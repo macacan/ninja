@@ -4,19 +4,8 @@ import { API, $, esc, kr, getJSON, skeleton, loading, cardImg } from "./site.js"
 import { parseCardQuery, resolvePokemonName, loadDataset } from "./card-autocomplete.js";
 import { recordCard, mountRecent } from "./recent.js";
 import { mountCardAutocomplete } from "./card-autocomplete.js";
+import { CONDITIONS, DEFAULT_COND, gradeMult } from "./valuation.js";
 import { openScanner, narrowByTotal, rankByLook } from "./card-scanner.js";
-
-// Andel av nyskickspriset per skick.
-const CONDITIONS = [
-  ["Near Mint", "Inga synliga fel", 1],
-  ["Excellent", "Lite slitage på nära håll", 0.85],
-  ["Lätt spelat", "Vita prickar, lätta repor", 0.7],
-  ["Spelat", "Tydligt slitage, små veck", 0.5],
-  ["Dåligt", "Veck, fukt eller skador", 0.25],
-];
-// Värde för ett graderat kort jämfört med nyskickspriset. Grova riktvärden.
-const GRADE_MULT = { 10: 5, 9: 2.3, 8: 1.4, 7: 1.1 };
-const gradeMult = (g) => GRADE_MULT[g] ?? 0.9;
 
 // Fyra kriterier, fem svar vardera med delbetyg.
 const CRITERIA = [
@@ -26,7 +15,7 @@ const CRITERIA = [
   ["Yta", "Repor och trycklinjer i vinklat ljus", [["Inga repor eller linjer", 10], ["Enstaka hårfin repa", 9], ["Några lätta repor", 8], ["Tydliga repor eller trycklinjer", 6], ["Intryck, veck eller skador", 4]]],
 ];
 
-const state = { card: null, rate: null, cond: 0, crit: CRITERIA.map(() => 1), cost: 400 };
+const state = { card: null, rate: null, cond: DEFAULT_COND, crit: CRITERIA.map(() => 1), cost: 400 };
 let found = [], shown = 0, searchId = 0;
 const PAGE = 12;
 
@@ -132,7 +121,7 @@ function outputHTML() {
     : gain > 0 ? ["mid", "Lönar sig knappt", `Vinsten blir bara cirka ${kr(gain)}. Ett lägre betyg än väntat gör det till en förlust.`]
     : ["bad", "Lönar sig inte", g >= 9 ? "Kortet är för billigt för att gradering ska löna sig." : "Med det betyget du bedömer blir det inte värt kostnaden."];
   const tier = (label, v, on) => `<li class="vt${on ? " on" : ""}"><span>${label}</span><b>${kr(round(v))}</b></li>`;
-  return `<div class="vo-main"><span class="vo-label">Ungefärligt värde ${cname === "Near Mint" ? "i nyskick" : `i skick ${esc(cname.toLowerCase())}`}</span>
+  return `<div class="vo-main"><span class="vo-label">Ungefärligt värde ${cname === "Near Mint" ? "i nyskick" : cname === "Mint" ? "i skick mint" : `i skick ${esc(cname.toLowerCase())}`}</span>
       <b class="vo-price">ca ${kr(round(raw))}</b>
       <small>Cardmarkets trendpris i nyskick: ${kr(round(base))}${state.card.pricing?.cardmarket?.low != null ? ` · lägsta annons ${kr(round(state.card.pricing.cardmarket.low * state.rate))}` : ""}</small></div>
     <ul class="vo-tiers" aria-label="Riktvärden per betyg">
@@ -181,7 +170,7 @@ async function pick(id) {
   box.scrollIntoView({ behavior: "smooth", block: "start" });
   try {
     const [card] = await Promise.all([getJSON(`${API}/cards/${encodeURIComponent(id)}`), getRate()]);
-    Object.assign(state, { card, cond: 0, crit: CRITERIA.map(() => 1) });
+    Object.assign(state, { card, cond: DEFAULT_COND, crit: CRITERIA.map(() => 1) });
     recordCard({ id: card.id, name: card.name, set: card.set?.name, localId: card.localId, total: card.set?.cardCount?.official, image: card.image, eur: baseEur(card) });
     renderCard();
   } catch {

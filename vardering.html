@@ -6,6 +6,7 @@
 <title>Värdera Pokémonkort – Gratis kortvärdering & pre-grading | Ninjaloot</title>
 <meta name="description" content="Se vad dina Pokémonkort är värda direkt i kronor. Sök kort, välj skick och få ett uppskattat marknadsvärde baserat på Cardmarkets live-priser. Digital pre-grading och kortskanner med kameran.">
 <meta name="theme-color" content="#131422">
+<meta name="theme-color" content="#0f1117" media="(prefers-color-scheme: dark)">
 <link rel="icon" href="logo.svg">
 <link href="fonts/fonts.css" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
@@ -49,28 +50,24 @@
         <!-- 4 Fördelar -->
         <ul class="val-hero-perks" aria-label="Fördelar med Ninjaloot värdering">
           <li>
-            <span class="val-perk-ic" data-icon="info" data-size="22"></span>
             <div>
               <b>Utan konto</b>
               <small>Börja direkt gratis</small>
             </div>
           </li>
           <li>
-            <span class="val-perk-ic" data-icon="coin" data-size="22"></span>
             <div>
               <b>Realtidsdata</b>
               <small>Cardmarket i SEK</small>
             </div>
           </li>
           <li>
-            <span class="val-perk-ic" data-icon="card" data-size="22"></span>
             <div>
               <b>Pre-grading</b>
               <small>PSA 1–10 estimat</small>
             </div>
           </li>
           <li>
-            <span class="val-perk-ic" data-icon="camera" data-size="22"></span>
             <div>
               <b>Kortskanner</b>
               <small>Hittar kortet med kameran</small>
@@ -160,7 +157,7 @@
             Vinkla kortet under en lampa och titta på hörn, kanter, yta och baksida. Ett kort som ser nytt ut får fullt pris, men redan små vita prickar eller en repa i folien kan halvera det.
           </p>
           <div class="val-how-tip">
-            <b>Vi räknar så här:</b> Near Mint 100 %, Excellent 85 %, Lätt spelat 70 %, Spelat 50 % och Dåligt 25 %.
+            <b>Vi räknar så här:</b> Mint 115 %, Near Mint 100 %, Excellent 85 %, Lätt spelat 70 %, Spelat 50 % och Dåligt 25 %.
           </div>
         </article>
 
@@ -456,10 +453,16 @@
             </thead>
             <tbody>
               <tr>
+                <td><span class="val-tag-pill val-tag-nm">Mint (M)</span></td>
+                <td>Som nytt och helt felfritt. Perfekta hörn, kanter och yta, fram och bak.</td>
+                <td><b>ca 115%</b></td>
+                <td><span class="val-psa">9 – 10</span></td>
+              </tr>
+              <tr>
                 <td><span class="val-tag-pill val-tag-nm">Near Mint (NM)</span></td>
                 <td>Ser ut som nyss uppdraget ur paketet. Spetsiga hörn och inga märken, varken fram eller bak.</td>
                 <td><b>100%</b></td>
-                <td><span class="val-psa">7 – 10</span></td>
+                <td><span class="val-psa">7 – 8</span></td>
               </tr>
               <tr>
                 <td><span class="val-tag-pill val-tag-ex">Excellent (EX)</span></td>
@@ -513,7 +516,7 @@
         </ul>
 
         <h4 class="val-cond-sub">Cardmarkets skala</h4>
-        <p class="val-cond-text">Cardmarket använder sju steg: <b>Mint</b>, <b>Near Mint</b>, <b>Excellent</b>, <b>Good</b>, <b>Light Played</b>, <b>Played</b> och <b>Poor</b>. Vi slår ihop dem till fem. Mint är i praktiken bara för helt nya, oöppnade kort, och Good hamnar mellan Excellent och Lätt spelat.</p>
+        <p class="val-cond-text">Cardmarket använder sju steg: <b>Mint</b>, <b>Near Mint</b>, <b>Excellent</b>, <b>Good</b>, <b>Light Played</b>, <b>Played</b> och <b>Poor</b>. Vi slår ihop dem till sex, där Good och Light Played blir Lätt spelat. Mint är för helt felfria kort som i praktiken aldrig har spelats.</p>
 
         <div class="val-cond-tip">
           <b>Skydda skicket direkt:</b> lägg kortet i en mjuk plastficka (sleeve) och sedan i en hård toploader. Undvik gummiband, fukt och solljus. Ett kort som dras rakt ur paketet och sleevas med en gång kan vara värt flera gånger mer graderat.
@@ -725,5 +728,6 @@
 </dialog>
 
 <script type="module" src="js/vardering.js"></script>
+<script type="module" src="js/vardering-mobile.js"></script>
 </body>
 </html>

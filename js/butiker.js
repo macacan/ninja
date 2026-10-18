@@ -34,7 +34,7 @@ function renderEvents() {
 
 // ---------- Produkter ----------
 const PRICE = { "": [0, Infinity], "0-200": [0, 200], "200-500": [200, 500], "500-1000": [500, 1000], "1000-": [1000, Infinity] };
-const LANG = { en: "Engelska", ja: "Japanska", ko: "Koreanska", zh: "Kinesiska", de: "Tyska", fr: "Franska" };
+const LANG = { en: "Engelska", ja: "Japanska", ko: "Koreanska", zh: "Kinesiska", fr: "Franska" };
 const TYPE_LABEL = { "Booster Pack": "Boosterpaket", "Booster Box": "Boosterbox", "Elite Trainer Box": "Elite Trainer Box (ETB)", Blister: "Blister", Tin: "Tin" };
 let recentDrop = new Map(), recentNew = new Set();
 let groups = new Map(), priceHist = {}, releaseDates = new Map();

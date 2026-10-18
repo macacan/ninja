@@ -447,6 +447,22 @@ export function findMatches(rawQuery, data, trends) {
     }
   }
 
+  // Flera ord (t.ex. "dark raichu"): matcha orden var för sig, så att kortnamn som inte står
+  // i listan över populära kort ändå får ett förslag.
+  const words = q.split(/\s+/).filter(Boolean);
+  if (words.length > 1) {
+    for (const c of cardList) {
+      if (cards.length >= 4) break;
+      const low = c.name.toLowerCase();
+      if (!cards.includes(c) && words.every((w) => low.includes(w))) cards.push(c);
+    }
+    const hasPoke = pokemonList.some((p) => words.some((w) => w.length >= 3 && p.name.toLowerCase().includes(w)));
+    if (!pokemonMatches.length && hasPoke) {
+      const title = words.map((w) => w[0].toUpperCase() + w.slice(1)).join(" ");
+      pokemonMatches.push({ name: title, val: title, sub: "Sök alla kort med det namnet" });
+    }
+  }
+
   return {
     bestMatch,
     pokemon: pokemonMatches,
@@ -496,12 +512,11 @@ export function mountCardAutocomplete(input, options = {}) {
   const ghost = document.createElement("div");
   ghost.className = "card-ghost";
   ghost.setAttribute("aria-hidden", "true");
-  ghost.innerHTML = `<span class="card-ghost-typed"></span><span class="card-ghost-tail"></span><button type="button" class="card-ghost-hint" hidden tabindex="-1" title="Tryck Tab eller klicka för att välja">Tab ⇥</button>`;
+  ghost.innerHTML = `<span class="card-ghost-typed"></span><span class="card-ghost-tail"></span>`;
   wrap.appendChild(ghost);
 
   const ghostTyped = ghost.querySelector(".card-ghost-typed");
   const ghostTail = ghost.querySelector(".card-ghost-tail");
-  const ghostHint = ghost.querySelector(".card-ghost-hint");
 
   // Förslags-popup
   const dropdown = document.createElement("div");
@@ -520,7 +535,6 @@ export function mountCardAutocomplete(input, options = {}) {
     currentBestMatch = null;
     ghostTyped.textContent = "";
     ghostTail.textContent = "";
-    ghostHint.hidden = true;
   }
 
   function setGhost(typed, match) {
@@ -531,7 +545,6 @@ export function mountCardAutocomplete(input, options = {}) {
     currentBestMatch = match;
     ghostTyped.textContent = typed;
     ghostTail.textContent = match.slice(typed.length);
-    ghostHint.hidden = false;
   }
 
   function closeDropdown() {
@@ -597,12 +610,6 @@ export function mountCardAutocomplete(input, options = {}) {
     );
   }
 
-  ghostHint.addEventListener("click", (e) => {
-    e.preventDefault();
-    acceptGhost();
-    input.focus();
-  });
-
   function updateActiveItem() {
     items.forEach((it, idx) => {
       const isAct = idx === activeIndex;
@@ -630,7 +637,6 @@ export function mountCardAutocomplete(input, options = {}) {
     let html = `
       <div class="cad-header">
         <span class="cad-live-badge"><i class="cad-dot"></i>Live-förslag</span>
-        <span class="cad-tip">Tryck <b>Tab</b> eller <b>↵</b></span>
       </div>`;
 
     if (hasPokemon) {
@@ -642,11 +648,11 @@ export function mountCardAutocomplete(input, options = {}) {
         const num = p.id ? `#${String(p.id).padStart(4, "0")}` : "";
         const tag = p.sub || (isTop ? "Mest eftersökt" : p.id <= 151 ? "Kanto" : "Populär");
 
-        // Visa kortet som en liten bild istället för "Tab" när ett matchande kort finns
+        // Visa kortet som en liten bild när ett matchande kort finns
         let actionHtml = "";
         if (p.image) {
           actionHtml = `
-            <div class="cad-card-thumb-wrap" title="${escapeHtml(p.name)} (Tryck Tab eller klicka för att välja)">
+            <div class="cad-card-thumb-wrap" title="${escapeHtml(p.name)} (klicka för att välja)">
               <img src="${escapeHtml(p.image)}/low.webp" alt="${escapeHtml(p.name)}" class="cad-card-thumb" loading="eager" decoding="async" onerror="this.parentNode.remove()">
               <i class="cad-card-gloss" aria-hidden="true"></i>
             </div>`;
@@ -655,8 +661,6 @@ export function mountCardAutocomplete(input, options = {}) {
             <div class="cad-card-thumb-wrap is-loading" aria-label="Laddar kortbild…">
               <div class="cad-card-thumb-skel"></div>
             </div>`;
-        } else if (isTop) {
-          actionHtml = `<span class="cad-key-pill">Tab ⇥</span>`;
         }
 
         html += `
@@ -760,7 +764,7 @@ export function mountCardAutocomplete(input, options = {}) {
         } else {
           const loader = dropdown.querySelector(".cad-card-thumb-wrap.is-loading");
           if (loader) {
-            loader.outerHTML = `<span class="cad-key-pill">Tab ⇥</span>`;
+            loader.remove();
           }
         }
       });
@@ -793,22 +797,7 @@ export function mountCardAutocomplete(input, options = {}) {
   input.addEventListener("keydown", (e) => {
     const isDropDownOpen = !dropdown.hidden && items.length > 0;
 
-    // 1. Tab: acceptera ghost text
-    if (e.key === "Tab") {
-      if (currentBestMatch && currentBestMatch.toLowerCase() !== input.value.trim().toLowerCase()) {
-        e.preventDefault();
-        const topOpt = dropdown.querySelector(".cad-item.is-top");
-        selectValue(currentBestMatch, topOpt?.dataset?.cardId);
-        return;
-      }
-      if (isDropDownOpen && activeIndex >= 0 && items[activeIndex]) {
-        e.preventDefault();
-        selectValue(items[activeIndex].dataset.val, items[activeIndex].dataset.cardId);
-        return;
-      }
-    }
-
-    // 2. ArrowRight: acceptera ghost text om markören är i slutet
+    // 1. ArrowRight: acceptera ghost text om markören är i slutet
     if (e.key === "ArrowRight") {
       if (input.selectionStart === input.value.length && currentBestMatch) {
         e.preventDefault();

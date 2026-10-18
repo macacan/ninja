@@ -1,6 +1,7 @@
 // Tryck på ett set: en ruta med alla kort i setet, pris i kronor och sortering.
 // Namn, bild och nummer kommer från TCGdex. Priserna från data/card-history/<set>.json.
 import { esc, kr, fmt, loading, getJSON, API, setLogo, cardImg } from "./site.js";
+import { openCardPrice } from "./cardprice.js";
 
 const SORTS = {
   "price-desc": ["Dyrast först", (a, b) => (b.price ?? -1) - (a.price ?? -1)],
@@ -79,13 +80,14 @@ function zoomDialog() {
         <span class="zm-count"></span>
         <h3 class="zm-name"></h3>
         <p class="zm-sub"></p>
-        <div class="zm-row"><span class="zm-price"></span><a class="btn small primary zm-val" href="vardering.html">Värdera kortet</a></div>
+        <div class="zm-row"><button type="button" class="zm-price" aria-haspopup="dialog"></button><span class="zm-hint">Tryck på priset för historik och värdering</span></div>
       </div>
     </div>`;
   document.body.append(zdlg);
   zdlg.addEventListener("cancel", (e) => { e.preventDefault(); closeZoom(); });
   zdlg.addEventListener("click", (e) => {
     if (e.target === zdlg || e.target.classList.contains("zm-stage") || e.target.closest(".zm-close")) closeZoom();
+    else if (e.target.closest(".zm-price")) openCardPrice(zlist[zi].id);
     else if (e.target.closest(".zm-nav.prev")) go(-1);
     else if (e.target.closest(".zm-nav.next")) go(1);
   });
@@ -133,8 +135,7 @@ function fillInfo(c) {
   zq(".zm-count").textContent = `${zi + 1} / ${zlist.length}`;
   zq(".zm-name").textContent = c.name;
   zq(".zm-sub").textContent = `#${c.localId} · ${current.set.name}`;
-  zq(".zm-price").innerHTML = c.price == null ? "Inget pris ännu" : `<b>${kr(c.price)}</b>`;
-  zq(".zm-val").href = `vardering.html?id=${encodeURIComponent(c.id)}`;
+  zq(".zm-price").innerHTML = c.price == null ? "Visa pris" : `<b>${kr(c.price)}</b>`;
   zq(".zm-nav.prev").disabled = zi === 0;
   zq(".zm-nav.next").disabled = zi === zlist.length - 1;
   getJSON(`${API}/cards/${encodeURIComponent(c.id)}`).then((d) => {

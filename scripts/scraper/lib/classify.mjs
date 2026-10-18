@@ -41,12 +41,14 @@ const LANGS = [
   ["ja", /japan|japansk|\bjp\b|\bjpn\b|日本/i],
   ["ko", /korea|koreansk|\bkr\b/i],
   ["zh", /kinesisk|chinese|simplified|traditional|\(\s*(ch|cn|chn|sc|tc)\s*\)/i],
-  ["de", /\bdeutsch|tysk|\bger\b/i],
   ["fr", /fran[cç]ais|fransk/i],
 ];
 
+// Tyska produkter tas inte med.
+const GERMAN = /\bdeutsch|tysk|\bger\b/i;
+
 export function classify(title, setNames = [], seriesNames = []) {
-  if (!title || !POKEMON.test(title) || NOT_SEALED.test(title)) return null;
+  if (!title || !POKEMON.test(title) || NOT_SEALED.test(title) || GERMAN.test(title)) return null;
   const type = TYPES.find(([, re]) => re.test(title))?.[0];
   if (!type) return null;
   const lang = LANGS.find(([, re]) => re.test(title))?.[0] || "en";

@@ -3,7 +3,7 @@ import { $, esc, kr, releaseSets, daysUntil, clockTime, liveStamp, setLogo, getJ
 
 const MON = ["jan", "feb", "mars", "apr", "maj", "juni", "juli", "aug", "sep", "okt", "nov", "dec"];
 const MONTH = ["januari", "februari", "mars", "april", "maj", "juni", "juli", "augusti", "september", "oktober", "november", "december"];
-const LANG = { en: "Engelska", ja: "Japanska", ko: "Koreanska", zh: "Kinesiska", de: "Tyska", fr: "Franska" };
+const LANG = { en: "Engelska", ja: "Japanska", ko: "Koreanska", zh: "Kinesiska", fr: "Franska" };
 const d = (s) => new Date(`${s}T12:00:00`);
 export const short = (s) => `${d(s).getDate()} ${MON[d(s).getMonth()]}`;
 const long = (s) => `${d(s).getDate()} ${MONTH[d(s).getMonth()]} ${d(s).getFullYear()}`;

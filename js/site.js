@@ -39,17 +39,28 @@ function header() {
       <input type="search" name="q" placeholder="Sök kort, t.ex. Pikachu" aria-label="Sök kort">
       <button type="submit" aria-label="Sök">${icon("search", 20)}</button>
     </form>
-    <button class="search-btn" aria-expanded="false" aria-controls="header-search" aria-label="Visa sökfältet">${icon("search", 24)}</button>
   </div></header>`;
 }
 
-// Flikrad längst ner på mobilen, nåbar med tummen.
+// Mobilen: ett fält längst ner med en hamburgerknapp som öppnar menyn med alla sidor och sökfältet.
 function tabbar() {
   const here = { "artikel.html": "nyheter.html" }[location.pathname.split("/").pop()] || location.pathname.split("/").pop() || "index.html";
-  const short = { "Kortpriser": "Priser", "Gradering": "Gradering" };
+  const current = NAV.find(([href]) => href === here);
   return `<nav class="tabbar" aria-label="Huvudmeny mobil">
-    ${NAV.map(([href, label, ic]) => `<a href="${href}"${href === here ? ' aria-current="page"' : ""}>${icon(ic, 22)}<span>${short[label] || label}</span></a>`).join("")}
-  </nav>`;
+    <button type="button" class="menu-btn" aria-expanded="false" aria-controls="mobile-menu">
+      <svg class="burger" width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"/></svg>
+      <span>Meny${current ? ` · ${current[1]}` : ""}</span>
+    </button>
+  </nav>
+  <div class="mobile-menu" id="mobile-menu" hidden>
+    <div class="mm-sheet" role="dialog" aria-label="Meny">
+      <form class="mm-search" action="${searchTarget()}" role="search">
+        <input type="search" name="q" placeholder="Sök kort, t.ex. Pikachu" aria-label="Sök kort">
+        <button type="submit" aria-label="Sök">${icon("search", 20)}</button>
+      </form>
+      <ul>${NAV.map(([href, label, ic]) => `<li><a href="${href}"${href === here ? ' aria-current="page"' : ""}>${icon(ic, 26)}<span>${label}</span></a></li>`).join("")}</ul>
+    </div>
+  </div>`;
 }
 
 function footer() {
@@ -75,7 +86,6 @@ function footer() {
         <li><a href="villkor.html">Användarvillkor</a></li>
         <li><a href="integritet.html">Integritet och kakor</a></li>
         <li><a href="om.html#rattigheter">Rättigheter</a></li>
-        <li><a href="lager.html">För butiker: lagersystem</a></li>
       </ul></div>
     </div>
     <p class="footer-legal">Ninjaloot är ett självständigt fanprojekt. Varken The Pokémon Company, Nintendo, Creatures, GAME FREAK eller någon butik står bakom sidan.
@@ -102,12 +112,15 @@ const searchTarget = () => (location.pathname.endsWith("vardering.html") ? "vard
 export function mountChrome() {
   document.body.insertAdjacentHTML("afterbegin", header());
   document.body.insertAdjacentHTML("beforeend", footer() + tabbar());
-  const btn = $(".search-btn"), form = $("#header-search");
-  btn.addEventListener("click", () => {
-    const open = form.classList.toggle("open");
-    btn.setAttribute("aria-expanded", open);
-    if (open) form.querySelector("input").focus();
-  });
+  const menuBtn = $(".menu-btn"), menu = $("#mobile-menu");
+  const setMenu = (open) => {
+    menu.hidden = !open;
+    menuBtn.setAttribute("aria-expanded", open);
+    document.body.classList.toggle("menu-open", open);
+  };
+  menuBtn.addEventListener("click", () => setMenu(menu.hidden));
+  menu.addEventListener("click", (e) => { if (e.target === menu || e.target.closest("a")) setMenu(false); });
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape" && !menu.hidden) { setMenu(false); menuBtn.focus(); } });
   // Ikoner som anges med data-icon i sidornas HTML.
   document.querySelectorAll("[data-icon]").forEach((el) => el.insertAdjacentHTML("afterbegin", icon(el.dataset.icon, +el.dataset.size || 28)));
   mountAllScenes();
