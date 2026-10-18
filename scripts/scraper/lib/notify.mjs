@@ -1,6 +1,5 @@
-// Skickar nya händelser till mobilen (ntfy) och valfritt till Discord.
-// ntfy-ämnet läses från config.json eller miljövariabeln NTFY_TOPIC. Discord-webhooken är hemlig och
-// läses bara från miljövariabeln DISCORD_WEBHOOK, så att den aldrig hamnar i koden.
+// Skickar nya händelser till mobilen via ntfy.
+// ntfy-ämnet läses från config.json eller miljövariabeln NTFY_TOPIC.
 
 const KIND = {
   ny: { label: "Ny produkt", tag: "new" },
@@ -58,24 +57,11 @@ async function toNtfy(base, events, storeName) {
   }
 }
 
-async function toDiscord(webhook, events, storeName) {
-  // Discord tar högst 10 inbäddningar per meddelande.
-  for (let i = 0; i < Math.min(events.length, 30); i += 10) {
-    const embeds = events.slice(i, i + 10).map((e) => {
-      const l = line(e, storeName);
-      return { title: l.title.slice(0, 250), url: e.url, description: l.body, color: e.kind === "prissankt" ? 0xe3262f : e.kind === "tillbaka" ? 0x58c06a : 0xf2b632 };
-    });
-    await post(webhook, JSON.stringify({ username: "Ninjaloot", embeds }), "Discord");
-  }
-}
-
 export async function notify(events, storeName, cfg = {}) {
   if (!events.length) return;
   const topic = process.env.NTFY_TOPIC || cfg.ntfyTopic;
-  const webhook = process.env.DISCORD_WEBHOOK;
   const jobs = [];
   if (topic) jobs.push(toNtfy(topic, events, storeName).then(() => console.log(`Notiser skickade till ntfy (${topic}-…).`)));
-  if (webhook) jobs.push(toDiscord(webhook, events, storeName).then(() => console.log("Notiser skickade till Discord.")));
   // En trasig notistjänst får aldrig stoppa själva bevakningen.
   for (const r of await Promise.allSettled(jobs)) if (r.status === "rejected") console.warn(`Notiser misslyckades: ${r.reason.message}`);
 }

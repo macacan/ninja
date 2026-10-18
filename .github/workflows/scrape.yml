@@ -26,8 +26,6 @@ jobs:
         with:
           node-version: 22
       - run: node scripts/scraper/run.mjs
-        env:
-          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
       - name: Spara om något ändrats
         run: |
           git config user.name "ninjaloot-bot"
