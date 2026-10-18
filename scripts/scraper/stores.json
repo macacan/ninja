@@ -1,0 +1,581 @@
+{
+ "_info": "status: tillstand = skriftligt ok från butiken, ej-forbjuden = inget förbud hittat, inga-bilder = får bevakas men villkoren skyddar bilder och texter, så produktbilder visas inte, okand = ej kontrollerad, forbjuden = hämtas aldrig. Ändra status när du fått svar från en butik.",
+ "stores": [
+  {
+   "id": "alara-games",
+   "name": "Alara Games",
+   "domain": "alaragames.se",
+   "platform": "shopify",
+   "status": "forbjuden",
+   "note": "Villkoren förbjuder automatisk insamling"
+  },
+  {
+   "id": "alphaspel",
+   "name": "Alphaspel",
+   "domain": "alphaspel.se",
+   "platform": "generic",
+   "status": "ej-forbjuden",
+   "note": "Inget förbud hittat i villkoren 2026-10-12"
+  },
+  {
+   "id": "aquitaz",
+   "name": "Aquitaz",
+   "domain": "aquitaz.se",
+   "platform": "shopify",
+   "status": "ej-forbjuden",
+   "note": "Inget förbud hittat i villkoren 2026-10-12"
+  },
+  {
+   "id": "arcade-dreams",
+   "name": "Arcade Dreams",
+   "domain": "arcadedreams.se",
+   "platform": "generic",
+   "status": "forbjuden",
+   "note": "robots.txt spärrar alla botar"
+  },
+  {
+   "id": "auroradex",
+   "name": "AuroraDex",
+   "domain": "auroradex.se",
+   "platform": "shopify",
+   "status": "forbjuden",
+   "note": "Villkoren förbjuder automatisk insamling"
+  },
+  {
+   "id": "bangerpack",
+   "name": "Bangerpack",
+   "domain": "bangerpack.se",
+   "platform": "generic",
+   "status": "ej-forbjuden",
+   "note": "Inget förbud hittat i villkoren 2026-10-12"
+  },
+  {
+   "id": "blindbox",
+   "name": "Blindbox",
+   "domain": "blindbox.se",
+   "platform": "shopify",
+   "status": "forbjuden",
+   "note": "Villkoren förbjuder automatisk insamling"
+  },
+  {
+   "id": "card-mountain",
+   "name": "Card Mountain",
+   "domain": "cardmountain.se",
+   "platform": "shopify",
+   "status": "ej-forbjuden",
+   "note": "Inget förbud hittat i villkoren 2026-10-12"
+  },
+  {
+   "id": "cardclub",
+   "name": "Cardclub",
+   "domain": "cardclub.se",
+   "platform": "shopify",
+   "status": "ej-forbjuden",
+   "note": "Inget förbud hittat i villkoren 2026-10-12"
+  },
+  {
+   "id": "cardgame",
+   "name": "CardGame",
+   "domain": "cardgame.se",
+   "platform": "generic",
+   "status": "ej-forbjuden",
+   "note": "Inget förbud hittat i villkoren 2026-10-12"
+  },
+  {
+   "id": "cardhaven",
+   "name": "CardHaven",
+   "domain": "cardhaven.se",
+   "platform": "generic",
+   "status": "ej-forbjuden",
+   "note": "Inget förbud hittat i villkoren 2026-10-12"
+  },
+  {
+   "id": "cardlevels",
+   "name": "Cardlevels",
+   "domain": "cardlevels.se",
+   "platform": "shopify",
+   "status": "ej-forbjuden",
+   "note": "Inget förbud hittat i villkoren 2026-10-12"
+  },
+  {
+   "id": "cards-by-malcolm",
+   "name": "Cards By Malcolm",
+   "domain": "cardsbymalcolm.se",
+   "platform": "generic",
+   "status": "ej-forbjuden",
+   "note": "Villkoren lästa manuellt 2026-10-18, inget förbud mot automatisk insamling"
+  },
+  {
+   "id": "collected",
+   "name": "Collected",
+   "domain": "collected.se",
+   "platform": "shopify",
+   "status": "ej-forbjuden",
+   "note": "Inget förbud hittat i villkoren 2026-10-12"
+  },
+  {
+   "id": "coolcard",
+   "name": "Coolcard",
+   "domain": "coolcard.se",
+   "platform": "generic",
+   "status": "forbjuden",
+   "note": "Köpvillkoren: produktnamn, bilder och information om produkter får inte kopieras eller användas utan skriftligt medgivande."
+  },
+  {
+   "id": "dragon-s-lair",
+   "name": "Dragon's Lair",
+   "domain": "dragonslair.se",
+   "platform": "shopify",
+   "status": "ej-forbjuden",
+   "note": "Villkoren lästa manuellt 2026-10-18, inget förbud mot automatisk insamling (egna köpvillkor, inga Shopify-standardvillkor)"
+  },
+  {
+   "id": "fantasia-north",
+   "name": "Fantasia North",
+   "domain": "fantasianorth.com",
+   "platform": "woocommerce",
+   "status": "ej-forbjuden",
+   "note": "Inget förbud hittat i villkoren 2026-10-12"
+  },
+  {
+   "id": "fire-games",
+   "name": "Fire Games",
+   "domain": "firegames.se",
+   "platform": "shopify",
+   "status": "forbjuden",
+   "note": "Villkoren förbjuder automatisk insamling"
+  },
+  {
+   "id": "frog-med-vanner",
+   "name": "Frog med Vänner",
+   "domain": "frogmedvanner.se",
+   "platform": "woocommerce",
+   "status": "ej-forbjuden",
+   "note": "Inget förbud hittat i villkoren 2026-10-12"
+  },
+  {
+   "id": "gameshop",
+   "name": "GameShop",
+   "domain": "gameshop.se",
+   "platform": "woocommerce",
+   "status": "ej-forbjuden",
+   "note": "Inget förbud hittat i villkoren 2026-10-12"
+  },
+  {
+   "id": "gimmick",
+   "name": "Gimmick",
+   "domain": "gimmick.se",
+   "platform": "shopify",
+   "status": "inga-bilder",
+   "note": "Användarvillkoren: bilder, logotyper, texter och grafik får inte kopieras eller användas utan tillstånd. Visas utan produktbilder."
+  },
+  {
+   "id": "goblinen",
+   "name": "Goblinen",
+   "domain": "goblinen.com",
+   "platform": "shopify",
+   "status": "ej-forbjuden",
+   "note": "Inget förbud hittat i villkoren 2026-10-12"
+  },
+  {
+   "id": "hobbykort",
+   "name": "Hobbykort",
+   "domain": "hobbykort.se",
+   "platform": "shopify",
+   "status": "forbjuden",
+   "note": "Villkoren förbjuder automatisk insamling"
+  },
+  {
+   "id": "jollyroom",
+   "name": "Jollyroom",
+   "domain": "jollyroom.se",
+   "platform": "generic",
+   "status": "ej-forbjuden",
+   "note": "Inget förbud hittat i villkoren 2026-10-12"
+  },
+  {
+   "id": "kantovault",
+   "name": "Kantovault",
+   "domain": "kantovault.se",
+   "platform": "shopify",
+   "status": "inga-bilder",
+   "note": "Villkoren: text, bilder, logotyper och varumärken får inte användas utan skriftligt medgivande. Visas utan produktbilder."
+  },
+  {
+   "id": "kortarkivet",
+   "name": "Kortarkivet",
+   "domain": "kortarkivet.se",
+   "platform": "shopify",
+   "status": "forbjuden",
+   "note": "Villkoren förbjuder automatisk insamling"
+  },
+  {
+   "id": "kortbutiken",
+   "name": "Kortbutiken",
+   "domain": "kortbutiken-shop.se",
+   "platform": "shopify",
+   "status": "ej-forbjuden",
+   "note": "Inget förbud hittat i villkoren 2026-10-12"
+  },
+  {
+   "id": "kortgrossisten",
+   "name": "Kortgrossisten",
+   "domain": "kortgrossisten.se",
+   "platform": "shopify",
+   "status": "forbjuden",
+   "note": "Villkoren förbjuder automatisk insamling"
+  },
+  {
+   "id": "majki-poke",
+   "name": "Majki Poke",
+   "domain": "majkipoke.se",
+   "platform": "shopify",
+   "status": "ej-forbjuden",
+   "note": "Inget förbud hittat i villkoren 2026-10-12"
+  },
+  {
+   "id": "mana-torsk",
+   "name": "Mana Torsk",
+   "domain": "manatorsk.com",
+   "platform": "shopify",
+   "status": "forbjuden",
+   "note": "Villkoren förbjuder automatisk insamling"
+  },
+  {
+   "id": "maxgaming",
+   "name": "MaxGaming",
+   "domain": "maxgaming.se",
+   "platform": "generic",
+   "status": "ej-forbjuden",
+   "note": "Inget förbud hittat i villkoren 2026-10-12"
+  },
+  {
+   "id": "miniature-metropolis",
+   "name": "Miniature Metropolis",
+   "domain": "miniaturemetropolis.se",
+   "platform": "shopify",
+   "status": "ej-forbjuden",
+   "note": "Inget förbud hittat i villkoren 2026-10-12"
+  },
+  {
+   "id": "mix-max",
+   "name": "Mix-Max",
+   "domain": "mix-max.se",
+   "platform": "generic",
+   "status": "ej-forbjuden",
+   "note": "Villkoren lästa manuellt 2026-10-18, inget förbud mot automatisk insamling"
+  },
+  {
+   "id": "mtg-butiken",
+   "name": "MTG Butiken",
+   "domain": "mtgbutiken.quickbutik.com",
+   "platform": "generic",
+   "status": "ej-forbjuden",
+   "note": "Inget förbud hittat i villkoren 2026-10-12"
+  },
+  {
+   "id": "mystery-shack",
+   "name": "Mystery Shack",
+   "domain": "mysteryshack.se",
+   "platform": "generic",
+   "status": "ej-forbjuden",
+   "note": "Inget förbud hittat i villkoren 2026-10-12"
+  },
+  {
+   "id": "netgrade",
+   "name": "NetGrade",
+   "domain": "netgrade.se",
+   "platform": "generic",
+   "status": "ej-forbjuden",
+   "note": "Inget förbud hittat i villkoren 2026-10-12"
+  },
+  {
+   "id": "nordic-pulls",
+   "name": "Nordic Pulls",
+   "domain": "nordicpulls.se",
+   "platform": "generic",
+   "status": "ej-forbjuden",
+   "note": "Villkoren lästa manuellt 2026-10-18, inget förbud mot automatisk insamling"
+  },
+  {
+   "id": "nordic-sports-cards",
+   "name": "Nordic Sports Cards",
+   "domain": "nordicsportscards.se",
+   "platform": "shopify",
+   "status": "forbjuden",
+   "note": "Villkoren förbjuder automatisk insamling"
+  },
+  {
+   "id": "nordictcg",
+   "name": "NordicTCG",
+   "domain": "nordictcg.se",
+   "platform": "generic",
+   "status": "forbjuden",
+   "note": "Cloudflare-kontroll mot botar på hela sidan."
+  },
+  {
+   "id": "packs-on-packs",
+   "name": "Packs on Packs",
+   "domain": "packsonpacks.se",
+   "platform": "generic",
+   "status": "ej-forbjuden",
+   "note": "Inget förbud hittat i villkoren 2026-10-12"
+  },
+  {
+   "id": "playoteket",
+   "name": "Playoteket",
+   "domain": "playoteket.com",
+   "platform": "generic",
+   "status": "forbjuden",
+   "note": "robots.txt spärrar alla botar"
+  },
+  {
+   "id": "pokekid",
+   "name": "Pokekid",
+   "domain": "pokekid.se",
+   "platform": "generic",
+   "status": "ej-forbjuden",
+   "note": "Inget förbud hittat i villkoren 2026-10-12"
+  },
+  {
+   "id": "pokemastersvault",
+   "name": "Pokemastersvault",
+   "domain": "pokemastersvault.com",
+   "platform": "woocommerce",
+   "status": "ej-forbjuden",
+   "note": "Inget förbud hittat i villkoren 2026-10-12"
+  },
+  {
+   "id": "pokemurre",
+   "name": "Pokemurre",
+   "domain": "pokemurre.se",
+   "platform": "shopify",
+   "status": "inga-bilder",
+   "note": "Villkoren: bilder, texter och logotyper får inte kopieras eller användas utan skriftligt tillstånd. Visas utan produktbilder."
+  },
+  {
+   "id": "poketalk",
+   "name": "PokeTalk",
+   "domain": "poketalk.se",
+   "platform": "shopify",
+   "status": "ej-forbjuden",
+   "note": "Inget förbud hittat i villkoren 2026-10-12"
+  },
+  {
+   "id": "pokexclusive",
+   "name": "Pokexclusive",
+   "domain": "pokexclusive.se",
+   "platform": "shopify",
+   "status": "forbjuden",
+   "note": "Rättslig information: text, bilder och data får inte användas utan uttryckligt tillstånd."
+  },
+  {
+   "id": "rahtech",
+   "name": "Rahtech",
+   "domain": "rahtech.se",
+   "platform": "shopify",
+   "status": "ej-forbjuden",
+   "note": "Inget förbud hittat i villkoren 2026-10-12"
+  },
+  {
+   "id": "rgb-kingz",
+   "name": "RGB Kingz",
+   "domain": "rgbkingz.com",
+   "platform": "shopify",
+   "status": "ej-forbjuden",
+   "note": "Inget förbud hittat i villkoren 2026-10-12"
+  },
+  {
+   "id": "samlargrottan",
+   "name": "Samlargrottan",
+   "domain": "samlargrottan.se",
+   "platform": "generic",
+   "status": "ej-forbjuden",
+   "note": "Villkoren lästa manuellt 2026-10-18, inget förbud mot automatisk insamling"
+  },
+  {
+   "id": "samlarhobby",
+   "name": "Samlarhobby",
+   "domain": "samlarhobby.se",
+   "platform": "shopify",
+   "status": "ej-forbjuden",
+   "note": "Inget förbud hittat i villkoren 2026-10-12"
+  },
+  {
+   "id": "samlarverket",
+   "name": "Samlarverket",
+   "domain": "samlarverket.com",
+   "platform": "generic",
+   "status": "ej-forbjuden",
+   "note": "Inget förbud hittat i villkoren 2026-10-12"
+  },
+  {
+   "id": "sf-bokhandeln",
+   "name": "SF-Bokhandeln",
+   "domain": "sfbok.se",
+   "platform": "generic",
+   "status": "ej-forbjuden",
+   "note": "Inget förbud hittat i villkoren 2026-10-12"
+  },
+  {
+   "id": "shinycards",
+   "name": "ShinyCards",
+   "domain": "shinycards.se",
+   "platform": "generic",
+   "status": "ej-forbjuden",
+   "note": "Villkoren lästa manuellt 2026-10-18, inget förbud mot automatisk insamling"
+  },
+  {
+   "id": "skattkistan",
+   "name": "Skattkistan",
+   "domain": "skattkistan.net",
+   "platform": "shopify",
+   "status": "ej-forbjuden",
+   "note": "Inget förbud hittat i villkoren 2026-10-12"
+  },
+  {
+   "id": "sneak",
+   "name": "Sneak",
+   "domain": "sneak.se",
+   "platform": "shopify",
+   "status": "forbjuden",
+   "note": "Villkoren förbjuder automatisk insamling"
+  },
+  {
+   "id": "spelexperten",
+   "name": "Spelexperten",
+   "domain": "spelexperten.com",
+   "platform": "generic",
+   "status": "ej-forbjuden",
+   "note": "Inget förbud hittat i villkoren 2026-10-12"
+  },
+  {
+   "id": "spelgalaxen",
+   "name": "Spelgalaxen",
+   "domain": "spelgalaxen.se",
+   "platform": "shopify",
+   "status": "ej-forbjuden",
+   "note": "Inget förbud hittat i villkoren 2026-10-12"
+  },
+  {
+   "id": "spelmaffian",
+   "name": "SpelMaffian",
+   "domain": "spelmaffian.se",
+   "platform": "shopify",
+   "status": "ej-forbjuden",
+   "note": "Inget förbud hittat i villkoren 2026-10-12"
+  },
+  {
+   "id": "spelparken",
+   "name": "Spelparken",
+   "domain": "spelparken.se",
+   "platform": "shopify",
+   "status": "ej-forbjuden",
+   "note": "Inget förbud hittat i villkoren 2026-10-12"
+  },
+  {
+   "id": "speltrollet",
+   "name": "Speltrollet",
+   "domain": "speltrollet.se",
+   "platform": "shopify",
+   "status": "ej-forbjuden",
+   "note": "Inget förbud hittat i villkoren 2026-10-12"
+  },
+  {
+   "id": "sweet-nerds",
+   "name": "Sweet Nerds",
+   "domain": "sweetnerds.se",
+   "platform": "generic",
+   "status": "ej-forbjuden",
+   "note": "Inget förbud hittat i villkoren 2026-10-12"
+  },
+  {
+   "id": "sweetnest",
+   "name": "SweetNest",
+   "domain": "sweetnest.se",
+   "platform": "shopify",
+   "status": "ej-forbjuden",
+   "note": "Inget förbud hittat i villkoren 2026-10-12"
+  },
+  {
+   "id": "swepoke",
+   "name": "Swepoke",
+   "domain": "swepoke.se",
+   "platform": "generic",
+   "status": "ej-forbjuden",
+   "note": "Inget förbud hittat i villkoren 2026-10-12"
+  },
+  {
+   "id": "tcg-card-house",
+   "name": "TCG Card House",
+   "domain": "tcgcardhouse.se",
+   "platform": "shopify",
+   "status": "ej-forbjuden",
+   "note": "Inget förbud hittat i villkoren 2026-10-12"
+  },
+  {
+   "id": "tcg-picks",
+   "name": "TCG Picks",
+   "domain": "tcgpicks.com",
+   "platform": "shopify",
+   "status": "ej-forbjuden",
+   "note": "Inget förbud hittat i villkoren 2026-10-12"
+  },
+  {
+   "id": "tcgstore",
+   "name": "TCGstore",
+   "domain": "tcgstore.se",
+   "platform": "shopify",
+   "status": "ej-forbjuden",
+   "note": "Inget förbud hittat i villkoren 2026-10-12"
+  },
+  {
+   "id": "tcgaddan",
+   "name": "TCGäddan",
+   "domain": "tcgaddan.se",
+   "platform": "shopify",
+   "status": "ej-forbjuden",
+   "note": "Inget förbud hittat i villkoren 2026-10-12"
+  },
+  {
+   "id": "the-swedish-fish",
+   "name": "The Swedish Fish",
+   "domain": "theswedishfish.se",
+   "platform": "woocommerce",
+   "status": "ej-forbjuden",
+   "note": "Inget förbud hittat i villkoren 2026-10-12"
+  },
+  {
+   "id": "toyspace",
+   "name": "Toyspace",
+   "domain": "toyspace.se",
+   "platform": "generic",
+   "status": "ej-forbjuden",
+   "note": "Inget förbud hittat i villkoren 2026-10-12"
+  },
+  {
+   "id": "tsp-vault",
+   "name": "TSP Vault",
+   "domain": "tspvault.se",
+   "platform": "shopify",
+   "status": "ej-forbjuden",
+   "note": "Inget förbud hittat i villkoren 2026-10-12"
+  },
+  {
+   "id": "webhallen",
+   "name": "Webhallen",
+   "domain": "webhallen.com",
+   "platform": "generic",
+   "status": "ej-forbjuden",
+   "note": "Villkoren lästa manuellt 2026-10-18, inget förbud mot automatisk insamling (köpvillkor)"
+  },
+  {
+   "id": "westcoast-vault",
+   "name": "Westcoast Vault",
+   "domain": "westcoastvault.se",
+   "platform": "shopify",
+   "status": "ej-forbjuden",
+   "note": "Inget förbud hittat i villkoren 2026-10-12"
+  }
+ ]
+}

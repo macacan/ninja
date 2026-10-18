@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Butiker – Ninjaloot</title>
+<meta name="description" content="Förseglade kortprodukter, priser och lagerstatus från svenska butiker.">
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" href="logo.svg">
+<link href="fonts/fonts.css" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main id="main">
+  <header class="page-head">
+    <div class="wrap">
+      <nav class="crumbs" aria-label="Brödsmulor"><a href="index.html">Hem</a><span aria-hidden="true">›</span><span aria-current="page">Butiker</span></nav>
+      <h1><span data-icon="shop" data-size="36"></span>Butikslager</h1>
+    </div>
+    <canvas class="scene" data-banner="stad" aria-hidden="true"></canvas>
+  </header>
+
+  <div class="wrap">
+    <nav class="seg" aria-label="Visa" id="seg">
+      <button data-tab="events" aria-pressed="true">Händelser</button>
+      <button data-tab="products" aria-pressed="false">Produkter</button>
+      <button data-tab="stores" aria-pressed="false">Butiker</button>
+      <button data-tab="notiser" aria-pressed="false">Notiser</button>
+    </nav>
+
+    <section id="tab-events">
+      <div class="section"><h2>Senaste händelser</h2></div>
+      <div class="chips" id="event-filter" role="group" aria-label="Filtrera händelser">
+        <button data-kind="" aria-pressed="true">Alla</button>
+        <button data-kind="ny" aria-pressed="false">Nytt</button>
+        <button data-kind="tillbaka" aria-pressed="false">Tillbaka i lager</button>
+        <button data-kind="prissankt" aria-pressed="false">Prissänkt</button>
+        <button data-kind="forbestallning" aria-pressed="false">Förbeställning</button>
+      </div>
+      <label class="check mine"><input id="only-mine" type="checkbox"> Bara mitt urval <a href="#notiser" data-goto="notiser">Ändra urval</a></label>
+      <ul id="events" class="events"></ul>
+    </section>
+
+    <section id="tab-products" hidden>
+      <div class="section"><h2>Produkter</h2></div>
+      <form id="filters" class="shopbar" role="search" onsubmit="return false">
+        <div class="viewbar">
+          <input id="f-q" class="shop-search" type="search" placeholder="Sök produkt eller set…" aria-label="Sök produkt">
+          <div class="qchips" role="group" aria-label="Snabbfilter">
+            <button type="button" class="qc" id="c-in" aria-pressed="true"><i class="dot-in"></i>I lager</button>
+            <button type="button" class="qc" id="c-pre" aria-pressed="true"><i class="dot-pre"></i>Förbeställ</button>
+            <button type="button" class="qc" id="c-watch" aria-pressed="false"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M12 3a6 6 0 0 0-6 6v4l-2 3h16l-2-3V9a6 6 0 0 0-6-6zm-2 15a2 2 0 0 0 4 0" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>Bevakade <b id="watch-count">0</b></button>
+          </div>
+          <div class="seg2" id="view" role="group" aria-label="Visa">
+            <button type="button" data-v="product" aria-pressed="true">Per produkt</button>
+            <button type="button" data-v="store" aria-pressed="false">Per butik</button>
+          </div>
+        </div>
+        <div class="shopbar-row">
+          <div class="drops">
+            <label class="drop"><span>Typ</span><select id="f-type"><option value="">Alla</option></select></label>
+            <label class="drop"><span>Pris</span><select id="f-price">
+              <option value="">Alla</option><option value="0-200">Under 200 kr</option><option value="200-500">200–500 kr</option>
+              <option value="500-1000">500–1 000 kr</option><option value="1000-">Över 1 000 kr</option></select></label>
+            <label class="drop"><span>Set</span><select id="f-set"><option value="">Alla</option></select></label>
+            <label class="drop"><span>Butik</span><select id="f-store"><option value="">Alla</option></select></label>
+            <label class="drop"><span>Språk</span><select id="f-lang"><option value="">Alla</option></select></label>
+          </div>
+          <div class="shopbar-right">
+            <span id="count" class="count"></span>
+            <label class="drop"><span>Sortera</span><select id="f-sort">
+              <option value="recent">Senast ändrad</option><option value="stores">Flest butiker</option><option value="price-asc">Lägst pris</option>
+              <option value="price-desc">Högst pris</option><option value="name">Namn</option></select></label>
+            <div class="density" id="density" role="group" aria-label="Kortstorlek">
+              <button type="button" data-d="large" aria-label="Stora kort"><svg viewBox="0 0 10 10" width="16" height="16" shape-rendering="crispEdges"><rect x="0" y="0" width="4" height="4"/><rect x="6" y="0" width="4" height="4"/><rect x="0" y="6" width="4" height="4"/><rect x="6" y="6" width="4" height="4"/></svg></button>
+              <button type="button" data-d="small" aria-label="Små kort"><svg viewBox="0 0 10 10" width="16" height="16" shape-rendering="crispEdges"><rect x="0" y="0" width="2" height="2"/><rect x="4" y="0" width="2" height="2"/><rect x="8" y="0" width="2" height="2"/><rect x="0" y="4" width="2" height="2"/><rect x="4" y="4" width="2" height="2"/><rect x="8" y="4" width="2" height="2"/><rect x="0" y="8" width="2" height="2"/><rect x="4" y="8" width="2" height="2"/><rect x="8" y="8" width="2" height="2"/></svg></button>
+            </div>
+          </div>
+        </div>
+      </form>
+      <div id="products" class="pgrid"></div>
+      <div class="more-row"><button id="more" class="btn" hidden>Visa fler</button></div>
+    </section>
+
+    <section id="tab-stores" hidden>
+      <div class="section"><h2>Bevakade butiker</h2></div>
+      <p class="lead-sm">Vi läser bara butiker som inte förbjuder det, följer deras robots.txt och väntar flera sekunder mellan varje anrop.</p>
+      <ul id="stores" class="store-list"></ul>
+    </section>
+
+    <section id="tab-notiser" hidden>
+      <div class="section"><h2>Notiser</h2></div>
+      <p class="lead-sm">Välj hur du får besked, från vilka butiker och vilka produkter som ska räknas. Valen sparas i den här webbläsaren, så du behöver inget konto.</p>
+
+      <div class="acc">
+        <h3 class="acc-group">Hur du får besked</h3>
+        <details class="acc-row" id="acc-channels">
+          <summary><span><b>Så får du besked</b><small>Webbläsare och mobil</small></span><em id="sum-channels">Inget valt</em></summary>
+          <div class="acc-body">
+            <div class="channel">
+              <b>I webbläsaren</b>
+              <p class="muted">Notiser när något i ditt urval händer, så länge Ninjaloot är öppen i en flik.</p>
+              <button class="btn small" id="p-browser" type="button">Slå på webbläsarnotiser</button>
+            </div>
+            <div class="channel">
+              <b>I mobilen med ntfy</b>
+              <p class="muted">Gratis app utan konto. Installera <a href="https://ntfy.sh" target="_blank" rel="noopener">ntfy</a> för Android eller iPhone och prenumerera på ett ämne. Notiserna kommer även när sidan är stängd. Mobilnotiserna följer ämnet du väljer, inte urvalet nedan.</p>
+              <ul class="topics" id="topics"></ul>
+            </div>
+          </div>
+        </details>
+
+        <h3 class="acc-group">Vad du får besked om</h3>
+        <details class="acc-row">
+          <summary><span><b>Butiker</b><small>Välj vilka butiker du vill få notiser från</small></span><em id="sum-stores"></em></summary>
+          <div class="acc-body"><div class="acc-tools"><input type="search" class="acc-find" data-for="p-stores" placeholder="Sök butik…" aria-label="Sök butik"><button type="button" class="link" data-all="p-stores">Alla</button><button type="button" class="link" data-none="p-stores">Inga</button></div><div class="checks" id="p-stores"></div></div>
+        </details>
+        <details class="acc-row">
+          <summary><span><b>Varningstyper</b><small>Välj vilka händelser du vill få besked om</small></span><em id="sum-kinds"></em></summary>
+          <div class="acc-body"><div class="checks" id="p-kinds"></div></div>
+        </details>
+        <details class="acc-row">
+          <summary><span><b>Pokémon-set</b><small>Välj vilka set du vill bevaka</small></span><em id="sum-sets"></em></summary>
+          <div class="acc-body"><div class="acc-tools"><input type="search" class="acc-find" data-for="p-sets" placeholder="Sök set…" aria-label="Sök set"><button type="button" class="link" data-all="p-sets">Alla</button><button type="button" class="link" data-none="p-sets">Inga</button></div><div class="checks" id="p-sets"></div></div>
+        </details>
+        <details class="acc-row">
+          <summary><span><b>Fler filter</b><small>Språk, produkttyp och pris</small></span><em id="sum-more"></em></summary>
+          <div class="acc-body">
+            <fieldset><legend>Språk</legend><div class="checks" id="p-langs"></div></fieldset>
+            <fieldset><legend>Produkttyper</legend><div class="checks" id="p-types"></div></fieldset>
+            <fieldset><legend>Maxpris</legend><label class="price-cap"><input id="p-max" type="number" min="0" step="50" inputmode="numeric" placeholder="Inget tak"> kr</label></fieldset>
+          </div>
+        </details>
+
+        <div class="acc-actions">
+          <button class="btn primary" id="p-save" type="button">Spara bevakning</button>
+          <button class="btn small" id="p-reset" type="button">Välj allt igen</button>
+          <a class="more" href="#products" data-goto="products">Se produkter</a>
+          <span id="p-status" class="muted" role="status"></span>
+        </div>
+        <p class="acc-match" id="p-match"></p>
+
+        <details class="acc-row" id="acc-watch">
+          <summary><span><b>Bevakade produkter</b><small>Enskilda produkter du valt med klockan. De ger alltid besked.</small></span><em id="sum-watch">0</em></summary>
+          <div class="acc-body"><ul class="watch-list" id="watch-list"></ul></div>
+        </details>
+        <p class="muted" style="margin:12px 0 0">Notiser kan dröja eller utebli. Läs mer i <a href="villkor.html#t7">användarvillkoren</a>.</p>
+      </div>
+    </section>
+
+    <p class="hint" style="margin-top:28px">Uppgifterna kommer från butikernas egna sidor och kan vara försenade. Kontrollera alltid pris och lager hos butiken innan du handlar. Produktbilder visas från butikernas egna servrar.</p>
+  </div>
+</main>
+<script type="module" src="js/butiker.js"></script>
+</body>
+</html>

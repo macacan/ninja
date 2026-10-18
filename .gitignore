@@ -1,0 +1,17 @@
+# Dependencies
+node_modules/
+
+# Local Environment & Secrets
+.env
+.env.*
+!.env.example
+
+# Internal research (state.json for the scraper must be committed: the Actions job needs it between runs)
+research/
+*.log
+
+# Editor & System files
+.claude/
+.vscode/
+.DS_Store
+Thumbs.db

@@ -1,0 +1,69 @@
+# Ninjaloot Hostinger Web Configuration
+
+# 1. Custom 404 Error Page
+ErrorDocument 404 /404.html
+
+# 2. Force UTF-8 Charset
+AddDefaultCharset UTF-8
+
+# 3. Security: Block hidden files, dev files, and scripts if accidentally uploaded
+<FilesMatch "(^\.|\.(cmd|sh|md|yml|yaml|mjs|env|log|bak|config))$">
+  <IfModule mod_authz_core.c>
+    Require all denied
+  </IfModule>
+  <IfModule !mod_authz_core.c>
+    Order allow,deny
+    Deny from all
+  </IfModule>
+</FilesMatch>
+
+# Block access to internal directories if accidentally uploaded to public_html
+RedirectMatch 403 ^/(research|scripts|\.github|\.claude)/
+
+# 4. HTTPS Redirect
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteCond %{HTTPS} off
+  RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+</IfModule>
+
+# 4b. No directory listings (e.g. /fonts/, /data/card-history/)
+Options -Indexes
+
+# 4c. Security headers
+<IfModule mod_headers.c>
+  # Browsers only use HTTPS for a year after the first visit. Remove "max-age" if the site ever has to go back to HTTP.
+  Header always set Strict-Transport-Security "max-age=31536000"
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  # Camera only for our own pages (card scanner); no microphone, location or payment APIs.
+  Header always set Permissions-Policy "camera=(self), microphone=(), geolocation=(), payment=(), usb=()"
+  # Enforced: these rules cannot break anything the site uses today.
+  Header always set Content-Security-Policy "object-src 'none'; base-uri 'self'; frame-ancestors 'self'; form-action 'self'"
+  # Full policy in report-only mode: violations show in the browser console but nothing is blocked.
+  # When the console has been clean on every page for a while, the header can be renamed to Content-Security-Policy.
+  Header always set Content-Security-Policy-Report-Only "default-src 'self'; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' blob: https://cdn.jsdelivr.net https://cdn.tailwindcss.com; worker-src 'self' blob: https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; font-src 'self'; connect-src 'self' https:; media-src 'self' blob:; frame-src https://www.youtube-nocookie.com; object-src 'none'; base-uri 'self'; frame-ancestors 'self'; form-action 'self'"
+</IfModule>
+
+# 5. Gzip Compression
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css application/javascript application/json image/svg+xml
+</IfModule>
+
+# 6. Browser Caching
+<IfModule mod_headers.c>
+  # Dynamic data files (products, prices, news) should never be stale in browser cache
+  <FilesMatch "\.(json)$">
+    Header set Cache-Control "no-cache, must-revalidate"
+  </FilesMatch>
+
+  # HTML pages revalidate quickly
+  <FilesMatch "\.(html)$">
+    Header set Cache-Control "max-age=600, must-revalidate"
+  </FilesMatch>
+
+  # Static images and styling can be cached longer
+  <FilesMatch "\.(css|js|svg|jpg|jpeg|png|webp|gif|ico|woff|woff2|ttf)$">
+    Header set Cache-Control "max-age=2592000, public"
+  </FilesMatch>
+</IfModule>

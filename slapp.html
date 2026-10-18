@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Släpp – Ninjaloot</title>
+<meta name="description" content="Släppkalender med kommande kortsläpp och nya set.">
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" href="logo.svg">
+<link href="fonts/fonts.css" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main id="main">
+  <header class="page-head">
+    <div class="wrap">
+      <nav class="crumbs" aria-label="Brödsmulor"><a href="index.html">Hem</a><span aria-hidden="true">›</span><span aria-current="page">Släpp</span></nav>
+      <h1><span data-icon="calendar" data-size="36"></span>Släppkalender</h1>
+    </div>
+    <canvas class="scene" data-banner="slapp" aria-hidden="true"></canvas>
+  </header>
+
+  <div class="wrap">
+    <div class="section"><h2>Kommande och aktuella släpp</h2></div>
+    <p class="lead-sm">När nya set och produkter släpps, vilka svenska butiker som redan tar beställningar och när de fick in dem i lager.</p>
+    <div id="releases" class="releases"></div>
+    <p class="hint">Datumen kommer från The Pokémon Company och branschnyheter och gäller Europa. Svenska butiker kan få in varorna några dagar senare. Butiksuppgifterna kommer från vår egen bevakning.</p>
+
+    <div class="section"><h2>Kalender</h2></div>
+    <section class="cal" aria-labelledby="cal-title">
+      <div class="cal-head">
+        <button class="cal-nav" id="prev" aria-label="Föregående månad">◀</button>
+        <h2 id="cal-title" aria-live="polite"></h2>
+        <button class="cal-nav" id="next" aria-label="Nästa månad">▶</button>
+        <button class="btn small" id="today">I dag</button>
+      </div>
+      <ul class="cal-legend" aria-label="Förklaring">
+        <li><i class="lg-drop"></i>Drop / produkt</li>
+        <li><i class="lg-set"></i>Nytt set</li>
+      </ul>
+      <div class="cal-grid" role="grid" aria-labelledby="cal-title">
+        <div class="cal-dow" role="row">
+          <span role="columnheader">Mån</span><span role="columnheader">Tis</span><span role="columnheader">Ons</span><span role="columnheader">Tor</span><span role="columnheader">Fre</span><span role="columnheader">Lör</span><span role="columnheader">Sön</span>
+        </div>
+        <div class="cal-days" id="days"></div>
+      </div>
+      <div class="section"><h2 id="agenda-title">Den här månaden</h2></div>
+      <ol class="agenda" id="agenda"></ol>
+    </section>
+
+    <div class="section" id="set"><h2>Senaste set</h2>
+      <input id="q" type="search" placeholder="Sök set…" aria-label="Sök set">
+    </div>
+    <div id="latest" class="grid"></div>
+  </div>
+  <dialog id="day-modal" class="card-modal day-modal" aria-label="Släpp den här dagen">
+    <button type="button" class="cm-close" aria-label="Stäng">✕</button>
+    <div class="dm-body"></div>
+  </dialog>
+</main>
+<script type="module" src="js/slapp.js"></script>
+</body>
+</html>

@@ -1,0 +1,723 @@
+<!doctype html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Värdera Pokémonkort – Gratis kortvärdering & pre-grading | Ninjaloot</title>
+<meta name="description" content="Se vad dina Pokémonkort är värda direkt i kronor. Sök kort, välj skick och få ett uppskattat marknadsvärde baserat på Cardmarkets live-priser. Digital pre-grading och kortskanner med kameran.">
+<meta name="theme-color" content="#131422">
+<link rel="icon" href="logo.svg">
+<link href="fonts/fonts.css" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main id="main">
+
+  <!-- STANDARD NINJALOOT PAGE-HEAD MED LANDSKAPSCANVAS STRIP ALLTID UNDER HEADERN -->
+  <header class="page-head">
+    <div class="wrap">
+      <nav class="crumbs" aria-label="Brödsmulor"><a href="index.html">Hem</a><span aria-hidden="true">›</span><span aria-current="page">Gradering</span></nav>
+      <h1><span data-icon="card" data-size="36"></span>Värdera & gradera ditt kort</h1>
+    </div>
+    <canvas class="scene" data-banner="labb" aria-hidden="true"></canvas>
+  </header>
+
+  <div class="wrap">
+
+    <!-- ======================================================== -->
+    <!-- HERO BANNER MED 3D-ANIMERADE HOLOGRAFISKA POKÉMONKORT    -->
+    <!-- ======================================================== -->
+    <section class="val-hero px-frame">
+      <div class="val-hero-content">
+        <div class="val-hero-badge">
+          <span class="badge-pulse"></span>
+          Gratis kortvärdering · Live Cardmarket · Kortskanner
+        </div>
+
+        <h2>Vad är dina Pokémonkort värda? <span class="hl">Värdera på sekunder.</span></h2>
+        
+        <p class="val-hero-lead">
+          Sök bland över 20&nbsp;000 Pokémonkort och se aktuella marknadsvärden i kronor. Välj skick, skanna kortet med kameran och testa vår pre-grading för att se om det lönar sig att gradera till PSA 10!
+        </p>
+
+        <!-- Sökformulär direkt i Hero -->
+        <div class="val-hero-search">
+          <button class="btn scan-btn" type="button" id="scan-open" aria-label="Skanna kort med kameran"><span data-icon="camera" data-size="20"></span><span>Skanna</span></button>
+          <button class="btn primary" type="button" id="val-search-open">Värdera kort</button>
+        </div>
+
+        <!-- 4 Fördelar -->
+        <ul class="val-hero-perks" aria-label="Fördelar med Ninjaloot värdering">
+          <li>
+            <span class="val-perk-ic" data-icon="info" data-size="22"></span>
+            <div>
+              <b>Utan konto</b>
+              <small>Börja direkt gratis</small>
+            </div>
+          </li>
+          <li>
+            <span class="val-perk-ic" data-icon="coin" data-size="22"></span>
+            <div>
+              <b>Realtidsdata</b>
+              <small>Cardmarket i SEK</small>
+            </div>
+          </li>
+          <li>
+            <span class="val-perk-ic" data-icon="card" data-size="22"></span>
+            <div>
+              <b>Pre-grading</b>
+              <small>PSA 1–10 estimat</small>
+            </div>
+          </li>
+          <li>
+            <span class="val-perk-ic" data-icon="camera" data-size="22"></span>
+            <div>
+              <b>Kortskanner</b>
+              <small>Hittar kortet med kameran</small>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <!-- 3D Holografisk Kortscen -->
+      <div class="val-hero-stage" aria-label="Interaktiv kortdisplay">
+        <div class="val-stage-glow" aria-hidden="true"></div>
+        <span class="val-sparkle val-sp1" aria-hidden="true"></span>
+        <span class="val-sparkle val-sp2" aria-hidden="true"></span>
+        <span class="val-sparkle val-sp3" aria-hidden="true"></span>
+        <span class="val-sparkle val-sp4" aria-hidden="true"></span>
+
+        <!-- Kort 1 (Vänster): Pikachu 151 Illustration Rare -->
+        <div class="val-card-3d val-card-left" data-val-pick="sv03.5-173" role="button" tabindex="0" title="Klicka för att värdera Pikachu 151" aria-label="Värdera Pikachu 151">
+          <img src="https://assets.tcgdex.net/en/sv/sv03.5/173/high.webp" alt="Pikachu 151 Illustration Rare" loading="eager" decoding="async">
+          <div class="val-holo-shine" aria-hidden="true"></div>
+        </div>
+
+        <!-- Kort 2 (Mitten): Charizard ex 151 Special Illustration Rare -->
+        <div class="val-card-3d val-card-center" data-val-pick="sv03.5-199" role="button" tabindex="0" title="Klicka för att värdera Charizard ex" aria-label="Värdera Charizard ex">
+          <img src="https://assets.tcgdex.net/en/sv/sv03.5/199/high.webp" alt="Charizard ex 151 Special Illustration Rare" loading="eager" decoding="async">
+          <div class="val-holo-shine" aria-hidden="true"></div>
+        </div>
+
+        <!-- Kort 3 (Höger): Umbreon VMAX Evolving Skies Alt Art -->
+        <div class="val-card-3d val-card-right" data-val-pick="swsh7-215" role="button" tabindex="0" title="Klicka för att värdera Umbreon VMAX" aria-label="Värdera Umbreon VMAX">
+          <img src="https://assets.tcgdex.net/en/swsh/swsh7/215/high.webp" alt="Umbreon VMAX Special Art Rare" loading="eager" decoding="async">
+          <div class="val-holo-shine" aria-hidden="true"></div>
+        </div>
+
+        <div class="val-stage-hint">Tryck på ett kort för att prov-värdera direkt!</div>
+      </div>
+    </section>
+
+    <!-- Steg-indikator -->
+    <ol class="val-steps" aria-label="Så fungerar värderingen">
+      <li><b>1</b><span>Hitta kortet</span></li>
+      <li><b>2</b><span>Välj skick</span></li>
+      <li><b>3</b><span>Pre-grading</span></li>
+      <li><b>4</b><span>Lönar det sig?</span></li>
+    </ol>
+
+
+
+    <!-- ======================================================== -->
+    <!-- GUIDE: HUR DU VÄRDERAR DINA POKÉMONKORT (TOPCARDS STIL) -->
+    <!-- ======================================================== -->
+    <section class="val-section" aria-labelledby="how-val-title">
+      <div class="val-section-title">
+        <h2 id="how-val-title">Hur värderar jag ett Pokémonkort?</h2>
+      </div>
+      <p class="val-section-desc">
+        Ett Pokémonkorts marknadsvärde bestäms av fyra centrala faktorer: kortets identitet (namn, nummer och set), sällsynthetssymbolen, dess fysiska skick och vad kortet faktiskt har sålts för nyligen på den europeiska marknaden.
+      </p>
+
+      <div class="val-how-grid">
+        <article class="val-how-card">
+          <span class="val-how-num">1</span>
+          <h3>Hitta namn & nummer</h3>
+          <p>
+            Kortets namn står högst upp och det unika kortnumret finns nere i ett av hörnen (till exempel <b>4/102</b> eller <b>199/165</b>). Numret identifierar exakt vilken version du äger.
+          </p>
+          <div class="val-how-tip">
+            <b>Tips:</b> Är numret högre än setets storlek (t.ex. 245/217) är det ett hemligt "Secret Rare". De är nästan alltid värda mer!
+          </div>
+        </article>
+
+        <article class="val-how-card">
+          <span class="val-how-num">2</span>
+          <h3>Kolla sällsyntheten</h3>
+          <p>
+            Symbolen nere på kortet visar dess sällsynthetsgrad. En cirkel är vanlig, en romb är ovanlig, och en stjärna är sällsynt eller holo. Sedan 2023 visar även färgen på stjärnorna nivån, och guldstjärnor har högst efterfrågan.
+          </p>
+          <div class="val-how-tip">
+            <b>Färgen avgör:</b> svarta stjärnor = Rare och Double Rare, silver = Ultra Rare, guld = Illustration, Special Illustration och Hyper Rare.
+          </div>
+        </article>
+
+        <article class="val-how-card">
+          <span class="val-how-num">3</span>
+          <h3>Bedöm skicket</h3>
+          <p>
+            Skicket är avgörande. Ett kort i nyskick (Near Mint) får fullt pris, medan minsta lilla vita prick i hörnen, repa i folien eller böjt hörn sänker värdet drastiskt till 50–85%.
+          </p>
+          <div class="val-how-tip">
+            <b>Fem nivåer:</b> Near Mint (100%), Excellent (85%), Lätt spelat (70%), Spelat (50%), Dåligt (25%).
+          </div>
+        </article>
+
+        <article class="val-how-card">
+          <span class="val-how-num">4</span>
+          <h3>Jämför sålda priser</h3>
+          <p>
+            Ett kort är bara värt vad samlare faktiskt betalar – inte vad det annonseras för med orimliga utropspriser på Tradera eller eBay. Vi hämtar Cardmarkets trendpris för genomförda köp.
+          </p>
+          <div class="val-how-tip">
+            <b>Pre-grading:</b> Testa kalkylatorn ovan för att se om betyget hos PSA 9 eller 10 täcker graderingskostnaden och ger ren vinst.
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- KORTETS ANATOMI: VAR HITTAR JAG DETALJERNA?               -->
+    <!-- ======================================================== -->
+    <section class="val-anatomy-section" aria-labelledby="anatomy-title">
+      <div class="val-section-title">
+        <h2 id="anatomy-title">Kortets anatomi: Var hittar jag detaljerna?</h2>
+      </div>
+      <p class="val-section-desc">
+        Här är en visuell översikt som hjälper dig att snabbt läsa av Pokémonkortet för att mata in rätt information i värderingen.
+      </p>
+
+      <div class="val-anatomy-box">
+        <div class="val-anatomy-visual">
+          <!-- Framsidan. Markörernas positioner är procent av just den här rutan. -->
+          <div class="val-anatomy-front">
+            <div class="val-anatomy-img">
+              <img src="https://assets.tcgdex.net/en/sv/sv03.5/199/high.webp" alt="Charizard ex illustration med annoterade markeringar" loading="lazy">
+            </div>
+            <span class="val-pin val-pin-1" title="Kortnamn & HP">1</span>
+            <span class="val-pin val-pin-2" title="Illustration & Holo-folie">2</span>
+            <span class="val-pin val-pin-3" title="Setkod">3</span>
+            <span class="val-pin val-pin-4" title="Kortnummer & Sällsynthet">4</span>
+            <span class="val-pin val-pin-6" title="Här sitter 1st Edition-stämpeln på äldre kort">6</span>
+          </div>
+          <span class="val-side-label">Framsida</span>
+
+          <!-- Baksidan som ett eget litet kort. -->
+          <div class="val-anatomy-backrow">
+            <div class="val-card-back">
+              <img src="img/kortbaksida.webp" alt="Pokémonkortets baksida" width="828" height="1147" loading="lazy">
+              <span class="val-pin val-pin-5" title="Baksidan">5</span>
+            </div>
+            <p><b>Baksida</b><br>Vita prickar och flagor syns tydligast mot den blå kanten.</p>
+          </div>
+        </div>
+
+        <ul class="val-anatomy-points">
+          <li>
+            <span class="val-point-badge">1</span>
+            <div>
+              <strong>Kortets namn & HP</strong>
+              <p>Står högst upp. Ange namnet exakt som det stavas, inklusive suffix som "ex", "VMAX", "VSTAR" eller "Tera".</p>
+            </div>
+          </li>
+          <li>
+            <span class="val-point-badge">2</span>
+            <div>
+              <strong>Bild & Holofolie</strong>
+              <p>Holo-kort glänser i ljuset. Vissa kort har textur (små fingeravtrycksliknande räfflor) vilket kännetecknar Ultra Rare och SAR.</p>
+            </div>
+          </li>
+          <li>
+            <span class="val-point-badge">3</span>
+            <div>
+              <strong>Set-symbol & Kod</strong>
+              <p>På moderna kort står en liten box med setkoden (t.ex. MEW, 151, SV3) nere i vänstra hörnet. Äldre kort har en symbol till höger under bilden.</p>
+            </div>
+          </li>
+          <li>
+            <span class="val-point-badge">4</span>
+            <div>
+              <strong>Kortnummer & Sällsynthet</strong>
+              <p>Visas som t.ex. 199/165 följt av en symbol. Numret är nyckeln för att skilja mellan vanliga versioner och dyrbara specialkort.</p>
+            </div>
+          </li>
+          <li>
+            <span class="val-point-badge">5</span>
+            <div>
+              <strong>Baksidan (Centrering & Kanter)</strong>
+              <p>Baksidan på kortet avslöjar snabbt om det är Near Mint. Titta noga längs den mörkblå kanten efter minsta vita kantflaga (edge wear).</p>
+            </div>
+          </li>
+          <li>
+            <span class="val-point-badge">6</span>
+            <div>
+              <strong>Vintage & 1st Edition</strong>
+              <p>På klassiska kort från 1999–2000 finns en liten "Edition 1"-stämpel till vänster under bildrutan. Den kan multiplicera värdet 10–50 gånger! Det här kortet är nytt, så den streckade markeringen visar bara var stämpeln sitter.</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- TABELL: PRISNIVÅER I KRONOR (TOPCARDS-INSPIRERAD)         -->
+    <!-- ======================================================== -->
+    <section class="val-full-table-card" aria-labelledby="levels-title">
+      <h3 id="levels-title">Pokémonkort värde – Nivåerna i kronor</h3>
+      <p class="table-sub">
+        Ett Pokémonkort är värt allt från 1 krona till över 100&nbsp;000 kronor. Kategori, utgåva och skick avgör spannen – här är en översikt över vad du kan förvänta dig för kort i nyskick (Near Mint):
+      </p>
+
+      <div class="val-table-responsive">
+        <table class="val-data-table" aria-label="Prisnivåer för Pokémonkort i kronor">
+          <thead>
+            <tr>
+              <th>Korttyp & Utgåva</th>
+              <th>Indikativt värde</th>
+              <th>Kännetecken & Typiska exempel</th>
+              <th>Efterfrågan</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><b>Moderna vanliga kort (2015–)</b></td>
+              <td><span class="val-price-tag">1 – 10 kr</span></td>
+              <td>Common och Uncommon spelkort, standard tränarkort och energier.</td>
+              <td><span class="val-tag-pill val-tag-lp">Låg (bulk)</span></td>
+            </tr>
+            <tr>
+              <td><b>Moderna holo & reverse</b></td>
+              <td><span class="val-price-tag">10 – 60 kr</span></td>
+              <td>Glimmande kort med glitter i bakgrunden eller över textytan.</td>
+              <td><span class="val-tag-pill val-tag-ex">Mellan</span></td>
+            </tr>
+            <tr>
+              <td><b>Ultra Rare (ex, V, VSTAR)</b></td>
+              <td><span class="val-price-tag">30 – 250 kr</span></td>
+              <td>Kort med full ram eller kraftfulla Pokémon som spelas aktivt.</td>
+              <td><span class="val-tag-pill val-tag-nm">Bra</span></td>
+            </tr>
+            <tr>
+              <td><b>Illustration Rare & SAR</b></td>
+              <td><span class="val-price-tag">250 – 4 500+ kr</span></td>
+              <td>Special Illustration Rare med heldragen konst och unik textur. T.ex. Charizard ex 151, Moonbreon.</td>
+              <td><span class="val-tag-pill val-tag-nm">Mycket hög</span></td>
+            </tr>
+            <tr>
+              <td><b>Vintage holo (1999–2003)</b></td>
+              <td><span class="val-price-tag">300 – 12 000 kr</span></td>
+              <td>Base Set, Jungle, Fossil, Team Rocket och Gym-serien. Blastoise, Venusaur, Gengar.</td>
+              <td><span class="val-tag-pill val-tag-nm">Hög (nostalgi)</span></td>
+            </tr>
+            <tr>
+              <td><b>Shadowless & 1st Edition holo</b></td>
+              <td><span class="val-price-tag">2 500 – 150 000+ kr</span></td>
+              <td>Klassiska kort från 1999 utan skugga på bildramen eller med 1st Edition-stämpel i toppskick.</td>
+              <td><span class="val-tag-pill val-tag-hp">Extrem (grails)</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- SÄLLSYNTHETSSYMBOLER OCH SKICKGUIDE (2-KOLUMN)           -->
+    <!-- ======================================================== -->
+    <div class="val-grid-2col">
+      <!-- Symbolguide -->
+      <section class="val-table-card" aria-labelledby="rarity-title">
+        <h3 id="rarity-title">
+          <span data-icon="card" data-size="22"></span>
+          Vad betyder sällsynthetssymbolen?
+        </h3>
+        <p class="val-section-desc" style="margin-bottom: 12px; font-size: 0.88rem;">
+          Symbolen nere på kortet visar hur sällsynt det trycktes. Sedan Scarlet &amp; Violet (2023) avgör även färgen på stjärnorna: svart, silver eller guld.
+        </p>
+
+        <!-- Egna symboler: cirkel, romb och stjärna. Färgen styrs av klassen på <svg>. -->
+        <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+          <symbol id="rs-c" viewBox="0 0 24 24"><circle cx="12" cy="12" r="6.5"/></symbol>
+          <symbol id="rs-u" viewBox="0 0 24 24"><path d="M12 4.5 19.5 12 12 19.5 4.5 12z"/></symbol>
+          <symbol id="rs-p" viewBox="0 0 24 24"><path d="M12 1.5l3 6.5 7 .8-5.2 4.8 1.4 7L12 17.2l-6.2 3.4 1.4-7L2 8.8l7-.8z"/><text x="12" y="13.6" text-anchor="middle" font-size="4.2" font-weight="700" fill="#fff" stroke="none" font-family="Inter,sans-serif">PROMO</text></symbol>
+          <symbol id="rs-r" viewBox="0 0 24 24"><path d="M12 3.2l2.6 5.6 6.1.7-4.5 4.2 1.2 6.1L12 16.8l-5.4 3 1.2-6.1-4.5-4.2 6.1-.7z"/></symbol>
+        </svg>
+
+        <div class="val-table-responsive">
+          <table class="val-data-table val-rarity" aria-label="Sällsynthetssymboler">
+            <thead>
+              <tr>
+                <th>Symbol</th>
+                <th>Raritet</th>
+                <th>Typiskt värde</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="rsym" aria-label="Svart cirkel"><svg class="rs-black"><use href="#rs-c"/></svg></span></td>
+                <td><b>Common</b> <span class="jp">C</span><br><small class="muted">Vanligast, oftast grundformer av Pokémon</small></td>
+                <td><span class="val-price-tag">1 – 10 kr</span></td>
+              </tr>
+              <tr>
+                <td><span class="rsym" aria-label="Svart romb"><svg class="rs-black"><use href="#rs-u"/></svg></span></td>
+                <td><b>Uncommon</b> <span class="jp">U</span><br><small class="muted">Ovanligare, ofta utvecklingar och tränarkort</small></td>
+                <td><span class="val-price-tag">2 – 25 kr</span></td>
+              </tr>
+              <tr>
+                <td><span class="rsym" aria-label="En svart stjärna"><svg class="rs-black"><use href="#rs-r"/></svg></span></td>
+                <td><b>Rare</b> <span class="jp">R</span><br><small class="muted">Minst ett per booster, ibland holo</small></td>
+                <td><span class="val-price-tag">5 – 50 kr</span></td>
+              </tr>
+              <tr>
+                <td><span class="rsym" aria-label="Två svarta stjärnor"><svg class="rs-black"><use href="#rs-r"/></svg><svg class="rs-black"><use href="#rs-r"/></svg></span></td>
+                <td><b>Double Rare</b> <span class="jp">RR</span><br><small class="muted">Pokémon ex med vanlig bild</small></td>
+                <td><span class="val-price-tag">10 – 100 kr</span></td>
+              </tr>
+              <tr>
+                <td><span class="rsym" aria-label="Rosa stjärna"><svg class="rs-ace"><use href="#rs-r"/></svg></span></td>
+                <td><b>Ace Spec Rare</b> <span class="jp">ACE</span><br><small class="muted">Extra starkt tränarkort, max ett per kortlek</small></td>
+                <td><span class="val-price-tag">10 – 150 kr</span></td>
+              </tr>
+              <tr>
+                <td><span class="rsym" aria-label="Två silverstjärnor"><svg class="rs-silver"><use href="#rs-r"/></svg><svg class="rs-silver"><use href="#rs-r"/></svg></span></td>
+                <td><b>Ultra Rare</b> <span class="jp">SR</span><br><small class="muted">Full art: bilden täcker hela kortet</small></td>
+                <td><span class="val-price-tag">40 – 400 kr</span></td>
+              </tr>
+              <tr>
+                <td><span class="rsym" aria-label="En guldstjärna"><svg class="rs-gold"><use href="#rs-r"/></svg></span></td>
+                <td><b>Illustration Rare</b> <span class="jp">AR</span><br><small class="muted">Konstnärlig helbild av en vanlig Pokémon</small></td>
+                <td><span class="val-price-tag">30 – 600 kr</span></td>
+              </tr>
+              <tr>
+                <td><span class="rsym" aria-label="Två guldstjärnor"><svg class="rs-gold"><use href="#rs-r"/></svg><svg class="rs-gold"><use href="#rs-r"/></svg></span></td>
+                <td><b>Special Illustration Rare</b> <span class="jp">SAR</span><br><small class="muted">Setets chase-kort, ofta mest värt</small></td>
+                <td><span class="val-price-tag">150 – 5 000 kr</span></td>
+              </tr>
+              <tr>
+                <td><span class="rsym" aria-label="Tre guldstjärnor"><svg class="rs-gold"><use href="#rs-r"/></svg><svg class="rs-gold"><use href="#rs-r"/></svg><svg class="rs-gold"><use href="#rs-r"/></svg></span></td>
+                <td><b>Hyper Rare</b> <span class="jp">UR</span><br><small class="muted">Guldkort med guldram</small></td>
+                <td><span class="val-price-tag">80 – 800 kr</span></td>
+              </tr>
+              <tr>
+                <td><span class="rsym" aria-label="Vit stjärna med guldkant"><svg class="rs-shiny"><use href="#rs-r"/></svg></span></td>
+                <td><b>Shiny Rare</b> <span class="jp">S</span><br><small class="muted">Pokémon i sin skimrande färg, t.ex. Paldean Fates</small></td>
+                <td><span class="val-price-tag">20 – 300 kr</span></td>
+              </tr>
+              <tr>
+                <td><span class="rsym" aria-label="Två vita stjärnor med guldkant"><svg class="rs-shiny"><use href="#rs-r"/></svg><svg class="rs-shiny"><use href="#rs-r"/></svg></span></td>
+                <td><b>Shiny Ultra Rare</b> <span class="jp">SSR</span><br><small class="muted">Full art av en skimrande Pokémon ex</small></td>
+                <td><span class="val-price-tag">100 – 1 500 kr</span></td>
+              </tr>
+              <tr>
+                <td><span class="rsym" aria-label="Svart stjärna med texten PROMO"><svg class="rs-promo" viewBox="0 0 24 24"><use href="#rs-p"/></svg></span></td>
+                <td><b>Black Star Promo</b> <span class="jp">PROMO</span><br><small class="muted">Kampanjkort från boxar, tävlingar och förköp</small></td>
+                <td><span class="val-price-tag">10 – 500 kr</span></td>
+              </tr>
+              <tr>
+                <td><span class="rsym" aria-label="Nummer högre än setets storlek"><span class="rsec">152/151</span></span></td>
+                <td><b>Secret Rare</b> <span class="jp">–</span><br><small class="muted">Ingen egen symbol: numret är högre än setets storlek</small></td>
+                <td><span class="val-price-tag">Varierar</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <ul class="val-rarity-notes">
+          <li><b>Äldre kort</b> (före 2023) har bara cirkel, romb och svart stjärna. Holo, V, VMAX och secret rares har alla en svart stjärna. Hur sällsynt kortet är syns då på bilden och numret.</li>
+          <li><b>Japanska kort</b> har bokstäver i stället för symboler. Koderna står vid varje raritet ovan.</li>
+          <li><b>Gold Star</b> (2004–2007) har en liten stjärna efter namnet och är bland de dyraste korten, oavsett symbol.</li>
+        </ul>
+      </section>
+
+      <!-- Skickguide -->
+      <section class="val-table-card" aria-labelledby="condition-title">
+        <h3 id="condition-title">
+          <span data-icon="coin" data-size="22"></span>
+          Hur mycket påverkar skicket värdet?
+        </h3>
+        <p class="val-section-desc" style="margin-bottom: 12px; font-size: 0.88rem;">
+          Skicket är den enskilt största prisfaktorn efter kortets identitet.
+        </p>
+
+        <div class="val-table-responsive">
+          <table class="val-data-table val-cond" aria-label="Kortskick och värdeprocent">
+            <thead>
+              <tr>
+                <th>Skick</th>
+                <th>Kännetecken</th>
+                <th>Andel av värdet</th>
+                <th>Ca PSA</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="val-tag-pill val-tag-nm">Near Mint (NM)</span></td>
+                <td>Inga synliga defekter, skarpa hörn, felfri yta och ren baksida.</td>
+                <td><b>100%</b></td>
+                <td><span class="val-psa">7 – 10</span></td>
+              </tr>
+              <tr>
+                <td><span class="val-tag-pill val-tag-ex">Excellent (EX)</span></td>
+                <td>Minimalt kantslitage eller mikrorepa som syns på nära håll.</td>
+                <td><b>ca 85%</b></td>
+                <td><span class="val-psa">5 – 6</span></td>
+              </tr>
+              <tr>
+                <td><span class="val-tag-pill val-tag-lp">Lätt spelat (LP)</span></td>
+                <td>Några vita prickar på kanterna, lätta ytrepor i visst ljus.</td>
+                <td><b>ca 70%</b></td>
+                <td><span class="val-psa">3 – 4</span></td>
+              </tr>
+              <tr>
+                <td><span class="val-tag-pill val-tag-mp">Spelat (MP)</span></td>
+                <td>Tydligt slitage på kanter, små veck eller mattare yta.</td>
+                <td><b>ca 50%</b></td>
+                <td><span class="val-psa">2</span></td>
+              </tr>
+              <tr>
+                <td><span class="val-tag-pill val-tag-hp">Dåligt (Poor)</span></td>
+                <td>Kraftiga veck, fuktfläckar, djupa repor eller saknade bitar.</td>
+                <td><b>ca 25%</b></td>
+                <td><span class="val-psa">1</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h4 class="val-cond-sub">Kolla skicket själv på en minut</h4>
+        <ol class="val-cond-steps">
+          <li><b>Ljuset.</b> Håll kortet under en lampa och luta det långsamt. Repor, trycklinjer och veck syns bara i snett ljus.</li>
+          <li><b>Baksidan först.</b> Vita prickar och flagor syns tydligast mot den mörkblå kanten.</li>
+          <li><b>Hörnen.</b> Ska vara skarpa och helt blå. Vitt eller rundat drar ner till Excellent eller sämre.</li>
+          <li><b>Ytan.</b> Leta efter repor i holofolien, fingeravtryck, tryckmärken och små bucklor.</li>
+          <li><b>Centreringen.</b> Jämför ramens bredd på vänster och höger sida, och upptill och nertill.</li>
+        </ol>
+
+        <h4 class="val-cond-sub">PSA:s betygsskala</h4>
+        <ul class="val-psa-scale">
+          <li><span class="val-psa">10</span><b>Gem Mint</b><small>Perfekt under förstoring</small></li>
+          <li><span class="val-psa">9</span><b>Mint</b><small>Ett litet fel, t.ex. lätt sned</small></li>
+          <li><span class="val-psa">8</span><b>NM-MT</b><small>Lite vitt på ett hörn eller en kant</small></li>
+          <li><span class="val-psa">7</span><b>Near Mint</b><small>Lätt slitage som syns vid granskning</small></li>
+          <li><span class="val-psa">6</span><b>EX-MT</b><small>Synligt slitage på flera hörn</small></li>
+          <li><span class="val-psa">5</span><b>Excellent</b><small>Rundade hörn, repor i ytan</small></li>
+          <li><span class="val-psa">4</span><b>VG-EX</b><small>Tydligt slitage, ev. ett lätt veck</small></li>
+          <li><span class="val-psa">3</span><b>Very Good</b><small>Veck och kraftigt kantslitage</small></li>
+          <li><span class="val-psa">2</span><b>Good</b><small>Flera veck, matt yta</small></li>
+          <li><span class="val-psa">1</span><b>Poor</b><small>Svåra skador men kortet är helt</small></li>
+        </ul>
+
+        <h4 class="val-cond-sub">Cardmarkets skala</h4>
+        <p class="val-cond-text">Cardmarket använder sju steg: <b>Mint</b>, <b>Near Mint</b>, <b>Excellent</b>, <b>Good</b>, <b>Light Played</b>, <b>Played</b> och <b>Poor</b>. Vi slår ihop dem till fem. Mint är i praktiken bara för helt nya, oöppnade kort, och Good hamnar mellan Excellent och Lätt spelat.</p>
+
+        <div class="val-cond-tip">
+          <b>Skydda skicket direkt:</b> lägg kortet i en mjuk plastficka (sleeve) och sedan i en hård toploader. Undvik gummiband, fukt och solljus. Ett kort som dras rakt ur paketet och sleevas med en gång kan vara värt flera gånger mer graderat.
+        </div>
+      </section>
+    </div>
+
+    <!-- ======================================================== -->
+    <!-- POPULÄRA PRISEXEMPEL (BENCHMARK KORT MED DIREKTKLICK)    -->
+    <!-- ======================================================== -->
+    <section class="val-benchmarks" aria-labelledby="bench-title">
+      <div class="val-section-title">
+        <h2 id="bench-title">Vad är vanliga Pokémonkort värda? Prisexempel</h2>
+      </div>
+      <p class="val-section-desc">
+        Här är fem kända referenskort med färska marknadspriser i nyskick och uppskattat värde i PSA 10. Klicka på valfritt kort för att prov-värdera det direkt!
+      </p>
+
+      <div class="val-bench-grid">
+        <!-- 1. Charizard ex 151 SAR -->
+        <article class="val-bench-card">
+          <div class="val-bench-img">
+            <img src="https://assets.tcgdex.net/en/sv/sv03.5/199/high.webp" alt="Charizard ex 151" loading="lazy">
+          </div>
+          <h4>Charizard ex</h4>
+          <span class="val-bench-set">151 · #199 · Special Illustration</span>
+          <div class="val-bench-prices">
+            <div><span>Near Mint:</span> <b>ca 1 400 kr</b></div>
+            <div class="psa10"><span>PSA 10:</span> <b>ca 3 950 kr</b></div>
+          </div>
+          <button type="button" class="btn small primary val-bench-btn" data-val-pick="sv03.5-199">Värdera kortet</button>
+        </article>
+
+        <!-- 2. Pikachu 151 Illustration Rare -->
+        <article class="val-bench-card">
+          <div class="val-bench-img">
+            <img src="https://assets.tcgdex.net/en/sv/sv03.5/173/high.webp" alt="Pikachu 151" loading="lazy">
+          </div>
+          <h4>Pikachu</h4>
+          <span class="val-bench-set">151 · #173 · Illustration Rare</span>
+          <div class="val-bench-prices">
+            <div><span>Near Mint:</span> <b>ca 280 kr</b></div>
+            <div class="psa10"><span>PSA 10:</span> <b>ca 850 kr</b></div>
+          </div>
+          <button type="button" class="btn small primary val-bench-btn" data-val-pick="sv03.5-173">Värdera kortet</button>
+        </article>
+
+        <!-- 3. Umbreon VMAX Alt Art -->
+        <article class="val-bench-card">
+          <div class="val-bench-img">
+            <img src="https://assets.tcgdex.net/en/swsh/swsh7/215/high.webp" alt="Umbreon VMAX" loading="lazy">
+          </div>
+          <h4>Umbreon VMAX</h4>
+          <span class="val-bench-set">Evolving Skies · #215 · Alt Art</span>
+          <div class="val-bench-prices">
+            <div><span>Near Mint:</span> <b>ca 6 500 kr</b></div>
+            <div class="psa10"><span>PSA 10:</span> <b>ca 12 500 kr</b></div>
+          </div>
+          <button type="button" class="btn small primary val-bench-btn" data-val-pick="swsh7-215">Värdera kortet</button>
+        </article>
+
+        <!-- 4. Charizard Base Set Holo -->
+        <article class="val-bench-card">
+          <div class="val-bench-img">
+            <img src="https://assets.tcgdex.net/en/base/base1/4/high.webp" alt="Charizard Base Set" loading="lazy">
+          </div>
+          <h4>Charizard</h4>
+          <span class="val-bench-set">Base Set (1999) · #4 · Holo Rare</span>
+          <div class="val-bench-prices">
+            <div><span>Near Mint:</span> <b>ca 3 500 kr</b></div>
+            <div class="psa10"><span>PSA 10:</span> <b>80 000+ kr</b></div>
+          </div>
+          <button type="button" class="btn small primary val-bench-btn" data-val-pick="base1-4">Värdera kortet</button>
+        </article>
+
+        <!-- 5. Mega Gengar ex -->
+        <article class="val-bench-card">
+          <div class="val-bench-img">
+            <img src="https://assets.tcgdex.net/en/me/me02.5/284/high.webp" alt="Mega Gengar ex" loading="lazy">
+          </div>
+          <h4>Mega Gengar ex</h4>
+          <span class="val-bench-set">Ascended Heroes · #284 · SAR</span>
+          <div class="val-bench-prices">
+            <div><span>Near Mint:</span> <b>ca 9 200 kr</b></div>
+            <div class="psa10"><span>PSA 10:</span> <b>ca 18 000 kr</b></div>
+          </div>
+          <button type="button" class="btn small primary val-bench-btn" data-val-pick="me02.5-284">Värdera kortet</button>
+        </article>
+      </div>
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- SÅ RÄKNAR VI (DATA KÄLLOR & METODIK)                     -->
+    <!-- ======================================================== -->
+    <section class="guide" aria-labelledby="calc-title">
+      <div class="val-section-title">
+        <h2 id="calc-title">Så räknar vi</h2>
+      </div>
+      <div class="guide-grid">
+        <article class="gcard-info">
+          <span class="gnum">1</span>
+          <h3>Utgångspris</h3>
+          <p>Vi utgår från Cardmarkets officiella trendpris för kortet i nyskick, hämtat via TCGdex och automatiskt omräknat till svenska kronor med dagens ECB-växelkurs via Frankfurter.</p>
+        </article>
+        <article class="gcard-info">
+          <span class="gnum">2</span>
+          <h3>Skicktumregler</h3>
+          <p>Ett kort i sämre skick säljs för mindre. Procentsatserna per skick är etablerade tumregler som erfarna samlare och handlare tillämpar för att räkna av värdet.</p>
+        </article>
+        <article class="gcard-info">
+          <span class="gnum">3</span>
+          <h3>Graderat värde</h3>
+          <p>Värdet för betygen 8, 9 och 10 beräknas utifrån historiska multiplar av nyskickspriset. Verkliga graderade priser varierar mellan kort, så kolla alltid sålda priser för just ditt kort.</p>
+        </article>
+        <article class="gcard-info">
+          <span class="gnum">4</span>
+          <h3>Ingen officiell gradering</h3>
+          <p>Vår digitala pre-grading är ett vägledande beslutsstöd och ingen garanti. Graderingsbolag som PSA, BGS och CGC sätter sitt slutgiltiga betyg efter fysisk granskning.</p>
+        </article>
+      </div>
+      <p class="hint">Vill du se fullständig prishistorik och trender för alla kort? Gå till <a href="priser.html">Kortpriser</a>.</p>
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- FAQ: VANLIGA FRÅGOR OM KORTVÄRDERING                     -->
+    <!-- ======================================================== -->
+    <section class="val-faq" aria-labelledby="faq-title">
+      <div class="val-section-title">
+        <h2 id="faq-title">Vanliga frågor om att värdera Pokémonkort</h2>
+      </div>
+
+      <div class="val-faq-list">
+        <details class="val-faq-item">
+          <summary>Är värderingen på Ninjaloot helt gratis?</summary>
+          <div class="val-faq-content">
+            <p>
+              Ja, Ninjaloots värderingstjänst är 100% gratis och kräver varken konto, inloggning eller betalkort. Du kan söka bland tiotusentals kort, testa hur skicket påverkar värdet och använda vår digitala pre-grading helt obegränsat.
+            </p>
+          </div>
+        </details>
+
+        <details class="val-faq-item">
+          <summary>Hur vet jag om mitt Pokémonkort är äkta?</summary>
+          <div class="val-faq-content">
+            <p>
+              Förfalskningar är vanliga på marknaden. Äkta kort kännetecknas av knivskarp typografi, korrekt typsnitt på HP och attacker, en tydlig mellankärna av svart papper i pappersskiktet (syns från kanten), och korrekt textur på full art-kort. Falska kort har ofta en onaturligt glansig yta utan räfflor, felaktig färgton på Pokébollen på baksidan eller stavfel.
+            </p>
+          </div>
+        </details>
+
+        <details class="val-faq-item">
+          <summary>Vad är skillnaden på ett graderat och ograderat kort?</summary>
+          <div class="val-faq-content">
+            <p>
+              Ett ograderat kort ("raw") säljs löst i plastficka där köpare och säljare själva bedömer skicket. Ett graderat kort har skickats till ett oberoende certifierat företag (som PSA, Beckett BGS eller CGC) som granskar kortet i mikroskop, ger det ett betyg mellan 1 och 10 och förseglar det i ett manipuleringssäkert akrylfodral ("slab"). Ett toppbetyg som PSA 10 (Gem Mint) kan mångdubbla kortets värde.
+            </p>
+          </div>
+        </details>
+
+        <details class="val-faq-item">
+          <summary>Lönar det sig att gradera mina kort hos PSA eller Beckett?</summary>
+          <div class="val-faq-content">
+            <p>
+              Det beror helt på kortets värde och skick. Att skicka ett kort på gradering inklusive frakt och försäkring kostar ofta cirka 300–500 kr per kort. Om kortet är värt under 200 kr ograderat lönar det sig sällan. Om du däremot har ett populärt kort i perfekt skick som kan få betyg 9 eller 10 kan vinsten bli tusenlappar. Vår kalkylator ovan hjälper dig att räkna ut exakt om det lönar sig!
+            </p>
+          </div>
+        </details>
+
+        <details class="val-faq-item">
+          <summary>Varför skiljer sig priserna på Cardmarket från Tradera eller Blocket?</summary>
+          <div class="val-faq-content">
+            <p>
+              Många säljare på Tradera och Blocket sätter höga önskepriser eller utropspriser som inte motsvarar vad korten faktiskt säljs för. Cardmarket är Europas största marknadsplats för samlarkort där tusentals köp slutförs varje dag. Trendpriset reflekterar verkliga avslutade transaktioner mellan samlare.
+            </p>
+          </div>
+        </details>
+      </div>
+    </section>
+
+    <!-- Senast sökta/värderade kort (lokal historik, se js/recent.js) -->
+    <section id="recent" hidden></section>
+
+  </div>
+</main>
+
+
+<!-- Värderingsfönstret: sök kort, välj skick och se värdet. Öppnas av "Värdera kort". -->
+<dialog id="val-modal" class="card-modal val-modal" aria-labelledby="vm-title">
+  <button type="button" class="cm-close" aria-label="Stäng">✕</button>
+  <div class="vm-head"><h2 id="vm-title">Värdera ditt kort</h2></div>
+  <form id="vm-form" class="vm-search" role="search">
+    <input id="vm-q" name="q" type="search" placeholder="Sök kort, t.ex. Charizard ex eller 199/165" aria-label="Sök kort att värdera">
+    <button class="btn primary" type="submit">Sök</button>
+    <button class="btn" type="button" id="vm-scan">Skanna</button>
+    <button class="btn" type="button" id="vm-clear">Rensa</button>
+  </form>
+  <p class="vm-empty" id="vm-empty">Skriv kortets namn, kortnummer eller båda, till exempel Charizard ex 199/165. Du kan också använda Skanna. Välj sedan kort, skick och se vad det är värt.</p>
+  <section id="val-results" hidden>
+      <div class="section">
+        <h2 id="vr-title">Välj ditt kort</h2>
+        <span id="vr-count" class="muted"></span>
+      </div>
+      <div id="vr-grid" class="cgrid"></div>
+      <div class="more-row">
+        <button id="vr-more" class="btn" type="button" hidden>Visa fler kort</button>
+      </div>
+    </section>
+  <section id="val-card" class="val" hidden aria-live="polite"></section>
+</dialog>
+
+<script type="module" src="js/vardering.js"></script>
+</body>
+</html>

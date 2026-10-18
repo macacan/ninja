@@ -1,0 +1,172 @@
+// För plattformar utan öppet produktflöde: hitta produktsidor via butikens sitemap och läs
+// schema.org/Product-data (JSON-LD) som butiken själv lägger ut för sökmotorer.
+
+// Bild kan vara en adress, en lista eller ett schema.org-ImageObject (url/contentUrl). Görs alltid till en hel adress.
+function imageUrl(v, base) {
+  const first = [].concat(v || [])[0];
+  const raw = typeof first === "string" ? first : first?.url || first?.contentUrl || first?.thumbnailUrl || null;
+  if (!raw || typeof raw !== "string") return null;
+  try { return new URL(raw.trim(), base).href; } catch { return null; }
+}
+const ogImage = (html) => html.match(/<meta[^>]+property=["']og:image(?::url)?["'][^>]+content=["']([^"']+)/i)?.[1] || null;
+
+const decode = (s) => s.replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"').replace(/&#0?39;/g, "'");
+
+// Språkversioner av samma sida (/da/produkt/x, /en/produkt/x, /en-gb/…) är samma produkt.
+// Finns versionen utan språkprefix behålls bara den, annars den första språkversionen vi ser.
+const LOCALE = /^\/([a-z]{2}(?:[-_][a-z]{2})?)(?=\/)/i;
+export function dropLocaleCopies(urls) {
+  const key = (u) => { try { const x = new URL(u); return x.host + x.pathname.replace(LOCALE, "").replace(/\/$/, ""); } catch { return u; } };
+  const path = (u) => { try { return new URL(u).pathname; } catch { return ""; } };
+  const best = new Map();
+  for (const u of urls) {
+    const k = key(u), plain = !LOCALE.test(path(u));
+    if (!best.has(k) || (plain && LOCALE.test(path(best.get(k))))) best.set(k, u);
+  }
+  const keep = new Set(best.values());
+  return urls.filter((u) => keep.has(u));
+}
+
+async function sitemapUrls(host, ctx) {
+  const queue = host.robots.sitemaps.length ? [...host.robots.sitemaps] : [`${host.origin}/sitemap.xml`];
+  const seen = new Set(), pages = [];
+  while (queue.length && seen.size < 15) {
+    const sm = queue.shift();
+    if (seen.has(sm)) continue;
+    seen.add(sm);
+    let xml;
+    try { xml = await host.get(sm); } catch { continue; }
+    const locs = [...xml.matchAll(/<loc>\s*([^<\s]+)\s*<\/loc>/g)].map((m) => decode(m[1]));
+    if (/<sitemapindex/i.test(xml)) {
+      // Produktsitemaps först, sidor och bloggar sist.
+      queue.push(...locs.sort((a, b) => /product/i.test(b) - /product/i.test(a)));
+    } else {
+      pages.push(...locs);
+    }
+  }
+  // Stora butiker: bara URL:er som nämner Pokémon. Små butiker: allt, och titeln avgör sedan.
+  const allowed = dropLocaleCopies([...new Set(pages)]).filter((u) => host.allowed(u));
+  const poke = allowed.filter((u) => /pok[eé]mon/i.test(decodeURIComponent(u)));
+  return allowed.length > ctx.maxSitemapUrls ? poke : allowed;
+}
+
+// Microdata (itemprop="price" osv.), som bl.a. Quickbutik använder.
+function parseMicrodata(html, url) {
+  const prop = (name) => {
+    const m = html.match(new RegExp(`itemprop=["']${name}["'][^>]*?(?:content|href)=["']([^"']*)`, "i"))
+      || html.match(new RegExp(`(?:content|href)=["']([^"']*)["'][^>]*itemprop=["']${name}["']`, "i"));
+    return m ? decode(m[1]) : null;
+  };
+  const price = prop("price");
+  if (price == null) return null;
+  const title = prop("name") || html.match(/<h1[^>]*>([\s\S]*?)<\/h1>/i)?.[1]?.replace(/<[^>]+>/g, "").trim()
+    || html.match(/<meta[^>]+property=["']og:title["'][^>]+content=["']([^"']*)/i)?.[1];
+  const availability = prop("availability") || "";
+  return {
+    title: decode(title || ""), url, price: Number(String(price).replace(/\s/g, "").replace(",", ".")),
+    currency: prop("priceCurrency") || "SEK",
+    available: /InStock|LimitedAvailability|OnlineOnly/i.test(availability),
+    preorder: /PreOrder|PreSale|BackOrder/i.test(availability),
+    image: imageUrl(prop("image"), url) || imageUrl(ogImage(html), url),
+  };
+}
+
+function* walk(node) {
+  if (!node || typeof node !== "object") return;
+  if (Array.isArray(node)) { for (const n of node) yield* walk(n); return; }
+  yield node;
+  for (const k of ["@graph", "mainEntity", "itemListElement", "item"]) if (node[k]) yield* walk(node[k]);
+}
+
+export function parseProductPage(html, url) {
+  for (const m of html.matchAll(/<script[^>]+application\/ld\+json[^>]*>([\s\S]*?)<\/script>/gi)) {
+    let data;
+    try { data = JSON.parse(m[1].trim()); } catch { continue; }
+    for (const n of walk(data)) {
+      const t = [].concat(n["@type"] || []);
+      if (!t.includes("Product")) continue;
+      const offers = [].concat(n.offers || []).flatMap((o) => (o["@type"] === "AggregateOffer" && o.offers ? [].concat(o.offers) : [o]));
+      const o = offers.find((x) => /InStock/i.test(x.availability || "")) || offers[0];
+      if (!o) continue;
+      const availability = String(o.availability || "");
+      return {
+        title: decode(String(n.name || "")),
+        url: n.url || url,
+        price: Number(o.price ?? o.lowPrice),
+        currency: o.priceCurrency || "SEK",
+        available: /InStock|LimitedAvailability|OnlineOnly/i.test(availability),
+        preorder: /PreOrder|PreSale|BackOrder/i.test(availability),
+        image: imageUrl(n.image, url) || imageUrl(ogImage(html), url),
+      };
+    }
+  }
+  const micro = parseMicrodata(html, url);
+  if (micro) return micro;
+  // Reserv: Open Graph-taggar för produkter.
+  const meta = (p) => html.match(new RegExp(`<meta[^>]+(?:property|name)=["']${p}["'][^>]+content=["']([^"']*)`, "i"))?.[1];
+  const price = meta("product:price:amount") || meta("og:price:amount");
+  if (!price) return null;
+  return {
+    title: decode(meta("og:title") || ""), url, price: Number(price.replace(",", ".")),
+    currency: meta("product:price:currency") || "SEK",
+    available: !/out ?of ?stock|oos|slut/i.test(meta("product:availability") || meta("og:availability") || "instock"),
+    preorder: /preorder|pre-order/i.test(meta("product:availability") || ""),
+    image: imageUrl(meta("og:image"), url),
+  };
+}
+
+const WEEK = 7 * 864e5;
+const POKE = /pok[eé]mon/i;
+
+export async function generic(host, ctx) {
+  // Sitemapen ändras sällan. I bevakningsläget läses den om högst var 30:e minut (sitemapMaxAge).
+  const s = ctx.state;
+  const reuse = s.known && s.knownAt && Date.now() - s.knownAt < (ctx.sitemapMaxAge || 0);
+  const urls = dropLocaleCopies(reuse ? s.known : await sitemapUrls(host, { maxSitemapUrls: 3000, ...ctx }));
+  if (!reuse) {
+    // En produkt räknas som ny i butiken bara om dess URL inte fanns i sitemapen förra gången.
+    // De nya URL:erna sparas tills vi hunnit läsa dem, även om det dröjer några varv.
+    if (s.known) { const before = new Set(s.known); s.fresh = [...new Set([...(s.fresh || []), ...urls.filter((u) => !before.has(u))])]; }
+    s.known = urls;
+    s.knownAt = Date.now();
+  }
+  const fresh = new Set(s.fresh || []);
+  // Minne per sida: när den lästes och om den var en Pokémon-produkt ("p") eller inte ("x").
+  const seen = ctx.state.pages ||= {};
+  for (const [u, v] of Object.entries(seen)) if (typeof v === "number") seen[u] = { t: v, k: "p" };
+  const now = Date.now();
+  // Turordning: olästa Pokémon-URL:er, olästa övriga, kända produkter (äldst först). Sidor som inte var
+  // Pokémon-produkter läses om först efter en vecka.
+  const rank = (u) => {
+    if (fresh.has(u)) return -1; // nya produkter i sitemapen läses allra först
+    const s = seen[u];
+    if (!s) return POKE.test(decodeURIComponent(u)) ? 0 : 1;
+    if (s.k === "x") return now - s.t > WEEK ? 3 : Infinity;
+    return 2;
+  };
+  const batch = urls.filter((u) => rank(u) !== Infinity)
+    .sort((a, b) => rank(a) - rank(b) || (seen[a]?.t || 0) - (seen[b]?.t || 0))
+    .slice(0, ctx.pagesPerRun);
+  const items = [];
+  let stopped = false;
+  for (const u of batch) {
+    let html;
+    try { html = await host.get(u); }
+    catch (e) {
+      if (e.robots) continue;
+      if (e.status === 404 || e.status === 410) { delete seen[u]; continue; }
+      // Botskydd, eller fel innan vi läst något alls: hela kontrollen räknas som misslyckad.
+      if (e.blocked || !items.length) throw e;
+      // Annars (nätfel, 5xx, 429) avbryts varvet men det vi redan läst sparas. Resten läses nästa varv.
+      stopped = true;
+      break;
+    }
+    const p = parseProductPage(html, u);
+    const ok = p && p.title && Number.isFinite(p.price) && POKE.test(p.title);
+    seen[u] = { t: Date.now(), k: ok ? "p" : "x" };
+    if (ok) items.push({ pid: u, ...p, isNew: fresh.has(u) });
+    if (fresh.has(u)) s.fresh = (s.fresh || []).filter((x) => x !== u);
+  }
+  // Produkter vi inte hann läsa om den här gången behåller sitt senaste kända läge.
+  return Object.assign(items, { partial: stopped || urls.length > batch.length, known: new Set(urls) });
+}

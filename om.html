@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Om – Ninjaloot</title>
+<meta name="description" content="Om Ninjaloot, våra källor, rättigheter och integritet.">
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" href="logo.svg">
+<link href="fonts/fonts.css" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main id="main">
+  <header class="page-head">
+    <div class="wrap">
+      <nav class="crumbs" aria-label="Brödsmulor"><a href="index.html">Hem</a><span aria-hidden="true">›</span><span aria-current="page">Om</span></nav>
+      <h1><span data-icon="info" data-size="36"></span>Om Ninjaloot</h1>
+    </div>
+    <canvas class="scene" data-scene="strip" aria-hidden="true"></canvas>
+  </header>
+
+  <div class="wrap prose">
+    <p style="margin-top:32px">Ninjaloot samlar kommande släpp, nya set, nyheter och marknadspriser på ett ställe. Sidan är gratis, kräver inget konto och visar ingen reklam.</p>
+
+    <h2 id="kallor">Källor</h2>
+    <div class="table-scroll"><table>
+      <thead><tr><th>Vad</th><th>Källa</th><th>Villkor</th></tr></thead>
+      <tbody>
+        <tr><td data-label="Vad">Set, kort och bilder</td><td data-label="Källa"><a href="https://tcgdex.dev">TCGdex</a></td><td data-label="Villkor">Databasen har MIT-licens. Bilderna tillhör rättighetsinnehavarna.</td></tr>
+        <tr><td data-label="Vad">Kortpriser</td><td data-label="Källa">Cardmarket via TCGdex</td><td data-label="Villkor">Vägledande, uppdateras dagligen.</td></tr>
+        <tr><td data-label="Vad">Valutakurs</td><td data-label="Källa"><a href="https://frankfurter.dev">Frankfurter</a> (ECB)</td><td data-label="Villkor">Öppen data från Europeiska centralbanken.</td></tr>
+        <tr><td data-label="Vad">Artiklar</td><td data-label="Källa"><a href="https://www.dexerto.com">Dexerto</a> (RSS)</td><td data-label="Villkor">Vi visar rubrik, datum och kort utdrag och länkar till originalet.</td></tr>
+        <tr><td data-label="Vad">Videor</td><td data-label="Källa">Officiella Pokémon-kanaler på YouTube (RSS)</td><td data-label="Villkor">Bäddas in via YouTube enligt deras villkor.</td></tr>
+        <tr><td data-label="Vad">Butikslager och priser</td><td data-label="Källa">Butikernas publika sidor och produktflöden</td><td data-label="Villkor">Bara butiker som inte förbjuder det. Se <a href="#bot">butiksbevakningen</a>.</td></tr>
+        <tr><td data-label="Vad">Släppkalender</td><td data-label="Källa">Egen lista</td><td data-label="Villkor">Sammanställd från officiella pressmeddelanden.</td></tr>
+        <tr><td data-label="Vad">Landskap, figurer och design</td><td data-label="Källa">Ninjaloot</td><td data-label="Villkor">Egengjord pixelgrafik, ritad i kod.</td></tr>
+      </tbody>
+    </table></div>
+
+    <h2 id="bevakning">Så fungerar bevakningen</h2>
+    <p><b>Vad ninjan håller koll på.</b> Pokémonprodukter hos svenska nätbutiker. Vi tar bara med förseglat: Elite Trainer Boxar, boosterboxar, bundles, paket, tins, blisters och samlarboxar. Lösa kort, graderade kort och tillbehör som sleeves och pärmar sorteras bort. Under <a href="butiker.html#stores">Butiker</a> ser du exakt vilka butiker som ingår och när de kollades senast.</p>
+    <p><b>Hur ofta.</b> Varje butik har en egen klocka och kollas ungefär varannan minut. Butiker som ber oss ta det lugnare, i sin robots.txt eller genom att svara att vi går för fort, kollas var femte minut. Butiker med ett öppet produktflöde läses i sin helhet varje gång. Hos andra går vi igenom produktsidorna några åt gången, så att ingen butik får för många besök på en gång.</p>
+    <p><b>Inget brus första gången.</b> När vi börjar bevaka en butik sparar vi bara hur det ser ut just då. Notiser kommer först när något faktiskt ändras.</p>
+    <p><b>Det här får du besked om.</b> Du väljer själv bland fyra sorters händelser:</p>
+    <ul>
+      <li><b>Ny produkt</b>: något nytt dyker upp i en butik.</li>
+      <li><b>Tillbaka i lager</b>: en slutsåld produkt går att köpa igen.</li>
+      <li><b>Förbeställning öppen</b>: en kommande produkt går att förbeställa.</li>
+      <li><b>Prissänkt</b>: priset har gått ner.</li>
+    </ul>
+    <p>Under <a href="butiker.html#notiser">Notiser</a> väljer du butiker, set, produkttyper och maxpris, och hur du vill få besked: i webbläsaren eller i mobilen via den kostnadsfria appen ntfy. Allt är gratis och inget konto behövs.</p>
+
+    <h2 id="bot">Butiksbevakningen (NinjalootBot)</h2>
+    <p>Lagerstatus och priser under <a href="butiker.html">Butiker</a> hämtas av vår bot <b>NinjalootBot</b> från butikernas publika produktsidor och produktflöden. Så här jobbar den:</p>
+    <ul>
+      <li>Den läser bara butiker vars villkor inte förbjuder automatisk insamling, och den följer alltid butikens robots.txt.</li>
+      <li>Den gör en förfrågan i taget per butik och väntar minst tre sekunder mellan varje, längre om butiken anger det eller ber oss sakta ner.</li>
+      <li>Den sparar bara produktnamn, pris, lagerstatus, länk och bildadress. Den loggar aldrig in och rör aldrig kassor eller kundkonton.</li>
+      <li>Vi länkar alltid till butiken. Köpet sker hos butiken.</li>
+    </ul>
+    <p><b>Är du butiksägare?</b> Vill du inte vara med räcker det att lägga till <code>User-agent: NinjalootBot</code> och <code>Disallow: /</code> i din robots.txt, eller att kontakta oss på <a href="mailto:kontakt@ninjaloot.se">kontakt@ninjaloot.se</a>, så tar vi bort butiken. Vill du hellre skicka ett produktflöde direkt tar vi gärna emot det.</p>
+
+    <h2 id="rattigheter">Rättigheter</h2>
+    <p>Ninjaloot är fristående och har ingen koppling till The Pokémon Company, Nintendo, Creatures, GAME FREAK eller någon butik.
+    Kortbilder, setloggor, namn och varumärken tillhör respektive rättighetsinnehavare och visas för att identifiera produkterna.
+    Ninja-maskoten, pixellandskapen och sidans design är Ninjaloots egna.</p>
+    <p>Är du rättighetsinnehavare och vill att något tas bort? Kontakta oss på <a href="mailto:kontakt@ninjaloot.se">kontakt@ninjaloot.se</a>, så gör vi det direkt.</p>
+
+    <h2 id="integritet">Integritet</h2>
+    <p>Kortversionen står här. Allt om personuppgifter, lagring i webbläsaren och dina rättigheter finns under <a href="integritet.html">Integritet och kakor</a>. Se även våra <a href="villkor.html">användarvillkor</a>.</p>
+    <ul>
+      <li>Vi har inga konton, ingen spårning, ingen analys och inga reklamkakor.</li>
+      <li>Sidan sparar svar från TCGdex och valutakursen i din webbläsare i sex timmar, så att sidan går snabbare. Det lämnar aldrig din enhet.</li>
+      <li>När sidan visar kortbilder och priser hämtas de från TCGdex och Frankfurter. De ser då din IP-adress, precis som vid vilket webbesök som helst. Typsnitten ligger på vår egen server, så Google får inget anrop.</li>
+      <li>YouTube-videor laddas först när du klickar på dem, via youtube-nocookie.com. Miniatyrbilderna hämtas från YouTube.</li>
+      <li>Dina val under Notiser (butiker, set, produkttyper, maxpris) och lagersystemets innehåll sparas bara i din webbläsare och skickas aldrig till oss.</li>
+      <li>Produktbilder visas direkt från butikernas servrar och artikelbilder från nyhetssajterna. De ser då din IP-adress, men vi skickar ingen information om dig till dem.</li>
+      <li>Väljer du mobilnotiser via ntfy eller följer en Discord-kanal gäller de tjänsternas egna villkor och integritetsregler. Vi får inte veta vem som prenumererar.</li>
+      <li>Senast sökta och värderade kort, och hur många pack du öppnat i dag, sparas bara i din webbläsare. Rensa webbplatsdata för Ninjaloot för att ta bort dem.</li>
+      <li>Kortskannern använder kameran först när du trycker på Skanna och ger tillåtelse. Bilden behandlas bara i din webbläsare och laddas aldrig upp. Textigenkänningen (Tesseract.js) hämtas från jsDelivr, som då ser din IP-adress.</li>
+      <li>Om dagsgränsen för pack är påslagen räknar servern öppnade pack per IP-adress. IP-adressen sparas inte i klartext, bara som en saltad kontrollsumma, och räknaren nollställs varje natt.</li>
+    </ul>
+  </div>
+</main>
+<script type="module" src="js/site.js"></script>
+</body>
+</html>

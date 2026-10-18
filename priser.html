@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Kortpriser – Ninjaloot</title>
+<meta name="description" content="Sök kort och se Cardmarkets marknadspris omräknat till kronor.">
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" href="logo.svg">
+<link href="fonts/fonts.css" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main id="main">
+  <header class="page-head">
+    <div class="wrap">
+      <nav class="crumbs" aria-label="Brödsmulor"><a href="index.html">Hem</a><span aria-hidden="true">›</span><span aria-current="page">Kortpriser</span></nav>
+      <h1><span data-icon="coin" data-size="36"></span>Kortpriser</h1>
+    </div>
+    <canvas class="scene" data-banner="butik" aria-hidden="true"></canvas>
+  </header>
+
+  <div class="wrap">
+    <form id="price-form" class="card-search" role="search">
+      <input id="pq" name="q" type="search" placeholder="Sök kort, t.ex. Pikachu eller Charizard ex" aria-label="Sök kort">
+      <label class="drop"><span>Set</span><select id="set" name="set"><option value="">Alla</option></select></label>
+      <label class="drop"><span>Sällsynthet</span><select id="rarity" name="rarity"><option value="">Alla</option></select></label>
+      <label class="drop"><span>Pris</span><select id="range" name="range">
+        <option value="">Alla</option><option value="0-50">Under 50 kr</option><option value="50-250">50–250 kr</option>
+        <option value="250-1000">250–1 000 kr</option><option value="1000-">Över 1 000 kr</option></select></label>
+      <label class="drop"><span>Sortera</span><select id="sort" name="sort">
+        <option value="price-desc">Dyrast först</option><option value="price-asc">Billigast först</option>
+        <option value="rising">Stiger mest</option><option value="falling">Sjunker mest</option><option value="number">Kortnummer</option></select></label>
+      <button class="btn primary" type="submit">Sök</button>
+    </form>
+    <p class="hint">Populärt: <a href="?q=Charizard">Charizard</a> · <a href="?q=Pikachu">Pikachu</a> · <a href="?q=Umbreon">Umbreon</a> · <a href="?q=Gengar">Gengar</a> · <a href="?rarity=Special%20illustration%20rare">Special illustration rare</a> · <a href="?rarity=Hyper%20rare">Hyper rare</a>. Tryck på ett kort för stor bild och alla priser.</p>
+
+    <section id="landing">
+      <div class="section"><h2>Trendar nu</h2></div>
+      <p class="lead-sm">Störst prisökning senaste veckan jämfört med månaden, bland korten i de senaste seten.</p>
+      <div id="rising" class="cgrid"></div>
+      <div class="section"><h2>Dyraste i nya set</h2></div>
+      <p class="lead-sm" id="top-sets"></p>
+      <div id="top" class="cgrid"></div>
+      <div class="section"><h2>Sjunker</h2></div>
+      <div id="falling" class="cgrid"></div>
+    </section>
+
+    <section id="results" hidden>
+      <div class="section"><h2 id="res-title">Sökresultat</h2><span id="res-count" class="muted"></span></div>
+      <div id="prices" class="cgrid"></div>
+      <div class="more-row"><button id="more" class="btn" type="button" hidden>Visa fler</button></div>
+    </section>
+
+    <section class="guide" id="guide" aria-labelledby="guide-title">
+      <div class="section"><h2 id="guide-title">Så värderas ett kort</h2></div>
+      <p class="lead-sm">Priserna ovan gäller ograderade kort i nyskick. Ditt eget kort kan vara värt mer eller mindre. Så här tänker samlare och graderingsfirmor.</p>
+
+      <div class="guide-grid">
+        <article class="gcard-info">
+          <span class="gnum">1</span>
+          <h3>Rätt kort först</h3>
+          <p>Namn, set och nummer avgör vilket pris som gäller. Samma Pokémon finns i många set, och samma bild kan finnas som vanlig, reverse holo och specialversion. Numret står i ett av de nedre hörnen.</p>
+          <p>Är numret högre än setets storlek, till exempel 245/217, är det ett hemligt kort (secret rare). De är nästan alltid värda mer.</p>
+        </article>
+        <article class="gcard-info">
+          <span class="gnum">2</span>
+          <h3>Sällsynthet</h3>
+          <p>Symbolen nere på kortet visar hur vanligt det är. Cirkel betyder vanligt, romb ovanligt och stjärna sällsynt. Kort med två eller fler stjärnor, guldstjärnor, illustrationskort och hela bildytor är de som brukar driva ett sets värde.</p>
+          <p>På gamla kort från 1999–2000 höjer en 1st Edition-stämpel eller ett så kallat shadowless-tryck värdet kraftigt.</p>
+        </article>
+        <article class="gcard-info">
+          <span class="gnum">3</span>
+          <h3>Skicket</h3>
+          <p>Efter vilket kort det är betyder skicket mest. Titta på hörnen, kanterna, ytan och baksidan i bra ljus.</p>
+          <ul class="cond">
+            <li><b>Near Mint</b><span>Inga synliga fel. Ger fullt pris.</span></li>
+            <li><b>Excellent</b><span>Lite slitage som syns på nära håll.</span></li>
+            <li><b>Lätt spelat</b><span>Vita prickar på kanter, lätta repor.</span></li>
+            <li><b>Spelat</b><span>Tydligt slitage, små veck.</span></li>
+            <li><b>Dåligt</b><span>Veck, fukt eller skador. Ofta en liten del av priset.</span></li>
+          </ul>
+        </article>
+        <article class="gcard-info">
+          <span class="gnum">4</span>
+          <h3>Sålda priser, inte annonser</h3>
+          <p>Ett kort är värt vad någon faktiskt betalat, inte vad det annonseras för. Jämför avslutade försäljningar i samma skick. Utropspriser ligger ofta högre än vad korten säljs för.</p>
+          <p>Cardmarkets trendpris här på sidan bygger på genomförda köp i Europa.</p>
+        </article>
+      </div>
+
+      <div class="grade-box">
+        <div>
+          <h3>Gradering: betyg från 1 till 10</h3>
+          <p>Ett graderingsföretag (de största är PSA, CGC och Beckett) granskar kortet, ger det ett betyg och förseglar det i ett plastfodral. Ett högt betyg kan göra kortet värt flera gånger mer än samma kort ograderat, eftersom köparen vet exakt vad den får.</p>
+          <p>Betyget bygger på fyra saker:</p>
+          <ul class="grade-parts">
+            <li>
+              <div class="grade-part-media">
+                <img src="img/grading/centering.jpg" alt="Centrering av Pokémonkort vid gradering" loading="lazy">
+              </div>
+              <div class="grade-part-text">
+                <b>Centrering</b>
+                <span>Hur jämna ramarna är runt bilden, på fram- och baksidan. Ett tiopoängskort kräver nästintill perfekt symmetri (ofta max 55/45 eller 60/40 fram).</span>
+              </div>
+            </li>
+            <li>
+              <div class="grade-part-media">
+                <img src="img/grading/corners.jpg" alt="Inspektion av kortets hörn" loading="lazy">
+              </div>
+              <div class="grade-part-text">
+                <b>Hörn</b>
+                <span>Skarpa och hela hörn utan minsta vithet ("whitening"), avrundning eller flisning. Granskas noga under stark belysning och förstoring.</span>
+              </div>
+            </li>
+            <li>
+              <div class="grade-part-media">
+                <img src="img/grading/edges.jpg" alt="Inspektion av kortets kanter" loading="lazy">
+              </div>
+              <div class="grade-part-text">
+                <b>Kanter</b>
+                <span>Raka och rena snitt utan hack, flagor eller vita prickar. Baksidans mörka ram avslöjar direkt om kanten har minsta tecken på slitage.</span>
+              </div>
+            </li>
+            <li>
+              <div class="grade-part-media">
+                <img src="img/grading/surface.jpg" alt="Inspektion av kortets yta i vinklat ljus" loading="lazy">
+              </div>
+              <div class="grade-part-text">
+                <b>Yta</b>
+                <span>Kortet måste vara fritt från repor, trycklinjer och intryck. Holografiska ytor vinklas i släpljus för att syna glansen och mikroskopiska märken.</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="grade-scale" aria-label="Betygsskala">
+          <div class="gs"><b>10</b><span>Gem Mint</span><small>Felfritt</small></div>
+          <div class="gs"><b>9</b><span>Mint</span><small>Ett litet fel</small></div>
+          <div class="gs"><b>8</b><span>Near Mint–Mint</span><small>Små fel</small></div>
+          <div class="gs"><b>7–5</b><span>Near Mint–Excellent</span><small>Synligt slitage</small></div>
+          <div class="gs"><b>4–1</b><span>Spelat–Dåligt</span><small>Tydliga skador</small></div>
+          <p class="gs-note">Namnen på betygen skiljer sig lite mellan företagen. Beckett ger även delbetyg (subgrades) för var och en av de fyra delarna.</p>
+
+          <div class="grade-companies">
+            <h4>De tre stora graderarna</h4>
+            <div class="gc-item">
+              <span class="gc-tag psa">PSA</span>
+              <div>
+                <strong>Professional Sports Authenticator</strong>
+                <p>Branschstandard med störst samlarmarknad och högst likviditet vid vidareförsäljning.</p>
+              </div>
+            </div>
+            <div class="gc-item">
+              <span class="gc-tag bgs">BGS</span>
+              <div>
+                <strong>Beckett Grading Services</strong>
+                <p>Kända för delbetyg på etiketten. En felfri 10:a i alla fyra kategorier kallas <em>Black Label</em>.</p>
+              </div>
+            </div>
+            <div class="gc-item">
+              <span class="gc-tag cgc">CGC</span>
+              <div>
+                <strong>CGC Cards</strong>
+                <p>Populära för modern högteknologisk bildanalys och kristallklara, UV-skyddade plastfodral.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="grade-slab-perks">
+            <h4>Varför kapsla in kortet (Slab)?</h4>
+            <ul>
+              <li><strong>Äkthetsgaranti:</strong> Registreras i online-databas med unikt certifikatnummer mot förfalskningar.</li>
+              <li><strong>Permanent skydd:</strong> Ultraljudssvetsad hårdplast mot fukt, smuts, böjning och solblekning.</li>
+              <li><strong>Enklare handel:</strong> Både köpare och säljare vet kortets exakta skick utan diskussion.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="guide-tips">
+        <h3>Lönar det sig att gradera?</h3>
+        <ul>
+          <li>Gradering kostar från några hundra kronor per kort, plus frakt och försäkring, och kan ta flera månader. För billiga kort lönar det sig sällan.</li>
+          <li>Gradera kort som är värda mycket ograderade och ser felfria ut. Skillnaden mellan betyg 9 och 10 kan vara stor i pris.</li>
+          <li>Kolla centreringen själv först. Det är den vanligaste anledningen till att ett i övrigt fint kort inte får toppbetyg.</li>
+          <li>Lägg kortet i en mjuk plastficka och ett hårt fodral direkt när du dragit det, så att det håller sig i nyskick.</li>
+        </ul>
+        <p class="muted">Vill du ha en uppskattning av betyget innan du skickar in kortet finns tjänster för förhandsgradering, till exempel <a href="https://www.topcards.se/vardera-pokemonkort" target="_blank" rel="noopener">TopCards</a>. Ninjaloot har inget samarbete med dem.</p>
+      </div>
+    </section>
+
+    <!-- Senast sökta/värderade kort (lokal historik, se js/recent.js) -->
+    <section id="recent" hidden></section>
+
+  </div>
+
+  <dialog id="card-modal" class="card-modal" aria-labelledby="cm-name">
+    <button type="button" class="cm-close" aria-label="Stäng">✕</button>
+    <button type="button" class="cm-nav prev" aria-label="Föregående kort">‹</button>
+    <button type="button" class="cm-nav next" aria-label="Nästa kort">›</button>
+    <div class="cm-body"></div>
+  </dialog>
+</main>
+<script type="module" src="js/priser.js"></script>
+</body>
+</html>

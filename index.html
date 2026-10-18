@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Ninjaloot – kortsläpp, set och priser</title>
+<meta name="description" content="Kommande kortsläpp, nya set, nyheter och marknadspriser för samlarkort. Gratis och utan konto.">
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" href="logo.svg">
+<meta property="og:title" content="Ninjaloot – kortsläpp, set och priser">
+<meta property="og:description" content="Kommande kortsläpp, nya set, nyheter och marknadspriser för samlarkort. Gratis och utan konto.">
+<meta property="og:image" content="https://ninjaloot.se/img/pokemon-hero-bg.jpg">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<link href="fonts/fonts.css" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main id="main">
+  <section class="hero">
+    <h1 class="sr-only">Ninjaloot – kortsläpp, set och priser</h1>
+    <canvas class="scene" data-scene="hero" aria-hidden="true"></canvas>
+  </section>
+
+  <div class="wrap">
+    <!-- Precis inne: levande flöde med nya lagerprodukter och en packöppnare. -->
+    <section class="restock px-frame" id="restock" aria-labelledby="restock-title">
+      <div class="restock-main">
+        <span class="live-badge"><i aria-hidden="true"></i>Live · lagerbevakning</span>
+        <h2 id="restock-title">Precis inne i butikerna</h2>
+        <p class="restock-lead">Ninjan kollar svenska butikers lager hela dygnet. Dyker det upp en ny box, ETB eller bundle visas den här direkt. Och medan du väntar kan du öppna ett pack och se vad du hade fått.</p>
+        <p class="restock-count" id="restock-count" aria-live="polite"></p>
+        <ul class="restock-feed" id="restock-feed" aria-live="polite" aria-label="Senast inkomna produkter"></ul>
+        <a class="btn small" href="butiker.html#products">Se hela lagret</a>
+      </div>
+      <div class="restock-stage" id="pack-stage">
+        <p class="stage-hint" id="stage-hint">Välj ett pack och tryck för att öppna det</p>
+        <div class="pack-row" id="pack-row" role="group" aria-label="Pack att öppna"></div>
+        <div class="pull" id="pull" hidden></div>
+        <p class="stage-note">Korten slumpas ur setets riktiga kortlista.</p>
+      </div>
+    </section>
+
+    <div class="section"><h2>Nästa släpp</h2><a class="more" href="slapp.html">Hela kalendern</a></div>
+    <div id="next-drop"></div>
+
+    <div class="section"><h2>Nytt i butikerna</h2><a class="more" href="butiker.html#products">Hela lagret</a></div>
+    <div id="home-shop" class="pgrid" data-density="large"></div>
+
+    <div class="section"><h2>Nya set</h2><a class="more" href="slapp.html#set">Alla set</a></div>
+    <div id="home-sets" class="grid"></div>
+
+    <div class="section"><h2>Senaste nytt</h2><a class="more" href="nyheter.html">Alla nyheter</a></div>
+    <div id="home-news" class="news-cols"></div>
+
+    <section class="price-band px-frame">
+      <div class="coins" aria-hidden="true"><span data-icon="coin" data-size="40"></span><span data-icon="coin" data-size="40"></span><span data-icon="coin" data-size="40"></span></div>
+      <div>
+        <h2>Vad är ditt kort värt?</h2>
+        <p>Sök bland alla kort och se Cardmarkets marknadspris omräknat till kronor.</p>
+      </div>
+      <form class="search-row" action="priser.html" role="search">
+        <input type="search" name="q" placeholder="t.ex. Charizard" aria-label="Kortnamn" required minlength="2">
+        <button class="btn gold" type="submit">Sök</button>
+      </form>
+    </section>
+  </div>
+</main>
+<script type="module" src="js/home.js"></script>
+</body>
+</html>

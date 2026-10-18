@@ -1,0 +1,336 @@
+// Delade delar för alla sidor: header, footer, API-hjälpare och kortrendering.
+import { icon, mountAllScenes } from "./pixel.js";
+import { mountBanners } from "./banners.js";
+import { startBrowserNotices } from "./prefs.js";
+import { mountCardAutocomplete } from "./card-autocomplete.js";
+
+export const API = "https://api.tcgdex.net/v2/en";
+export const $ = (s, root = document) => root.querySelector(s);
+export const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+// Länkar från butiker och nyhetsflöden: bara http(s) släpps igenom, allt annat (t.ex. "javascript:") blir "#".
+export const safeUrl = (u) => { if (!u) return "#"; try { const x = new URL(u, location.href); return /^https?:$/.test(x.protocol) ? x.href : "#"; } catch { return "#"; } };
+export const fmt = (d) => new Date(d).toLocaleDateString("sv-SE", { day: "numeric", month: "short", year: "numeric" });
+export const kr = (n) => (n > 0 && n < 0.5 ? "under 1 kr" : Math.round(n).toLocaleString("sv-SE") + " kr");
+// Platshållarkort medan ett rutnät laddar, så att sidan inte hoppar när innehållet kommer.
+export const skeleton = (n = 4) => Array.from({ length: n }, () => '<div class="tcard skel" aria-hidden="true"><div class="art"></div><i></i><i></i><i class="short"></i></div>').join("");
+export const loading = (text = "Ninjan letar") => `<div class="loading"><span class="bar"></span>${esc(text)}…</div>`;
+export { icon };
+const ICONS = ["★", "✦", "♦", "●"];
+
+const NAV = [
+  ["index.html", "Hem", "home"],
+  ["slapp.html", "Släpp", "calendar"],
+  ["butiker.html", "Butiker", "shop"],
+  ["priser.html", "Kortpriser", "coin"],
+  ["vardering.html", "Gradering", "card"],
+  ["nyheter.html", "Nyheter", "news"],
+];
+
+function header() {
+  const here = { "artikel.html": "nyheter.html" }[location.pathname.split("/").pop()] || location.pathname.split("/").pop() || "index.html";
+  return `<a class="skip" href="#main">Hoppa till innehållet</a>
+  <div class="ticker" aria-label="Senaste info"><div class="ticker-track" id="ticker"></div></div>
+  <header class="site-header"><div class="wrap">
+    <a class="logo" href="index.html"><img src="logo.svg" alt=""><span><b>Ninjaloot</b><small>Kortsläpp & priser</small></span></a>
+    <nav class="main-nav" aria-label="Huvudmeny"><ul>
+      ${NAV.map(([href, label, ic]) => `<li><a href="${href}"${href === here ? ' aria-current="page"' : ""}>${icon(ic, 18)}${label}</a></li>`).join("")}
+    </ul></nav>
+    <form id="header-search" class="header-search" action="${searchTarget()}" role="search">
+      <input type="search" name="q" placeholder="Sök kort, t.ex. Pikachu" aria-label="Sök kort">
+      <button type="submit" aria-label="Sök">${icon("search", 20)}</button>
+    </form>
+    <button class="search-btn" aria-expanded="false" aria-controls="header-search" aria-label="Visa sökfältet">${icon("search", 24)}</button>
+  </div></header>`;
+}
+
+// Flikrad längst ner på mobilen, nåbar med tummen.
+function tabbar() {
+  const here = { "artikel.html": "nyheter.html" }[location.pathname.split("/").pop()] || location.pathname.split("/").pop() || "index.html";
+  const short = { "Kortpriser": "Priser", "Gradering": "Gradering" };
+  return `<nav class="tabbar" aria-label="Huvudmeny mobil">
+    ${NAV.map(([href, label, ic]) => `<a href="${href}"${href === here ? ' aria-current="page"' : ""}>${icon(ic, 22)}<span>${short[label] || label}</span></a>`).join("")}
+  </nav>`;
+}
+
+function footer() {
+  return `<footer class="site-footer">
+    <canvas class="scene" data-scene="footer" aria-hidden="true"></canvas>
+    <div class="wrap">
+    <div class="footer-grid">
+      <div class="about">
+        <a class="logo" href="index.html"><img src="logo.svg" alt=""><span><b>Ninjaloot</b><small>Kortsläpp & priser</small></span></a>
+        <p>Ninjan smyger fram nästa kortsläpp, nya set och vad korten är värda just nu. Gratis och utan konto.</p>
+      </div>
+      <div><h2>Utforska</h2><ul>${NAV.map(([h, l]) => `<li><a href="${h}">${l}</a></li>`).join("")}</ul></div>
+      <div><h2>Källor</h2><ul>
+        <li><a href="https://tcgdex.dev" rel="noopener">TCGdex</a></li>
+        <li><a href="https://www.cardmarket.com" rel="noopener">Cardmarket</a></li>
+        <li><a href="https://frankfurter.dev" rel="noopener">Frankfurter (ECB)</a></li>
+        <li><a href="om.html#kallor">Alla källor</a></li>
+      </ul></div>
+      <div><h2>Mer</h2><ul>
+        <li><a href="om.html">Om Ninjaloot</a></li>
+        <li><a href="om.html#bevakning">Så fungerar bevakningen</a></li>
+        <li><a href="butiker.html#notiser">Notiser</a></li>
+        <li><a href="villkor.html">Användarvillkor</a></li>
+        <li><a href="integritet.html">Integritet och kakor</a></li>
+        <li><a href="om.html#rattigheter">Rättigheter</a></li>
+        <li><a href="lager.html">För butiker: lagersystem</a></li>
+      </ul></div>
+    </div>
+    <p class="footer-legal">Ninjaloot är ett fristående fanprojekt utan koppling till The Pokémon Company, Nintendo, Creatures, GAME FREAK eller någon butik.
+    Kortbilder, setloggor och namn tillhör respektive rättighetsinnehavare. Landskap, figurer och design är Ninjaloots egna. Priser är vägledande.
+    © ${new Date().getFullYear()} Ninjaloot.</p>
+  </div></footer>`;
+}
+
+async function fillTicker() {
+  const items = ["Priser från Cardmarket uppdateras dagligen", "Gratis, utan konto och utan reklam"];
+  try {
+    const [next] = await upcomingReleases();
+    if (next) { const d = daysUntil(next.date); items.unshift(`Nästa drop: ${next.name} ${d === 0 ? "i dag" : `om ${d} ${d === 1 ? "dag" : "dagar"}`}`); }
+  } catch {}
+  try { const n = await news(); items.push(`Nyheter uppdaterade ${ago(n.updated)}`); if (n.articles[0]) items.push(`Senaste: ${n.articles[0].title}`); } catch {}
+  // Två kopior av listan gör att rullningen blir sömlös.
+  const html = items.map((t) => `<span>${esc(t)}</span>`).join("");
+  $("#ticker").innerHTML = html + html;
+}
+
+// Sökfältet i headern söker kortpriser, utom på värderingssidan där det värderar kortet.
+const searchTarget = () => (location.pathname.endsWith("vardering.html") ? "vardering.html" : "priser.html");
+
+export function mountChrome() {
+  document.body.insertAdjacentHTML("afterbegin", header());
+  document.body.insertAdjacentHTML("beforeend", footer() + tabbar());
+  const btn = $(".search-btn"), form = $("#header-search");
+  btn.addEventListener("click", () => {
+    const open = form.classList.toggle("open");
+    btn.setAttribute("aria-expanded", open);
+    if (open) form.querySelector("input").focus();
+  });
+  // Ikoner som anges med data-icon i sidornas HTML.
+  document.querySelectorAll("[data-icon]").forEach((el) => el.insertAdjacentHTML("afterbegin", icon(el.dataset.icon, +el.dataset.size || 28)));
+  mountAllScenes();
+  mountBanners();
+  fillTicker();
+  startBrowserNotices();
+  const headerInput = $("#header-search input");
+  if (headerInput) mountCardAutocomplete(headerInput, { formAction: searchTarget() });
+  document.querySelectorAll(".search-row input[type=search]").forEach((inp) => {
+    mountCardAutocomplete(inp, { formAction: "priser.html" });
+  });
+}
+
+// TCGdex ber att man cachar svar lokalt. Vi sparar dem i webbläsaren i 6 timmar.
+const TTL = 6 * 3600e3;
+export async function getJSON(url, ttl = TTL) {
+  const key = "nl:" + url;
+  try {
+    const hit = JSON.parse(localStorage.getItem(key));
+    if (hit && Date.now() - hit.t < ttl) return hit.d;
+  } catch {}
+  const r = await fetch(url);
+  if (!r.ok) throw new Error(r.status);
+  const d = await r.json();
+  try { localStorage.setItem(key, JSON.stringify({ t: Date.now(), d })); }
+  catch {
+    // Fullt lagringsutrymme: rensa våra gamla svar och strunta i att cacha just detta.
+    try { Object.keys(localStorage).filter((k) => k.startsWith("nl:")).forEach((k) => localStorage.removeItem(k)); } catch {}
+  }
+  return d;
+}
+
+// Returnerar bildadress för ett kort. Använder TCGdex webp om den finns,
+// annars TCGplayer-bilden via variants_detailed eller sparad länk.
+export function cardImg(c, size = "low") {
+  if (!c) return null;
+  const raw = c.image || c.img;
+  if (raw) {
+    if (typeof raw === "string" && (raw.startsWith("http://") || raw.startsWith("https://")) && (raw.includes("tcgplayer.com") || raw.endsWith(".jpg") || raw.endsWith(".jpeg") || raw.endsWith(".png") || raw.endsWith(".webp"))) {
+      return raw;
+    }
+    return `${raw}/${size}.webp`;
+  }
+  const tcgplayer = c.tcgplayer
+    || c.variants_detailed?.find((v) => v.thirdParty?.tcgplayer)?.thirdParty?.tcgplayer
+    || c.variants_detailed?.[0]?.thirdParty?.tcgplayer;
+  if (tcgplayer) {
+    return `https://product-images.tcgplayer.com/fit-in/437x437/${tcgplayer}.jpg`;
+  }
+  return null;
+}
+
+// Bild från TCGdex med ninja-ikonen som reserv om bilden saknas eller inte laddar.
+export function art(i, src, alt, kind = "") {
+  const ic = `<span aria-hidden="true">${ICONS[i % 4]}</span>`;
+  if (!src) return `<div class="art ${kind}">${ic}</div>`;
+  return `<div class="art ${kind}"><img src="${esc(src)}" alt="${esc(alt)}" loading="lazy" decoding="async"
+    onerror="this.replaceWith(Object.assign(document.createElement('span'),{textContent:'${ICONS[i % 4]}'}))"></div>`;
+}
+
+// Loggor för set som TCGdex saknar, se scripts/update-set-logos.mjs.
+let extraLogos = {};
+const extraLogosReady = fetch("data/set-logos.json").then((r) => r.json()).then((d) => (extraLogos = d)).catch(() => {});
+
+export const setLogo = (s) => (s.logo ? `${s.logo}.webp` : extraLogos[s.id] || null);
+
+// Setets logga. Finns ingen logga alls blir det en textlogga i samma stil, så att alla kort ser likadana ut.
+export function setArt(s) {
+  const logo = setLogo(s);
+  const word = `<span class="wordmark"><b>${esc(s.name)}</b>${s.serie?.name ? `<small>${esc(s.serie.name)}</small>` : ""}</span>`;
+  if (!logo) return `<div class="art logo">${word}</div>`;
+  return `<div class="art logo"><img src="${esc(logo)}" alt="${esc(s.name)}" loading="lazy" decoding="async"
+    onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'wordmark',innerHTML:this.dataset.w}))" data-w="${esc(word.replace(/^<span class="wordmark">|<\/span>$/g, ""))}"></div>`;
+}
+
+export function card(title, date, tag, extra, i, soon, artHtml, badge, attrs = "") {
+  return `<article class="tcard"${attrs ? ` ${attrs}` : ""}>${badge ? `<span class="badge ${badge.hot ? "hot" : ""}">${esc(badge.text)}</span>` : ""}${artHtml || art(i)}
+    <h3>${esc(title)}</h3>
+    <span class="tag ${soon ? "soon" : ""}">${esc(tag)}</span>
+    <div class="meta"><span>${date ? fmt(date) : "Datum ej satt"}</span><span>${esc(extra)}</span></div></article>`;
+}
+
+// Set som släppts de senaste 60 dagarna får en "Nytt"-etikett. Tryck på setet för att se alla kort (se setcards.js).
+export const setCard = (s, i) => {
+  const age = s.releaseDate ? -daysUntil(s.releaseDate) : 999;
+  return card(s.name, s.releaseDate, s.serie?.name || "Set", `${s.cardCount?.official ?? "?"} kort`, i, false, setArt(s, i), age <= 60 ? { text: "Nytt" } : null,
+    `data-set="${esc(s.id)}" role="button" tabindex="0" aria-label="Visa alla kort i ${esc(s.name)}"`);
+};
+
+// De senaste fysiska seten. TCG Pocket är ett mobilspel utan butikssläpp och hoppas över.
+export async function latestSets(n = 16) {
+  const recent = await getJSON(`${API}/sets?sort:field=releaseDate&sort:order=DESC&pagination:page=1&pagination:itemsPerPage=${n * 2}`);
+  const [details] = await Promise.all([Promise.all(recent.map((s) => getJSON(`${API}/sets/${encodeURIComponent(s.id)}`).catch(() => null))), extraLogosReady]);
+  const list = details.filter((s) => s && s.serie?.id !== "tcgp")
+    .sort((a, b) => (b.releaseDate || "").localeCompare(a.releaseDate || ""));
+  // Delset med samma logga som huvudsetet (t.ex. "30th Classic Collection") visas inte två gånger:
+  // vi behåller setet med flest kort.
+  const byLogo = new Map();
+  for (const s of list) {
+    const logo = setLogo(s);
+    if (!logo) continue;
+    const o = byLogo.get(logo);
+    if (!o || (s.cardCount?.total || 0) > (o.cardCount?.total || 0)) byLogo.set(logo, s);
+  }
+  return list.filter((s) => !setLogo(s) || byLogo.get(setLogo(s)) === s).slice(0, n);
+}
+
+// Släppkalendern: ett objekt per set med produktomgångar (waves). Se data/releases.json.
+let releaseData;
+export function releaseSets() {
+  releaseData ??= fetch("data/releases.json", { cache: "no-cache" }).then((r) => r.json()).then((d) => d.releases || []);
+  return releaseData;
+}
+
+// Varje omgång som en egen rad, t.ex. "30th Celebration: Battle Deck" den 30 oktober.
+export async function allReleases() {
+  return (await releaseSets()).flatMap((r) => r.waves.map((w) => ({
+    name: `${r.set}: ${w.products.join(" · ")}`, set: r.set, id: r.id, date: w.date,
+    type: w.products.length === 1 ? w.products[0] : `${w.products.length} produkter`,
+    note: w.preliminary || r.preliminary ? "preliminärt datum" : "", products: w.products,
+  }))).sort((a, b) => a.date.localeCompare(b.date));
+}
+
+// Kommande omgångar, närmast först.
+export async function upcomingReleases() {
+  const today = new Date(); today.setHours(0, 0, 0, 0);
+  return (await allReleases()).filter((r) => new Date(r.date) >= today);
+}
+
+export function daysUntil(date) {
+  const d = new Date(date); d.setHours(0, 0, 0, 0);
+  const t = new Date(); t.setHours(0, 0, 0, 0);
+  return Math.round((d - t) / 864e5);
+}
+
+// Tar emot ISO-sträng eller millisekunder.
+export function ago(t) {
+  const min = Math.round((Date.now() - new Date(t)) / 60000);
+  if (min < 1) return "nyss";
+  if (min < 60) return `${min} min sedan`;
+  const h = Math.round(min / 60);
+  if (h < 48) return `${h} tim sedan`;
+  return `${Math.round(h / 24)} dagar sedan`;
+}
+
+let newsCache;
+export function news() {
+  newsCache ??= fetch("data/news.json", { cache: "no-cache" }).then((r) => r.json());
+  return newsCache;
+}
+
+// Kort, stabilt id för en artikel (byggt på länken), så att den kan öppnas på artikel.html?id=…
+export function articleId(link) {
+  let h = 2166136261;
+  for (let i = 0; i < link.length; i++) { h ^= link.charCodeAt(i); h = Math.imul(h, 16777619); }
+  return (h >>> 0).toString(36);
+}
+export const articleHref = (a) => `artikel.html?id=${articleId(a.link)}`;
+
+// Större artikelkort för nyhetssidans rutnät.
+export const articleCard = (a) => `<article class="acard">
+  <div class="acard-img">${a.image ? `<img src="${esc(a.image)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.remove()">` : ""}<span class="acard-src">${esc(a.source)}</span></div>
+  <div class="acard-body">
+    <span class="src">${fmt(a.date)}</span>
+    <h3><a class="stretch" href="${articleHref(a)}">${esc(a.title)}</a></h3>
+    ${a.summary ? `<p>${esc(a.summary)}</p>` : ""}
+    <span class="acard-more">Läs mer <i aria-hidden="true">→</i></span>
+  </div>
+</article>`;
+
+export const newsItem = (a) => `<article class="news">
+  <div class="news-img">${a.image ? `<img src="${esc(a.image)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.remove()">` : ""}</div>
+  <div class="news-body">
+    <span class="src">${esc(a.source)} · ${fmt(a.date)}</span>
+    <h3><a class="stretch" href="${articleHref(a)}">${esc(a.title)}</a></h3>
+    ${a.summary ? `<p>${esc(a.summary)}</p>` : ""}
+  </div>
+</article>`;
+
+// Produktkort i butiksstil. flags: { drop: tidigare pris om priset sänkts nyligen, isNew: nytt nyligen }.
+export function productCard(p, storeName, flags = {}) {
+  const badge = !p.available && !p.preorder ? '<span class="pbadge out">Slut</span>'
+    : p.preorder && !p.available ? '<span class="pbadge pre">Förbeställ</span>'
+    : flags.drop ? '<span class="pbadge sale">Prissänkt</span>'
+    : flags.isNew ? '<span class="pbadge new">Nytt</span>' : "";
+  return `<article class="pcard${p.available || p.preorder ? "" : " is-out"}">
+    <div class="pimg">${p.image ? `<img src="${esc(p.image)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.remove()">` : `<span class="noimg"><b>${esc(p.type || "Förseglat")}</b>Bild finns hos butiken</span>`}${badge}</div>
+    <div class="pbody">
+      <span class="pstore">${esc(storeName || p.store)}${p.lang && p.lang !== "en" ? ` · ${esc(p.lang.toUpperCase())}` : ""}</span>
+      <h3><a class="stretch" href="${esc(safeUrl(p.url))}" target="_blank" rel="noopener nofollow">${esc(p.title)}</a></h3>
+      <div class="pfoot"><span class="pprice">${kr(p.price)}${flags.drop ? ` <s>${kr(flags.drop)}</s>` : ""}</span>${p.lastChange ? `<span class="ptime" title="Senast ändrad">${ago(p.lastChange)}</span>` : ""}</div>
+    </div>
+  </article>`;
+}
+
+mountChrome();
+
+// Klockslag, med datum om det inte är i dag.
+export function clockTime(t) {
+  const d = new Date(t), today = new Date().toDateString() === d.toDateString();
+  const time = d.toLocaleTimeString("sv-SE", { hour: "2-digit", minute: "2-digit" });
+  return today ? time : `${d.toLocaleDateString("sv-SE", { day: "numeric", month: "short" })} ${time}`;
+}
+
+// "Uppdaterad 2 min sedan · 16:08" med grön livepunkt. Räknar upp av sig själv.
+const stamps = new Map();
+export function liveStamp(el, t, label = "Uppdaterad") {
+  if (!el || !t) return;
+  stamps.set(el, { t, label });
+  el.className = `stamp${Date.now() - t < 30 * 60e3 ? " is-live" : ""}`;
+  el.innerHTML = `<i aria-hidden="true"></i>${label} ${ago(t)} · ${clockTime(t)}`;
+}
+setInterval(() => stamps.forEach((v, el) => liveStamp(el, v.t, v.label)), 30e3);
+
+// Visar bara hela rader i ett rutnät, så att ingen rad blir halvtom. Räknar om när bredden ändras.
+export function fillRows(el, maxRows = 2) {
+  const apply = () => {
+    const items = [...el.children].filter((c) => !c.classList.contains("msg"));
+    const cols = getComputedStyle(el).gridTemplateColumns.split(" ").filter(Boolean).length || 1;
+    const full = Math.floor(items.length / cols) * cols;
+    const keep = full ? Math.min(full, cols * maxRows) : items.length;
+    items.forEach((c, i) => (c.hidden = i >= keep));
+  };
+  apply();
+  if (!el._rowObserver) { el._rowObserver = new ResizeObserver(apply); el._rowObserver.observe(el); }
+}

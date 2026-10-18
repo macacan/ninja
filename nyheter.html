@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Nyheter – Ninjaloot</title>
+<meta name="description" content="Senaste nyheterna och de officiella videorna om samlarkort.">
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" href="logo.svg">
+<link href="fonts/fonts.css" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main id="main">
+  <header class="page-head">
+    <div class="wrap">
+      <nav class="crumbs" aria-label="Brödsmulor"><a href="index.html">Hem</a><span aria-hidden="true">›</span><span aria-current="page">Nyheter</span></nav>
+      <h1><span data-icon="news" data-size="36"></span>Nyheter</h1>
+    </div>
+    <canvas class="scene" data-banner="nyheter" aria-hidden="true"></canvas>
+  </header>
+
+  <div class="wrap">
+    <div class="section"><h2>Artiklar</h2><span id="art-count" class="muted"></span></div>
+    <div id="articles" class="agrid"></div>
+    <nav class="pager" id="pager" aria-label="Sidor"></nav>
+
+    <div class="section"><h2>Officiella videor</h2></div>
+    <p class="lead-sm">Videon laddas från YouTube först när du klickar på den.</p>
+    <div id="videos" class="grid wide"></div>
+  </div>
+</main>
+<script type="module" src="js/nyheter.js"></script>
+</body>
+</html>

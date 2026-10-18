@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# Block crawling of internal data and scripts
+Disallow: /data/card-history/
+Disallow: /research/
+Disallow: /scripts/
+
+Sitemap: https://ninjaloot.se/sitemap.xml

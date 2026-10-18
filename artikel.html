@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Nyhet – Ninjaloot</title>
+<meta name="description" content="Nyhet om Pokémon-kort, med länk till originalkällan.">
+<meta name="theme-color" content="#ffffff">
+<meta name="robots" content="noindex">
+<link rel="icon" href="logo.svg">
+<link href="fonts/fonts.css" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main id="main">
+  <header class="page-head">
+    <div class="wrap">
+      <nav class="crumbs" aria-label="Brödsmulor"><a href="index.html">Hem</a><span aria-hidden="true">›</span><a href="nyheter.html">Nyheter</a><span aria-hidden="true">›</span><span aria-current="page">Artikel</span></nav>
+    </div>
+    <canvas class="scene" data-banner="nyheter" aria-hidden="true"></canvas>
+  </header>
+
+  <div class="wrap">
+    <article id="article" class="article"><div class="msg">Hämtar artikeln…</div></article>
+
+    <div class="section"><h2>Fler nyheter</h2><a class="more" href="nyheter.html">Alla nyheter</a></div>
+    <div id="related" class="agrid"></div>
+  </div>
+</main>
+<script type="module" src="js/artikel.js"></script>
+</body>
+</html>

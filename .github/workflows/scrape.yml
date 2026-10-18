@@ -1,0 +1,36 @@
+name: Butiksbevakning
+
+on:
+  schedule:
+    - cron: "*/15 * * * *" # var 15:e minut (GitHub kan försena körningar några minuter)
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+# Två körningar får aldrig överlappa, annars skulle butikerna få dubbelt så många anrop.
+concurrency:
+  group: scrape
+  cancel-in-progress: false
+
+jobs:
+  scrape:
+    # Kör du daemon.mjs på en egen dator: sätt repo-variabeln SCRAPE_ON_ACTIONS=false, annars
+    # bevakas butikerna dubbelt och samma notis skickas två gånger.
+    if: vars.SCRAPE_ON_ACTIONS != 'false'
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node scripts/scraper/run.mjs
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+      - name: Spara om något ändrats
+        run: |
+          git config user.name "ninjaloot-bot"
+          git config user.email "ninjaloot-bot@users.noreply.github.com"
+          git add data/products.json data/events.json data/stores-status.json data/notify.json data/price-history.json scripts/scraper/state.json
+          git diff --cached --quiet || (git commit -m "Uppdatera butikslager" && git pull --rebase && git push)

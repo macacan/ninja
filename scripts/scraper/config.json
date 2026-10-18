@@ -1,0 +1,6 @@
+{
+  "_info": "botInfoUrl och contactEmail är frivilliga. Lämnas de tomma syns boten bara som \"NinjalootBot/1.0 (prisbevakning)\". ntfyTopic är början på de publika ntfy-ämnen som notiserna skickas till. Discord-webhooken läggs i miljövariabeln DISCORD_WEBHOOK (GitHub-hemlighet), aldrig här.",
+  "botInfoUrl": "https://ninjaloot.se/om.html#bot",
+  "contactEmail": "kontakt@ninjaloot.se",
+  "ntfyTopic": "ninjaloot-72d27451"
+}

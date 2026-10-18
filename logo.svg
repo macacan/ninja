@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none" stroke-linejoin="round" stroke-linecap="round">
+  <!-- scarf tails -->
+  <path d="M52 92 L22 80 L30 100 L14 108 L50 108Z" fill="#e4572e" stroke="#2b2118" stroke-width="5"/>
+  <!-- body -->
+  <path d="M60 196 C58 150 70 128 100 128 C130 128 142 150 140 196Z" fill="#3b4a6b" stroke="#2b2118" stroke-width="5"/>
+  <!-- head -->
+  <circle cx="100" cy="82" r="48" fill="#3b4a6b" stroke="#2b2118" stroke-width="5"/>
+  <!-- face band -->
+  <path d="M60 72 Q100 58 140 72 L140 98 Q100 112 60 98Z" fill="#f7e3c3" stroke="#2b2118" stroke-width="5"/>
+  <!-- headband -->
+  <path d="M54 62 Q100 44 146 62 L146 74 Q100 58 54 74Z" fill="#e4572e" stroke="#2b2118" stroke-width="5"/>
+  <circle cx="100" cy="62" r="7" fill="#f2b632" stroke="#2b2118" stroke-width="3"/>
+  <!-- eyes -->
+  <circle cx="82" cy="86" r="5" fill="#2b2118"/>
+  <circle cx="118" cy="86" r="5" fill="#2b2118"/>
+  <circle cx="84" cy="84" r="1.8" fill="#fff"/><circle cx="120" cy="84" r="1.8" fill="#fff"/>
+  <ellipse cx="72" cy="98" rx="6" ry="3.5" fill="#f08a7e"/><ellipse cx="128" cy="98" rx="6" ry="3.5" fill="#f08a7e"/>
+  <!-- card -->
+  <g transform="rotate(12 150 140)">
+    <rect x="124" y="104" width="54" height="76" rx="7" fill="#fffaf0" stroke="#2b2118" stroke-width="5"/>
+    <rect x="131" y="112" width="40" height="34" rx="4" fill="#9bd1c0" stroke="#2b2118" stroke-width="3"/>
+    <path d="M151 120 l3.5 7.5 8 1 -6 5.5 1.8 8 -7.3 -4 -7.3 4 1.8 -8 -6 -5.5 8 -1z" fill="#f2b632" stroke="#2b2118" stroke-width="2"/>
+    <path d="M132 156h38M132 165h26" stroke="#2b2118" stroke-width="3"/>
+  </g>
+  <!-- hand -->
+  <circle cx="128" cy="150" r="9" fill="#3b4a6b" stroke="#2b2118" stroke-width="5"/>
+</svg>
