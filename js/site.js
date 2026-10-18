@@ -78,7 +78,7 @@ function footer() {
         <li><a href="lager.html">För butiker: lagersystem</a></li>
       </ul></div>
     </div>
-    <p class="footer-legal">Ninjaloot är ett fristående fanprojekt utan koppling till The Pokémon Company, Nintendo, Creatures, GAME FREAK eller någon butik.
+    <p class="footer-legal">Ninjaloot är ett självständigt fanprojekt. Varken The Pokémon Company, Nintendo, Creatures, GAME FREAK eller någon butik står bakom sidan.
     Kortbilder, setloggor och namn tillhör respektive rättighetsinnehavare. Landskap, figurer och design är Ninjaloots egna. Priser är vägledande.
     © ${new Date().getFullYear()} Ninjaloot.</p>
   </div></footer>`;

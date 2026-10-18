@@ -90,12 +90,12 @@
 
     <section id="tab-notiser" hidden>
       <div class="section"><h2>Notiser</h2></div>
-      <p class="lead-sm">Välj hur du får besked, från vilka butiker och vilka produkter som ska räknas. Valen sparas i den här webbläsaren, så du behöver inget konto.</p>
+      <p class="lead-sm">Ninjan säger till när något du vill ha dyker upp. Ställ in kanal och urval här. Inställningarna stannar i din webbläsare, inget konto behövs.</p>
 
       <div class="acc">
-        <h3 class="acc-group">Hur du får besked</h3>
+        <h3 class="acc-group">1. Kanal</h3>
         <details class="acc-row" id="acc-channels">
-          <summary><span><b>Så får du besked</b><small>Webbläsare och mobil</small></span><em id="sum-channels">Inget valt</em></summary>
+          <summary><span><b>Var ninjan ska höra av sig</b><small>I webbläsaren eller i mobilen</small></span><em id="sum-channels">Inget valt</em></summary>
           <div class="acc-body">
             <div class="channel">
               <b>I webbläsaren</b>
@@ -110,21 +110,21 @@
           </div>
         </details>
 
-        <h3 class="acc-group">Vad du får besked om</h3>
+        <h3 class="acc-group">2. Urval</h3>
         <details class="acc-row">
-          <summary><span><b>Butiker</b><small>Välj vilka butiker du vill få notiser från</small></span><em id="sum-stores"></em></summary>
+          <summary><span><b>Butiker</b><small>Bocka för butikerna du handlar i</small></span><em id="sum-stores"></em></summary>
           <div class="acc-body"><div class="acc-tools"><input type="search" class="acc-find" data-for="p-stores" placeholder="Sök butik…" aria-label="Sök butik"><button type="button" class="link" data-all="p-stores">Alla</button><button type="button" class="link" data-none="p-stores">Inga</button></div><div class="checks" id="p-stores"></div></div>
         </details>
         <details class="acc-row">
-          <summary><span><b>Varningstyper</b><small>Välj vilka händelser du vill få besked om</small></span><em id="sum-kinds"></em></summary>
+          <summary><span><b>Händelser</b><small>Nytt, påfyllt, förbeställning eller billigare</small></span><em id="sum-kinds"></em></summary>
           <div class="acc-body"><div class="checks" id="p-kinds"></div></div>
         </details>
         <details class="acc-row">
-          <summary><span><b>Pokémon-set</b><small>Välj vilka set du vill bevaka</small></span><em id="sum-sets"></em></summary>
+          <summary><span><b>Pokémon-set</b><small>Bara de set du samlar på</small></span><em id="sum-sets"></em></summary>
           <div class="acc-body"><div class="acc-tools"><input type="search" class="acc-find" data-for="p-sets" placeholder="Sök set…" aria-label="Sök set"><button type="button" class="link" data-all="p-sets">Alla</button><button type="button" class="link" data-none="p-sets">Inga</button></div><div class="checks" id="p-sets"></div></div>
         </details>
         <details class="acc-row">
-          <summary><span><b>Fler filter</b><small>Språk, produkttyp och pris</small></span><em id="sum-more"></em></summary>
+          <summary><span><b>Smalna av mer</b><small>Språk, sorts produkt och högsta pris</small></span><em id="sum-more"></em></summary>
           <div class="acc-body">
             <fieldset><legend>Språk</legend><div class="checks" id="p-langs"></div></fieldset>
             <fieldset><legend>Produkttyper</legend><div class="checks" id="p-types"></div></fieldset>
@@ -133,22 +133,22 @@
         </details>
 
         <div class="acc-actions">
-          <button class="btn primary" id="p-save" type="button">Spara bevakning</button>
-          <button class="btn small" id="p-reset" type="button">Välj allt igen</button>
-          <a class="more" href="#products" data-goto="products">Se produkter</a>
+          <button class="btn primary" id="p-save" type="button">Spara mina val</button>
+          <button class="btn small" id="p-reset" type="button">Börja om</button>
+          <a class="more" href="#products" data-goto="products">Till lagret</a>
           <span id="p-status" class="muted" role="status"></span>
         </div>
         <p class="acc-match" id="p-match"></p>
 
         <details class="acc-row" id="acc-watch">
-          <summary><span><b>Bevakade produkter</b><small>Enskilda produkter du valt med klockan. De ger alltid besked.</small></span><em id="sum-watch">0</em></summary>
+          <summary><span><b>Mina klockor</b><small>Produkter du har tryckt på klockan för. Dem hör du alltid om.</small></span><em id="sum-watch">0</em></summary>
           <div class="acc-body"><ul class="watch-list" id="watch-list"></ul></div>
         </details>
         <p class="muted" style="margin:12px 0 0">Notiser kan dröja eller utebli. Läs mer i <a href="villkor.html#t7">användarvillkoren</a>.</p>
       </div>
     </section>
 
-    <p class="hint" style="margin-top:28px">Uppgifterna kommer från butikernas egna sidor och kan vara försenade. Kontrollera alltid pris och lager hos butiken innan du handlar. Produktbilder visas från butikernas egna servrar.</p>
+    <p class="hint" style="margin-top:28px">Priser och lagerstatus läses av från butikerna och kan ha hunnit ändras. Det är butikens egen sida som gäller när du köper. Produktbilder visas från butikernas egna servrar.</p>
   </div>
 </main>
 <script type="module" src="js/butiker.js"></script>
