@@ -9,7 +9,7 @@ import { openScanner, narrowByTotal, rankByLook } from "./card-scanner.js";
 
 // Fyra kriterier, fem svar vardera med delbetyg.
 const CRITERIA = [
-  ["Centrering", "Hur jämna ramarna är runt bilden", [["Nästan perfekt (55/45)", 10], ["Bra (60/40)", 9], ["Märkbart sned (65/35)", 8], ["Tydligt sned (70/30)", 6], ["Mycket sned", 3]]],
+  ["Centrering", "Hur jämna ramarna är runt bilden", [["Nästan perfekt", 10], ["Bra", 9], ["Märkbart sned", 8], ["Tydligt sned", 6], ["Mycket sned", 3]]],
   ["Hörn", "Titta efter vitning och avrundning", [["Skarpa, ingen vitning", 10], ["Minimal vitning", 9], ["Lite vitning", 8], ["Tydlig vitning eller rundade", 6], ["Skadade eller vikta", 1]]],
   ["Kanter", "Vita prickar och hack längs kanten", [["Rena och raka", 10], ["Någon liten prick", 9], ["Några vita prickar", 8], ["Tydlig kantvitning", 6], ["Sprickor eller flagor", 1]]],
   ["Yta", "Repor och trycklinjer i vinklat ljus", [["Inga repor eller linjer", 10], ["Enstaka hårfin repa", 9], ["Några lätta repor", 8], ["Tydliga repor eller trycklinjer", 6], ["Intryck, veck eller skador", 1]]],
@@ -117,7 +117,7 @@ function buildDamage(box, src) {
   add(stg, "stop", { offset: ".7", "stop-color": "#7a5530", "stop-opacity": ".5" });
   add(stg, "stop", { offset: "1", "stop-color": "#5a3a1c", "stop-opacity": ".8" });
   const dirt = add(svg, "g", { class: "vd-dirt" });
-  const haze = add(dirt, "rect", { x: "0", y: "0", width: CW, height: CH, fill: "#7d7d7d", opacity: "0", style: "mix-blend-mode:multiply" });
+  const haze = add(dirt, "rect", { x: "0", y: "0", width: CW, height: CH, fill: "#8c7a5c", opacity: "0", style: "mix-blend-mode:multiply" });
   const stains = Array.from({ length: 6 }, () => {
     const cx = f(8, 55), cy = f(10, 80), rx = f(1.4, 3.6);
     return { el: add(dirt, "ellipse", { cx: f2(cx), cy: f2(cy), rx: f2(rx), ry: f2(rx * f(0.6, 1)), transform: `rotate(${f2(f(0, 180))} ${f2(cx)} ${f2(cy)})`, fill: "url(#vd-stain-g)", filter: "url(#vd-stain)", opacity: "0" }), t: 1.6 + Math.pow(r(), 0.8) * 2.3 };
@@ -187,9 +187,9 @@ function drawDamage() {
   dmg.specks.forEach((d) => d.el.setAttribute("r", f2(d.r * ramp(dir, d.t, 0.3))));
   dmg.stains.forEach((d) => d.el.setAttribute("opacity", f2(ramp(dir, d.t, 0.5))));
   const dull = clamp01((dir - 1.5) / 2.5);
-  dmg.haze.setAttribute("opacity", f2(dull * 0.12));
-  // Max blir bilden gråskala. Prickar och fläckar ligger ovanpå bilden och påverkas inte av filtret.
-  dmg.pic.style.filter = dull > 0.01 ? `grayscale(${f2(dull)}) contrast(${f2(1 - dull * 0.08)})` : "";
+  // Matt glans: hinnan och färgtonen är svagare än tidigare, så max blir inte lika starkt.
+  dmg.haze.setAttribute("opacity", f2(dull * 0.04));
+  dmg.pic.style.filter = dull > 0.01 ? `saturate(${f2(1 - dull * 0.08)}) contrast(${f2(1 - dull * 0.025)}) brightness(${f2(1 - dull * 0.0125)})` : "";
 }
 
 const state = { card: null, rate: null, cond: DEFAULT_COND, crit: [1, 1, 1, 1, 1], cost: 400 };
@@ -286,11 +286,10 @@ const condText = (n) => (n === "Near Mint" ? "i nyskick" : n === "Mint" ? "i ski
 
 // Mobil: liten ruta bredvid kortet med betyg och värde, så man ser dem medan man drar.
 function liveHTML() {
-  const base = baseSek(), g = estGrade(), [cname, , cmult] = CONDITIONS[state.cond];
-  return `<div class="vl-grade" aria-label="Estimerat betyg ${g} av 10"><b>${g}</b><span>/10</span></div>
-    <div class="vl-text"><small>Estimerat betyg</small>
+  const base = baseSek(), [cname, , cmult] = CONDITIONS[state.cond];
+  return `<div class="vl-text"><small>Ograderat värde</small>
       <b>${base == null ? "Inget pris" : `ca ${kr(round(base * cmult))}`}</b>
-      <small>ograderat, ${esc(cname)}</small></div>`;
+      <small>${esc(cname)}</small></div>`;
 }
 
 function outputHTML() {
@@ -304,21 +303,23 @@ function outputHTML() {
     : gain > 0 ? ["mid", "Lönar sig knappt", `Vinsten blir bara cirka ${kr(gain)}. Ett lägre betyg än väntat gör det till en förlust.`]
     : ["bad", "Lönar sig inte", g >= 9 ? "Kortet är för billigt för att gradering ska löna sig." : "Med det betyget du bedömer blir det inte värt kostnaden."];
   const tier = (label, v, on) => `<li class="vt${on ? " on" : ""}"><span>${label}</span><b>${kr(round(v))}</b></li>`;
-  return `<div class="vo-main"><span class="vo-label">Ungefärligt värde ${condText(cname)} · betyg ${g}/10</span>
+  return `<div class="vo-main"><span class="vo-label">Ungefärligt värde ${condText(cname)}</span>
       <b class="vo-price">ca ${kr(round(raw))}</b>
       <small>Cardmarkets trendpris i nyskick: ${kr(round(base))}${state.card.pricing?.cardmarket?.low != null ? ` · lägsta annons ${kr(round(state.card.pricing.cardmarket.low * state.rate))}` : ""}</small></div>
     <ul class="vo-tiers" aria-label="Riktvärden per betyg">
-      ${tier("Nyskick", base, false)}${tier("Ograderat, ditt skick", raw, false)}${tier(`Graderat, betyg ${g}`, gv, true)}
+      ${tier("Ograderat, ditt skick", raw, false)}${tier("Graderat", gv, true)}
     </ul>
     <p class="hint">Riktvärden. Graderade priser skiljer mycket mellan kort${vintage ? ", och kort från Wizards-eran har högre premie för toppbetyg" : ""}, så jämför med sålda priser för just ditt kort innan du betalar för gradering.</p>
-    <div class="vo-grade"><div class="vo-gnum" aria-label="Ditt estimerade betyg"><b>${g}</b><span>/ 10</span></div>
-      <div><b>Ditt estimerade betyg</b><p class="muted">Vår egen uppskattning av dina svar, inte en officiell gradering. Det svagaste kriteriet väger tyngst, precis som hos graderingsbolagen.</p></div></div>
+    <div class="vo-grade"><div class="gcircle${g === 10 ? " gold" : ""}" role="img" aria-label="Ditt estimerade betyg ${g} av 10"><b>${g}</b><span>/10</span></div><div><b>Ditt estimerade betyg</b><p class="muted">Vår egen uppskattning av dina svar, inte en officiell gradering. Det svagaste kriteriet väger tyngst, precis som hos graderingsbolagen.</p></div></div>
     <div class="verdict ${verdict[0]}"><b>${verdict[1]}</b><span>${verdict[2]}</span></div>`;
 }
 
 function updateOut() {
   $("#val-live").innerHTML = liveHTML();
   $("#val-out").innerHTML = outputHTML();
+  // Dropdownernas rubrik visar valt skick, så man ser vad som är valt utan att öppna.
+  const condAcc = $("#val-card [data-acc='cond']");
+  if (condAcc) condAcc.textContent = CONDITIONS[state.cond][0];
 }
 
 function renderCard() {
@@ -328,26 +329,36 @@ function renderCard() {
   $("#val-card").innerHTML = `<div class="val-top">
       <div class="val-side">
         <div class="val-img${isBack ? " has-back" : ""}" role="button" tabindex="0" aria-label="Förstora kortet i ditt skick"><span class="vd-card"><img src="${esc(img)}" alt="${esc(c.name)}" referrerpolicy="no-referrer" onerror="this.src='img/kortbaksida.webp';this.closest('.val-img').classList.add('has-back');"></span>${isBack ? `<span class="val-soon">Kommer snart bilder</span>` : ""}<span class="vz-tip" aria-hidden="true">Tryck för att förstora</span></div>
-        <div class="val-live" id="val-live" aria-hidden="true">${liveHTML()}</div>
+        <div class="val-meta">
+          <div class="val-mtitle"><b>${esc(c.name)}</b><small>${esc(c.set?.name || "")} · #${esc(c.localId || "")}</small></div>
+          <div class="val-live" id="val-live" aria-hidden="true">${liveHTML()}</div>
+        </div>
       </div>
       <div class="val-info">
-        <h2>${esc(c.name)}</h2>
-        <p class="muted">${esc(c.set?.name || "")} · #${esc(c.localId || "")}${c.rarity && c.rarity !== "None" ? ` · ${esc(c.rarity)}` : ""}</p>
-        <h3>2. Välj skick</h3>
-        <div class="chips" role="radiogroup" aria-label="Kortets skick">${CONDITIONS.map(([n, d], i) => `<label class="chip"><input type="radio" name="cond" value="${i}"${i === state.cond ? " checked" : ""}><span><b>${n}</b><small>${d}</small></span></label>`).join("")}</div>
+        <h2 class="val-dh">${esc(c.name)}</h2>
+        <p class="muted val-dsub">${esc(c.set?.name || "")} · #${esc(c.localId || "")}${c.rarity && c.rarity !== "None" ? ` · ${esc(c.rarity)}` : ""}</p>
+        <details class="acc"${WIDE.matches ? " open" : ""}>
+          <summary><span>2. Välj skick</span><span class="acc-val" data-acc="cond"></span></summary>
+          <div class="chips" role="radiogroup" aria-label="Kortets skick">${CONDITIONS.map(([n, d], i) => `<label class="chip"><input type="radio" name="cond" value="${i}"${i === state.cond ? " checked" : ""}><span><b>${n}</b><small>${d}</small></span></label>`).join("")}</div>
+        </details>
       </div>
     </div>
     <div class="val-bottom">
       <div class="val-grade">
-        <h3>3. Pre-grading</h3>
-        <p class="muted">Titta på kortet i bra ljus och svara ärligt. Din bedömning ger ett eget betyg från 1 till 10.</p>
-        ${CRITERIA.map(([n, hint, opts], i) => `<div class="crit-s">
-          <div class="crit-head"><label for="crit-${i}">${n}</label><output class="crit-val" for="crit-${i}">${esc(opts[Math.round(state.crit[i])][0])}</output></div>
-          <small>${hint}</small>
-          <input type="range" id="crit-${i}" class="crit-range" min="0" max="100" step="any" value="${state.crit[i] * 25}" data-crit="${i}" aria-valuetext="${esc(opts[Math.round(state.crit[i])][0])}">
-        </div>`).join("")}
-        <label class="crit"><span><b>Kostnad för gradering</b><small>Avgift och frakt per kort, i kronor</small></span>
-          <input type="number" min="0" step="50" inputmode="numeric" data-cost value="${state.cost}"></label>
+        <details class="acc"${WIDE.matches ? " open" : ""}>
+          <summary><span>3. Pre-grading</span></summary>
+          <p class="muted">Titta på kortet i bra ljus och svara ärligt. Din bedömning ger ett eget betyg.</p>
+          ${CRITERIA.map(([n, hint, opts], i) => `<div class="crit-s">
+            <div class="crit-head"><label for="crit-${i}">${n}</label><output class="crit-val" for="crit-${i}">${esc(opts[Math.round(state.crit[i])][0])}</output></div>
+            <small>${hint}</small>
+            <input type="range" id="crit-${i}" class="crit-range" min="0" max="100" step="any" value="${state.crit[i] * 25}" data-crit="${i}" aria-valuetext="${esc(opts[Math.round(state.crit[i])][0])}">
+          </div>`).join("")}
+        </details>
+        <details class="acc cost-acc"${WIDE.matches ? " open" : ""}>
+          <summary><span>Kostnad för gradering</span><span class="acc-val" data-acc="cost">${state.cost} kr</span></summary>
+          <label class="crit"><span><b>Kostnad för gradering</b><small>Avgift och frakt per kort, i kronor</small></span>
+            <input type="number" min="0" step="50" inputmode="numeric" data-cost value="${state.cost}"></label>
+        </details>
       </div>
       <div class="val-out" id="val-out">${outputHTML()}</div>
     </div>
@@ -355,7 +366,12 @@ function renderCard() {
   buildDamage($("#val-card .val-img"), img);
   syncSliders();
   drawDamage();
+  updateOut();
 }
+
+// På desktop finns inga dropdowns: allt är öppet. På mobil börjar pre-grading ihopfälld.
+const WIDE = matchMedia("(min-width: 761px)");
+WIDE.addEventListener("change", (e) => document.querySelectorAll("#val-card .acc").forEach((d) => { d.open = e.matches; }));
 
 // Den fyllda delen av reglaget följer tummen.
 const paintRange = (input) => input.style.setProperty("--p", `${input.value}%`);
@@ -483,7 +499,7 @@ function openValZoom() {
   card.setAttribute("aria-label", `${state.card.name} i skick ${CONDITIONS[state.cond][0]}`);
   card.insertAdjacentHTML("beforeend", '<span class="vz-glare" aria-hidden="true"></span>');
   d.querySelector(".zm-name").textContent = state.card.name;
-  d.querySelector(".zm-sub").textContent = `Skick: ${CONDITIONS[state.cond][0]} · Estimerat betyg ${estGrade()} av 10`;
+  d.querySelector(".zm-sub").textContent = `Skick: ${CONDITIONS[state.cond][0]}`;
   d.showModal();
   // Kortet växer fram från sin plats i värderingen.
   const from = src.getBoundingClientRect(), to = card.getBoundingClientRect();
@@ -587,6 +603,7 @@ $("#val-card").addEventListener("input", (e) => {
   if (e.target.dataset.cost == null) return;
   state.cost = +e.target.value || 0;
   $("#val-out").innerHTML = outputHTML();
+  $("#val-card [data-acc='cost']").textContent = `${state.cost} kr`;
 });
 
 // Klick på ett kort i hero-bannern värderar det direkt.

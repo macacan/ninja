@@ -1482,6 +1482,10 @@ input[type=search]::-webkit-search-results-decoration {
 .vt.on{border-color:var(--ink);box-shadow:3px 3px 0 var(--ink)}
 .vo-grade{display:flex;gap:14px;align-items:center;margin-top:14px}
 .vo-grade p{margin:2px 0 0;font-size:.85rem}
+/* Betygscirkeln: siffran för det estimerade betyget, 1 till 10. */
+.gcircle{flex:none;display:grid;place-items:center;align-content:center;width:58px;height:58px;border-radius:50%;background:var(--ink-solid);color:#fff}
+.gcircle b{font:700 1.7rem/1 var(--cond)}.gcircle span{font-size:.62rem;opacity:.7;margin-top:-2px}
+.gcircle.gold{background:radial-gradient(circle at 35% 30%,#fff6c4 0%,#f2b632 45%,#b87a06 100%);color:#2a1a00;box-shadow:0 0 0 2px #8a5a00,0 4px 12px rgba(242,182,50,.45)}
 .vo-gnum{flex:none;display:grid;place-items:center;width:84px;height:84px;border-radius:50%;background:var(--ink-solid);color:#fff}
 .vo-gnum b{font:700 2.4rem/1 var(--cond)}.vo-gnum span{font-size:.7rem;margin-top:-14px;opacity:.7}
 .verdict{display:grid;gap:2px;margin-top:14px;padding:12px 14px;border-radius:10px;border-left:5px solid}
@@ -2969,10 +2973,10 @@ button.zm-price:hover{background:#1f2132}
 
 /* ---------- Värdering: betyg och värde bredvid kortet, bara på mobil ---------- */
 .val-side{display:grid;gap:14px;align-content:start}
+.val-meta{display:contents}
+.val-mtitle{display:none}
 .val-side .val-img{max-width:none}
 .val-live{display:none}
-.vl-grade{flex:none;display:grid;place-items:center;align-content:center;width:58px;height:58px;border-radius:50%;background:var(--ink-solid);color:#fff}
-.vl-grade b{font:700 1.7rem/1 var(--cond)}.vl-grade span{font-size:.62rem;opacity:.7;margin-top:-2px}
 .vl-text{display:grid;line-height:1.25}
 .vl-text b{font:700 1.35rem/1.15 var(--cond)}
 .vl-text small{color:var(--muted);font-size:.76rem}
@@ -2980,10 +2984,53 @@ button.zm-price:hover{background:#1f2132}
   /* Mobil: kortet med betyg och värde ligger fast högst upp medan man väljer skick och drar reglagen.
      Raderna löses upp så att kortet kan ligga fast genom hela värderingen. */
   .val-card-modal .val-top,.val-card-modal .val-bottom{display:contents}
-  .val-side{position:sticky;top:0;z-index:2;grid-template-columns:118px 1fr;align-items:center;gap:14px;margin:0 -16px 14px;padding:10px 16px;background:var(--card);border-bottom:1px solid var(--line)}
-  .val-side .val-img{width:118px}
-  .val-live{display:flex;flex-direction:column;align-items:flex-start;gap:8px}
-  .val-card-modal .val-grade{margin-top:18px;padding-top:6px;border-top:1px solid var(--line)}
+  .val-card-modal #val-card{padding-top:12px}
+  .val-side{position:sticky;top:0;z-index:2;grid-template-columns:1fr;justify-items:center;text-align:center;align-items:center;gap:8px;margin:0 -16px 14px;padding:8px 16px 10px;background:var(--card);border-bottom:1px solid var(--line)}
+  .val-side .val-img{width:185px}
+  .val-mtitle b{font-size:.9rem}
+  .val-mtitle small{font-size:.68rem}
+  .vl-text b{font-size:1.05rem}
+  .vl-text small{font-size:.68rem}
+  .val-meta{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:8px 18px}
+  .val-mtitle{display:grid;gap:2px;text-align:left}
+  .val-mtitle b{font:700 1.05rem/1.15 var(--cond);text-transform:uppercase;letter-spacing:.3px}
+  .val-mtitle small{color:var(--muted);font-size:.75rem}
+  .val-dh,.val-dsub{display:none}
+  .val-side{padding-bottom:0;margin-bottom:0}
+  .val-mtitle{padding-top:14px}
+  .acc{margin-bottom:0}
+  .acc summary{padding:6px 0}
+  .acc > p.muted{margin:0 0 2px}
+  .acc > .chips{margin-bottom:0;gap:6px}
+  .crit-s{padding:6px 0 2px;gap:0}
+  .crit-range{height:20px;margin:0}
+  .val-live{display:flex;flex-direction:column;align-items:flex-start;gap:2px}
+  .val-card-modal .val-grade{margin-top:0;padding-top:0;border-top:0}
+}
+
+/* ---------- Värdering: skick och pre-grading som dropdowns ---------- */
+.acc{border-bottom:1px solid var(--line);margin-bottom:4px}
+.acc summary{list-style:none;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 0;cursor:pointer;font:700 1.05rem/1.2 var(--cond);text-transform:uppercase;letter-spacing:.3px;color:var(--ink)}
+.acc summary::-webkit-details-marker{display:none}
+.acc summary::after{content:"";flex:none;width:9px;height:9px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:rotate(45deg) translateY(-3px);transition:transform .2s}
+.acc[open] summary::after{transform:rotate(225deg) translateY(-3px)}
+.acc summary:focus-visible{outline:3px solid var(--red);outline-offset:4px;border-radius:6px}
+.acc-val{margin-left:auto;font:600 .85rem/1.2 var(--pixel);text-transform:none;color:var(--muted)}
+.acc[open] > .chips, .acc[open] > p, .acc[open] > .crit-s{animation:accIn .2s ease-out}
+@keyframes accIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+/* Desktop: inga dropdowns, och kostnaden för gradering ligger under värdet till höger. */
+@media (min-width:761px){
+  .acc summary{display:none}
+  .acc{border-bottom:0;margin-bottom:0}
+  .val-grade{display:contents}
+  .val-grade > .acc:not(.cost-acc){grid-column:1;grid-row:1 / span 2;align-self:start}
+  .val-out{grid-column:2;grid-row:1}
+  .val-grade > .cost-acc{grid-column:2;grid-row:2;align-self:start;margin-top:12px}
+}
+/* Mobil: kostnaden är en dropdown, ihopfälld som standard. Rubriken finns i raden ovanför. */
+@media (max-width:760px){
+  .cost-acc .crit > span > b{display:none}
+  .cost-acc .crit{padding:0 0 12px;border-bottom:0}
 }
 
 /* ---------- Värdering: kortet i stort format, i ditt skick ---------- */
@@ -2991,7 +3038,8 @@ button.zm-price:hover{background:#1f2132}
 .val-card-modal .val-img:focus-visible{outline:3px solid var(--red);outline-offset:4px}
 .vz-tip{position:absolute;left:50%;bottom:10px;z-index:3;transform:translate(-50%,6px);padding:5px 10px;border-radius:999px;background:rgba(15,17,30,.78);color:#fff;font:600 .72rem var(--sans);white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .18s,transform .18s}
 .val-card-modal .val-img:hover .vz-tip{opacity:1;transform:translate(-50%,0)}
-.vz-card{position:relative;height:min(70vh,660px);aspect-ratio:63/88;touch-action:none;cursor:zoom-in;outline:none;--sheen:.55}
+.vz-dlg .zm-stage{padding:64px 16px 24px;justify-content:center}
+.vz-card{position:relative;height:min(84vh,840px,calc((100vw - 32px) * 88 / 63));aspect-ratio:63/88;touch-action:none;cursor:zoom-in;outline:none;--sheen:.55}
 .vz-card .vd-card{box-shadow:0 30px 70px rgba(0,0,0,.65)}
 .vz-card .vd-card{transition:scale .3s cubic-bezier(.2,.8,.2,1)}
 .vz-card .vd-scratch{opacity:var(--sheen);transition:opacity .15s}
@@ -3000,5 +3048,4 @@ button.zm-price:hover{background:#1f2132}
 .vz-card.zoomed .vd-card{scale:2.4;transform-origin:var(--ox,50%) var(--oy,50%)}
 .vz-hint{margin:6px 0 0;font-size:.82rem;color:#9aa7c2}
 .vz-card:focus-visible{outline:3px solid var(--gold);outline-offset:6px;border-radius:12px}
-@media (max-width:640px){.vz-card{height:min(62vh,520px)}}
 @media (hover:none){.vz-tip{display:none}}
