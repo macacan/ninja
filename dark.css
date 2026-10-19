@@ -17,8 +17,6 @@ input[type=search],select,.shop-search{background:#1e2230}
 .price-cap input{background:#1e2230}
 .toc a:hover{background:#403315}
 .todo{background:#494218}
-.rel-pre{background:#403315}
-.wave[aria-pressed=true]{background:#403315}
 .qc[aria-pressed=true]{background:#403315}
 .dot-pre{color:#1b1b2f}
 .bell[aria-pressed=true]{color:#1b1b2f}
@@ -56,3 +54,14 @@ input[type=search],select,.shop-search{background:#1e2230}
 .lg-drop,.lg-set{box-shadow:0 0 0 2px #3a4058}
 .ev-drop{box-shadow:none}
 .ev-set{color:#cfdcff;box-shadow:0 0 0 1px #2c4566}
+/* Släppsidan */
+.rc-note{background:#403315}
+.rc-waves button:hover{background:#262b3b}
+.pill,.rs-st.listed,.rs-st.out{background:#262b3b;color:#9aa2b6}
+.pill.in,.rs-st.in{background:#17331f;color:#7fdc95}
+.pill.pre,.rs-st.pre{background:#1f2a4d;color:#a9bbff}
+.rd-tabs button[aria-selected=true]{background:#e8eaf1;border-color:#e8eaf1;color:#0f1117}
+.day[data-day]:hover{background:#3a3018}
+.ph{background:repeating-linear-gradient(45deg,#1e2230 0 6px,#262b3b 6px 12px)}
+.next-rel{border-color:#3a4058;box-shadow:4px 4px 0 #05060a}
+.rc-prod em{background:#3a2f55;color:#d9c9ff}

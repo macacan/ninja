@@ -236,18 +236,23 @@ export async function latestSets(n = 16) {
   return list.filter((s) => !setLogo(s) || byLogo.get(setLogo(s)) === s).slice(0, n);
 }
 
-// Släppkalendern: ett objekt per set med produktomgångar (waves). Se data/releases.json.
+// Släppkalendern: ett objekt per set med produktomgångar (waves). data/release-calendar.json byggs av
+// scripts/update-releases.mjs (handskrivna data/releases.json plus automatiskt hittade släpp).
+// Saknas den används de handskrivna släppen direkt.
 let releaseData;
 export function releaseSets() {
-  releaseData ??= fetch("data/releases.json", { cache: "no-cache" }).then((r) => r.json()).then((d) => d.releases || []);
+  const load = (f) => fetch(f, { cache: "no-cache" }).then((r) => { if (!r.ok) throw new Error(r.status); return r.json(); }).then((d) => d.releases || []);
+  releaseData ??= load("data/release-calendar.json").catch(() => load("data/releases.json"));
   return releaseData;
 }
 
 // Varje omgång som en egen rad, t.ex. "30th Celebration: Battle Deck" den 30 oktober.
 export async function allReleases() {
+  // Ett set utan inlagda produkter ("Setet släpps") eller en fristående produkt visas med bara sitt namn.
+  const named = (r, w) => (!w.products.length || (w.products.length === 1 && w.products[0] === r.set) ? r.set : `${r.set}: ${w.products.join(" · ")}`);
   return (await releaseSets()).flatMap((r) => r.waves.map((w) => ({
-    name: `${r.set}: ${w.products.join(" · ")}`, set: r.set, id: r.id, date: w.date,
-    type: w.products.length === 1 ? w.products[0] : `${w.products.length} produkter`,
+    name: named(r, w), set: r.set, id: r.id, date: w.date, language: r.language,
+    type: !w.products.length ? "Nytt set" : named(r, w) === r.set ? "Fristående produkt" : w.products.length === 1 ? w.products[0] : `${w.products.length} produkter`,
     note: w.preliminary || r.preliminary ? "preliminärt datum" : "", products: w.products,
   }))).sort((a, b) => a.date.localeCompare(b.date));
 }

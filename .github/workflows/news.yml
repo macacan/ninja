@@ -18,9 +18,10 @@ jobs:
           node-version: 22
       - run: node scripts/update-news.mjs
       - run: node scripts/update-set-logos.mjs || echo "Setloggorna kunde inte uppdateras den här gången"
+      - run: node scripts/update-releases.mjs || echo "Släppkalendern kunde inte uppdateras den här gången"
       - name: Spara om något ändrats
         run: |
           git config user.name "ninjaloot-bot"
           git config user.email "ninjaloot-bot@users.noreply.github.com"
-          git add data/news.json data/set-logos.json
+          git add data/news.json data/set-logos.json data/release-calendar.json
           git diff --cached --quiet || (git commit -m "Uppdatera nyheter" && git pull --rebase -X theirs && git push)

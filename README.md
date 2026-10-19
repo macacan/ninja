@@ -15,9 +15,20 @@ npx http-server -p 5173 -c-1
 | Vad | Skript | Schema (GitHub Actions) |
 |---|---|---|
 | Nyheter och videor | `node scripts/update-news.mjs` | varje timme, i `.github/workflows/scrape.yml` (reserv: `news.yml`) |
+| Släppkalendern | `node scripts/update-releases.mjs` | varje timme, i `scrape.yml` (reserv: `news.yml`) |
 | Butikslager | `node scripts/scraper/daemon.mjs` | var 15:e minut per butik, sparas en gång i timmen, `.github/workflows/scrape.yml` |
 
 Båda skriver JSON till `data/`, som sidan läser.
+
+## Släppkalendern
+
+`data/release-calendar.json` byggs automatiskt och är det släppsidan läser. Den slås ihop av:
+
+- **`data/releases.json`** – handskrivna släpp med produktomgångar, beskrivning och förrelease. Vinner alltid när något krockar. Skriv in eller rätta släpp här.
+- **Bulbapedia** – set och produkter som är annonserade men inte släppta (sidor märkta "upcoming"). Nya set kommer med automatiskt, även utan datum.
+- **TCGdex** – set som har släppts de senaste 60 dagarna.
+
+Ändra aldrig `release-calendar.json` för hand, den skrivs över.
 
 ## Butiksbevakningen
 
