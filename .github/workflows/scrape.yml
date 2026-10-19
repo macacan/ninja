@@ -4,9 +4,11 @@ name: Butiksbevakning
 # Därför kör jobbet i stället daemon.mjs (varannan minut per butik) i nästan sex timmar, sparar till repot
 # var tionde minut och startar sedan nästa körning själv. Schemat nedan är bara en reserv som startar
 # kedjan igen om den skulle brytas (t.ex. om GitHub avbryter ett jobb).
+# PAUSAD: schemat är avstängt och kedjan startar ingen ny körning. Ta bort kommentarerna och
+# återställ if-raden i sista steget för att slå på igen.
 on:
-  schedule:
-    - cron: "*/30 * * * *"
+  # schedule:
+  #   - cron: "*/30 * * * *"
   workflow_dispatch:
 
 permissions:
@@ -60,7 +62,7 @@ jobs:
           wait $PID || echo "::warning::Bevakningen avslutades med fel"
           save
       - name: Starta nästa körning
-        if: always() && !cancelled()
+        if: false # pausad, var: always() && !cancelled()
         env:
           GH_TOKEN: ${{ github.token }}
         run: gh workflow run scrape.yml --ref "${{ github.ref_name }}"
