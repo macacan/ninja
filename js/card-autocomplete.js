@@ -634,10 +634,7 @@ export function mountCardAutocomplete(input, options = {}) {
       return;
     }
 
-    let html = `
-      <div class="cad-header">
-        <span class="cad-live-badge"><i class="cad-dot"></i>Live-förslag</span>
-      </div>`;
+    let html = "";
 
     if (hasPokemon) {
       const secLabel = matches.parsed?.numPart ? "Kortnummer & träffar" : "Pokémon";
