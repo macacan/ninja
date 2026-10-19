@@ -1,6 +1,19 @@
 {
- "updated": 1792436262908,
+ "updated": 1792442689216,
  "events": [
+  {
+   "at": 1792442211805,
+   "store": "the-swedish-fish",
+   "product": "the-swedish-fish:7647",
+   "group": "destined-rivals|booster-pack|en|",
+   "title": "Pokemon Destined Rivals Booster Pack",
+   "url": "https://theswedishfish.se/product/destined-rivals-live-premiere-friday-20-00/",
+   "price": 139,
+   "type": "Booster Pack",
+   "set": "Destined Rivals",
+   "lang": "en",
+   "kind": "ny"
+  },
   {
    "at": 1792435831159,
    "store": "kantovault",
