@@ -2967,30 +2967,21 @@ button.zm-price:hover{background:#1f2132}
 .val-card-modal{min-height:0}
 .val-card-modal #val-card{padding-top:56px}
 
-/* ---------- Värdering: kortet till vänster följer med, bedömningen till höger ---------- */
-.val-layout{display:grid;grid-template-columns:minmax(180px,250px) 1fr;gap:28px;align-items:start}
-.val-side{position:sticky;top:16px;display:grid;gap:14px}
+/* ---------- Värdering: betyg och värde bredvid kortet, bara på mobil ---------- */
+.val-side{display:grid;gap:14px;align-content:start}
 .val-side .val-img{max-width:none}
-.val-live{display:flex;align-items:center;gap:12px}
+.val-live{display:none}
 .vl-grade{flex:none;display:grid;place-items:center;align-content:center;width:58px;height:58px;border-radius:50%;background:var(--ink-solid);color:#fff}
 .vl-grade b{font:700 1.7rem/1 var(--cond)}.vl-grade span{font-size:.62rem;opacity:.7;margin-top:-2px}
 .vl-text{display:grid;line-height:1.25}
 .vl-text b{font:700 1.35rem/1.15 var(--cond)}
 .vl-text small{color:var(--muted);font-size:.76rem}
-.val-main{min-width:0}
-.val-main .val-out{margin-top:16px}
-.val-main .crit{margin-top:6px}
-.val-panel[hidden]{display:none}
-.val-panel>.muted{margin:0 0 10px;font-size:.9rem}
-.seg{display:grid;grid-template-columns:1fr 1fr;gap:4px;padding:4px;margin:0 0 14px;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
-.seg button{padding:9px 10px;border:0;border-radius:7px;background:none;color:var(--muted);font:600 .92rem var(--sans);cursor:pointer;transition:background .15s,color .15s}
-.seg button[aria-selected="true"]{background:var(--card);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.18)}
-.seg button:focus-visible{outline:2px solid var(--red);outline-offset:2px}
 @media (max-width:760px){
-  .val-layout{display:block}
-  /* Mobil: kortet och betyget ligger fast högst upp medan man väljer skick eller drar reglagen. */
+  /* Mobil: kortet med betyg och värde ligger fast högst upp medan man väljer skick och drar reglagen.
+     Raderna löses upp så att kortet kan ligga fast genom hela värderingen. */
+  .val-card-modal .val-top,.val-card-modal .val-bottom{display:contents}
   .val-side{position:sticky;top:0;z-index:2;grid-template-columns:118px 1fr;align-items:center;gap:14px;margin:0 -16px 14px;padding:10px 16px;background:var(--card);border-bottom:1px solid var(--line)}
   .val-side .val-img{width:118px}
-  .val-live{flex-direction:column;align-items:flex-start;gap:8px}
-  .val-main h2{font-size:1.5rem}
+  .val-live{display:flex;flex-direction:column;align-items:flex-start;gap:8px}
+  .val-card-modal .val-grade{margin-top:18px;padding-top:6px;border-top:1px solid var(--line)}
 }
