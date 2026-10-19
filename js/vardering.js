@@ -15,6 +15,76 @@ const CRITERIA = [
   ["Yta", "Repor och trycklinjer i vinklat ljus", [["Inga repor eller linjer", 10], ["Enstaka hårfin repa", 9], ["Några lätta repor", 8], ["Tydliga repor eller trycklinjer", 6], ["Intryck, veck eller skador", 4]]],
 ];
 
+// ---------- Förhandsvisning per kriterium ----------
+// Kortets egen bild med skadorna ritade ovanpå, i kortets mått (63 x 88). Allt ritas en gång och reglaget
+// tänder de delar som hör till nivån, så prickar och repor växer fram ju längre man drar.
+const KINDS = ["center", "corner", "edge", "surface"];
+const CW = 63, CH = 88;
+const CORNER_R = [3, 3, 3.6, 5.2, 5.2];
+const CENTER_RATIO = [0.55, 0.6, 0.65, 0.7, 0.86];
+const rng = (seed) => () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+const on = (a, b = 4) => `data-a="${a}" data-b="${b}"`;
+
+function overlay(kind) {
+  const r = rng(kind.length * 7919 + 17), f = (a, b) => a + r() * (b - a);
+  let s = "";
+  if (kind === "corner") {
+    // Vitning: en vit båge i övre vänstra hörnet som blir bredare och längre för varje nivå.
+    [[0.45, 0.6, 0.75], [0.8, 1.8, 0.85], [1.3, 3.4, 0.95]].forEach(([w, len, o], k) => {
+      const R = CORNER_R[k + 1], q = R - w / 2;
+      s += `<path ${on(k + 1, k === 2 ? 4 : k + 1)} d="M${w / 2} ${R + len}V${R}A${q} ${q} 0 0 1 ${R} ${w / 2}H${R + len}" fill="none" stroke="#fff" stroke-opacity="${o}" stroke-width="${w}" stroke-linecap="round"/>`;
+    });
+    for (let k = 0; k < 9; k++) {
+      const lv = 2 + (k > 4), a = f(0, Math.PI / 2), d = f(0.3, 1.4);
+      s += `<circle ${on(lv)} cx="${(CORNER_R[lv] - Math.cos(a) * (CORNER_R[lv] - d)).toFixed(2)}" cy="${(CORNER_R[lv] - Math.sin(a) * (CORNER_R[lv] - d)).toFixed(2)}" r="${f(0.15, 0.32).toFixed(2)}" fill="#fff"/>`;
+    }
+    // Vikt hörn: flärpen viks in och visar den blå baksidan.
+    s += `<g ${on(4)} class="cv-fold"><polygon points="0,0 8,0 0,8" fill="var(--card)"/><polygon points="8,0 0,8 8,8" fill="#2f5fb3"/><line x1="8" y1="0" x2="0" y2="8" stroke="#000" stroke-opacity=".35" stroke-width=".35"/></g>`;
+  } else if (kind === "edge") {
+    // Vita prickar längs vänsterkanten, fler för varje nivå.
+    [2, 3, 5, 6].forEach((n, k) => {
+      for (let j = 0; j < n; j++) s += `<circle ${on(k + 1)} cx="${f(0.25, 0.75).toFixed(2)}" cy="${f(28, 60).toFixed(2)}" r="${(f(0.22, 0.42) + k * 0.06).toFixed(2)}" fill="#fff"/>`;
+    });
+    for (let j = 0; j < 3; j++) { const y = f(29, 55); s += `<line ${on(3)} class="draw" pathLength="1" x1=".35" y1="${y.toFixed(1)}" x2=".35" y2="${(y + f(3, 7)).toFixed(1)}" stroke="#fff" stroke-width=".7" stroke-linecap="round"/>`; }
+    for (let j = 0; j < 3; j++) { const y = f(30, 58); s += `<polygon ${on(4)} points="0,${(y - 1.3).toFixed(1)} ${f(1, 1.8).toFixed(1)},${y.toFixed(1)} 0,${(y + 1.5).toFixed(1)}" fill="#f4f1ea" stroke="#000" stroke-opacity=".25" stroke-width=".12"/>`; }
+  } else if (kind === "surface") {
+    // Repor syns som ljusa streck i vinklat ljus. De ritas fram när de tänds.
+    [1, 2, 3, 3].forEach((n, k) => {
+      for (let j = 0; j < n; j++) {
+        const x = f(8, 52), y = f(10, 78), a = f(-0.9, 0.9), len = f(6, 16) + k * 2;
+        const x2 = x + Math.cos(a) * len, y2 = y + Math.sin(a) * len;
+        s += `<path ${on(k + 1)} class="draw" pathLength="1" d="M${x.toFixed(1)} ${y.toFixed(1)}Q${((x + x2) / 2 + f(-1.5, 1.5)).toFixed(1)} ${((y + y2) / 2 + f(-1.5, 1.5)).toFixed(1)} ${x2.toFixed(1)} ${y2.toFixed(1)}" fill="none" stroke="#fff" stroke-opacity="${f(0.65, 0.95).toFixed(2)}" stroke-width="${(0.28 + k * 0.08).toFixed(2)}" stroke-linecap="round"/>`;
+      }
+    });
+    for (let j = 0; j < 2; j++) { const y = f(22, 70).toFixed(1); s += `<line ${on(3)} class="draw" pathLength="1" x1="2" y1="${y}" x2="61" y2="${y}" stroke="#fff" stroke-opacity=".55" stroke-width=".3"/>`; }
+    s += `<g ${on(4)}><path class="draw" pathLength="1" d="M4 22Q30 40 59 70" fill="none" stroke="#000" stroke-opacity=".4" stroke-width=".7"/><path class="draw" pathLength="1" d="M4.4 21.4Q30.4 39.4 59.4 69.4" fill="none" stroke="#fff" stroke-opacity=".8" stroke-width=".35"/>
+      <circle cx="42" cy="28" r="2.4" fill="#000" fill-opacity=".12" stroke="#fff" stroke-opacity=".7" stroke-width=".3"/></g>`;
+  }
+  return s;
+}
+
+function critVisual(i, img) {
+  const kind = KINDS[i];
+  const pic = `<img src="${esc(img)}" alt="" referrerpolicy="no-referrer" onerror="this.src='img/kortbaksida.webp'">`;
+  const inner = kind === "center"
+    ? `<span class="cv-win">${pic}</span>`
+    : `<span class="cv-in">${pic}<svg viewBox="0 0 ${CW} ${CH}" preserveAspectRatio="none" aria-hidden="true">${overlay(kind)}</svg></span>`;
+  return `<div class="cv cv-${kind}" data-cv="${i}" aria-hidden="true">${inner}${kind === "corner" || kind === "edge" ? '<span class="cv-zoom">Zoom</span>' : ""}</div>`;
+}
+
+function setLevel(cv, lv) {
+  const kind = KINDS[+cv.dataset.cv];
+  cv.querySelectorAll("[data-a]").forEach((el) => el.classList.toggle("on", +el.dataset.a <= lv && lv <= +el.dataset.b));
+  if (kind === "center") {
+    // Ramarna: bilden flyttas i ramen så att ena sidan blir smalare, som 60/40.
+    const m = 7, d = (CENTER_RATIO[lv] - 0.5) * 2 * m, mh = m * CW / CH, dh = d * 0.5 * CW / CH;
+    Object.assign(cv.querySelector(".cv-win").style, { left: `${m + d}%`, right: `${m - d}%`, top: `${mh + dh}%`, bottom: `${mh - dh}%` });
+  } else {
+    const R = kind === "corner" ? CORNER_R[lv] : CORNER_R[0];
+    cv.querySelector(".cv-in").style.borderRadius = `${(R / CW) * 100}% / ${(R / CH) * 100}%`;
+  }
+}
+
 const state = { card: null, rate: null, cond: DEFAULT_COND, crit: CRITERIA.map(() => 1), cost: 400 };
 let found = [], shown = 0, searchId = 0;
 const PAGE = 12;
@@ -138,14 +208,33 @@ function renderCard() {
       <div class="val-grade">
         <h3>3. Pre-grading</h3>
         <p class="muted">Titta på kortet i bra ljus och svara ärligt. Din bedömning ger ett eget betyg från 1 till 10.</p>
-        ${CRITERIA.map(([n, hint, opts], i) => `<label class="crit"><span><b>${n}</b><small>${hint}</small></span>
-          <select data-crit="${i}">${opts.map(([t], k) => `<option value="${k}"${k === state.crit[i] ? " selected" : ""}>${t}</option>`).join("")}</select></label>`).join("")}
+        ${CRITERIA.map(([n, hint, opts], i) => `<div class="crit-s">
+          ${critVisual(i, img)}
+          <div class="crit-body">
+            <label for="crit-${i}"><b>${n}</b><small>${hint}</small></label>
+            <input type="range" id="crit-${i}" class="crit-range" min="0" max="4" step="1" value="${state.crit[i]}" data-crit="${i}" aria-valuetext="${esc(opts[state.crit[i]][0])}">
+            <span class="crit-ends"><span>Perfekt</span><span>Skadat</span></span>
+            <output class="crit-val" for="crit-${i}" data-lv="${state.crit[i]}">${esc(opts[state.crit[i]][0])}</output>
+          </div>
+        </div>`).join("")}
         <label class="crit"><span><b>Kostnad för gradering</b><small>Avgift och frakt per kort, i kronor</small></span>
           <input type="number" min="0" step="50" inputmode="numeric" data-cost value="${state.cost}"></label>
       </div>
       <div class="val-out" id="val-out">${outputHTML()}</div>
     </div>
     <p class="hint">Priser från Cardmarket via TCGdex${cm.updated ? `, uppdaterade ${esc(String(cm.updated).slice(0, 10))}` : ""}. Allt är vägledande uppskattningar. <a href="priser.html?q=${encodeURIComponent(c.name)}">Se alla priser för ${esc(c.name)}</a>.</p>`;
+  $("#val-card").querySelectorAll("[data-cv]").forEach((cv) => setLevel(cv, state.crit[+cv.dataset.cv]));
+}
+
+function setCrit(input) {
+  const i = +input.dataset.crit, lv = +input.value, text = CRITERIA[i][2][lv][0];
+  if (state.crit[i] === lv) return;
+  state.crit[i] = lv;
+  input.setAttribute("aria-valuetext", text);
+  const out = input.parentNode.querySelector(".crit-val");
+  out.textContent = text; out.dataset.lv = lv;
+  setLevel($(`#val-card [data-cv="${i}"]`), lv);
+  $("#val-out").innerHTML = outputHTML();
 }
 
 async function pick(id) {
@@ -244,12 +333,12 @@ $("#vr-grid").addEventListener("keydown", (e) => {
 document.addEventListener("click", (e) => { if (armed && !armed.contains(e.target)) disarm(); });
 $("#vr-more").addEventListener("click", () => { disarm(); shown += PAGE; renderResults(); });
 $("#val-card").addEventListener("change", (e) => {
-  if (e.target.name === "cond") state.cond = +e.target.value;
-  else if (e.target.dataset.crit != null) state.crit[+e.target.dataset.crit] = +e.target.value;
-  else return;
+  if (e.target.name !== "cond") return;
+  state.cond = +e.target.value;
   $("#val-out").innerHTML = outputHTML();
 });
 $("#val-card").addEventListener("input", (e) => {
+  if (e.target.dataset.crit != null) return setCrit(e.target);
   if (e.target.dataset.cost == null) return;
   state.cost = +e.target.value || 0;
   $("#val-out").innerHTML = outputHTML();
