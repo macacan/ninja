@@ -1467,9 +1467,7 @@ input[type=search]::-webkit-search-results-decoration {
 .crit-range:focus-visible{outline:2px solid var(--red);outline-offset:4px;border-radius:2px}
 .val-img{position:relative}
 .vd-card{position:absolute;inset:0;border-radius:inherit;overflow:hidden}
-.vd-card>img,.vd-shift img{width:100%;height:100%;object-fit:cover;display:block}
-.vd-fill{position:absolute;inset:2.6% 3.6%;opacity:0}
-.vd-shift{position:absolute;inset:0}
+.vd-card>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;transform-origin:0 0}
 .vd-svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
 .val-img .val-soon{z-index:1}
 .val-img:not(.has-back){background:none}

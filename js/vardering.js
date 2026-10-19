@@ -18,7 +18,7 @@ const CRITERIA = [
 // ---------- Skadorna på kortbilden ----------
 // Reglagen är steglösa (0 till 4) och ritar skadorna direkt på det stora kortet, i kortets mått 63 x 88.
 // Varje prick och repa har en egen tröskel, så det blir gradvis fler ju längre man drar.
-const CW = 63, CH = 88, BX = 3.6, BY = 2.6; // ramens bredd i procent av kortet
+const CW = 63, CH = 88, GAP = 0.045; // största extra ram vid sned centrering, i andel av kortet
 const CENTER_RATIO = [0.52, 0.56, 0.6, 0.64, 0.7]; // flyttar bara lite, ramen syns alltid på båda sidor
 const rng = (seed) => () => (seed = (seed * 16807) % 2147483647) / 2147483647;
 const clamp01 = (n) => Math.max(0, Math.min(1, n));
@@ -87,36 +87,13 @@ function buildDamage(box, src) {
   add(grad, "stop", { offset: "1", "stop-color": "#fff", "stop-opacity": ".35" });
   const dent = add(scratch, "ellipse", { cx: "40", cy: "30", rx: "2.4", ry: "1.9", fill: "url(#vd-dent)", filter: "url(#vd-soft)" });
 
-  // Centrering: insidan av kortet flyttas i ramen. Under den ligger ramens egen färg.
-  const card = box.querySelector(".vd-card");
-  card.insertAdjacentHTML("beforeend", `<span class="vd-fill"></span><span class="vd-shift"><img src="${esc(src)}" alt="" referrerpolicy="no-referrer"></span>`);
+  // Centrering: hela bilden flyttas och krymper lite, så att ramen blir tjockare på ena sidan.
+  // Bakom ligger en kopia av kortet i full storlek, så glipan visar kortets egen ram. Inget klipps bort.
+  const card = box.querySelector(".vd-card"), pic = card.querySelector("img");
+  pic.insertAdjacentHTML("beforebegin", `<img class="vd-under" src="${esc(src)}" alt="" referrerpolicy="no-referrer" aria-hidden="true" onerror="this.remove()">`);
   card.appendChild(svg);
-  const fill = card.querySelector(".vd-fill"), shift = card.querySelector(".vd-shift");
-  shift.style.clipPath = `inset(${BY}% ${BX}%)`;
-  sampleBorder(src).then((c) => { fill.style.background = c; });
 
-  dmg = { card, corners, dots, runs, chips, scratches, lines, dent, fill, shift };
-}
-
-// Ramens färg läses från kortbilden. Går det inte blir den neutral gul, som på de flesta kort.
-function sampleBorder(src) {
-  return new Promise((resolve) => {
-    const img = new Image();
-    img.crossOrigin = "anonymous";
-    img.onload = () => {
-      try {
-        const cv = document.createElement("canvas"); cv.width = 200; cv.height = 280;
-        const g = cv.getContext("2d"); g.drawImage(img, 0, 0, 200, 280);
-        const px = g.getImageData(4, 90, 3, 100).data; // mitt i vänsterramen
-        let R = 0, G = 0, B = 0;
-        for (let i = 0; i < px.length; i += 4) { R += px[i]; G += px[i + 1]; B += px[i + 2]; }
-        const n = px.length / 4;
-        resolve(`rgb(${Math.round(R / n)},${Math.round(G / n)},${Math.round(B / n)})`);
-      } catch { resolve("#e8c547"); }
-    };
-    img.onerror = () => resolve("#e8c547");
-    img.src = src;
-  });
+  dmg = { card, pic, corners, dots, runs, chips, scratches, lines, dent };
 }
 
 // Vitning i övre vänstra hörnet: en yta längs kanten och hörnets båge, bredast mitt i hörnet och spetsig i ändarna.
@@ -140,9 +117,9 @@ function drawDamage() {
   const ramp = (L, t, w = 0.5) => clamp01((L - t) / w);
 
   // Centrering
-  const dx = (lerpArr(CENTER_RATIO, cen) - 0.5) * 2 * BX, dy = dx * 0.35;
-  dmg.shift.style.transform = `translate(${f2(dx)}%, ${f2(dy)}%)`;
-  dmg.fill.style.opacity = cen > 0.05 ? 1 : 0;
+  // Vänster ram och överkant får den extra bredden, höger kant ligger kvar där den var.
+  const g = clamp01((lerpArr(CENTER_RATIO, cen) - 0.5) / 0.2) * GAP;
+  dmg.pic.style.transform = `translate(${f2(g * 100)}%, ${f2(g * 65)}%) scale(${(1 - g).toFixed(4)})`;
 
   // Hörn: rundningen växer från ungefär 2,8 till 5,5 enheter.
   const R = 2.85 + Math.max(0, cor - 1.6) * 1.1;
