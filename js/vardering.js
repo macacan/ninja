@@ -19,7 +19,7 @@ const CRITERIA = [
 // Reglagen är steglösa (0 till 4) och ritar skadorna direkt på det stora kortet, i kortets mått 63 x 88.
 // Varje prick och repa har en egen tröskel, så det blir gradvis fler ju längre man drar.
 const CW = 63, CH = 88, BX = 3.6, BY = 2.6; // ramens bredd i procent av kortet
-const CENTER_RATIO = [0.53, 0.6, 0.65, 0.7, 0.9];
+const CENTER_RATIO = [0.52, 0.56, 0.6, 0.64, 0.7]; // flyttar bara lite, ramen syns alltid på båda sidor
 const rng = (seed) => () => (seed = (seed * 16807) % 2147483647) / 2147483647;
 const clamp01 = (n) => Math.max(0, Math.min(1, n));
 const lerpArr = (arr, x) => { const i = Math.min(arr.length - 2, Math.floor(x)); return arr[i] + (arr[i + 1] - arr[i]) * (x - i); };
@@ -52,26 +52,26 @@ function buildDamage(box, src) {
     g: add(soft, "g", { transform: `translate(${x} ${y}) scale(${sx} ${sy})` }), w: f(0.6, 1.15),
   }));
   corners.forEach((c) => {
-    c.path = add(c.g, "path", { fill: "none", stroke: "#fff", "stroke-linecap": "round" });
-    c.dots = Array.from({ length: 7 }, () => ({ el: add(c.g, "circle", { fill: "#fff" }), t: f(1.2, 3.8), a: f(0.05, 1.5), d: f(0.2, 1.3), r: f(0.15, 0.32) }));
+    c.path = add(c.g, "path", { fill: "#fff" });
+    c.dots = Array.from({ length: 7 }, () => ({ el: add(c.g, "circle", { fill: "#fff", "fill-opacity": ".5" }), t: f(1.2, 3.8), a: f(0.05, 1.5), d: f(0.2, 1.3), r: f(0.15, 0.32) }));
   });
 
   // Kanter: små vita prickar runt hela kortet, sedan längre vitnade partier och till sist flagor.
   const dots = Array.from({ length: 70 }, () => {
     const t = f(0, 1), [x, y] = edgePoint(t, f(0.1, 0.45));
-    return { el: add(soft, "circle", { cx: f2(x), cy: f2(y), fill: "#fff" }), t: 0.4 + Math.pow(r(), 0.8) * 3.4, r: f(0.18, 0.42) };
+    return { el: add(soft, "circle", { cx: f2(x), cy: f2(y), fill: "#fff", "fill-opacity": ".8" }), t: 0.4 + Math.pow(r(), 0.8) * 3.4, r: f(0.18, 0.42) };
   });
   const runs = Array.from({ length: 10 }, () => {
     const t = f(0, 1), len = f(0.015, 0.04), pts = [];
     for (let k = 0; k <= 6; k++) pts.push(edgePoint(t + (len * k) / 6, 0.3).map(f2).join(" "));
-    return { el: add(soft, "path", { d: `M${pts.join("L")}`, fill: "none", stroke: "#fff", "stroke-width": ".6", "stroke-linecap": "round", pathLength: "1", "stroke-dasharray": "1" }), t: f(2.2, 3.7) };
+    return { el: add(soft, "path", { d: `M${pts.join("L")}`, fill: "none", stroke: "#fff", "stroke-opacity": ".4", "stroke-width": ".35", "stroke-linecap": "round", pathLength: "1", "stroke-dasharray": "1" }), t: f(2.2, 3.7) };
   });
   const chips = Array.from({ length: 5 }, () => {
     const t = f(0, 1), [x1, y1] = edgePoint(t, 0), [x2, y2] = edgePoint(t + 0.004, f(0.9, 1.6)), [x3, y3] = edgePoint(t + 0.008, 0);
-    return { el: add(svg, "polygon", { points: `${f2(x1)},${f2(y1)} ${f2(x2)},${f2(y2)} ${f2(x3)},${f2(y3)}`, fill: "#efe9dc" }), t: f(3.3, 3.95) };
+    return { el: add(svg, "polygon", { points: `${f2(x1)},${f2(y1)} ${f2(x2)},${f2(y2)} ${f2(x3)},${f2(y3)}`, fill: "#efe9dc", "fill-opacity": ".75" }), t: f(3.3, 3.95) };
   });
 
-  // Yta: tunna repor åt olika håll, sedan trycklinjer, ett veck och ett intryck.
+  // Yta: tunna repor åt olika håll, sedan trycklinjer och ett intryck.
   const scratch = add(svg, "g", { class: "vd-scratch" });
   const scratches = Array.from({ length: 26 }, () => {
     const x = f(6, 50), y = f(6, 80), a = f(-Math.PI, Math.PI), len = f(4, 15);
@@ -80,19 +80,12 @@ function buildDamage(box, src) {
     return { el: add(scratch, "path", { d, fill: "none", stroke: "#fff", "stroke-opacity": f2(f(0.25, 0.6)), "stroke-width": f2(f(0.1, 0.22)), "stroke-linecap": "round", pathLength: "1", "stroke-dasharray": "1" }), t: 0.3 + Math.pow(r(), 0.9) * 3.3 };
   });
   const lines = [f(18, 40), f(48, 74)].map((y, k) => ({ el: add(scratch, "line", { x1: "1.5", y1: f2(y), x2: "61.5", y2: f2(y + f(-0.4, 0.4)), stroke: "#fff", "stroke-opacity": ".4", "stroke-width": ".22", pathLength: "1", "stroke-dasharray": "1" }), t: 2.5 + k * 0.4 }));
-  const crease = [["#000", ".35", ".55", 0], ["#fff", ".7", ".25", -0.45]].map(([c, o, w, off]) => ({
-    el: add(scratch, "path", { d: `M${-1 + off} ${24 + off}Q${30 + off} ${36 + off} ${64 + off} ${62 + off}`, fill: "none", stroke: c, "stroke-opacity": o, "stroke-width": w, pathLength: "1", "stroke-dasharray": "1" }), t: 3.4,
-  }));
   // Intrycket är en mjuk skugga med en ljus kant mot ljuset, inte en ritad ring.
   const grad = add(svg.querySelector("defs"), "radialGradient", { id: "vd-dent", cx: ".42", cy: ".4", r: ".6" });
   add(grad, "stop", { offset: "0", "stop-color": "#000", "stop-opacity": ".22" });
   add(grad, "stop", { offset: ".7", "stop-color": "#000", "stop-opacity": ".06" });
   add(grad, "stop", { offset: "1", "stop-color": "#fff", "stop-opacity": ".35" });
   const dent = add(scratch, "ellipse", { cx: "40", cy: "30", rx: "2.4", ry: "1.9", fill: "url(#vd-dent)", filter: "url(#vd-soft)" });
-
-  // Vikt hörn nere till höger: hörnet klipps bort och flärpen visar kortets blå baksida.
-  const flap = add(svg, "polygon", { fill: "#2b59a8" });
-  const flapLine = add(svg, "line", { stroke: "#000", "stroke-opacity": ".3", "stroke-width": ".3" });
 
   // Centrering: insidan av kortet flyttas i ramen. Under den ligger ramens egen färg.
   const card = box.querySelector(".vd-card");
@@ -102,7 +95,7 @@ function buildDamage(box, src) {
   shift.style.clipPath = `inset(${BY}% ${BX}%)`;
   sampleBorder(src).then((c) => { fill.style.background = c; });
 
-  dmg = { card, corners, dots, runs, chips, scratches, lines, crease, dent, flap, flapLine, fill, shift };
+  dmg = { card, corners, dots, runs, chips, scratches, lines, dent, fill, shift };
 }
 
 // Ramens färg läses från kortbilden. Går det inte blir den neutral gul, som på de flesta kort.
@@ -126,13 +119,28 @@ function sampleBorder(src) {
   });
 }
 
+// Vitning i övre vänstra hörnet: en yta längs kanten och hörnets båge, bredast mitt i hörnet och spetsig i ändarna.
+function cornerWear(R, len, w) {
+  const arc = (Math.PI / 2) * R, total = 2 * len + arc, outer = [], inner = [];
+  for (let k = 0; k <= 28; k++) {
+    const u = k / 28, p = u * total;
+    let x, y, nx, ny;
+    if (p < len) { x = 0; y = R + len - p; nx = 1; ny = 0; }
+    else if (p < len + arc) { const th = Math.PI + ((p - len) / arc) * (Math.PI / 2); x = R + R * Math.cos(th); y = R + R * Math.sin(th); nx = -Math.cos(th); ny = -Math.sin(th); }
+    else { x = R + p - len - arc; y = 0; nx = 0; ny = 1; }
+    const t = w * Math.pow(Math.sin(Math.PI * u), 1.6);
+    outer.push(`${f2(x)} ${f2(y)}`); inner.push(`${f2(x + nx * t)} ${f2(y + ny * t)}`);
+  }
+  return `M${outer.join("L")}L${inner.reverse().join("L")}Z`;
+}
+
 function drawDamage() {
   if (!dmg) return;
   const [cen, cor, edg, sur] = state.crit;
   const ramp = (L, t, w = 0.5) => clamp01((L - t) / w);
 
   // Centrering
-  const dx = (lerpArr(CENTER_RATIO, cen) - 0.5) * 2 * BX, dy = dx * 0.45;
+  const dx = (lerpArr(CENTER_RATIO, cen) - 0.5) * 2 * BX, dy = dx * 0.35;
   dmg.shift.style.transform = `translate(${f2(dx)}%, ${f2(dy)}%)`;
   dmg.fill.style.opacity = cen > 0.05 ? 1 : 0;
 
@@ -140,10 +148,10 @@ function drawDamage() {
   const R = 2.85 + Math.max(0, cor - 1.6) * 1.1;
   dmg.card.parentNode.style.borderRadius = `${f2((R / CW) * 100)}% / ${f2((R / CH) * 100)}%`;
   dmg.corners.forEach((c) => {
-    const w = Math.min(1.5, cor * c.w * 0.38), len = cor * c.w * 1.1, q = Math.max(0.1, R - w / 2);
-    c.path.setAttribute("d", `M${f2(w / 2)} ${f2(R + len)}V${f2(R)}A${f2(q)} ${f2(q)} 0 0 1 ${f2(R)} ${f2(w / 2)}H${f2(R + len)}`);
-    c.path.setAttribute("stroke-width", f2(w));
-    c.path.setAttribute("stroke-opacity", f2(clamp01(cor * 0.9)));
+    // Vitningen är bredast i själva hörnet och smalnar av utåt längs kanterna.
+    const w = Math.min(1.1, cor * c.w * 0.28), len = cor * c.w * 1.3;
+    c.path.setAttribute("d", w > 0.01 ? cornerWear(R, len, w) : "");
+    c.path.setAttribute("fill-opacity", f2(clamp01(cor * 0.35) * 0.55));
     c.dots.forEach((d) => {
       const k = ramp(cor, d.t);
       d.el.setAttribute("cx", f2(R - Math.cos(d.a) * (R - d.d) * 1.1));
@@ -151,12 +159,6 @@ function drawDamage() {
       d.el.setAttribute("r", f2(d.r * k));
     });
   });
-  const s = ramp(cor, 3.25, 0.75) * 8;
-  dmg.card.style.clipPath = s > 0.05 ? `polygon(0 0,100% 0,100% ${f2(100 - (s / CH) * 100)}%,${f2(100 - (s / CW) * 100)}% 100%,0 100%)` : "";
-  dmg.flap.setAttribute("points", s > 0.05 ? `${f2(CW - s)},${CH} ${CW},${f2(CH - s)} ${f2(CW - s)},${f2(CH - s)}` : "");
-  dmg.flapLine.setAttribute("x1", f2(CW - s)); dmg.flapLine.setAttribute("y1", CH);
-  dmg.flapLine.setAttribute("x2", CW); dmg.flapLine.setAttribute("y2", f2(CH - s));
-  dmg.flapLine.style.opacity = s > 0.05 ? 1 : 0;
 
   // Kanter
   dmg.dots.forEach((d) => d.el.setAttribute("r", f2(d.r * ramp(edg, d.t, 0.35))));
@@ -166,7 +168,6 @@ function drawDamage() {
   // Yta
   dmg.scratches.forEach((d) => d.el.setAttribute("stroke-dashoffset", f2(1 - ramp(sur, d.t, 0.6))));
   dmg.lines.forEach((d) => d.el.setAttribute("stroke-dashoffset", f2(1 - ramp(sur, d.t, 0.5))));
-  dmg.crease.forEach((d) => d.el.setAttribute("stroke-dashoffset", f2(1 - ramp(sur, d.t, 0.45))));
   dmg.dent.style.opacity = ramp(sur, 3.75, 0.25);
 }
 
