@@ -35,7 +35,7 @@ function tile(c, i) {
   return `<button type="button" class="ctile ${finish(c)}" data-i="${i}" aria-label="Visa ${esc(c.name)} större">
     <span class="cimg${isBack ? " has-back" : ""}">
       <img src="${esc(img)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.src='img/kortbaksida.webp';this.parentNode.classList.add('has-back');">
-      ${isBack ? `<span class="csoon">Kommer snart bilder</span>` : ""}
+      ${isBack ? `<span class="csoon">Bilder kommer snart</span>` : ""}
       <i class="glare"></i>
     </span>
     <span class="cname">${esc(c.name)}</span>
@@ -247,7 +247,7 @@ async function openCard(i) {
   body.innerHTML = `
     <div class="cm-card-wrap">
       <div class="cm-card ${fin}" style="--rx:0deg;--ry:0deg;--mx:50%;--my:50%">
-        ${full.image ? `<img src="${esc(full.image)}/high.webp" alt="${esc(full.name || c.name)}" onload="this.parentNode.classList.add('loaded')" referrerpolicy="no-referrer" onerror="this.src='img/kortbaksida.webp';this.parentNode.classList.add('has-back');">` : `<img src="img/kortbaksida.webp" alt="Kortets baksida" onload="this.parentNode.classList.add('loaded')"><span class="csoon" style="position:absolute;inset:auto 12px 14px;padding:6px 12px;font-size:0.8rem">Kommer snart bilder</span>`}
+        ${full.image ? `<img src="${esc(full.image)}/high.webp" alt="${esc(full.name || c.name)}" onload="this.parentNode.classList.add('loaded')" referrerpolicy="no-referrer" onerror="this.src='img/kortbaksida.webp';this.parentNode.classList.add('has-back');">` : `<img src="img/kortbaksida.webp" alt="Kortets baksida" onload="this.parentNode.classList.add('loaded')"><span class="csoon" style="position:absolute;inset:auto 12px 14px;padding:6px 12px;font-size:0.8rem">Bilder kommer snart</span>`}
         <i class="cm-holo"></i><i class="cm-glare"></i>
       </div>
       <ul class="cm-facts">${facts}</ul>

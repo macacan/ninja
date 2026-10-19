@@ -227,7 +227,7 @@ function resultTile(c, i) {
   return `<div class="ctile plain" data-id="${esc(c.id)}" role="button" tabindex="0" aria-label="Välj ${esc(c.name)}">
     <span class="cimg${isBack ? " has-back" : ""}">
       <img src="${esc(img)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.src='img/kortbaksida.webp';this.parentNode.classList.add('has-back');">
-      ${isBack ? `<span class="csoon">Kommer snart bilder</span>` : ""}
+      ${isBack ? `<span class="csoon">Bilder kommer snart</span>` : ""}
     </span>
     <span class="cname">${esc(c.name)}</span>
     <span class="cset">#${esc(c.localId || "")} · ${esc(c.id.split("-")[0].toUpperCase())}</span>
@@ -328,7 +328,7 @@ function renderCard() {
   const isBack = !c.image;
   $("#val-card").innerHTML = `<div class="val-top">
       <div class="val-side">
-        <div class="val-img${isBack ? " has-back" : ""}" role="button" tabindex="0" aria-label="Förstora kortet i ditt skick"><span class="vd-card"><img src="${esc(img)}" alt="${esc(c.name)}" referrerpolicy="no-referrer" onerror="this.src='img/kortbaksida.webp';this.closest('.val-img').classList.add('has-back');"></span>${isBack ? `<span class="val-soon">Kommer snart bilder</span>` : ""}<span class="vz-tip" aria-hidden="true">Tryck för att förstora</span></div>
+        <div class="val-img${isBack ? " has-back" : ""}" role="button" tabindex="0" aria-label="Förstora kortet i ditt skick"><span class="vd-card"><img src="${esc(img)}" alt="${esc(c.name)}" referrerpolicy="no-referrer" onerror="this.src='img/kortbaksida.webp';this.closest('.val-img').classList.add('has-back');"></span>${isBack ? `<span class="val-soon">Bilder kommer snart</span>` : ""}<span class="vz-tip" aria-hidden="true">Tryck för att förstora</span></div>
         <div class="val-meta">
           <div class="val-mtitle"><b>${esc(c.name)}</b><small>${esc(c.set?.name || "")} · #${esc(c.localId || "")}</small></div>
           <div class="val-live" id="val-live" aria-hidden="true">${liveHTML()}</div>

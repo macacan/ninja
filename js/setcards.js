@@ -37,8 +37,8 @@ function tile(c) {
   const src = c.image ? `${c.image}/low.webp` : "";
   return `<li class="sm-card" data-id="${esc(c.id)}" role="button" tabindex="0" aria-label="Visa ${esc(c.name)} i stort format">
     <span class="sm-img${src ? "" : " has-back"}">${src
-      ? `<img src="${esc(src)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.src='img/kortbaksida.webp';this.parentNode.classList.add('has-back');if(!this.parentNode.querySelector('.sm-soon')){const s=document.createElement('span');s.className='sm-soon';s.textContent='Kommer snart bilder';this.parentNode.append(s);}">`
-      : `<img src="img/kortbaksida.webp" alt="Kortets baksida" loading="lazy" decoding="async"><span class="sm-soon">Kommer snart bilder</span>`
+      ? `<img src="${esc(src)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.src='img/kortbaksida.webp';this.parentNode.classList.add('has-back');if(!this.parentNode.querySelector('.sm-soon')){const s=document.createElement('span');s.className='sm-soon';s.textContent='Bilder kommer snart';this.parentNode.append(s);}">`
+      : `<img src="img/kortbaksida.webp" alt="Kortets baksida" loading="lazy" decoding="async"><span class="sm-soon">Bilder kommer snart</span>`
     }</span>
     <b>${esc(c.name)}</b>
     <small>#${esc(c.localId)}</small>
