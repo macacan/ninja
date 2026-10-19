@@ -17,7 +17,7 @@ for (const card of cards) {
 }
 
 // ---------- Kortöversikten: tryck på en del av kortet för förklaringen ----------
-const pins = [...document.querySelectorAll(".val-anatomy-front .val-pin")];
+const pins = [...document.querySelectorAll(".val-anatomy-visual .val-pin")];
 const points = new Map([...document.querySelectorAll(".val-anatomy-points li")]
   .map((li) => [li.querySelector(".val-point-badge").textContent.trim(), li]));
 let dlg = null;
