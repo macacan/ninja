@@ -39,21 +39,18 @@ function header() {
       <input type="search" name="q" placeholder="Sök kort, t.ex. Pikachu" aria-label="Sök kort">
       <button type="submit" aria-label="Sök">${icon("search", 20)}</button>
     </form>
+    <button type="button" class="menu-btn" aria-expanded="false" aria-controls="mobile-menu" aria-label="Meny">
+      <svg class="burger" width="28" height="28" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"/></svg>
+    </button>
   </div></header>`;
 }
 
-// Mobilen: ett fält längst ner med en hamburgerknapp som öppnar menyn med alla sidor och sökfältet.
+// Mobilen: hamburgerknappen sitter i headern och öppnar menyn med alla sidor och sökfältet.
 function tabbar() {
   const here = { "artikel.html": "nyheter.html" }[location.pathname.split("/").pop()] || location.pathname.split("/").pop() || "index.html";
-  const current = NAV.find(([href]) => href === here);
-  return `<nav class="tabbar" aria-label="Huvudmeny mobil">
-    <button type="button" class="menu-btn" aria-expanded="false" aria-controls="mobile-menu">
-      <svg class="burger" width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"/></svg>
-      <span>Meny${current ? ` · ${current[1]}` : ""}</span>
-    </button>
-  </nav>
-  <div class="mobile-menu" id="mobile-menu" hidden>
+  return `<div class="mobile-menu" id="mobile-menu" hidden>
     <div class="mm-sheet" role="dialog" aria-label="Meny">
+      <button type="button" class="mm-close" aria-label="Stäng menyn">✕</button>
       <form class="mm-search" action="${searchTarget()}" role="search">
         <input type="search" name="q" placeholder="Sök kort, t.ex. Pikachu" aria-label="Sök kort">
         <button type="submit" aria-label="Sök">${icon("search", 20)}</button>
@@ -119,7 +116,7 @@ export function mountChrome() {
     document.body.classList.toggle("menu-open", open);
   };
   menuBtn.addEventListener("click", () => setMenu(menu.hidden));
-  menu.addEventListener("click", (e) => { if (e.target === menu || e.target.closest("a")) setMenu(false); });
+  menu.addEventListener("click", (e) => { if (e.target === menu || e.target.closest("a, .mm-close")) setMenu(false); });
   document.addEventListener("keydown", (e) => { if (e.key === "Escape" && !menu.hidden) { setMenu(false); menuBtn.focus(); } });
   // Ikoner som anges med data-icon i sidornas HTML.
   document.querySelectorAll("[data-icon]").forEach((el) => el.insertAdjacentHTML("afterbegin", icon(el.dataset.icon, +el.dataset.size || 28)));

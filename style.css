@@ -54,8 +54,8 @@ canvas.scene{display:block;width:100%;image-rendering:pixelated;image-rendering:
 @media (max-width:1100px){.site-header .wrap{gap:14px}.main-nav a .px-icon{display:none}.header-search input{width:130px}}
 @media (max-width:980px){.main-nav a{padding:9px 10px}.logo small{display:none}}
 
-/* ---------- Mobilmeny: hamburger längst ner ---------- */
-.tabbar,.mobile-menu{display:none}
+/* ---------- Mobilmeny: hamburger i headern ---------- */
+.menu-btn,.mobile-menu{display:none}
 @media (max-width:860px){
   /* Headern följer med sidan i stället för att ligga kvar överst. */
   .site-header{position:static}
@@ -64,13 +64,12 @@ canvas.scene{display:block;width:100%;image-rendering:pixelated;image-rendering:
   .main-nav,.header-search{display:none}
   /* Sidrubriken och det blå bandet under headern visas inte på mobilen (rubriken finns kvar för skärmläsare). */
   .page-head{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
-  .tabbar{display:block;position:fixed;left:0;right:0;bottom:0;z-index:40;background:var(--card);border-top:2px solid var(--ink);
-    padding:6px 10px calc(6px + env(safe-area-inset-bottom))}
-  .menu-btn{display:flex;align-items:center;gap:12px;width:100%;min-height:50px;padding:0 14px;border:2px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink);font:600 1rem/1 var(--pixel);cursor:pointer;text-align:left}
-  .menu-btn[aria-expanded=true]{border-color:var(--ink);background:#fff3d6}
-  .mobile-menu{display:block;position:fixed;inset:0;z-index:39;background:rgba(15,17,30,.6)}
+  .menu-btn{display:grid;place-items:center;margin-left:auto;width:46px;height:46px;padding:0;border:2px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink);cursor:pointer}
+  .menu-btn[aria-expanded=true]{border-color:var(--ink);background:#fff3d6;color:#1b1b2f}
+  .mobile-menu{display:block;position:fixed;inset:0;z-index:50;background:rgba(15,17,30,.6)}
   .mobile-menu[hidden]{display:none}
-  .mm-sheet{position:absolute;left:0;right:0;bottom:calc(64px + env(safe-area-inset-bottom));max-height:calc(100dvh - 90px - env(safe-area-inset-bottom));overflow:auto;background:var(--card);border-top:2px solid var(--ink);border-radius:16px 16px 0 0;padding:16px 16px 12px}
+  .mm-sheet{position:absolute;left:0;right:0;top:0;max-height:100dvh;overflow:auto;background:var(--card);border-bottom:2px solid var(--ink);border-radius:0 0 16px 16px;padding:14px 16px 16px}
+  .mm-close{display:block;margin:0 0 8px auto;width:44px;height:44px;border:2px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink);font-size:1.1rem;cursor:pointer}
   .mm-search{display:flex;gap:8px;margin-bottom:12px}
   .mm-search input{flex:1;min-width:0;min-height:46px;border:2px solid var(--line);border-radius:8px;padding:0 12px;background:var(--bg);color:var(--ink)}
   .mm-search button{all:unset;cursor:pointer;display:grid;place-items:center;width:46px;height:46px;border-radius:8px;background:var(--red)}
@@ -79,7 +78,6 @@ canvas.scene{display:block;width:100%;image-rendering:pixelated;image-rendering:
   .mm-sheet li a[aria-current=page]{background:#fff3d6;color:#1b1b2f}
   .mm-sheet li a:active{background:var(--surface)}
   body.menu-open{overflow:hidden}
-  body{padding-bottom:calc(74px + env(safe-area-inset-bottom))}
 }
 
 /* ---------- Knappar ---------- */
@@ -2930,8 +2928,6 @@ button.zm-price:hover{background:#1f2132}
 .btn.primary,.btn.gold{color:#1b1b2f}
 .btn.primary{color:#fff}
 .card-ghost-tail{color:#8b93a7}
-@media (max-width:860px){.menu-btn[aria-expanded=true]{background:#403315}
-}
 .btn.gold{color:#1b1b2f}
 .seg button[aria-pressed=true]{color:#1b1b2f}
 .k-new{color:#1b1b2f}
