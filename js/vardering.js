@@ -86,6 +86,25 @@ function buildDamage(box, src) {
   add(grad, "stop", { offset: ".7", "stop-color": "#000", "stop-opacity": ".06" });
   add(grad, "stop", { offset: "1", "stop-color": "#fff", "stop-opacity": ".35" });
   const dent = add(scratch, "ellipse", { cx: "40", cy: "30", rx: "2.4", ry: "1.9", fill: "url(#vd-dent)", filter: "url(#vd-soft)" });
+  // Skrapmärken: fläckar där trycket har nötts bort. Brus gör kanten ojämn och ytan fläckig, som sliten färg.
+  const defs = svg.querySelector("defs");
+  const sf = add(defs, "filter", { id: "vd-scuff", x: "-30%", y: "-30%", width: "160%", height: "160%" });
+  add(sf, "feTurbulence", { type: "fractalNoise", baseFrequency: "1.4", numOctaves: "3", seed: "7", result: "n" });
+  add(sf, "feDisplacementMap", { in: "SourceGraphic", in2: "n", scale: "2.4", xChannelSelector: "R", yChannelSelector: "G", result: "d" });
+  // Två lager: en blekt yta med ojämn kant, och ovanpå fläckar där färgen har gått helt.
+  add(sf, "feColorMatrix", { in: "d", type: "matrix", values: "1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 .85 0", result: "fade" });
+  add(sf, "feColorMatrix", { in: "n", type: "matrix", values: "0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 4 -1.6", result: "m" });
+  add(sf, "feComposite", { in: "m", in2: "d", operator: "in", result: "spots" });
+  const merge = add(sf, "feMerge", { result: "c" });
+  add(merge, "feMergeNode", { in: "fade" }); add(merge, "feMergeNode", { in: "spots" });
+  add(sf, "feGaussianBlur", { in: "c", stdDeviation: ".1" });
+  const sg = add(defs, "radialGradient", { id: "vd-scuff-g" });
+  add(sg, "stop", { offset: "0", "stop-color": "#f4f1ea", "stop-opacity": "1" });
+  add(sg, "stop", { offset: ".6", "stop-color": "#f4f1ea", "stop-opacity": ".75" });
+  add(sg, "stop", { offset: "1", "stop-color": "#f4f1ea", "stop-opacity": "0" });
+  const scuffs = [[19, 56, 7.5, 3.6, -24, 3.5], [47, 17, 3.6, 2, 15, 3.75], [52, 72, 2.6, 1.6, -40, 3.9]].map(([cx, cy, rx, ry, rot, t]) => ({
+    el: add(svg, "ellipse", { cx, cy, rx, ry, transform: `rotate(${rot} ${cx} ${cy})`, fill: "url(#vd-scuff-g)", filter: "url(#vd-scuff)", opacity: "0" }), t,
+  }));
 
   // Centrering: hela bilden flyttas och krymper lite, så att ramen blir tjockare på ena sidan.
   // Bakom ligger en kopia av kortet i full storlek, så glipan visar kortets egen ram. Inget klipps bort.
@@ -93,7 +112,7 @@ function buildDamage(box, src) {
   pic.insertAdjacentHTML("beforebegin", `<img class="vd-under" src="${esc(src)}" alt="" referrerpolicy="no-referrer" aria-hidden="true" onerror="this.remove()">`);
   card.appendChild(svg);
 
-  dmg = { card, pic, corners, dots, runs, chips, scratches, lines, dent };
+  dmg = { card, pic, corners, dots, runs, chips, scratches, lines, dent, scuffs };
 }
 
 // Vitning i övre vänstra hörnet: en yta längs kanten och hörnets båge, bredast mitt i hörnet och spetsig i ändarna.
@@ -146,6 +165,7 @@ function drawDamage() {
   dmg.scratches.forEach((d) => d.el.setAttribute("stroke-dashoffset", f2(1 - ramp(sur, d.t, 0.6))));
   dmg.lines.forEach((d) => d.el.setAttribute("stroke-dashoffset", f2(1 - ramp(sur, d.t, 0.5))));
   dmg.dent.style.opacity = ramp(sur, 3.75, 0.25);
+  dmg.scuffs.forEach((d) => d.el.setAttribute("opacity", f2(ramp(sur, d.t, 0.35))));
 }
 
 const state = { card: null, rate: null, mode: "cond", cond: DEFAULT_COND, crit: [1.6, 1.6, 1.6, 1.6], cost: 400 };
