@@ -2990,7 +2990,7 @@ button.zm-price:hover{background:#1f2132}
   .val-layout{display:block}
   /* Mobil: kortet och betyget ligger fast högst upp medan man väljer skick eller drar reglagen. */
   .val-side{position:sticky;top:0;z-index:2;grid-template-columns:118px 1fr;align-items:center;gap:14px;margin:0 -16px 14px;padding:10px 16px;background:var(--card);border-bottom:1px solid var(--line)}
-  .val-side .val-img{width:118px;box-shadow:0 8px 18px -10px rgba(15,17,30,.6)}
+  .val-side .val-img{width:118px}
   .val-live{flex-direction:column;align-items:flex-start;gap:8px}
   .val-main h2{font-size:1.5rem}
 }
