@@ -46,3 +46,13 @@ input[type=search],select,.shop-search{background:#1e2230}
 .val-data-table tr:hover td{background:#1e252d}
 .rsec{background:#1e2230}
 .val-cond-tip{background:#3c3117}
+/* Släppkalendern */
+.cal-grid{border-color:#3a4058;box-shadow:4px 4px 0 #05060a}
+.cal-nav{border-color:#3a4058;box-shadow:3px 3px 0 #05060a}
+.day.weekend{background:#1c202b}
+.day.out{background:#12141b;color:#4a5064}
+.day.has:not(.out){background:#2b2414}
+.day.today .num{box-shadow:none}
+.lg-drop,.lg-set{box-shadow:0 0 0 2px #3a4058}
+.ev-drop{box-shadow:none}
+.ev-set{color:#cfdcff;box-shadow:0 0 0 1px #2c4566}
