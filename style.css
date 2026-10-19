@@ -1439,11 +1439,14 @@ input[type=search]::-webkit-search-results-decoration {
 .val-top{display:grid;grid-template-columns:minmax(180px,260px) 1fr;gap:26px;align-items:start}
 .val-img{aspect-ratio:63/88;border-radius:4.5%/3.2%;overflow:hidden;background:var(--surface);display:grid;place-items:center;text-align:center;color:var(--muted);font-size:.85rem;box-shadow:0 14px 30px -12px rgba(15,17,30,.5)}
 .val-img img{width:100%;height:100%;object-fit:cover;display:block}
-.chips{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+/* Lite luft runt rutorna, så att markeringen och skuggan inte skärs av i kanten. */
+.chips{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;padding:4px 6px 6px 4px;margin:-4px -6px -6px -4px}
 .chip input{position:absolute;opacity:0;pointer-events:none}
-.chip span{display:grid;gap:1px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--card);cursor:pointer;height:100%}
-.chip small{color:var(--muted);font-size:.78rem}
-.chip input:checked+span{border-color:var(--ink);box-shadow:3px 3px 0 var(--ink)}
+.chip span{display:grid;gap:3px;padding:11px 13px;border:1.5px solid var(--line);border-radius:12px;background:var(--card);cursor:pointer;height:100%;transition:border-color .15s,box-shadow .15s,transform .15s}
+.chip span:hover{border-color:var(--muted);transform:translateY(-1px)}
+.chip b{font-size:.95rem}
+.chip small{color:var(--muted);font-size:.78rem;line-height:1.3}
+.chip input:checked+span{border-color:var(--ink);background:linear-gradient(180deg,#fff 0%,var(--surface) 100%);box-shadow:0 0 0 1px var(--ink),0 6px 14px -6px rgba(15,17,30,.35)}
 .chip input:focus-visible+span{outline:3px solid var(--red);outline-offset:2px}
 .val-bottom{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-top:10px;padding-top:6px;border-top:1px solid var(--line)}
 .crit{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid var(--line)}

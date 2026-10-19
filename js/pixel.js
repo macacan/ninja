@@ -405,7 +405,7 @@ export function mountScene(canvas, opts = {}) {
   }).observe(canvas);
   if (!reduce) {
     // 8 bilder per sekund ger den hackiga 8-bitarskänslan. Pausa när fliken inte syns.
-    const start = () => { clearInterval(timer); timer = setInterval(tick, 125); };
+    const start = () => { clearInterval(timer); timer = setInterval(tick, 167); };
     document.addEventListener("visibilitychange", () => (document.hidden ? clearInterval(timer) : start()));
     start();
   }

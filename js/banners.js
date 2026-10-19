@@ -431,7 +431,7 @@ function mountBanner(canvas, theme) {
   }).observe(canvas);
   canvas.style.height = `${H * SCALE}px`;
   if (!reduce) {
-    const start = () => { clearInterval(timer); timer = setInterval(() => { frame++; draw(); }, 125); };
+    const start = () => { clearInterval(timer); timer = setInterval(() => { frame++; draw(); }, 167); };
     document.addEventListener("visibilitychange", () => (document.hidden ? clearInterval(timer) : start()));
     start();
   }

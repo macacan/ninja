@@ -39,7 +39,6 @@ function header() {
     </ul></nav>
     <form id="header-search" class="header-search" action="${searchTarget()}" role="search">
       <input type="search" name="q" placeholder="Sök kort, t.ex. Pikachu" aria-label="Sök kort">
-      <button type="submit" aria-label="Sök">${icon("search", 20)}</button>
     </form>
     <button type="button" class="theme-btn" data-theme-toggle aria-label="Växla mellan ljust och mörkt läge" title="Ljust/mörkt läge">${THEME_ICON}</button>
     <button type="button" class="menu-btn" aria-expanded="false" aria-controls="mobile-menu" aria-label="Meny">
