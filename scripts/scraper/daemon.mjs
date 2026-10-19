@@ -3,6 +3,7 @@
 // Vanliga butiker kollas varannan minut. Butiker som ber oss ta det lugnare (Crawl-delay i robots.txt,
 // eller svar 429/503) kollas var femte minut. Butiker som inte svarar försöker vi igen efter tio minuter.
 // Processen ska köras hela tiden, t.ex. på en server eller med Windows Schemaläggaren vid inloggning.
+// DAEMON_MINUTES=340 avslutar snyggt efter så många minuter (används av GitHub Actions, där ett jobb får köra högst sex timmar).
 import { createEngine } from "./lib/engine.mjs";
 
 const engine = await createEngine();
@@ -75,4 +76,6 @@ process.on("SIGTERM", stop);
 console.log(`${clock()} Bevakar ${stores.length} butiker. Varannan minut som standard, var ${CALM / MIN}:e minut för butiker som vill ta det lugnare. Ctrl+C avslutar.`);
 setInterval(tick, 1000);
 setInterval(flush, SAVE_EVERY);
+const LIMIT = Number(process.env.DAEMON_MINUTES) || 0;
+if (LIMIT > 0) setTimeout(stop, LIMIT * MIN);
 tick();

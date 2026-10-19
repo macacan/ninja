@@ -15,7 +15,7 @@ npx http-server -p 5173 -c-1
 | Vad | Skript | Schema (GitHub Actions) |
 |---|---|---|
 | Nyheter och videor | `node scripts/update-news.mjs` | var 3:e timme, `.github/workflows/news.yml` |
-| Butikslager | `node scripts/scraper/run.mjs` | var 30:e minut, `.github/workflows/scrape.yml` |
+| Butikslager | `node scripts/scraper/daemon.mjs` | hela tiden (varannan minut per butik), sparas var 10:e minut, `.github/workflows/scrape.yml` |
 
 Båda skriver JSON till `data/`, som sidan läser.
 
@@ -64,4 +64,10 @@ På Windows går det också att dubbelklicka på `start-bevakning.cmd`.
 - Butiker med botskydd (Cloudflare, Akamai m.fl.) försöker vi aldrig ta oss förbi. De markeras som blockerade och kollas igen först efter sex timmar. Ber en butik oss vänta längre än två minuter (`Retry-After`) väntar schemat så länge.
 - Kör inte daemon.mjs och GitHub Actions-jobbet samtidigt: då bevakas butikerna dubbelt och notiserna kommer två gånger. Sätt repo-variabeln `SCRAPE_ON_ACTIONS=false` för att stänga av Actions-jobbet.
 
-Processen måste köras hela tiden, så den passar inte GitHub Actions. Kör den på en server (samma server som sidan, så att `data/` uppdateras direkt) eller på en dator som är igång.
+### På GitHub Actions
+
+GitHub startar schemalagda jobb bara några gånger per dygn för det här repot, oavsett cron. Därför kör `scrape.yml` daemon.mjs i ungefär 5,5 timmar (`DAEMON_MINUTES`), committar ändrade filer var 10:e minut och startar sedan nästa körning själv. Cron-schemat är bara en reserv om kedjan bryts.
+
+- Repo-variabler: `SCRAPE_COMMIT_MINUTES` (hur ofta det sparas, standard 10) och `SCRAPE_DAEMON_MINUTES` (längd per körning, standard 330).
+- Boten committar ofta, så kör `git pull --rebase` innan du pushar egna ändringar.
+- Vill du hellre köra på en egen server eller dator: sätt `SCRAPE_ON_ACTIONS=false` och starta daemon.mjs där.

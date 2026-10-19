@@ -1,14 +1,20 @@
 name: Butiksbevakning
 
+# GitHub startar schemalagda jobb högst några gånger per dygn för det här repot, oavsett vad cron säger.
+# Därför kör jobbet i stället daemon.mjs (varannan minut per butik) i nästan sex timmar, sparar till repot
+# var tionde minut och startar sedan nästa körning själv. Schemat nedan är bara en reserv som startar
+# kedjan igen om den skulle brytas (t.ex. om GitHub avbryter ett jobb).
 on:
   schedule:
-    - cron: "*/15 * * * *" # var 15:e minut (GitHub kan försena körningar några minuter)
+    - cron: "*/30 * * * *"
   workflow_dispatch:
 
 permissions:
   contents: write
+  actions: write # för att kunna starta nästa körning i kedjan
 
 # Två körningar får aldrig överlappa, annars skulle butikerna få dubbelt så många anrop.
+# En reservkörning som startas medan kedjan går väntar i kön och blir sedan nästa länk.
 concurrency:
   group: scrape
   cancel-in-progress: false
@@ -19,16 +25,42 @@ jobs:
     # bevakas butikerna dubbelt och samma notis skickas två gånger.
     if: vars.SCRAPE_ON_ACTIONS != 'false'
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 355
+    env:
+      DAEMON_MINUTES: ${{ vars.SCRAPE_DAEMON_MINUTES || 330 }}
+      COMMIT_EVERY: ${{ vars.SCRAPE_COMMIT_MINUTES || 10 }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - run: node scripts/scraper/run.mjs
-      - name: Spara om något ändrats
+      - name: Bevaka butikerna
         run: |
           git config user.name "ninjaloot-bot"
           git config user.email "ninjaloot-bot@users.noreply.github.com"
-          git add data/products.json data/events.json data/stores-status.json data/notify.json data/price-history.json scripts/scraper/state.json
-          git diff --cached --quiet || (git commit -m "Uppdatera butikslager" && git pull --rebase && git push)
+          FILES="data/products.json data/events.json data/stores-status.json data/notify.json data/price-history.json scripts/scraper/state.json"
+          save() {
+            git add $FILES
+            git diff --cached --quiet && return 0
+            git commit -q -m "Uppdatera butikslager"
+            # Daemonen skriver filerna hela tiden, så ändringar som kommer under tiden läggs undan och tillbaka.
+            for i in 1 2 3; do
+              git pull -q --rebase --autostash && git push -q && return 0
+              sleep 10
+            done
+            echo "::warning::Kunde inte spara till repot, försöker igen nästa gång"
+          }
+
+          node scripts/scraper/daemon.mjs &
+          PID=$!
+          while kill -0 $PID 2>/dev/null; do
+            for _ in $(seq $((COMMIT_EVERY * 6))); do kill -0 $PID 2>/dev/null || break; sleep 10; done
+            save
+          done
+          wait $PID || echo "::warning::Bevakningen avslutades med fel"
+          save
+      - name: Starta nästa körning
+        if: always() && !cancelled()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run scrape.yml --ref "${{ github.ref_name }}"
