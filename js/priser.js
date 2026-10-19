@@ -268,7 +268,6 @@ async function openCard(i) {
         ${full.image ? `<img src="${esc(full.image)}/high.webp" alt="${esc(full.name || c.name)}" onload="this.parentNode.classList.add('loaded')" referrerpolicy="no-referrer" onerror="this.src='img/kortbaksida.webp';this.parentNode.classList.add('has-back');">` : `<img src="img/kortbaksida.webp" alt="Kortets baksida" onload="this.parentNode.classList.add('loaded')"><span class="csoon" style="position:absolute;inset:auto 12px 14px;padding:6px 12px;font-size:0.8rem">Kommer snart bilder</span>`}
         <i class="cm-holo"></i><i class="cm-glare"></i>
       </div>
-      <span class="cm-finish">${fin === "rainbow" ? "Specialkort · regnbågsglans" : fin === "holo" ? "Holo" : "Vanlig yta"}</span>
       <ul class="cm-facts">${facts}</ul>
     </div>
     <div class="cm-info">

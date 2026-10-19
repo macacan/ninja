@@ -25,7 +25,6 @@ function renderArticles(scroll = false) {
   const page = currentPage(), n = pageCount();
   const list = articles.slice((page - 1) * PER_PAGE, page * PER_PAGE);
   $("#articles").innerHTML = list.map(articleCard).join("") || '<div class="msg">Inga artiklar just nu.</div>';
-  $("#art-count").textContent = articles.length ? `${articles.length} artiklar · sida ${page} av ${n}` : "";
   const link = (p, label, cls = "") => `<a class="pg${cls}" href="?sida=${p}" data-page="${p}"${p === page ? ' aria-current="page"' : ""}>${label}</a>`;
   $("#pager").innerHTML = n < 2 ? "" : [
     page > 1 ? link(page - 1, "‹ Föregående", " pg-step") : '<span class="pg pg-step" aria-disabled="true">‹ Föregående</span>',
