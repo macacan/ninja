@@ -117,7 +117,7 @@ function buildDamage(box, src) {
   add(stg, "stop", { offset: ".7", "stop-color": "#7a5530", "stop-opacity": ".5" });
   add(stg, "stop", { offset: "1", "stop-color": "#5a3a1c", "stop-opacity": ".8" });
   const dirt = add(svg, "g", { class: "vd-dirt" });
-  const haze = add(dirt, "rect", { x: "0", y: "0", width: CW, height: CH, fill: "#8c7a5c", opacity: "0", style: "mix-blend-mode:multiply" });
+  const haze = add(dirt, "rect", { x: "0", y: "0", width: CW, height: CH, fill: "#7d7d7d", opacity: "0", style: "mix-blend-mode:multiply" });
   const stains = Array.from({ length: 6 }, () => {
     const cx = f(8, 55), cy = f(10, 80), rx = f(1.4, 3.6);
     return { el: add(dirt, "ellipse", { cx: f2(cx), cy: f2(cy), rx: f2(rx), ry: f2(rx * f(0.6, 1)), transform: `rotate(${f2(f(0, 180))} ${f2(cx)} ${f2(cy)})`, fill: "url(#vd-stain-g)", filter: "url(#vd-stain)", opacity: "0" }), t: 1.6 + Math.pow(r(), 0.8) * 2.3 };
@@ -187,8 +187,9 @@ function drawDamage() {
   dmg.specks.forEach((d) => d.el.setAttribute("r", f2(d.r * ramp(dir, d.t, 0.3))));
   dmg.stains.forEach((d) => d.el.setAttribute("opacity", f2(ramp(dir, d.t, 0.5))));
   const dull = clamp01((dir - 1.5) / 2.5);
-  dmg.haze.setAttribute("opacity", f2(dull * 0.16));
-  dmg.pic.style.filter = dull > 0.01 ? `saturate(${f2(1 - dull * 0.35)}) contrast(${f2(1 - dull * 0.12)}) brightness(${f2(1 - dull * 0.06)})` : "";
+  dmg.haze.setAttribute("opacity", f2(dull * 0.12));
+  // Max blir bilden gråskala. Prickar och fläckar ligger ovanpå bilden och påverkas inte av filtret.
+  dmg.pic.style.filter = dull > 0.01 ? `grayscale(${f2(dull)}) contrast(${f2(1 - dull * 0.08)})` : "";
 }
 
 const state = { card: null, rate: null, cond: DEFAULT_COND, crit: [1, 1, 1, 1, 1], cost: 400 };
