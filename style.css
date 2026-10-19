@@ -1451,41 +1451,28 @@ input[type=search]::-webkit-search-results-decoration {
 .crit small{color:var(--muted);font-size:.78rem}
 .crit select,.crit input{font:inherit;padding:7px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);max-width:55%}
 .crit input{width:110px}
-/* Pre-grading med reglage: kortet till vänster visar skadorna, reglaget till höger. */
-.crit-s{display:grid;grid-template-columns:104px 1fr;gap:14px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line)}
-.crit-body{display:grid;gap:4px;min-width:0}
-.crit-body label{display:grid;gap:1px}
-.crit-body small{color:var(--muted);font-size:.78rem}
-.crit-val{font-weight:600;font-size:.9rem;transition:color .2s}
-.crit-val[data-lv="0"],.crit-val[data-lv="1"]{color:#2b8a57}.crit-val[data-lv="2"]{color:#b8860b}.crit-val[data-lv="3"]{color:#d0661c}.crit-val[data-lv="4"]{color:#c9372c}
-.crit-ends{display:flex;justify-content:space-between;font-size:.7rem;color:var(--muted);margin-top:-2px}
-.crit-range{-webkit-appearance:none;appearance:none;width:100%;height:28px;margin:4px 0 0;background:transparent;cursor:pointer;touch-action:pan-y}
-.crit-range::-webkit-slider-runnable-track{height:8px;border-radius:99px;background:linear-gradient(90deg,#3aa655,#e0b43a 50%,#d4442a)}
-.crit-range::-moz-range-track{height:8px;border-radius:99px;background:linear-gradient(90deg,#3aa655,#e0b43a 50%,#d4442a)}
-.crit-range::-webkit-slider-thumb{-webkit-appearance:none;width:24px;height:24px;margin-top:-8px;border-radius:50%;background:#fff;border:3px solid var(--ink-solid,#1b1d2a);box-shadow:0 2px 6px rgba(0,0,0,.25);transition:transform .15s}
-.crit-range::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:#fff;border:3px solid var(--ink-solid,#1b1d2a);box-shadow:0 2px 6px rgba(0,0,0,.25)}
-.crit-range:active::-webkit-slider-thumb{transform:scale(1.15)}
-.crit-range:focus-visible{outline:3px solid var(--red);outline-offset:3px;border-radius:99px}
-.cv{position:relative;width:104px;aspect-ratio:63/88;border-radius:5px;overflow:hidden;background:var(--surface);box-shadow:0 6px 14px -8px rgba(15,17,30,.55)}
-.cv img{display:block;width:100%;height:100%;object-fit:cover}
-.cv-in{position:absolute;inset:0;overflow:hidden;transition:border-radius .35s ease}
-.cv-in svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
-.cv-corner .cv-in{transform:scale(2.6);transform-origin:0 0}
-.cv-edge .cv-in{transform:scale(2.4);transform-origin:0 50%}
-.cv-corner,.cv-edge{background:var(--card);border:1px solid var(--line)}
-.cv-zoom{position:absolute;right:4px;bottom:4px;padding:1px 5px;border-radius:99px;background:rgba(15,17,30,.65);color:#fff;font-size:.6rem;font-weight:600}
-.cv-center{background:linear-gradient(135deg,#f6d955,#e3b52a)}
-.cv-win{position:absolute;overflow:hidden;border-radius:2px;box-shadow:inset 0 0 0 1px rgba(0,0,0,.15);transition:left .4s cubic-bezier(.3,1.4,.5,1),right .4s cubic-bezier(.3,1.4,.5,1),top .4s cubic-bezier(.3,1.4,.5,1),bottom .4s cubic-bezier(.3,1.4,.5,1)}
-.cv-win img{transform:scale(1.16)}
-.cv [data-a]{opacity:0;transition:opacity .3s,transform .35s cubic-bezier(.3,1.6,.5,1),stroke-dashoffset .5s ease}
-.cv [data-a].on{opacity:1}
-.cv circle[data-a],.cv polygon[data-a]{transform:scale(0);transform-box:fill-box;transform-origin:center}
-.cv circle[data-a].on,.cv polygon[data-a].on{transform:none}
-.cv .draw{stroke-dasharray:1;stroke-dashoffset:1;transition:opacity .3s,stroke-dashoffset .5s ease}
-.cv .on .draw,.cv .draw.on{stroke-dashoffset:0}
-.cv-fold{transform:scale(0);transform-box:fill-box;transform-origin:0 0}
-.cv-fold.on{transform:none}
-@media (prefers-reduced-motion:reduce){.cv *{transition:none!important}}
+/* Pre-grading: steglösa reglage. Skadorna ritas på det stora kortet ovanför. */
+.crit-s{display:grid;gap:2px;padding:14px 0 10px;border-bottom:1px solid var(--line)}
+.crit-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.crit-head label{font-weight:700}
+.crit-val{font-size:.88rem;color:var(--ink);text-align:right}
+.crit-s small{color:var(--muted);font-size:.78rem}
+.crit-range{--p:25%;-webkit-appearance:none;appearance:none;width:100%;height:26px;margin:6px 0 0;background:transparent;cursor:pointer;touch-action:pan-y}
+.crit-range::-webkit-slider-runnable-track{height:4px;border-radius:2px;background:linear-gradient(var(--ink),var(--ink)) 0/var(--p) 100% no-repeat,var(--line)}
+.crit-range::-moz-range-track{height:4px;border-radius:2px;background:var(--line)}
+.crit-range::-moz-range-progress{height:4px;border-radius:2px;background:var(--ink)}
+.crit-range::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;margin-top:-7px;border-radius:50%;background:var(--card);border:2px solid var(--ink);transition:transform .12s}
+.crit-range::-moz-range-thumb{width:14px;height:14px;border-radius:50%;background:var(--card);border:2px solid var(--ink)}
+.crit-range:active::-webkit-slider-thumb{transform:scale(1.2)}
+.crit-range:focus-visible{outline:2px solid var(--red);outline-offset:4px;border-radius:2px}
+.val-img{position:relative}
+.vd-card{position:absolute;inset:0;border-radius:inherit;overflow:hidden}
+.vd-card>img,.vd-shift img{width:100%;height:100%;object-fit:cover;display:block}
+.vd-fill{position:absolute;inset:2.6% 3.6%;opacity:0}
+.vd-shift{position:absolute;inset:0}
+.vd-svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.val-img .val-soon{z-index:1}
+.val-img:not(.has-back){background:none}
 .val-out{background:var(--surface);border-radius:12px;padding:18px;align-self:start;margin-top:18px}
 .vo-label{display:block;font:600 .8rem var(--sans);text-transform:uppercase;letter-spacing:.6px;color:var(--red)}
 .vo-price{display:block;font:700 2.6rem/1.1 var(--cond)}

@@ -15,74 +15,159 @@ const CRITERIA = [
   ["Yta", "Repor och trycklinjer i vinklat ljus", [["Inga repor eller linjer", 10], ["Enstaka hårfin repa", 9], ["Några lätta repor", 8], ["Tydliga repor eller trycklinjer", 6], ["Intryck, veck eller skador", 4]]],
 ];
 
-// ---------- Förhandsvisning per kriterium ----------
-// Kortets egen bild med skadorna ritade ovanpå, i kortets mått (63 x 88). Allt ritas en gång och reglaget
-// tänder de delar som hör till nivån, så prickar och repor växer fram ju längre man drar.
-const KINDS = ["center", "corner", "edge", "surface"];
-const CW = 63, CH = 88;
-const CORNER_R = [3, 3, 3.6, 5.2, 5.2];
-const CENTER_RATIO = [0.55, 0.6, 0.65, 0.7, 0.86];
+// ---------- Skadorna på kortbilden ----------
+// Reglagen är steglösa (0 till 4) och ritar skadorna direkt på det stora kortet, i kortets mått 63 x 88.
+// Varje prick och repa har en egen tröskel, så det blir gradvis fler ju längre man drar.
+const CW = 63, CH = 88, BX = 3.6, BY = 2.6; // ramens bredd i procent av kortet
+const CENTER_RATIO = [0.53, 0.6, 0.65, 0.7, 0.9];
 const rng = (seed) => () => (seed = (seed * 16807) % 2147483647) / 2147483647;
-const on = (a, b = 4) => `data-a="${a}" data-b="${b}"`;
+const clamp01 = (n) => Math.max(0, Math.min(1, n));
+const lerpArr = (arr, x) => { const i = Math.min(arr.length - 2, Math.floor(x)); return arr[i] + (arr[i + 1] - arr[i]) * (x - i); };
+const f2 = (n) => n.toFixed(2);
+let dmg = null;
 
-function overlay(kind) {
-  const r = rng(kind.length * 7919 + 17), f = (a, b) => a + r() * (b - a);
-  let s = "";
-  if (kind === "corner") {
-    // Vitning: en vit båge i övre vänstra hörnet som blir bredare och längre för varje nivå.
-    [[0.45, 0.6, 0.75], [0.8, 1.8, 0.85], [1.3, 3.4, 0.95]].forEach(([w, len, o], k) => {
-      const R = CORNER_R[k + 1], q = R - w / 2;
-      s += `<path ${on(k + 1, k === 2 ? 4 : k + 1)} d="M${w / 2} ${R + len}V${R}A${q} ${q} 0 0 1 ${R} ${w / 2}H${R + len}" fill="none" stroke="#fff" stroke-opacity="${o}" stroke-width="${w}" stroke-linecap="round"/>`;
-    });
-    for (let k = 0; k < 9; k++) {
-      const lv = 2 + (k > 4), a = f(0, Math.PI / 2), d = f(0.3, 1.4);
-      s += `<circle ${on(lv)} cx="${(CORNER_R[lv] - Math.cos(a) * (CORNER_R[lv] - d)).toFixed(2)}" cy="${(CORNER_R[lv] - Math.sin(a) * (CORNER_R[lv] - d)).toFixed(2)}" r="${f(0.15, 0.32).toFixed(2)}" fill="#fff"/>`;
-    }
-    // Vikt hörn: flärpen viks in och visar den blå baksidan.
-    s += `<g ${on(4)} class="cv-fold"><polygon points="0,0 8,0 0,8" fill="var(--card)"/><polygon points="8,0 0,8 8,8" fill="#2f5fb3"/><line x1="8" y1="0" x2="0" y2="8" stroke="#000" stroke-opacity=".35" stroke-width=".35"/></g>`;
-  } else if (kind === "edge") {
-    // Vita prickar längs vänsterkanten, fler för varje nivå.
-    [2, 3, 5, 6].forEach((n, k) => {
-      for (let j = 0; j < n; j++) s += `<circle ${on(k + 1)} cx="${f(0.25, 0.75).toFixed(2)}" cy="${f(28, 60).toFixed(2)}" r="${(f(0.22, 0.42) + k * 0.06).toFixed(2)}" fill="#fff"/>`;
-    });
-    for (let j = 0; j < 3; j++) { const y = f(29, 55); s += `<line ${on(3)} class="draw" pathLength="1" x1=".35" y1="${y.toFixed(1)}" x2=".35" y2="${(y + f(3, 7)).toFixed(1)}" stroke="#fff" stroke-width=".7" stroke-linecap="round"/>`; }
-    for (let j = 0; j < 3; j++) { const y = f(30, 58); s += `<polygon ${on(4)} points="0,${(y - 1.3).toFixed(1)} ${f(1, 1.8).toFixed(1)},${y.toFixed(1)} 0,${(y + 1.5).toFixed(1)}" fill="#f4f1ea" stroke="#000" stroke-opacity=".25" stroke-width=".12"/>`; }
-  } else if (kind === "surface") {
-    // Repor syns som ljusa streck i vinklat ljus. De ritas fram när de tänds.
-    [1, 2, 3, 3].forEach((n, k) => {
-      for (let j = 0; j < n; j++) {
-        const x = f(8, 52), y = f(10, 78), a = f(-0.9, 0.9), len = f(6, 16) + k * 2;
-        const x2 = x + Math.cos(a) * len, y2 = y + Math.sin(a) * len;
-        s += `<path ${on(k + 1)} class="draw" pathLength="1" d="M${x.toFixed(1)} ${y.toFixed(1)}Q${((x + x2) / 2 + f(-1.5, 1.5)).toFixed(1)} ${((y + y2) / 2 + f(-1.5, 1.5)).toFixed(1)} ${x2.toFixed(1)} ${y2.toFixed(1)}" fill="none" stroke="#fff" stroke-opacity="${f(0.65, 0.95).toFixed(2)}" stroke-width="${(0.28 + k * 0.08).toFixed(2)}" stroke-linecap="round"/>`;
-      }
-    });
-    for (let j = 0; j < 2; j++) { const y = f(22, 70).toFixed(1); s += `<line ${on(3)} class="draw" pathLength="1" x1="2" y1="${y}" x2="61" y2="${y}" stroke="#fff" stroke-opacity=".55" stroke-width=".3"/>`; }
-    s += `<g ${on(4)}><path class="draw" pathLength="1" d="M4 22Q30 40 59 70" fill="none" stroke="#000" stroke-opacity=".4" stroke-width=".7"/><path class="draw" pathLength="1" d="M4.4 21.4Q30.4 39.4 59.4 69.4" fill="none" stroke="#fff" stroke-opacity=".8" stroke-width=".35"/>
-      <circle cx="42" cy="28" r="2.4" fill="#000" fill-opacity=".12" stroke="#fff" stroke-opacity=".7" stroke-width=".3"/></g>`;
-  }
-  return s;
+// Punkt på kortets kant: t går ett varv runt kortet, d är avståndet in från kanten.
+function edgePoint(t, d) {
+  const p = t * 2 * (CW + CH);
+  if (p < CW) return [p, d];
+  if (p < CW + CH) return [CW - d, p - CW];
+  if (p < 2 * CW + CH) return [2 * CW + CH - p, CH - d];
+  return [d, 2 * (CW + CH) - p];
 }
 
-function critVisual(i, img) {
-  const kind = KINDS[i];
-  const pic = `<img src="${esc(img)}" alt="" referrerpolicy="no-referrer" onerror="this.src='img/kortbaksida.webp'">`;
-  const inner = kind === "center"
-    ? `<span class="cv-win">${pic}</span>`
-    : `<span class="cv-in">${pic}<svg viewBox="0 0 ${CW} ${CH}" preserveAspectRatio="none" aria-hidden="true">${overlay(kind)}</svg></span>`;
-  return `<div class="cv cv-${kind}" data-cv="${i}" aria-hidden="true">${inner}${kind === "corner" || kind === "edge" ? '<span class="cv-zoom">Zoom</span>' : ""}</div>`;
+function buildDamage(box, src) {
+  const r = rng(4711), f = (a, b) => a + r() * (b - a);
+  const NS = "http://www.w3.org/2000/svg";
+  const svg = document.createElementNS(NS, "svg");
+  svg.setAttribute("viewBox", `0 0 ${CW} ${CH}`);
+  svg.setAttribute("preserveAspectRatio", "none");
+  svg.setAttribute("class", "vd-svg");
+  svg.setAttribute("aria-hidden", "true");
+  const add = (parent, tag, attrs) => { const el = document.createElementNS(NS, tag); for (const k in attrs) el.setAttribute(k, attrs[k]); parent.appendChild(el); return el; };
+  add(add(add(svg, "defs", {}), "filter", { id: "vd-soft", x: "-20%", y: "-20%", width: "140%", height: "140%" }), "feGaussianBlur", { stdDeviation: ".14" });
+  const soft = add(svg, "g", { filter: "url(#vd-soft)" });
+
+  // Hörn: vitningen följer hörnets rundning. Hörnen slits olika mycket, som på riktiga kort.
+  const corners = [[0, 0, 1, 1], [CW, 0, -1, 1], [CW, CH, -1, -1], [0, CH, 1, -1]].map(([x, y, sx, sy]) => ({
+    g: add(soft, "g", { transform: `translate(${x} ${y}) scale(${sx} ${sy})` }), w: f(0.6, 1.15),
+  }));
+  corners.forEach((c) => {
+    c.path = add(c.g, "path", { fill: "none", stroke: "#fff", "stroke-linecap": "round" });
+    c.dots = Array.from({ length: 7 }, () => ({ el: add(c.g, "circle", { fill: "#fff" }), t: f(1.2, 3.8), a: f(0.05, 1.5), d: f(0.2, 1.3), r: f(0.15, 0.32) }));
+  });
+
+  // Kanter: små vita prickar runt hela kortet, sedan längre vitnade partier och till sist flagor.
+  const dots = Array.from({ length: 70 }, () => {
+    const t = f(0, 1), [x, y] = edgePoint(t, f(0.1, 0.45));
+    return { el: add(soft, "circle", { cx: f2(x), cy: f2(y), fill: "#fff" }), t: 0.4 + Math.pow(r(), 0.8) * 3.4, r: f(0.18, 0.42) };
+  });
+  const runs = Array.from({ length: 10 }, () => {
+    const t = f(0, 1), len = f(0.015, 0.04), pts = [];
+    for (let k = 0; k <= 6; k++) pts.push(edgePoint(t + (len * k) / 6, 0.3).map(f2).join(" "));
+    return { el: add(soft, "path", { d: `M${pts.join("L")}`, fill: "none", stroke: "#fff", "stroke-width": ".6", "stroke-linecap": "round", pathLength: "1", "stroke-dasharray": "1" }), t: f(2.2, 3.7) };
+  });
+  const chips = Array.from({ length: 5 }, () => {
+    const t = f(0, 1), [x1, y1] = edgePoint(t, 0), [x2, y2] = edgePoint(t + 0.004, f(0.9, 1.6)), [x3, y3] = edgePoint(t + 0.008, 0);
+    return { el: add(svg, "polygon", { points: `${f2(x1)},${f2(y1)} ${f2(x2)},${f2(y2)} ${f2(x3)},${f2(y3)}`, fill: "#efe9dc" }), t: f(3.3, 3.95) };
+  });
+
+  // Yta: tunna repor åt olika håll, sedan trycklinjer, ett veck och ett intryck.
+  const scratch = add(svg, "g", { class: "vd-scratch" });
+  const scratches = Array.from({ length: 26 }, () => {
+    const x = f(6, 50), y = f(6, 80), a = f(-Math.PI, Math.PI), len = f(4, 15);
+    const x2 = Math.max(1, Math.min(62, x + Math.cos(a) * len)), y2 = Math.max(1, Math.min(87, y + Math.sin(a) * len));
+    const d = `M${f2(x)} ${f2(y)}Q${f2((x + x2) / 2 + f(-1.2, 1.2))} ${f2((y + y2) / 2 + f(-1.2, 1.2))} ${f2(x2)} ${f2(y2)}`;
+    return { el: add(scratch, "path", { d, fill: "none", stroke: "#fff", "stroke-opacity": f2(f(0.25, 0.6)), "stroke-width": f2(f(0.1, 0.22)), "stroke-linecap": "round", pathLength: "1", "stroke-dasharray": "1" }), t: 0.3 + Math.pow(r(), 0.9) * 3.3 };
+  });
+  const lines = [f(18, 40), f(48, 74)].map((y, k) => ({ el: add(scratch, "line", { x1: "1.5", y1: f2(y), x2: "61.5", y2: f2(y + f(-0.4, 0.4)), stroke: "#fff", "stroke-opacity": ".4", "stroke-width": ".22", pathLength: "1", "stroke-dasharray": "1" }), t: 2.5 + k * 0.4 }));
+  const crease = [["#000", ".35", ".55", 0], ["#fff", ".7", ".25", -0.45]].map(([c, o, w, off]) => ({
+    el: add(scratch, "path", { d: `M${-1 + off} ${24 + off}Q${30 + off} ${36 + off} ${64 + off} ${62 + off}`, fill: "none", stroke: c, "stroke-opacity": o, "stroke-width": w, pathLength: "1", "stroke-dasharray": "1" }), t: 3.4,
+  }));
+  // Intrycket är en mjuk skugga med en ljus kant mot ljuset, inte en ritad ring.
+  const grad = add(svg.querySelector("defs"), "radialGradient", { id: "vd-dent", cx: ".42", cy: ".4", r: ".6" });
+  add(grad, "stop", { offset: "0", "stop-color": "#000", "stop-opacity": ".22" });
+  add(grad, "stop", { offset: ".7", "stop-color": "#000", "stop-opacity": ".06" });
+  add(grad, "stop", { offset: "1", "stop-color": "#fff", "stop-opacity": ".35" });
+  const dent = add(scratch, "ellipse", { cx: "40", cy: "30", rx: "2.4", ry: "1.9", fill: "url(#vd-dent)", filter: "url(#vd-soft)" });
+
+  // Vikt hörn nere till höger: hörnet klipps bort och flärpen visar kortets blå baksida.
+  const flap = add(svg, "polygon", { fill: "#2b59a8" });
+  const flapLine = add(svg, "line", { stroke: "#000", "stroke-opacity": ".3", "stroke-width": ".3" });
+
+  // Centrering: insidan av kortet flyttas i ramen. Under den ligger ramens egen färg.
+  const card = box.querySelector(".vd-card");
+  card.insertAdjacentHTML("beforeend", `<span class="vd-fill"></span><span class="vd-shift"><img src="${esc(src)}" alt="" referrerpolicy="no-referrer"></span>`);
+  card.appendChild(svg);
+  const fill = card.querySelector(".vd-fill"), shift = card.querySelector(".vd-shift");
+  shift.style.clipPath = `inset(${BY}% ${BX}%)`;
+  sampleBorder(src).then((c) => { fill.style.background = c; });
+
+  dmg = { card, corners, dots, runs, chips, scratches, lines, crease, dent, flap, flapLine, fill, shift };
 }
 
-function setLevel(cv, lv) {
-  const kind = KINDS[+cv.dataset.cv];
-  cv.querySelectorAll("[data-a]").forEach((el) => el.classList.toggle("on", +el.dataset.a <= lv && lv <= +el.dataset.b));
-  if (kind === "center") {
-    // Ramarna: bilden flyttas i ramen så att ena sidan blir smalare, som 60/40.
-    const m = 7, d = (CENTER_RATIO[lv] - 0.5) * 2 * m, mh = m * CW / CH, dh = d * 0.5 * CW / CH;
-    Object.assign(cv.querySelector(".cv-win").style, { left: `${m + d}%`, right: `${m - d}%`, top: `${mh + dh}%`, bottom: `${mh - dh}%` });
-  } else {
-    const R = kind === "corner" ? CORNER_R[lv] : CORNER_R[0];
-    cv.querySelector(".cv-in").style.borderRadius = `${(R / CW) * 100}% / ${(R / CH) * 100}%`;
-  }
+// Ramens färg läses från kortbilden. Går det inte blir den neutral gul, som på de flesta kort.
+function sampleBorder(src) {
+  return new Promise((resolve) => {
+    const img = new Image();
+    img.crossOrigin = "anonymous";
+    img.onload = () => {
+      try {
+        const cv = document.createElement("canvas"); cv.width = 200; cv.height = 280;
+        const g = cv.getContext("2d"); g.drawImage(img, 0, 0, 200, 280);
+        const px = g.getImageData(4, 90, 3, 100).data; // mitt i vänsterramen
+        let R = 0, G = 0, B = 0;
+        for (let i = 0; i < px.length; i += 4) { R += px[i]; G += px[i + 1]; B += px[i + 2]; }
+        const n = px.length / 4;
+        resolve(`rgb(${Math.round(R / n)},${Math.round(G / n)},${Math.round(B / n)})`);
+      } catch { resolve("#e8c547"); }
+    };
+    img.onerror = () => resolve("#e8c547");
+    img.src = src;
+  });
+}
+
+function drawDamage() {
+  if (!dmg) return;
+  const [cen, cor, edg, sur] = state.crit;
+  const ramp = (L, t, w = 0.5) => clamp01((L - t) / w);
+
+  // Centrering
+  const dx = (lerpArr(CENTER_RATIO, cen) - 0.5) * 2 * BX, dy = dx * 0.45;
+  dmg.shift.style.transform = `translate(${f2(dx)}%, ${f2(dy)}%)`;
+  dmg.fill.style.opacity = cen > 0.05 ? 1 : 0;
+
+  // Hörn: rundningen växer från ungefär 2,8 till 5,5 enheter.
+  const R = 2.85 + Math.max(0, cor - 1.6) * 1.1;
+  dmg.card.parentNode.style.borderRadius = `${f2((R / CW) * 100)}% / ${f2((R / CH) * 100)}%`;
+  dmg.corners.forEach((c) => {
+    const w = Math.min(1.5, cor * c.w * 0.38), len = cor * c.w * 1.1, q = Math.max(0.1, R - w / 2);
+    c.path.setAttribute("d", `M${f2(w / 2)} ${f2(R + len)}V${f2(R)}A${f2(q)} ${f2(q)} 0 0 1 ${f2(R)} ${f2(w / 2)}H${f2(R + len)}`);
+    c.path.setAttribute("stroke-width", f2(w));
+    c.path.setAttribute("stroke-opacity", f2(clamp01(cor * 0.9)));
+    c.dots.forEach((d) => {
+      const k = ramp(cor, d.t);
+      d.el.setAttribute("cx", f2(R - Math.cos(d.a) * (R - d.d) * 1.1));
+      d.el.setAttribute("cy", f2(R - Math.sin(d.a) * (R - d.d) * 1.1));
+      d.el.setAttribute("r", f2(d.r * k));
+    });
+  });
+  const s = ramp(cor, 3.25, 0.75) * 8;
+  dmg.card.style.clipPath = s > 0.05 ? `polygon(0 0,100% 0,100% ${f2(100 - (s / CH) * 100)}%,${f2(100 - (s / CW) * 100)}% 100%,0 100%)` : "";
+  dmg.flap.setAttribute("points", s > 0.05 ? `${f2(CW - s)},${CH} ${CW},${f2(CH - s)} ${f2(CW - s)},${f2(CH - s)}` : "");
+  dmg.flapLine.setAttribute("x1", f2(CW - s)); dmg.flapLine.setAttribute("y1", CH);
+  dmg.flapLine.setAttribute("x2", CW); dmg.flapLine.setAttribute("y2", f2(CH - s));
+  dmg.flapLine.style.opacity = s > 0.05 ? 1 : 0;
+
+  // Kanter
+  dmg.dots.forEach((d) => d.el.setAttribute("r", f2(d.r * ramp(edg, d.t, 0.35))));
+  dmg.runs.forEach((d) => d.el.setAttribute("stroke-dashoffset", f2(1 - ramp(edg, d.t, 0.6))));
+  dmg.chips.forEach((d) => { d.el.style.opacity = ramp(edg, d.t, 0.25); });
+
+  // Yta
+  dmg.scratches.forEach((d) => d.el.setAttribute("stroke-dashoffset", f2(1 - ramp(sur, d.t, 0.6))));
+  dmg.lines.forEach((d) => d.el.setAttribute("stroke-dashoffset", f2(1 - ramp(sur, d.t, 0.5))));
+  dmg.crease.forEach((d) => d.el.setAttribute("stroke-dashoffset", f2(1 - ramp(sur, d.t, 0.45))));
+  dmg.dent.style.opacity = ramp(sur, 3.75, 0.25);
 }
 
 const state = { card: null, rate: null, cond: DEFAULT_COND, crit: CRITERIA.map(() => 1), cost: 400 };
@@ -163,7 +248,7 @@ async function search(raw, total = null, photo = null) {
 const baseEur = (c) => { const cm = c.pricing?.cardmarket || {}; return cm.trend ?? cm.avg ?? cm["trend-holo"] ?? null; };
 const baseSek = () => { const e = baseEur(state.card); return e != null && state.rate ? e * state.rate : null; };
 function estGrade() {
-  const s = CRITERIA.map(([, , opts], i) => opts[state.crit[i]][1]);
+  const s = CRITERIA.map(([, , opts], i) => lerpArr(opts.map((o) => o[1]), state.crit[i]));
   const avg = s.reduce((a, b) => a + b, 0) / s.length;
   return Math.max(1, Math.min(10, Math.round((avg + Math.min(...s)) / 2)));
 }
@@ -196,7 +281,7 @@ function renderCard() {
   const img = c.image ? `${c.image}/high.webp` : "img/kortbaksida.webp";
   const isBack = !c.image;
   $("#val-card").innerHTML = `<div class="val-top">
-      <div class="val-img${isBack ? " has-back" : ""}"><img src="${esc(img)}" alt="${esc(c.name)}" referrerpolicy="no-referrer" onerror="this.src='img/kortbaksida.webp';this.parentNode.classList.add('has-back');">${isBack ? `<span class="val-soon">Kommer snart bilder</span>` : ""}</div>
+      <div class="val-img${isBack ? " has-back" : ""}"><span class="vd-card"><img src="${esc(img)}" alt="${esc(c.name)}" referrerpolicy="no-referrer" onerror="this.src='img/kortbaksida.webp';this.closest('.val-img').classList.add('has-back');"></span>${isBack ? `<span class="val-soon">Kommer snart bilder</span>` : ""}</div>
       <div class="val-info">
         <h2>${esc(c.name)}</h2>
         <p class="muted">${esc(c.set?.name || "")} · #${esc(c.localId || "")}${c.rarity && c.rarity !== "None" ? ` · ${esc(c.rarity)}` : ""}</p>
@@ -209,13 +294,9 @@ function renderCard() {
         <h3>3. Pre-grading</h3>
         <p class="muted">Titta på kortet i bra ljus och svara ärligt. Din bedömning ger ett eget betyg från 1 till 10.</p>
         ${CRITERIA.map(([n, hint, opts], i) => `<div class="crit-s">
-          ${critVisual(i, img)}
-          <div class="crit-body">
-            <label for="crit-${i}"><b>${n}</b><small>${hint}</small></label>
-            <input type="range" id="crit-${i}" class="crit-range" min="0" max="4" step="1" value="${state.crit[i]}" data-crit="${i}" aria-valuetext="${esc(opts[state.crit[i]][0])}">
-            <span class="crit-ends"><span>Perfekt</span><span>Skadat</span></span>
-            <output class="crit-val" for="crit-${i}" data-lv="${state.crit[i]}">${esc(opts[state.crit[i]][0])}</output>
-          </div>
+          <div class="crit-head"><label for="crit-${i}">${n}</label><output class="crit-val" for="crit-${i}">${esc(opts[Math.round(state.crit[i])][0])}</output></div>
+          <small>${hint}</small>
+          <input type="range" id="crit-${i}" class="crit-range" min="0" max="100" step="any" value="${state.crit[i] * 25}" data-crit="${i}" aria-valuetext="${esc(opts[Math.round(state.crit[i])][0])}">
         </div>`).join("")}
         <label class="crit"><span><b>Kostnad för gradering</b><small>Avgift och frakt per kort, i kronor</small></span>
           <input type="number" min="0" step="50" inputmode="numeric" data-cost value="${state.cost}"></label>
@@ -223,17 +304,21 @@ function renderCard() {
       <div class="val-out" id="val-out">${outputHTML()}</div>
     </div>
     <p class="hint">Priser från Cardmarket via TCGdex${cm.updated ? `, uppdaterade ${esc(String(cm.updated).slice(0, 10))}` : ""}. Allt är vägledande uppskattningar. <a href="priser.html?q=${encodeURIComponent(c.name)}">Se alla priser för ${esc(c.name)}</a>.</p>`;
-  $("#val-card").querySelectorAll("[data-cv]").forEach((cv) => setLevel(cv, state.crit[+cv.dataset.cv]));
+  buildDamage($("#val-card .val-img"), img);
+  $("#val-card").querySelectorAll(".crit-range").forEach(paintRange);
+  drawDamage();
 }
 
+// Den fyllda delen av reglaget följer tummen.
+const paintRange = (input) => input.style.setProperty("--p", `${input.value}%`);
+
 function setCrit(input) {
-  const i = +input.dataset.crit, lv = +input.value, text = CRITERIA[i][2][lv][0];
-  if (state.crit[i] === lv) return;
-  state.crit[i] = lv;
+  const i = +input.dataset.crit, L = +input.value / 25, text = CRITERIA[i][2][Math.round(L)][0];
+  state.crit[i] = L;
+  paintRange(input);
   input.setAttribute("aria-valuetext", text);
-  const out = input.parentNode.querySelector(".crit-val");
-  out.textContent = text; out.dataset.lv = lv;
-  setLevel($(`#val-card [data-cv="${i}"]`), lv);
+  input.parentNode.querySelector(".crit-val").textContent = text;
+  drawDamage();
   $("#val-out").innerHTML = outputHTML();
 }
 
