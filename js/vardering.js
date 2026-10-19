@@ -18,7 +18,8 @@ const CRITERIA = [
 // ---------- Skadorna på kortbilden ----------
 // Reglagen är steglösa (0 till 4) och ritar skadorna direkt på det stora kortet, i kortets mått 63 x 88.
 // Varje prick och repa har en egen tröskel, så det blir gradvis fler ju längre man drar.
-const CW = 63, CH = 88, SHIFT = 4.5; // hur långt kortet glider vid max sned centrering, i procent av bredden
+const CW = 63, CH = 88, BX = 3.4, BY = 2.5; // ramens bredd i procent av kortet
+const SHIFT = 2.7; // hur långt motivet flyttas i ramen vid max sned centrering, i procent av bredden
 const CENTER_RATIO = [0.52, 0.56, 0.6, 0.64, 0.7]; // flyttar bara lite, ramen syns alltid på båda sidor
 const rng = (seed) => () => (seed = (seed * 16807) % 2147483647) / 2147483647;
 const clamp01 = (n) => Math.max(0, Math.min(1, n));
@@ -106,11 +107,36 @@ function buildDamage(box, src) {
     el: add(svg, "ellipse", { cx, cy, rx, ry, transform: `rotate(${rot} ${cx} ${cy})`, fill: "url(#vd-scuff-g)", filter: "url(#vd-scuff)", opacity: "0" }), t,
   }));
 
-  // Centrering: hela kortet glider åt höger i en osynlig ram och skärs av lite vid ramens högerkant.
+  // Centrering som ett snett tryck: kortets kant ligger still, men allt innanför ramen flyttas åt höger.
+  // Vänster ram blir tjockare och höger smalare. Glipan fylls med ramens egen färg, inget dubbleras.
   const card = box.querySelector(".vd-card");
+  card.insertAdjacentHTML("beforeend", `<span class="vd-fill"></span><span class="vd-shift" style="clip-path:inset(${BY}% ${BX}%)"><img src="${esc(src)}" alt="" referrerpolicy="no-referrer"></span>`);
   card.appendChild(svg);
+  const fill = card.querySelector(".vd-fill"), shift = card.querySelector(".vd-shift");
+  sampleBorder(src).then((c) => { if (c) fill.style.background = c; else fill.remove(); });
 
-  dmg = { card, corners, dots, runs, chips, scratches, lines, dent, scuffs };
+  dmg = { card, fill, shift, corners, dots, runs, chips, scratches, lines, dent, scuffs };
+}
+
+// Ramens färg läses längst ut på kortets vänsterkant (medianen, så att enstaka prickar i motivet inte stör).
+// Går bilden inte att läsa blir det ingen fyllning, och motivet flyttas bara över ramen.
+function sampleBorder(src) {
+  return new Promise((resolve) => {
+    const img = new Image();
+    img.crossOrigin = "anonymous";
+    img.onload = () => {
+      try {
+        const cv = document.createElement("canvas"); cv.width = 200; cv.height = 280;
+        const g = cv.getContext("2d"); g.drawImage(img, 0, 0, 200, 280);
+        const px = g.getImageData(1, 70, 2, 140).data, ch = [[], [], []];
+        for (let i = 0; i < px.length; i += 4) for (let k = 0; k < 3; k++) ch[k].push(px[i + k]);
+        const med = ch.map((a) => a.sort((x, y) => x - y)[a.length >> 1]);
+        resolve(`rgb(${med.join(",")})`);
+      } catch { resolve(null); }
+    };
+    img.onerror = () => resolve(null);
+    img.src = src;
+  });
 }
 
 // Vitning i övre vänstra hörnet: en yta längs kanten och hörnets båge, bredast mitt i hörnet och spetsig i ändarna.
@@ -134,7 +160,9 @@ function drawDamage() {
   const ramp = (L, t, w = 0.5) => clamp01((L - t) / w);
 
   // Centrering
-  dmg.card.style.transform = `translateX(${f2(clamp01((lerpArr(CENTER_RATIO, cen) - 0.5) / 0.2) * SHIFT)}%)`;
+  const dx = clamp01((lerpArr(CENTER_RATIO, cen) - 0.5) / 0.2) * SHIFT;
+  dmg.shift.style.transform = `translate(${f2(dx)}%, ${f2(dx * 0.25)}%)`;
+  dmg.fill.style.opacity = dx > 0.02 ? 1 : 0;
 
   // Hörn: rundningen växer från ungefär 2,8 till 5,5 enheter.
   const R = 2.85 + Math.max(0, cor - 1.6) * 1.1;
