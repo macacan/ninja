@@ -297,7 +297,7 @@ function renderCard() {
   const isBack = !c.image;
   $("#val-card").innerHTML = `<div class="val-top">
       <div class="val-side">
-        <div class="val-img${isBack ? " has-back" : ""}"><span class="vd-card"><img src="${esc(img)}" alt="${esc(c.name)}" referrerpolicy="no-referrer" onerror="this.src='img/kortbaksida.webp';this.closest('.val-img').classList.add('has-back');"></span>${isBack ? `<span class="val-soon">Kommer snart bilder</span>` : ""}</div>
+        <div class="val-img${isBack ? " has-back" : ""}" role="button" tabindex="0" aria-label="Förstora kortet i ditt skick"><span class="vd-card"><img src="${esc(img)}" alt="${esc(c.name)}" referrerpolicy="no-referrer" onerror="this.src='img/kortbaksida.webp';this.closest('.val-img').classList.add('has-back');"></span>${isBack ? `<span class="val-soon">Kommer snart bilder</span>` : ""}<span class="vz-tip" aria-hidden="true">Tryck för att förstora</span></div>
         <div class="val-live" id="val-live" aria-hidden="true">${liveHTML()}</div>
       </div>
       <div class="val-info">
@@ -379,6 +379,88 @@ async function pick(id) {
   } catch {
     box.innerHTML = '<div class="msg">Kortet kunde inte laddas just nu. Försök igen om en stund.</div>';
   }
+}
+
+// ---------- Kortet i stort format, i nuvarande skick ----------
+// Tryck på kortet: det öppnas stort med alla skador. Luta det mot ljuset (pekaren eller fingret)
+// så syns reporna tydligare, och tryck för att zooma in på en del av kortet.
+let vz = null;
+const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+function valZoom() {
+  if (vz) return vz;
+  vz = document.createElement("dialog");
+  vz.className = "zoom-dlg vz-dlg";
+  vz.setAttribute("aria-label", "Kortet i stort format, i ditt skick");
+  vz.innerHTML = `<button type="button" class="zm-close" aria-label="Stäng">✕</button>
+    <div class="zm-stage">
+      <div class="zm-tilt"><div class="vz-card" tabindex="0" role="img"></div></div>
+      <div class="zm-info">
+        <h3 class="zm-name"></h3>
+        <p class="zm-sub"></p>
+        <p class="vz-hint">Dra för att luta kortet i ljuset. Tryck för att zooma in.</p>
+      </div>
+    </div>`;
+  document.body.append(vz);
+  const card = vz.querySelector(".vz-card"), tilt = vz.querySelector(".zm-tilt");
+  vz.addEventListener("click", (e) => {
+    if (e.target === vz || e.target.classList.contains("zm-stage") || e.target.closest(".zm-close")) vz.close();
+  });
+
+  // Lutning: pekaren styr på datorn, fingret när man drar på mobilen. Glansen följer ljuset,
+  // och reporna lyser upp mer ju mer kortet lutar.
+  let zoomed = false, down = null, moved = false;
+  const lean = (e) => {
+    const r = card.getBoundingClientRect(), x = clamp01((e.clientX - r.left) / r.width), y = clamp01((e.clientY - r.top) / r.height);
+    card.style.setProperty("--gx", `${f2(x * 100)}%`); card.style.setProperty("--gy", `${f2(y * 100)}%`);
+    if (zoomed) { card.style.setProperty("--ox", `${f2(x * 100)}%`); card.style.setProperty("--oy", `${f2(y * 100)}%`); return; }
+    const dx = x - 0.5, dy = y - 0.5;
+    tilt.style.transform = `rotateY(${f2(dx * 26)}deg) rotateX(${f2(-dy * 26)}deg)`;
+    card.style.setProperty("--sheen", f2(0.55 + Math.min(1, Math.hypot(dx, dy) * 2) * 0.45));
+  };
+  const rest = () => { tilt.style.transform = ""; card.style.setProperty("--sheen", ".55"); };
+  card.addEventListener("pointerdown", (e) => { down = [e.clientX, e.clientY]; moved = false; card.setPointerCapture(e.pointerId); lean(e); });
+  card.addEventListener("pointermove", (e) => {
+    if (down && Math.hypot(e.clientX - down[0], e.clientY - down[1]) > 6) moved = true;
+    if (e.pointerType === "mouse" || down) lean(e);
+  });
+  card.addEventListener("pointerup", (e) => {
+    if (!moved) {
+      zoomed = !zoomed;
+      card.classList.toggle("zoomed", zoomed);
+      if (zoomed) { rest(); lean(e); }
+    }
+    down = null;
+    if (e.pointerType !== "mouse" && !zoomed) rest();
+  });
+  card.addEventListener("pointercancel", () => { down = null; rest(); });
+  card.addEventListener("pointerleave", (e) => { if (e.pointerType === "mouse" && !zoomed) rest(); });
+  card.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); zoomed = !zoomed; card.classList.toggle("zoomed", zoomed); } });
+  vz.addEventListener("close", () => { zoomed = false; card.classList.remove("zoomed"); rest(); });
+  return vz;
+}
+
+function openValZoom() {
+  const src = $("#val-card .val-img");
+  if (!src || !state.card) return;
+  const d = valZoom(), card = d.querySelector(".vz-card");
+  // En kopia av kortet med skadorna som de är just nu. Ramens rundning följer med.
+  card.innerHTML = "";
+  card.appendChild(src.querySelector(".vd-card").cloneNode(true));
+  card.style.borderRadius = src.style.borderRadius;
+  card.setAttribute("aria-label", `${state.card.name} i skick ${CONDITIONS[state.cond][0]}`);
+  card.insertAdjacentHTML("beforeend", '<span class="vz-glare" aria-hidden="true"></span>');
+  d.querySelector(".zm-name").textContent = state.card.name;
+  d.querySelector(".zm-sub").textContent = `Skick: ${CONDITIONS[state.cond][0]} · Estimerat betyg ${estGrade()} av 10`;
+  d.showModal();
+  // Kortet växer fram från sin plats i värderingen.
+  const from = src.getBoundingClientRect(), to = card.getBoundingClientRect();
+  if (!reduceMotion && from.width && to.width) {
+    const dx = from.left + from.width / 2 - (to.left + to.width / 2), dy = from.top + from.height / 2 - (to.top + to.height / 2);
+    card.animate([{ transform: `translate(${dx}px,${dy}px) scale(${from.width / to.width})` }, { transform: "none" }], { duration: 480, easing: "cubic-bezier(.2,.8,.2,1)" });
+    d.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 220 });
+  }
+  card.focus({ preventScroll: true });
 }
 
 // ---------- Värderingsfönstret ----------
@@ -466,6 +548,8 @@ $("#val-card").addEventListener("change", (e) => {
   updateOut();
   animateCrit(COND_PRESET[state.cond]);
 });
+$("#val-card").addEventListener("click", (e) => { if (e.target.closest(".val-img")) openValZoom(); });
+$("#val-card").addEventListener("keydown", (e) => { if ((e.key === "Enter" || e.key === " ") && e.target.matches(".val-img")) { e.preventDefault(); openValZoom(); } });
 $("#val-card").addEventListener("input", (e) => {
   if (e.target.dataset.crit != null) return setCrit(e.target);
   if (e.target.dataset.cost == null) return;

@@ -2985,3 +2985,20 @@ button.zm-price:hover{background:#1f2132}
   .val-live{display:flex;flex-direction:column;align-items:flex-start;gap:8px}
   .val-card-modal .val-grade{margin-top:18px;padding-top:6px;border-top:1px solid var(--line)}
 }
+
+/* ---------- Värdering: kortet i stort format, i ditt skick ---------- */
+.val-card-modal .val-img{cursor:zoom-in}
+.val-card-modal .val-img:focus-visible{outline:3px solid var(--red);outline-offset:4px}
+.vz-tip{position:absolute;left:50%;bottom:10px;z-index:3;transform:translate(-50%,6px);padding:5px 10px;border-radius:999px;background:rgba(15,17,30,.78);color:#fff;font:600 .72rem var(--sans);white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .18s,transform .18s}
+.val-card-modal .val-img:hover .vz-tip{opacity:1;transform:translate(-50%,0)}
+.vz-card{position:relative;height:min(70vh,660px);aspect-ratio:63/88;touch-action:none;cursor:zoom-in;outline:none;--sheen:.55}
+.vz-card .vd-card{box-shadow:0 30px 70px rgba(0,0,0,.65)}
+.vz-card .vd-card{transition:scale .3s cubic-bezier(.2,.8,.2,1)}
+.vz-card .vd-scratch{opacity:var(--sheen);transition:opacity .15s}
+.vz-glare{position:absolute;inset:0;border-radius:inherit;pointer-events:none;mix-blend-mode:soft-light;background:radial-gradient(circle at var(--gx,50%) var(--gy,30%),rgba(255,255,255,.55),transparent 50%)}
+.vz-card.zoomed{overflow:hidden;cursor:zoom-out;border-radius:inherit}
+.vz-card.zoomed .vd-card{scale:2.4;transform-origin:var(--ox,50%) var(--oy,50%)}
+.vz-hint{margin:6px 0 0;font-size:.82rem;color:#9aa7c2}
+.vz-card:focus-visible{outline:3px solid var(--gold);outline-offset:6px;border-radius:12px}
+@media (max-width:640px){.vz-card{height:min(62vh,520px)}}
+@media (hover:none){.vz-tip{display:none}}
