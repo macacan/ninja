@@ -14,8 +14,8 @@ npx http-server -p 5173 -c-1
 
 | Vad | Skript | Schema (GitHub Actions) |
 |---|---|---|
-| Nyheter och videor | `node scripts/update-news.mjs` | var 3:e timme, `.github/workflows/news.yml` |
-| Butikslager | `node scripts/scraper/daemon.mjs` | hela tiden (varannan minut per butik), sparas var 10:e minut, `.github/workflows/scrape.yml` |
+| Nyheter och videor | `node scripts/update-news.mjs` | varje timme, i `.github/workflows/scrape.yml` (reserv: `news.yml`) |
+| Butikslager | `node scripts/scraper/daemon.mjs` | var 15:e minut per butik, sparas en gång i timmen, `.github/workflows/scrape.yml` |
 
 Båda skriver JSON till `data/`, som sidan läser.
 
@@ -66,8 +66,8 @@ På Windows går det också att dubbelklicka på `start-bevakning.cmd`.
 
 ### På GitHub Actions
 
-GitHub startar schemalagda jobb bara några gånger per dygn för det här repot, oavsett cron. Därför kör `scrape.yml` daemon.mjs i ungefär 5,5 timmar (`DAEMON_MINUTES`), committar ändrade filer var 10:e minut och startar sedan nästa körning själv. Cron-schemat är bara en reserv om kedjan bryts.
+GitHub startar schemalagda jobb bara några gånger per dygn för det här repot, oavsett cron. Därför kör `scrape.yml` daemon.mjs i ungefär 5,5 timmar (`DAEMON_MINUTES`) med en kontroll per butik var 15:e minut. En gång i timmen hämtas nyheterna och ändrade filer committas. Sedan startar jobbet nästa körning själv. Notiser skickas direkt, inte bara vid commit. Cron-schemat är bara en reserv om kedjan bryts.
 
-- Repo-variabler: `SCRAPE_COMMIT_MINUTES` (hur ofta det sparas, standard 10) och `SCRAPE_DAEMON_MINUTES` (längd per körning, standard 330).
+- Repo-variabler: `SCRAPE_INTERVAL_MINUTES` (minuter mellan kontrollerna per butik, standard 15), `SCRAPE_COMMIT_MINUTES` (hur ofta det sparas, standard 60) och `SCRAPE_DAEMON_MINUTES` (längd per körning, standard 330).
 - Boten committar ofta, så kör `git pull --rebase` innan du pushar egna ändringar.
 - Vill du hellre köra på en egen server eller dator: sätt `SCRAPE_ON_ACTIONS=false` och starta daemon.mjs där.

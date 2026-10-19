@@ -8,8 +8,10 @@ import { createEngine } from "./lib/engine.mjs";
 
 const engine = await createEngine();
 const MIN = 60e3;
-const BASE = (engine.cfg.intervalMinutes ?? 2) * MIN;
-const CALM = (engine.cfg.calmIntervalMinutes ?? 5) * MIN;
+// DAEMON_INTERVAL och DAEMON_PAGES styr takten utan att ändra config.json (används av GitHub Actions).
+const BASE = (Number(process.env.DAEMON_INTERVAL) || engine.cfg.intervalMinutes || 2) * MIN;
+const CALM = Math.max(BASE, (engine.cfg.calmIntervalMinutes ?? 5) * MIN);
+const PAGES = Number(process.env.DAEMON_PAGES) || 8;
 const RETRY = 10 * MIN;
 const BLOCKED = 6 * 60 * MIN; // botskydd: försök igen om sex timmar, aldrig oftare
 const CONCURRENCY = engine.cfg.concurrency ?? 10;
@@ -29,7 +31,7 @@ async function check(store) {
   running.add(store.id);
   try {
     // Sitemap-butiker läser några få produktsidor per varv i stället för 25 åt gången.
-    const res = await engine.scrape(store, { pagesPerRun: 8, sitemapMaxAge: SITEMAP_MAX_AGE });
+    const res = await engine.scrape(store, { pagesPerRun: PAGES, sitemapMaxAge: SITEMAP_MAX_AGE });
     const calm = res.ok && res.delay > 3000;
     const interval = res.blocked ? BLOCKED : !res.ok ? Math.max(RETRY, res.retryAfter * 1000) : calm ? CALM : BASE;
     const found = engine.apply(store, res, { interval: Math.round(interval / MIN) });
@@ -73,7 +75,7 @@ async function stop() {
 process.on("SIGINT", stop);
 process.on("SIGTERM", stop);
 
-console.log(`${clock()} Bevakar ${stores.length} butiker. Varannan minut som standard, var ${CALM / MIN}:e minut för butiker som vill ta det lugnare. Ctrl+C avslutar.`);
+console.log(`${clock()} Bevakar ${stores.length} butiker. Var ${BASE / MIN}:e minut som standard, var ${CALM / MIN}:e minut för butiker som vill ta det lugnare. Ctrl+C avslutar.`);
 setInterval(tick, 1000);
 setInterval(flush, SAVE_EVERY);
 const LIMIT = Number(process.env.DAEMON_MINUTES) || 0;

@@ -1,8 +1,8 @@
 name: Butiksbevakning
 
 # GitHub startar schemalagda jobb högst några gånger per dygn för det här repot, oavsett vad cron säger.
-# Därför kör jobbet i stället daemon.mjs (varannan minut per butik) i nästan sex timmar, sparar till repot
-# var tionde minut och startar sedan nästa körning själv. Schemat nedan är bara en reserv som startar
+# Därför kör jobbet i stället daemon.mjs (var 15:e minut per butik) i nästan sex timmar, hämtar nyheter och
+# sparar till repot en gång i timmen och startar sedan nästa körning själv. Schemat nedan är bara en reserv som startar
 # kedjan igen om den skulle brytas (t.ex. om GitHub avbryter ett jobb).
 on:
   schedule:
@@ -28,24 +28,29 @@ jobs:
     timeout-minutes: 355
     env:
       DAEMON_MINUTES: ${{ vars.SCRAPE_DAEMON_MINUTES || 330 }}
-      COMMIT_EVERY: ${{ vars.SCRAPE_COMMIT_MINUTES || 10 }}
+      COMMIT_EVERY: ${{ vars.SCRAPE_COMMIT_MINUTES || 60 }}
+      DAEMON_INTERVAL: ${{ vars.SCRAPE_INTERVAL_MINUTES || 15 }}
+      DAEMON_PAGES: 25 # sitemap-butiker: fler produktsidor per varv när varven är glesare
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - name: Bevaka butikerna
+      - name: Bevaka butikerna och hämta nyheter
         run: |
           git config user.name "ninjaloot-bot"
           git config user.email "ninjaloot-bot@users.noreply.github.com"
-          FILES="data/products.json data/events.json data/stores-status.json data/notify.json data/price-history.json scripts/scraper/state.json"
+          FILES="data/news.json data/products.json data/events.json data/stores-status.json data/notify.json data/price-history.json scripts/scraper/state.json"
           save() {
+            node scripts/update-news.mjs || echo "::warning::Nyheterna kunde inte hämtas den här gången"
             git add $FILES
             git diff --cached --quiet && return 0
-            git commit -q -m "Uppdatera butikslager"
+            git commit -q -m "Uppdatera butikslager och nyheter"
             # Daemonen skriver filerna hela tiden, så ändringar som kommer under tiden läggs undan och tillbaka.
+            # Krockar det (t.ex. news.json från nyhetsjobbet) vinner vår nyare version.
             for i in 1 2 3; do
-              git pull -q --rebase --autostash && git push -q && return 0
+              git pull -q --rebase --autostash -X theirs && git push -q && return 0
+              git rebase --abort 2>/dev/null
               sleep 10
             done
             echo "::warning::Kunde inte spara till repot, försöker igen nästa gång"
