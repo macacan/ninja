@@ -13,6 +13,7 @@ const CRITERIA = [
   ["Hörn", "Titta efter vitning och avrundning", [["Skarpa, ingen vitning", 10], ["Minimal vitning", 9], ["Lite vitning", 8], ["Tydlig vitning eller rundade", 6], ["Skadade eller vikta", 1]]],
   ["Kanter", "Vita prickar och hack längs kanten", [["Rena och raka", 10], ["Någon liten prick", 9], ["Några vita prickar", 8], ["Tydlig kantvitning", 6], ["Sprickor eller flagor", 1]]],
   ["Yta", "Repor och trycklinjer i vinklat ljus", [["Inga repor eller linjer", 10], ["Enstaka hårfin repa", 9], ["Några lätta repor", 8], ["Tydliga repor eller trycklinjer", 6], ["Intryck, veck eller skador", 1]]],
+  ["Smuts", "Svarta prickar, bruna fläckar och matt glans", [["Rent och blankt", 10], ["Någon liten prick", 9], ["Några prickar eller en liten fläck", 8], ["Fläckar och mattare glans", 6], ["Smutsigt eller fuktfläckar", 1]]],
 ];
 
 // ---------- Skadorna på kortbilden ----------
@@ -106,11 +107,30 @@ function buildDamage(box, src) {
     el: add(svg, "ellipse", { cx, cy, rx, ry, transform: `rotate(${rot} ${cx} ${cy})`, fill: "url(#vd-scuff-g)", filter: "url(#vd-scuff)", opacity: "0" }), t,
   }));
 
+  // Smuts: små svarta prickar, bruna fläckar med ojämn kant och en matt hinna som tar bort glansen.
+  const stf = add(defs, "filter", { id: "vd-stain", x: "-40%", y: "-40%", width: "180%", height: "180%" });
+  add(stf, "feTurbulence", { type: "fractalNoise", baseFrequency: ".9", numOctaves: "2", seed: "21", result: "n" });
+  add(stf, "feDisplacementMap", { in: "SourceGraphic", in2: "n", scale: "3", xChannelSelector: "R", yChannelSelector: "G", result: "d" });
+  add(stf, "feGaussianBlur", { in: "d", stdDeviation: ".25" });
+  const stg = add(defs, "radialGradient", { id: "vd-stain-g" });
+  add(stg, "stop", { offset: "0", "stop-color": "#6b4423", "stop-opacity": ".75" });
+  add(stg, "stop", { offset: ".7", "stop-color": "#7a5530", "stop-opacity": ".5" });
+  add(stg, "stop", { offset: "1", "stop-color": "#5a3a1c", "stop-opacity": ".8" });
+  const dirt = add(svg, "g", { class: "vd-dirt" });
+  const haze = add(dirt, "rect", { x: "0", y: "0", width: CW, height: CH, fill: "#8c7a5c", opacity: "0", style: "mix-blend-mode:multiply" });
+  const stains = Array.from({ length: 6 }, () => {
+    const cx = f(8, 55), cy = f(10, 80), rx = f(1.4, 3.6);
+    return { el: add(dirt, "ellipse", { cx: f2(cx), cy: f2(cy), rx: f2(rx), ry: f2(rx * f(0.6, 1)), transform: `rotate(${f2(f(0, 180))} ${f2(cx)} ${f2(cy)})`, fill: "url(#vd-stain-g)", filter: "url(#vd-stain)", opacity: "0" }), t: 1.6 + Math.pow(r(), 0.8) * 2.3 };
+  });
+  const specks = Array.from({ length: 45 }, () => ({
+    el: add(dirt, "circle", { cx: f2(f(2, 61)), cy: f2(f(2, 86)), fill: r() < 0.75 ? "#111" : "#3b2a1a", "fill-opacity": f2(f(0.55, 0.9)) }), t: 0.4 + Math.pow(r(), 0.85) * 3.4, r: f(0.1, 0.32),
+  }));
+
   // Centrering: hela kortet glider åt höger i en osynlig ram och skärs av lite vid ramens högerkant.
   const card = box.querySelector(".vd-card");
   card.appendChild(svg);
 
-  dmg = { card, corners, dots, runs, chips, scratches, lines, dent, scuffs };
+  dmg = { card, pic: card.querySelector("img"), corners, dots, runs, chips, scratches, lines, dent, scuffs, haze, stains, specks };
 }
 
 // Vitning i övre vänstra hörnet: en yta längs kanten och hörnets båge, bredast mitt i hörnet och spetsig i ändarna.
@@ -130,7 +150,7 @@ function cornerWear(R, len, w) {
 
 function drawDamage() {
   if (!dmg) return;
-  const [cen, cor, edg, sur] = state.crit;
+  const [cen, cor, edg, sur, dir] = state.crit;
   const ramp = (L, t, w = 0.5) => clamp01((L - t) / w);
 
   // Centrering
@@ -162,9 +182,16 @@ function drawDamage() {
   dmg.lines.forEach((d) => d.el.setAttribute("stroke-dashoffset", f2(1 - ramp(sur, d.t, 0.5))));
   dmg.dent.style.opacity = ramp(sur, 3.75, 0.25);
   dmg.scuffs.forEach((d) => d.el.setAttribute("opacity", f2(ramp(sur, d.t, 0.35))));
+
+  // Smuts: prickarna växer fram, fläckarna tonas in och glansen blir mattare.
+  dmg.specks.forEach((d) => d.el.setAttribute("r", f2(d.r * ramp(dir, d.t, 0.3))));
+  dmg.stains.forEach((d) => d.el.setAttribute("opacity", f2(ramp(dir, d.t, 0.5))));
+  const dull = clamp01((dir - 1.5) / 2.5);
+  dmg.haze.setAttribute("opacity", f2(dull * 0.16));
+  dmg.pic.style.filter = dull > 0.01 ? `saturate(${f2(1 - dull * 0.35)}) contrast(${f2(1 - dull * 0.12)}) brightness(${f2(1 - dull * 0.06)})` : "";
 }
 
-const state = { card: null, rate: null, cond: DEFAULT_COND, crit: [1.6, 1.6, 1.6, 1.6], cost: 400 };
+const state = { card: null, rate: null, cond: DEFAULT_COND, crit: [1, 1, 1, 1, 1], cost: 400 };
 let found = [], shown = 0, searchId = 0;
 const PAGE = 12;
 
@@ -250,7 +277,7 @@ function estGrade() {
 }
 // Reglagens läge för varje skick, valda så att betyget blir 10, 9, 7, 6, 4 och 1 och texterna stämmer med skicket.
 // Dåligt är alla reglage i botten.
-const COND_PRESET = [[0.3, 0.3, 0.3, 0.3], [1, 1, 1, 1], [2.4, 2.4, 2.4, 2.4], [2.6, 3, 3, 2.8], [3.2, 3.4, 3.4, 3.3], [4, 4, 4, 4]];
+const COND_PRESET = [[0.3, 0.3, 0.3, 0.3, 0.3], [1, 1, 1, 1, 1], [2.4, 2.4, 2.4, 2.4, 2.4], [2.6, 3, 3, 2.8, 2.8], [3.2, 3.4, 3.4, 3.3, 3.3], [4, 4, 4, 4, 4]];
 // När man drar i reglagen följer skicket med betyget, så att det ograderade värdet ändras direkt.
 const gradeToCond = (g) => (g >= 10 ? 0 : g === 9 ? 1 : g >= 7 ? 2 : g >= 5 ? 3 : g >= 3 ? 4 : 5);
 const round = (n) => Math.round(n / 10) * 10 || Math.round(n);
