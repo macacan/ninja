@@ -18,7 +18,7 @@ const CRITERIA = [
 // ---------- Skadorna på kortbilden ----------
 // Reglagen är steglösa (0 till 4) och ritar skadorna direkt på det stora kortet, i kortets mått 63 x 88.
 // Varje prick och repa har en egen tröskel, så det blir gradvis fler ju längre man drar.
-const CW = 63, CH = 88, SHIFT = 4.5; // hur långt kortet glider vid max sned centrering, i procent av bredden
+const CW = 63, CH = 88, SHIFT = 2.5; // hur långt kortet glider vid max sned centrering, i procent av bredden
 const CENTER_RATIO = [0.52, 0.56, 0.6, 0.64, 0.7]; // flyttar bara lite, ramen syns alltid på båda sidor
 const rng = (seed) => () => (seed = (seed * 16807) % 2147483647) / 2147483647;
 const clamp01 = (n) => Math.max(0, Math.min(1, n));
