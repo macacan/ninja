@@ -115,6 +115,11 @@ export function mountChrome() {
     menuBtn.setAttribute("aria-expanded", open);
     document.body.classList.toggle("menu-open", open);
   };
+  // Hamburgaren ligger fast uppe till höger: i sidans topp på raden med loggan, och högst upp i fönstret när man scrollat.
+  const placeMenuBtn = () => menuBtn.style.setProperty("--menu-top", Math.max(8, menuBtn.parentElement.getBoundingClientRect().top + 8) + "px");
+  addEventListener("scroll", placeMenuBtn, { passive: true });
+  addEventListener("resize", placeMenuBtn);
+  placeMenuBtn();
   menuBtn.addEventListener("click", () => setMenu(menu.hidden));
   menu.addEventListener("click", (e) => { if (e.target === menu || e.target.closest("a, .mm-close")) setMenu(false); });
   document.addEventListener("keydown", (e) => { if (e.key === "Escape" && !menu.hidden) { setMenu(false); menuBtn.focus(); } });
