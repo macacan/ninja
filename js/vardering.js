@@ -9,10 +9,10 @@ import { openScanner, narrowByTotal, rankByLook } from "./card-scanner.js";
 
 // Fyra kriterier, fem svar vardera med delbetyg.
 const CRITERIA = [
-  ["Centrering", "Hur jämna ramarna är runt bilden", [["Nästan perfekt (55/45)", 10], ["Bra (60/40)", 9], ["Märkbart sned (65/35)", 8], ["Tydligt sned (70/30)", 6], ["Mycket sned", 4]]],
-  ["Hörn", "Titta efter vitning och avrundning", [["Skarpa, ingen vitning", 10], ["Minimal vitning", 9], ["Lite vitning", 8], ["Tydlig vitning eller rundade", 6], ["Skadade eller vikta", 3]]],
-  ["Kanter", "Vita prickar och hack längs kanten", [["Rena och raka", 10], ["Någon liten prick", 9], ["Några vita prickar", 8], ["Tydlig kantvitning", 6], ["Sprickor eller flagor", 3]]],
-  ["Yta", "Repor och trycklinjer i vinklat ljus", [["Inga repor eller linjer", 10], ["Enstaka hårfin repa", 9], ["Några lätta repor", 8], ["Tydliga repor eller trycklinjer", 6], ["Intryck, veck eller skador", 3]]],
+  ["Centrering", "Hur jämna ramarna är runt bilden", [["Nästan perfekt (55/45)", 10], ["Bra (60/40)", 9], ["Märkbart sned (65/35)", 8], ["Tydligt sned (70/30)", 6], ["Mycket sned", 3]]],
+  ["Hörn", "Titta efter vitning och avrundning", [["Skarpa, ingen vitning", 10], ["Minimal vitning", 9], ["Lite vitning", 8], ["Tydlig vitning eller rundade", 6], ["Skadade eller vikta", 1]]],
+  ["Kanter", "Vita prickar och hack längs kanten", [["Rena och raka", 10], ["Någon liten prick", 9], ["Några vita prickar", 8], ["Tydlig kantvitning", 6], ["Sprickor eller flagor", 1]]],
+  ["Yta", "Repor och trycklinjer i vinklat ljus", [["Inga repor eller linjer", 10], ["Enstaka hårfin repa", 9], ["Några lätta repor", 8], ["Tydliga repor eller trycklinjer", 6], ["Intryck, veck eller skador", 1]]],
 ];
 
 // ---------- Skadorna på kortbilden ----------
@@ -248,8 +248,11 @@ function estGrade() {
   const avg = s.reduce((a, b) => a + b, 0) / s.length;
   return Math.max(1, Math.min(10, Math.round((avg + Math.min(...s)) / 2)));
 }
-// Reglagens läge för varje skick, valda så att betyget blir 10, 9, 7, 6, 4 och 3 och texterna stämmer med skicket.
-const COND_PRESET = [[0.3, 0.3, 0.3, 0.3], [1, 1, 1, 1], [2.4, 2.4, 2.4, 2.4], [2.6, 3, 3, 2.8], [3.2, 3.6, 3.6, 3.4], [3.8, 4, 4, 4]];
+// Reglagens läge för varje skick, valda så att betyget blir 10, 9, 7, 6, 4 och 1 och texterna stämmer med skicket.
+// Dåligt är alla reglage i botten.
+const COND_PRESET = [[0.3, 0.3, 0.3, 0.3], [1, 1, 1, 1], [2.4, 2.4, 2.4, 2.4], [2.6, 3, 3, 2.8], [3.2, 3.4, 3.4, 3.3], [4, 4, 4, 4]];
+// När man drar i reglagen följer skicket med betyget, så att det ograderade värdet ändras direkt.
+const gradeToCond = (g) => (g >= 10 ? 0 : g === 9 ? 1 : g >= 7 ? 2 : g >= 5 ? 3 : g >= 3 ? 4 : 5);
 const round = (n) => Math.round(n / 10) * 10 || Math.round(n);
 const condText = (n) => (n === "Near Mint" ? "i nyskick" : n === "Mint" ? "i skick mint" : `i skick ${n.toLowerCase()}`);
 
@@ -273,12 +276,11 @@ function outputHTML() {
     : gain > 0 ? ["mid", "Lönar sig knappt", `Vinsten blir bara cirka ${kr(gain)}. Ett lägre betyg än väntat gör det till en förlust.`]
     : ["bad", "Lönar sig inte", g >= 9 ? "Kortet är för billigt för att gradering ska löna sig." : "Med det betyget du bedömer blir det inte värt kostnaden."];
   const tier = (label, v, on) => `<li class="vt${on ? " on" : ""}"><span>${label}</span><b>${kr(round(v))}</b></li>`;
-  const grades = [...(g < 8 ? [g] : []), 8, 9, 10];
-  return `<div class="vo-main"><span class="vo-label">Ungefärligt värde ${condText(cname)}</span>
+  return `<div class="vo-main"><span class="vo-label">Ungefärligt värde ${condText(cname)} · betyg ${g}/10</span>
       <b class="vo-price">ca ${kr(round(raw))}</b>
       <small>Cardmarkets trendpris i nyskick: ${kr(round(base))}${state.card.pricing?.cardmarket?.low != null ? ` · lägsta annons ${kr(round(state.card.pricing.cardmarket.low * state.rate))}` : ""}</small></div>
     <ul class="vo-tiers" aria-label="Riktvärden per betyg">
-      ${tier("Ograderat (ditt skick)", raw, false)}${grades.map((n) => tier(`Betyg ${n}`, base * gradeMult(n, vintage), g === n)).join("")}
+      ${tier("Nyskick", base, false)}${tier("Ograderat, ditt skick", raw, false)}${tier(`Graderat, betyg ${g}`, gv, true)}
     </ul>
     <p class="hint">Riktvärden. Graderade priser skiljer mycket mellan kort${vintage ? ", och kort från Wizards-eran har högre premie för toppbetyg" : ""}, så jämför med sålda priser för just ditt kort innan du betalar för gradering.</p>
     <div class="vo-grade"><div class="vo-gnum" aria-label="Ditt estimerade betyg"><b>${g}</b><span>/ 10</span></div>
@@ -346,6 +348,8 @@ function setCrit(input) {
   paintRange(input);
   input.setAttribute("aria-valuetext", text);
   input.parentNode.querySelector(".crit-val").textContent = text;
+  state.cond = gradeToCond(estGrade());
+  const chip = $(`#val-card input[name="cond"][value="${state.cond}"]`); if (chip && !chip.checked) chip.checked = true;
   drawDamage();
   updateOut();
 }
