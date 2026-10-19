@@ -24,7 +24,7 @@ const NAV = [
   ["slapp.html", "Släpp", "calendar"],
   ["butiker.html", "Butiker", "shop"],
   ["priser.html", "Kortpriser", "coin"],
-  ["vardering.html", "Gradering", "card"],
+  ["vardering.html", "Värdering", "card"],
   ["nyheter.html", "Nyheter", "news"],
 ];
 
