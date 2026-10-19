@@ -18,7 +18,7 @@ const CRITERIA = [
 // ---------- Skadorna på kortbilden ----------
 // Reglagen är steglösa (0 till 4) och ritar skadorna direkt på det stora kortet, i kortets mått 63 x 88.
 // Varje prick och repa har en egen tröskel, så det blir gradvis fler ju längre man drar.
-const CW = 63, CH = 88, GAP = 0.045; // största extra ram vid sned centrering, i andel av kortet
+const CW = 63, CH = 88, SHIFT = 4.5; // hur långt kortet glider vid max sned centrering, i procent av bredden
 const CENTER_RATIO = [0.52, 0.56, 0.6, 0.64, 0.7]; // flyttar bara lite, ramen syns alltid på båda sidor
 const rng = (seed) => () => (seed = (seed * 16807) % 2147483647) / 2147483647;
 const clamp01 = (n) => Math.max(0, Math.min(1, n));
@@ -106,13 +106,11 @@ function buildDamage(box, src) {
     el: add(svg, "ellipse", { cx, cy, rx, ry, transform: `rotate(${rot} ${cx} ${cy})`, fill: "url(#vd-scuff-g)", filter: "url(#vd-scuff)", opacity: "0" }), t,
   }));
 
-  // Centrering: hela bilden flyttas och krymper lite, så att ramen blir tjockare på ena sidan.
-  // Bakom ligger en kopia av kortet i full storlek, så glipan visar kortets egen ram. Inget klipps bort.
-  const card = box.querySelector(".vd-card"), pic = card.querySelector("img");
-  pic.insertAdjacentHTML("beforebegin", `<img class="vd-under" src="${esc(src)}" alt="" referrerpolicy="no-referrer" aria-hidden="true" onerror="this.remove()">`);
+  // Centrering: hela kortet glider åt höger i en osynlig ram och skärs av lite vid ramens högerkant.
+  const card = box.querySelector(".vd-card");
   card.appendChild(svg);
 
-  dmg = { card, pic, corners, dots, runs, chips, scratches, lines, dent, scuffs };
+  dmg = { card, corners, dots, runs, chips, scratches, lines, dent, scuffs };
 }
 
 // Vitning i övre vänstra hörnet: en yta längs kanten och hörnets båge, bredast mitt i hörnet och spetsig i ändarna.
@@ -136,9 +134,7 @@ function drawDamage() {
   const ramp = (L, t, w = 0.5) => clamp01((L - t) / w);
 
   // Centrering
-  // Vänster ram och överkant får den extra bredden, höger kant ligger kvar där den var.
-  const g = clamp01((lerpArr(CENTER_RATIO, cen) - 0.5) / 0.2) * GAP;
-  dmg.pic.style.transform = `translate(${f2(g * 100)}%, ${f2(g * 65)}%) scale(${(1 - g).toFixed(4)})`;
+  dmg.card.style.transform = `translateX(${f2(clamp01((lerpArr(CENTER_RATIO, cen) - 0.5) / 0.2) * SHIFT)}%)`;
 
   // Hörn: rundningen växer från ungefär 2,8 till 5,5 enheter.
   const R = 2.85 + Math.max(0, cor - 1.6) * 1.1;
