@@ -2043,7 +2043,7 @@ input[type=search]::-webkit-search-results-decoration {
 .val-pin-3 { left: 11%; top: 90%; }   /* setkoden "MEW EN" nere till vänster */
 .val-pin-4 { left: 29%; top: 90%; }   /* "199/165" och stjärnorna */
 .val-pin-5 { left: 100%; top: 50%; } /* baksidans kant */
-.val-pin-6 { left: 7%; top: 57%; outline: 2px dashed var(--red); outline-offset: 3px; }
+.val-pin-6 { left: 7%; top: 57%; }
 .val-anatomy-front { position: relative; }
 .val-side-label { display: block; margin-top: 6px; text-align: center; font: 700 0.8rem var(--sans); color: var(--muted); }
 /* Baksidan som ett eget litet kort under framsidan, med förklaring bredvid. */
@@ -2875,7 +2875,6 @@ button.zm-price:hover{background:#1f2132}
   .val-anatomy-visual { max-width: 300px; }
   .val-anatomy-visual .val-pin { pointer-events: auto; cursor: pointer; width: 32px; height: 32px; margin: -16px 0 0 -16px; font-size: 1rem; }
   .val-card-back .val-pin { pointer-events: auto; cursor: pointer; width: 32px; height: 32px; margin: -16px 0 0 -16px; font-size: 1rem; left: 88%; top: 50%; }
-  .val-pin-6 { display: none; }
   .val-anatomy-visual::after { content: "Tryck på en siffra för att se vad den visar"; display: block; text-align: center; font-size: .8rem; color: var(--muted); margin-top: 10px; }
 
   /* Bilden på kortet i värderingsfönstret ska ligga mitt i */
