@@ -1,7 +1,7 @@
 import { API, $, esc, kr, getJSON, skeleton, liveStamp, cardImg } from "./site.js";
 import { mountChart } from "./pricechart.js";
 import { recordCard, mountRecent } from "./recent.js";
-import { mountCardAutocomplete, parseCardQuery, resolvePokemonName, loadDataset } from "./card-autocomplete.js";
+import { mountCardAutocomplete, parseCardQuery, resolvePokemonName, loadDataset, sameNumber, filterByNumber, apiNumber } from "./card-autocomplete.js";
 
 // ---------- Valuta ----------
 let rates = null;
@@ -143,15 +143,10 @@ async function search() {
     if (set) {
       // Ett helt set: hämta setets kortlista och filtrera på namn och/eller kortnummer
       const s = await getJSON(`${API}/sets/${encodeURIComponent(set)}`);
-      const cleanNum = parsed.numPart ? parsed.numPart.toLowerCase().replace(/^0+/, "") : null;
       list = (s.cards || []).filter((c) => {
         const nameMatch = !resolvedName || c.name.toLowerCase().includes(resolvedName.toLowerCase());
         if (!nameMatch) return false;
-        if (parsed.numPart) {
-          const idStr = String(c.localId || "").toLowerCase();
-          return idStr === parsed.numPart.toLowerCase() || idStr.replace(/^0+/, "") === cleanNum || idStr.endsWith("/" + parsed.numPart) || idStr.endsWith("/" + cleanNum);
-        }
-        return true;
+        return !parsed.numPart || sameNumber(c.localId, parsed.numPart);
       });
       if (rarity) {
         const all = await Promise.all(list.map((c) => getJSON(`${API}/cards/${encodeURIComponent(c.id)}`).catch(() => null)));
@@ -159,35 +154,22 @@ async function search() {
       }
     } else {
       if (parsed.numPart && resolvedName) {
-        // 1. Sök direkt i API med både namn och localId (t.ex. "Pikachu" och "37")
-        const p = new URLSearchParams();
-        p.set("name", resolvedName);
-        p.set("localId", parsed.numPart);
+        // TCGdex matchar delar av numret (4 ger även 14 och 40), så vi filtrerar fram exakt nummer själva.
+        // 4, 04 och 004 räknas som samma nummer, och "004/123" väljer i första hand set med 123 kort.
+        const p = new URLSearchParams({ name: resolvedName, localId: apiNumber(parsed.numPart) });
         if (rarity) p.set("rarity", `eq:${rarity}`);
-        list = await getJSON(`${API}/cards?${p}`).catch(() => []);
-
-        // 2. Om API-svaret var tomt p.g.a. ledande nollor eller format som "037/197",
-        // hämta korten för Pokémonen och matcha kortnumret lokalt
-        if (!list || !list.length) {
-          const p2 = new URLSearchParams();
-          p2.set("name", resolvedName);
+        list = await filterByNumber(await getJSON(`${API}/cards?${p}`).catch(() => []), parsed.numPart, parsed.setTotal);
+        if (!list.length) {
+          // Numret matchade inget kort med namnet (t.ex. "pikachu 151" där 151 är setet): visa alla kort för namnet.
+          const p2 = new URLSearchParams({ name: resolvedName });
           if (rarity) p2.set("rarity", `eq:${rarity}`);
-          const all = await getJSON(`${API}/cards?${p2}`).catch(() => []);
-          const cleanNum = parsed.numPart.toLowerCase().replace(/^0+/, "");
-          const matches = all.filter((c) => {
-            const idStr = String(c.localId || "").toLowerCase();
-            return idStr === parsed.numPart.toLowerCase() || idStr.replace(/^0+/, "") === cleanNum || idStr.endsWith("/" + parsed.numPart) || idStr.endsWith("/" + cleanNum);
-          });
-          // Om numret inte matchade något kortnummer (t.ex. användaren sökte på set "151" eller liknande),
-          // visa alla kort för Pokémonen i stället för tom lista
-          list = matches.length ? matches : all;
+          list = await getJSON(`${API}/cards?${p2}`).catch(() => []);
         }
       } else if (parsed.numPart && !resolvedName) {
-        // Enbart kortnummer angivet (t.ex. "37" eller "037")
-        const p = new URLSearchParams();
-        p.set("localId", parsed.numPart);
+        // Enbart kortnummer (t.ex. "4", "004" eller "004/102")
+        const p = new URLSearchParams({ localId: apiNumber(parsed.numPart) });
         if (rarity) p.set("rarity", `eq:${rarity}`);
-        list = await getJSON(`${API}/cards?${p}`).catch(() => []);
+        list = await filterByNumber(await getJSON(`${API}/cards?${p}`).catch(() => []), parsed.numPart, parsed.setTotal);
       } else {
         // Vanlig namnsökning
         const p = new URLSearchParams();

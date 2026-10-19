@@ -1,7 +1,7 @@
 // Gratis kortvärdering: sök kort, välj skick, gör en egen pre-grading och se om gradering lönar sig.
 // Utgångspriset är Cardmarkets trendpris (via TCGdex). Skick och betyg är tumregler, se "Så räknar vi" på sidan.
 import { API, $, esc, kr, getJSON, skeleton, loading, cardImg } from "./site.js";
-import { parseCardQuery, resolvePokemonName, loadDataset } from "./card-autocomplete.js";
+import { parseCardQuery, resolvePokemonName, loadDataset, filterByNumber, apiNumber } from "./card-autocomplete.js";
 import { recordCard, mountRecent } from "./recent.js";
 import { mountCardAutocomplete } from "./card-autocomplete.js";
 import { CONDITIONS, DEFAULT_COND, gradeMult } from "./valuation.js";
@@ -31,18 +31,13 @@ async function findCards(raw) {
   const data = await loadDataset().catch(() => null);
   const name = parsed.textPart ? (resolvePokemonName(parsed.textPart, data) || parsed.textPart) : "";
   const num = parsed.numPart;
-  const clean = num ? num.toLowerCase().replace(/^0+/, "") : null;
-  const sameNum = (c) => { const id = String(c.localId || "").toLowerCase(); return id === num.toLowerCase() || id.replace(/^0+/, "") === clean || id.endsWith(`/${num}`) || id.endsWith(`/${clean}`); };
   let list = [];
   if (name && num) {
-    list = await getJSON(`${API}/cards?${new URLSearchParams({ name, localId: num })}`).catch(() => []);
-    if (!list?.length) {
-      const all = ((await getJSON(`${API}/cards?${new URLSearchParams({ name })}`).catch(() => [])) || []);
-      const matches = all.filter(sameNum);
-      list = matches.length ? matches : all;
-    }
+    // Exakt nummer: 4, 04 och 004 är samma kort, och "004/123" väljer i första hand set med 123 kort.
+    list = await filterByNumber(await getJSON(`${API}/cards?${new URLSearchParams({ name, localId: apiNumber(num) })}`).catch(() => []), num, parsed.setTotal);
+    if (!list.length) list = (await getJSON(`${API}/cards?${new URLSearchParams({ name })}`).catch(() => [])) || [];
   } else if (num) {
-    list = await getJSON(`${API}/cards?${new URLSearchParams({ localId: num })}`).catch(() => []);
+    list = await filterByNumber(await getJSON(`${API}/cards?${new URLSearchParams({ localId: apiNumber(num) })}`).catch(() => []), num, parsed.setTotal);
   } else if (name) {
     list = await getJSON(`${API}/cards?${new URLSearchParams({ name })}`);
   }

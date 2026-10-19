@@ -42,7 +42,7 @@ const norm = (s) => String(s || "")
 
 export function resolvePokemonName(raw, data) {
   if (!raw) return null;
-  const q = raw.toLowerCase().trim();
+  const q = raw.toLowerCase().trim().replace(/\s+/g, " ");
   if (!q) return null;
   const nq = norm(q);
   const pokemonList = data?.pokemon || [];
@@ -50,6 +50,23 @@ export function resolvePokemonName(raw, data) {
   // 1. Exakt normaliserad matchning (t.ex. "flabebe" -> "Flabébé", "farfetchd" -> "Farfetch'd", "mr mime" -> "Mr. Mime")
   const exact = pokemonList.find((p) => norm(p.name) === nq);
   if (exact) return exact.name;
+
+  // Flera ord ("charizard ex", "dark raichu", "mega gengar"): rätta bara ord som är ett Pokémon-namn
+  // och behåll resten. Annars skulle "charizard ex" bli bara "Charizard" och orden efter mellanslaget försvinna.
+  if (q.includes(" ")) {
+    return q.split(" ").map((w) => {
+      if (w.length < 4) return w;
+      const hit = pokemonList.find((p) => norm(p.name) === norm(w));
+      if (hit) return hit.name;
+      if (w.length < 5) return w;
+      let best = null, minD = 2;
+      for (const p of pokemonList) {
+        const d = editDist(norm(p.name), norm(w));
+        if (d < minD) { minD = d; best = p; }
+      }
+      return best ? best.name : w;
+    }).join(" ");
+  }
 
   // 2. Börjar med
   const starts = pokemonList.filter((p) => p.name.toLowerCase().startsWith(q) || norm(p.name).startsWith(nq));
@@ -75,91 +92,80 @@ export function resolvePokemonName(raw, data) {
 const cardMatchCache = new Map();
 const API = "https://api.tcgdex.net/v2/en";
 
+// Kortnummer jämförs utan inledande nollor: 4, 04 och 004 är samma kort, liksom TG4 och TG04.
+const numKey = (s) => String(s ?? "").trim().toLowerCase().replace(/^#/, "").replace(/^([a-z]*)0+(?=\d)/, "$1");
+export const sameNumber = (localId, num) => numKey(localId) === numKey(num);
+// TCGdex söker på delar av numret (localId=4 ger även 14, 40 och 284), så vi frågar med numret
+// utan nollor, vilket ger alla varianter, och filtrerar fram exakt nummer själva.
+export const apiNumber = (num) => numKey(num) || String(num ?? "");
+
+// Antal kort per set, för att tolka "004/123": bara set med 123 kort är aktuella.
+let setSizes = null;
+function loadSetSizes() {
+  setSizes ??= fetch(`${API}/sets`).then((r) => (r.ok ? r.json() : [])).then((l) => new Map(l.map((x) => [x.id, x.cardCount || {}]))).catch(() => new Map());
+  return setSizes;
+}
+
+// Behåller bara kort med exakt det numret. Med setTotal ("004/123") väljs i första hand kort ur set med så många kort.
+export async function filterByNumber(list, num, setTotal = null) {
+  let hits = (Array.isArray(list) ? list : []).filter((c) => sameNumber(c.localId, num));
+  if (setTotal && hits.length > 1) {
+    const sizes = await loadSetSizes(), t = +setTotal;
+    const inSet = hits.filter((c) => {
+      const size = sizes.get(String(c.id).slice(0, String(c.id).lastIndexOf("-")));
+      return size && (size.official === t || size.total === t);
+    });
+    if (inSet.length) hits = inSet;
+  }
+  return hits;
+}
+
 /**
  * Hitta matchande kort i cachedTrends (0 ms) eller asynkront från TCGdex API.
  */
-export async function lookupCardMatch(namePart, numPart, trends) {
-  const cleanNum = String(numPart || "").trim().toLowerCase().replace(/^0+/, "");
+export async function lookupCardMatch(namePart, numPart, trends, setTotal = null) {
+  const cleanNum = numKey(numPart);
   const cleanName = String(namePart || "").trim();
-  const cacheKey = `${cleanName}::${cleanNum}`.toLowerCase();
+  const cacheKey = `${cleanName}::${cleanNum}::${setTotal || ""}`.toLowerCase();
 
   if (cardMatchCache.has(cacheKey)) {
     return cardMatchCache.get(cacheKey);
   }
 
   // 1. Kolla först i trendkort (0 ms direkt från minnet)
-  if (trends) {
+  if (trends && !setTotal) {
     const allTrends = [...(trends.rising || []), ...(trends.top || []), ...(trends.falling || [])];
     const trendHit = allTrends.find((c) => {
-      const cId = String(c.localId || "").toLowerCase();
-      const matchNum = cId === cleanNum || cId === String(numPart).toLowerCase() || cId.endsWith(`/${cleanNum}`);
-      if (!matchNum) return false;
+      if (!sameNumber(c.localId, numPart)) return false;
       if (!cleanName) return true;
       const lowName = (c.name || "").toLowerCase();
       return lowName.includes(cleanName.toLowerCase()) || cleanName.toLowerCase().includes(lowName);
     });
     if (trendHit && trendHit.image) {
-      const res = [{
-        id: trendHit.id,
-        localId: trendHit.localId,
-        name: trendHit.name,
-        image: trendHit.image,
-        set: trendHit.set,
-        rarity: trendHit.rarity,
-        eur: trendHit.eur,
-      }];
+      const res = [{ id: trendHit.id, localId: trendHit.localId, name: trendHit.name, image: trendHit.image, set: trendHit.set, rarity: trendHit.rarity, eur: trendHit.eur }];
       cardMatchCache.set(cacheKey, res);
       return res;
     }
   }
 
-  // 2. Anropa TCGdex API
+  // 2. Anropa TCGdex API och filtrera fram exakt nummer
+  const get = (p) => fetch(`${API}/cards?${new URLSearchParams(p)}`).then((r) => (r.ok ? r.json() : [])).catch(() => []);
+  const SUFFIX = /\s+(?:ex|gx|v|vmax|vstar|mega|radiant|gold|star|prime)$/i;
   try {
     let list = [];
     if (cleanName && cleanNum) {
-      list = await fetch(`${API}/cards?name=${encodeURIComponent(cleanName)}&localId=${encodeURIComponent(cleanNum)}`)
-        .then((r) => (r.ok ? r.json() : []))
-        .catch(() => []);
-
-      // Om namnet slutar på t.ex. "ex", "vmax", "v", "gx" prova även basnamnet om första var tomt
-      if (!list?.length && /\s+(?:ex|gx|v|vmax|vstar|mega|radiant|gold|star|prime)$/i.test(cleanName)) {
-        const baseName = cleanName.replace(/\s+(?:ex|gx|v|vmax|vstar|mega|radiant|gold|star|prime)$/i, "").trim();
-        list = await fetch(`${API}/cards?name=${encodeURIComponent(baseName)}&localId=${encodeURIComponent(cleanNum)}`)
-          .then((r) => (r.ok ? r.json() : []))
-          .catch(() => []);
-      }
-
-      // Om tomt pga nummer (t.ex. set "151" istället för kortnummer), sök på namnet och matcha flexibelt
-      if (!list?.length) {
-        list = await fetch(`${API}/cards?name=${encodeURIComponent(cleanName)}`)
-          .then((r) => (r.ok ? r.json() : []))
-          .catch(() => []);
-        if (list?.length) {
-          const matched = list.filter((c) => {
-            const id = String(c.localId || "").toLowerCase();
-            return id === cleanNum || id === String(numPart).toLowerCase() || id.replace(/^0+/, "") === cleanNum || id.endsWith("/" + cleanNum);
-          });
-          list = matched.length ? matched : list;
-        }
+      list = await filterByNumber(await get({ name: cleanName, localId: apiNumber(numPart) }), numPart, setTotal);
+      // Namnet slutar på t.ex. "ex" eller "vmax": prova även basnamnet
+      if (!list.length && SUFFIX.test(cleanName)) {
+        list = await filterByNumber(await get({ name: cleanName.replace(SUFFIX, "").trim(), localId: apiNumber(numPart) }), numPart, setTotal);
       }
     } else if (cleanNum) {
-      list = await fetch(`${API}/cards?localId=${encodeURIComponent(cleanNum)}`)
-        .then((r) => (r.ok ? r.json() : []))
-        .catch(() => []);
+      list = await filterByNumber(await get({ localId: apiNumber(numPart) }), numPart, setTotal);
     } else if (cleanName) {
-      list = await fetch(`${API}/cards?name=${encodeURIComponent(cleanName)}`)
-        .then((r) => (r.ok ? r.json() : []))
-        .catch(() => []);
+      list = await get({ name: cleanName });
     }
-
     if (Array.isArray(list) && list.length) {
-      if (cleanNum) {
-        list = list.filter((c) => {
-          const id = String(c.localId || "").toLowerCase();
-          return id === cleanNum || id === String(numPart).toLowerCase() || id.replace(/^0+/, "") === cleanNum;
-        });
-      }
-      list.sort((a, b) => (b.image ? 1 : 0) - (a.image ? 1 : 0));
+      list.sort((x, y) => (y.image ? 1 : 0) - (x.image ? 1 : 0));
       cardMatchCache.set(cacheKey, list);
       return list;
     }
@@ -245,10 +251,10 @@ export function findMatches(rawQuery, data, trends) {
   // FALL A: Kortnummer angivet (t.ex. "pikachu 37", "pikachu ex 219" eller "037")
   // ==========================================
   if (parsed.numPart) {
-    const cleanNum = parsed.numPart.replace(/^0+/, "");
+    const cleanNum = numKey(parsed.numPart);
     const cleanName = (parsed.textPart || "").trim();
     const resolvedPoke = cleanName ? (resolvePokemonName(cleanName, data) || cleanName) : null;
-    const cacheKey = `${cleanName}::${cleanNum}`.toLowerCase();
+    const cacheKey = `${cleanName}::${cleanNum}::${parsed.setTotal || ""}`.toLowerCase();
     const cachedCardList = cardMatchCache.get(cacheKey);
 
     let bestMatch = null;
@@ -281,8 +287,7 @@ export function findMatches(rawQuery, data, trends) {
       if (trends) {
         const allTrendCards = [...(trends.rising || []), ...(trends.top || []), ...(trends.falling || [])];
         trendHit = allTrendCards.find((c) => {
-          const idStr = String(c.localId || "").toLowerCase();
-          const matchesNum = idStr === parsed.numPart.toLowerCase() || idStr.replace(/^0+/, "") === cleanNum || idStr.endsWith("/" + parsed.numPart);
+          const matchesNum = sameNumber(c.localId, parsed.numPart);
           if (!matchesNum) return false;
           if (!cleanName) return true;
           const low = (c.name || "").toLowerCase();
@@ -339,8 +344,7 @@ export function findMatches(rawQuery, data, trends) {
     if (trends) {
       const allTrendCards = [...(trends.rising || []), ...(trends.top || []), ...(trends.falling || [])];
       for (const c of allTrendCards) {
-        const idStr = String(c.localId || "").toLowerCase();
-        const matchesNum = idStr === parsed.numPart.toLowerCase() || idStr.replace(/^0+/, "") === cleanNum || idStr.endsWith("/" + parsed.numPart);
+        const matchesNum = sameNumber(c.localId, parsed.numPart);
         const matchesName = !resolvedPoke || (c.name || "").toLowerCase().includes(resolvedPoke.toLowerCase());
         if (matchesNum && matchesName) {
           trending.push(c);
@@ -753,7 +757,7 @@ export function mountCardAutocomplete(input, options = {}) {
     // Om vi har en kortträff som fortfarande laddar bilden asynkront från TCGdex:
     if (matches.pokemon[0]?.isLoadingCard && matches.parsed?.numPart) {
       const activeQ = q;
-      lookupCardMatch(matches.parsed.textPart, matches.parsed.numPart, cachedTrends).then((cards) => {
+      lookupCardMatch(matches.parsed.textPart, matches.parsed.numPart, cachedTrends, matches.parsed.setTotal).then((cards) => {
         if (input.value.trim().toLowerCase() !== activeQ.toLowerCase() || dropdown.hidden) return;
         if (cards && cards.length) {
           const freshMatches = findMatches(input.value.trim(), data, cachedTrends);
