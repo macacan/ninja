@@ -668,7 +668,12 @@
         <button id="vr-more" class="btn" type="button" hidden>Visa fler kort</button>
       </div>
     </section>
-  <section id="val-card" class="val" hidden aria-live="polite"></section>
+</dialog>
+
+<!-- Värderingen av ett valt kort: egen popup ovanpå sökträffarna. -->
+<dialog id="val-card-modal" class="card-modal val-modal val-card-modal" aria-label="Värdering av kortet">
+  <button type="button" class="cm-close" aria-label="Stäng">✕</button>
+  <section id="val-card" class="val" aria-live="polite"></section>
 </dialog>
 
 <script type="module" src="js/vardering.js"></script>

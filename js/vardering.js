@@ -47,15 +47,14 @@ async function findCards(raw) {
 function resultTile(c, i) {
   const img = c.image ? `${c.image}/low.webp` : "img/kortbaksida.webp";
   const isBack = !c.image;
-  return `<button type="button" class="ctile plain" data-id="${esc(c.id)}" aria-label="Värdera ${esc(c.name)}">
+  return `<div class="ctile plain" data-id="${esc(c.id)}" role="button" tabindex="0" aria-label="Välj ${esc(c.name)}">
     <span class="cimg${isBack ? " has-back" : ""}">
       <img src="${esc(img)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.src='img/kortbaksida.webp';this.parentNode.classList.add('has-back');">
       ${isBack ? `<span class="csoon">Kommer snart bilder</span>` : ""}
     </span>
     <span class="cname">${esc(c.name)}</span>
     <span class="cset">#${esc(c.localId || "")} · ${esc(c.id.split("-")[0].toUpperCase())}</span>
-    <span class="crar">Värdera det här</span>
-  </button>`;
+  </div>`;
 }
 
 function renderResults() {
@@ -72,7 +71,6 @@ async function search(raw, total = null, photo = null) {
   $("#vm-q").value = q;
   $("#vm-empty").hidden = true;
   history.replaceState(null, "", `?q=${encodeURIComponent(q)}`);
-  $("#val-card").hidden = true;
   $("#val-results").hidden = false;
   $("#vr-grid").innerHTML = skeleton(6);
   const my = ++searchId;
@@ -82,15 +80,10 @@ async function search(raw, total = null, photo = null) {
     const { list, sure } = photo ? await rankByLook(photo, await narrowByTotal(all, total)) : { list: all, sure: false };
     if (my !== searchId) return;
     // Är träffen tydlig eller finns bara ett enda matchande kort öppnas kortet direkt.
-    if (sure || (list.length === 1 && !photo)) {
-      $("#val-results").hidden = true;
-      pick(list[0].id);
-      $("#val-card")?.scrollIntoView({ behavior: "smooth", block: "start" });
-      return;
-    }
     found = list; shown = PAGE;
     $("#vr-title").textContent = title ? `Välj ditt kort: ${title}` : "Välj ditt kort";
     renderResults();
+    if (sure || (list.length === 1 && !photo)) pick(list[0].id);
   } catch {
     if (my === searchId) $("#vr-grid").innerHTML = '<div class="msg">Kunde inte nå TCGdex just nu. Försök igen om en stund.</div>';
   }
@@ -156,13 +149,11 @@ function renderCard() {
 }
 
 async function pick(id) {
-  openModal();
-  $("#vm-empty").hidden = true;
   history.replaceState(null, "", `?id=${encodeURIComponent(id)}`);
   const box = $("#val-card");
-  box.hidden = false;
   box.innerHTML = loading("Ninjan värderar");
-  box.scrollIntoView({ behavior: "smooth", block: "start" });
+  if (!cardModal.open) cardModal.showModal();
+  box.scrollTop = 0; cardModal.scrollTop = 0;
   try {
     const [card] = await Promise.all([getJSON(`${API}/cards/${encodeURIComponent(id)}`), getRate()]);
     Object.assign(state, { card, cond: DEFAULT_COND, crit: CRITERIA.map(() => 1) });
@@ -174,10 +165,10 @@ async function pick(id) {
 }
 
 // ---------- Värderingsfönstret ----------
-const modal = $("#val-modal"), vmInput = $("#vm-q");
+const modal = $("#val-modal"), cardModal = $("#val-card-modal"), vmInput = $("#vm-q");
 function openModal() {
   if (!modal.open) modal.showModal();
-  $("#vm-empty").hidden = !$("#val-results").hidden || !$("#val-card").hidden;
+  $("#vm-empty").hidden = !$("#val-results").hidden;
 }
 // Rensa: tömmer sökrutan, träffarna och det valda kortet, och börjar om.
 function clearAll() {
@@ -186,7 +177,7 @@ function clearAll() {
   found = []; shown = 0;
   $("#vr-grid").innerHTML = ""; $("#vr-count").textContent = "";
   $("#val-results").hidden = true;
-  $("#val-card").hidden = true; $("#val-card").innerHTML = "";
+  $("#val-card").innerHTML = "";
   state.card = null;
   $("#vm-empty").hidden = false;
   history.replaceState(null, "", location.pathname);
@@ -197,6 +188,9 @@ $("#vm-form").addEventListener("submit", (e) => { e.preventDefault(); search(vmI
 $("#vm-clear").addEventListener("click", clearAll);
 modal.addEventListener("click", (e) => { if (e.target === modal || e.target.closest(".cm-close")) modal.close(); });
 modal.addEventListener("close", () => history.replaceState(null, "", location.pathname));
+cardModal.addEventListener("click", (e) => { if (e.target === cardModal || e.target.closest(".cm-close")) cardModal.close(); });
+// Stängs värderingen och sökträffarna finns kvar under, går adressen tillbaka till sökningen.
+cardModal.addEventListener("close", () => history.replaceState(null, "", modal.open && vmInput.value.trim() ? `?q=${encodeURIComponent(vmInput.value.trim())}` : location.pathname));
 
 // ---------- Händelser ----------
 // Sökningen sker i headerns sökfält, som på den här sidan söker kort att värdera.
@@ -206,13 +200,10 @@ $("#header-search").addEventListener("submit", (e) => {
   const cardId = $("#header-search input[name='cardId']")?.value;
   if (cardId) {
     $("#header-search input[name='cardId']").remove();
-    $("#val-results").hidden = true;
     pick(cardId);
-    $("#val-card")?.scrollIntoView({ behavior: "smooth", block: "start" });
     return;
   }
   search(input.value);
-  $("#val-results")?.scrollIntoView({ behavior: "smooth", block: "start" });
 });
 // "Värdera kort" i hero-delen öppnar sökfältet i headern (på mobilen är det dolt bakom en knapp).
 $("#val-search-open")?.addEventListener("click", () => { openModal(); vmInput.focus(); });
@@ -223,8 +214,35 @@ const startScan = () => openScanner(({ name, number, total, canvas }) => {
 });
 $("#scan-open")?.addEventListener("click", startScan);
 $("#vm-scan")?.addEventListener("click", startScan);
-$("#vr-grid").addEventListener("click", (e) => { const t = e.target.closest("[data-id]"); if (t) pick(t.dataset.id); });
-$("#vr-more").addEventListener("click", () => { shown += PAGE; renderResults(); });
+// Tryck en gång på ett kort: knappen "Värdera detta kort" visas mitt på kortet. Knappen öppnar värderingen.
+// Tryck utanför kortet döljer knappen igen.
+let armed = null;
+function disarm() {
+  armed?.classList.remove("armed");
+  armed?.querySelector(".ctile-go")?.remove();
+  armed = null;
+}
+function arm(tile) {
+  if (armed === tile) return;
+  disarm();
+  armed = tile;
+  tile.classList.add("armed");
+  tile.querySelector(".cimg").insertAdjacentHTML("beforeend", '<button type="button" class="ctile-go">Värdera detta kort</button>');
+  tile.querySelector(".ctile-go").focus({ preventScroll: true });
+}
+$("#vr-grid").addEventListener("click", (e) => {
+  const tile = e.target.closest("[data-id]");
+  if (!tile) return;
+  if (e.target.closest(".ctile-go")) { const id = tile.dataset.id; disarm(); pick(id); return; }
+  arm(tile);
+});
+$("#vr-grid").addEventListener("keydown", (e) => {
+  const tile = e.target.closest("[data-id]");
+  if (tile && e.target === tile && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); arm(tile); }
+  if (e.key === "Escape" && armed) { e.stopPropagation(); e.preventDefault(); const t = armed; disarm(); t.focus(); }
+});
+document.addEventListener("click", (e) => { if (armed && !armed.contains(e.target)) disarm(); });
+$("#vr-more").addEventListener("click", () => { disarm(); shown += PAGE; renderResults(); });
 $("#val-card").addEventListener("change", (e) => {
   if (e.target.name === "cond") state.cond = +e.target.value;
   else if (e.target.dataset.crit != null) state.crit[+e.target.dataset.crit] = +e.target.value;

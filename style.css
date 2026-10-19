@@ -2925,3 +2925,12 @@ button.zm-price:hover{background:#1f2132}
   .val-psa-scale li { min-width: 0; }
   .val-grid-2col, .val-table-card { min-width: 0; }
 }
+
+/* ---------- Värdering: tryck på ett kort, sedan "Värdera detta kort" ---------- */
+.ctile.armed .cimg img{filter:brightness(.55)}
+.ctile.armed{border-color:var(--ink)}
+.ctile-go{position:absolute;left:50%;top:50%;z-index:2;transform:translate(-50%,-50%);width:max-content;max-width:calc(100% - 12px);padding:10px 14px;border:0;border-radius:8px;background:var(--red);color:#fff;font:600 .85rem/1.2 var(--pixel);text-align:center;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.45);animation:goPop .18s cubic-bezier(.2,1.3,.4,1)}
+.ctile-go:hover{background:var(--red-d)}
+@keyframes goPop{from{opacity:0;transform:translate(-50%,-50%) scale(.6)}to{opacity:1;transform:translate(-50%,-50%) scale(1)}}
+.val-card-modal{min-height:0}
+.val-card-modal #val-card{padding-top:56px}
