@@ -53,7 +53,6 @@ function tabbar() {
       <button type="button" class="mm-close" aria-label="Stäng menyn">✕</button>
       <form class="mm-search" action="${searchTarget()}" role="search">
         <input type="search" name="q" placeholder="Sök kort, t.ex. Pikachu" aria-label="Sök kort">
-        <button type="submit" aria-label="Sök">${icon("search", 20)}</button>
       </form>
       <ul>${NAV.map(([href, label, ic]) => `<li><a href="${href}"${href === here ? ' aria-current="page"' : ""}>${icon(ic, 26)}<span>${label}</span></a></li>`).join("")}</ul>
     </div>
@@ -129,6 +128,8 @@ export function mountChrome() {
   mountBanners();
   fillTicker();
   startBrowserNotices();
+  const menuInput = $(".mm-search input");
+  if (menuInput) mountCardAutocomplete(menuInput, { formAction: searchTarget() });
   const headerInput = $("#header-search input");
   if (headerInput) mountCardAutocomplete(headerInput, { formAction: searchTarget() });
   document.querySelectorAll(".search-row input[type=search]").forEach((inp) => {
