@@ -1,0 +1,48 @@
+/* Mörkt tema. Laddas med media="(prefers-color-scheme: dark)" och styrs av js/theme.js (systemet, eller användarens val). */
+:root{--bg:#0f1117;--card:#171a23;--surface:#1e2230;--ink:#e8eaf1;--ink-solid:#2b3150;--muted:#9aa2b6;--line:#2a2f3e;--navy:#aab8e0}
+.site-header{background:rgba(23,26,35,.92);box-shadow:0 6px 18px -12px rgba(0,0,0,.6)}
+.page-head h1{color:#1b1b2f}
+.tcard .art,.pimg,.product .art.cardimg{color:#1b1b2f}
+.skel .art,.skel i{background:#1e2230;border-color:#1e2230}
+
+.btn.primary,.btn.gold{color:#1b1b2f}
+.btn.primary{color:#fff}
+.card-ghost-tail{color:#8b93a7}
+.btn.gold{color:#1b1b2f}
+.seg button[aria-pressed=true]{color:#1b1b2f}
+.k-new{color:#1b1b2f}
+.ev-set{background:#152538}
+.badge:not(.hot){color:#1b1b2f}
+input[type=search],select,.shop-search{background:#1e2230}
+.price-cap input{background:#1e2230}
+.toc a:hover{background:#403315}
+.todo{background:#494218}
+.rel-pre{background:#403315}
+.wave[aria-pressed=true]{background:#403315}
+.qc[aria-pressed=true]{background:#403315}
+.dot-pre{color:#1b1b2f}
+.bell[aria-pressed=true]{color:#1b1b2f}
+.btn.gold{color:#1b1b2f}
+.acc-find{background:#1e2230}
+.price-cap input{background:#1e2230}
+.rs-btn:hover{background:#282c32}
+.card-search .card-suggest-wrap{background:#1e2230}
+.search-row .card-suggest-wrap{background:#1e2230}
+.cad-header{background:#1f252f}
+.cad-item:hover,
+.cad-item.is-active{background:#3f3315}
+.cad-item.is-top:hover,
+.cad-item.is-top.is-active{background:#453a17}
+.cad-trend-card{background:#1e2230}
+.cad-footer{background:#1f252f}
+.cad-footer:hover,
+.cad-footer.is-active{background:#222932}
+.guide-tips{background:#3c3114}
+.verdict.good{background:#203326}
+.verdict.mid{background:#3c3117}
+.verdict.bad{background:#381f1a}
+.badge-pulse{color:#1b1b2f}
+.val-hero-search{background:#1e2230}
+.val-data-table tr:hover td{background:#1e252d}
+.rsec{background:#1e2230}
+.val-cond-tip{background:#3c3117}

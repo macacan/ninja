@@ -15,6 +15,8 @@ export const kr = (n) => (n > 0 && n < 0.5 ? "under 1 kr" : Math.round(n).toLoca
 export const skeleton = (n = 4) => Array.from({ length: n }, () => '<div class="tcard skel" aria-hidden="true"><div class="art"></div><i></i><i></i><i class="short"></i></div>').join("");
 export const loading = (text = "Ninjan letar") => `<div class="loading"><span class="bar"></span>${esc(text)}…</div>`;
 export { icon };
+// Halvfylld cirkel: växlar mellan ljust och mörkt läge.
+const THEME_ICON = `<svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2.4"/><path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor"/></svg>`;
 const ICONS = ["★", "✦", "♦", "●"];
 
 const NAV = [
@@ -39,6 +41,7 @@ function header() {
       <input type="search" name="q" placeholder="Sök kort, t.ex. Pikachu" aria-label="Sök kort">
       <button type="submit" aria-label="Sök">${icon("search", 20)}</button>
     </form>
+    <button type="button" class="theme-btn" data-theme-toggle aria-label="Växla mellan ljust och mörkt läge" title="Ljust/mörkt läge">${THEME_ICON}</button>
     <button type="button" class="menu-btn" aria-expanded="false" aria-controls="mobile-menu" aria-label="Meny">
       <svg class="burger" width="28" height="28" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"/></svg>
     </button>
@@ -55,6 +58,7 @@ function tabbar() {
         <input type="search" name="q" placeholder="Sök kort, t.ex. Pikachu" aria-label="Sök kort">
       </form>
       <ul>${NAV.map(([href, label, ic]) => `<li><a href="${href}"${href === here ? ' aria-current="page"' : ""}>${icon(ic, 26)}<span>${label}</span></a></li>`).join("")}</ul>
+      <button type="button" class="mm-theme" data-theme-toggle>${THEME_ICON}<span>Mörkt läge</span></button>
     </div>
   </div>`;
 }
@@ -108,6 +112,8 @@ const searchTarget = () => (location.pathname.endsWith("vardering.html") ? "vard
 export function mountChrome() {
   document.body.insertAdjacentHTML("afterbegin", header());
   document.body.insertAdjacentHTML("beforeend", footer() + tabbar());
+  document.querySelectorAll("[data-theme-toggle]").forEach((b) => b.addEventListener("click", () => window.nlTheme?.toggle()));
+  window.nlTheme?.apply();
   const menuBtn = $(".menu-btn"), menu = $("#mobile-menu");
   const setMenu = (open) => {
     menu.hidden = !open;
