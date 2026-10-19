@@ -4,15 +4,15 @@ import { API, $, esc, kr, getJSON, skeleton, loading, cardImg } from "./site.js"
 import { parseCardQuery, resolvePokemonName, loadDataset, filterByNumber, apiNumber } from "./card-autocomplete.js";
 import { recordCard, mountRecent } from "./recent.js";
 import { mountCardAutocomplete } from "./card-autocomplete.js";
-import { CONDITIONS, DEFAULT_COND, gradeMult } from "./valuation.js";
+import { CONDITIONS, DEFAULT_COND, gradeMult, isVintage } from "./valuation.js";
 import { openScanner, narrowByTotal, rankByLook } from "./card-scanner.js";
 
 // Fyra kriterier, fem svar vardera med delbetyg.
 const CRITERIA = [
   ["Centrering", "Hur jämna ramarna är runt bilden", [["Nästan perfekt (55/45)", 10], ["Bra (60/40)", 9], ["Märkbart sned (65/35)", 8], ["Tydligt sned (70/30)", 6], ["Mycket sned", 4]]],
-  ["Hörn", "Titta efter vitning och avrundning", [["Skarpa, ingen vitning", 10], ["Minimal vitning", 9], ["Lite vitning", 8], ["Tydlig vitning eller rundade", 6], ["Skadade eller vikta", 4]]],
-  ["Kanter", "Vita prickar och hack längs kanten", [["Rena och raka", 10], ["Någon liten prick", 9], ["Några vita prickar", 8], ["Tydlig kantvitning", 6], ["Sprickor eller flagor", 4]]],
-  ["Yta", "Repor och trycklinjer i vinklat ljus", [["Inga repor eller linjer", 10], ["Enstaka hårfin repa", 9], ["Några lätta repor", 8], ["Tydliga repor eller trycklinjer", 6], ["Intryck, veck eller skador", 4]]],
+  ["Hörn", "Titta efter vitning och avrundning", [["Skarpa, ingen vitning", 10], ["Minimal vitning", 9], ["Lite vitning", 8], ["Tydlig vitning eller rundade", 6], ["Skadade eller vikta", 3]]],
+  ["Kanter", "Vita prickar och hack längs kanten", [["Rena och raka", 10], ["Någon liten prick", 9], ["Några vita prickar", 8], ["Tydlig kantvitning", 6], ["Sprickor eller flagor", 3]]],
+  ["Yta", "Repor och trycklinjer i vinklat ljus", [["Inga repor eller linjer", 10], ["Enstaka hårfin repa", 9], ["Några lätta repor", 8], ["Tydliga repor eller trycklinjer", 6], ["Intryck, veck eller skador", 3]]],
 ];
 
 // ---------- Skadorna på kortbilden ----------
@@ -171,7 +171,7 @@ function drawDamage() {
   dmg.dent.style.opacity = ramp(sur, 3.75, 0.25);
 }
 
-const state = { card: null, rate: null, cond: DEFAULT_COND, crit: CRITERIA.map(() => 1), cost: 400 };
+const state = { card: null, rate: null, mode: "cond", cond: DEFAULT_COND, crit: [1.6, 1.6, 1.6, 1.6], cost: 400 };
 let found = [], shown = 0, searchId = 0;
 const PAGE = 12;
 
@@ -246,6 +246,8 @@ async function search(raw, total = null, photo = null) {
 }
 
 // ---------- Värdering ----------
+// Två sätt att bedöma kortet: välj ett skick (kortet visar hur det skicket ser ut) eller gör en egen
+// pre-grading med reglagen. Båda ger ett betyg, och betyget ger ett ograderat skick och tvärtom.
 const baseEur = (c) => { const cm = c.pricing?.cardmarket || {}; return cm.trend ?? cm.avg ?? cm["trend-holo"] ?? null; };
 const baseSek = () => { const e = baseEur(state.card); return e != null && state.rate ? e * state.rate : null; };
 function estGrade() {
@@ -253,65 +255,101 @@ function estGrade() {
   const avg = s.reduce((a, b) => a + b, 0) / s.length;
   return Math.max(1, Math.min(10, Math.round((avg + Math.min(...s)) / 2)));
 }
+// Reglagens läge för varje skick, valda så att betyget blir 9, 8, 7, 6, 4 och 3.
+const COND_PRESET = [[0.6, 0.6, 0.6, 0.6], [1.6, 1.6, 1.6, 1.6], [2.5, 2.5, 2.5, 2.5], [2.6, 3, 3, 2.8], [3.2, 3.6, 3.6, 3.4], [3.8, 4, 4, 4]];
+// Ograderat skick som motsvarar ett betyg, ungefär som säljare brukar räkna.
+const gradeToCond = (g) => (g >= 9 ? 0 : g === 8 ? 1 : g === 7 ? 2 : g >= 5 ? 3 : g >= 3 ? 4 : 5);
+const curCond = () => (state.mode === "cond" ? state.cond : gradeToCond(estGrade()));
 const round = (n) => Math.round(n / 10) * 10 || Math.round(n);
+const condText = (n) => (n === "Near Mint" ? "i nyskick" : n === "Mint" ? "i skick mint" : `i skick ${n.toLowerCase()}`);
+
+// Den lilla rutan bredvid kortet: betyget och värdet, uppdateras medan man drar.
+function liveHTML() {
+  const base = baseSek(), g = estGrade(), [cname, , cmult] = CONDITIONS[curCond()];
+  return `<div class="vl-grade" aria-label="Estimerat betyg ${g} av 10"><b>${g}</b><span>/10</span></div>
+    <div class="vl-text"><small>Estimerat betyg</small>
+      <b>${base == null ? "Inget pris" : `ca ${kr(round(base * cmult))}`}</b>
+      <small>ograderat, ${esc(cname)}</small></div>`;
+}
 
 function outputHTML() {
   const base = baseSek();
   if (base == null) return '<div class="msg">Cardmarket har inget pris för det här kortet än, så vi kan inte värdera det.</div>';
-  const [cname, , cmult] = CONDITIONS[state.cond];
+  const vintage = isVintage(state.card.id);
+  const [cname, , cmult] = CONDITIONS[curCond()];
   const raw = base * cmult, g = estGrade();
-  const gv = base * gradeMult(g), cost = Math.max(0, +state.cost || 0), gain = gv - raw - cost;
+  const gv = base * gradeMult(g, vintage), cost = Math.max(0, +state.cost || 0), gain = gv - raw - cost;
   const verdict = gain > 200 ? ["good", "Lönar sig sannolikt", `Räkna med cirka ${kr(gain)} mer än att sälja ograderat, efter kostnaden.`]
     : gain > 0 ? ["mid", "Lönar sig knappt", `Vinsten blir bara cirka ${kr(gain)}. Ett lägre betyg än väntat gör det till en förlust.`]
-    : ["bad", "Lönar sig inte", g >= 9 ? "Kortet är för billigt för att gradering ska löna sig." : "Med det betyget du bedömer blir det inte värt kostnaden."];
+    : ["bad", "Lönar sig inte", g >= 9 ? "Kortet är för billigt för att gradering ska löna sig." : `Ett kort i betyg ${g} säljs inte för mer än det kostar att gradera.`];
   const tier = (label, v, on) => `<li class="vt${on ? " on" : ""}"><span>${label}</span><b>${kr(round(v))}</b></li>`;
-  return `<div class="vo-main"><span class="vo-label">Ungefärligt värde ${cname === "Near Mint" ? "i nyskick" : cname === "Mint" ? "i skick mint" : `i skick ${esc(cname.toLowerCase())}`}</span>
+  const grades = [10, 9, 8, ...(g < 8 ? [g] : [])];
+  return `<div class="vo-main"><span class="vo-label">Ungefärligt värde ${condText(cname)}</span>
       <b class="vo-price">ca ${kr(round(raw))}</b>
       <small>Cardmarkets trendpris i nyskick: ${kr(round(base))}${state.card.pricing?.cardmarket?.low != null ? ` · lägsta annons ${kr(round(state.card.pricing.cardmarket.low * state.rate))}` : ""}</small></div>
     <ul class="vo-tiers" aria-label="Riktvärden per betyg">
-      ${tier("Ograderat (ditt skick)", raw, false)}${tier("Betyg 8", base * gradeMult(8), g === 8)}${tier("Betyg 9", base * gradeMult(9), g === 9)}${tier("Betyg 10", base * gradeMult(10), g === 10)}
+      ${tier("Ograderat (ditt skick)", raw, false)}${grades.map((n) => tier(`Betyg ${n}`, base * gradeMult(n, vintage), g === n)).join("")}
     </ul>
-    <p class="hint">Riktvärden. Graderade priser skiljer mycket mellan kort, så jämför med sålda priser för just ditt kort innan du betalar för gradering.</p>
-    <div class="vo-grade"><div class="vo-gnum" aria-label="Ditt estimerade betyg"><b>${g}</b><span>/ 10</span></div>
-      <div><b>Ditt estimerade betyg</b><p class="muted">Vår egen uppskattning av dina svar, inte en officiell gradering. Det svagaste kriteriet väger tyngst, precis som hos graderingsbolagen.</p></div></div>
-    <div class="verdict ${verdict[0]}"><b>${verdict[1]}</b><span>${verdict[2]}</span></div>`;
+    <div class="verdict ${verdict[0]}"><b>${verdict[1]}</b><span>${verdict[2]}</span></div>
+    <p class="hint">Betyget är vår egen uppskattning, inte en officiell gradering. Det svagaste kriteriet väger tyngst, precis som hos graderingsbolagen. Graderade priser är riktvärden från sålda kort${vintage ? " (kort från Wizards-eran har högre premie för toppbetyg)" : ""}: jämför med sålda priser för just ditt kort innan du betalar för gradering.</p>`;
+}
+
+function updateOut() {
+  $("#val-live").innerHTML = liveHTML();
+  $("#val-out").innerHTML = outputHTML();
 }
 
 function renderCard() {
   const c = state.card, cm = c.pricing?.cardmarket || {};
   const img = c.image ? `${c.image}/high.webp` : "img/kortbaksida.webp";
-  const isBack = !c.image;
-  $("#val-card").innerHTML = `<div class="val-top">
-      <div class="val-img${isBack ? " has-back" : ""}"><span class="vd-card"><img src="${esc(img)}" alt="${esc(c.name)}" referrerpolicy="no-referrer" onerror="this.src='img/kortbaksida.webp';this.closest('.val-img').classList.add('has-back');"></span>${isBack ? `<span class="val-soon">Kommer snart bilder</span>` : ""}</div>
-      <div class="val-info">
+  const isBack = !c.image, grade = state.mode === "grade";
+  $("#val-card").innerHTML = `<div class="val-layout">
+      <aside class="val-side">
+        <div class="val-img${isBack ? " has-back" : ""}"><span class="vd-card"><img src="${esc(img)}" alt="${esc(c.name)}" referrerpolicy="no-referrer" onerror="this.src='img/kortbaksida.webp';this.closest('.val-img').classList.add('has-back');"></span>${isBack ? `<span class="val-soon">Kommer snart bilder</span>` : ""}</div>
+        <div class="val-live" id="val-live" aria-live="polite">${liveHTML()}</div>
+      </aside>
+      <div class="val-main">
         <h2>${esc(c.name)}</h2>
         <p class="muted">${esc(c.set?.name || "")} · #${esc(c.localId || "")}${c.rarity && c.rarity !== "None" ? ` · ${esc(c.rarity)}` : ""}</p>
-        <h3>2. Välj skick</h3>
-        <div class="chips" role="radiogroup" aria-label="Kortets skick">${CONDITIONS.map(([n, d], i) => `<label class="chip"><input type="radio" name="cond" value="${i}"${i === state.cond ? " checked" : ""}><span><b>${n}</b><small>${d}</small></span></label>`).join("")}</div>
-      </div>
-    </div>
-    <div class="val-bottom">
-      <div class="val-grade">
-        <h3>3. Pre-grading</h3>
-        <p class="muted">Titta på kortet i bra ljus och svara ärligt. Din bedömning ger ett eget betyg från 1 till 10.</p>
-        ${CRITERIA.map(([n, hint, opts], i) => `<div class="crit-s">
-          <div class="crit-head"><label for="crit-${i}">${n}</label><output class="crit-val" for="crit-${i}">${esc(opts[Math.round(state.crit[i])][0])}</output></div>
-          <small>${hint}</small>
-          <input type="range" id="crit-${i}" class="crit-range" min="0" max="100" step="any" value="${state.crit[i] * 25}" data-crit="${i}" aria-valuetext="${esc(opts[Math.round(state.crit[i])][0])}">
-        </div>`).join("")}
+        <h3>2. Bedöm kortet</h3>
+        <div class="seg" role="tablist" aria-label="Sätt att bedöma kortet">
+          <button type="button" role="tab" data-mode="cond" aria-selected="${!grade}">Välj skick</button>
+          <button type="button" role="tab" data-mode="grade" aria-selected="${grade}">Pre-grading</button>
+        </div>
+        <div class="val-panel" data-panel="cond"${grade ? " hidden" : ""}>
+          <p class="muted">Välj det skick som stämmer bäst. Kortet visar ungefär hur det ser ut, och betyget räknas fram ur skicket.</p>
+          <div class="chips" role="radiogroup" aria-label="Kortets skick">${CONDITIONS.map(([n, d], i) => `<label class="chip"><input type="radio" name="cond" value="${i}"${i === state.cond ? " checked" : ""}><span><b>${n}</b><small>${d}</small></span></label>`).join("")}</div>
+        </div>
+        <div class="val-panel" data-panel="grade"${grade ? "" : " hidden"}>
+          <p class="muted">Titta på kortet i bra ljus och dra reglagen. Ju längre åt höger, desto mer slitage.</p>
+          ${CRITERIA.map(([n, hint, opts], i) => `<div class="crit-s">
+            <div class="crit-head"><label for="crit-${i}">${n}</label><output class="crit-val" for="crit-${i}">${esc(opts[Math.round(state.crit[i])][0])}</output></div>
+            <small>${hint}</small>
+            <input type="range" id="crit-${i}" class="crit-range" min="0" max="100" step="any" value="${state.crit[i] * 25}" data-crit="${i}" aria-valuetext="${esc(opts[Math.round(state.crit[i])][0])}">
+          </div>`).join("")}
+        </div>
         <label class="crit"><span><b>Kostnad för gradering</b><small>Avgift och frakt per kort, i kronor</small></span>
           <input type="number" min="0" step="50" inputmode="numeric" data-cost value="${state.cost}"></label>
+        <div class="val-out" id="val-out">${outputHTML()}</div>
       </div>
-      <div class="val-out" id="val-out">${outputHTML()}</div>
     </div>
     <p class="hint">Priser från Cardmarket via TCGdex${cm.updated ? `, uppdaterade ${esc(String(cm.updated).slice(0, 10))}` : ""}. Allt är vägledande uppskattningar. <a href="priser.html?q=${encodeURIComponent(c.name)}">Se alla priser för ${esc(c.name)}</a>.</p>`;
   buildDamage($("#val-card .val-img"), img);
-  $("#val-card").querySelectorAll(".crit-range").forEach(paintRange);
+  syncSliders();
   drawDamage();
 }
 
 // Den fyllda delen av reglaget följer tummen.
 const paintRange = (input) => input.style.setProperty("--p", `${input.value}%`);
+function syncSliders() {
+  $("#val-card").querySelectorAll(".crit-range").forEach((input) => {
+    const i = +input.dataset.crit, text = CRITERIA[i][2][Math.round(state.crit[i])][0];
+    input.value = state.crit[i] * 25;
+    input.setAttribute("aria-valuetext", text);
+    input.parentNode.querySelector(".crit-val").textContent = text;
+    paintRange(input);
+  });
+}
 
 function setCrit(input) {
   const i = +input.dataset.crit, L = +input.value / 25, text = CRITERIA[i][2][Math.round(L)][0];
@@ -320,7 +358,35 @@ function setCrit(input) {
   input.setAttribute("aria-valuetext", text);
   input.parentNode.querySelector(".crit-val").textContent = text;
   drawDamage();
-  $("#val-out").innerHTML = outputHTML();
+  updateOut();
+}
+
+// Byte av skick: skadorna på kortet glider över till det nya skicket.
+let tween = 0;
+function animateCrit(target) {
+  const from = state.crit.slice(), start = performance.now(), my = ++tween;
+  const dur = matchMedia("(prefers-reduced-motion: reduce)").matches ? 0 : 420;
+  const step = (now) => {
+    if (my !== tween) return;
+    const k = dur ? Math.min(1, (now - start) / dur) : 1, e = 1 - Math.pow(1 - k, 3);
+    state.crit = from.map((a, i) => a + (target[i] - a) * e);
+    drawDamage();
+    if (k < 1) requestAnimationFrame(step);
+    else { syncSliders(); updateOut(); }
+  };
+  requestAnimationFrame(step);
+}
+
+function setMode(mode) {
+  state.mode = mode;
+  $("#val-card").querySelectorAll(".seg [data-mode]").forEach((b) => b.setAttribute("aria-selected", b.dataset.mode === mode));
+  $("#val-card").querySelectorAll("[data-panel]").forEach((p) => { p.hidden = p.dataset.panel !== mode; });
+  // Pre-grading börjar där skicket var, och tillbaka till skick väljs det skick som betyget motsvarar.
+  if (mode === "cond") {
+    state.cond = gradeToCond(estGrade());
+    const r = $(`#val-card input[name="cond"][value="${state.cond}"]`); if (r) r.checked = true;
+    animateCrit(COND_PRESET[state.cond]);
+  } else { tween++; syncSliders(); updateOut(); }
 }
 
 async function pick(id) {
@@ -331,7 +397,7 @@ async function pick(id) {
   box.scrollTop = 0; cardModal.scrollTop = 0;
   try {
     const [card] = await Promise.all([getJSON(`${API}/cards/${encodeURIComponent(id)}`), getRate()]);
-    Object.assign(state, { card, cond: DEFAULT_COND, crit: CRITERIA.map(() => 1) });
+    Object.assign(state, { card, mode: "cond", cond: DEFAULT_COND, crit: COND_PRESET[DEFAULT_COND].slice() });
     recordCard({ id: card.id, name: card.name, set: card.set?.name, localId: card.localId, total: card.set?.cardCount?.official, image: card.image, eur: baseEur(card) });
     renderCard();
   } catch {
@@ -421,7 +487,12 @@ $("#vr-more").addEventListener("click", () => { disarm(); shown += PAGE; renderR
 $("#val-card").addEventListener("change", (e) => {
   if (e.target.name !== "cond") return;
   state.cond = +e.target.value;
-  $("#val-out").innerHTML = outputHTML();
+  updateOut();
+  animateCrit(COND_PRESET[state.cond]);
+});
+$("#val-card").addEventListener("click", (e) => {
+  const tab = e.target.closest(".seg [data-mode]");
+  if (tab && tab.dataset.mode !== state.mode) setMode(tab.dataset.mode);
 });
 $("#val-card").addEventListener("input", (e) => {
   if (e.target.dataset.crit != null) return setCrit(e.target);
