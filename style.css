@@ -41,6 +41,7 @@ canvas.scene{display:block;width:100%;image-rendering:pixelated;image-rendering:
 .logo:hover img{transform:rotate(-8deg) translateY(-2px)}
 .logo b{font:700 1.5rem/1 var(--pixel)}
 .logo small{display:block;font:500 .7rem/1 var(--sans);color:var(--muted);letter-spacing:.5px;text-transform:uppercase;margin-top:3px}
+.logo .brand-mob{display:none}
 .main-nav ul{list-style:none;display:flex;gap:4px;margin:0;padding:4px;background:var(--surface);border-radius:12px}
 .main-nav a{display:flex;align-items:center;gap:8px;text-decoration:none;padding:9px 13px;font:600 .92rem/1 var(--sans);color:var(--muted);border-radius:9px;position:relative;transition:background .15s,color .15s}
 .main-nav a:hover{background:var(--card);color:var(--ink)}
@@ -63,6 +64,8 @@ canvas.scene{display:block;width:100%;image-rendering:pixelated;image-rendering:
   .site-header{position:static;backdrop-filter:none;z-index:auto}
   .site-header .wrap{min-height:62px}
   .logo img{width:40px;height:40px}
+  .logo .brand-desk{display:none}
+  .logo .brand-mob{display:inline}
   .main-nav,.header-search{display:none}
   /* Sidrubriken och det blå bandet under headern visas inte på mobilen (rubriken finns kvar för skärmläsare). */
   .page-head{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
