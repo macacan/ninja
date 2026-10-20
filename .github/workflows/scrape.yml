@@ -38,8 +38,8 @@ jobs:
           node-version: 22
       - name: Bevaka butikerna och hämta nyheter
         run: |
-          git config user.name "ninjaloot-bot"
-          git config user.email "ninjaloot-bot@users.noreply.github.com"
+          git config user.name "packninja-bot"
+          git config user.email "packninja-bot@users.noreply.github.com"
           FILES="data/news.json data/release-calendar.json data/products.json data/events.json data/stores-status.json data/notify.json data/price-history.json scripts/scraper/state.json"
           save() {
             node scripts/update-news.mjs || echo "::warning::Nyheterna kunde inte hämtas den här gången"

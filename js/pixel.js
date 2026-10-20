@@ -13,7 +13,7 @@ export const SPRITES = {
     "...kkkkkk...", "..knnnnnnk..", ".knnnnnnnnk.", "rkrrrrrrrrk.", "rkssssssssk.", ".kskksskksk.",
     ".knnnnnnnnk.", "..knnnnnnk..", "..knnnnnkwwk", ".knnnnnnkwmk", ".knnnnnnkwwk", "..knnnnnkkkk", "...kk.kk....",
   ],
-  // Mossling: Ninjaloots egen lilla varelse som gömmer sig i gräset.
+  // Mossling: Packninjas egen lilla varelse som gömmer sig i gräset.
   blob: ["...gG...", "..gGg...", ".kkkkkk.", "kppppppk", "kpkppkpk", "kppppppk", "kppkkppk", ".kkkkkk."],
   blobBlink: ["...gG...", "..gGg...", ".kkkkkk.", "kppppppk", "kppppppk", "kppppppk", "kppkkppk", ".kkkkkk."],
   tuftA: ["G...G", "GG.GG", ".GgG.", "ggggg"],

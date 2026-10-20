@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Värdera Pokémonkort – Gratis kortvärdering & pre-grading | Ninjaloot</title>
+<title>Värdera Pokémonkort – Gratis kortvärdering & pre-grading | Packninja</title>
 <meta name="description" content="Se vad dina Pokémonkort är värda direkt i kronor. Sök kort, välj skick och få ett uppskattat marknadsvärde baserat på Cardmarkets live-priser. Digital pre-grading och kortskanner med kameran.">
 <meta name="theme-color" content="#131422">
-<meta name="theme-color" content="#0f1117" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#1b1e28" media="(prefers-color-scheme: dark)">
 <link rel="icon" href="logo.svg">
 <link href="fonts/fonts.css" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
@@ -16,7 +16,7 @@
 <body>
 <main id="main">
 
-  <!-- STANDARD NINJALOOT PAGE-HEAD MED LANDSKAPSCANVAS STRIP ALLTID UNDER HEADERN -->
+  <!-- STANDARD PACKNINJA PAGE-HEAD MED LANDSKAPSCANVAS STRIP ALLTID UNDER HEADERN -->
   <header class="page-head">
     <div class="wrap">
       <nav class="crumbs" aria-label="Brödsmulor"><a href="index.html">Hem</a><span aria-hidden="true">›</span><span aria-current="page">Värdering</span></nav>
@@ -40,7 +40,7 @@
 
         <!-- Sökformulär direkt i Hero -->
         <div class="val-hero-search">
-          <button class="btn scan-btn" type="button" id="scan-open" aria-label="Skanna kort med kameran"><span data-icon="camera" data-size="20"></span><span>Skanna</span></button>
+          <button class="btn scan-btn" type="button" id="scan-open" aria-label="Skanna kort med kameran (beta)"><span data-icon="camera" data-size="20"></span><span>Skanna</span><span class="beta-tag">Beta</span></button>
           <button class="btn primary" type="button" id="val-search-open">Värdera kort</button>
         </div>
       </div>
@@ -623,10 +623,10 @@
 
       <div class="val-faq-list">
         <details class="val-faq-item">
-          <summary>Är värderingen på Ninjaloot helt gratis?</summary>
+          <summary>Är värderingen på Packninja helt gratis?</summary>
           <div class="val-faq-content">
             <p>
-              Ja, Ninjaloots värderingstjänst är 100% gratis och kräver varken konto, inloggning eller betalkort. Du kan söka bland tiotusentals kort, testa hur skicket påverkar värdet och använda vår digitala pre-grading helt obegränsat.
+              Ja, Packninjas värderingstjänst är 100% gratis och kräver varken konto, inloggning eller betalkort. Du kan söka bland tiotusentals kort, testa hur skicket påverkar värdet och använda vår digitala pre-grading helt obegränsat. Tänk på att detta är ett ideellt hobbyprojekt – uppskattade marknadsvärden baseras på Cardmarket och är endast vägledande, inte en 100% garanti eller finansiell rådgivning.
             </p>
           </div>
         </details>
@@ -683,7 +683,7 @@
   <form id="vm-form" class="vm-search" role="search">
     <input id="vm-q" name="q" type="search" placeholder="Sök kort, t.ex. Charizard ex eller 199/165" aria-label="Sök kort att värdera">
     <button class="btn primary" type="submit">Sök</button>
-    <button class="btn" type="button" id="vm-scan">Skanna</button>
+    <button class="btn" type="button" id="vm-scan">Skanna <span class="beta-tag">Beta</span></button>
     <button class="btn" type="button" id="vm-clear">Rensa</button>
   </form>
   <p class="vm-empty" id="vm-empty">Skriv kortets namn, kortnummer eller båda, till exempel Charizard ex 199/165. Du kan också använda Skanna. Välj sedan kort, skick och se vad det är värt.</p>

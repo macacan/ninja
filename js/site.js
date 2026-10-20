@@ -33,12 +33,12 @@ const pageOf = () => ({ "artikel.html": "nyheter.html" }[location.pathname.split
 
 function header() {
   const here = pageOf();
-  // På mobilen visas sidans namn i loggan i stället för "Ninjaloot" (startsidan behåller namnet).
-  const mobileTitle = here === "index.html" ? "Ninjaloot" : NAV.find(([href]) => href.split("#")[0] === here)?.[1] || "Ninjaloot";
+  // På mobilen visas sidans namn i loggan i stället för "Packninja" (startsidan behåller namnet).
+  const mobileTitle = here === "index.html" ? "Packninja" : NAV.find(([href]) => href.split("#")[0] === here)?.[1] || "Packninja";
   return `<a class="skip" href="#main">Hoppa till innehållet</a>
   <div class="ticker" aria-label="Senaste info"><div class="ticker-track" id="ticker"></div></div>
   <header class="site-header"><div class="wrap">
-    <a class="logo" href="index.html"><img src="logo.svg" alt=""><span><b class="brand-desk">Ninjaloot</b><b class="brand-mob">${esc(mobileTitle)}</b><small>Kortsläpp & priser</small></span></a>
+    <a class="logo" href="index.html"><img src="logo.svg" alt=""><span><b class="brand-desk">Packninja</b><b class="brand-mob">${esc(mobileTitle)}</b><small>Kortsläpp & priser</small></span></a>
     <nav class="main-nav" aria-label="Huvudmeny"><ul>
       ${NAV.map(([href, label]) => `<li><a href="${href}"${href.split("#")[0] === here ? ' aria-current="page"' : ""}>${label}</a></li>`).join("")}
     </ul></nav>
@@ -73,8 +73,8 @@ function footer() {
     <div class="wrap">
     <div class="footer-grid">
       <div class="about">
-        <a class="logo" href="index.html"><img src="logo.svg" alt=""><span><b>Ninjaloot</b><small>Kortsläpp & priser</small></span></a>
-        <p>Ninjan smyger fram nästa kortsläpp, nya set och vad korten är värda just nu. Gratis och utan konto.</p>
+        <a class="logo" href="index.html"><img src="logo.svg" alt=""><span><b>Packninja</b><small>Kortsläpp & priser</small></span></a>
+        <p>Ett ideellt hobbyprojekt. Ninjan smyger fram kortsläpp, set och priser – gratis och utan konto. Priser och lager är vägledande och kan innehålla felaktigheter.</p>
       </div>
       <div><h2>Utforska</h2><ul>${NAV.map(([h, l]) => `<li><a href="${h}">${l}</a></li>`).join("")}</ul></div>
       <div><h2>Källor</h2><ul>
@@ -84,7 +84,7 @@ function footer() {
         <li><a href="om.html#kallor">Alla källor</a></li>
       </ul></div>
       <div><h2>Mer</h2><ul>
-        <li><a href="om.html">Om Ninjaloot</a></li>
+        <li><a href="om.html">Om Packninja</a></li>
         <li><a href="om.html#bevakning">Så fungerar bevakningen</a></li>
         <li><a href="butiker.html#notiser">Notiser</a></li>
         <li><a href="villkor.html">Användarvillkor</a></li>
@@ -92,14 +92,15 @@ function footer() {
         <li><a href="om.html#rattigheter">Rättigheter</a></li>
       </ul></div>
     </div>
-    <p class="footer-legal">Ninjaloot är ett självständigt fanprojekt. Varken The Pokémon Company, Nintendo, Creatures, GAME FREAK eller någon butik står bakom sidan.
-    Kortbilder, setloggor och namn tillhör respektive rättighetsinnehavare. Landskap, figurer och design är Ninjaloots egna. Priser är vägledande.
-    © ${new Date().getFullYear()} Ninjaloot.</p>
+    <p class="footer-legal">Packninja är ett ideellt hobbyprojekt och självständigt fanprojekt. Varken The Pokémon Company, Nintendo, Creatures, GAME FREAK eller någon butik står bakom sidan.
+    All data, priser och lagerstatus samlas in automatiskt och ska ses som vägledande – ta inte allt för 100% sanning då felaktiga priser, fördröjningar i uppdateringar eller tekniska fel kan förekomma. Dubbelkolla alltid direkt hos butiken innan köp.
+    Kortbilder, setloggor och namn tillhör respektive rättighetsinnehavare. Landskap, figurer och design är Packninjas egna.
+    © ${new Date().getFullYear()} Packninja.</p>
   </div></footer>`;
 }
 
 async function fillTicker() {
-  const items = ["Priser från Cardmarket uppdateras dagligen", "Gratis, utan konto och utan reklam"];
+  const items = ["Priser från Cardmarket uppdateras dagligen", "Gratis, utan konto och utan reklam", "Hobbyprojekt: Priser är vägledande – dubbelkolla alltid hos butiken"];
   try {
     const [next] = await upcomingReleases();
     if (next) { const d = daysUntil(next.date); items.unshift(`Nästa drop: ${next.name} ${d === 0 ? "i dag" : `om ${d} ${d === 1 ? "dag" : "dagar"}`}`); }

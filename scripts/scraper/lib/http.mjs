@@ -2,7 +2,7 @@
 import { readFileSync } from "node:fs";
 import { parseRobots, groupFor, isAllowed } from "./robots.mjs";
 
-export const BOT = "NinjalootBot";
+export const BOT = "PackninjaBot";
 const cfg = (() => { try { return JSON.parse(readFileSync(new URL("../config.json", import.meta.url), "utf8")); } catch { return {}; } })();
 // Identifiera boten ärligt: namn, var man läser om den och hur man når ägaren.
 export const UA = `${BOT}/1.0 (${[cfg.botInfoUrl && `+${cfg.botInfoUrl}`, cfg.contactEmail, "prisbevakning"].filter(Boolean).join("; ")})`;

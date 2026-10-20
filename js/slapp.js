@@ -4,6 +4,7 @@ import { $, esc, loading, skeleton, fillRows, latestSets, setCard, setLogo } fro
 import { releaseData, nextWave, isOver, timelineHTML, releaseCard, detailHTML, fillDetail, bindDetail, pill, LANG } from "./releases.js";
 import { mountCalendar, MONTHS } from "./calendar.js";
 import { bindSetCards } from "./setcards.js";
+import { getAnatomyData, renderPullRatesModal } from "./anatomy.js";
 
 const RECENT_DAYS = 45; // så länge ligger ett avslutat släpp kvar bland de aktuella
 const startOfToday = () => { const t = new Date(); t.setHours(0, 0, 0, 0); return t; };
@@ -126,3 +127,20 @@ function renderSets() {
 $("#q").addEventListener("input", renderSets);
 bindSetCards($("#latest"));
 renderSets();
+
+const anatModal = $("#anat-modal");
+if (anatModal) {
+  anatModal.addEventListener("click", (e) => {
+    if (e.target === anatModal || e.target.closest(".cm-close")) { anatModal.close(); return; }
+    if (e.target.closest("[data-show-odds]")) {
+      getAnatomyData().then((d) => { anatModal.querySelector(".anat-modal-body").innerHTML = renderPullRatesModal(d); });
+    }
+  });
+}
+$("#slapp-odds-btn")?.addEventListener("click", async () => {
+  if (anatModal) {
+    const d = await getAnatomyData();
+    anatModal.querySelector(".anat-modal-body").innerHTML = renderPullRatesModal(d);
+    if (!anatModal.open) anatModal.showModal();
+  }
+});

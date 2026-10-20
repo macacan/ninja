@@ -10,7 +10,7 @@ import { classify } from "./scraper/lib/classify.mjs";
 
 const MANUAL = new URL("../data/releases.json", import.meta.url);
 const OUT = new URL("../data/release-calendar.json", import.meta.url);
-const UA = "NinjalootBot/1.0 (+https://playapp.tech/om.html#bot)";
+const UA = "PackninjaBot/1.0 (+https://playapp.tech/om.html#bot)";
 const WIKI = "https://bulbapedia.bulbagarden.net/w/api.php";
 const TCGDEX = "https://api.tcgdex.net/v2/en";
 const RECENT_DAYS = 60; // så länge efter släppet tas ett set från TCGdex med

@@ -3,6 +3,10 @@
 //   Vyer:  nextHTML (nästa släpp), releaseCard (kompakt kort), detailHTML (allt om ett släpp, i en dialog),
 //          galleryHTML + bindGallery (produktrutor med butiker), används också av kalenderns dagvy.
 import { esc, kr, releaseSets, daysUntil, clockTime, setLogo, getJSON, API, safeUrl } from "./site.js";
+import { getAnatomyData, matchAnatomy, renderAnatomyModal } from "./anatomy.js";
+
+let anatomyData = null;
+getAnatomyData().then((d) => (anatomyData = d)).catch(() => {});
 
 const MON = ["jan", "feb", "mars", "apr", "maj", "juni", "juli", "aug", "sep", "okt", "nov", "dec"];
 const MONTH = ["januari", "februari", "mars", "april", "maj", "juni", "juli", "augusti", "september", "oktober", "november", "december"];
@@ -259,14 +263,43 @@ function offerRow(p, names, withStore = true, it = null) {
   </li>`;
 }
 function offersHTML(it, names) {
+  const anat = anatomyData ? matchAnatomy(it.name, typeOf(it.name), anatomyData) : null;
+  const lowPrice = it.offers.length ? Math.min(...it.offers.map((o) => o.price)) : null;
+  const perPack = (anat?.packs && lowPrice) ? Math.round(lowPrice / anat.packs) : null;
+  const anatBanner = anat ? `<div class="rg-anat-bar">
+    <div class="rg-anat-info">
+      <span class="rg-anat-icon">📦</span>
+      <div>
+        <b>${anat.packs ? `${anat.packs} boosterpaket` : "Förseglad produkt"}${perPack ? ` · ca ${perPack} kr/pack` : ""}</b>
+        <small>${anat.promos?.length ? `${anat.promos.length} st promokort (${anat.promos.map((p) => p.name).join(", ")})` : anat.promoNote || (anat.accessories?.[0] || "")}</small>
+      </div>
+    </div>
+    <button type="button" class="btn small gold rg-anat-btn" data-anat-title="${esc(it.name)}" data-anat-type="${esc(typeOf(it.name))}" data-anat-price="${lowPrice || ""}">Vad ingår?</button>
+  </div>` : "";
+
   return `<div class="rg-offers-head"><b>${esc(it.name)}</b><span class="muted">${plural(storeCount(it), "butik", "butiker")} · ${it.upcoming ? `släpps ${short(it.date)} · ` : ""}billigast först</span>
     <button type="button" class="link rg-close">Stäng</button></div>
+    ${anatBanner}
     <ul class="of-list">${it.offers.map((p) => offerRow(p, names, true, it)).join("")}</ul>`;
 }
 
 // Kopplar klick på rutorna i en behållare. lookup(key) ger items för rutnätet.
 export function bindGallery(root, lookup, names) {
   root.addEventListener("click", (e) => {
+    const anatBtn = e.target.closest(".rg-anat-btn");
+    if (anatBtn) {
+      e.stopPropagation();
+      const t = anatBtn.dataset.anatTitle;
+      const ty = anatBtn.dataset.anatType;
+      const pr = anatBtn.dataset.anatPrice ? +anatBtn.dataset.anatPrice : null;
+      const a = matchAnatomy(t, ty, anatomyData);
+      const dlg = document.querySelector("#anat-modal");
+      if (dlg) {
+        dlg.querySelector(".anat-modal-body").innerHTML = renderAnatomyModal(t, a, pr);
+        if (!dlg.open) dlg.showModal();
+      }
+      return;
+    }
     const close = e.target.closest(".rg-close");
     const tile = e.target.closest(".rg-tile");
     if (!tile && !close) return;

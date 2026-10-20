@@ -1,29 +1,41 @@
 // Kortskanner: läser kortets namn och nummer med kameran och hittar kortet i TCGdex.
 // Inspirerad av mtg_card_detector och Pokemon-Card-Scanner:
-// 1. 4-punkts perspektivtransformation (homografi) rätsiktar sneda kort till ett platt 63×88 mm-format.
-// 2. Två läszoner (namn överst, nummer nederst) i stället för hela kortet, med bildbehandling för OCR:
-//    gråskala, reflexdämpning, kontraststräckning och Otsu-tröskel. Varannan skanning körs inverterad.
+// 1. Kortets kanter letas nära ramen på skärmen och 4-punkts perspektivtransformation (homografi) rätsiktar
+//    sneda kort till ett platt 63×88 mm-format.
+// 2. Små läszoner där texten alltid sitter: namnet uppe till vänster och kortnumret nere till vänster
+//    (2020 och framåt) eller nere till höger (äldre kort). Bildbehandling för OCR: gråskala, reflexdämpning,
+//    brusutjämning och lokal tröskel, för både mörk och ljus text. Namn och nummer läses av var sin
+//    Tesseract-worker parallellt. Numret måste ha en total som är en känd setstorlek, t.ex. 132 i "013/132".
 // 3. Rörelsekontroll: OCR körs först när kameran hålls stilla.
 // 4. Perceptual dHash (64-bitars skillnadshash) för visuell matchning av kandidatkorten.
 import { API, esc, getJSON } from "./site.js";
 import { loadDataset } from "./card-autocomplete.js";
 
 const TESSERACT = "https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/tesseract.min.js";
-const SCAN_INTERVAL = 900; // ms minst mellan två OCR-försök under aktiv kameraström
+const SCAN_INTERVAL = 250; // ms minst mellan två OCR-försök under aktiv kameraström
 const MOTION_TICK = 150; // ms mellan två stabilitetskontroller
 const MOTION_LIMIT = 10; // medelskillnad (0–255 per pixel) under vilken kameran räknas som stilla
 const STILL_TICKS = 2; // antal stilla kontroller i rad innan OCR startar
-const CARD_W = 420;
-const CARD_H = 587; // Exakt 63:88 mm Pokémon-kortproportioner
+// 63:88 mm. Så stort att kortnumret (ca 1,5 % av kortets höjd) behåller kamerans skärpa. Rätningen sker på GPU:n
+// och bara läszonerna läses ut, så storleken kostar nästan inget.
+const CARD_W = 900;
+const CARD_H = 1257;
 
 // Läszoner i andelar av kortet (x, y, bredd, höjd) som beskärs ut för OCR.
 const ZONES = {
-  name: { x: 0.04, y: 0.02, w: 0.74, h: 0.14 }, // Översta ~16 %, utan HP-rutan längst till höger
-  number: { x: 0.03, y: 0.86, w: 0.94, h: 0.13 }, // Nedersta ~14 %, där set-numret står
+  name: { x: 0.03, y: 0.02, w: 0.72, h: 0.11 }, // Namnraden, utan HP-rutan. Gamla kort har "Evolves from" ovanför.
+  numLeft: { x: 0.02, y: 0.925, w: 0.4, h: 0.055 }, // "013/132" på kort från 2020 och framåt
+  numRight: { x: 0.62, y: 0.945, w: 0.37, h: 0.05 }, // "4/102" på äldre kort
 };
 
 // ---------- Textigenkänning (Tesseract) ----------
-let workerPromise = null;
+// Varsin worker för namn och nummer, så att de läses samtidigt och var och en bara letar efter sina tecken.
+const OCR_PARAMS = {
+  name: { tessedit_pageseg_mode: "11" },
+  number: { tessedit_pageseg_mode: "11", tessedit_char_whitelist: "0123456789/" },
+};
+let scriptPromise = null;
+const workers = {};
 function loadScript(src) {
   return new Promise((resolve, reject) => {
     const s = document.createElement("script");
@@ -34,16 +46,18 @@ function loadScript(src) {
   });
 }
 
-function getWorker() {
-  if (!workerPromise) {
-    workerPromise = (window.Tesseract ? Promise.resolve() : loadScript(TESSERACT))
+function getWorker(kind) {
+  if (!workers[kind]) {
+    scriptPromise ||= window.Tesseract ? Promise.resolve() : loadScript(TESSERACT).catch((err) => { scriptPromise = null; throw err; });
+    workers[kind] = scriptPromise
       .then(() => window.Tesseract.createWorker("eng"))
+      .then(async (w) => { await w.setParameters(OCR_PARAMS[kind]); return w; })
       .catch((err) => {
-        workerPromise = null;
+        delete workers[kind];
         throw err;
       });
   }
-  return workerPromise;
+  return workers[kind];
 }
 
 // ---------- 1. WebGL Hårdvaruaccelererad Perspektivtransformation (GPU Unwarp) ----------
@@ -261,62 +275,27 @@ export function getProjectiveTransform(srcCorners, dstW, dstH) {
 }
 
 // ---------- 2. Bildbehandling för OCR ----------
-const histOf = (arr) => {
-  const h = new Uint32Array(256);
-  for (let i = 0; i < arr.length; i++) h[arr[i]]++;
-  return h;
-};
+// Lokal tröskel (medelvärde i ett fönster runt varje pixel) i stället för en tröskel för hela zonen. Kortens
+// botten blandar gul ram, ljusa fält och mörka partier, och en gemensam tröskel suddar då ut siffrorna.
+// Zonen ger två svartvita bilder: mörk text på ljus botten och ljus text på mörk botten (t.ex. full art),
+// båda med svart text på vitt, så att Tesseract kan läsa den som finns.
+const INK_DIFF = 12; // hur mycket mörkare (eller ljusare) än omgivningen en pixel måste vara för att räknas som text
 
-function percentileOf(hist, p) {
-  let acc = 0;
-  for (let v = 0; v < 256; v++) {
-    acc += hist[v];
-    if (acc >= p) return v;
-  }
-  return 255;
-}
-
-function otsuOf(hist, total) {
-  let sum = 0;
-  for (let v = 0; v < 256; v++) sum += v * hist[v];
-  let sumB = 0, wB = 0, best = 0, thr = 128;
-  for (let v = 0; v < 256; v++) {
-    wB += hist[v];
-    if (!wB) continue;
-    const wF = total - wB;
-    if (!wF) break;
-    sumB += v * hist[v];
-    const mB = sumB / wB, mF = (sum - sumB) / wF;
-    const between = wB * wF * (mB - mF) * (mB - mF);
-    if (between > best) { best = between; thr = v; }
-  }
-  return thr;
-}
-
-function cropEnhanced(src, zone, scale = 2, invert = false) {
-  const sx = Math.round(src.width * zone.x);
-  const sy = Math.round(src.height * zone.y);
-  const sw = Math.round(src.width * zone.w);
-  const sh = Math.round(src.height * zone.h);
-
+function zoneMaps(src, zone, scale) {
   const cv = document.createElement("canvas");
-  cv.width = Math.round(sw * scale);
-  cv.height = Math.round(sh * scale);
+  const w = (cv.width = Math.round(src.width * zone.w * scale));
+  const h = (cv.height = Math.round(src.height * zone.h * scale));
   const g = cv.getContext("2d", { willReadFrequently: true });
-
   g.imageSmoothingEnabled = true;
   g.imageSmoothingQuality = "high";
-  g.drawImage(src, sx, sy, sw, sh, 0, 0, cv.width, cv.height);
+  g.drawImage(src, src.width * zone.x, src.height * zone.y, src.width * zone.w, src.height * zone.h, 0, 0, w, h);
+  const d = g.getImageData(0, 0, w, h).data;
 
-  const imgData = g.getImageData(0, 0, cv.width, cv.height);
-  const d = imgData.data;
-  const n = cv.width * cv.height;
-
-  const gray = new Uint8Array(n);
-  for (let i = 0, j = 0; i < d.length; i += 4, j++) {
+  // Gråskala med dämpade reflexer (nästan vita, omättade pixlar från blänk i plastfickan)
+  const gray = new Uint8Array(w * h);
+  for (let i = 0, j = 0; j < gray.length; i += 4, j++) {
     let r = d[i], gn = d[i + 1], b = d[i + 2];
-    const max = Math.max(r, gn, b);
-    const min = Math.min(r, gn, b);
+    const max = Math.max(r, gn, b), min = Math.min(r, gn, b);
     const sat = max > 0 ? (max - min) / max : 0;
     if (sat < 0.16 && max > 210) {
       const soften = 0.65 + sat * 1.5;
@@ -325,23 +304,69 @@ function cropEnhanced(src, zone, scale = 2, invert = false) {
     gray[j] = Math.min(255, (r * 77 + gn * 150 + b * 29) >> 8);
   }
 
-  const lo = percentileOf(histOf(gray), n * 0.03);
-  const hi = percentileOf(histOf(gray), n * 0.97);
-  const span = Math.max(1, hi - lo);
-  for (let j = 0; j < n; j++) {
-    gray[j] = Math.max(0, Math.min(255, Math.round(((gray[j] - lo) * 255) / span)));
+  // Lätt utjämning (lådfilter) mot kamerabrus, annars blir bruset prickar som stör textläsningen
+  const raw = new Uint8Array(gray);
+  for (let y = 0; y < h; y++) {
+    for (let x = 0; x < w; x++) {
+      let acc = 0, cnt = 0;
+      for (let yy = Math.max(0, y - 1); yy <= Math.min(h - 1, y + 1); yy++) {
+        for (let xx = Math.max(0, x - 1); xx <= Math.min(w - 1, x + 1); xx++) {
+          acc += raw[yy * w + xx];
+          cnt++;
+        }
+      }
+      gray[y * w + x] = acc / cnt;
+    }
   }
 
-  const thr = otsuOf(histOf(gray), n);
-  for (let i = 0, j = 0; i < d.length; i += 4, j++) {
-    let val = gray[j] > thr ? 255 : 0;
-    if (invert) val = 255 - val;
-    d[i] = val;
-    d[i + 1] = val;
-    d[i + 2] = val;
-    d[i + 3] = 255;
+  // Summerad-area-tabell, så att medelvärdet i varje fönster tar konstant tid
+  const W = w + 1;
+  const sum = new Float64Array(W * (h + 1));
+  for (let y = 0; y < h; y++) {
+    let row = 0;
+    for (let x = 0; x < w; x++) {
+      row += gray[y * w + x];
+      sum[(y + 1) * W + x + 1] = sum[y * W + x + 1] + row;
+    }
   }
-  g.putImageData(imgData, 0, 0);
+
+  // Fönstret är ungefär två teckenhöjder brett
+  const rad = Math.max(6, Math.round(h * 0.3));
+  const maps = { dark: new ImageData(w, h), light: new ImageData(w, h) };
+  for (let y = 0; y < h; y++) {
+    const y0 = Math.max(0, y - rad), y1 = Math.min(h, y + rad + 1);
+    for (let x = 0; x < w; x++) {
+      const x0 = Math.max(0, x - rad), x1 = Math.min(w, x + rad + 1);
+      const mean = (sum[y1 * W + x1] - sum[y0 * W + x1] - sum[y1 * W + x0] + sum[y0 * W + x0]) / ((y1 - y0) * (x1 - x0));
+      const v = gray[y * w + x], i = (y * w + x) * 4;
+      const dark = v < mean - INK_DIFF ? 0 : 255;
+      const light = v > mean + INK_DIFF ? 0 : 255;
+      maps.dark.data[i] = maps.dark.data[i + 1] = maps.dark.data[i + 2] = dark;
+      maps.light.data[i] = maps.light.data[i + 1] = maps.light.data[i + 2] = light;
+      maps.dark.data[i + 3] = maps.light.data[i + 3] = 255;
+    }
+  }
+
+  const toCanvas = (img) => {
+    const c = document.createElement("canvas");
+    c.width = w;
+    c.height = h;
+    c.getContext("2d").putImageData(img, 0, 0);
+    return c;
+  };
+  return [toCanvas(maps.dark), toCanvas(maps.light)];
+}
+
+// Lägger zonerna under varandra med vit marginal, så att båda nummerplatserna läses i en och samma OCR-körning.
+function stack(canvases, gap = 24) {
+  const cv = document.createElement("canvas");
+  cv.width = Math.max(...canvases.map((c) => c.width)) + gap * 2;
+  cv.height = canvases.reduce((h, c) => h + c.height + gap, gap);
+  const g = cv.getContext("2d");
+  g.fillStyle = "#fff";
+  g.fillRect(0, 0, cv.width, cv.height);
+  let y = gap;
+  for (const c of canvases) { g.drawImage(c, gap, y); y += c.height + gap; }
   return cv;
 }
 
@@ -386,131 +411,102 @@ export function hammingDistance(h1, h2) {
   return dist;
 }
 
-// ---------- 4. Kant- och Hörndetektion i Realtid (Zero-Allocation Buffer) ----------
-const AW = 240, AH = 320;
-let cornerCanvas = null;
-let cornerCtx = null;
-// Pre-allokerad buffer för kantpunkter (undviker att skapa tusentals array-objekt per sekund i HUD-loopen)
-const MAX_CORNERS_PTS = 256;
-const ptsX = new Int16Array(MAX_CORNERS_PTS);
-const ptsY = new Int16Array(MAX_CORNERS_PTS);
+// ---------- 4. Kant- och hörndetektion i realtid ----------
+// Kortet hålls i ramen på skärmen, så varje kant letas bara i ett band kring ramens motsvarande kant.
+// Längs varje kant tas ett antal tvärsnitt, och i varje tvärsnitt väljs den yttersta tydliga ljusövergången
+// (kortets ytterkant, inte kanten mellan ram och bild). Punkterna anpassas till en rät linje där avvikande punkter
+// (fingrar, reflexer) sorteras bort, och hörnen blir linjernas skärningspunkter. Bakgrundens färg spelar ingen
+// roll, så ett mönstrat bord eller ojämnt ljus stör inte.
+const AW = 240; // analysbildens bredd, höjden följer bildens proportioner
+const SIDE_SAMPLES = 24; // tvärsnitt per kant
+const MIN_EDGE = 36; // minsta ljusskillnad (summa av tre pixlar) för att räknas som en kant
+let cornerCanvas = null, cornerCtx = null, cornerGray = null;
 
-export function detectCardCorners(videoOrImg, fallbackRect) {
+function fitLine(pts) {
+  // pos = a + b·t med minsta kvadrat, två varv: andra varvet utan punkter som avviker mer än 2 px
+  let use = pts;
+  let a = 0, b = 0;
+  for (let pass = 0; pass < 2; pass++) {
+    if (use.length < 4) return null;
+    let st = 0, sp = 0, stt = 0, stp = 0;
+    for (const [t, p] of use) { st += t; sp += p; stt += t * t; stp += t * p; }
+    const n = use.length, den = n * stt - st * st;
+    if (!den) return null;
+    b = (n * stp - st * sp) / den;
+    a = (sp - b * st) / n;
+    use = pts.filter(([t, p]) => Math.abs(a + b * t - p) <= 2);
+  }
+  return { a, b, inliers: use.length };
+}
+
+export function detectCardCorners(videoOrImg, guide, band = 0.12) {
   const sw = videoOrImg.videoWidth || videoOrImg.width;
   const sh = videoOrImg.videoHeight || videoOrImg.height;
-  if (!sw || !sh) return { corners: fallbackRect, confident: false };
+  if (!sw || !sh || !guide) return { corners: guide, confident: false };
 
-  if (!cornerCanvas) {
-    cornerCanvas = Object.assign(document.createElement("canvas"), { width: AW, height: AH });
+  const ah = Math.round((AW * sh) / sw);
+  if (!cornerCanvas || cornerCanvas.height !== ah) {
+    cornerCanvas = Object.assign(document.createElement("canvas"), { width: AW, height: ah });
     cornerCtx = cornerCanvas.getContext("2d", { willReadFrequently: true });
+    cornerGray = new Uint8Array(AW * ah);
   }
+  cornerCtx.drawImage(videoOrImg, 0, 0, AW, ah);
+  const px = cornerCtx.getImageData(0, 0, AW, ah).data;
+  for (let i = 0, j = 0; j < cornerGray.length; i += 4, j++) cornerGray[j] = (px[i] * 77 + px[i + 1] * 150 + px[i + 2] * 29) >> 8;
+  const at = (x, y) => cornerGray[y * AW + x];
 
-  cornerCtx.drawImage(videoOrImg, 0, 0, AW, AH);
-  const data = cornerCtx.getImageData(0, 0, AW, AH).data;
+  const k = AW / sw;
+  const xs = guide.map(([x]) => x * k), ys = guide.map(([, y]) => y * k);
+  const gx0 = Math.min(...xs), gx1 = Math.max(...xs), gy0 = Math.min(...ys), gy1 = Math.max(...ys);
+  const gw = gx1 - gx0, gh = gy1 - gy0;
+  const reach = Math.max(4, Math.round(band * Math.min(gw, gh)));
 
-  // Sampla bakgrundsfärg från de fyra hörnen
-  const sample = (x, y) => {
-    const i = (y * AW + x) * 4;
-    return [data[i], data[i + 1], data[i + 2]];
+  // En kant: horizontal = topp/botten (söker i y), outward = -1 när utsidan ligger mot lägre koordinater
+  const side = (horizontal, edge, outward) => {
+    const pts = [];
+    const [t0, t1] = horizontal ? [gx0 + gw * 0.15, gx1 - gw * 0.15] : [gy0 + gh * 0.15, gy1 - gh * 0.15];
+    const lim = horizontal ? ah : AW;
+    for (let s = 0; s < SIDE_SAMPLES; s++) {
+      const t = Math.round(t0 + ((t1 - t0) * s) / (SIDE_SAMPLES - 1));
+      const from = Math.round(edge + outward * reach), to = Math.round(edge - outward * reach);
+      const grad = [];
+      let max = 0;
+      for (let p = from; p !== to; p -= outward) {
+        if (p < 2 || p >= lim - 2 || t < 1 || t >= (horizontal ? AW : ah) - 1) { grad.push(0); continue; }
+        let gsum = 0;
+        for (let q = -1; q <= 1; q++) {
+          gsum += horizontal ? at(t + q, p + 1) - at(t + q, p - 1) : at(p + 1, t + q) - at(p - 1, t + q);
+        }
+        const v = Math.abs(gsum);
+        grad.push(v);
+        if (v > max) max = v;
+      }
+      if (max < MIN_EDGE) continue;
+      // Yttersta övergången som är nästan lika tydlig som den starkaste
+      const idx = grad.findIndex((v) => v >= max * 0.6);
+      pts.push([t, from - outward * idx]);
+    }
+    const line = fitLine(pts);
+    return line && line.inliers >= SIDE_SAMPLES * 0.5 ? line : null;
   };
-  const cornersBg = [sample(2, 2), sample(AW - 3, 2), sample(2, AH - 3), sample(AW - 3, AH - 3)];
-  const bgR = (cornersBg[0][0] + cornersBg[1][0] + cornersBg[2][0] + cornersBg[3][0]) >> 2;
-  const bgG = (cornersBg[0][1] + cornersBg[1][1] + cornersBg[2][1] + cornersBg[3][1]) >> 2;
-  const bgB = (cornersBg[0][2] + cornersBg[1][2] + cornersBg[2][2] + cornersBg[3][2]) >> 2;
 
-  let ptCount = 0;
-  const steps = 28;
+  const top = side(true, gy0, -1), bottom = side(true, gy1, 1);
+  const left = side(false, gx0, -1), right = side(false, gx1, 1);
+  if (!top || !bottom || !left || !right) return { corners: guide, confident: false };
 
-  // Strålsökning från vänster och höger inåt (zero-allocation)
-  for (let s = 1; s < steps && ptCount < MAX_CORNERS_PTS - 2; s++) {
-    const y = Math.round((AH * s) / steps);
-    const rowOffset = y * AW * 4;
-    for (let x = 0; x < AW * 0.46; x++) {
-      const i = rowOffset + x * 4;
-      if (Math.abs(data[i] - bgR) + Math.abs(data[i + 1] - bgG) + Math.abs(data[i + 2] - bgB) > 45) {
-        ptsX[ptCount] = x;
-        ptsY[ptCount] = y;
-        ptCount++;
-        break;
-      }
-    }
-    for (let x = AW - 1; x > AW * 0.54; x--) {
-      const i = rowOffset + x * 4;
-      if (Math.abs(data[i] - bgR) + Math.abs(data[i + 1] - bgG) + Math.abs(data[i + 2] - bgB) > 45) {
-        ptsX[ptCount] = x;
-        ptsY[ptCount] = y;
-        ptCount++;
-        break;
-      }
-    }
-  }
+  // Skärning mellan y = a + b·x (topp/botten) och x = c + d·y (vänster/höger)
+  const cross = (h, v) => {
+    const x = (v.a + v.b * h.a) / (1 - v.b * h.b);
+    return [x / k, (h.a + h.b * x) / k];
+  };
+  const corners = [cross(top, left), cross(top, right), cross(bottom, right), cross(bottom, left)];
 
-  // Strålsökning från topp och botten inåt
-  for (let s = 1; s < steps && ptCount < MAX_CORNERS_PTS - 2; s++) {
-    const x = Math.round((AW * s) / steps);
-    for (let y = 0; y < AH * 0.46; y++) {
-      const i = (y * AW + x) * 4;
-      if (Math.abs(data[i] - bgR) + Math.abs(data[i + 1] - bgG) + Math.abs(data[i + 2] - bgB) > 45) {
-        ptsX[ptCount] = x;
-        ptsY[ptCount] = y;
-        ptCount++;
-        break;
-      }
-    }
-    for (let y = AH - 1; y > AH * 0.54; y--) {
-      const i = (y * AW + x) * 4;
-      if (Math.abs(data[i] - bgR) + Math.abs(data[i + 1] - bgG) + Math.abs(data[i + 2] - bgB) > 45) {
-        ptsX[ptCount] = x;
-        ptsY[ptCount] = y;
-        ptCount++;
-        break;
-      }
-    }
-  }
-
-  if (ptCount < 18) {
-    return { corners: fallbackRect, confident: false };
-  }
-
-  let tlX = ptsX[0], tlY = ptsY[0];
-  let brX = ptsX[0], brY = ptsY[0];
-  let trX = ptsX[0], trY = ptsY[0];
-  let blX = ptsX[0], blY = ptsY[0];
-  let minSum = Infinity, maxSum = -Infinity, minDiff = Infinity, maxDiff = -Infinity;
-
-  for (let i = 0; i < ptCount; i++) {
-    const x = ptsX[i], y = ptsY[i];
-    const sum = x + y;
-    const diff = y - x;
-    if (sum < minSum) { minSum = sum; tlX = x; tlY = y; }
-    if (sum > maxSum) { maxSum = sum; brX = x; brY = y; }
-    if (diff < minDiff) { minDiff = diff; trX = x; trY = y; }
-    if (diff > maxDiff) { maxDiff = diff; blX = x; blY = y; }
-  }
-
-  const scaleX = sw / AW;
-  const scaleY = sh / AH;
-  const fullCorners = [
-    [tlX * scaleX, tlY * scaleY],
-    [trX * scaleX, trY * scaleY],
-    [brX * scaleX, brY * scaleY],
-    [blX * scaleX, blY * scaleY],
-  ];
-
-  const topW = Math.hypot(fullCorners[1][0] - fullCorners[0][0], fullCorners[1][1] - fullCorners[0][1]);
-  const botW = Math.hypot(fullCorners[2][0] - fullCorners[3][0], fullCorners[2][1] - fullCorners[3][1]);
-  const leftH = Math.hypot(fullCorners[3][0] - fullCorners[0][0], fullCorners[3][1] - fullCorners[0][1]);
-  const rightH = Math.hypot(fullCorners[2][0] - fullCorners[1][0], fullCorners[2][1] - fullCorners[1][1]);
-
-  const avgW = (topW + botW) * 0.5;
-  const avgH = (leftH + rightH) * 0.5;
+  const dist = (p, q) => Math.hypot(p[0] - q[0], p[1] - q[1]);
+  const avgW = (dist(corners[0], corners[1]) + dist(corners[3], corners[2])) / 2;
+  const avgH = (dist(corners[0], corners[3]) + dist(corners[1], corners[2])) / 2;
   const ratio = avgW / (avgH || 1);
-
-  const isCardShape = ratio >= 0.55 && ratio <= 0.92 && avgW > sw * 0.22 && avgH > sh * 0.25;
-  return {
-    corners: isCardShape ? fullCorners : fallbackRect,
-    confident: isCardShape,
-  };
+  const confident = ratio > 0.62 && ratio < 0.82 && corners.every(([x, y]) => x > -sw * 0.05 && x < sw * 1.05 && y > -sh * 0.05 && y < sh * 1.05);
+  return { corners: confident ? corners : guide, confident };
 }
 
 // ---------- 5. Tolka Text och Pokémonnamn ----------
@@ -533,10 +529,23 @@ async function names() {
   return nameIndex;
 }
 
+// lines är [{ text, h }] där h är radens höjd i pixlar. Kortnamnet är den största texten i zonen, så en hög rad
+// vinner över t.ex. "Evolves from Charmeleon" ovanför namnet på gamla kort.
 function findName(lines, list) {
   let best = null;
-  lines.forEach((line, row) => {
-    const words = line.split(/\s+/).filter(Boolean);
+  lines.forEach(({ text, h }) => {
+    // "Evolves from Charmeleon" och "Put Charizard on the Stage 1 card" står ovanför namnet på äldre kort
+    const clean = text.replace(/evolves\s*from\s*\S+/gi, " ").replace(/put\s+\S+\s+on\b.*/gi, " ");
+    const words = clean.split(/\s+/).filter(Boolean);
+    for (const w of words) {
+      // Namnet sitter ofta ihop med skräp från symboler intill, t.ex. "PikachU(Zg)" eller "UmbreonViaye"
+      const key = norm(w);
+      for (const p of list) {
+        if (p.key.length < 5 || key.length <= p.key.length || !key.startsWith(p.key)) continue;
+        const score = 6 - h - p.key.length * 0.1;
+        if (!best || score < best.score) best = { name: p.name, score };
+      }
+    }
     for (let i = 0; i < words.length; i++) {
       for (const n of [1, 2]) {
         if (i + n > words.length) continue;
@@ -547,7 +556,7 @@ function findName(lines, list) {
           if (Math.abs(p.key.length - key.length) > tol) continue;
           const dist = p.key === key ? 0 : editDist(p.key, key);
           if (dist > tol) continue;
-          const score = row * 3 + dist * 2 - p.key.length * 0.1;
+          const score = dist * 12 - h - p.key.length * 0.1;
           if (!best || score < best.score) best = { name: p.name, score };
         }
       }
@@ -575,38 +584,85 @@ function fixNumberToken(tok) {
 }
 
 // Hittar "238/191", "025/165" eller "TG12/TG30" i OCR-texten. Rättar bara tokens kring snedstrecket.
-function findNumber(text) {
+// sizes är alla kända setstorlekar: totalen efter snedstrecket måste vara en av dem, annars är det skräp.
+// Snedstrecket läses ofta som 7 eller 1 eller faller bort ("2157203", "006 165"). Då delas siffrorna där
+// totalen blir en känd setstorlek, och svaret får sure: false eftersom det är en gissning.
+function findNumber(text, sizes) {
   if (!text) return null;
   const fixed = text.replace(/[A-Za-z0-9|]{1,10}\s*\/\s*[A-Za-z0-9|]{1,10}/g, (m) => {
     const [a, b] = m.split("/");
     return `${fixNumberToken(a.trim())}/${fixNumberToken(b.trim())}`;
   });
-  const m = fixed.match(/\b([A-Z]{0,4}\d{1,3}[a-z]?)\/([A-Z]{0,4}\d{1,3})\b/);
-  return m ? { number: m[1].replace(/^0+(?=\d)/, ""), total: m[2].replace(/^[A-Z]+/, "") } : null;
+  // Hemliga kort går över totalen, i t.ex. Paldean Fates ända till 245/91
+  const plausible = (a, b) => b.length >= 2 && +a > 0 && +a <= Math.max(+b * 3, +b + 160) && (!sizes?.size || sizes.has(+b));
+  const result = (a, b, sure) => ({ number: a.replace(/^[A-Z]+/, "").replace(/^0+(?=\d)/, ""), total: b, sure });
+
+  for (const m of fixed.matchAll(/(?<![A-Z\d])([A-Z]{0,4}\d{1,3}[a-z]?)\s*\/\s*[A-Z]{0,4}(\d{2,3})(?!\d)/g)) {
+    if (plausible(m[1].replace(/\D/g, ""), m[2])) return result(m[1], m[2], true);
+  }
+
+  let best = null;
+  for (const line of fixed.split("\n")) {
+    for (const run of line.replace(/\s+/g, "").match(/\d{3,8}/g) || []) {
+      for (let start = 0; start <= run.length - 3; start++) {
+        for (let i = 1; i <= 3; i++) {
+          for (const sep of [1, 0]) {
+            if (sep && !"71".includes(run[start + i])) continue;
+            for (const len of [3, 2]) {
+              const end = start + i + sep + len;
+              if (end > run.length) continue;
+              const a = run.slice(start, start + i), b = run.slice(start + i + sep, end);
+              if (!plausible(a, b)) continue;
+              // Moderna kort fyller ut numret till totalens längd (006/165), och ett utläst snedstreck väger tungt.
+              // Siffror före eller efter är troligen skräp och drar ner.
+              const score = sep * 2 + (a.length === b.length ? 2 : 0) - start - (run.length - end);
+              if (!best || score > best.score) best = { ...result(a, b, false), score };
+            }
+          }
+        }
+      }
+    }
+  }
+  return best && { number: best.number, total: best.total, sure: false };
 }
 
-// Läser kortet från ett rätat canvas ($420 \times 587$ px). invert växlar mellan normal och inverterad bild.
+// Rader ur ett Tesseract-svar med höjd. Saknas radinfo används texten med samma höjd på alla rader.
+const linesOf = (res) => (res.data.lines?.length
+  ? res.data.lines.map((l) => ({ text: l.text.trim(), h: l.bbox.y1 - l.bbox.y0 }))
+  : res.data.text.split("\n").map((t) => ({ text: t.trim(), h: 0 }))).filter((l) => l.text);
+
+// Mörk och ljus text staplade i en körning. För namnet läser Tesseract det bättre än var för sig.
+async function readName(worker, canvas, list) {
+  return findName(linesOf(await worker.recognize(stack(zoneMaps(canvas, ZONES.name, 0.7)))), list);
+}
+
+// Nere till vänster först (kort från 2020 och framåt), sedan nere till höger. Ett säkert nummer avbryter direkt,
+// så ett vanligt modernt kort klarar sig på en enda OCR-körning. Varje bild läses för sig: staplade blir de sämre.
+async function readNumber(worker, canvas, sizes) {
+  let guess = null;
+  for (const zone of [ZONES.numLeft, ZONES.numRight]) {
+    for (const map of zoneMaps(canvas, zone, 1.4)) {
+      const num = findNumber((await worker.recognize(map)).data.text, sizes);
+      if (num?.sure) return num;
+      guess ||= num;
+    }
+  }
+  return guess;
+}
+
+// Läser kortet från ett rätat canvas (CARD_W × CARD_H px).
 // full läser hela kortet om zonerna inte räcker. Det är långsamt, så auto-skanningen gör det inte.
-export async function readCard(canvas, { invert = false, full = false } = {}) {
-  const worker = await getWorker();
-  const list = await names();
+export async function readCard(canvas, { full = false } = {}) {
+  const [nameWorker, numWorker, list, sizes] = await Promise.all([getWorker("name"), getWorker("number"), names(), setSizes()]);
 
-  // Zon-OCR: namnzonen överst och nummerzonen nederst
-  const [topRes, botRes] = await Promise.all([
-    worker.recognize(cropEnhanced(canvas, ZONES.name, 2, invert)),
-    worker.recognize(cropEnhanced(canvas, ZONES.number, 2.5, invert)),
-  ]);
-
-  const topLines = topRes.data.text.split("\n").map((l) => l.trim()).filter(Boolean);
-  let name = findName(topLines, list);
-  let num = findNumber(botRes.data.text) || findNumber(topRes.data.text);
+  // Namn och nummer läses samtidigt i var sin worker
+  let [name, num] = await Promise.all([readName(nameWorker, canvas, list), readNumber(numWorker, canvas, sizes)]);
 
   // Om zonerna inte räckte: läs hela kortet (bara vid "Skanna nu" och foto)
   if (full && (!name || !num)) {
-    const fullRes = await worker.recognize(cropEnhanced(canvas, { x: 0, y: 0, w: 1, h: 1 }, 1.2, invert));
-    const allLines = fullRes.data.text.split("\n").map((l) => l.trim()).filter(Boolean);
-    name = name || findName(allLines, list);
-    num = num || findNumber(fullRes.data.text);
+    const fullRes = await nameWorker.recognize(zoneMaps(canvas, { x: 0, y: 0, w: 1, h: 1 }, 0.7)[0]);
+    name = name || findName(linesOf(fullRes), list);
+    num = num || findNumber(fullRes.data.text, sizes);
   }
 
   const dhash = computeDHash(canvas);
@@ -614,6 +670,7 @@ export async function readCard(canvas, { invert = false, full = false } = {}) {
     name,
     number: num?.number || null,
     total: num?.total || null,
+    numberSure: !!num?.sure,
     dhash,
   };
 }
@@ -621,6 +678,9 @@ export async function readCard(canvas, { invert = false, full = false } = {}) {
 // ---------- 6. Filtrera och Matcha mot TCGdex ----------
 let setsPromise = null;
 const setCounts = () => (setsPromise ||= getJSON(`${API}/sets`).then((sets) => new Map(sets.map((s) => [s.id, s.cardCount || {}]))).catch(() => new Map()));
+// Alla setstorlekar som finns, för att känna igen totalen i "013/132". Tom om TCGdex inte svarar.
+let sizesPromise = null;
+const setSizes = () => (sizesPromise ||= setCounts().then((m) => new Set([...m.values()].flatMap((c) => [c.official, c.total]).filter(Boolean))));
 const setOf = (id) => id.slice(0, id.lastIndexOf("-"));
 
 export async function narrowByTotal(list, total) {
@@ -681,7 +741,7 @@ let dialog = null, stream = null, timer = null, animFrame = null, busy = false;
 let onFound = null, onPartial = null;
 let smoothedCorners = null;
 let torchSupported = false, torchActive = false;
-let stillTicks = 0, lastScanAt = 0, scanCount = 0, pendingForce = false;
+let stillTicks = 0, lastScanAt = 0, pendingForce = false;
 let pauseUntil = 0, openedAt = 0; // pauseUntil: auto-skanningen väntar så att ett felmeddelande hinner läsas
 const NUDGE_AFTER = 2000; // ms utan träff innan "Skanna nu" lyfts fram
 const PAUSE_AFTER_MISS = 3500; // ms paus efter en misslyckad manuell skanning eller ett foto
@@ -749,7 +809,7 @@ function ui() {
       [img.width * 0.9, img.height * 0.9],
       [img.width * 0.1, img.height * 0.9],
     ];
-    const { corners } = detectCardCorners(img, defaultRect);
+    const { corners } = detectCardCorners(img, defaultRect, 0.35);
     const unwarped = unwarpCard(img, corners);
 
     // Pågår en kameraskanning läses fotot direkt efter den. Kameran fortsätter om fotot inte gav någon träff.
@@ -955,7 +1015,7 @@ function motionTick() {
   if (Date.now() - lastScanAt >= SCAN_INTERVAL) runScan(false);
 }
 
-// Startar en skanning av aktuell bild. Auto-skanning varvar normal och inverterad bild.
+// Startar en skanning av aktuell bild.
 async function runScan(manual) {
   if (busy) {
     if (manual) {
@@ -970,8 +1030,7 @@ async function runScan(manual) {
     return;
   }
   lastScanAt = Date.now();
-  const invert = scanCount++ % 2 === 1;
-  await attempt(cv, { manual, invert });
+  await attempt(cv, { manual });
   if (pendingForce && dialog?.open) {
     pendingForce = false;
     runScan(true);
@@ -1032,8 +1091,8 @@ export function findInstantVisualMatch(myHashStr) {
   return null;
 }
 
-let last = null;
-async function attempt(canvas, { fromFile = false, manual = false, invert = false } = {}) {
+let last = null, lastNum = null;
+async function attempt(canvas, { fromFile = false, manual = false } = {}) {
   if (busy) return;
   busy = true;
   frameEl()?.classList.add("is-reading");
@@ -1061,11 +1120,18 @@ async function attempt(canvas, { fromFile = false, manual = false, invert = fals
     }
 
     // 2. OCR körs enbart vid behov om visuell match saknas
-    const r = await readCard(canvas, { invert, full: manual || fromFile });
+    const r = await readCard(canvas, { full: manual || fromFile });
     if (!dialog.open) return;
-    const seen = [r.name, r.number && `${r.number}/${r.total}`].filter(Boolean).join(" · ");
-    const sure = r.name && (r.number || fromFile || last === r.name);
+    const numKey = r.number && `${r.number}/${r.total}`;
+    // Ett nummer räknas om det lästes med snedstreck, eller likadant två gånger i rad
+    const numOk = numKey && (r.numberSure || lastNum === numKey);
+    if (!numOk) Object.assign(r, { number: null, total: null });
+    const seen = [r.name, r.number && numKey].filter(Boolean).join(" · ");
+    // Namn och nummer tillsammans räcker direkt. Bara nummer eller bara namn måste läsas likadant två gånger i rad,
+    // eftersom en enstaka felläsning annars ger fel kort.
+    const sure = (numOk && (r.name || lastNum === numKey || fromFile)) || (r.name && (fromFile || last === r.name));
     last = r.name;
+    lastNum = numKey;
 
     if (sure) {
       status(`Hittade <b>${esc(seen)}</b>!`);
@@ -1138,10 +1204,10 @@ export async function openScanner(callback, partialCallback) {
   onFound = callback;
   onPartial = partialCallback || null;
   last = null;
+  lastNum = null;
   smoothedCorners = null;
   hasPrevMotion = false;
   stillTicks = 0;
-  scanCount = 0;
   pendingForce = false;
   pauseUntil = 0;
   openedAt = Date.now();
@@ -1153,7 +1219,10 @@ export async function openScanner(callback, partialCallback) {
   d.showModal();
   status("Startar kameran…");
   d.querySelector(".scan-hud-status")?.classList.remove("success");
-  getWorker().catch(() => {});
+  // Värm upp båda textläsarna och setstorlekarna medan kameran startar
+  getWorker("name").catch(() => {});
+  getWorker("number").catch(() => {});
+  setSizes().catch(() => {});
   ensureLocalIndex().catch(() => {});
 
   try {

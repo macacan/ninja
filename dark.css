@@ -1,11 +1,12 @@
 /* Mörkt tema. Laddas med media="(prefers-color-scheme: dark)" och styrs av js/theme.js (systemet, eller användarens val). */
-:root{--bg:#0f1117;--card:#171a23;--surface:#1e2230;--ink:#e8eaf1;--ink-solid:#2b3150;--muted:#9aa2b6;--line:#2a2f3e;--navy:#aab8e0}
-.site-header{background:rgba(23,26,35,.92);box-shadow:0 6px 18px -12px rgba(0,0,0,.6)}
+/* Mjukt mörk blågrå i stället för nästan svart, så att sidan inte känns som ett svart hål. */
+:root{--bg:#1b1e28;--card:#232734;--surface:#2a2f3e;--ink:#e8eaf1;--ink-solid:#353c5c;--muted:#a3abbe;--line:#363c4e;--navy:#aab8e0}
+.site-header{background:rgba(35,39,52,.92);box-shadow:0 6px 18px -12px rgba(0,0,0,.6)}
 .page-head{background:var(--card)}
 .page-head h1{color:var(--ink)}
 .page-head p{color:var(--muted)}
 .tcard .art,.pimg,.product .art.cardimg{color:#1b1b2f}
-.skel .art,.skel i{background:#1e2230;border-color:#1e2230}
+.skel .art,.skel i{background:#2a2f3e;border-color:#2a2f3e}
 
 .btn.primary,.btn.gold{color:#1b1b2f}
 .btn.primary{color:#fff}
@@ -15,43 +16,43 @@
 .k-new{color:#1b1b2f}
 .ev-set{background:#152538}
 .badge:not(.hot){color:#1b1b2f}
-input[type=search],select,.shop-search{background:#1e2230}
-.price-cap input{background:#1e2230}
+input[type=search],select,.shop-search{background:#2a2f3e}
+.price-cap input{background:#2a2f3e}
 .toc a:hover{background:#403315}
 .todo{background:#494218}
 .qc[aria-pressed=true]{background:#403315}
 .dot-pre{color:#1b1b2f}
-.bell{background:rgba(23,26,35,.92);color:var(--ink);border-color:#3a4052;box-shadow:0 2px 8px rgba(0,0,0,.45)}
+.bell{background:rgba(35,39,52,.92);color:var(--ink);border-color:#3a4052;box-shadow:0 2px 8px rgba(0,0,0,.45)}
 .bell[aria-pressed=true]{color:#1b1b2f}
 .btn.gold{color:#1b1b2f}
-.acc-find{background:#1e2230}
-.price-cap input{background:#1e2230}
+.acc-find{background:#2a2f3e}
+.price-cap input{background:#2a2f3e}
 .rs-btn:hover{background:#282c32}
-.card-search .card-suggest-wrap{background:#1e2230}
-.search-row .card-suggest-wrap{background:#1e2230}
-.cad-header{background:#1f252f}
+.card-search .card-suggest-wrap{background:#2a2f3e}
+.search-row .card-suggest-wrap{background:#2a2f3e}
+.cad-header{background:#292e3b}
 .cad-item:hover,
 .cad-item.is-active{background:#3f3315}
 .cad-item.is-top:hover,
 .cad-item.is-top.is-active{background:#453a17}
-.cad-trend-card{background:#1e2230}
-.cad-footer{background:#1f252f}
+.cad-trend-card{background:#2a2f3e}
+.cad-footer{background:#292e3b}
 .cad-footer:hover,
-.cad-footer.is-active{background:#222932}
+.cad-footer.is-active{background:#2d3340}
 .guide-tips{background:#3c3114}
 .verdict.good{background:#203326}
 .verdict.mid{background:#3c3117}
 .verdict.bad{background:#381f1a}
 .badge-pulse{color:#1b1b2f}
-.val-hero-search{background:#1e2230}
+.val-hero-search{background:#2a2f3e}
 .val-data-table tr:hover td{background:#1e252d}
-.rsec{background:#1e2230}
+.rsec{background:#2a2f3e}
 .val-cond-tip{background:#3c3117}
 /* Släppkalendern */
 .cal-grid{border-color:#3a4058;box-shadow:4px 4px 0 #05060a}
 .cal-nav{border-color:#3a4058;box-shadow:3px 3px 0 #05060a}
-.day.weekend{background:#1c202b}
-.day.out{background:#12141b;color:#4a5064}
+.day.weekend{background:#262a37}
+.day.out{background:#1f222d;color:#575e73}
 .day.has:not(.out){background:#2b2414}
 .day.today .num{box-shadow:none}
 .lg-drop,.lg-set{box-shadow:0 0 0 2px #3a4058}
@@ -59,13 +60,13 @@ input[type=search],select,.shop-search{background:#1e2230}
 .ev-set{color:#cfdcff;box-shadow:0 0 0 1px #2c4566}
 /* Släppsidan */
 .rc-note{background:#403315}
-.rc-waves button:hover{background:#262b3b}
-.pill,.rs-st.listed,.rs-st.out{background:#262b3b;color:#9aa2b6}
+.rc-waves button:hover{background:#323849}
+.pill,.rs-st.listed,.rs-st.out{background:#323849;color:#9aa2b6}
 .pill.in,.rs-st.in{background:#17331f;color:#7fdc95}
 .pill.pre,.rs-st.pre{background:#1f2a4d;color:#a9bbff}
-.rd-tabs button[aria-selected=true]{background:#e8eaf1;border-color:#e8eaf1;color:#0f1117}
+.rd-tabs button[aria-selected=true]{background:#e8eaf1;border-color:#e8eaf1;color:#1b1e28}
 .day[data-day]:hover{background:#3a3018}
-.ph{background:repeating-linear-gradient(45deg,#1e2230 0 6px,#262b3b 6px 12px)}
+.ph{background:repeating-linear-gradient(45deg,#2a2f3e 0 6px,#323849 6px 12px)}
 .next-rel{border-color:#3a4058;box-shadow:4px 4px 0 #05060a}
 .rc-prod em{background:#3a2f55;color:#d9c9ff}
 
@@ -103,24 +104,18 @@ input[type=search],select,.shop-search{background:#1e2230}
 .rf-body b { color: #ffffff; text-shadow: 0 1px 3px rgba(0, 0, 0, 0.85); }
 .rf-body small { color: #d6dcec; text-shadow: 0 1px 3px rgba(0, 0, 0, 0.85); }
 
-/* Produktbilder i nattläge: bakgrunden bakom produkterna är en mjuk blågrå i stället för vitt, medan
-   produktfotona förblir ljusa. Fotona blandas in i bakgrunden, så att deras vita kanter blir mjuka. */
+/* Produktbilder i nattläge: vit botten som i fotona, utan hinna eller färgfilter över bilderna. */
 .pimg,.tcard .art,.product .art.cardimg {
-  background-color: #bcc5dc !important;
-  background-image: radial-gradient(circle at 50% 30%, #dbe1f0 0%, #bcc5dc 70%, #a9b3cd 100%) !important;
+  background: #fff !important;
 }
 
 /* Produktkorten får en ljusare yta än sidans bakgrund, så de syns tydligare i nattläge. */
 .tcard,.pcard,.product {
-  background: #262c3c;
-  border-color: #353c50;
-  box-shadow: 0 3px 0 #353c50;
+  background: #2e3446;
+  border-color: #3e465c;
+  box-shadow: 0 3px 0 #3e465c;
 }
 .tcard .muted,.pcard .muted,.product .muted,.tcard small,.pcard small,.product small {
   color: #b4bbcd;
-}
-.pimg img,.tcard .art img,.product .art.cardimg img {
-  mix-blend-mode: multiply;
-  filter: brightness(1.08) saturate(1.1);
 }
 

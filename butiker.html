@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Butiker – Ninjaloot</title>
+<title>Butiker – Packninja</title>
 <meta name="description" content="Förseglade kortprodukter, priser och lagerstatus från svenska butiker.">
 <meta name="theme-color" content="#ffffff">
-<meta name="theme-color" content="#0f1117" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#1b1e28" media="(prefers-color-scheme: dark)">
 <link rel="icon" href="logo.svg">
 <link href="fonts/fonts.css" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
@@ -52,6 +52,7 @@
             <button type="button" class="qc" id="c-in" aria-pressed="true"><i class="dot-in"></i>I lager</button>
             <button type="button" class="qc" id="c-pre" aria-pressed="true"><i class="dot-pre"></i>Förbeställ</button>
             <button type="button" class="qc" id="c-watch" aria-pressed="false"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M12 3a6 6 0 0 0-6 6v4l-2 3h16l-2-3V9a6 6 0 0 0-6-6zm-2 15a2 2 0 0 0 4 0" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>Bevakade <b id="watch-count">0</b></button>
+            <button type="button" class="qc" id="c-odds" aria-pressed="false" title="Se vad paketen innehåller och oddsen för sällsynta kort">🎯 Paket & Odds</button>
           </div>
         </div>
         <div class="shopbar-row">
@@ -103,7 +104,7 @@
             <span class="ntf-ic" data-icon="bell" data-size="26"></span>
             <div>
               <b>I webbläsaren</b>
-              <p class="muted">Ett pling när något i ditt urval händer, så länge Ninjaloot är öppen i en flik.</p>
+              <p class="muted">Ett pling när något i ditt urval händer, så länge Packninja är öppen i en flik.</p>
               <button class="btn small" id="p-browser" type="button">Slå på webbläsarnotiser</button>
             </div>
           </article>
@@ -159,8 +160,12 @@
       </div>
     </section>
 
-    <p class="hint" style="margin-top:28px">Priser och lagerstatus läses av från butikerna och kan ha hunnit ändras. Det är butikens egen sida som gäller när du köper. Produktbilder visas från butikernas egna servrar.</p>
+    <p class="hint" style="margin-top:28px">Packninja är ett privat hobbyprojekt. Priser och lagerstatus samlas in automatiskt och är endast vägledande – ta inte all data för 100% sanning då felaktiga priser, fördröjda uppdateringar eller tekniska fel kan förekomma. Det är alltid butikens egen sida och kassa som gäller när du köper.</p>
   </div>
+  <dialog id="anat-modal" class="card-modal anat-modal" aria-label="Produktens innehåll">
+    <button type="button" class="cm-close" aria-label="Stäng">✕</button>
+    <div class="anat-modal-body"></div>
+  </dialog>
 </main>
 <script type="module" src="js/butiker.js"></script>
 </body>

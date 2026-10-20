@@ -245,8 +245,9 @@ function renderResults() {
   $("#vr-count").textContent = found.length ? `${found.length} kort` : "";
 }
 
-// Från skannern: total är antalet kort i setet ("4/102" ger 102) och photo bilden av kortet.
-async function search(raw, total = null, photo = null) {
+// Från skannern: total är antalet kort i setet ("4/102" ger 102), photo bilden av kortet och nameHint namnet
+// skannern läste. Namnet används bara för att välja bland korten med rätt nummer, eftersom det oftare läses fel.
+async function search(raw, total = null, photo = null, nameHint = null) {
   const q = raw.trim();
   if (!q) return;
   openModal();
@@ -257,7 +258,14 @@ async function search(raw, total = null, photo = null) {
   $("#vr-grid").innerHTML = skeleton(6);
   const my = ++searchId;
   try {
-    const { list: all, title } = await findCards(q);
+    let { list: all, title } = await findCards(q);
+    if (photo && nameHint) {
+      const hint = nameHint.toLowerCase();
+      const named = all.filter((c) => c.name.toLowerCase().includes(hint));
+      // Inget kort med numret och setstorleken heter så: setstorleken lästes troligen fel, så sök på namn och nummer
+      if (named.length) all = named;
+      else { ({ list: all, title } = await findCards(`${nameHint} ${parseCardQuery(q).numPart || ""}`)); total = null; }
+    }
     // Skannat kort: filtrera på setets storlek och sortera efter hur lika bilderna är fotot.
     const { list, sure } = photo ? await rankByLook(photo, await narrowByTotal(all, total)) : { list: all, sure: false };
     if (my !== searchId) return;
@@ -617,9 +625,10 @@ const startScan = () => openScanner(({ name, number, total, canvas, cardId }) =>
     reveal(cardId);
     return;
   }
-  const q = [name, number].filter(Boolean).join(" ");
-  input.value = q;
-  search(q, total, canvas);
+  // Nummer och setstorlek pekar ut kortet bäst. Namnet följer med som ledtråd.
+  const q = number && total ? `${number}/${total}` : [name, number].filter(Boolean).join(" ");
+  input.value = [name, number && total ? `${number}/${total}` : number].filter(Boolean).join(" ");
+  search(q, total, canvas, number && total ? name : null);
 }, ({ name, number }) => {
   // Halv läsning: fyll i det som gick att läsa, så användaren kan komplettera i stället för att skriva från noll.
   const q = [name, number].filter(Boolean).join(" ");

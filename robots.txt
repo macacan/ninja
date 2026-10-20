@@ -6,4 +6,4 @@ Disallow: /data/card-history/
 Disallow: /research/
 Disallow: /scripts/
 
-Sitemap: https://ninjaloot.se/sitemap.xml
+Sitemap: https://packninja.se/sitemap.xml

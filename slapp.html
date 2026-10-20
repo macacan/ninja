@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Släpp – Ninjaloot</title>
+<title>Släpp – Packninja</title>
 <meta name="description" content="Släppkalender med kommande kortsläpp och nya set.">
 <meta name="theme-color" content="#ffffff">
-<meta name="theme-color" content="#0f1117" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#1b1e28" media="(prefers-color-scheme: dark)">
 <link rel="icon" href="logo.svg">
 <link href="fonts/fonts.css" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
@@ -23,6 +23,11 @@
   </header>
 
   <div class="wrap">
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin:20px 0 10px;flex-wrap:wrap;">
+      <span class="muted" style="font-size:0.92rem;">Håll koll på nya set, officiella boxinnehåll och vinstchanser per paket.</span>
+      <button type="button" class="btn small gold" id="slapp-odds-btn">🎯 Booster-guide & Pull rates</button>
+    </div>
+
     <div class="section" id="tidslinje"><h2>Tidslinje</h2><div class="tl-nav" id="tl-nav" role="group" aria-label="Bläddra i tidslinjen"></div></div>
     <div id="next-release"></div>
 
@@ -65,6 +70,10 @@
   <dialog id="day-modal" class="card-modal day-modal" aria-label="Släpp den här dagen">
     <button type="button" class="cm-close" aria-label="Stäng">✕</button>
     <div class="dm-body"></div>
+  </dialog>
+  <dialog id="anat-modal" class="card-modal anat-modal" aria-label="Innehåll och vinstchanser">
+    <button type="button" class="cm-close" aria-label="Stäng">✕</button>
+    <div class="anat-modal-body"></div>
   </dialog>
 </main>
 <script type="module" src="js/slapp.js"></script>

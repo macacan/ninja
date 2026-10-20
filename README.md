@@ -1,4 +1,4 @@
-# Ninjaloot
+# Packninja
 
 Statisk webbplats för kortsläpp, set, kortpriser, nyheter och butikslager.
 
@@ -42,7 +42,7 @@ Regler som alltid gäller:
 
 - `robots.txt` kontrolleras före varje URL. Spärrade sidor hämtas inte.
 - En förfrågan i taget per butik, minst 3 sekunder mellan anrop (längre om butiken anger `Crawl-delay` eller svarar 429/503).
-- Boten identifierar sig som `NinjalootBot`. **Fyll i `scripts/scraper/config.json`** med din webbadress och e-post innan du kör skarpt.
+- Boten identifierar sig som `PackninjaBot`. **Fyll i `scripts/scraper/config.json`** med din webbadress och e-post innan du kör skarpt.
 
 ### Vilka butiker som hämtas
 

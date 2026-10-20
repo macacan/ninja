@@ -1,0 +1,373 @@
+{
+  "updated": "2026-10-20",
+  "defaults": {
+    "Elite Trainer Box": {
+      "name": "Elite Trainer Box (ETB)",
+      "packs": 9,
+      "packsPC": 11,
+      "promoCount": 1,
+      "promoNote": "1 folierat full-art promokort (Pokémon Center-versionen har 2 promokort, varav ett med exklusiv PC-stämpel)",
+      "accessories": [
+        "65 kortfickor (sleeves) med motiv från setet",
+        "45 Basic Energy-kort",
+        "Spelarguide till expansionen med bild på alla kort",
+        "6 skaderäknartärningar av turneringskvalitet",
+        "1 godkänd slantsinglingstärning",
+        "2 tillståndsmarkörer i hårdplast",
+        "4 avdelare med motiv för att organisera lådan",
+        "Robust förvaringslåda med magnetiskt lock",
+        "Kodkort till Pokémon TCG Live"
+      ]
+    },
+    "Booster Bundle": {
+      "name": "Booster Bundle",
+      "packs": 6,
+      "promoCount": 0,
+      "promoNote": "Inga promokort – fokuserat enbart på maximalt antal boosterpaket",
+      "accessories": [
+        "Kompakt samlarask",
+        "Perfekt och prisvärt sätt att öppna 6 paket utan extra tillbehör"
+      ]
+    },
+    "Booster Box": {
+      "name": "Booster Display Box",
+      "packs": 36,
+      "promoCount": 0,
+      "promoNote": "Officiell butiksdisplay med 36 fabriksförseglade boosterpaket",
+      "accessories": [
+        "Fabriksförseglad displaylåda med Pokémon-logotypad krympfilm",
+        "Lägsta genomsnittliga pris per boosterpaket"
+      ]
+    },
+    "Ultra-Premium Collection": {
+      "name": "Ultra-Premium Collection (UPC)",
+      "packs": 16,
+      "promoCount": 3,
+      "promoNote": "3 exklusiva promokort av högsta klass (t.ex. äkta metallkort, Special Illustration Rare och Illustration Rare)",
+      "accessories": [
+        "Exklusiv stor spelmatta med sydda kanter (playmat)",
+        "Hård däckbox för din kortlek",
+        "Metalliskt samlarmynt",
+        "6 metalltärningar för skada",
+        "2 metallmarkörer för tillstånd",
+        "Stort magnetförslutet samlarskrin",
+        "Kodkort till Pokémon TCG Live"
+      ]
+    },
+    "Collection Box": {
+      "name": "Collection Box / V-Box / ex-Box",
+      "packs": 4,
+      "promoCount": 2,
+      "promoNote": "1 folierat promokort + 1 matchande jumbokort (oversized) eller samlarnål",
+      "accessories": [
+        "Stort fönster för att visa promokortet",
+        "4 boosterpaket från aktuella serier",
+        "Kodkort till Pokémon TCG Live"
+      ]
+    },
+    "Premium Collection": {
+      "name": "Premium Collection",
+      "packs": 6,
+      "promoCount": 3,
+      "promoNote": "Flera folierade promokort med etsad yta (etched foil)",
+      "accessories": [
+        "Magnetisk displayhållare (one-touch slab) med ställ för dina kort",
+        "65 exklusiva kortfickor (sleeves)",
+        "6 boosterpaket från aktuella serier",
+        "Kodkort till Pokémon TCG Live"
+      ]
+    },
+    "Tin": {
+      "name": "Samlarburk (Tin)",
+      "packs": 4,
+      "promoCount": 1,
+      "promoNote": "1 folierat promokort med Pokémon från burkens lock",
+      "accessories": [
+        "Dekorativ, återanvändbar plåtburk för kortförvaring",
+        "4 eller 5 boosterpaket (ofta från flera olika serier)",
+        "Kodkort till Pokémon TCG Live"
+      ]
+    },
+    "Mini Tin": {
+      "name": "Mini Tin",
+      "packs": 2,
+      "promoCount": 0,
+      "promoNote": "Inga promokort, men innehåller 1 samlar-artkort som kan pusslas ihop med seriens övriga plåtaskar",
+      "accessories": [
+        "1 Pokémon art-kort med motiv från asken",
+        "1 klistermärkesark",
+        "Liten behändig plåtask i fickformat"
+      ]
+    },
+    "Blister": {
+      "name": "3-Pack Blister / Trippelpack",
+      "packs": 3,
+      "promoCount": 1,
+      "promoNote": "1 folierat Black Star Promo-kort",
+      "accessories": [
+        "1 stort Pokémon-mynt för matchspel",
+        "3 boosterpaket",
+        "Kodkort till Pokémon TCG Live"
+      ]
+    },
+    "Build & Battle": {
+      "name": "Build & Battle Box",
+      "packs": 4,
+      "promoCount": 1,
+      "promoNote": "1 av 4 unika folierade promokort med gyllene stämpel från setet",
+      "accessories": [
+        "Färdigbyggd 40-kortslek redo att spelas direkt (inklusive tränarkort och energikort)",
+        "4 boosterpaket",
+        "Spelarguide med däckbyggartips",
+        "Kodkort till Pokémon TCG Live"
+      ]
+    }
+  },
+  "specific": {
+    "151 ultra-premium collection": {
+      "title": "151 Ultra-Premium Collection",
+      "packs": 16,
+      "packSet": "151",
+      "promos": [
+        { "name": "Mew ex (Metal Hyper Rare)", "code": "MEW 205/165 Metal", "note": "Äkta metallkort" },
+        { "name": "Mew ex (Special Illustration Rare)", "code": "SVP 053", "note": "Full art promokort" },
+        { "name": "Mewtwo (Illustration Rare)", "code": "SVP 052", "note": "Full art promokort" }
+      ],
+      "accessories": [
+        "Stor tygmatta med sydda kanter (stitched-edge playmat)",
+        "Däckbox med Mew-prägling",
+        "Metalliskt mynt med Mew",
+        "6 metalltärningar för skaderäkning",
+        "2 metallmarkörer för tillstånd",
+        "16 boosterpaket från Scarlet & Violet 151",
+        "Kodkort till Pokémon TCG Live"
+      ]
+    },
+    "151 elite trainer box": {
+      "title": "151 Elite Trainer Box",
+      "packs": 9,
+      "packSet": "151",
+      "promos": [
+        { "name": "Snorlax (Illustration Rare)", "code": "SVP 051", "note": "Full art foil promo" }
+      ],
+      "accessories": [
+        "65 kortfickor (sleeves) med Snorlax",
+        "45 Basic Energy-kort",
+        "151 Spelarguide",
+        "6 skadetärningar och 1 slantsinglingstärning",
+        "4 avdelare och förvaringslåda",
+        "Kodkort till Pokémon TCG Live"
+      ]
+    },
+    "151 poster collection": {
+      "title": "151 Poster Collection",
+      "packs": 3,
+      "packSet": "151",
+      "promos": [
+        { "name": "Bulbasaur (Foil promo)", "code": "SVP 046" },
+        { "name": "Charmander (Foil promo)", "code": "SVP 047" },
+        { "name": "Squirtle (Foil promo)", "code": "SVP 048" }
+      ],
+      "accessories": [
+        "En gigantisk dubbelsidig affisch med illustrationer av alla ursprungliga 151 Pokémon",
+        "3 boosterpaket från 151",
+        "Kodkort till Pokémon TCG Live"
+      ]
+    },
+    "151 binder collection": {
+      "title": "151 Binder Collection",
+      "packs": 4,
+      "packSet": "151",
+      "promos": [],
+      "accessories": [
+        "Exklusiv samlarpärm med 9 fickor per sida (rymmer upp till 360 kort)",
+        "4 boosterpaket från 151",
+        "Perfekt för att samla en komplett master set av 151"
+      ]
+    },
+    "151 collection zapdos ex": {
+      "title": "151 Collection — Zapdos ex",
+      "packs": 4,
+      "packSet": "151",
+      "promos": [
+        { "name": "Zapdos ex (Foil promo)", "code": "SVP 049" },
+        { "name": "Electabuzz (Foil promo)", "code": "SVP 041" },
+        { "name": "Zapdos ex (Oversized Jumbo-kort)", "code": "Jumbo Promo" }
+      ],
+      "accessories": [
+        "4 boosterpaket från 151",
+        "Kodkort till Pokémon TCG Live"
+      ]
+    },
+    "151 collection alakazam ex": {
+      "title": "151 Collection — Alakazam ex",
+      "packs": 4,
+      "packSet": "151",
+      "promos": [
+        { "name": "Alakazam ex (Foil promo)", "code": "SVP 050" },
+        { "name": "Kadabra (Foil promo)", "code": "SVP 040" },
+        { "name": "Abra (Foil promo)", "code": "SVP 039" }
+      ],
+      "accessories": [
+        "4 boosterpaket från 151",
+        "Kodkort till Pokémon TCG Live"
+      ]
+    },
+    "prismatic evolutions elite trainer box": {
+      "title": "Prismatic Evolutions Elite Trainer Box",
+      "packs": 9,
+      "packSet": "Prismatic Evolutions",
+      "promos": [
+        { "name": "Eevee (Special Illustration Rare)", "code": "SVP 170", "note": "Mycket eftertraktad SIR-promo med Eevee" }
+      ],
+      "accessories": [
+        "65 kortfickor (sleeves) med Eevee och dess utvecklingar",
+        "45 Basic Energy-kort",
+        "Spelarguide till Prismatic Evolutions",
+        "6 skadetärningar och 1 godkänd tävlingstärning",
+        "4 snygga avdelare och lyxig samlarlåda",
+        "Kodkort till Pokémon TCG Live"
+      ]
+    },
+    "prismatic evolutions poster collection": {
+      "title": "Prismatic Evolutions Poster Collection",
+      "packs": 3,
+      "packSet": "Prismatic Evolutions",
+      "promos": [
+        { "name": "Vaporeon (Foil promo)", "code": "SVP Promo" },
+        { "name": "Jolteon (Foil promo)", "code": "SVP Promo" },
+        { "name": "Flareon (Foil promo)", "code": "SVP Promo" }
+      ],
+      "accessories": [
+        "Dubbelsidig stor affisch med Eeveelutions",
+        "3 boosterpaket från Prismatic Evolutions",
+        "Kodkort till Pokémon TCG Live"
+      ]
+    },
+    "prismatic evolutions binder collection": {
+      "title": "Prismatic Evolutions Binder Collection",
+      "packs": 5,
+      "packSet": "Prismatic Evolutions",
+      "promos": [],
+      "accessories": [
+        "9-ficks samlarpärm med Eevee och alla utvecklingar (rymmer 378 kort)",
+        "5 boosterpaket från Prismatic Evolutions"
+      ]
+    },
+    "surging sparks elite trainer box": {
+      "title": "Surging Sparks Elite Trainer Box",
+      "packs": 9,
+      "packSet": "Surging Sparks",
+      "promos": [
+        { "name": "Magneton (Illustration Rare)", "code": "SVP 154", "note": "Exklusivt folierat art-kort ritat av GIDORA" }
+      ],
+      "accessories": [
+        "65 kortfickor (sleeves) med Stellar Tera Pikachu",
+        "45 Basic Energy-kort",
+        "Spelarguide till Surging Sparks",
+        "6 skadetärningar och tävlingstärning",
+        "4 avdelare och förvaringslåda",
+        "Kodkort till Pokémon TCG Live"
+      ]
+    },
+    "stellar crown elite trainer box": {
+      "title": "Stellar Crown Elite Trainer Box",
+      "packs": 9,
+      "packSet": "Stellar Crown",
+      "promos": [
+        { "name": "Noctowl (Illustration Rare)", "code": "SVP 141", "note": "Full art foil promo" }
+      ],
+      "accessories": [
+        "65 kortfickor (sleeves) med Stellar Terapagos",
+        "45 Basic Energy-kort",
+        "Spelarguide till Stellar Crown",
+        "6 skadetärningar",
+        "Förvaringslåda med 4 avdelare",
+        "Kodkort till Pokémon TCG Live"
+      ]
+    },
+    "charizard ex premium collection": {
+      "title": "Charizard ex Premium Collection",
+      "packs": 6,
+      "packSet": "Blandade serier (t.ex. 151, Obsidian Flames)",
+      "promos": [
+        { "name": "Charizard ex (Etched Foil)", "code": "SVP 074", "note": "Full art etched foil" },
+        { "name": "Charmander (Foil promo)", "code": "SVP 044" },
+        { "name": "Charmeleon (Foil promo)", "code": "SVP 045" }
+      ],
+      "accessories": [
+        "1 magnetisk kortskyddshållare (one-touch slab) med ställ",
+        "65 kortfickor med Charizard som Tera Pokémon",
+        "6 boosterpaket",
+        "Kodkort till Pokémon TCG Live"
+      ]
+    }
+  },
+  "pullRates": {
+    "packSlots": [
+      { "slot": "Kort 1–4", "title": "Common", "desc": "Vanliga grundkort från setet (cirkelsymbol).", "rate": "100% garanterat (4 st)", "cls": "c" },
+      { "slot": "Kort 5–7", "title": "Uncommon", "desc": "Ovanliga Pokémon- och tränarkort (rombsymbol).", "rate": "100% garanterat (3 st)", "cls": "u" },
+      { "slot": "Kort 8", "title": "Reverse Holo / ACE SPEC", "desc": "Glänsande kortram. I nyare set kan detta kort ersättas av ett kraftfullt rosa ACE SPEC-kort eller Shiny Rare.", "rate": "Reverse Holo (ca 95%) · ACE SPEC (ca 5%)", "cls": "rh" },
+      { "slot": "Kort 9", "title": "Hit-slot / Stor vinstchans", "desc": "Det andra glansiga kortet. Här gömmer sig setets mest eftertraktade konstkort (Illustration Rares, Special Illustration Rares och guldiga Hyper Rares).", "rate": "Reverse (ca 85%) · IR (1 på 13) · SIR (1 på 32) · Guld (1 på 54)", "cls": "hit" },
+      { "slot": "Kort 10", "title": "Rare / Double Rare / Full Art", "desc": "Huvudplatsen för sällsynthet (stjärnsymbol). Alltid minst ett glänsande Rare, med stor chans för Pokémon ex eller Full Art Ultra Rare.", "rate": "Holo Rare (ca 75%) · Double Rare ex (1 på 6) · Ultra Rare (1 på 15)", "cls": "r" },
+      { "slot": "Kort 11", "title": "Basic Energy", "desc": "Ett energikort (Grass, Fire, Water, Lightning, Psychic, Fighting, Darkness eller Metal). Chans för sällsynt glänsande Holo Energy.", "rate": "Standard (ca 70%) · Holofoil Energy (ca 30%)", "cls": "e" },
+      { "slot": "Kort 12", "title": "TCG Live Kodkort", "desc": "Digital kod som ger ett motsvarande paket i det officiella spelet Pokémon TCG Live.", "rate": "100% (1 st i varje paket)", "cls": "code" }
+    ],
+    "odds": [
+      {
+        "name": "Double Rare (ex)",
+        "code": "RR",
+        "odds": "1 på 6 paket",
+        "pct": "16.7%",
+        "icon": "⭐⭐",
+        "color": "#3b82f6",
+        "desc": "Kraftfulla Pokémon ex med dubbel stjärna. I genomsnitt 6 st per Booster Box."
+      },
+      {
+        "name": "Illustration Rare (IR)",
+        "code": "IR",
+        "odds": "1 på 13 paket",
+        "pct": "7.7%",
+        "icon": "🎨",
+        "color": "#eab308",
+        "desc": "Unika full-art illustrationer som sträcker sig över hela kortet. Cirka 3 st per Booster Box."
+      },
+      {
+        "name": "Ultra Rare (Full Art)",
+        "code": "UR",
+        "odds": "1 på 15 paket",
+        "pct": "6.7%",
+        "icon": "✨",
+        "color": "#8b5cf6",
+        "desc": "Folierade tränare eller Pokémon ex med etsad textur och stjärnglans. Ca 2 st per Booster Box."
+      },
+      {
+        "name": "ACE SPEC Rare",
+        "code": "ACE",
+        "odds": "1 på 20 paket",
+        "pct": "5.0%",
+        "icon": "⚡",
+        "color": "#ec4899",
+        "desc": "Matchavgörande rosa metallglänsande kort (tillåts endast 1 per kortlek). Ca 1-2 per Booster Box."
+      },
+      {
+        "name": "Special Illustration Rare (SIR)",
+        "code": "SIR",
+        "odds": "1 på 32 paket",
+        "pct": "3.1%",
+        "icon": "👑",
+        "color": "#f97316",
+        "desc": "De mest eftertraktade och värdefulla korten i hela setet (t.ex. Charizard, Pikachu, Eeveelutions). Snittar ca 1 st per Booster Box."
+      },
+      {
+        "name": "Hyper Rare (Guld)",
+        "code": "HR",
+        "odds": "1 på 54 paket",
+        "pct": "1.8%",
+        "icon": "🏆",
+        "color": "#ffd700",
+        "desc": "Exklusiva helguldiga kort med trippelstjärna. Dyker upp ungefär i varannan Booster Box."
+      }
+    ]
+  }
+}

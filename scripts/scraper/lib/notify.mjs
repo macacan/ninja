@@ -36,7 +36,7 @@ async function post(url, body, label) {
 const ntfy = (topic, msg) => post("https://ntfy.sh", JSON.stringify({ topic, ...msg }), "ntfy");
 
 async function toNtfy(base, events, storeName) {
-  // Två sorters ämnen: ett med allt, och ett per produkttyp (t.ex. ninjaloot-xyz-elite-trainer-box).
+  // Två sorters ämnen: ett med allt, och ett per produkttyp (t.ex. packninja-xyz-elite-trainer-box).
   const groups = new Map([[`${base}-alla`, events]]);
   for (const e of events) {
     const t = `${base}-${slug(e.type || "ovrigt")}`;
@@ -47,7 +47,7 @@ async function toNtfy(base, events, storeName) {
     if (list.length > MAX_SINGLE) {
       const counts = Object.entries(list.reduce((a, e) => ((a[e.kind] = (a[e.kind] || 0) + 1), a), {}))
         .map(([k, n]) => `${n} ${(KIND[k]?.label || k).toLowerCase()}`).join(", ");
-      await ntfy(topic, { title: `${list.length} nya händelser i butikerna`, message: `${counts}. Öppna Ninjaloot för hela listan.`, tags: ["bell"] });
+      await ntfy(topic, { title: `${list.length} nya händelser i butikerna`, message: `${counts}. Öppna Packninja för hela listan.`, tags: ["bell"] });
       continue;
     }
     for (const e of list) {

@@ -55,7 +55,7 @@ $ip = visitorIp();
 // Filen ligger bredvid public_html om det går (så att den inte kan laddas ner), annars i systemets temp-mapp.
 $parent = dirname(__DIR__, 2);
 $dir = (is_dir($parent) && is_writable($parent)) ? $parent : sys_get_temp_dir();
-$file = $dir . '/ninjaloot-pack-limit.json';
+$file = $dir . '/packninja-pack-limit.json';
 
 $fh = @fopen($file, 'c+');
 if (!$fh || !flock($fh, LOCK_EX)) {
