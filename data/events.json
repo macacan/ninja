@@ -1,6 +1,19 @@
 {
- "updated": 1792495219908,
+ "updated": 1792498840010,
  "events": [
+  {
+   "at": 1792496250186,
+   "store": "toyspace",
+   "product": "toyspace:https://toyspace.se/pokemon-tcg-30-arsjubileum-greninja-ex-lada-pok10463-101",
+   "group": "30th-celebration|collection-box|en||greninja",
+   "title": "Pokémon TCG 30th Celebration Greninja ex Box",
+   "url": "https://toyspace.se/pokemon-tcg-30-arsjubileum-greninja-ex-lada-pok10463-101",
+   "price": 758,
+   "type": "Collection Box",
+   "set": "30th Celebration",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1792490974581,
    "store": "aquitaz",
