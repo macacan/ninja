@@ -1,4 +1,4 @@
-import { $, esc, kr, fmt, ago, loading, productCard, liveStamp, releaseSets, safeUrl } from "./site.js";
+import { $, esc, kr, fmt, ago, loading, liveStamp, releaseSets, safeUrl } from "./site.js";
 import { groupKey, groupProducts, groupTitle, lowestInStock } from "./group.js";
 import { typeOf } from "./releases.js";
 import { getPrefs, savePrefs, matches, KINDS, startBrowserNotices } from "./prefs.js";
@@ -17,12 +17,15 @@ const load = (p) => fetch(p, { cache: "no-cache" }).then((r) => (r.ok ? r.json()
 // ---------- Händelser ----------
 function renderEvents() {
   const mine = $("#only-mine").checked, prefs = getPrefs();
-  const byId = mine ? new Map(products.map((p) => [p.id, p])) : null;
+  const byId = new Map(products.map((p) => [p.id, p]));
   const list = events.filter((e) => (!eventKind || e.kind === eventKind) && (!mine || matches(e, prefs, byId.get(e.product)))).slice(0, 120);
   $("#events").innerHTML = list.length ? list.map((e) => {
     const k = KIND[e.kind] || { label: e.kind, cls: "" };
+    // Produktens bild med händelsen som etikett ovanpå. Produkter som försvunnit ur butiken saknar bild.
+    // Produkttypen syns under bilden och tar över om bilden saknas eller inte laddar.
+    const p = byId.get(e.product), img = p?.image;
     return `<li class="event">
-      <span class="kind ${k.cls}">${k.label}</span>
+      <div class="ev-img"><span class="ev-noimg">${esc(p?.type || e.type || "Förseglat")}</span>${img ? `<img src="${esc(img)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.remove()">` : ""}<span class="kind ${k.cls}">${k.label}</span></div>
       <div class="ev-body">
         <a href="${esc(safeUrl(e.url))}" target="_blank" rel="noopener nofollow">${esc(e.title)}</a>
         <span class="muted">${esc(storeName[e.store] || e.store)} · ${ago(new Date(e.at).toISOString())}</span>
@@ -36,9 +39,8 @@ function renderEvents() {
 const PRICE = { "": [0, Infinity], "0-200": [0, 200], "200-500": [200, 500], "500-1000": [500, 1000], "1000-": [1000, Infinity] };
 const LANG = { en: "Engelska", ja: "Japanska", ko: "Koreanska", zh: "Kinesiska", fr: "Franska" };
 const TYPE_LABEL = { "Booster Pack": "Boosterpaket", "Booster Box": "Boosterbox", "Elite Trainer Box": "Elite Trainer Box (ETB)", Blister: "Blister", Tin: "Tin" };
-let recentDrop = new Map(), recentNew = new Set();
+let recentDrop = new Map();
 let groups = new Map(), priceHist = {}, releaseDates = new Map();
-let view = "product";
 const pressed = (id) => $(id).getAttribute("aria-pressed") === "true";
 
 // Produkter som klarar alla filter. Tillgänglighet styrs av snabbfiltren: inget valt betyder allt, även slut.
@@ -56,14 +58,6 @@ function filtered() {
     && (!watchOnly || watch.has(groupKey(p)))
     && words.every((w) => `${p.title} ${p.set || ""}`.toLowerCase().includes(w)));
 }
-
-const SORT = {
-  recent: (a, b) => b.lastChange - a.lastChange,
-  "price-asc": (a, b) => a.price - b.price,
-  "price-desc": (a, b) => b.price - a.price,
-  name: (a, b) => a.title.localeCompare(b.title, "sv"),
-  stores: (a, b) => b.lastChange - a.lastChange,
-};
 
 // En produktgrupp som kort: lägsta pris, läget i butikerna och en utfällbar jämförelse.
 function groupInfo(key) {
@@ -150,17 +144,9 @@ const openGroups = new Set();
 function renderProducts() {
   const list = filtered();
   const grid = $("#products");
-  grid.className = view === "product" ? "ggrid" : "pgrid";
+  grid.className = "ggrid";
   const cols = getComputedStyle(grid).gridTemplateColumns.split(" ").filter(Boolean).length || 1;
   const take = Math.ceil(shown / cols) * cols;
-  if (view === "store") {
-    list.sort(SORT[$("#f-sort").value]);
-    $("#count").textContent = `${list.length.toLocaleString("sv-SE")} produkter`;
-    grid.innerHTML = list.slice(0, take).map((p) => productCard(p, storeName[p.store], { drop: recentDrop.get(p.id), isNew: recentNew.has(p.id) })).join("")
-      || '<div class="msg">Inga produkter matchar. Prova att ta bort ett filter.</div>';
-    $("#more").hidden = list.length <= take;
-    return;
-  }
   // Per produkt: grupper där minst en butik klarar filtren, men jämförelsen visar alla butiker.
   const keys = [...new Set(list.map(groupKey))].map(groupInfo);
   const sort = $("#f-sort").value;
@@ -196,16 +182,6 @@ $("#products").addEventListener("click", (e) => {
 for (const id of ["#c-in", "#c-pre", "#c-watch"]) {
   $(id).addEventListener("click", () => { $(id).setAttribute("aria-pressed", String(!pressed(id))); shown = PAGE; renderProducts(); });
 }
-$("#view").addEventListener("click", (e) => {
-  const b = e.target.closest("[data-v]"); if (!b) return;
-  view = b.dataset.v;
-  document.querySelectorAll("#view button").forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
-  try { localStorage.setItem("nl:view", view); } catch {}
-  shown = PAGE; renderProducts();
-});
-try { view = localStorage.getItem("nl:view") || "product"; } catch {}
-document.querySelectorAll("#view button").forEach((x) => x.setAttribute("aria-pressed", String(x.dataset.v === view)));
-
 // ---------- Butiker ----------
 const STATUS = { tillstand: "Tillstånd", "ej-forbjuden": "Bevakas", "inga-bilder": "Bevakas, utan bilder", okand: "Ej kontrollerad", forbjuden: "Bevakas inte" };
 function renderStores() {
@@ -225,7 +201,7 @@ function renderStores() {
 }
 
 // ---------- Flikar och filter ----------
-const TABS = ["events", "products", "stores", "notiser"];
+const TABS = ["products", "events", "stores", "notiser"];
 function showTab(tab) {
   document.querySelectorAll("#seg button").forEach((b) => b.setAttribute("aria-pressed", b.dataset.tab === tab));
   for (const t of TABS) $(`#tab-${t}`).hidden = t !== tab;
@@ -267,6 +243,7 @@ $("#filters").addEventListener("submit", (e) => e.preventDefault());
 $("#more").addEventListener("click", () => { shown += PAGE; renderProducts(); });
 
 $("#events").innerHTML = loading("Ninjan kollar butikerna");
+$("#products").innerHTML = loading("Ninjan kollar butikerna");
 try {
   const [p, e, s] = await Promise.all([load("data/products.json"), load("data/events.json"), load("data/stores-status.json")]);
   products = p.products; events = e.events; stores = s.stores;
@@ -299,19 +276,20 @@ try {
     if (ev.at < week) continue;
     // Mer än 60 % lägre är nästan alltid ett valutafel (dollar i stället för kronor), inte en rea.
     if (ev.kind === "prissankt" && !recentDrop.has(ev.product) && ev.price >= ev.from * 0.4) recentDrop.set(ev.product, ev.from);
-    if (ev.kind === "ny") recentNew.add(ev.product);
   }
   // Sökning från länk, t.ex. butiker.html?q=Delta Reign#products
   const q = new URLSearchParams(location.search).get("q");
   if (q) $("#f-q").value = q;
   renderEvents(); renderProducts(); renderStores(); fitAll();
-  // Utan händelser ännu är produktlistan mer intressant att börja med.
+  // Produkterna visas först, om inte länken pekar på en annan flik (t.ex. butiker.html#events).
   const start = location.hash.slice(1);
   renderPrefs();
-  showTab(TABS.includes(start) ? start : events.length ? "events" : "products");
+  showTab(TABS.includes(start) ? start : "products");
 } catch (err) {
   console.error(err);
-  $("#events").innerHTML = '<li class="msg">Butiksdatan kunde inte laddas. Kör bevakningen först (se README).</li>';
+  const msg = "Butiksdatan kunde inte laddas. Kör bevakningen först (se README).";
+  $("#events").innerHTML = `<li class="msg">${msg}</li>`;
+  $("#products").innerHTML = `<div class="msg">${msg}</div>`;
 }
 
 // ---------- Notiser och urval ----------
@@ -389,7 +367,7 @@ $("#tab-notiser").addEventListener("click", (e) => {
     savePrefs(p);
     updateWatchCount();
     refreshSummary();
-    if (view === "product") renderProducts();
+    renderProducts();
   }
 });
 

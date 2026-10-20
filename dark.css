@@ -1,7 +1,9 @@
 /* Mörkt tema. Laddas med media="(prefers-color-scheme: dark)" och styrs av js/theme.js (systemet, eller användarens val). */
 :root{--bg:#0f1117;--card:#171a23;--surface:#1e2230;--ink:#e8eaf1;--ink-solid:#2b3150;--muted:#9aa2b6;--line:#2a2f3e;--navy:#aab8e0}
 .site-header{background:rgba(23,26,35,.92);box-shadow:0 6px 18px -12px rgba(0,0,0,.6)}
-.page-head h1{color:#1b1b2f}
+.page-head{background:var(--card)}
+.page-head h1{color:var(--ink)}
+.page-head p{color:var(--muted)}
 .tcard .art,.pimg,.product .art.cardimg{color:#1b1b2f}
 .skel .art,.skel i{background:#1e2230;border-color:#1e2230}
 

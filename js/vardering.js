@@ -691,11 +691,18 @@ else if (params.get("q")) { input.value = params.get("q"); search(params.get("q"
 
 
 // Hero-bannern visar tre slumpade dyra kort varje gång sidan laddas (utan priser, de värderas när man klickar).
-const HERO_POOL = ["sv03.5-199", "swsh7-215", "sv04.5-234", "sv08-238", "sv08.5-161", "sv08.5-156", "sv10.5b-172", "sv10.5w-173", "swsh11-186", "swsh7-194", "swsh7-218"];
+const HERO_POOL = [
+  "sv03.5-199", "sv03.5-205", "sv03.5-200", "sv03.5-198", "sv03.5-201", "sv03.5-203", "sv03-223", "sv02-269", "sv02-203",
+  "sv04.5-234", "sv04.5-232", "sv01-244", "sv04-251", "sv05-205", "sv06-214", "sv07-170", "sv08-238", "sv08-239",
+  "sv08.5-161", "sv08.5-156", "sv08.5-155", "sv08.5-146", "sv08.5-149", "sv08.5-150", "sv08.5-153", "sv08.5-144",
+  "sv10.5b-172", "sv10.5w-173", "swsh7-215", "swsh7-194", "swsh7-218", "swsh7-205", "swsh8-271", "swsh8-270", "swsh9-154", "swsh11-186",
+];
+// Fisher–Yates: alla kort har samma chans att hamna i hero-bannern.
+const shuffled = (list) => { const a = list.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
 (async () => {
   const slots = [...document.querySelectorAll(".val-hero-stage .val-card-3d")];
   if (!slots.length) return;
-  const ids = HERO_POOL.slice().sort(() => Math.random() - 0.5).slice(0, slots.length);
+  const ids = shuffled(HERO_POOL).slice(0, slots.length);
   const cards = await Promise.all(ids.map((id) => getJSON(`${API}/cards/${encodeURIComponent(id)}`).catch(() => null)));
   slots.forEach((el, i) => {
     const c = cards[i];

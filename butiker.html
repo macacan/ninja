@@ -24,13 +24,13 @@
 
   <div class="wrap">
     <nav class="seg" aria-label="Visa" id="seg">
-      <button data-tab="events" aria-pressed="true">Händelser</button>
-      <button data-tab="products" aria-pressed="false">Produkter</button>
+      <button data-tab="products" aria-pressed="true">Produkter</button>
+      <button data-tab="events" aria-pressed="false">Händelser</button>
       <button data-tab="stores" aria-pressed="false">Butiker</button>
       <button data-tab="notiser" aria-pressed="false">Notiser</button>
     </nav>
 
-    <section id="tab-events">
+    <section id="tab-events" hidden>
       <div class="section"><h2>Senaste händelser</h2></div>
       <div class="chips" id="event-filter" role="group" aria-label="Filtrera händelser">
         <button data-kind="" aria-pressed="true">Alla</button>
@@ -43,7 +43,7 @@
       <ul id="events" class="events"></ul>
     </section>
 
-    <section id="tab-products" hidden>
+    <section id="tab-products">
       <div class="section"><h2>Produkter</h2></div>
       <form id="filters" class="shopbar" role="search" onsubmit="return false">
         <div class="viewbar">
@@ -52,10 +52,6 @@
             <button type="button" class="qc" id="c-in" aria-pressed="true"><i class="dot-in"></i>I lager</button>
             <button type="button" class="qc" id="c-pre" aria-pressed="true"><i class="dot-pre"></i>Förbeställ</button>
             <button type="button" class="qc" id="c-watch" aria-pressed="false"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M12 3a6 6 0 0 0-6 6v4l-2 3h16l-2-3V9a6 6 0 0 0-6-6zm-2 15a2 2 0 0 0 4 0" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>Bevakade <b id="watch-count">0</b></button>
-          </div>
-          <div class="seg2" id="view" role="group" aria-label="Visa">
-            <button type="button" data-v="product" aria-pressed="true">Per produkt</button>
-            <button type="button" data-v="store" aria-pressed="false">Per butik</button>
           </div>
         </div>
         <div class="shopbar-row">

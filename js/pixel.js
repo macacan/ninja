@@ -335,15 +335,19 @@ export function mountScene(canvas, opts = {}) {
     if (!canvas.clientWidth) return;
     const small = innerWidth < 640;
     const scale = (small && o.smallScale) || o.scale || (small ? 3 : 4);
+    const pW = W, pH = H, live = ninjaX !== undefined;
     H = small && o.smallHeight ? o.smallHeight : o.height;
     W = Math.ceil(canvas.clientWidth / scale);
+    // Byter man bara nattläge (samma storlek) behålls ninjan, fåglarna, molnen och händelserna där de var.
+    const same = live && W === pW && H === pH;
     canvas.width = W; canvas.height = H;
     // Exakt heltalsskala på höjden, annars blir pixlarna olika stora.
     canvas.style.height = `${H * scale}px`;
     rand = rng(o.seed);
     scene = buildStatic(W, H, o, rand, o.sign ? signBox(scale) : null);
-    events = [];
     sky = o.sky ? buildSky(W, scene.gt + 1, isNight() ? SKY_NIGHT : SKY) : null;
+    if (same) { draw(); return; }
+    events = [];
     // Stjärnorna får en egen slumpföljd, så att dagscenerna inte ändras.
     const sr = rng(o.seed + 99);
     stars = Array.from({ length: Math.round(W / 5) }, () => ({ x: Math.floor(sr() * W), y: Math.floor(sr() * Math.max(4, scene.gt - 22)), ph: Math.floor(sr() * 23), c: sr() < 0.2 ? "#fff3b0" : "#ffffff" }));
