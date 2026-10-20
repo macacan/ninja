@@ -92,9 +92,38 @@ async function fromBulbapedia() {
   return { sets, products };
 }
 
+// Officiella expansionstabeller från Bulbapedias "List of Pokémon Trading Card Game expansions"
+async function expansionListFromBulbapedia() {
+  const secRes = await getJSON(`${WIKI}?action=parse&page=List_of_Pok%C3%A9mon_Trading_Card_Game_expansions&prop=sections&format=json&formatversion=2`);
+  const targetSections = (secRes.parse?.sections || []).filter((s) => /Scarlet &amp; Violet|Mega Evolution/i.test(s.line));
+  const list = [];
+  for (const s of targetSections) {
+    const r = await getJSON(`${WIKI}?action=parse&page=List_of_Pok%C3%A9mon_Trading_Card_Game_expansions&section=${s.index}&prop=wikitext&format=json&formatversion=2`);
+    const rows = (r.parse?.wikitext || "").split(/\|-\s*(?:style="background:#FFF")?/);
+    const series = s.line.replace(/&amp;/g, "&").replace(/\s*Series\s*$/i, "").trim();
+    for (const row of rows) {
+      const nameMatch = row.match(/\{\{TCG\|([^|}]+)/);
+      const dateMatch = row.match(/([A-Z][a-z]+\s+\d{1,2},\s*\d{4})/);
+      if (nameMatch && dateMatch) {
+        const name = nameMatch[1].trim();
+        const date = isoDate(dateMatch[1]);
+        if (!name || !date) continue;
+        list.push({
+          set: name,
+          date,
+          series,
+          language: "en",
+          url: `https://bulbapedia.bulbagarden.net/wiki/${encodeURIComponent(name.replace(/ /g, "_"))}_(TCG)`,
+        });
+      }
+    }
+  }
+  return list;
+}
+
 // ---------- TCGdex ----------
 async function fromTcgdex() {
-  const list = await getJSON(`${TCGDEX}/sets?sort:field=releaseDate&sort:order=DESC&pagination:page=1&pagination:itemsPerPage=12`);
+  const list = await getJSON(`${TCGDEX}/sets?sort:field=releaseDate&sort:order=DESC&pagination:page=1&pagination:itemsPerPage=50`);
   const details = await Promise.all(list.map((s) => getJSON(`${TCGDEX}/sets/${encodeURIComponent(s.id)}`).catch(() => null)));
   return details.filter((s) => s?.releaseDate && s.serie?.id !== "tcgp");
 }
@@ -143,6 +172,14 @@ try {
     const name = parent ? p.name.replace(new RegExp(`^${parent.set.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\s*`, "i"), "") || p.name : p.name;
     if (p.date) addProduct(r, p.date, name);
     else if (r.auto && !r.waves.length) r.announced = true;
+  }
+  const expSets = await expansionListFromBulbapedia().catch(() => []);
+  for (const s of expSets) {
+    const r = ensure(s.set, s.language, { series: s.series, source: s.url });
+    if (!r.auto) continue;
+    r.source ||= s.url;
+    r.series ||= s.series;
+    if (s.date && !r.waves.length) r.waves.push({ date: s.date, products: [], auto: true });
   }
   sources.bulbapedia = true;
 } catch (e) { console.warn(`Bulbapedia: ${e.message}`); }
