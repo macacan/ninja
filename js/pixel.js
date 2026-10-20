@@ -73,17 +73,27 @@ export function makeCloud(w, rand) {
 
 // Himmel i klassisk 8-bitarsstil: platta färgband med schackrutiga pixelövergångar.
 export const SKY = ["#8fd0ff", "#a6daff", "#bde4ff", "#d3eeff", "#e8f7ff"];
-export function buildSky(W, horizon) {
+// Kvällshimmel: mörkblått högst upp, ner mot en orange solnedgång vid horisonten.
+export const SKY_DUSK = ["#1d2150", "#343a78", "#6b3f86", "#b4587a", "#f08e5c"];
+// Nattlig himmel. Ljusare än den verkar, eftersom nattljuset läggs över hela scenen.
+export const SKY_NIGHT = ["#1e2a6e", "#2a3880", "#3a4a92", "#4a5ca0", "#5e70ae"];
+const isNight = () => document.documentElement.dataset.theme === "dark";
+// Scener som ska bygga om sig när man byter mellan ljust och mörkt läge.
+const sceneListeners = new Set();
+new MutationObserver(() => sceneListeners.forEach((f) => f())).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+// Månen: en tunn halvmåne i pixlar.
+const MOON = ["..yyy.", ".yy...", "yy....", "yy....", ".yy...", "..yyy."];
+export function buildSky(W, horizon, palette = SKY) {
   const c = document.createElement("canvas"); c.width = W; c.height = horizon;
   const g = c.getContext("2d");
-  const band = horizon / SKY.length;
+  const band = horizon / palette.length;
   for (let y = 0; y < horizon; y++) {
-    const i = Math.min(SKY.length - 1, Math.floor(y / band));
-    const next = SKY[Math.min(SKY.length - 1, i + 1)];
+    const i = Math.min(palette.length - 1, Math.floor(y / band));
+    const next = palette[Math.min(palette.length - 1, i + 1)];
     const intoBand = y - i * band;
-    g.fillStyle = SKY[i]; g.fillRect(0, y, W, 1);
+    g.fillStyle = palette[i]; g.fillRect(0, y, W, 1);
     // De två sista raderna i varje band blandas med nästa färg i ett rutmönster.
-    if (i < SKY.length - 1 && intoBand >= band - 2) {
+    if (i < palette.length - 1 && intoBand >= band - 2) {
       g.fillStyle = next;
       const step = intoBand >= band - 1 ? 2 : 4;
       for (let x = (y % 2) * (step / 2); x < W; x += step) g.fillRect(x, y, 1, 1);
@@ -246,7 +256,7 @@ function buildStatic(W, H, o, rand) {
 export function mountScene(canvas, opts = {}) {
   const o = { height: 100, ground: 26, mountains: true, trees: true, pond: true, path: true, ninja: true, ninjaDir: 1, blob: true, birds: true, sky: true, seed: 7, ...opts };
   const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
-  let W, H, scene, sky, clouds, tufts, birds, frame = 0, ninjaX, blobX, timer, events = [], nextEvent = 40, rand;
+  let W, H, scene, sky, clouds, tufts, birds, stars = [], frame = 0, ninjaX, blobX, timer, events = [], nextEvent = 40, rand;
   const ctx = canvas.getContext("2d");
 
   function setup() {
@@ -261,7 +271,10 @@ export function mountScene(canvas, opts = {}) {
     rand = rng(o.seed);
     scene = buildStatic(W, H, o, rand);
     events = [];
-    sky = o.sky ? buildSky(W, scene.gt + 1) : null;
+    sky = o.sky ? buildSky(W, scene.gt + 1, isNight() ? SKY_NIGHT : SKY) : null;
+    // Stjärnorna får en egen slumpföljd, så att dagscenerna inte ändras.
+    const sr = rng(o.seed + 99);
+    stars = Array.from({ length: Math.round(W / 5) }, () => ({ x: Math.floor(sr() * W), y: Math.floor(sr() * Math.max(4, scene.gt - 22)), ph: Math.floor(sr() * 23), c: sr() < 0.2 ? "#fff3b0" : "#ffffff" }));
     const skyH = Math.max(scene.gt - 24, 6);
     clouds = Array.from({ length: Math.max(2, Math.round(W / 70)) }, (_, i) => ({
       img: makeCloud(18 + Math.floor(rand() * 18), rand),
@@ -281,6 +294,7 @@ export function mountScene(canvas, opts = {}) {
     ninjaX = o.ninjaDir > 0 ? -14 : W + 2;
     draw();
   }
+  sceneListeners.add(setup);
 
   // ---------- Slumpade händelser ----------
   // Varje händelse har en egen livslängd och ritas i rätt lager (himmel eller mark).
@@ -338,8 +352,15 @@ export function mountScene(canvas, opts = {}) {
   }
 
   function draw() {
+    const night = isNight();
     ctx.clearRect(0, 0, W, H);
     if (sky) ctx.drawImage(sky, 0, 0);
+    if (night) {
+      // Stjärnorna blinkar var för sig, och månen står i övre vänstra hörnet.
+      for (const s of stars) if ((frame + s.ph) % 23 < 18) { ctx.fillStyle = s.c; ctx.fillRect(s.x, s.y, 1, 1); }
+      const mx = Math.round(W * 0.14);
+      MOON.forEach((row, j) => [...row].forEach((ch, i) => { if (ch === "y") { ctx.fillStyle = "#fff6c9"; ctx.fillRect(mx + i, 3 + j, 1, 1); } }));
+    }
     for (const c of clouds) ctx.drawImage(c.img, Math.round(c.x), c.y);
     drawEvents("sky");
     for (const b of birds) drawSprite(ctx, Math.floor(frame / 3) % 2 ? SPRITES.birdA : SPRITES.birdB, Math.round(b.x), b.y);
@@ -369,6 +390,7 @@ export function mountScene(canvas, opts = {}) {
 
     drawEvents("ground");
 
+    let torch = null;
     if (o.ninja && o.path) {
       const jump = events.find((e) => e.type === "jump");
       const hop = jump ? [0, 2, 4, 5, 6, 6, 5, 4, 2, 0][jump.age] || 0 : 0;
@@ -377,6 +399,31 @@ export function mountScene(canvas, opts = {}) {
       drawSprite(ctx, Math.floor(frame / 3) % 2 ? SPRITES.ninjaA : SPRITES.ninjaB, Math.round(ninjaX), y, flip);
       const sx = flip ? Math.round(ninjaX) - 2 : Math.round(ninjaX) + 11;
       drawSprite(ctx, Math.floor(frame / 5) % 2 ? SPRITES.sparkA : SPRITES.sparkB, sx, y + 6);
+      // Facklan bärs i handen. Den ritas efter nattljuset, så att lågan syns klart.
+      if (night) torch = { x: flip ? Math.round(ninjaX) - 2 : Math.round(ninjaX) + 12, y: y + 2 };
+    }
+
+    if (night) {
+      // Nattljus: en blå multiplicering över hela scenen, så att dagens färger blir mörka och mjuka.
+      ctx.globalCompositeOperation = "multiply";
+      ctx.fillStyle = "#8f97cf";
+      ctx.fillRect(0, 0, W, H);
+      ctx.globalCompositeOperation = "source-over";
+    }
+    if (torch) {
+      const { x: tx, y: ty } = torch;
+      // Ljusskenet runt facklan, som flimrar med lågan.
+      const glow = ctx.createRadialGradient(tx, ty, 0, tx, ty, 12);
+      glow.addColorStop(0, `rgba(255,190,90,${frame % 2 ? 0.55 : 0.45})`);
+      glow.addColorStop(1, "rgba(255,190,90,0)");
+      ctx.globalCompositeOperation = "lighter";
+      ctx.fillStyle = glow;
+      ctx.fillRect(tx - 12, ty - 12, 24, 24);
+      ctx.globalCompositeOperation = "source-over";
+      // Skaftet och lågan, som flaxar mellan två bilder.
+      ctx.fillStyle = "#6b4325"; ctx.fillRect(tx, ty, 1, 4);
+      ctx.fillStyle = "#ff8a3d"; ctx.fillRect(tx - 1, ty - 2, 3, 2);
+      ctx.fillStyle = "#ffd34d"; ctx.fillRect(tx, ty - 3 - (frame % 2), 1, 2);
     }
   }
 

@@ -82,3 +82,32 @@ input[type=search],select,.shop-search{background:#1e2230}
     #131422;
 }
 
+/* Valt skick i nattläge: mörk bakgrund med ljus text, i stället för den vita ljusläges-gradienten. */
+.chip input:checked+span {
+  border-color: #e8eaf1;
+  background: linear-gradient(180deg, #2f3658 0%, var(--surface) 100%);
+  box-shadow: 0 0 0 1px #e8eaf1, 0 6px 14px -6px rgba(0, 0, 0, 0.6);
+}
+.chip input:checked+span b { color: #ffffff; }
+.chip input:checked+span small { color: #c3c9da; }
+
+/* PROMO-stjärnan är svart med ljus kant, så att den och texten syns mot den mörka bakgrunden. */
+.rsym .rs-promo { fill: #0b0c12; stroke: #e8eaf1; stroke-width: 0.8px; }
+
+/* Produktraderna i "Precis inne i butikerna" i nattläge: ingen mörk overlay bakom dem, bara texten på landskapet. */
+.rf a { background: none; backdrop-filter: none; border-color: transparent; }
+.rf a:hover { background: none; }
+.rf-body b { color: #ffffff; text-shadow: 0 1px 3px rgba(0, 0, 0, 0.85); }
+.rf-body small { color: #d6dcec; text-shadow: 0 1px 3px rgba(0, 0, 0, 0.85); }
+
+/* Produktbilder i nattläge: bakgrunden bakom produkterna är en mjuk blågrå i stället för vitt, medan
+   produktfotona förblir ljusa. Fotona blandas in i bakgrunden, så att deras vita kanter blir mjuka. */
+.pimg,.tcard .art,.product .art.cardimg {
+  background-color: #a7b0cc !important;
+  background-image: radial-gradient(circle at 50% 30%, #c6cde2 0%, #a7b0cc 70%, #939db9 100%) !important;
+}
+.pimg img,.tcard .art img,.product .art.cardimg img {
+  mix-blend-mode: multiply;
+  filter: brightness(1.08) saturate(1.1);
+}
+

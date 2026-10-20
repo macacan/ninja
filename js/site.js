@@ -120,7 +120,8 @@ export function mountChrome() {
     document.body.classList.toggle("menu-open", open);
   };
   // Hamburgaren ligger fast uppe till höger: i sidans topp på raden med loggan, och högst upp i fönstret när man scrollat.
-  const placeMenuBtn = () => menuBtn.style.setProperty("--menu-top", Math.max(8, menuBtn.parentElement.getBoundingClientRect().top + 8) + "px");
+  // Sätts på <html> så att även menyns sökrad (som ligger utanför headern) kan följa knappens läge.
+  const placeMenuBtn = () => document.documentElement.style.setProperty("--menu-top", Math.max(8, menuBtn.parentElement.getBoundingClientRect().top + 8) + "px");
   addEventListener("scroll", placeMenuBtn, { passive: true });
   addEventListener("resize", placeMenuBtn);
   placeMenuBtn();

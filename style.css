@@ -74,9 +74,10 @@ canvas.scene{display:block;width:100%;image-rendering:pixelated;image-rendering:
   .menu-btn[aria-expanded=true]{border-color:var(--ink);background:#fff3d6;color:#1b1b2f}
   .mobile-menu{display:block;position:fixed;inset:0;z-index:50;background:rgba(15,17,30,.6)}
   .mobile-menu[hidden]{display:none}
-  .mm-sheet{position:absolute;left:0;right:0;top:0;overflow:visible;background:var(--card);border-bottom:2px solid var(--ink);border-radius:0 0 16px 16px;padding:62px 16px 16px}
+  /* Sökfältet ligger på samma rad som hamburgerikonen (46 px hög, 16 px från högerkanten) och går inte under den. */
+  .mm-sheet{position:absolute;left:0;right:0;top:0;overflow:visible;background:var(--card);border-bottom:2px solid var(--ink);border-radius:0 0 16px 16px;padding:calc(var(--menu-top,39px)) 16px 16px}
   .mm-close{display:none}
-  .mm-search{display:block;margin-bottom:12px}
+  .mm-search{display:block;margin-bottom:12px;padding-right:58px}
   .mm-search .card-suggest-wrap{display:block;width:100%}
   .mm-search .card-suggest-dropdown{min-width:0;max-width:none}
   .mm-search input{flex:1;min-width:0;min-height:46px;border:2px solid var(--line);border-radius:8px;padding:0 12px;background:var(--bg);color:var(--ink)}
@@ -133,6 +134,8 @@ canvas.scene{display:block;width:100%;image-rendering:pixelated;image-rendering:
 
 /* ---------- Butikskort ---------- */
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:20px}
+/* Startsidans senaste set: fem kort på en rad när det finns plats. */
+@media (min-width:961px){#home-sets{grid-template-columns:repeat(5,minmax(0,1fr))}}
 .tcard{position:relative;background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:8px;
   box-shadow:0 3px 0 var(--line);transition:transform .12s steps(2),box-shadow .12s steps(2),border-color .12s steps(2)}
 .tcard:hover{transform:translate(-2px,-3px);border-color:var(--ink);box-shadow:4px 5px 0 var(--ink)}

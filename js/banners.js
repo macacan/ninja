@@ -1,7 +1,18 @@
 // Egna pixelbanderoller under sidrubrikerna: varje sida har sin egen miljö.
 // Allt ritas i kod i samma 8-bitarsstil som landskapen. Bakgrunden ritas en gång,
 // och bara de rörliga detaljerna (bil, folk, löpband, nyhetsrad ...) ritas om, 8 gånger i sekunden.
-import { PAL, SPRITES, rng, makeCloud, buildSky } from "./pixel.js";
+import { PAL, SPRITES, rng, makeCloud, buildSky, SKY_DUSK, SKY } from "./pixel.js";
+
+// Nattläget: bannern blir kväll, med en mörkare himmel och ett lila ljus över hela bilden.
+let dusk = document.documentElement.dataset.theme === "dark";
+const skyFor = (W, horizon) => buildSky(W, horizon, dusk ? SKY_DUSK : SKY);
+const listeners = new Set();
+new MutationObserver(() => {
+  const d = document.documentElement.dataset.theme === "dark";
+  if (d === dusk) return;
+  dusk = d;
+  listeners.forEach((f) => f());
+}).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
 
 const SCALE = 2; // varje pixel blir 2 × 2 skärmpixlar
 const H = 32; // banderollens höjd i pixlar, alltså 64 px på skärmen
@@ -78,7 +89,7 @@ const THEMES = {
   slapp: {
     seed: 11,
     build(g, W, rand) {
-      g.drawImage(buildSky(W, 24), 0, 0);
+      g.drawImage(skyFor(W, 24), 0, 0);
       clouds(g, W, rand);
       // Avlägsna hus
       for (let x = 0; x < W;) {
@@ -135,7 +146,7 @@ const THEMES = {
   stad: {
     seed: 23,
     build(g, W, rand) {
-      g.drawImage(buildSky(W, 24), 0, 0);
+      g.drawImage(skyFor(W, 24), 0, 0);
       clouds(g, W, rand, 4);
       for (let x = 0; x < W;) {
         const w = 7 + Math.floor(rand() * 12), h = 8 + Math.floor(rand() * 10);
@@ -419,7 +430,10 @@ function mountBanner(canvas, theme) {
     ctx.clearRect(0, 0, W, H);
     ctx.drawImage(bg, 0, 0);
     theme.frame?.(ctx, W, frame, st);
+    // Kvällsljus: en lila multiplicering över hela bilden, så även bilarna och folket får kvällsfärg.
+    if (dusk) { ctx.globalCompositeOperation = "multiply"; ctx.fillStyle = "#c9b8e4"; ctx.fillRect(0, 0, W, H); ctx.globalCompositeOperation = "source-over"; }
   }
+  listeners.add(setup);
 
   // Rita om när bredden ändras, även om sidan först laddats i en dold flik med bredden 0.
   let lastW = -1, rt;
