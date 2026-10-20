@@ -19,6 +19,7 @@ input[type=search],select,.shop-search{background:#1e2230}
 .todo{background:#494218}
 .qc[aria-pressed=true]{background:#403315}
 .dot-pre{color:#1b1b2f}
+.bell{background:rgba(23,26,35,.92);color:var(--ink);border-color:#3a4052;box-shadow:0 2px 8px rgba(0,0,0,.45)}
 .bell[aria-pressed=true]{color:#1b1b2f}
 .btn.gold{color:#1b1b2f}
 .acc-find{background:#1e2230}

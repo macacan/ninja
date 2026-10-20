@@ -681,7 +681,7 @@ let dialog = null, stream = null, timer = null, animFrame = null, busy = false;
 let onFound = null, onPartial = null;
 let smoothedCorners = null;
 let torchSupported = false, torchActive = false;
-let motionCanvas = null, prevMotion = null, stillTicks = 0, lastScanAt = 0, scanCount = 0, pendingForce = false;
+let stillTicks = 0, lastScanAt = 0, scanCount = 0, pendingForce = false;
 let pauseUntil = 0, openedAt = 0; // pauseUntil: auto-skanningen väntar så att ett felmeddelande hinner läsas
 const NUDGE_AFTER = 2000; // ms utan träff innan "Skanna nu" lyfts fram
 const PAUSE_AFTER_MISS = 3500; // ms paus efter en misslyckad manuell skanning eller ett foto

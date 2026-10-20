@@ -99,6 +99,10 @@ export async function createEngine({ statuses } = {}) {
       for (const r of raw) {
         const c = classify(r.title, state.sets.names, state.sets.series);
         if (!c || !(r.price > 0)) continue;
+        // Orimligt låga priser för stora förseglade produkter (enstaka paket eller skydd felmärkta som hel box)
+        if (c.type === "Booster Box" && r.price < 250) continue;
+        if (c.type === "Elite Trainer Box" && r.price < 200) continue;
+        if (c.type === "Ultra-Premium Collection" && r.price < 500) continue;
         // Bara svenska priser. Butiker med flera språkversioner (t.ex. /fi/, /dk/) visar annars euro och danska kronor.
         if (r.currency && r.currency.toUpperCase() !== "SEK") { foreign.add(r.currency.toUpperCase()); continue; }
         // Samma produkt under två adresser (t.ex. språkversioner eller dubbla listningar) räknas en gång.

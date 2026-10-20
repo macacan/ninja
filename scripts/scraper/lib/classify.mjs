@@ -6,16 +6,16 @@ const POKEMON = /pok[eé]mon/i;
 
 // Höjs när igenkänningen ändras så att fler produkter räknas. Då sparas de nyfunna produkterna tyst
 // vid nästa kontroll av varje butik, i stället för att larmas som hundratals "nya" (se engine.mjs).
-export const CLASSIFY_VERSION = 4;
+export const CLASSIFY_VERSION = 5;
 
 // Ordningen spelar roll: mer specifika typer först.
 const TYPES = [
   ["Elite Trainer Box", /elite trainer|\betb\b/i],
   ["Booster Bundle", /booster bundle/i],
-  ["Booster Box", /booster ?box|display|36[- ]?pack|booster case/i],
+  ["Booster Box", /(?:booster ?box|booster ?display|display ?box|(?:30|36)[- ]?pack|booster case|display.*(?:30|36)\s*boosters?)(?!.*\(\s*(?:[1-9]|10)\s*(?:kort|cards?)\s*\))/i],
   ["Ultra-Premium Collection", /ultra[- ]premium|\bupc\b/i],
   ["Premium Collection", /premium collection|special collection|super[- ]premium/i],
-  ["Collection Box", /collection|kollektion|ex box|\bbox\b/i],
+  ["Collection Box", /collection|kollektion|ex box|\bbox\b|display set|gift box/i],
   ["Tin", /\btins?\b|plåtburk/i],
   ["Blister", /blister|checklane|3[- ]?pack|three[- ]pack/i],
   ["Build & Battle", /build (&|and) battle|prerelease/i],
@@ -28,9 +28,14 @@ const TYPES = [
 // poster ("Figure Collection", "Pin Collection", "Binder Collection") innehåller boosterpaket och får vara kvar.
 const NOT_SEALED = new RegExp([
   // tillbehör och förvaring
-  "display case", "acrylic", "akryl\\w*", "magnetic", "storage", "förvaring\\w*", "protector", "skydd\\w*", "sleeves?", "kortfickor",
-  "toploaders?", "binder(?! (?:collection|gift box))", "pärm", "portfolio", "album", "playmat", "spelmatta", "deck ?box", "kortlåda", "dice", "tärning\\w*",
-  "damage[- ]counters?", "coin set", "myntset", "card case", "kortfodral", "flip box", "flip deck", "alcove", "deck ?case", "deckbox", "ultra pro", "gamegenic", "dragon shield", "ultimate guard",
+  "display case", "acrylic\\w*", "akryl\\w*", "magnetic", "magnetisk\\w*", "storage", "förvaring\\w*",
+  "protectors?", "protective\\w*", "protection\\w*", "skydd\\w*", "kortskydd\\w*", "crystal box\\w*", "one[- ]touch",
+  "sleeves?", "kortfickor", "toploaders?", "binder(?! (?:collection|gift box))", "pärm", "portfolio", "album",
+  "playmat", "spelmatta", "deck ?box", "kortlåda", "dice", "tärning\\w*", "kortsdisplay\\w*", "kortdisplay\\w*",
+  "damage[- ]counters?", "coin set", "myntset", "card case", "kortfodral", "flip box", "flip deck", "alcove",
+  "deck ?case", "deckbox", "ultra pro", "gamegenic", "dragon shield", "ultimate guard", "phoenix shield", "evoretro", "tcglab",
+  // singelkort, promos och graderat
+  "black star promos?", "singelkort\\w*", "singles?(?! strike)",
   // kläder och accessoarer
   "t-?shirt", "tröja", "hoodie", "huvtröja", "keps", "mössa", "cap", "hatt", "strumpor", "socks?", "väska", "bag", "ryggsäck", "backpack",
   "pyjamas", "jacka", "byxor", "halsband", "armband", "örhängen", "smycke\\w*", "nyckelring", "keychain", "pins?(?= set)",
@@ -40,13 +45,13 @@ const NOT_SEALED = new RegExp([
   // tv-spel och digitalt
   "nintendo switch", "switch 2", "game boy", "3ds", "amiibo", "videospel", "online code", "code[- ]card", "code in a box", "kodkort", "oanvänd kod",
   // biljetter till turneringar och prerelease-event (har ofta veckodag och datum i namnet)
-  "biljett\\w*", "tickets?", "turnering\\w*", "anmälan", "deltagaravgift", "entry fee",
+  "biljett\\w*", "tickets?", "turnering\\w*", "anmälan", "deltagaravgift", "entry fee", "duck race", "raffle",
   // tjänster där butiken öppnar packet live åt köparen
   "öppnas live", "live[- ]?öppning", "live opening", "pack ?battle", "packbattle",
   "måndag", "tisdag", "onsdag", "torsdag", "fredag", "lördag", "söndag",
   // böcker, graderat, tomma lådor
   "bok", "book", "graded", "psa ?\\d+", "cgc ?\\d*", "bgs ?\\d*", "tom låda", "empty box", "endast låda", "only box",
-].map((w) => `\\b${w}\\b`).join("|") + "|\\b\\d{1,3}\\s*\\/\\s*\\d{2,3}\\b", "i");
+].map((w) => `(?<![\\p{L}\\p{N}])${w}(?![\\p{L}\\p{N}])`).join("|") + "|(?<![\\p{L}\\p{N}])\\d{1,3}\\s*\\/\\s*\\d{2,3}(?![\\p{L}\\p{N}])", "iu");
 
 const LANGS = [
   ["ja", /japan|japansk|\bjp\b|\bjpn\b|日本/i],

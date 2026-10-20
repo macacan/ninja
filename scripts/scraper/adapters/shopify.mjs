@@ -14,15 +14,19 @@ function toItem(host, p, ctx) {
   const avail = variants.filter((v) => v.available);
   const pick = (avail.length ? avail : variants).reduce((a, v) => (!a || +v.price < +a.price ? v : a), null);
   if (!pick) return null;
+  const multi = variants.length > 1 && pick.title && pick.title.toLowerCase() !== "default title";
+  const title = multi ? `${p.title} (${pick.title})` : p.title;
+  const baseUrl = ctx.productUrl ? ctx.productUrl(p.handle) : `${host.origin}/products/${p.handle}`;
+  const url = variants.length > 1 && pick.id ? `${baseUrl}${baseUrl.includes("?") ? "&" : "?"}variant=${pick.id}` : baseUrl;
   return {
     pid: String(p.id),
-    title: p.title,
-    url: ctx.productUrl ? ctx.productUrl(p.handle) : `${host.origin}/products/${p.handle}`,
+    title,
+    url,
     price: +pick.price,
     currency: "SEK",
     available: avail.length > 0,
-    preorder: /förbeställ|pre-?order|preorder/i.test(`${p.title} ${(p.tags || []).join(" ")}`),
-    image: p.images?.[0]?.src || null,
+    preorder: /förbeställ|pre-?order|preorder/i.test(`${title} ${(p.tags || []).join(" ")}`),
+    image: pick.featured_image?.src || p.images?.[0]?.src || null,
   };
 }
 

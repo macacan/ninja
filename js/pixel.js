@@ -271,6 +271,7 @@ function buildStatic(W, H, o, rand, sign = null) {
   }
 
   // Ninjans kortbutik längs vägen: randig markis, skylt och skyltfönster.
+  const shopLamps = [];
   if (o.shop && W > 200) {
     const x0 = Math.round(W * 0.88) - 13, bottom = gt + 10, top = bottom - 15;
     g.fillStyle = "#1b1b2f"; g.fillRect(x0 - 1, top - 8, 28, 24);
@@ -287,6 +288,8 @@ function buildStatic(W, H, o, rand, sign = null) {
       g.fillStyle = "#8ec5ff"; g.fillRect(wx, top + 9, 5, 4);
       g.fillStyle = "#ffffff"; g.fillRect(wx, top + 9, 1, 2);
       g.fillStyle = "#f2b8a4"; g.fillRect(wx + 2, top + 11, 2, 2);
+      // Kvällsljus: fönstrets lampa (se draw i mountScene).
+      shopLamps.push({ x: wx + 2, y: top + 11, wx, wy: top + 9 });
     }
   }
 
@@ -296,7 +299,7 @@ function buildStatic(W, H, o, rand, sign = null) {
     if (o.path && y >= H - 15 && y <= H - 8) continue;
     px(x, y, flowers[i % flowers.length]);
   }
-  return { canvas: c, gt, hillTop, trees, sign: signGeo };
+  return { canvas: c, gt, hillTop, trees, sign: signGeo, shopLamps };
 }
 
 // Bokstäverna till skylten på berget (5 pixlar höga).
@@ -478,6 +481,13 @@ export function mountScene(canvas, opts = {}) {
       ctx.fillStyle = "#8f97cf";
       ctx.fillRect(0, 0, W, H);
       ctx.globalCompositeOperation = "source-over";
+      // Butikens fönster lyser inifrån, med ett svagt ljusskenet ut över gatan.
+      for (const { x, y, wx, wy } of scene.shopLamps || []) {
+        const gr = ctx.createRadialGradient(x, y, 0, x, y, 11);
+        gr.addColorStop(0, "rgba(255,210,140,.22)"); gr.addColorStop(1, "rgba(255,210,140,0)");
+        ctx.save(); ctx.globalCompositeOperation = "lighter"; ctx.fillStyle = gr; ctx.fillRect(x - 11, y - 11, 22, 22); ctx.restore();
+        ctx.fillStyle = "#fff0c0"; ctx.fillRect(wx, wy, 5, 4);
+      }
       // Skylten på berget är upplyst på natten: strålkastare underifrån och varmvita bokstäver ovanpå nattljuset.
       if (scene.sign?.lit) {
         const { lit, s, x0, x1, y } = scene.sign;

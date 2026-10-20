@@ -79,11 +79,26 @@ function street(g, W, top) {
   R(g, 0, top + 4, W, H - top - 4, "#4a4f5e");
   for (let x = 2; x < W; x += 10) R(g, x, top + 6, 5, 1, "#f2e6b8");
 }
+// Leveransbilens läge i bildruta f (även använt av kvällsljuset). Bilen kör in från vänster, stannar vid
+// butiken en stund (VAN_PAUSE bildrutor) och kör sedan vidare åt höger. st.stop är läget framför butiken.
+const VAN_SPEED = 1.5, VAN_PAUSE = 30;
+const vanX = (W, f, st) => {
+  const stop = st.stop, t1 = (stop + 30) / VAN_SPEED, t2 = (W + 30 - stop) / VAN_SPEED, T = t1 + VAN_PAUSE + t2;
+  const p = f % T;
+  if (p < t1) return -30 + VAN_SPEED * p;
+  if (p < t1 + VAN_PAUSE) return stop;
+  return stop + VAN_SPEED * (p - t1 - VAN_PAUSE);
+};
 // Bil, 14 × 6 pixlar, med framlykta (y) åt höger.
 const CAR = ["....kkkkkk....", "...kbiibiibk..", ".kkbbbbbbbbbk.", "kbbbbbbbbbbbyk", "kkkkkkkkkkkkkk", "..kak....kak.."];
 const car = (g, x, y, body, flip = false) => spr(g, CAR, x, y, { k: "#1b1b2f", b: body, i: "#bfe6ff", a: "#9aa3b5", y: "#f2e6b8" }, flip);
+// Bilarnas läge i stadsbannerns bildruta f (även använt av kvällsljuset).
+const stadCarX1 = (W, f) => ((f * 1.3) % (W + 40)) - 20;
+const stadCarX2 = (W, f) => W - (((f * 0.9) + W / 2) % (W + 40)) + 20;
 
 // ---------- Teman ----------
+// Kvällstonen för de varma bannerna: gul-orange i stället för den lila-blå.
+const WARM = "#e6b98c";
 const THEMES = {
   // Släpp: släppdag utanför butiken. Kön ringlar sig, bilen kommer med nya kartonger.
   slapp: {
@@ -91,11 +106,16 @@ const THEMES = {
     build(g, W, rand) {
       g.drawImage(skyFor(W, 24), 0, 0);
       clouds(g, W, rand);
-      // Avlägsna hus
+      // Avlägsna hus. Fönstren slumpas till tända eller släckta: på kvällen lyser de tända (se night nedan).
+      const windows = [];
       for (let x = 0; x < W;) {
         const w = 8 + Math.floor(rand() * 12), h = 5 + Math.floor(rand() * 8);
         R(g, x, 24 - h, w, h, "#c3d3ec");
-        for (let wy = 26 - h; wy < 22; wy += 3) for (let wx = x + 2; wx < x + w - 2; wx += 3) R(g, wx, wy, 1, 1, "#e3ecf9");
+        for (let wy = 26 - h; wy < 22; wy += 3) for (let wx = x + 2; wx < x + w - 2; wx += 3) {
+          const lit = rand() < 0.4;
+          R(g, wx, wy, 1, 1, "#e3ecf9");
+          windows.push({ x: wx, y: wy, lit });
+        }
         x += w + 1 + Math.floor(rand() * 4);
       }
       street(g, W, 24);
@@ -121,7 +141,16 @@ const THEMES = {
       // Kön till dörren
       const queue = [];
       for (let x = sx - 6, i = 0; x > (W > 200 ? Math.round(W * 0.1) + 18 : 2) && i < 10; x -= 6, i++) queue.push({ x, lk: look(rand) });
-      return { queue, sx, sw };
+      // Bilen stannar mitt framför butiken, med framkanten vid dörren.
+      const stop = sx + Math.round(sw / 2) - 11;
+      return { queue, sx, sw, windows, stop };
+    },
+    // Kvällsljus ovanpå den lila tonen: tända fönster och bilens strålkastare.
+    night(g, W, f, st) {
+      for (const w of st.windows) if (w.lit) R(g, w.x, w.y, 1, 1, "#fff0b8");
+      const x = vanX(W, f, st);
+      R(g, x + 24, 23, 5, 5, "rgba(255,240,180,.3)");
+      R(g, x + 23, 25, 1, 2, "#fff9d6");
     },
     frame(g, W, f, st) {
       st.queue.forEach((p, i) => person(g, p.x, (f + i * 7) % 48 < 3 ? 15 : 16, p.lk));
@@ -132,7 +161,7 @@ const THEMES = {
         R(g, st.sx + ((k * 13 + Math.floor(f / 6)) % st.sw), y - 4 + 4, 1, 1, conf[k % conf.length]);
       }
       // Leveransbilen med nya kartonger
-      const x = ((f * 1.5) % (W + 60)) - 30;
+      const x = vanX(W, f, st);
       R(g, x, 20, 18, 8, "#1b1b2f"); R(g, x + 1, 21, 16, 6, "#fffaf0"); R(g, x + 1, 25, 16, 1, "#e4572e");
       text(g, "KORT", x + 2, 21, "#e4572e");
       R(g, x + 18, 22, 6, 6, "#1b1b2f"); R(g, x + 18, 23, 5, 4, "#5b9be0"); R(g, x + 20, 23, 3, 2, "#bfe6ff");
@@ -154,6 +183,7 @@ const THEMES = {
         for (let wy = 24 - h; wy < 20; wy += 3) for (let wx = x + 2; wx < x + w - 1; wx += 3) R(g, wx, wy, 1, 1, "#d7e2f5");
         x += w + Math.floor(rand() * 3);
       }
+      const signs = [], lamps = [];
       const walls = ["#c9634a", "#5fa8a0", "#f2c75c", "#9a8fd1", "#9bd1c0", "#f2b8a4", "#8ec5ff"];
       const awn = ["#e4572e", "#3b4a6b", "#6cc06a", "#8a6cd1", "#f95587", "#5b9be0"];
       const words = ["KORT", "TCG", "SHOP", "SPEL", "CARDS", "SAMLA", "PACKS", "BOXAR", "PROMO"];
@@ -167,7 +197,9 @@ const THEMES = {
         const fits = words.filter((s) => textW(s) <= w - 6);
         const word = fits[Math.floor(rand() * fits.length)] || "TCG";
         box(g, x + 2, 9, w - 4, 7, "#fffaf0");
-        text(g, word, x + Math.round((w - textW(word)) / 2), 10, aw);
+        const tx = x + Math.round((w - textW(word)) / 2);
+        text(g, word, tx, 10, aw);
+        signs.push({ x: x + 2, y: 9, w: w - 4, h: 7, word, tx, aw });
         for (let ax = x, i = 0; ax < x + w; ax += 2, i++) R(g, ax, 16, 2, 2, i % 2 ? "#fffaf0" : aw);
         box(g, x + 2, 18, w - 10, 6, "#bfe6ff");
         for (let cx = x + 4; cx < x + w - 10; cx += 4) { R(g, cx, 20, 2, 3, pick(rand, ["#f2b632", "#e4572e", "#5b9be0", "#6cc06a"])); R(g, cx, 20, 2, 1, "#f2d36b"); }
@@ -178,22 +210,45 @@ const THEMES = {
         const gx = x + Math.floor(gap / 2);
         const kind = rand();
         if (kind < 0.4) { R(g, gx - 1, 13, 1, 11, "#8a5a3b"); spr(g, SPRITES.leaf, gx - 3, 4); R(g, gx - 2, 6, 5, 6, "#3f8f3f"); R(g, gx - 1, 4, 3, 2, "#6cc06a"); }
-        else if (kind < 0.7) { R(g, gx, 10, 1, 14, "#3b4a6b"); R(g, gx - 1, 9, 3, 1, "#3b4a6b"); R(g, gx - 1, 10, 3, 1, "#ffe9a6"); }
+        else if (kind < 0.7) { R(g, gx, 10, 1, 14, "#3b4a6b"); R(g, gx - 1, 9, 3, 1, "#3b4a6b"); R(g, gx - 1, 10, 3, 1, "#ffe9a6"); lamps.push(gx); }
         else { R(g, gx - 2, 20, 5, 2, "#6cc06a"); R(g, gx, 19, 1, 1, "#f2d36b"); }
         x += gap;
       }
       street(g, W, 24);
       const walkers = Array.from({ length: Math.max(3, Math.round(W / 60)) }, (_, i) => ({ x: rand() * W, dir: i % 2 ? 1 : -1, lk: look(rand), v: 0.35 + rand() * 0.3 }));
-      return { walkers };
+      return { walkers, signs, lamps };
     },
     frame(g, W, f, st) {
       for (const p of st.walkers) {
         const x = (((p.x + p.dir * p.v * f) % (W + 8)) + W + 8) % (W + 8) - 4;
         person(g, x, 18, p.lk, Math.floor(f / 3) % 2, p.dir < 0);
       }
-      car(g, ((f * 1.3) % (W + 40)) - 20, 26, "#e4572e");
-      car(g, W - (((f * 0.9) + W / 2) % (W + 40)) + 20, 26, "#5b9be0", true);
+      car(g, stadCarX1(W, f), 26, "#e4572e");
+      car(g, stadCarX2(W, f), 26, "#5b9be0", true);
     },
+    // Kvällsljus: neonskyltarna lyser, gatlyktorna glöder och bilarna har tända strålkastare.
+    night(g, W, f, st) {
+      const glow = (cx, cy, r, a) => {
+        const gr = g.createRadialGradient(cx, cy, 0, cx, cy, r);
+        gr.addColorStop(0, `rgba(255,220,150,${a})`); gr.addColorStop(1, "rgba(255,220,150,0)");
+        g.fillStyle = gr; g.fillRect(cx - r, cy - r, r * 2, r * 2);
+      };
+      g.globalCompositeOperation = "lighter";
+      for (const s of st.signs) glow(s.x + s.w / 2, s.y + s.h / 2, s.w * 0.7, 0.35);
+      for (const gx of st.lamps) glow(gx, 11, 9, 0.5);
+      // Strålkastarna: framåt för den röda bilen, bakåt åt vänster för den blå.
+      const x1 = stadCarX1(W, f), x2 = stadCarX2(W, f);
+      glow(x1 + 14, 29, 7, 0.55);
+      glow(x2, 29, 7, 0.55);
+      g.globalCompositeOperation = "source-over";
+      // Skyltarna ritas om i starka färger så att de lyser som neon.
+      for (const s of st.signs) {
+        R(g, s.x, s.y, s.w, s.h, "#fffaf0");
+        text(g, s.word, s.tx, 10, s.aw);
+      }
+      for (const gx of st.lamps) R(g, gx - 1, 10, 3, 1, "#fff6c9");
+      R(g, x1 + 13, 29, 1, 1, "#fffbe0");
+      R(g, x2, 29, 1, 1, "#fffbe0");    },
   },
 
   // Kortpriser: en kortbörs. Kursgrafer som går upp och ner, en rullande kurstavla och skärmar på disken.
@@ -219,6 +274,7 @@ const THEMES = {
       const people = [0.05, 0.35, 0.65, 0.95].map((p) => ({ x: Math.round(W * p) - 2, lk: look(rand) }));
       return { charts, mons, people };
     },
+    tint: WARM,
     frame(g, W, f, st) {
       // Kurstavlan: en rullande rad med tickers
       R(g, 0, 0, W, 6, "#0b1322");
@@ -310,7 +366,13 @@ const THEMES = {
       // Löpbandet
       R(g, 0, 19, W, 1, "#1b1b2f"); R(g, 0, 20, W, 2, "#3b3f4d"); R(g, 0, 22, W, 1, "#1b1b2f");
       for (let x = 6; x < W; x += 18) R(g, x, 23, 1, 3, "#3b4a6b");
-      return { scanX, micX, mons, colors: ["#e4572e", "#5b9be0", "#6cc06a", "#8a6cd1", "#f2b632"], off: 0, hold: 0, lastStop: -1e9, grade: null, heldX: 0, lastLabel: null, lastK: 0 };
+      return { scanX, micX, mons, signX, W, colors: ["#e4572e", "#5b9be0", "#6cc06a", "#8a6cd1", "#f2b632"], off: 0, hold: 0, lastStop: -1e9, grade: null, heldX: 0, lastLabel: null, lastK: 0 };
+    },
+    tint: WARM,
+    // Kvällsljus: lampor i taket och GRADE-skylten lyser.
+    night(g, W, f, st) {
+      for (let x = 15; x < W; x += 16) { halo(g, x, 3, 6, "255,240,190", 0.5); R(g, x, 3, 1, 1, "#fff6c9"); }
+      if (st.signX + 24 < W) halo(g, st.signX + 12, 7, 14, "255,200,120", 0.45);
     },
     frame(g, W, f, st) {
       // Bandet rör sig, men står still i 2 sekunder när ett kort är vid scannern. Då visas ett slumpat betyg.
@@ -350,8 +412,8 @@ const THEMES = {
       R(g, st.scanX + 2 + (f % 10), 9, 1, 10, "rgba(228,87,46,.85)");
       R(g, st.scanX + 5, 7, 4, 1, st.hold > 0 ? "#6cc06a" : f % 8 < 4 ? "#6cc06a" : "#2f6b2f");
       // Ljuskon från mikroskopets lins ner mot kortet
-      const glow = f % 6 < 3 ? "rgba(95,211,224,.55)" : "rgba(95,211,224,.3)";
-      R(g, st.micX + 4, 14, 1, 1, "#5fd3e0"); R(g, st.micX + 3, 15, 3, 1, glow); R(g, st.micX + 2, 16, 5, 2, glow);
+      const glow = f % 6 < 3 ? "rgba(255,200,120,.6)" : "rgba(255,200,120,.35)";
+      R(g, st.micX + 4, 14, 1, 1, "#ffd28a"); R(g, st.micX + 3, 15, 3, 1, glow); R(g, st.micX + 2, 16, 5, 2, glow);
       st.mons.forEach((mx, k) => {
         R(g, mx + 1, 5, 14, 8, "#14324a");
         if (k === 0) for (let x = 0; x < 14; x++) R(g, mx + 1 + x, 9 + Math.round(Math.sin((x + f * 0.4) / 2) * 2), 1, 1, "#6cc06a");
@@ -368,10 +430,12 @@ const THEMES = {
       R(g, 0, 0, W, H, "#e6ebf3");
       const sw = textW("NYHETER") + 6, sx = Math.round((W - sw) / 2);
       // Fönster på väggen
+      const wins = [];
       for (let x = 4; x < W - 22; x += 96) {
         if (x + 24 > sx - 14 && x < sx + sw + 16) continue;
         box(g, x, 8, 24, 11, "#a6daff", "#3b4a6b");
         R(g, x + 12, 8, 1, 11, "#3b4a6b");
+        wins.push(x);
       }
       box(g, sx, 7, sw, 8, "#e4572e"); text(g, "NYHETER", sx + 3, 8, "#fffaf0");
       // Golvet
@@ -387,7 +451,31 @@ const THEMES = {
         R(g, dx + 20, 20, 4, 2, "#fffaf0"); R(g, dx + 21, 19, 2, 1, "#fffaf0");
         desks.push(dx);
       }
-      return { desks, sx, sw, msg: "SENASTE NYTT - NYA SET - KORTPRISER - SLAPPDATUM - VIDEOR - " };
+      // Nyhetsankare vid ett nyhetsbord i mitten och en filmare med kamera på stativ till höger.
+      let anchor = null, crew = null;
+      if (W > 300) {
+        const ax = Math.round(W / 2) - 4, cx = ax - 40;
+        box(g, ax - 14, 19, 28, 5, "#2b5f9e");
+        R(g, ax - 14, 19, 28, 1, "#5b9be0");
+        R(g, ax, 18, 1, 1, "#1b1b2f");
+        anchor = { x: ax - 2, lk: look(rand) };
+        // Kameran på stativet, med filmaren bakom.
+        R(g, cx + 3, 19, 1, 5, "#1b1b2f"); R(g, cx + 1, 23, 1, 2, "#1b1b2f"); R(g, cx + 5, 23, 1, 2, "#1b1b2f");
+        box(g, cx, 12, 8, 6, "#3b3f4d");
+        R(g, cx + 8, 13, 2, 3, "#5b9be0");
+        crew = { cx, lk: look(rand) };
+      }
+      return { desks, sx, sw, wins, anchor, crew, msg: "SENASTE NYTT - NYA SET - KORTPRISER - SLAPPDATUM - VIDEOR - " };
+    },
+    tint: WARM,
+    // Kvällsljus: taklamporna i fönstren lyser (inga gula fönster), nyhetsraden och skrivbordslamporna glöder.
+    night(g, W, f, st) {
+      for (const wx of st.wins) {
+        R(g, wx + 11, 12, 2, 2, "#fff6c9");
+        halo(g, wx + 12, 13, 14, "255,240,200", 0.5);
+      }
+      halo(g, W / 2, 3, W * 0.5, "255,190,90", 0.22);
+      for (const dx of st.desks) halo(g, dx + 21, 20, 6, "255,240,190", 0.6);
     },
     frame(g, W, f, st) {
       // Nyhetsraden överst: långsam, ett steg var tredje bildruta
@@ -406,10 +494,27 @@ const THEMES = {
           R(g, dx + 4 + k * 3, 20 - h, 2, h, k % 2 ? "#6cc06a" : "#8ec5ff");
         }
       });
+      // Ankaret talar: munnen blinkar. Kameramannen står bakom kameran och REC-lampan blinkar.
+      if (st.anchor) {
+        const { x, lk } = st.anchor;
+        person(g, x, 11, lk, Math.floor(f / 4) % 2);
+        R(g, x + 1, 13, 2, 1, f % 6 < 3 ? "#8a2a2a" : lk.s);
+      }
+      if (st.crew) {
+        const { cx, lk } = st.crew;
+        person(g, cx - 6, 15, lk, Math.floor(f / 8) % 2);
+        R(g, cx + 1, 13, 1, 1, f % 8 < 4 ? "#e4572e" : "#7a1f10");
+      }
     },
   },
 };
 
+// Ett mjukt ljusskenet (additivt) runt en punkt, för lampor och skärmar på kvällen.
+function halo(g, cx, cy, r, rgb, a) {
+  const gr = g.createRadialGradient(cx, cy, 0, cx, cy, r);
+  gr.addColorStop(0, `rgba(${rgb},${a})`); gr.addColorStop(1, `rgba(${rgb},0)`);
+  g.save(); g.globalCompositeOperation = "lighter"; g.fillStyle = gr; g.fillRect(cx - r, cy - r, r * 2, r * 2); g.restore();
+}
 // ---------- Motor ----------
 function mountBanner(canvas, theme) {
   const ctx = canvas.getContext("2d");
@@ -431,7 +536,9 @@ function mountBanner(canvas, theme) {
     ctx.drawImage(bg, 0, 0);
     theme.frame?.(ctx, W, frame, st);
     // Kvällsljus: en lila multiplicering över hela bilden, så även bilarna och folket får kvällsfärg.
-    if (dusk) { ctx.globalCompositeOperation = "multiply"; ctx.fillStyle = "#c9b8e4"; ctx.fillRect(0, 0, W, H); ctx.globalCompositeOperation = "source-over"; }
+    if (dusk) { ctx.globalCompositeOperation = "multiply"; ctx.fillStyle = theme.tint || "#c9b8e4"; ctx.fillRect(0, 0, W, H); ctx.globalCompositeOperation = "source-over"; }
+    // Ljus som ska synas även på kvällen (tända fönster, lampor) ritas efter den lila tonen.
+    if (dusk) theme.night?.(ctx, W, frame, st);
   }
   listeners.add(setup);
 
