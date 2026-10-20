@@ -927,6 +927,9 @@ span.rd-logo{display:grid;place-items:center;background:var(--surface);border-ra
 .rg-img{display:block;aspect-ratio:1;background:#fff;border-radius:7px;overflow:hidden;margin-bottom:4px}
 .rg-img img{width:100%;height:100%;object-fit:contain;transition:transform .25s}
 .rg-tile:hover:not(:disabled) .rg-img img{transform:scale(1.05)}
+/* Pokémons egna produktbilder visas hela och oförändrade: ingen beskärning eller zoom. */
+.rg-img.official{background:none}
+.rg-tile:hover:not(:disabled) .rg-img.official img{transform:none}
 .rg-date{font:700 .78rem var(--cond);text-transform:uppercase;letter-spacing:.4px;color:var(--red)}
 .rg-tile b{font:700 .98rem/1.2 var(--cond);text-transform:uppercase;letter-spacing:.2px}
 .rg-price{font:700 1.02rem var(--cond)}

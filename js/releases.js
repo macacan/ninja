@@ -58,7 +58,9 @@ function itemsFor(r, mine) {
       best = it.tokens.size;
     }
     it.offers = sortOffers(scored.filter(([, s]) => s >= best && (best > 0 || !it.tokens.size)).map(([p]) => p));
-    it.image = it.offers.find((p) => p.image)?.image || null;
+    // Officiell bild från pokemon.com om den finns (data/releases.json → images), annars en butiks bild.
+    it.official = r.images?.[it.name] || null;
+    it.image = it.official || it.offers.find((p) => p.image)?.image || null;
     it.upcoming = d(it.date) > startOfToday();
   }
   return all;
@@ -191,7 +193,7 @@ export function galleryHTML(items, key) {
   return `<div class="rg" data-key="${esc(key)}">${items.map((it, i) => {
     const pr = itemPrice(it), n = storeCount(it);
     return `<button type="button" class="rg-tile" data-item="${i}" aria-expanded="false"${it.offers.length ? "" : " disabled"}>
-      <span class="rg-img">${img(it.image)}</span>
+      <span class="rg-img${it.official ? " official" : ""}">${img(it.image)}</span>
       <span class="rg-date">${short(it.date)}</span>
       <b>${esc(it.name)}</b>
       <span class="rg-price ${pr.cls}">${pr.text}</span>

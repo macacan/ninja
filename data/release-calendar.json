@@ -50,6 +50,20 @@
      ]
     }
    ],
+   "images": {
+    "Elite Trainer Box": "https://www.pokemon.com/static-assets/content-assets/cms2/img/trading-card-game/series/incrementals/2026/30th-celebration-elite-trainer-box/30th-celebration-elite-trainer-box-169-en.png",
+    "Pokémon Center Elite Trainer Box": "https://www.pokemon.com/static-assets/content-assets/cms2/img/trading-card-game/series/incrementals/2026/30th-celebration-pokemon-center-elite-trainer-box/30th-celebration-pokemon-center-elite-trainer-box-169-en.png",
+    "Pokémon ex Box (Sylveon ex, Greninja ex)": "https://www.pokemon.com/static-assets/content-assets/cms2/img/trading-card-game/series/incrementals/2026/30th-celebration-sylveon-ex-box-greninja-ex-box/30th-celebration-sylveon-ex-box-greninja-ex-box-169-en.png",
+    "Poster Collection": "https://www.pokemon.com/static-assets/content-assets/cms2/img/trading-card-game/series/incrementals/2026/30th-poster-collection/30th-poster-collection-169-en.png",
+    "Tech Sticker Collection": "https://www.pokemon.com/static-assets/content-assets/cms2/img/trading-card-game/series/incrementals/2026/30th-celebration-tech-sticker-collection/30th-celebration-tech-sticker-collection-169-en.png",
+    "Booster Bundle": "https://www.pokemon.com/static-assets/content-assets/cms2/img/trading-card-game/series/incrementals/2026/30th-celebration-booster-bundle/30th-celebration-booster-bundle-169-en.png",
+    "Mini Tins": "https://www.pokemon.com/static-assets/content-assets/cms2/img/trading-card-game/series/incrementals/2026/30th-celebration-mini-tin/30th-celebration-mini-tin-169.png",
+    "Binder Collection": "https://www.pokemon.com/static-assets/content-assets/cms2/img/trading-card-game/series/incrementals/2026/30th-celebration-binder-collection/30th-celebration-binder-collection-169-en.png",
+    "Battle Deck (Espeon ex, Umbreon ex)": "https://www.pokemon.com/static-assets/content-assets/cms2/img/trading-card-game/series/incrementals/2026/30th-celebration-battle-deck-espeon-ex-umbreon-ex/30th-celebration-battle-deck-espeon-ex-umbreon-ex-169-en.png",
+    "Ultra-Premium Collection: Day & Night": "https://www.pokemon.com/static-assets/content-assets/cms2/img/trading-card-game/series/incrementals/2026/30th-celebration-ultra-premium-collections-day-night/30th-celebration-ultra-premium-collections-day-night-169-en.png",
+    "Ditto Premium Collection": "https://www.pokemon.com/static-assets/content-assets/cms2/img/trading-card-game/series/incrementals/2026/30th-celebration-ditto-premium-collection/30th-celebration-ditto-premium-collection-169-en.png",
+    "Figure Collection (Mew, Mewtwo)": "https://www.pokemon.com/static-assets/content-assets/cms2/img/trading-card-game/series/incrementals/2026/30th-celebration-figure-collection/30th-celebration-figure-collection-169-en.png"
+   },
    "sources": [
     "https://rarecandy.com/blog/pokemon-tcg-30th-celebration-release-calendar",
     "https://insider-gaming.com/pokemon-tcg-30th-celebration-release-date-pre-order/"
