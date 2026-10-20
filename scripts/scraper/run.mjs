@@ -2,7 +2,7 @@
 //   node scripts/scraper/run.mjs                 alla butiker med tillåten status
 //   node scripts/scraper/run.mjs --only=swepoke  bara vissa butiker (kommaseparerat id)
 //   SCRAPE_STATUSES=tillstand node ...           bara butiker som gett skriftligt tillstånd
-// För löpande bevakning varannan minut, använd daemon.mjs i stället.
+// För löpande bevakning var tionde minut, använd daemon.mjs i stället.
 import { createEngine } from "./lib/engine.mjs";
 
 const only = process.argv.find((a) => a.startsWith("--only="))?.slice(7).split(",");

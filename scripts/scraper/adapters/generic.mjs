@@ -31,12 +31,13 @@ export function dropLocaleCopies(urls) {
 async function sitemapUrls(host, ctx) {
   const queue = host.robots.sitemaps.length ? [...host.robots.sitemaps] : [`${host.origin}/sitemap.xml`];
   const seen = new Set(), pages = [];
+  let firstError = null;
   while (queue.length && seen.size < 15) {
     const sm = queue.shift();
     if (seen.has(sm)) continue;
     seen.add(sm);
     let xml;
-    try { xml = await host.get(sm); } catch { continue; }
+    try { xml = await host.get(sm); } catch (e) { if (e.blocked) throw e; firstError ||= e; continue; }
     const locs = [...xml.matchAll(/<loc>\s*(?:<!\[CDATA\[\s*)?([^<\s\]]+)\s*(?:\]\]>\s*)?<\/loc>/g)].map((m) => decode(m[1]));
     if (/<sitemapindex/i.test(xml)) {
       // Produktsitemaps först, sidor och bloggar sist.
@@ -45,6 +46,8 @@ async function sitemapUrls(host, ctx) {
       pages.push(...locs);
     }
   }
+  // Ingen sitemap gick att läsa: visa felet i stället för att rapportera en tom butik som lyckad.
+  if (!pages.length && firstError) throw firstError;
   // Stora butiker: bara URL:er som nämner Pokémon. Små butiker: allt, och titeln avgör sedan.
   const allowed = dropLocaleCopies([...new Set(pages)]).filter((u) => host.allowed(u));
   const slug = (u) => { try { return decodeURIComponent(new URL(u).pathname).replace(/[-_/]+/g, " "); } catch { return u; } };
@@ -133,6 +136,8 @@ async function listingUrls(host, listing) {
       .filter((h) => re.test(h)).map((h) => { try { return new URL(h, host.origin).href; } catch { return null; } })
       .filter((u) => u && host.allowed(u));
     const fresh = found.filter((u) => !urls.includes(u));
+    // Inga produktlänkar alls på första sidan: butiken har bytt utseende eller visar oss en annan sida.
+    if (!fresh.length && n === 1) throw new Error(`kategorisidan ${path} har inga produktlänkar (${html.length} tecken)`);
     if (!fresh.length) break; // sidan visade inget nytt: slut på listan
     urls.push(...new Set(fresh));
     if (!listing.path.includes("{n}")) break;
@@ -147,6 +152,7 @@ export async function generic(host, ctx) {
   const urls = dropLocaleCopies(reuse ? s.known
     : ctx.listing ? await listingUrls(host, ctx.listing)
     : await sitemapUrls(host, { maxSitemapUrls: 3000, ...ctx }));
+  if (!urls.length) throw new Error(ctx.listing ? "kategorisidan gav inga produkter" : "sitemapen gav inga produktsidor");
   if (!reuse) {
     // En produkt räknas som ny i butiken bara om dess URL inte fanns i sitemapen förra gången.
     // De nya URL:erna sparas tills vi hunnit läsa dem, även om det dröjer några varv.
@@ -179,8 +185,9 @@ export async function generic(host, ctx) {
   const items = [];
   let stopped = false;
   for (const u of batch) {
-    let html;
-    try { html = await host.get(u); }
+    let p;
+    // readProduct: butiker vars sidor byggs med JavaScript läser produkten från butikens eget API i stället.
+    try { p = ctx.readProduct ? await ctx.readProduct(host, u) : parseProductPage(await host.get(u), u); }
     catch (e) {
       if (e.robots) continue;
       if (e.status === 404 || e.status === 410) { delete seen[u]; continue; }
@@ -190,9 +197,11 @@ export async function generic(host, ctx) {
       stopped = true;
       break;
     }
-    const p = parseProductPage(html, u);
     const ok = p && p.title && Number.isFinite(p.price) && looksPokemonTitle(p.title, ctx.setNames);
-    seen[u] = { t: Date.now(), k: ok ? "p" : "x" };
+    // En känd produktsida som plötsligt saknar produktdata (tillfälligt fel hos butiken) parkeras inte en vecka
+    // direkt: den läses om nästa varv och räknas som avvisad först efter tre missar i rad.
+    const miss = !p && seen[u]?.k === "p" ? (seen[u].miss || 0) + 1 : 0;
+    seen[u] = miss && miss < 3 ? { t: Date.now(), k: "p", miss } : { t: Date.now(), k: ok ? "p" : "x" };
     if (ok) items.push({ pid: u, ...p, isNew: fresh.has(u) });
     if (fresh.has(u)) s.fresh = (s.fresh || []).filter((x) => x !== u);
   }

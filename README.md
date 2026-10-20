@@ -59,7 +59,7 @@ Vill du bara hämta butiker som gett tillstånd: `SCRAPE_STATUSES=tillstand node
 
 Testa en butik: `node scripts/scraper/run.mjs --only=poketalk`.
 
-### Löpande bevakning (varannan minut)
+### Löpande bevakning (var tionde minut)
 
 ```bash
 node scripts/scraper/daemon.mjs
@@ -67,10 +67,10 @@ node scripts/scraper/daemon.mjs
 
 På Windows går det också att dubbelklicka på `start-bevakning.cmd`.
 
-- Varje butik har en egen klocka: varannan minut som standard, var femte minut för butiker som anger `Crawl-delay` eller svarar 429/503, och nytt försök efter tio minuter om en butik inte svarar.
+- Varje butik har en egen klocka: var tionde minut som standard, var tjugonde minut för butiker som anger `Crawl-delay` eller svarar 429/503, högst en gång i timmen mellan 01 och 07, och nytt försök efter tio minuter om en butik inte svarar. Svar med `ETag` eller `Last-Modified` hämtas villkorligt, så en oförändrad sida ger bara ett tomt 304-svar.
 - Sitemap-butiker läser 8 produktsidor per varv, och sitemapen läses om var 30:e minut. Nya produkt-URL:er läses först.
 - Resultatet sparas i `data/` var 20:e sekund, och notiser skickas direkt när något ändras.
-- Ändra takten i `scripts/scraper/config.json`: `intervalMinutes`, `calmIntervalMinutes`, `concurrency`.
+- Ändra takten i `scripts/scraper/config.json`: `intervalMinutes`, `calmIntervalMinutes`, `nightFrom`, `nightTo`, `nightIntervalMinutes`, `concurrency`.
 
 - Butiker med botskydd (Cloudflare, Akamai m.fl.) försöker vi aldrig ta oss förbi. De markeras som blockerade och kollas igen först efter sex timmar. Ber en butik oss vänta längre än två minuter (`Retry-After`) väntar schemat så länge.
 - Kör inte daemon.mjs och GitHub Actions-jobbet samtidigt: då bevakas butikerna dubbelt och notiserna kommer två gånger. Sätt repo-variabeln `SCRAPE_ON_ACTIONS=false` för att stänga av Actions-jobbet.

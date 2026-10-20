@@ -6,7 +6,7 @@ const POKEMON = /pok[eé]mon/i;
 
 // Höjs när igenkänningen ändras så att fler produkter räknas. Då sparas de nyfunna produkterna tyst
 // vid nästa kontroll av varje butik, i stället för att larmas som hundratals "nya" (se engine.mjs).
-export const CLASSIFY_VERSION = 3;
+export const CLASSIFY_VERSION = 4;
 
 // Ordningen spelar roll: mer specifika typer först.
 const TYPES = [

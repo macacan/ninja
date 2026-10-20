@@ -10,6 +10,7 @@ const MIN_DELAY_MS = 3000;
 const MAX_INLINE_WAIT_S = 120; // längre Retry-After än så: avbryt och låt schemat vänta i stället
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const MAX_BYTES = 20 * 1024 * 1024; // ett svar större än 20 MB läses inte, så att en trasig eller fientlig sida inte fyller minnet
+const CACHE_MAX = 200; // sparade svar per butik för villkorlig hämtning (ETag/Last-Modified)
 
 // Läser svaret som text men avbryter vid MAX_BYTES.
 export async function readCapped(r, max = MAX_BYTES) {
@@ -45,6 +46,10 @@ export class Host {
     this.queue = Promise.resolve();
     this.last = 0;
     this.requests = 0;
+    this.notModified = 0;
+    // url → { etag, modified, text }. Svar med ETag eller Last-Modified sparas, och nästa gång frågar vi
+    // butiken om sidan har ändrats. Svarar den 304 skickas ingen data alls och vi använder det sparade svaret.
+    this.cache = new Map();
   }
 
   async init() {
@@ -67,8 +72,22 @@ export class Host {
     return isAllowed(this.group, u.pathname + u.search);
   }
 
-  #raw(url) {
-    return fetch(url, { headers: { "user-agent": UA, accept: "text/html,application/json,application/xml;q=0.9,*/*;q=0.8" }, redirect: "follow", signal: AbortSignal.timeout(20000) });
+  // Node skickar själv accept-encoding (gzip, deflate, br). Webbläsarrubriker som sec-fetch-* skickar vi inte:
+  // boten ska synas som den bot den är.
+  // Accept skiljer på sidor och JSON: PrestaShop (t.ex. Mix-Max) svarar med en tom sida om application/json står med
+  // när vi ber om HTML.
+  #raw(url, extra = {}, type = "text") {
+    const accept = type === "json" ? "application/json,*/*;q=0.5" : "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8";
+    const headers = { "user-agent": UA, accept, "accept-language": "sv-SE,sv;q=0.9,en;q=0.5", ...extra };
+    return fetch(url, { headers, redirect: "follow", signal: AbortSignal.timeout(20000) });
+  }
+
+  #remember(url, r, text) {
+    const etag = r.headers.get("etag"), modified = r.headers.get("last-modified");
+    this.cache.delete(url);
+    if (!etag && !modified) return;
+    this.cache.set(url, { etag, modified, text });
+    if (this.cache.size > CACHE_MAX) this.cache.delete(this.cache.keys().next().value);
   }
 
   // Köar förfrågan så att samma butik aldrig får två samtidiga anrop.
@@ -81,12 +100,20 @@ export class Host {
         if (wait > 0) await sleep(wait);
         this.last = Date.now();
         this.requests++;
+        const saved = this.cache.get(full);
+        const cond = { ...(saved?.etag && { "if-none-match": saved.etag }), ...(saved?.modified && { "if-modified-since": saved.modified }) };
         let r;
-        try { r = await this.#raw(full); }
+        try { r = await this.#raw(full, cond, type); }
         catch (e) {
           // Tillfälligt nätfel eller timeout: ett nytt försök efter en paus i stället för att hela butiken fallerar.
           if (attempt < 2) { await sleep(5000 * (attempt + 1)); continue; }
           throw Object.assign(new Error(`${full} → ${e.name === "TimeoutError" ? "timeout" : e.message}`), { network: true });
+        }
+        if (r.status === 304 && saved) {
+          r.body?.cancel();
+          this.notModified++;
+          this.cache.delete(full); this.cache.set(full, saved); // senast använda svaret hamnar sist och rensas sist
+          return type === "json" ? JSON.parse(saved.text) : saved.text;
         }
         const text = await readCapped(r);
         const who = blockedBy(r, text);
@@ -101,6 +128,7 @@ export class Host {
           continue;
         }
         if (!r.ok) throw Object.assign(new Error(`${full} → ${r.status}`), { status: r.status });
+        this.#remember(full, r, text);
         return type === "json" ? JSON.parse(text) : text;
       }
       throw Object.assign(new Error(`${full} → för många försök`), { status: 429 });

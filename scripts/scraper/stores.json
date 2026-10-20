@@ -1,5 +1,5 @@
 {
- "_info": "status: tillstand = skriftligt ok från butiken, ej-forbjuden = inget förbud hittat, inga-bilder = får bevakas men villkoren skyddar bilder och texter, så produktbilder visas inte, okand = ej kontrollerad, forbjuden = hämtas aldrig. Ändra status när du fått svar från en butik. listing: kategorisida för butiker utan sitemap, { path med {n} för sidnummer, link = regex för produktlänkar, pages = max antal sidor }.",
+ "_info": "status: tillstand = skriftligt ok från butiken, ej-forbjuden = inget förbud hittat, inga-bilder = får bevakas men villkoren skyddar bilder och texter, så produktbilder visas inte, okand = ej kontrollerad, forbjuden = hämtas aldrig. Ändra status när du fått svar från en butik. listing: kategorisida för butiker utan sitemap, { path med {n} för sidnummer, link = regex för produktlänkar, pages = max antal sidor }. feed: domän som katalogen läses från när den skiljer sig från butikens (t.ex. Shopify bakom en egen framsida). productPath: länkmönster på butikens egen domän, t.ex. /produkt/{handle}.",
  "stores": [
   {
    "id": "alara-games",
@@ -172,7 +172,9 @@
    "domain": "gimmick.se",
    "platform": "shopify",
    "status": "inga-bilder",
-   "note": "Användarvillkoren: bilder, logotyper, texter och grafik får inte kopieras eller användas utan tillstånd. Visas utan produktbilder."
+   "note": "Användarvillkoren: bilder, logotyper, texter och grafik får inte kopieras eller användas utan tillstånd. Visas utan produktbilder. Framsidan är byggd i Lovable och saknar produktdata i HTML:en. Katalogen ligger hos Shopify och läses från feed-domänen (2026-10-20).",
+   "feed": "shop.gimmick.se",
+   "productPath": "/product/{handle}"
   },
   {
    "id": "goblinen",
@@ -273,7 +275,11 @@
    "domain": "mix-max.se",
    "platform": "generic",
    "status": "ej-forbjuden",
-   "note": "Villkoren lästa manuellt 2026-10-18, inget förbud mot automatisk insamling"
+   "note": "Villkoren lästa manuellt 2026-10-18, inget förbud mot automatisk insamling. Leksaksbutik: sitemapen har mest pussel och muggar, så produkterna läses från Pokémon-kategorin.",
+   "listing": {
+    "path": "/819-pokemon",
+    "link": "^https://mix-max\\.se/pokemon/\\d+-[^/]+\\.html$"
+   }
   },
   {
    "id": "mtg-butiken",
@@ -415,9 +421,11 @@
    "id": "samlarverket",
    "name": "Samlarverket",
    "domain": "samlarverket.com",
-   "platform": "generic",
+   "platform": "shopify",
    "status": "ej-forbjuden",
-   "note": "Inget förbud hittat i villkoren 2026-10-12"
+   "note": "Inget förbud hittat i villkoren 2026-10-12. Framsidan är byggd i Lovable och saknar produktdata i HTML:en. Katalogen ligger hos Shopify och läses från feed-domänen (2026-10-20).",
+   "feed": "cardbase-se.myshopify.com",
+   "productPath": "/produkt/{handle}"
   },
   {
    "id": "sf-bokhandeln",
@@ -529,7 +537,9 @@
    "domain": "tcgpicks.com",
    "platform": "shopify",
    "status": "ej-forbjuden",
-   "note": "Inget förbud hittat i villkoren 2026-10-12. Säljer främst lösa och graderade kort, som vi inte bevakar. 0 produkter är väntat."
+   "note": "Inget förbud hittat i villkoren 2026-10-12. Säljer främst lösa och graderade kort, som vi inte bevakar. Framsidan är byggd i Lovable och saknar produktdata i HTML:en. Katalogen ligger hos Shopify och läses från feed-domänen (2026-10-20).",
+   "feed": "aw7knm-yr.myshopify.com",
+   "productPath": "/produkt/{handle}"
   },
   {
    "id": "tcgstore",
@@ -575,9 +585,10 @@
    "id": "webhallen",
    "name": "Webhallen",
    "domain": "webhallen.com",
-   "platform": "generic",
+   "platform": "webhallen",
    "status": "ej-forbjuden",
-   "note": "Villkoren lästa manuellt 2026-10-18, inget förbud mot automatisk insamling (köpvillkor)"
+   "note": "Villkoren lästa manuellt 2026-10-18, inget förbud mot automatisk insamling (köpvillkor). Produktsidorna byggs med JavaScript: produkterna läses från butikens öppna API /api/product/{id} (2026-10-20).",
+   "feed": "www.webhallen.com"
   },
   {
    "id": "westcoast-vault",
