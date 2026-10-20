@@ -2,7 +2,7 @@
 // Används både av run.mjs (en körning över alla butiker) och daemon.mjs (löpande, varannan minut).
 import { readFile, writeFile, mkdir, rename } from "node:fs/promises";
 import { Host } from "./http.mjs";
-import { classify, CLASSIFY_VERSION } from "./classify.mjs";
+import { classify, CLASSIFY_VERSION, looksPokemonTitle } from "./classify.mjs";
 import { notify } from "./notify.mjs";
 import { shopify } from "../adapters/shopify.mjs";
 import { woocommerce } from "../adapters/woocommerce.mjs";
@@ -53,6 +53,12 @@ export async function createEngine({ statuses } = {}) {
   if (state.classifyVersion !== CLASSIFY_VERSION) {
     state.classifyVersion = CLASSIFY_VERSION;
     state.reclassify = stores.map((s) => s.id);
+    // Sitemap-butiker: sidor som avvisades men vars adress ser ut som en Pokémon-produkt läses om snart
+    // (som om de vore över en vecka gamla), så att den nya igenkänningen hinner pröva dem.
+    const slug = (u) => { try { return decodeURIComponent(new URL(u).pathname).replace(/[-_/]+/g, " "); } catch { return u; } };
+    for (const s of stores) for (const [u, v] of Object.entries(state[s.id]?.pages || {})) {
+      if (v?.k === "x" && looksPokemonTitle(slug(u), state.sets?.names || [])) v.t = 0;
+    }
   }
   // Prishistorik: lägsta pris i lager per produktgrupp och dag. Sparas i data/price-history.json.
   const history = (await readJSON("data/price-history.json", { days: {} })).days || {};
@@ -82,7 +88,8 @@ export async function createEngine({ statuses } = {}) {
     try {
       const host = await hostFor(store);
       const before = host.requests;
-      const ctx = { maxPages: 12, pagesPerRun, sitemapMaxAge, state: (state[store.id] ||= {}), setNames: state.sets.names, listing: store.listing };
+      // Upp till 40 sidor: stora Shopify-butiker (Aquitaz, Dragon's Lair, RGB Kingz) har över 3 000 produkter.
+      const ctx = { maxPages: 40, pagesPerRun, sitemapMaxAge, state: (state[store.id] ||= {}), setNames: state.sets.names, listing: store.listing };
       const raw = await ADAPTERS[store.platform](host, ctx);
       const list = [], same = new Set();
       for (const r of raw) {

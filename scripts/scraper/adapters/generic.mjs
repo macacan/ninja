@@ -159,7 +159,7 @@ export async function generic(host, ctx) {
   for (const [u, v] of Object.entries(seen)) if (typeof v === "number") seen[u] = { t: v, k: "p" };
   const now = Date.now();
   // Turordning: olästa Pokémon-URL:er, olästa övriga, kända produkter (äldst först). Sidor som inte var
-  // Pokémon-produkter läses om först efter en vecka.
+  // Pokémon-produkter läses om tidigast efter en vecka (eller direkt när klassningen ändrats, se engine.mjs).
   const rank = (u) => {
     if (fresh.has(u)) return -1; // nya produkter i sitemapen läses allra först
     const s = seen[u];
@@ -167,9 +167,14 @@ export async function generic(host, ctx) {
     if (s.k === "x") return now - s.t > WEEK ? 3 : Infinity;
     return 2;
   };
-  const batch = urls.filter((u) => rank(u) !== Infinity)
-    .sort((a, b) => rank(a) - rank(b) || (seen[a]?.t || 0) - (seen[b]?.t || 0))
-    .slice(0, ctx.pagesPerRun);
+  const byRank = (a, b) => rank(a) - rank(b) || (seen[a]?.t || 0) - (seen[b]?.t || 0);
+  const main = urls.filter((u) => rank(u) <= 2).sort(byRank);
+  const recheck = urls.filter((u) => rank(u) === 3).sort(byRank);
+  // Upp till 40 % av varvet går till att läsa om avvisade sidor, så att de inte trängs undan av kända
+  // produkter för alltid. Räcker inte den ena listan fylls varvet på från den andra.
+  const share = Math.min(recheck.length, Math.ceil(ctx.pagesPerRun * 0.4));
+  const take = Math.min(main.length, ctx.pagesPerRun - share);
+  const batch = [...main.slice(0, take), ...recheck.slice(0, ctx.pagesPerRun - take)];
   const items = [];
   let stopped = false;
   for (const u of batch) {

@@ -25,11 +25,11 @@ const TYPES = [
 
 // Saker som nämner Pokémon men inte är förseglade kortprodukter: tillbehör, kläder, leksaker, spel,
 // digitala koder, graderade och lösa kort (t.ex. "025/165"). Officiella TCG-boxar med figur, pin eller
-// poster ("Figure Collection", "Pin Collection") innehåller boosterpaket och får vara kvar.
+// poster ("Figure Collection", "Pin Collection", "Binder Collection") innehåller boosterpaket och får vara kvar.
 const NOT_SEALED = new RegExp([
   // tillbehör och förvaring
   "display case", "acrylic", "akryl\\w*", "magnetic", "storage", "förvaring\\w*", "protector", "skydd\\w*", "sleeves?", "kortfickor",
-  "toploaders?", "binder", "pärm", "portfolio", "album", "playmat", "spelmatta", "deck ?box", "kortlåda", "dice", "tärning\\w*",
+  "toploaders?", "binder(?! (?:collection|gift box))", "pärm", "portfolio", "album", "playmat", "spelmatta", "deck ?box", "kortlåda", "dice", "tärning\\w*",
   "damage[- ]counters?", "coin set", "myntset", "card case", "kortfodral", "flip box", "flip deck", "alcove", "deck ?case", "deckbox", "ultra pro", "gamegenic", "dragon shield", "ultimate guard",
   // kläder och accessoarer
   "t-?shirt", "tröja", "hoodie", "huvtröja", "keps", "mössa", "cap", "hatt", "strumpor", "socks?", "väska", "bag", "ryggsäck", "backpack",
@@ -38,9 +38,11 @@ const NOT_SEALED = new RegExp([
   "plush", "plysch", "light ?up", "gosedjur", "mjukisdjur", "blind ?box", "figure set", "figur", "samlarfigur\\w*", "re-?ment", "collection figure", "battle figure", "funko", "nendoroid", "funism", "statyett", "action figure", "mega construx", "lego",
   "pussel", "puzzle", "mugg", "mug", "flaska", "bottle", "lampa", "lamp", "kudde", "pillow", "filt", "blanket", "ryggsäck",
   // tv-spel och digitalt
-  "nintendo switch", "switch 2", "game boy", "3ds", "amiibo", "videospel", "online code", "code[- ]card", "kodkort", "oanvänd kod",
+  "nintendo switch", "switch 2", "game boy", "3ds", "amiibo", "videospel", "online code", "code[- ]card", "code in a box", "kodkort", "oanvänd kod",
   // biljetter till turneringar och prerelease-event (har ofta veckodag och datum i namnet)
   "biljett\\w*", "tickets?", "turnering\\w*", "anmälan", "deltagaravgift", "entry fee",
+  // tjänster där butiken öppnar packet live åt köparen
+  "öppnas live", "live[- ]?öppning", "live opening", "pack ?battle", "packbattle",
   "måndag", "tisdag", "onsdag", "torsdag", "fredag", "lördag", "söndag",
   // böcker, graderat, tomma lådor
   "bok", "book", "graded", "psa ?\\d+", "cgc ?\\d*", "bgs ?\\d*", "tom låda", "empty box", "endast låda", "only box",
