@@ -82,7 +82,7 @@ export async function createEngine({ statuses } = {}) {
     try {
       const host = await hostFor(store);
       const before = host.requests;
-      const ctx = { maxPages: 12, pagesPerRun, sitemapMaxAge, state: (state[store.id] ||= {}) };
+      const ctx = { maxPages: 12, pagesPerRun, sitemapMaxAge, state: (state[store.id] ||= {}), setNames: state.sets.names, listing: store.listing };
       const raw = await ADAPTERS[store.platform](host, ctx);
       const list = [], same = new Set();
       for (const r of raw) {

@@ -1,5 +1,5 @@
 {
- "_info": "status: tillstand = skriftligt ok från butiken, ej-forbjuden = inget förbud hittat, inga-bilder = får bevakas men villkoren skyddar bilder och texter, så produktbilder visas inte, okand = ej kontrollerad, forbjuden = hämtas aldrig. Ändra status när du fått svar från en butik.",
+ "_info": "status: tillstand = skriftligt ok från butiken, ej-forbjuden = inget förbud hittat, inga-bilder = får bevakas men villkoren skyddar bilder och texter, så produktbilder visas inte, okand = ej kontrollerad, forbjuden = hämtas aldrig. Ändra status när du fått svar från en butik. listing: kategorisida för butiker utan sitemap, { path med {n} för sidnummer, link = regex för produktlänkar, pages = max antal sidor }.",
  "stores": [
   {
    "id": "alara-games",
@@ -15,7 +15,12 @@
    "domain": "alphaspel.se",
    "platform": "generic",
    "status": "ej-forbjuden",
-   "note": "Inget förbud hittat i villkoren 2026-10-12"
+   "note": "Inget förbud hittat i villkoren 2026-10-12. Ingen sitemap: produkterna läses från Pokémon-kategorin.",
+   "listing": {
+    "path": "/1762-pokemon-tcg/?page={n}",
+    "link": "^/1762-pokemon-tcg/\\d+-[^/?#]+$",
+    "pages": 12
+   }
   },
   {
    "id": "aquitaz",
@@ -247,7 +252,12 @@
    "domain": "maxgaming.se",
    "platform": "generic",
    "status": "ej-forbjuden",
-   "note": "Inget förbud hittat i villkoren 2026-10-12"
+   "note": "Inget förbud hittat i villkoren 2026-10-12. Ingen sitemap: produkterna läses från Pokémon-kategorin.",
+   "listing": {
+    "path": "/sv/hem-fritid/samlarkortsspel/pokemon?page={n}",
+    "link": "^/sv/pokemon/[^/?#]+$",
+    "pages": 12
+   }
   },
   {
    "id": "miniature-metropolis",
@@ -519,7 +529,7 @@
    "domain": "tcgpicks.com",
    "platform": "shopify",
    "status": "ej-forbjuden",
-   "note": "Inget förbud hittat i villkoren 2026-10-12"
+   "note": "Inget förbud hittat i villkoren 2026-10-12. Säljer främst lösa och graderade kort, som vi inte bevakar. 0 produkter är väntat."
   },
   {
    "id": "tcgstore",

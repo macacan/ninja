@@ -6,7 +6,7 @@ const POKEMON = /pok[eé]mon/i;
 
 // Höjs när igenkänningen ändras så att fler produkter räknas. Då sparas de nyfunna produkterna tyst
 // vid nästa kontroll av varje butik, i stället för att larmas som hundratals "nya" (se engine.mjs).
-export const CLASSIFY_VERSION = 2;
+export const CLASSIFY_VERSION = 3;
 
 // Ordningen spelar roll: mer specifika typer först.
 const TYPES = [
@@ -19,7 +19,7 @@ const TYPES = [
   ["Tin", /\btins?\b|plåtburk/i],
   ["Blister", /blister|checklane|3[- ]?pack|three[- ]pack/i],
   ["Build & Battle", /build (&|and) battle|prerelease/i],
-  ["Deck", /\bdeck\b|battle academy|league battle/i],
+  ["Deck", /\bdeck\b|battle academy|league battle|starter set|start ?deck/i],
   ["Booster Pack", /booster ?pack|booster\b|boosterpaket|sleeved booster/i],
 ];
 
@@ -39,6 +39,9 @@ const NOT_SEALED = new RegExp([
   "pussel", "puzzle", "mugg", "mug", "flaska", "bottle", "lampa", "lamp", "kudde", "pillow", "filt", "blanket", "ryggsäck",
   // tv-spel och digitalt
   "nintendo switch", "switch 2", "game boy", "3ds", "amiibo", "videospel", "online code", "code[- ]card", "kodkort", "oanvänd kod",
+  // biljetter till turneringar och prerelease-event (har ofta veckodag och datum i namnet)
+  "biljett\\w*", "tickets?", "turnering\\w*", "anmälan", "deltagaravgift", "entry fee",
+  "måndag", "tisdag", "onsdag", "torsdag", "fredag", "lördag", "söndag",
   // böcker, graderat, tomma lådor
   "bok", "book", "graded", "psa ?\\d+", "cgc ?\\d*", "bgs ?\\d*", "tom låda", "empty box", "endast låda", "only box",
 ].map((w) => `\\b${w}\\b`).join("|") + "|\\b\\d{1,3}\\s*\\/\\s*\\d{2,3}\\b", "i");
@@ -71,6 +74,18 @@ function pokemonNames() {
     MONS = new Set((d.pokemon || []).map((p) => p.name.toLowerCase()).filter((n) => n.length >= 4));
   } catch { MONS = new Set(); }
   return MONS;
+}
+
+// Snabb kontroll utan typ: ser titeln ut att handla om Pokémon? Används av adaptrarna innan klassningen.
+// strict (för URL:er i stora sitemaps): bara ordet Pokémon, japanska/kinesiska setnamn och setkoder.
+// Engelska setnamn och Pokémon-namn ger för många träffar i stora spelbutiker ("Base Set", "Black Bolt",
+// "Team Up", "Golem", "Kabuto"). Produktsidans titel kontrolleras sedan utan strict.
+export function looksPokemonTitle(title, setNames = [], { strict = false } = {}) {
+  if (!title) return false;
+  if (strict) return POKEMON.test(title) || (!OTHER_TCG.test(title) && (POKE_WORDS.test(title) || SET_CODE.test(title)));
+  const low = title.toLowerCase();
+  const hits = setNames.filter((s) => s.length > 3 ? low.includes(s.toLowerCase()) : /^\d{3}$/.test(s) && new RegExp(`\\b${s}\\b`).test(low));
+  return looksPokemon(title, hits);
 }
 
 function looksPokemon(title, hits) {

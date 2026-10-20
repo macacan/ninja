@@ -2,10 +2,19 @@
 import { generic } from "./generic.mjs";
 
 export async function woocommerce(host, ctx) {
-  const path = (page) => `/wp-json/wc/store/v1/products?per_page=100&page=${page}&search=pokemon`;
-  if (!host.allowed(path(1))) return generic(host, ctx);
+  const API = "/wp-json/wc/store/v1/products";
+  if (!host.allowed(`${API}?per_page=100&page=1`)) return generic(host, ctx);
   const items = [];
   try {
+    // Butikens Pokémon-kategorier om de finns. Annars sök på "pokemon", vilket missar t.ex. japanska
+    // produkter som bara heter "Triplet Beat (SV1a)".
+    let filter = "&search=pokemon";
+    try {
+      const cats = await host.get(`${API}/categories?per_page=100`, { type: "json" });
+      const ids = (Array.isArray(cats) ? cats : []).filter((c) => /pok[eé]mon/i.test(`${c.name} ${c.slug}`)).map((c) => c.id);
+      if (ids.length) filter = `&category=${ids.join(",")}`;
+    } catch {}
+    const path = (page) => `${API}?per_page=100&page=${page}${filter}`;
     for (let page = 1; page <= ctx.maxPages; page++) {
       const list = await host.get(path(page), { type: "json" });
       for (const p of list) {

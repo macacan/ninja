@@ -1,5 +1,6 @@
-// För plattformar utan öppet produktflöde: hitta produktsidor via butikens sitemap och läs
-// schema.org/Product-data (JSON-LD) som butiken själv lägger ut för sökmotorer.
+// För plattformar utan öppet produktflöde: hitta produktsidor via butikens sitemap (eller via en
+// kategorisida, se listingUrls) och läs schema.org/Product-data (JSON-LD) som butiken lägger ut för sökmotorer.
+import { looksPokemonTitle } from "../lib/classify.mjs";
 
 // Bild kan vara en adress, en lista eller ett schema.org-ImageObject (url/contentUrl). Görs alltid till en hel adress.
 function imageUrl(v, base) {
@@ -36,7 +37,7 @@ async function sitemapUrls(host, ctx) {
     seen.add(sm);
     let xml;
     try { xml = await host.get(sm); } catch { continue; }
-    const locs = [...xml.matchAll(/<loc>\s*([^<\s]+)\s*<\/loc>/g)].map((m) => decode(m[1]));
+    const locs = [...xml.matchAll(/<loc>\s*(?:<!\[CDATA\[\s*)?([^<\s\]]+)\s*(?:\]\]>\s*)?<\/loc>/g)].map((m) => decode(m[1]));
     if (/<sitemapindex/i.test(xml)) {
       // Produktsitemaps först, sidor och bloggar sist.
       queue.push(...locs.sort((a, b) => /product/i.test(b) - /product/i.test(a)));
@@ -46,7 +47,8 @@ async function sitemapUrls(host, ctx) {
   }
   // Stora butiker: bara URL:er som nämner Pokémon. Små butiker: allt, och titeln avgör sedan.
   const allowed = dropLocaleCopies([...new Set(pages)]).filter((u) => host.allowed(u));
-  const poke = allowed.filter((u) => /pok[eé]mon/i.test(decodeURIComponent(u)));
+  const slug = (u) => { try { return decodeURIComponent(new URL(u).pathname).replace(/[-_/]+/g, " "); } catch { return u; } };
+  const poke = allowed.filter((u) => looksPokemonTitle(slug(u), ctx.setNames, { strict: true }));
   return allowed.length > ctx.maxSitemapUrls ? poke : allowed;
 }
 
@@ -118,11 +120,32 @@ export function parseProductPage(html, url) {
 const WEEK = 7 * 864e5;
 const POKE = /pok[eé]mon/i;
 
+// Butiker utan sitemap: produktlänkar från en kategorisida, sida för sida.
+// listing = { path: "/kategori/pokemon?page={n}", link: "^/produkt/", pages: 10 } i stores.json.
+async function listingUrls(host, listing) {
+  const re = new RegExp(listing.link);
+  const urls = [];
+  for (let n = 1; n <= (listing.pages || 10); n++) {
+    const path = listing.path.replace("{n}", n);
+    let html;
+    try { html = await host.get(path); } catch (e) { if (n === 1) throw e; break; }
+    const found = [...html.matchAll(/href=["']([^"'#]+)["']/g)].map((m) => decode(m[1]))
+      .filter((h) => re.test(h)).map((h) => new URL(h, host.origin).href).filter((u) => host.allowed(u));
+    const fresh = found.filter((u) => !urls.includes(u));
+    if (!fresh.length) break; // sidan visade inget nytt: slut på listan
+    urls.push(...new Set(fresh));
+    if (!listing.path.includes("{n}")) break;
+  }
+  return urls;
+}
+
 export async function generic(host, ctx) {
   // Sitemapen ändras sällan. I bevakningsläget läses den om högst var 30:e minut (sitemapMaxAge).
   const s = ctx.state;
   const reuse = s.known && s.knownAt && Date.now() - s.knownAt < (ctx.sitemapMaxAge || 0);
-  const urls = dropLocaleCopies(reuse ? s.known : await sitemapUrls(host, { maxSitemapUrls: 3000, ...ctx }));
+  const urls = dropLocaleCopies(reuse ? s.known
+    : ctx.listing ? await listingUrls(host, ctx.listing)
+    : await sitemapUrls(host, { maxSitemapUrls: 3000, ...ctx }));
   if (!reuse) {
     // En produkt räknas som ny i butiken bara om dess URL inte fanns i sitemapen förra gången.
     // De nya URL:erna sparas tills vi hunnit läsa dem, även om det dröjer några varv.
@@ -162,7 +185,7 @@ export async function generic(host, ctx) {
       break;
     }
     const p = parseProductPage(html, u);
-    const ok = p && p.title && Number.isFinite(p.price) && POKE.test(p.title);
+    const ok = p && p.title && Number.isFinite(p.price) && looksPokemonTitle(p.title, ctx.setNames);
     seen[u] = { t: Date.now(), k: ok ? "p" : "x" };
     if (ok) items.push({ pid: u, ...p, isNew: fresh.has(u) });
     if (fresh.has(u)) s.fresh = (s.fresh || []).filter((x) => x !== u);
