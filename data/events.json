@@ -1,6 +1,32 @@
 {
- "updated": 1792524112576,
+ "updated": 1792527764311,
  "events": [
+  {
+   "at": 1792526984101,
+   "store": "pokemurre",
+   "product": "pokemurre:10280840560978",
+   "group": "x|booster-box|ja||inferno-x",
+   "title": "Pokémon Mega Inferno X Booster Box (Japanese)",
+   "url": "https://pokemurre.se/products/preorder-mega-inferno-x-booster-box-japanese",
+   "price": 1929,
+   "type": "Booster Box",
+   "set": null,
+   "lang": "ja",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1792525975201,
+   "store": "collected",
+   "product": "collected:11056466952534",
+   "group": "151|booster-box|zh|",
+   "title": "Pokémon TCG: Collect 151 Surprise Booster Box (Kinesisk) - 151C",
+   "url": "https://collected.se/products/pokemon-tcg-151-surprise-booster-box-kinesisk",
+   "price": 1190,
+   "type": "Booster Box",
+   "set": "151",
+   "lang": "zh",
+   "kind": "tillbaka"
+  },
   {
    "at": 1792518514851,
    "store": "dragon-s-lair",
