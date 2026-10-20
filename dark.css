@@ -168,3 +168,6 @@ input.shop-search { border-color: #0b0c12; }
 /* Flikarna (Produkter, Händelser, Butiker, Notiser) med svarta kanter i mörkt läge. */
 .seg { border-color: #0b0c12; }
 .seg button + button { border-left-color: #0b0c12; }
+
+/* "I lager"-chipsen på produktkorten: svart text i mörkt läge. */
+.c.in { color: #0b0c12; }

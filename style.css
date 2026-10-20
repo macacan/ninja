@@ -3429,3 +3429,8 @@ button.zm-price:hover{background:#1f2132}
 .anat-src summary:hover,.anat-src[open] summary{background:var(--gold);border-color:var(--gold);color:#1b1b2f}
 .anat-src p{position:absolute;right:0;top:calc(100% + 8px);z-index:3;width:max-content;max-width:220px;margin:0;padding:8px 10px;background:var(--card);border:1px solid var(--line);border-radius:8px;box-shadow:0 8px 20px rgba(0,0,0,.25);font-size:.8rem;line-height:1.4;color:var(--ink)}
 .anat-src p a{color:var(--navy);font-weight:600}
+
+/* Produktkorten i samma rad blir lika höga, och innehållet fyller hela kortet. */
+.pgrid, .ggrid, #products { align-items: stretch; }
+.pgrid > .gcard{height:100%}
+.pgrid > .gcard > .gbody{flex:1}
