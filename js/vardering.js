@@ -605,6 +605,15 @@ const startScan = () => openScanner(({ name, number, total, canvas }) => {
   const q = [name, number].filter(Boolean).join(" ");
   input.value = q;
   search(q, total, canvas);
+}, ({ name, number }) => {
+  // Halv läsning: fyll i det som gick att läsa, så användaren kan komplettera i stället för att skriva från noll.
+  const q = [name, number].filter(Boolean).join(" ");
+  input.value = q;
+  vmInput.value = q;
+  openModal();
+  vmInput.focus();
+  // Visa förslag direkt för det ifyllda, t.ex. hela kortnamnet när bara början gick att läsa.
+  vmInput.dispatchEvent(new Event("input", { bubbles: true }));
 });
 $("#scan-open")?.addEventListener("click", startScan);
 $("#vm-scan")?.addEventListener("click", startScan);

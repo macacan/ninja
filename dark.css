@@ -103,8 +103,18 @@ input[type=search],select,.shop-search{background:#1e2230}
 /* Produktbilder i nattläge: bakgrunden bakom produkterna är en mjuk blågrå i stället för vitt, medan
    produktfotona förblir ljusa. Fotona blandas in i bakgrunden, så att deras vita kanter blir mjuka. */
 .pimg,.tcard .art,.product .art.cardimg {
-  background-color: #a7b0cc !important;
-  background-image: radial-gradient(circle at 50% 30%, #c6cde2 0%, #a7b0cc 70%, #939db9 100%) !important;
+  background-color: #bcc5dc !important;
+  background-image: radial-gradient(circle at 50% 30%, #dbe1f0 0%, #bcc5dc 70%, #a9b3cd 100%) !important;
+}
+
+/* Produktkorten får en ljusare yta än sidans bakgrund, så de syns tydligare i nattläge. */
+.tcard,.pcard,.product {
+  background: #262c3c;
+  border-color: #353c50;
+  box-shadow: 0 3px 0 #353c50;
+}
+.tcard .muted,.pcard .muted,.product .muted,.tcard small,.pcard small,.product small {
+  color: #b4bbcd;
 }
 .pimg img,.tcard .art img,.product .art.cardimg img {
   mix-blend-mode: multiply;

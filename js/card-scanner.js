@@ -1,16 +1,29 @@
 // Kortskanner: läser kortets namn och nummer med kameran och hittar kortet i TCGdex.
 // Inspirerad av mtg_card_detector och Pokemon-Card-Scanner:
 // 1. 4-punkts perspektivtransformation (homografi) rätsiktar sneda kort till ett platt 63×88 mm-format.
-// 2. Reflexdämpning (glare reduction) i HSV-färgrymden mot blänk från plastfickor och holokort.
-// 3. Dubbel-zon-OCR (läser översta namnzonen och nedersta numret i hög kontrast).
-// 4. Perceptual dHash (64-bitars skillnadshash) för visuell strukturell fingeravtrycksmatchning.
+// 2. Två läszoner (namn överst, nummer nederst) i stället för hela kortet, med bildbehandling för OCR:
+//    gråskala, reflexdämpning, kontraststräckning och Otsu-tröskel. Varannan skanning körs inverterad.
+// 3. Rörelsekontroll: OCR körs först när kameran hålls stilla.
+// 4. Perceptual dHash (64-bitars skillnadshash) för visuell matchning av kandidatkorten.
 import { API, esc, getJSON } from "./site.js";
 import { loadDataset } from "./card-autocomplete.js";
 
 const TESSERACT = "https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/tesseract.min.js";
-const SCAN_INTERVAL = 900; // ms mellan OCR-försök under aktiv kameraström
+const SCAN_INTERVAL = 900; // ms minst mellan två OCR-försök under aktiv kameraström
+const MOTION_TICK = 150; // ms mellan två stabilitetskontroller
+const MOTION_LIMIT = 10; // medelskillnad (0–255 per pixel) under vilken kameran räknas som stilla
+const STILL_TICKS = 2; // antal stilla kontroller i rad innan OCR startar
+const ZOOM_DEFAULT = 1.5;
+const ZOOM_MAX = 2.5;
 const CARD_W = 420;
 const CARD_H = 587; // Exakt 63:88 mm Pokémon-kortproportioner
+
+// Läszoner i andelar av kortet (x, y, bredd, höjd). Samma värden används för beskärningen
+// och för markeringsrutorna i siktramen, så användaren ser exakt det som läses.
+const ZONES = {
+  name: { x: 0.04, y: 0.02, w: 0.74, h: 0.14 }, // Översta ~16 %, utan HP-rutan längst till höger
+  number: { x: 0.03, y: 0.86, w: 0.94, h: 0.13 }, // Nedersta ~14 %, där set-numret står
+};
 
 // ---------- Textigenkänning (Tesseract) ----------
 let workerPromise = null;
@@ -127,34 +140,48 @@ export function unwarpCard(srcImage, corners, dstW = CARD_W, dstH = CARD_H) {
   return outCanvas;
 }
 
-// ---------- 2. Reflex- och blänkreduktion (mtg_card_detector-stil) ----------
-// Filtrerar bort vita mättnadslösa reflexer orsakade av ficklampor, blixt eller taklampor på plastfickor/folie.
-export function suppressGlare(canvas) {
-  const ctx = canvas.getContext("2d", { willReadFrequently: true });
-  const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-  const d = imgData.data;
-  for (let i = 0; i < d.length; i += 4) {
-    const r = d[i], g = d[i + 1], b = d[i + 2];
-    const max = Math.max(r, g, b);
-    const min = Math.min(r, g, b);
-    const sat = max > 0 ? (max - min) / max : 0;
-    // Glare: mycket låg mättnad och hög ljusstyrka
-    if (sat < 0.16 && max > 210) {
-      const soften = 0.65 + sat * 1.5;
-      d[i] = Math.round(r * soften);
-      d[i + 1] = Math.round(g * soften);
-      d[i + 2] = Math.round(b * soften);
-    }
+// ---------- 2. Bildbehandling för OCR ----------
+const histOf = (arr) => {
+  const h = new Uint32Array(256);
+  for (const v of arr) h[v]++;
+  return h;
+};
+
+function percentileOf(hist, p) {
+  let acc = 0;
+  for (let v = 0; v < 256; v++) {
+    acc += hist[v];
+    if (acc >= p) return v;
   }
-  ctx.putImageData(imgData, 0, 0);
+  return 255;
 }
 
-// Skapar ett kontrastförstärkt, binärt utsnitt optimerat för Tesseract OCR
-function cropEnhanced(src, xRatio, yRatio, wRatio, hRatio, scale = 2) {
-  const sx = Math.round(src.width * xRatio);
-  const sy = Math.round(src.height * yRatio);
-  const sw = Math.round(src.width * wRatio);
-  const sh = Math.round(src.height * hRatio);
+// Otsus metod: den tröskel som bäst delar pixlarna i mörk och ljus grupp.
+function otsuOf(hist, total) {
+  let sum = 0;
+  for (let v = 0; v < 256; v++) sum += v * hist[v];
+  let sumB = 0, wB = 0, best = 0, thr = 128;
+  for (let v = 0; v < 256; v++) {
+    wB += hist[v];
+    if (!wB) continue;
+    const wF = total - wB;
+    if (!wF) break;
+    sumB += v * hist[v];
+    const mB = sumB / wB, mF = (sum - sumB) / wF;
+    const between = wB * wF * (mB - mF) * (mB - mF);
+    if (between > best) { best = between; thr = v; }
+  }
+  return thr;
+}
+
+// Beskär en zon ur kortet och gör den redo för OCR: gråskala, reflexdämpning,
+// kontraststräckning och binarisering. invert vänder till ljus text på mörk botten,
+// vilket behövs för holo- och full art-kort med vit text.
+function cropEnhanced(src, zone, scale = 2, invert = false) {
+  const sx = Math.round(src.width * zone.x);
+  const sy = Math.round(src.height * zone.y);
+  const sw = Math.round(src.width * zone.w);
+  const sh = Math.round(src.height * zone.h);
 
   const cv = document.createElement("canvas");
   cv.width = Math.round(sw * scale);
@@ -165,22 +192,41 @@ function cropEnhanced(src, xRatio, yRatio, wRatio, hRatio, scale = 2) {
   g.imageSmoothingQuality = "high";
   g.drawImage(src, sx, sy, sw, sh, 0, 0, cv.width, cv.height);
 
-  // Adaptiv binarisering och skärpa för textläsning
   const imgData = g.getImageData(0, 0, cv.width, cv.height);
   const d = imgData.data;
-  let sum = 0;
-  for (let i = 0; i < d.length; i += 4) {
-    sum += d[i] * 0.299 + d[i + 1] * 0.587 + d[i + 2] * 0.114;
-  }
-  const mean = sum / (cv.width * cv.height);
+  const n = cv.width * cv.height;
 
-  for (let i = 0; i < d.length; i += 4) {
-    const lum = d[i] * 0.299 + d[i + 1] * 0.587 + d[i + 2] * 0.114;
-    // Sträck ut kontrasten runt medelvärdet
-    const val = lum < mean * 0.85 ? 0 : lum > mean * 1.15 ? 255 : Math.round((lum - mean * 0.85) * (255 / (mean * 0.3)));
+  // 1. Gråskala, och reflexdämpning av vita mättnadslösa blänk (plastfickor, holo)
+  const gray = new Uint8Array(n);
+  for (let i = 0, j = 0; i < d.length; i += 4, j++) {
+    let r = d[i], gn = d[i + 1], b = d[i + 2];
+    const max = Math.max(r, gn, b);
+    const min = Math.min(r, gn, b);
+    const sat = max > 0 ? (max - min) / max : 0;
+    if (sat < 0.16 && max > 210) {
+      const soften = 0.65 + sat * 1.5;
+      r *= soften; gn *= soften; b *= soften;
+    }
+    gray[j] = Math.min(255, Math.round(r * 0.299 + gn * 0.587 + b * 0.114));
+  }
+
+  // 2. Kraftig kontraststräckning mellan 3:e och 97:e percentilen
+  const lo = percentileOf(histOf(gray), n * 0.03);
+  const hi = percentileOf(histOf(gray), n * 0.97);
+  const span = Math.max(1, hi - lo);
+  for (let j = 0; j < n; j++) {
+    gray[j] = Math.max(0, Math.min(255, Math.round(((gray[j] - lo) * 255) / span)));
+  }
+
+  // 3. Binarisering med Otsu, och inversion vid behov
+  const thr = otsuOf(histOf(gray), n);
+  for (let i = 0, j = 0; i < d.length; i += 4, j++) {
+    let val = gray[j] > thr ? 255 : 0;
+    if (invert) val = 255 - val;
     d[i] = val;
     d[i + 1] = val;
     d[i + 2] = val;
+    d[i + 3] = 255;
   }
   g.putImageData(imgData, 0, 0);
   return cv;
@@ -220,6 +266,7 @@ export function hammingDistance(h1, h2) {
 }
 
 // ---------- 4. Kant- och Hörndetektion i Realtid ----------
+let cornerCanvas = null;
 // Letar efter kortets konturer och 4 hörn med outside-in strålsökning.
 // Söker från bildens ytterkanter inåt mot mitten, vilket garanterar att endast
 // kortets sanna ytterkanter hittas (utan att luras av illustrationer eller text inuti kortet).
@@ -228,11 +275,10 @@ export function detectCardCorners(videoOrImg, fallbackRect) {
   const sh = videoOrImg.videoHeight || videoOrImg.height;
   if (!sw || !sh) return { corners: fallbackRect, confident: false };
 
-  // Analysera i optimerad upplösning för 60 FPS
+  // Analysera i optimerad upplösning för 60 FPS. Samma canvas återanvänds varje bildruta.
   const AW = 240, AH = 320;
-  const cv = document.createElement("canvas");
-  cv.width = AW; cv.height = AH;
-  const g = cv.getContext("2d", { willReadFrequently: true });
+  cornerCanvas ||= Object.assign(document.createElement("canvas"), { width: AW, height: AH });
+  const g = cornerCanvas.getContext("2d", { willReadFrequently: true });
   g.drawImage(videoOrImg, 0, 0, AW, AH);
   const data = g.getImageData(0, 0, AW, AH).data;
 
@@ -365,43 +411,54 @@ function findName(lines, list) {
   return best?.name || null;
 }
 
-function findNumber(text) {
-  if (!text) return null;
-  const fixed = text
-    .replace(/(?<=\d|\/)[oO]|[oO](?=\d|\/)/g, "0")
-    .replace(/(?<=\d|\/)[lI|]|[lI|](?=\d|\/)/g, "1")
-    .replace(/(\d)\s*\/\s*(\d)/g, "$1/$2");
-  const m = fixed.match(/\b([A-Z]{0,2}\d{1,3}[a-z]?)\s*\/\s*([A-Z]{0,2}\d{2,3})\b/);
-  return m ? { number: m[1].replace(/^0+(?=\d)/, ""), total: m[2] } : null;
+// Set-prefix som inte ska ändras när OCR-fel rättas (t.ex. "SV" i "SV001/SV122", "TG" i "TG12/TG30").
+const SET_PREFIXES = ["TG", "GG", "SV", "SWSH", "SM", "XY", "BW", "DP", "PT"];
+
+// Rättar vanliga OCR-fel i ett nummer-token: O→0, I/l/|→1, S→5, B→8, Z→2.
+function fixNumberToken(tok) {
+  const letters = tok.match(/^[A-Za-z]+/)?.[0] || "";
+  const upper = letters.toUpperCase();
+  const prefix = letters.length < tok.length && SET_PREFIXES.includes(upper) ? upper : "";
+  const rest = tok
+    .slice(prefix.length)
+    .replace(/[oO]/g, "0")
+    .replace(/[lI|]/g, "1")
+    .replace(/S/g, "5")
+    .replace(/B/g, "8")
+    .replace(/Z/g, "2");
+  return prefix + rest;
 }
 
-// Läser kortet från ett rätat canvas ($420 \times 587$ px)
-export async function readCard(canvas) {
+// Hittar "238/191", "025/165" eller "TG12/TG30" i OCR-texten. Rättar bara tokens kring snedstrecket.
+function findNumber(text) {
+  if (!text) return null;
+  const fixed = text.replace(/[A-Za-z0-9|]{1,10}\s*\/\s*[A-Za-z0-9|]{1,10}/g, (m) => {
+    const [a, b] = m.split("/");
+    return `${fixNumberToken(a.trim())}/${fixNumberToken(b.trim())}`;
+  });
+  const m = fixed.match(/\b([A-Z]{0,4}\d{1,3}[a-z]?)\/([A-Z]{0,4}\d{1,3})\b/);
+  return m ? { number: m[1].replace(/^0+(?=\d)/, ""), total: m[2].replace(/^[A-Z]+/, "") } : null;
+}
+
+// Läser kortet från ett rätat canvas ($420 \times 587$ px). invert växlar mellan normal och inverterad bild.
+// full läser hela kortet om zonerna inte räcker. Det är långsamt, så auto-skanningen gör det inte.
+export async function readCard(canvas, { invert = false, full = false } = {}) {
   const worker = await getWorker();
   const list = await names();
 
-  // Reflexdämpning på hela kortet
-  suppressGlare(canvas);
-
-  // Zon-OCR:
-  // Namn överst: x: 4% till 85%, y: 2.5% till 14.5%
-  // Bottenlinje (samlarnummer och copyright): x: 3% till 97%, y: 91% till 99%
-  // Täcker både moderna kort (nummer nere till vänster) och vintage (nummer nere till höger)
-  const topCrop = cropEnhanced(canvas, 0.04, 0.025, 0.82, 0.125, 2.0);
-  const botCrop = cropEnhanced(canvas, 0.03, 0.908, 0.94, 0.082, 2.5);
-
+  // Zon-OCR: namnzonen överst och nummerzonen nederst
   const [topRes, botRes] = await Promise.all([
-    worker.recognize(topCrop),
-    worker.recognize(botCrop),
+    worker.recognize(cropEnhanced(canvas, ZONES.name, 2, invert)),
+    worker.recognize(cropEnhanced(canvas, ZONES.number, 2.5, invert)),
   ]);
 
   const topLines = topRes.data.text.split("\n").map((l) => l.trim()).filter(Boolean);
   let name = findName(topLines, list);
   let num = findNumber(botRes.data.text) || findNumber(topRes.data.text);
 
-  // Om OCR i zonerna inte räckte: läs hela kortet
-  if (!name || !num) {
-    const fullRes = await worker.recognize(cropEnhanced(canvas, 0, 0, 1, 1, 1.2));
+  // Om zonerna inte räckte: läs hela kortet (bara vid "Skanna nu" och foto)
+  if (full && (!name || !num)) {
+    const fullRes = await worker.recognize(cropEnhanced(canvas, { x: 0, y: 0, w: 1, h: 1 }, 1.2, invert));
     const allLines = fullRes.data.text.split("\n").map((l) => l.trim()).filter(Boolean);
     name = name || findName(allLines, list);
     num = num || findNumber(fullRes.data.text);
@@ -475,9 +532,18 @@ export async function rankByLook(canvas, list, limit = 150) {
 }
 
 // ---------- 8. Kamerafönster & Interaktiv HUD ----------
-let dialog = null, stream = null, timer = null, animFrame = null, busy = false, onFound = null;
+let dialog = null, stream = null, timer = null, animFrame = null, busy = false;
+let onFound = null, onPartial = null;
 let smoothedCorners = null;
 let torchSupported = false, torchActive = false;
+let motionCanvas = null, prevMotion = null, stillTicks = 0, lastScanAt = 0, scanCount = 0, pendingForce = false;
+let pauseUntil = 0, openedAt = 0; // pauseUntil: auto-skanningen väntar så att ett felmeddelande hinner läsas
+const NUDGE_AFTER = 2000; // ms utan träff innan "Skanna nu" lyfts fram
+const PAUSE_AFTER_MISS = 3500; // ms paus efter en misslyckad manuell skanning eller ett foto
+
+const frameEl = () => dialog?.querySelector(".scan-frame i");
+
+const zoneStyle = (z) => `left:${z.x * 100}%;top:${z.y * 100}%;width:${z.w * 100}%;height:${z.h * 100}%`;
 
 function ui() {
   if (dialog) return dialog;
@@ -488,14 +554,22 @@ function ui() {
     <div class="scan-view">
       <video playsinline muted autoplay></video>
       <canvas class="scan-hud" aria-hidden="true"></canvas>
-      <div class="scan-frame" aria-hidden="true"><i></i></div>
+      <div class="scan-frame" aria-hidden="true"><i>
+        <span class="scan-zone" data-label="Namn" style="${zoneStyle(ZONES.name)}"></span>
+        <span class="scan-zone" data-label="Nummer" style="${zoneStyle(ZONES.number)}"></span>
+      </i></div>
       <button class="btn icon scan-torch" type="button" aria-label="Tänd ficklampa" hidden>
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M18 6l-6 12-2-6-6-2 14-4z"/>
         </svg>
       </button>
+      <label class="scan-zoom" hidden>
+        <span>Zoom</span>
+        <input type="range" min="1" max="${ZOOM_MAX}" step="0.1" value="${ZOOM_DEFAULT}" aria-label="Zoom">
+        <output>${ZOOM_DEFAULT.toFixed(1)}×</output>
+      </label>
       <div class="scan-beam" aria-hidden="true"></div>
-      <p class="scan-tip">Håll kortet inom ramen. Kortet rätas upp automatiskt.</p>
+      <p class="scan-tip">Håll kortet i ramen. Glänser det? Luta det lätt.</p>
     </div>
     <div class="scan-hud-status">
       <div class="scan-status-dot" aria-hidden="true"></div>
@@ -503,12 +577,16 @@ function ui() {
     </div>
     <div class="scan-actions">
       <label class="btn small">Välj foto<input type="file" accept="image/*" hidden></label>
+      <button class="btn small gold scan-now" type="button">Skanna nu</button>
       <button class="btn small" type="button" data-close>Stäng</button>
     </div>`;
 
   document.body.append(dialog);
   dialog.addEventListener("close", stop);
   dialog.querySelector("[data-close]").addEventListener("click", () => dialog.close());
+
+  // Skanna nu: tvingar fram en omedelbar avläsning i full upplösning, även om kameran rör sig
+  dialog.querySelector(".scan-now").addEventListener("click", () => runScan(true));
 
   // Ficklampa
   const torchBtn = dialog.querySelector(".scan-torch");
@@ -521,6 +599,15 @@ function ui() {
       await track.applyConstraints({ advanced: [{ torch: torchActive }] });
       torchBtn.classList.toggle("active", torchActive);
     } catch {}
+  });
+
+  // Zoom
+  const zoomLabel = dialog.querySelector(".scan-zoom");
+  zoomLabel.querySelector("input").addEventListener("input", async (e) => {
+    const z = +e.target.value;
+    zoomLabel.querySelector("output").textContent = `${z.toFixed(1)}×`;
+    const track = stream?.getVideoTracks()[0];
+    await track?.applyConstraints({ advanced: [{ zoom: z }] }).catch(() => {});
   });
 
   // Välj foto från fil
@@ -541,18 +628,22 @@ function ui() {
     const { corners } = detectCardCorners(img, defaultRect);
     const unwarped = unwarpCard(img, corners);
 
-    clearInterval(timer);
-    cancelAnimationFrame(animFrame);
-    await attempt(unwarped, true);
+    // Pågår en kameraskanning läses fotot direkt efter den. Kameran fortsätter om fotot inte gav någon träff.
+    status("Läser fotot…");
+    await waitIdle();
+    await attempt(unwarped, { fromFile: true });
   });
 
   return dialog;
 }
 
+// Skriver bara om texten när den ändras, så att skärmläsare inte läser upp samma sak var 150:e ms.
 const status = (t) => {
   const el = dialog?.querySelector(".scan-status");
-  if (el) el.innerHTML = t;
+  if (el && el.innerHTML !== t) el.innerHTML = t;
 };
+
+const waitIdle = async () => { while (busy) await new Promise((r) => setTimeout(r, 50)); };
 
 // Hämtar standardkoordinater för sökramen i video-koordinater
 function getDefaultFrameCorners() {
@@ -665,7 +756,7 @@ function startHudLoop() {
   animFrame = requestAnimationFrame(loop);
 }
 
-// Fångar en rätad bild av kortet från kameran
+// Fångar en rätad bild av kortet från kameran i full upplösning
 function grabUnwarpedFrame() {
   const video = dialog.querySelector("video");
   if (!video.videoWidth) return null;
@@ -676,12 +767,79 @@ function grabUnwarpedFrame() {
   return unwarpCard(video, corners, CARD_W, CARD_H);
 }
 
+// Medelskillnaden mot föregående bild på en liten gråskalebild. Låg siffra = kameran står still.
+function motionLevel(video) {
+  const W = 48, H = 64;
+  motionCanvas ||= Object.assign(document.createElement("canvas"), { width: W, height: H });
+  const g = motionCanvas.getContext("2d", { willReadFrequently: true });
+  g.drawImage(video, 0, 0, W, H);
+  const d = g.getImageData(0, 0, W, H).data;
+  const cur = new Uint8Array(W * H);
+  for (let i = 0, j = 0; i < d.length; i += 4, j++) {
+    cur[j] = d[i] * 0.299 + d[i + 1] * 0.587 + d[i + 2] * 0.114;
+  }
+  let level = Infinity;
+  if (prevMotion) {
+    let sum = 0;
+    for (let j = 0; j < cur.length; j++) sum += Math.abs(cur[j] - prevMotion[j]);
+    level = sum / cur.length;
+  }
+  prevMotion = cur;
+  return level;
+}
+
+// Körs var MOTION_TICK ms. OCR startar först när kameran varit stilla en stund och ingen skanning pågår.
+function motionTick() {
+  const video = dialog?.querySelector("video");
+  if (!dialog?.open || !video?.videoWidth || busy || Date.now() < pauseUntil) return;
+
+  // Ingen träff efter en stund: lyft fram "Skanna nu"
+  if (Date.now() - openedAt > NUDGE_AFTER) dialog.querySelector(".scan-now")?.classList.add("nudge");
+
+  const level = motionLevel(video);
+  stillTicks = level < MOTION_LIMIT ? stillTicks + 1 : 0;
+
+  if (stillTicks < STILL_TICKS) {
+    frameEl()?.classList.add("is-moving");
+    status("Håll kortet i ramen…");
+    return;
+  }
+  frameEl()?.classList.remove("is-moving");
+  if (Date.now() - lastScanAt >= SCAN_INTERVAL) runScan(false);
+}
+
+// Startar en skanning av aktuell bild. Auto-skanning varvar normal och inverterad bild.
+async function runScan(manual) {
+  if (busy) {
+    if (manual) {
+      pendingForce = true;
+      status("Läser av… tar en ny bild direkt efter.");
+    }
+    return;
+  }
+  const cv = grabUnwarpedFrame();
+  if (!cv) {
+    if (manual) status("Kameran är inte igång. Välj ett foto av kortet i stället.");
+    return;
+  }
+  lastScanAt = Date.now();
+  const invert = scanCount++ % 2 === 1;
+  await attempt(cv, { manual, invert });
+  if (pendingForce && dialog?.open) {
+    pendingForce = false;
+    runScan(true);
+  }
+}
+
 let last = null;
-async function attempt(canvas, fromFile = false) {
+async function attempt(canvas, { fromFile = false, manual = false, invert = false } = {}) {
   if (busy) return;
   busy = true;
+  frameEl()?.classList.add("is-reading");
+  frameEl()?.classList.remove("is-moving");
+  if (!fromFile) status("Läser av…");
   try {
-    const r = await readCard(canvas);
+    const r = await readCard(canvas, { invert, full: manual || fromFile });
     if (!dialog.open) return;
     const seen = [r.name, r.number && `${r.number}/${r.total}`].filter(Boolean).join(" · ");
     const sure = r.name && (r.number || fromFile || last === r.name);
@@ -694,12 +852,21 @@ async function attempt(canvas, fromFile = false) {
       stop();
       dialog.close();
       onFound?.({ ...r, canvas });
+    } else if ((manual || fromFile) && (r.name || r.number) && onPartial) {
+      // Halv läsning: stäng och fyll i det som gick att läsa, så användaren slipper skriva från noll
+      stop();
+      dialog.close();
+      onPartial({ name: r.name, number: r.number, total: r.total });
     } else {
+      // Manuell skanning eller foto utan träff: pausa auto-skanningen så att meddelandet hinner läsas
+      if (manual || fromFile) pauseUntil = Date.now() + PAUSE_AFTER_MISS;
       status(
         seen
           ? `Läser… <b>${esc(seen)}</b>`
           : fromFile
           ? "Hittade inget kortnamn i bilden. Prova ett skarpare foto rakt framifrån."
+          : manual
+          ? "Hittade inget. Flytta kortet närmare och försök igen."
           : "Letar efter kortets namn och nummer…"
       );
     }
@@ -707,6 +874,7 @@ async function attempt(canvas, fromFile = false) {
     status(esc(err.message || "Något gick fel. Försök igen."));
   } finally {
     busy = false;
+    frameEl()?.classList.remove("is-reading");
   }
 }
 
@@ -717,15 +885,60 @@ function stop() {
   animFrame = null;
   smoothedCorners = null;
   torchActive = false;
+  dialog?.querySelector(".scan-torch")?.classList.remove("active");
+  pendingForce = false;
   stream?.getTracks().forEach((t) => t.stop());
   stream = null;
 }
 
-export async function openScanner(callback) {
+// Fokus, ficklampa och zoom ställs in direkt när strömmen startar. Det som inte stöds hoppas över.
+async function tuneCamera(track, caps, d) {
+  if (!track) return;
+
+  if (caps.focusMode?.includes("continuous")) {
+    await track.applyConstraints({ advanced: [{ focusMode: "continuous" }] }).catch(() => {});
+  }
+
+  torchSupported = !!caps.torch;
+  const torchBtn = d.querySelector(".scan-torch");
+  if (torchBtn) torchBtn.hidden = !torchSupported;
+
+  // Standardzoom 1,5× så att kortet fyller ramen på ca 20 cm avstånd, utan att närgränsen tar över
+  if (caps.zoom) {
+    const lo = Math.max(1, caps.zoom.min ?? 1);
+    const hi = Math.min(ZOOM_MAX, caps.zoom.max ?? ZOOM_MAX);
+    if (hi > lo) {
+      const zoomLabel = d.querySelector(".scan-zoom");
+      const input = zoomLabel.querySelector("input");
+      const start = Math.min(hi, Math.max(lo, ZOOM_DEFAULT));
+      input.min = lo;
+      input.max = hi;
+      input.value = start;
+      zoomLabel.querySelector("output").textContent = `${start.toFixed(1)}×`;
+      zoomLabel.hidden = false;
+      await track.applyConstraints({ advanced: [{ zoom: start }] }).catch(() => {});
+    }
+  }
+}
+
+// callback får ett komplett kort (namn + nummer + bild). partialCallback får en delläsning
+// (bara namn eller bara nummer) när användaren tryckt "Skanna nu" eller valt ett foto.
+export async function openScanner(callback, partialCallback) {
   onFound = callback;
+  onPartial = partialCallback || null;
   last = null;
   smoothedCorners = null;
+  prevMotion = null;
+  stillTicks = 0;
+  scanCount = 0;
+  pendingForce = false;
+  pauseUntil = 0;
+  openedAt = Date.now();
   const d = ui();
+  // Återställ allt från förra gången, t.ex. om kameran inte gick att starta då
+  d.querySelector(".scan-view").classList.remove("nocam");
+  d.querySelector(".scan-frame i").classList.remove("is-moving", "is-reading");
+  d.querySelector(".scan-now").classList.remove("nudge");
   d.showModal();
   status("Startar kameran…");
   d.querySelector(".scan-hud-status")?.classList.remove("success");
@@ -745,19 +958,13 @@ export async function openScanner(callback) {
     video.srcObject = stream;
     await video.play();
 
-    // Kontrollera om kameran har inbyggd lampa
     const track = stream.getVideoTracks()[0];
     const caps = track?.getCapabilities ? track.getCapabilities() : {};
-    torchSupported = !!caps.torch;
-    const torchBtn = d.querySelector(".scan-torch");
-    if (torchBtn) torchBtn.hidden = !torchSupported;
+    await tuneCamera(track, caps, d);
 
     status("Håll kortet i ramen…");
     startHudLoop();
-    timer = setInterval(() => {
-      const cv = grabUnwarpedFrame();
-      if (cv) attempt(cv);
-    }, SCAN_INTERVAL);
+    timer = setInterval(motionTick, MOTION_TICK);
   } catch {
     d.querySelector(".scan-view").classList.add("nocam");
     status("Kameran går inte att använda här. Välj ett foto av kortet i stället.");

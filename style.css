@@ -387,6 +387,10 @@ input[type=search]{width:100%;max-width:360px}
 .cal-nav{width:46px;height:46px;border:2px solid var(--ink);border-radius:8px;background:var(--card);font-size:1rem;cursor:pointer;box-shadow:3px 3px 0 var(--ink)}
 .cal-nav:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}
 .cal-head .btn{margin-left:auto}
+.cal-head .btn + .btn{margin-left:0}
+.cal-nav:disabled,.tl-nav .btn:disabled,.cal-head .btn:disabled{opacity:.35;cursor:default;transform:none;box-shadow:none}
+.day.jumped{animation:dayJump .5s ease-in-out 3}
+@keyframes dayJump{50%{box-shadow:inset 0 0 0 3px var(--gold)}}
 .cal-legend{display:flex;gap:18px;list-style:none;padding:0;margin:14px 0 12px;font-size:.85rem;color:var(--muted)}
 .cal-legend li{display:flex;align-items:center;gap:6px}
 .lg-drop,.lg-set{display:inline-block;width:10px;height:10px;box-shadow:0 0 0 2px var(--ink);flex:none}
@@ -621,6 +625,34 @@ input[type=search],select,.shop-search{background:#fff}
 
 /* Nästa släpp */
 #next-release:empty{display:none}
+/* Tidslinjen: aktuellt släpp och de två närmaste kommande, ett steg per datum. */
+.tl{list-style:none;margin:24px 0 8px;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;position:relative}
+.tl::before{content:"";position:absolute;left:0;right:0;top:7px;height:4px;background:repeating-linear-gradient(90deg,var(--ink) 0 10px,transparent 10px 16px);opacity:.35}
+.tl-step{position:relative;display:flex;flex-direction:column;gap:14px;min-width:0}
+.tl-dot{position:relative;z-index:1;width:18px;height:18px;margin-left:12px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 3px var(--ink)}
+.tl-step.current .tl-dot{background:var(--mint)}
+.tl-step.empty .tl-dot{background:var(--card);box-shadow:0 0 0 2px var(--line)}
+.tl-card{flex:1;display:flex;flex-direction:column;gap:14px;background:var(--card);border:2px solid var(--ink);border-radius:14px;padding:16px 18px;box-shadow:4px 4px 0 var(--ink);min-width:0}
+.tl-step.current .tl-card{border-color:var(--mint)}
+.tl-step.past .tl-dot{background:var(--surface);box-shadow:0 0 0 3px var(--line)}
+.tl-step.past .tl-card{border-color:var(--line);box-shadow:none;opacity:.8}
+.tl-nav{display:flex;align-items:center;gap:8px}
+.tl-nav .cal-nav{width:40px;height:40px}
+.tl-nav .btn{margin:0}
+.tl-step.empty .tl-card{border-style:dashed;border-color:var(--line);box-shadow:none}
+.tl-head{display:flex;align-items:center;gap:14px}
+.tl-head .kicker{display:block;font-size:.78rem}
+.tl-head h3{margin:2px 0 0;font:600 1.15rem/1.25 var(--sans)}
+.tl-rel{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.tl-rel li{display:grid;gap:8px;justify-items:start;background:var(--surface);border-radius:10px;padding:10px 12px}
+.tl-rel b{display:block;font:700 .98rem/1.25 var(--cond);text-transform:uppercase}
+.tl-rel span{font-size:.82rem;color:var(--muted);line-height:1.35}
+.tl-rel .pill{justify-self:start}
+.tl-rel .btn{margin:0}
+@media (max-width:760px){
+  .tl{grid-template-columns:1fr;gap:14px}
+  .tl::before,.tl-dot{display:none}
+}
 .next-rel{display:flex;align-items:center;gap:22px;margin-top:28px;background:var(--card);border:2px solid var(--ink);border-radius:14px;padding:20px 24px;box-shadow:4px 4px 0 var(--ink)}
 .next-main{flex:1;min-width:0;display:grid;gap:4px}
 .next-main h3{margin:0;font:700 2rem/1.05 var(--cond);text-transform:uppercase}
@@ -2558,9 +2590,20 @@ input[type=search]::-webkit-search-results-decoration {
 .scan-hud{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:2}
 .scan-frame{position:absolute;inset:0;display:grid;place-items:center;pointer-events:none;z-index:1}
 /* Ramen har ett riktigt korts proportioner (63 × 88 mm), resten av bilden mörkas ner. */
-.scan-frame i{height:82%;aspect-ratio:63/88;border:2px solid rgba(240,185,11,.6);border-radius:12px;box-shadow:0 0 0 999px rgba(10,12,22,.55);transition:border-color .2s ease,box-shadow .2s ease}
+.scan-frame i{position:relative;height:82%;aspect-ratio:63/88;border:2px solid rgba(240,185,11,.6);border-radius:12px;box-shadow:0 0 0 999px rgba(10,12,22,.55);transition:border-color .2s ease,box-shadow .2s ease}
 .scan-view.nocam .scan-frame i{box-shadow:none;border-style:dashed;opacity:.5}
+/* Ramens färg visar läget: gul = håll kortet i ramen, vit = kameran rör sig, grön pulserande = läser av. */
+.scan-frame i.is-moving{border-color:rgba(255,255,255,.9)}
+.scan-frame i.is-reading{border-color:#10b981;animation:scanReading 1s ease-in-out infinite}
+@keyframes scanReading{0%,100%{box-shadow:0 0 0 999px rgba(10,12,22,.55),0 0 0 0 rgba(16,185,129,.7)}50%{box-shadow:0 0 0 999px rgba(10,12,22,.55),0 0 0 9px rgba(16,185,129,0)}}
+/* Läszonerna för namn och nummer, de två diskreta markeringsrutorna i ramen. */
+.scan-zone{position:absolute;border:1.5px dashed rgba(255,255,255,.85);border-radius:6px;pointer-events:none}
+.scan-zone::before{content:attr(data-label);position:absolute;left:4px;top:-1.4em;font-size:.68rem;font-weight:600;color:#fff;text-shadow:0 1px 3px #000;white-space:nowrap}
 .scan-torch{position:absolute;top:12px;right:12px;z-index:10;width:38px;height:38px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:rgba(15,18,30,.7);backdrop-filter:blur(8px);color:#fff;display:grid;place-items:center;cursor:pointer;transition:background .2s,border-color .2s,box-shadow .2s}
+.scan-torch[hidden],.scan-zoom[hidden]{display:none}
+.scan-zoom{position:absolute;left:14px;right:14px;bottom:44px;z-index:10;display:flex;align-items:center;gap:10px;color:#fff;font-size:.8rem;font-weight:600;text-shadow:0 1px 4px rgba(0,0,0,.9)}
+.scan-zoom input{flex:1;accent-color:var(--gold)}
+.scan-zoom output{min-width:3em;text-align:right}
 .scan-torch:hover{background:rgba(25,30,50,.9);border-color:rgba(255,255,255,.4)}
 .scan-torch.active{background:var(--gold);border-color:var(--gold);color:#111;box-shadow:0 0 16px rgba(240,185,11,.7)}
 .scan-beam{position:absolute;left:10%;right:10%;height:2px;background:linear-gradient(90deg,transparent,rgba(240,185,11,.9),#fff,rgba(240,185,11,.9),transparent);box-shadow:0 0 12px rgba(240,185,11,.8);z-index:3;pointer-events:none;animation:scanMove 2.4s ease-in-out infinite}
@@ -2572,8 +2615,11 @@ input[type=search]::-webkit-search-results-decoration {
 .scan-hud-status.success .scan-status-dot{background:#10b981;box-shadow:0 0 10px #10b981;animation:none}
 @keyframes dotPulse{0%,100%{opacity:.4;transform:scale(.85)}50%{opacity:1;transform:scale(1.15)}}
 .scan-status{margin:0;min-height:2.4em;font-size:.9rem;line-height:1.35;flex:1}
-.scan-actions{display:flex;gap:8px;justify-content:flex-end;padding:8px 14px 14px}
+.scan-actions{display:flex;flex-wrap:wrap;gap:8px;justify-content:flex-end;padding:8px 14px 14px}
 .scan-actions label{cursor:pointer}
+/* "Skanna nu" lyfts fram när auto-skanningen inte fått träff efter ett par sekunder. */
+.scan-now.nudge{animation:scanNudge 1.2s ease-in-out infinite}
+@keyframes scanNudge{50%{outline:3px solid var(--gold);outline-offset:3px}}
 .val-psa-scale { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
 .val-psa-scale li { display: grid; grid-template-columns: 34px 92px 1fr; align-items: center; gap: 8px; padding: 5px 8px; border-radius: 8px; background: var(--surface); font-size: 0.82rem; }
 .val-psa-scale .val-psa { text-align: center; }

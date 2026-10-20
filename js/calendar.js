@@ -60,6 +60,19 @@ export function mountCalendar(events, onDay) {
   $("#prev").addEventListener("click", () => step(-1));
   $("#next").addEventListener("click", () => step(1));
   $("#today").addEventListener("click", () => { view = { y: now.getFullYear(), m: now.getMonth() }; render(); });
+  // Hoppar till månaden med det första släppet från och med i dag, så att kommande släpp går att hitta.
+  // Dagen blinkar till, så att det syns var släppet ligger även när det redan är rätt månad.
+  const nextKey = [...events.keys()].filter((k) => k >= todayKey).sort()[0];
+  $("#jump").disabled = !nextKey;
+  $("#jump").addEventListener("click", () => {
+    if (!nextKey) return;
+    view = { y: +nextKey.slice(0, 4), m: +nextKey.slice(5, 7) - 1 };
+    render();
+    const cell = $(`#days [data-day="${nextKey}"]`);
+    cell?.classList.add("jumped");
+    cell?.scrollIntoView({ block: "nearest", behavior: "smooth" });
+    setTimeout(() => cell?.classList.remove("jumped"), 1600);
+  });
   document.addEventListener("keydown", (e) => {
     if (e.target.closest("input,select,textarea,dialog")) return;
     if (e.key === "ArrowLeft") step(-1);

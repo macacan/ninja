@@ -1,7 +1,7 @@
-// Släppsidan, uppifrån och ner: nästa släpp, aktuella släpp, annonserade släpp, kalender och alla set.
+// Släppsidan, uppifrån och ner: tidslinje, alla släpp, annonserade släpp, kalender och alla set.
 // Allt om ett enskilt släpp (produkter, butiker, omgångar) öppnas i en dialog.
 import { $, esc, loading, skeleton, fillRows, latestSets, setCard, setLogo } from "./site.js";
-import { releaseData, nextWave, isOver, nextHTML, releaseCard, detailHTML, fillDetail, bindDetail, pill, LANG } from "./releases.js";
+import { releaseData, nextWave, isOver, timelineHTML, releaseCard, detailHTML, fillDetail, bindDetail, pill, LANG } from "./releases.js";
 import { mountCalendar, MONTHS } from "./calendar.js";
 import { bindSetCards } from "./setcards.js";
 
@@ -48,7 +48,25 @@ const recent = ctx.releases.filter((r) => isOver(r) && (today - day(r.waves.at(-
   .sort((a, b) => b.waves.at(-1).date.localeCompare(a.waves.at(-1).date));
 const announced = ctx.releases.filter((r) => !r.waves.length);
 
-$("#next-release").innerHTML = upcoming.length ? nextHTML(upcoming[0], ctx) : "";
+// Tidslinjen: ◀ ▶ bläddrar ett släpp i taget, "Nu" går tillbaka till aktuellt släpp.
+let tlShift = 0;
+function renderTimeline(focus = null) {
+  const { nav, list } = timelineHTML(ctx.releases, ctx, tlShift);
+  $("#tl-nav").innerHTML = nav;
+  $("#next-release").innerHTML = list;
+  // Behåll fokus på knappen som trycktes, eller närmaste som fortfarande går att trycka på.
+  if (focus) {
+    const btns = [...$("#tl-nav").querySelectorAll("button")];
+    (btns.find((b) => b.dataset.tl === focus && !b.disabled) || btns.find((b) => !b.disabled))?.focus();
+  }
+}
+$("#tl-nav").addEventListener("click", (e) => {
+  const b = e.target.closest("[data-tl]");
+  if (!b || b.disabled) return;
+  tlShift = b.dataset.tl === "now" ? 0 : tlShift + +b.dataset.tl;
+  renderTimeline(b.dataset.tl);
+});
+renderTimeline();
 $("#releases").innerHTML = [...upcoming, ...recent].map((r) => releaseCard(r, ctx)).join("")
   || '<div class="msg">Inga släpp inlagda just nu.</div>';
 $("#announced").innerHTML = announced.length ? `<div class="section"><h2>Annonserat, datum inte klart</h2></div>
