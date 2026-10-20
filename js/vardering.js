@@ -1,6 +1,6 @@
 // Gratis kortvärdering: sök kort, välj skick, gör en egen pre-grading och se om gradering lönar sig.
 // Utgångspriset är Cardmarkets trendpris (via TCGdex). Skick och betyg är tumregler, se "Så räknar vi" på sidan.
-import { API, $, esc, kr, getJSON, skeleton, loading, cardImg } from "./site.js";
+import { API, $, esc, kr, getJSON, getList, skeleton, loading, cardImg } from "./site.js";
 import { parseCardQuery, resolvePokemonName, loadDataset, filterByNumber, apiNumber } from "./card-autocomplete.js";
 import { recordCard, mountRecent } from "./recent.js";
 import { mountCardAutocomplete } from "./card-autocomplete.js";
@@ -210,16 +210,17 @@ async function findCards(raw) {
   const parsed = parseCardQuery(raw);
   const data = await loadDataset().catch(() => null);
   const name = parsed.textPart ? (resolvePokemonName(parsed.textPart, data) || parsed.textPart) : "";
-  const num = parsed.numPart;
+  let num = parsed.numPart;
   let list = [];
   if (name && num) {
     // Exakt nummer: 4, 04 och 004 är samma kort, och "004/123" väljer i första hand set med 123 kort.
-    list = await filterByNumber(await getJSON(`${API}/cards?${new URLSearchParams({ name, localId: apiNumber(num) })}`).catch(() => []), num, parsed.setTotal);
-    if (!list.length) list = (await getJSON(`${API}/cards?${new URLSearchParams({ name })}`).catch(() => [])) || [];
+    list = await filterByNumber(await getList(`${API}/cards?${new URLSearchParams({ name, localId: apiNumber(num) })}`), num, parsed.setTotal);
+    // Inget kort med det numret: visa alla kort med namnet, och låt rubriken säga det.
+    if (!list.length) { list = await getList(`${API}/cards?${new URLSearchParams({ name })}`); num = null; }
   } else if (num) {
-    list = await filterByNumber(await getJSON(`${API}/cards?${new URLSearchParams({ localId: apiNumber(num) })}`).catch(() => []), num, parsed.setTotal);
+    list = await filterByNumber(await getList(`${API}/cards?${new URLSearchParams({ localId: apiNumber(num) })}`), num, parsed.setTotal);
   } else if (name) {
-    list = await getJSON(`${API}/cards?${new URLSearchParams({ name })}`);
+    list = await getList(`${API}/cards?${new URLSearchParams({ name })}`);
   }
   return { list: [...(list || [])].sort((a, b) => !!b.image - !!a.image), title: [name, num && `#${num}`].filter(Boolean).join(" ") };
 }

@@ -167,6 +167,10 @@ export async function getJSON(url, ttl = TTL) {
   return d;
 }
 
+// Kortlistor: 404 betyder inga träffar, men andra fel (t.ex. att TCGdex är nere) ska nå anroparen
+// så att sidan kan säga det i stället för "hittade inga kort".
+export const getList = (url) => getJSON(url).catch((e) => (e.message === "404" ? [] : Promise.reject(e)));
+
 // Kortbilder som TCGdex saknar (t.ex. 30th Classic Collection), se data/card-images.json.
 let extraCardImgs = {};
 export const extraCardImgsReady = fetch("data/card-images.json").then((r) => r.json()).then((d) => (extraCardImgs = d)).catch(() => {});

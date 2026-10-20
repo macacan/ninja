@@ -149,7 +149,11 @@ export async function lookupCardMatch(namePart, numPart, trends, setTotal = null
   }
 
   // 2. Anropa TCGdex API och filtrera fram exakt nummer
-  const get = (p) => fetch(`${API}/cards?${new URLSearchParams(p)}`).then((r) => (r.ok ? r.json() : [])).catch(() => []);
+  // Nätverksfel och serverfel cachas inte som "inga träffar", så att nästa sökning försöker igen.
+  let failed = false;
+  const get = (p) => fetch(`${API}/cards?${new URLSearchParams(p)}`)
+    .then((r) => (r.ok ? r.json() : (r.status !== 404 && (failed = true), [])))
+    .catch(() => ((failed = true), []));
   const SUFFIX = /\s+(?:ex|gx|v|vmax|vstar|mega|radiant|gold|star|prime)$/i;
   try {
     let list = [];
@@ -169,9 +173,9 @@ export async function lookupCardMatch(namePart, numPart, trends, setTotal = null
       cardMatchCache.set(cacheKey, list);
       return list;
     }
-  } catch {}
+  } catch { failed = true; }
 
-  cardMatchCache.set(cacheKey, []);
+  if (!failed) cardMatchCache.set(cacheKey, []);
   return [];
 }
 

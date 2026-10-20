@@ -44,8 +44,10 @@ let groups = new Map(), priceHist = {}, releaseDates = new Map();
 const pressed = (id) => $(id).getAttribute("aria-pressed") === "true";
 
 // Produkter som klarar alla filter. Tillgänglighet styrs av snabbfiltren: inget valt betyder allt, även slut.
+// Sökningen bryr sig inte om accenter, så att "pokemon" hittar "Pokémon".
+const fold = (s) => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
 function filtered() {
-  const q = $("#f-q").value.trim().toLowerCase();
+  const q = fold($("#f-q").value.trim());
   const v = (id) => $(id).value;
   const [lo, hi] = PRICE[v("#f-price")];
   const inS = pressed("#c-in"), pre = pressed("#c-pre"), watchOnly = pressed("#c-watch");
@@ -56,7 +58,7 @@ function filtered() {
     && p.price >= lo && p.price < hi
     && ((!inS && !pre) || (inS && p.available) || (pre && p.preorder && !p.available))
     && (!watchOnly || watch.has(groupKey(p)))
-    && words.every((w) => `${p.title} ${p.set || ""}`.toLowerCase().includes(w)));
+    && words.every((w) => fold(`${p.title} ${p.set || ""}`).includes(w)));
 }
 
 // En produktgrupp som kort: lägsta pris, läget i butikerna och en utfällbar jämförelse.

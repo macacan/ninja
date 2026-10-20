@@ -1,4 +1,4 @@
-import { API, $, esc, kr, getJSON, skeleton, liveStamp, cardImg } from "./site.js";
+import { API, $, esc, kr, getJSON, getList, skeleton, liveStamp, cardImg } from "./site.js";
 import { mountChart } from "./pricechart.js";
 import { recordCard, mountRecent } from "./recent.js";
 import { mountCardAutocomplete, parseCardQuery, resolvePokemonName, loadDataset, sameNumber, filterByNumber, apiNumber } from "./card-autocomplete.js";
@@ -80,10 +80,12 @@ async function landing() {
 // ---------- Sök ----------
 const RANGE = { "": [0, Infinity], "0-50": [0, 50], "50-250": [50, 250], "250-1000": [250, 1000], "1000-": [1000, Infinity] };
 const PAGE = 24;
-let found = [], loaded = [], searchId = 0;
+let found = [], loaded = [], next = 0, searchId = 0;
 
-async function loadDetails(from, to) {
-  const ids = found.slice(from, to);
+// Hämtar nästa sida av found. next räknas för sig, eftersom kort som inte går att hämta faller bort ur loaded.
+async function loadDetails() {
+  const ids = found.slice(next, next + PAGE);
+  next += ids.length;
   const cards = await Promise.all(ids.map((c) => getJSON(`${API}/cards/${encodeURIComponent(c.id)}`).catch(() => null)));
   return cards.filter(Boolean).map(slim);
 }
@@ -103,8 +105,8 @@ function applyView() {
   list = list.sort(cmp);
   current = list;
   renderGrid($("#prices"), list);
-  $("#res-count").textContent = `${list.length} av ${found.length} kort${loaded.length < found.length ? " (fler finns)" : ""}`;
-  $("#more").hidden = loaded.length >= found.length;
+  $("#res-count").textContent = `${list.length} av ${found.length} kort${next < found.length ? " (fler finns)" : ""}`;
+  $("#more").hidden = next >= found.length;
 }
 
 async function search() {
@@ -159,31 +161,33 @@ async function search() {
         // 4, 04 och 004 räknas som samma nummer, och "004/123" väljer i första hand set med 123 kort.
         const p = new URLSearchParams({ name: resolvedName, localId: apiNumber(parsed.numPart) });
         if (rarity) p.set("rarity", `eq:${rarity}`);
-        list = await filterByNumber(await getJSON(`${API}/cards?${p}`).catch(() => []), parsed.numPart, parsed.setTotal);
+        list = await filterByNumber(await getList(`${API}/cards?${p}`), parsed.numPart, parsed.setTotal);
         if (!list.length) {
           // Numret matchade inget kort med namnet (t.ex. "pikachu 151" där 151 är setet): visa alla kort för namnet.
           const p2 = new URLSearchParams({ name: resolvedName });
           if (rarity) p2.set("rarity", `eq:${rarity}`);
-          list = await getJSON(`${API}/cards?${p2}`).catch(() => []);
+          list = await getList(`${API}/cards?${p2}`);
+          if (my === searchId) $("#res-title").textContent = `Inget ${resolvedName} #${parsed.numPart}, visar alla kort som heter "${resolvedName}"`;
         }
       } else if (parsed.numPart && !resolvedName) {
         // Enbart kortnummer (t.ex. "4", "004" eller "004/102")
         const p = new URLSearchParams({ localId: apiNumber(parsed.numPart) });
         if (rarity) p.set("rarity", `eq:${rarity}`);
-        list = await filterByNumber(await getJSON(`${API}/cards?${p}`).catch(() => []), parsed.numPart, parsed.setTotal);
+        list = await filterByNumber(await getList(`${API}/cards?${p}`), parsed.numPart, parsed.setTotal);
       } else {
         // Vanlig namnsökning
         const p = new URLSearchParams();
         if (resolvedName) p.set("name", resolvedName);
         if (rarity) p.set("rarity", `eq:${rarity}`);
-        list = await getJSON(`${API}/cards?${p}`);
+        list = await getList(`${API}/cards?${p}`);
       }
     }
     if (my !== searchId) return;
     // Kort med bild först, så att listan inte fylls av bildlösa promokort.
     found = [...list].sort((a, b) => !!b.image - !!a.image);
+    next = 0;
     await getRates();
-    loaded = await loadDetails(0, PAGE);
+    loaded = await loadDetails();
     if (my === searchId) applyView();
   } catch {
     $("#prices").innerHTML = '<div class="msg">Kunde inte nå TCGdex just nu. Försök igen om en stund.</div>';
@@ -192,7 +196,7 @@ async function search() {
 
 $("#more").addEventListener("click", async () => {
   $("#more").disabled = true;
-  loaded = loaded.concat(await loadDetails(loaded.length, loaded.length + PAGE));
+  loaded = loaded.concat(await loadDetails());
   $("#more").disabled = false;
   applyView();
 });
