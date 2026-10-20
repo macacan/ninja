@@ -1,6 +1,19 @@
 {
- "updated": 1792455485521,
+ "updated": 1792459085749,
  "events": [
+  {
+   "at": 1792458576748,
+   "store": "jollyroom",
+   "product": "jollyroom:https://www.jollyroom.se/leksaker/spel-pussel/kortspel-memory/pokemon-tcg-30th-celebration-elite-trainer-box",
+   "group": "30th-celebration|elite-trainer-box|en|",
+   "title": "Pokémon TCG: 30th Celebration Elite Trainer Box",
+   "url": "https://www.jollyroom.se/leksaker/spel-pussel/kortspel-memory/pokemon-tcg-30th-celebration-elite-trainer-box",
+   "price": 2299,
+   "type": "Elite Trainer Box",
+   "set": "30th Celebration",
+   "lang": "en",
+   "kind": "ny"
+  },
   {
    "at": 1792442211805,
    "store": "the-swedish-fish",
