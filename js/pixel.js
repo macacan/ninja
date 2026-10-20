@@ -551,6 +551,8 @@ const ICONS = {
   info: ["..kkkkkk..", ".kbbbbbbk.", "kbbbwwbbbk", "kbbbbbbbbk", "kbbbwwbbbk", "kbbbwwbbbk", "kbbbwwbbbk", "kbbbwwbbbk", ".kbbbbbbk.", "..kkkkkk.."],
   search: ["..kkkk....", ".kwwwwk...", "kwbwwwwk..", "kwwwwwwk..", "kwwwwwwk..", ".kwwwwk...", "..kkkkkk..", "......kkk.", ".......kkk", "........kk"],
   camera: ["..........", "..kkk.....", ".kkkkkkkk.", "knnnkkknnk", "knnkbbkrnk", "knkbwbbknk", "knkbbbbknk", "knnkbbknnk", "knnnkknnnk", ".kkkkkkkk."],
+  bell: ["....kk....", "...kyyk...", "..kyywyk..", "..kyywyk..", "..kyyyyk..", ".kyyyyyyk.", "kyyyyyyyyk", "kkkkkkkkkk", "....kk....", ".........."],
+  phone: ["..kkkkkk..", "..kwwwwk..", "..kbbbbk..", "..kbwbbk..", "..kbbbbk..", "..kbbbbk..", "..kbbbbk..", "..kwwwwk..", "..kwkkwk..", "..kkkkkk.."],
   shop: ["..kkkkkk..", ".k......k.", "kkkkkkkkkk", "krwrwrwrwk", "kkkkkkkkkk", ".kwwwwwwk.", ".kwkkwwwk.", ".kwkkwbwk.", ".kwkkwwwk.", ".kkkkkkkk."],
 };
 
