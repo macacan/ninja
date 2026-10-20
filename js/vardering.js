@@ -6,6 +6,7 @@ import { recordCard, mountRecent } from "./recent.js";
 import { mountCardAutocomplete } from "./card-autocomplete.js";
 import { CONDITIONS, DEFAULT_COND, gradeMult, isVintage } from "./valuation.js";
 import { openScanner, narrowByTotal, rankByLook } from "./card-scanner.js";
+import { showReveal } from "./card-reveal.js";
 
 // Fyra kriterier, som graderingsbolagen: centrering, hörn, kanter och yta. Smuts ingår i ytan.
 // Varje kriterium har fem svar, och varje svar har ett delbetyg.
@@ -259,11 +260,12 @@ async function search(raw, total = null, photo = null) {
     // Skannat kort: filtrera på setets storlek och sortera efter hur lika bilderna är fotot.
     const { list, sure } = photo ? await rankByLook(photo, await narrowByTotal(all, total)) : { list: all, sure: false };
     if (my !== searchId) return;
-    // Är träffen tydlig eller finns bara ett enda matchande kort öppnas kortet direkt.
+    // Säker träff från kameran visas som ett förhandsvisat kort med värde. Annars öppnas ett enda kort direkt.
     found = list; shown = PAGE;
     $("#vr-title").textContent = title ? `Välj ditt kort: ${title}` : "Välj ditt kort";
     renderResults();
-    if (sure || (list.length === 1 && !photo)) pick(list[0].id);
+    if (sure) reveal(list[0].id);
+    else if (list.length === 1 && !photo) pick(list[0].id);
   } catch {
     if (my === searchId) $("#vr-grid").innerHTML = '<div class="msg">Kunde inte nå TCGdex just nu. Försök igen om en stund.</div>';
   }
@@ -474,6 +476,14 @@ async function pick(id) {
   } catch {
     box.innerHTML = '<div class="msg">Kortet kunde inte laddas just nu. Försök igen om en stund.</div>';
   }
+}
+
+// Säker träff från kameran: visar kortet med marknadsvärdet. Gradera öppnar värderingen med pre-gradingen.
+async function reveal(id) {
+  const [card, rate] = await Promise.all([getJSON(`${API}/cards/${encodeURIComponent(id)}`).catch(() => null), getRate()]);
+  if (!card) return pick(id);
+  const e = baseEur(card);
+  showReveal({ card, sek: e != null && rate ? e * rate : null, onGrade: () => pick(card.id) });
 }
 
 // ---------- Kortet i stort format, i nuvarande skick ----------

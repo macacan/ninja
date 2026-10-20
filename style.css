@@ -2582,44 +2582,91 @@ input[type=search]::-webkit-search-results-decoration {
 
 /* ---------- Kortskanner ---------- */
 .val-hero-search .scan-btn{display:inline-flex;align-items:center;gap:6px;background:var(--surface);padding:12px 14px}
-.scan{width:calc(100vw - 24px);max-width:440px;max-height:calc(100dvh - 24px);overflow:auto;padding:0;border:2px solid var(--border);border-radius:18px;background:var(--card);color:var(--ink);box-shadow:0 24px 60px rgba(0,0,0,.6)}
-.scan::backdrop{background:rgba(10,12,22,.82);backdrop-filter:blur(6px)}
-.scan-view{position:relative;aspect-ratio:3/4;background:#0d0f17;overflow:hidden}
+/* Mörk "AI-kamera": glasknappar, cyan–violett accent och hörnvinklar i stället för en hel ram. */
+.scan{--ai1:#22d3ee;--ai2:#a855f7;--ai-grad:linear-gradient(135deg,var(--ai1),#6366f1 55%,var(--ai2));width:calc(100vw - 24px);max-width:440px;max-height:calc(100dvh - 24px);overflow:auto;padding:0;border:1px solid rgba(255,255,255,.08);border-radius:26px;background:#07080f;color:#e8eaf6;box-shadow:0 30px 80px rgba(0,0,0,.7),0 0 0 1px rgba(168,85,247,.12),0 0 60px rgba(99,102,241,.18)}
+.scan::backdrop{background:rgba(4,5,12,.86);backdrop-filter:blur(10px)}
+.scan-view{position:relative;aspect-ratio:3/4;background:radial-gradient(120% 90% at 50% 40%,#141633,#05060c);overflow:hidden;border-radius:25px 25px 0 0}
 .scan-view video{width:100%;height:100%;object-fit:cover;display:block}
 .scan-view.nocam video{display:none}
 .scan-hud{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:2}
 .scan-frame{position:absolute;inset:0;display:grid;place-items:center;pointer-events:none;z-index:1}
-/* Ramen har ett riktigt korts proportioner (63 × 88 mm), resten av bilden mörkas ner. */
-.scan-frame i{position:relative;height:82%;aspect-ratio:63/88;border:2px solid rgba(240,185,11,.6);border-radius:12px;box-shadow:0 0 0 999px rgba(10,12,22,.55);transition:border-color .2s ease,box-shadow .2s ease}
-.scan-view.nocam .scan-frame i{box-shadow:none;border-style:dashed;opacity:.5}
-/* Ramens färg visar läget: gul = håll kortet i ramen, vit = kameran rör sig, grön pulserande = läser av. */
-.scan-frame i.is-moving{border-color:rgba(255,255,255,.9)}
-.scan-frame i.is-reading{border-color:#10b981;animation:scanReading 1s ease-in-out infinite}
-@keyframes scanReading{0%,100%{box-shadow:0 0 0 999px rgba(10,12,22,.55),0 0 0 0 rgba(16,185,129,.7)}50%{box-shadow:0 0 0 999px rgba(10,12,22,.55),0 0 0 9px rgba(16,185,129,0)}}
-/* Läszonerna för namn och nummer, de två diskreta markeringsrutorna i ramen. */
-.scan-zone{position:absolute;border:1.5px dashed rgba(255,255,255,.85);border-radius:6px;pointer-events:none}
-.scan-zone::before{content:attr(data-label);position:absolute;left:4px;top:-1.4em;font-size:.68rem;font-weight:600;color:#fff;text-shadow:0 1px 3px #000;white-space:nowrap}
-.scan-torch{position:absolute;top:12px;right:12px;z-index:10;width:38px;height:38px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:rgba(15,18,30,.7);backdrop-filter:blur(8px);color:#fff;display:grid;place-items:center;cursor:pointer;transition:background .2s,border-color .2s,box-shadow .2s}
-.scan-torch[hidden],.scan-zoom[hidden]{display:none}
-.scan-zoom{position:absolute;left:14px;right:14px;bottom:44px;z-index:10;display:flex;align-items:center;gap:10px;color:#fff;font-size:.8rem;font-weight:600;text-shadow:0 1px 4px rgba(0,0,0,.9)}
-.scan-zoom input{flex:1;accent-color:var(--gold)}
-.scan-zoom output{min-width:3em;text-align:right}
-.scan-torch:hover{background:rgba(25,30,50,.9);border-color:rgba(255,255,255,.4)}
-.scan-torch.active{background:var(--gold);border-color:var(--gold);color:#111;box-shadow:0 0 16px rgba(240,185,11,.7)}
-.scan-beam{position:absolute;left:10%;right:10%;height:2px;background:linear-gradient(90deg,transparent,rgba(240,185,11,.9),#fff,rgba(240,185,11,.9),transparent);box-shadow:0 0 12px rgba(240,185,11,.8);z-index:3;pointer-events:none;animation:scanMove 2.4s ease-in-out infinite}
-@keyframes scanMove{0%,100%{top:14%}50%{top:84%}}
-.scan-view.nocam .scan-beam{display:none}
-.scan-tip{position:absolute;left:0;right:0;bottom:10px;margin:0;padding:0 14px;text-align:center;color:rgba(255,255,255,.9);font-size:.82rem;font-weight:500;text-shadow:0 1px 4px rgba(0,0,0,.9);z-index:4}
-.scan-hud-status{display:flex;align-items:center;gap:10px;padding:12px 16px 4px}
-.scan-status-dot{width:10px;height:10px;border-radius:50%;background:var(--gold);box-shadow:0 0 8px var(--gold);animation:dotPulse 1.4s ease-in-out infinite;flex-shrink:0}
-.scan-hud-status.success .scan-status-dot{background:#10b981;box-shadow:0 0 10px #10b981;animation:none}
-@keyframes dotPulse{0%,100%{opacity:.4;transform:scale(.85)}50%{opacity:1;transform:scale(1.15)}}
-.scan-status{margin:0;min-height:2.4em;font-size:.9rem;line-height:1.35;flex:1}
-.scan-actions{display:flex;flex-wrap:wrap;gap:8px;justify-content:flex-end;padding:8px 14px 14px}
-.scan-actions label{cursor:pointer}
+/* Siktet har ett riktigt korts proportioner (63 × 88 mm). Fyra hörnvinklar ritas med gradienter och resten av bilden mörkas ner. */
+.scan-frame i{--c:rgba(255,255,255,.85);--l:28px;--w:3px;position:relative;height:80%;aspect-ratio:63/88;border-radius:16px;overflow:hidden;box-shadow:0 0 0 999px rgba(4,5,12,.6);
+  background:
+    linear-gradient(var(--c),var(--c)) top left/var(--l) var(--w),linear-gradient(var(--c),var(--c)) top left/var(--w) var(--l),
+    linear-gradient(var(--c),var(--c)) top right/var(--l) var(--w),linear-gradient(var(--c),var(--c)) top right/var(--w) var(--l),
+    linear-gradient(var(--c),var(--c)) bottom left/var(--l) var(--w),linear-gradient(var(--c),var(--c)) bottom left/var(--w) var(--l),
+    linear-gradient(var(--c),var(--c)) bottom right/var(--l) var(--w),linear-gradient(var(--c),var(--c)) bottom right/var(--w) var(--l),
+    radial-gradient(rgba(255,255,255,.07) 1px,transparent 1.5px) 0 0/14px 14px;
+  background-repeat:no-repeat,no-repeat,no-repeat,no-repeat,no-repeat,no-repeat,no-repeat,no-repeat,repeat;transition:box-shadow .3s ease}
+.scan-view.nocam .scan-frame i{box-shadow:none;opacity:.45}
+/* Läget: vitt = håll kortet i ramen, dämpat = kameran rör sig, cyan = läser av. */
+.scan-frame i.is-moving{--c:rgba(255,255,255,.35)}
+.scan-frame i.is-reading{--c:var(--ai1)}
+/* Glaspiller ovanpå kamerabilden */
+.scan-hud-status,.scan-torch{background:rgba(12,14,30,.55);backdrop-filter:blur(14px) saturate(1.4);-webkit-backdrop-filter:blur(14px) saturate(1.4);border:1px solid rgba(255,255,255,.12)}
+.scan-hud-status{position:absolute;top:12px;left:12px;right:62px;z-index:10;display:flex;align-items:center;gap:10px;padding:6px 12px 6px 6px;border-radius:999px;width:max-content;max-width:calc(100% - 74px)}
+.scan-status{margin:0;font-size:.82rem;line-height:1.3;color:#f1f3ff;flex:1}
+.scan-status b{background:var(--ai-grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.scan-torch{position:absolute;top:12px;right:12px;z-index:10;width:40px;height:40px;border-radius:50%;color:#fff;display:grid;place-items:center;cursor:pointer;transition:background .2s,box-shadow .2s}
+.scan-torch[hidden]{display:none}
+.scan-torch:hover{background:rgba(30,34,64,.75)}
+.scan-torch.active{background:var(--ai-grad);border-color:transparent;box-shadow:0 0 18px rgba(139,92,246,.8)}
+.scan-tip{position:absolute;left:0;right:0;bottom:12px;margin:0;padding:0 14px;text-align:center;color:rgba(232,234,246,.75);font-size:.78rem;text-shadow:0 1px 4px rgba(0,0,0,.9);z-index:4}
+.scan-actions{display:flex;gap:8px;align-items:center;padding:14px}
+.scan-actions>*{font:inherit;font-size:.85rem;font-weight:600;border-radius:999px;padding:11px 16px;cursor:pointer;text-align:center;transition:background .2s,transform .15s,box-shadow .2s}
+.scan-actions>*:active{transform:scale(.97)}
+.scan-ghost{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);color:#e8eaf6}
+.scan-ghost:hover{background:rgba(255,255,255,.12)}
+.scan-now{flex:1;border:0;color:#fff;background:var(--ai-grad);box-shadow:0 6px 22px rgba(99,102,241,.45)}
+.scan-now:hover{box-shadow:0 6px 28px rgba(168,85,247,.65)}
+.scan-actions>*:focus-visible{outline:2px solid var(--ai1);outline-offset:2px}
 /* "Skanna nu" lyfts fram när auto-skanningen inte fått träff efter ett par sekunder. */
-.scan-now.nudge{animation:scanNudge 1.2s ease-in-out infinite}
-@keyframes scanNudge{50%{outline:3px solid var(--gold);outline-offset:3px}}
+.scan-now.nudge{animation:scanNudge 1.4s ease-in-out infinite}
+@keyframes scanNudge{50%{box-shadow:0 0 0 4px rgba(34,211,238,.35),0 6px 30px rgba(168,85,247,.8)}}
+@media (prefers-reduced-motion:reduce){.scan-now.nudge{animation:none}}
+/* ---------- Säker träff: kortet visas med värde. Animationen blir finare ju mer kortet är värt. ---------- */
+.rv-dlg{--rv:#f0b90b;width:calc(100vw - 24px);max-width:400px}
+.rv-stage{position:relative;overflow:hidden;display:grid;justify-items:center;gap:14px;padding:26px 20px 18px;text-align:center}
+.rv-card{position:relative;z-index:2;width:min(62%,220px);aspect-ratio:63/88;border-radius:14px;overflow:hidden;box-shadow:0 18px 40px rgba(0,0,0,.6)}
+.rv-card img{width:100%;height:100%;object-fit:contain;display:block}
+.rv-info{position:relative;z-index:2;display:grid;gap:4px;justify-items:center}
+.rv-kicker{margin:0;font-size:.7rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#10b981}
+.rv-name{margin:0;font-size:1.3rem}
+.rv-set{margin:0;font-size:.85rem}
+.rv-value{margin:8px 0 0;display:grid;gap:2px}
+.rv-value b{font-size:2rem;font-variant-numeric:tabular-nums;color:var(--rv)}
+.rv-value small{font-size:.78rem;color:var(--muted,#9aa3c7)}
+.rv-actions{position:relative;z-index:2;display:flex;gap:8px;width:100%;margin-top:6px}
+.rv-actions>*{flex:1;font:inherit;font-size:.9rem;font-weight:700;border-radius:999px;padding:12px 16px;cursor:pointer}
+.rv-actions .scan-ghost{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);color:#e8eaf6}
+.rv-actions .scan-now{border:0;color:#fff;background:linear-gradient(135deg,#22d3ee,#6366f1 55%,#a855f7);box-shadow:0 6px 22px rgba(99,102,241,.45)}
+.rv-in .rv-card{animation:rvIn .7s cubic-bezier(.2,.9,.3,1.25) both}
+@keyframes rvIn{from{opacity:0;transform:translateY(30px) rotateX(35deg) scale(.85)}to{opacity:1;transform:none}}
+.rv-in .rv-info{animation:rvFade .5s .35s ease both}
+@keyframes rvFade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* Pengaeffekter, de lägsta nivåerna har bara mynt */
+.rv-fx{position:absolute;inset:0;pointer-events:none;z-index:1;overflow:hidden}
+.rv-coin{position:absolute;top:-10%;width:var(--s);height:var(--s);border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff7c2,#f0b90b 45%,#9a6b00);box-shadow:inset 0 -2px 0 rgba(0,0,0,.25),0 0 10px rgba(240,185,11,.5);animation:rvCoin var(--t) cubic-bezier(.3,.1,.6,1) var(--d) both}
+@keyframes rvCoin{0%{transform:translateY(0) rotate(0) rotateY(0)}100%{transform:translateY(130%) rotate(360deg) rotateY(720deg);opacity:0}}
+.rv-conf{position:absolute;top:-4%;width:8px;height:12px;border-radius:2px;animation:rvConf var(--t) cubic-bezier(.15,.7,.3,1) var(--d) both}
+@keyframes rvConf{0%{transform:translate(0,0) rotate(0) scale(.6)}15%{opacity:1}100%{transform:translate(var(--x),120%) rotate(var(--r));opacity:0}}
+.rv-rays{position:absolute;left:50%;top:38%;width:220%;aspect-ratio:1;translate:-50% -50%;background:repeating-conic-gradient(from 0deg,rgba(240,185,11,.22) 0 6deg,transparent 6deg 18deg);-webkit-mask:radial-gradient(circle,#000 10%,transparent 60%);mask:radial-gradient(circle,#000 10%,transparent 60%);animation:rvSpin 14s linear infinite}
+@keyframes rvSpin{to{rotate:360deg}}
+.rv-spark{position:absolute;width:10px;height:10px;background:#fff;clip-path:polygon(50% 0,62% 38%,100% 50%,62% 62%,50% 100%,38% 62%,0 50%,38% 38%);animation:rvSpark 1.6s ease-in-out var(--d) infinite}
+@keyframes rvSpark{0%,100%{opacity:0;transform:scale(.3)}50%{opacity:1;transform:scale(1.2);filter:drop-shadow(0 0 6px #f0b90b)}}
+/* Guldskimmer över kortet */
+.rv-rare .rv-card,.rv-gold .rv-card,.rv-epic .rv-card,.rv-legendary .rv-card{box-shadow:0 18px 40px rgba(0,0,0,.6),0 0 0 2px rgba(240,185,11,.7),0 0 30px rgba(240,185,11,.35)}
+.rv-rare .rv-card::after,.rv-gold .rv-card::after,.rv-epic .rv-card::after,.rv-legendary .rv-card::after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 35%,rgba(255,255,255,.55) 50%,transparent 65%);background-size:250% 100%;animation:rvSheen 2.8s ease-in-out infinite;mix-blend-mode:overlay}
+@keyframes rvSheen{0%{background-position:150% 0}100%{background-position:-150% 0}}
+/* Nivåer: mer mynt, starkare glöd och till sist en skakning och konfetti */
+.rv-gold .rv-value b,.rv-epic .rv-value b,.rv-legendary .rv-value b{text-shadow:0 0 14px rgba(240,185,11,.6)}
+.rv-epic .rv-card{box-shadow:0 18px 40px rgba(0,0,0,.6),0 0 0 2px #a855f7,0 0 40px rgba(168,85,247,.5)}
+.rv-legendary .rv-card{box-shadow:0 18px 40px rgba(0,0,0,.6),0 0 0 2px #fff,0 0 50px rgba(240,185,11,.8),0 0 90px rgba(168,85,247,.5)}
+.rv-legendary.rv-dlg .rv-stage{animation:rvShake .5s .9s 2}
+@keyframes rvShake{0%,100%{translate:0 0}25%{translate:-4px 2px}75%{translate:4px -2px}}
+@media (prefers-reduced-motion:reduce){.rv-in .rv-card,.rv-in .rv-info,.rv-coin,.rv-conf,.rv-rays,.rv-spark,.rv-rare .rv-card::after,.rv-gold .rv-card::after,.rv-epic .rv-card::after,.rv-legendary .rv-card::after,.rv-legendary .rv-stage{animation:none}}
 .val-psa-scale { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
 .val-psa-scale li { display: grid; grid-template-columns: 34px 92px 1fr; align-items: center; gap: 8px; padding: 5px 8px; border-radius: 8px; background: var(--surface); font-size: 0.82rem; }
 .val-psa-scale .val-psa { text-align: center; }

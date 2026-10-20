@@ -13,13 +13,10 @@ const SCAN_INTERVAL = 900; // ms minst mellan två OCR-försök under aktiv kame
 const MOTION_TICK = 150; // ms mellan två stabilitetskontroller
 const MOTION_LIMIT = 10; // medelskillnad (0–255 per pixel) under vilken kameran räknas som stilla
 const STILL_TICKS = 2; // antal stilla kontroller i rad innan OCR startar
-const ZOOM_DEFAULT = 1.5;
-const ZOOM_MAX = 2.5;
 const CARD_W = 420;
 const CARD_H = 587; // Exakt 63:88 mm Pokémon-kortproportioner
 
-// Läszoner i andelar av kortet (x, y, bredd, höjd). Samma värden används för beskärningen
-// och för markeringsrutorna i siktramen, så användaren ser exakt det som läses.
+// Läszoner i andelar av kortet (x, y, bredd, höjd) som beskärs ut för OCR.
 const ZONES = {
   name: { x: 0.04, y: 0.02, w: 0.74, h: 0.14 }, // Översta ~16 %, utan HP-rutan längst till höger
   number: { x: 0.03, y: 0.86, w: 0.94, h: 0.13 }, // Nedersta ~14 %, där set-numret står
@@ -543,8 +540,6 @@ const PAUSE_AFTER_MISS = 3500; // ms paus efter en misslyckad manuell skanning e
 
 const frameEl = () => dialog?.querySelector(".scan-frame i");
 
-const zoneStyle = (z) => `left:${z.x * 100}%;top:${z.y * 100}%;width:${z.w * 100}%;height:${z.h * 100}%`;
-
 function ui() {
   if (dialog) return dialog;
   dialog = document.createElement("dialog");
@@ -554,31 +549,21 @@ function ui() {
     <div class="scan-view">
       <video playsinline muted autoplay></video>
       <canvas class="scan-hud" aria-hidden="true"></canvas>
-      <div class="scan-frame" aria-hidden="true"><i>
-        <span class="scan-zone" data-label="Namn" style="${zoneStyle(ZONES.name)}"></span>
-        <span class="scan-zone" data-label="Nummer" style="${zoneStyle(ZONES.number)}"></span>
-      </i></div>
-      <button class="btn icon scan-torch" type="button" aria-label="Tänd ficklampa" hidden>
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <div class="scan-frame" aria-hidden="true"><i></i></div>
+      <div class="scan-hud-status">
+        <p class="scan-status" role="status" aria-live="polite">Startar kameran…</p>
+      </div>
+      <button class="scan-torch" type="button" aria-label="Tänd ficklampa" hidden>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M18 6l-6 12-2-6-6-2 14-4z"/>
         </svg>
       </button>
-      <label class="scan-zoom" hidden>
-        <span>Zoom</span>
-        <input type="range" min="1" max="${ZOOM_MAX}" step="0.1" value="${ZOOM_DEFAULT}" aria-label="Zoom">
-        <output>${ZOOM_DEFAULT.toFixed(1)}×</output>
-      </label>
-      <div class="scan-beam" aria-hidden="true"></div>
       <p class="scan-tip">Håll kortet i ramen. Glänser det? Luta det lätt.</p>
     </div>
-    <div class="scan-hud-status">
-      <div class="scan-status-dot" aria-hidden="true"></div>
-      <p class="scan-status" role="status" aria-live="polite">Startar kameran…</p>
-    </div>
     <div class="scan-actions">
-      <label class="btn small">Välj foto<input type="file" accept="image/*" hidden></label>
-      <button class="btn small gold scan-now" type="button">Skanna nu</button>
-      <button class="btn small" type="button" data-close>Stäng</button>
+      <label class="scan-ghost">Välj foto<input type="file" accept="image/*" hidden></label>
+      <button class="scan-now" type="button">Skanna nu</button>
+      <button class="scan-ghost" type="button" data-close>Stäng</button>
     </div>`;
 
   document.body.append(dialog);
@@ -599,15 +584,6 @@ function ui() {
       await track.applyConstraints({ advanced: [{ torch: torchActive }] });
       torchBtn.classList.toggle("active", torchActive);
     } catch {}
-  });
-
-  // Zoom
-  const zoomLabel = dialog.querySelector(".scan-zoom");
-  zoomLabel.querySelector("input").addEventListener("input", async (e) => {
-    const z = +e.target.value;
-    zoomLabel.querySelector("output").textContent = `${z.toFixed(1)}×`;
-    const track = stream?.getVideoTracks()[0];
-    await track?.applyConstraints({ advanced: [{ zoom: z }] }).catch(() => {});
   });
 
   // Välj foto från fil
@@ -704,22 +680,35 @@ function renderHud(corners, confident) {
   ctx.closePath();
 
   if (confident) {
-    ctx.strokeStyle = "#10b981"; // Smaragdgrön när kortet är låst
-    ctx.lineWidth = 3;
-    ctx.shadowColor = "rgba(16, 185, 129, 0.7)";
-    ctx.shadowBlur = 10;
+    // Låst kort: svagt ifylld yta med cyan–violett kontur och glöd
+    const grad = ctx.createLinearGradient(pts[0][0], pts[0][1], pts[2][0], pts[2][1]);
+    grad.addColorStop(0, "#22d3ee");
+    grad.addColorStop(1, "#a855f7");
+    ctx.fillStyle = "rgba(34, 211, 238, 0.07)";
+    ctx.fill();
+    ctx.strokeStyle = grad;
+    ctx.lineWidth = 1.5;
+    ctx.shadowColor = "rgba(139, 92, 246, 0.8)";
+    ctx.shadowBlur = 14;
     ctx.stroke();
 
-    // Hörnmarkörer
-    pts.forEach(([px, py]) => {
-      ctx.fillStyle = "#10b981";
+    // Hörnvinklar längs kortets kanter
+    ctx.lineWidth = 4;
+    ctx.lineCap = "round";
+    pts.forEach(([px, py], i) => {
       ctx.beginPath();
-      ctx.arc(px, py, 6, 0, 2 * Math.PI);
-      ctx.fill();
+      for (const [nx, ny] of [pts[(i + 1) % 4], pts[(i + 3) % 4]]) {
+        const len = Math.hypot(nx - px, ny - py) || 1;
+        const t = Math.min(22, len * 0.18) / len;
+        ctx.moveTo(px, py);
+        ctx.lineTo(px + (nx - px) * t, py + (ny - py) * t);
+      }
+      ctx.stroke();
     });
   } else {
-    ctx.strokeStyle = "rgba(240, 185, 11, 0.4)"; // Guldton när den söker
-    ctx.lineWidth = 1.5;
+    ctx.setLineDash([4, 6]);
+    ctx.strokeStyle = "rgba(255, 255, 255, 0.18)"; // Diskret när den söker
+    ctx.lineWidth = 1;
     ctx.stroke();
   }
   ctx.restore();
@@ -903,22 +892,6 @@ async function tuneCamera(track, caps, d) {
   const torchBtn = d.querySelector(".scan-torch");
   if (torchBtn) torchBtn.hidden = !torchSupported;
 
-  // Standardzoom 1,5× så att kortet fyller ramen på ca 20 cm avstånd, utan att närgränsen tar över
-  if (caps.zoom) {
-    const lo = Math.max(1, caps.zoom.min ?? 1);
-    const hi = Math.min(ZOOM_MAX, caps.zoom.max ?? ZOOM_MAX);
-    if (hi > lo) {
-      const zoomLabel = d.querySelector(".scan-zoom");
-      const input = zoomLabel.querySelector("input");
-      const start = Math.min(hi, Math.max(lo, ZOOM_DEFAULT));
-      input.min = lo;
-      input.max = hi;
-      input.value = start;
-      zoomLabel.querySelector("output").textContent = `${start.toFixed(1)}×`;
-      zoomLabel.hidden = false;
-      await track.applyConstraints({ advanced: [{ zoom: start }] }).catch(() => {});
-    }
-  }
 }
 
 // callback får ett komplett kort (namn + nummer + bild). partialCallback får en delläsning
