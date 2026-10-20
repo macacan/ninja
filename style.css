@@ -501,9 +501,9 @@ input[type=search]{width:100%;max-width:360px}
 .drop select:focus-visible{outline:none}
 .drop:focus-within{background:var(--surface);box-shadow:0 0 0 2px var(--ink)}
 .count{font-size:.9rem;color:var(--muted);padding:0 6px}
-.density{display:flex;gap:2px;margin-left:4px}
-.density button{width:38px;height:38px;border:0;border-radius:6px;background:transparent;display:grid;place-items:center;cursor:pointer;fill:#9aa0b0}
-.density button[aria-pressed=true]{background:var(--surface);fill:var(--ink)}
+.viewtoggle{display:flex;gap:2px;margin-left:4px}
+.viewtoggle button{min-height:38px;padding:0 12px;border:0;border-radius:6px;background:transparent;cursor:pointer;font:700 .85rem var(--sans);color:#9aa0b0}
+.viewtoggle button[aria-pressed=true]{background:var(--surface);color:var(--ink)}
 
 /* Set- och priskort i samma rena stil */
 .tcard{border:1px solid var(--line);border-radius:6px;box-shadow:none;padding:0;gap:6px;overflow:hidden}
@@ -779,6 +779,7 @@ span.rd-logo{display:grid;place-items:center;background:var(--surface);border-ra
 .gbody{padding:12px 14px 14px;display:flex;flex-direction:column;gap:6px}
 .gcard h3{margin:0;font:700 1.12rem/1.15 var(--cond);text-transform:uppercase}
 .gmeta{font-size:.78rem;color:var(--muted)}
+.gupdated{font-size:.78rem;color:var(--muted)}
 .gprice{font-size:.95rem}
 .gprice b{font:700 1.35rem var(--sans)}
 .gchips{display:flex;gap:5px;flex-wrap:wrap}
@@ -787,6 +788,14 @@ span.rd-logo{display:grid;place-items:center;background:var(--surface);border-ra
 .gtoggle{all:unset;cursor:pointer;margin-top:4px;padding:10px 0 2px;border-top:1px solid var(--line);font:700 .9rem var(--sans);color:var(--red)}
 .gtoggle:focus-visible{outline:3px solid var(--red)}
 .gdetail{display:grid;gap:8px;margin-top:4px}
+/* Listvy: bilden till vänster, texten till höger */
+.ggrid[data-view=list]{grid-template-columns:1fr;gap:8px}
+.ggrid[data-view=list] .gcard{flex-direction:row}
+.ggrid[data-view=list] .gcard .pimg{flex:0 0 112px;aspect-ratio:auto;border-bottom:0;border-right:1px solid var(--line);padding:8px}
+.ggrid[data-view=list] .gcard .pimg img{inset:8px;width:calc(100% - 16px);height:calc(100% - 16px)}
+.ggrid[data-view=list] .gcard .bell{top:6px;left:6px;width:30px;height:30px}
+.ggrid[data-view=list] .gbody{flex:1;min-width:0;padding:10px 12px}
+.ggrid[data-view=list] .gcard h3{font-size:1rem}
 .ghist{display:grid;gap:2px;background:var(--surface);border-radius:8px;padding:10px 12px;font-size:.82rem}
 .ghist b{font:700 1.4rem var(--sans)}
 .atlow{justify-self:start;font-weight:700;color:#1f6b2c;background:#d9f5dd;border-radius:5px;padding:3px 8px;margin:4px 0}
@@ -951,7 +960,7 @@ span.rd-logo{display:grid;place-items:center;background:var(--surface);border-ra
 .ntf-body fieldset{border:0;padding:0;margin:16px 0 0}
 .ntf-body legend{font:600 .78rem var(--sans);text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin-bottom:8px}
 .ntf-tools{display:flex;align-items:center;gap:12px;margin:14px 0 10px}
-.ntf-bar{position:sticky;bottom:12px;z-index:5;display:flex;align-items:center;flex-wrap:wrap;gap:10px 16px;margin:16px 0 0;padding:12px 14px 12px 18px;background:var(--card);border:2px solid var(--ink);border-radius:10px;box-shadow:4px 4px 0 var(--ink)}
+.ntf-bar{display:flex;align-items:center;flex-wrap:wrap;gap:10px 16px;margin:16px 0 0;padding:12px 14px 12px 18px;background:var(--card);border:2px solid var(--ink);border-radius:10px;box-shadow:4px 4px 0 var(--ink)}
 .ntf-match{margin:0;flex:1 1 240px;color:var(--muted);font-size:.92rem}
 .ntf-match b{font:700 1.15rem var(--cond);color:var(--ink)}
 .ntf-saved{font:600 .8rem var(--pixel);color:#2f9e44}

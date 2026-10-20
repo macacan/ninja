@@ -23,7 +23,7 @@ export function mountCalendar(events, onDay) {
 
   function render() {
     const { y, m } = view;
-    $("#cal-title").textContent = `${MONTHS[m][0].toUpperCase()}${MONTHS[m].slice(1)} ${y}`;
+    $("#cal-title").textContent = `${MONTHS[m][0].toUpperCase()}${MONTHS[m].slice(1, 3)} ${y}`;
     // Veckan börjar på måndag.
     const lead = (new Date(y, m, 1).getDay() + 6) % 7;
     const cells = Math.ceil((lead + new Date(y, m + 1, 0).getDate()) / 7) * 7;

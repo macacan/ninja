@@ -2,10 +2,6 @@ import { $, esc, kr, fmt, ago, loading, liveStamp, releaseSets, safeUrl } from "
 import { groupKey, groupProducts, groupTitle, lowestInStock } from "./group.js";
 import { typeOf } from "./releases.js";
 import { getPrefs, savePrefs, matches, KINDS, startBrowserNotices } from "./prefs.js";
-import { getAnatomyData, matchAnatomy, renderAnatomyModal, renderPullRatesModal } from "./anatomy.js";
-
-let anatomyData = null; // vad boxarna innehåller, se js/anatomy.js
-
 const KIND = {
   ny: { label: "Nytt", cls: "k-new" },
   tillbaka: { label: "Tillbaka i lager", cls: "k-back" },
@@ -126,12 +122,6 @@ function groupCard(g, open) {
   const badge = !g.inStock.length && !g.pre.length ? '<span class="pbadge out">Slut</span>' : !g.inStock.length ? '<span class="pbadge pre">Förbeställ</span>'
     : g.all.some((m) => recentDrop.has(m.id)) ? '<span class="pbadge sale">Prissänkt</span>' : "";
   const title = groupTitle(g.all);
-  // Butikens egen titel följer med, eftersom antalet paket ("36 boosters") ofta bara står där
-  const anatText = `${title} ${lead.title}`;
-  const anat = anatomyData ? matchAnatomy(anatText, lead.type, anatomyData, lead.lang || "en") : null;
-  const bestPrice = g.low != null ? g.low : g.lowPre;
-  const perPack = (anat?.packs && bestPrice) ? Math.round(bestPrice / anat.packs) : null;
-  const anatChip = anat ? `<button type="button" class="c anat-c" data-anat-title="${esc(title)}" data-anat-match="${esc(anatText)}" data-anat-lang="${esc(lead.lang || "en")}" data-anat-type="${esc(lead.type)}" data-anat-price="${bestPrice || ""}" title="Visa vad som ingår i boxen">${anat.packs ? `${anat.packs} pack` : "Innehåll"}${perPack ? ` (${perPack} kr/st)` : ""} · Vad ingår?</button>` : "";
 
   return `<article class="gcard${open ? " open" : ""}" data-key="${esc(g.key)}">
     <div class="pimg">${img ? `<img src="${esc(img)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.remove()">` : `<span class="noimg"><b>${esc(lead.type)}</b>Bild finns hos butiken</span>`}${badge}
@@ -141,8 +131,8 @@ function groupCard(g, open) {
       <h3>${esc(title)}</h3>
       <span class="gmeta">${esc(meta)}</span>
       <div class="gprice">${price}</div>
+      ${g.last ? `<span class="gupdated">Senast uppdaterad ${ago(new Date(g.last).toISOString())}</span>` : ""}
       <div class="gchips">
-        ${anatChip}
         ${g.inStock.length ? `<span class="c in">I lager ${new Set(g.inStock.map((m) => m.store)).size}</span>` : ""}
         ${g.pre.length ? `<span class="c pre">Förbeställ ${new Set(g.pre.map((m) => m.store)).size}</span>` : ""}
         ${g.out.length ? `<span class="c out">Slut ${new Set(g.out.map((m) => m.store)).size}</span>` : ""}
@@ -176,20 +166,6 @@ function renderProducts() {
 function updateWatchCount() { $("#watch-count").textContent = (getPrefs().watch || []).length; }
 
 $("#products").addEventListener("click", (e) => {
-  const anatBtn = e.target.closest(".anat-c");
-  if (anatBtn) {
-    e.stopPropagation();
-    const t = anatBtn.dataset.anatTitle;
-    const ty = anatBtn.dataset.anatType;
-    const pr = anatBtn.dataset.anatPrice ? +anatBtn.dataset.anatPrice : null;
-    const a = matchAnatomy(anatBtn.dataset.anatMatch || t, ty, anatomyData, anatBtn.dataset.anatLang || "en");
-    const dlg = $("#anat-modal");
-    if (dlg) {
-      dlg.querySelector(".anat-modal-body").innerHTML = renderAnatomyModal(t, a, pr);
-      if (!dlg.open) dlg.showModal();
-    }
-    return;
-  }
   const card = e.target.closest(".gcard"); if (!card) return;
   const key = card.dataset.key;
   if (e.target.closest(".gtoggle")) {
@@ -208,24 +184,6 @@ $("#products").addEventListener("click", (e) => {
   }
 });
 
-const anatModal = $("#anat-modal");
-if (anatModal) {
-  anatModal.addEventListener("click", (e) => {
-    if (e.target === anatModal || e.target.closest(".cm-close")) {
-      anatModal.close();
-      return;
-    }
-    if (e.target.closest("[data-show-odds]")) {
-      anatModal.querySelector(".anat-modal-body").innerHTML = renderPullRatesModal(anatomyData);
-    }
-  });
-}
-$("#c-odds")?.addEventListener("click", () => {
-  if (anatModal) {
-    anatModal.querySelector(".anat-modal-body").innerHTML = renderPullRatesModal(anatomyData);
-    if (!anatModal.open) anatModal.showModal();
-  }
-});
 for (const id of ["#c-in", "#c-pre", "#c-watch"]) {
   $(id).addEventListener("click", () => { $(id).setAttribute("aria-pressed", String(!pressed(id))); shown = PAGE; renderProducts(); });
 }
@@ -276,24 +234,24 @@ const fitAll = () => document.querySelectorAll(".drop select").forEach(fitSelect
 $("#filters").addEventListener("change", (e) => { if (e.target.matches(".drop select")) fitSelect(e.target); });
 document.fonts?.ready.then(fitAll);
 
-// Stora eller små kort. Valet sparas till nästa besök.
-function setDensity(d) {
-  $("#products").dataset.density = d;
-  document.querySelectorAll("#density button").forEach((b) => b.setAttribute("aria-pressed", b.dataset.d === d));
-  try { localStorage.setItem("nl:density", d); } catch {}
+// Kort- eller listvy. Valet sparas till nästa besök.
+function setView(v) {
+  $("#products").dataset.view = v;
+  document.querySelectorAll("#view button").forEach((b) => b.setAttribute("aria-pressed", b.dataset.v === v));
+  try { localStorage.setItem("nl:view", v); } catch {}
 }
-$("#density").addEventListener("click", (e) => { const b = e.target.closest("[data-d]"); if (b) setDensity(b.dataset.d); });
-let savedDensity = "large";
-try { savedDensity = localStorage.getItem("nl:density") || "large"; } catch {}
-setDensity(savedDensity);
+$("#view").addEventListener("click", (e) => { const b = e.target.closest("[data-v]"); if (b) setView(b.dataset.v); });
+let savedView = "grid";
+try { savedView = localStorage.getItem("nl:view") || "grid"; } catch {}
+setView(savedView === "list" ? "list" : "grid");
 $("#filters").addEventListener("submit", (e) => e.preventDefault());
 $("#more").addEventListener("click", () => { shown += PAGE; renderProducts(); });
 
 $("#events").innerHTML = loading("Ninjan kollar butikerna");
 $("#products").innerHTML = loading("Ninjan kollar butikerna");
 try {
-  const [p, e, s, anat] = await Promise.all([load("data/products.json"), load("data/events.json"), load("data/stores-status.json"), getAnatomyData().catch(() => null)]);
-  products = p.products; events = e.events; stores = s.stores; anatomyData = anat;
+  const [p, e, s] = await Promise.all([load("data/products.json"), load("data/events.json"), load("data/stores-status.json")]);
+  products = p.products; events = e.events; stores = s.stores;
   groups = groupProducts(products);
   priceHist = (await load("data/price-history.json").catch(() => ({ days: {} }))).days || {};
   storeLogos = await load("data/store-logos.json").catch(() => ({}));

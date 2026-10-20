@@ -52,7 +52,6 @@
             <button type="button" class="qc" id="c-in" aria-pressed="true"><i class="dot-in"></i>I lager</button>
             <button type="button" class="qc" id="c-pre" aria-pressed="true"><i class="dot-pre"></i>Förbeställ</button>
             <button type="button" class="qc" id="c-watch" aria-pressed="false"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M12 3a6 6 0 0 0-6 6v4l-2 3h16l-2-3V9a6 6 0 0 0-6-6zm-2 15a2 2 0 0 0 4 0" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>Bevakade <b id="watch-count">0</b></button>
-            <button type="button" class="qc" id="c-odds" aria-pressed="false" title="Se vad paketen innehåller och oddsen för sällsynta kort">Paket & Odds</button>
           </div>
         </div>
         <div class="shopbar-row">
@@ -70,9 +69,9 @@
             <label class="drop"><span>Sortera</span><select id="f-sort">
               <option value="recent">Senast ändrad</option><option value="stores">Flest butiker</option><option value="price-asc">Lägst pris</option>
               <option value="price-desc">Högst pris</option><option value="name">Namn</option></select></label>
-            <div class="density" id="density" role="group" aria-label="Kortstorlek">
-              <button type="button" data-d="large" aria-label="Stora kort"><svg viewBox="0 0 10 10" width="16" height="16" shape-rendering="crispEdges"><rect x="0" y="0" width="4" height="4"/><rect x="6" y="0" width="4" height="4"/><rect x="0" y="6" width="4" height="4"/><rect x="6" y="6" width="4" height="4"/></svg></button>
-              <button type="button" data-d="small" aria-label="Små kort"><svg viewBox="0 0 10 10" width="16" height="16" shape-rendering="crispEdges"><rect x="0" y="0" width="2" height="2"/><rect x="4" y="0" width="2" height="2"/><rect x="8" y="0" width="2" height="2"/><rect x="0" y="4" width="2" height="2"/><rect x="4" y="4" width="2" height="2"/><rect x="8" y="4" width="2" height="2"/><rect x="0" y="8" width="2" height="2"/><rect x="4" y="8" width="2" height="2"/><rect x="8" y="8" width="2" height="2"/></svg></button>
+            <div class="viewtoggle" id="view" role="group" aria-label="Visning">
+              <button type="button" data-v="grid" aria-pressed="true">Kort</button>
+              <button type="button" data-v="list" aria-pressed="false">Lista</button>
             </div>
           </div>
         </div>
@@ -162,10 +161,6 @@
 
     <p class="hint" style="margin-top:28px">Packninja är ett privat hobbyprojekt. Priser och lagerstatus samlas in automatiskt och är endast vägledande – ta inte all data för 100% sanning då felaktiga priser, fördröjda uppdateringar eller tekniska fel kan förekomma. Det är alltid butikens egen sida och kassa som gäller när du köper.</p>
   </div>
-  <dialog id="anat-modal" class="card-modal anat-modal" aria-label="Produktens innehåll">
-    <button type="button" class="cm-close" aria-label="Stäng">✕</button>
-    <div class="anat-modal-body"></div>
-  </dialog>
 </main>
 <script type="module" src="js/butiker.js"></script>
 </body>

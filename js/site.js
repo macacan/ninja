@@ -21,7 +21,7 @@ const ICONS = ["★", "✦", "♦", "●"];
 
 const NAV = [
   ["index.html", "Hem"],
-  ["slapp.html", "Släpp"],
+  ["slapp.html", "Kalender"],
   ["butiker.html#products", "Produkter"],
   ["priser.html", "Kortpriser"],
   ["vardering.html", "Värdering"],
