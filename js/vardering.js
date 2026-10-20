@@ -611,7 +611,11 @@ $("#header-search").addEventListener("submit", (e) => {
 });
 // "Värdera kort" i hero-delen öppnar sökfältet i headern (på mobilen är det dolt bakom en knapp).
 $("#val-search-open")?.addEventListener("click", () => { openModal(); vmInput.focus(); });
-const startScan = () => openScanner(({ name, number, total, canvas }) => {
+const startScan = () => openScanner(({ name, number, total, canvas, cardId }) => {
+  if (cardId) {
+    reveal(cardId);
+    return;
+  }
   const q = [name, number].filter(Boolean).join(" ");
   input.value = q;
   search(q, total, canvas);
