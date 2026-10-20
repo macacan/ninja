@@ -29,7 +29,7 @@ async function feed() {
       return `<li class="rf${fresh.has(x.url) ? " is-fresh" : ""}" style="--i:${i}">
         <a href="${esc(safeUrl(x.url))}" target="_blank" rel="noopener nofollow">
           <span class="rf-img"><img src="${esc(x.image)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.remove()"></span>
-          <span class="rf-body"><b>${esc(x.title)}</b><small>${esc(names[x.store] || x.store)} · ${kr(x.price)} · ${ago(x.lastChange)}</small></span>
+          <span class="rf-body"><b>${esc(x.title)}</b><small>${esc(names[x.store] || x.store)} · ${kr(x.price)}${x.lastChange ? ` · ${ago(x.lastChange)}` : ""}</small></span>
           ${justIn ? '<span class="rf-tag">Nytt</span>' : ""}
         </a></li>`;
     }).join("") || '<li class="rf-empty">Inget nytt i lager just nu.</li>';

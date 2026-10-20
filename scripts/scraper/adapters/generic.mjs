@@ -130,7 +130,8 @@ async function listingUrls(host, listing) {
     let html;
     try { html = await host.get(path); } catch (e) { if (n === 1) throw e; break; }
     const found = [...html.matchAll(/href=["']([^"'#]+)["']/g)].map((m) => decode(m[1]))
-      .filter((h) => re.test(h)).map((h) => new URL(h, host.origin).href).filter((u) => host.allowed(u));
+      .filter((h) => re.test(h)).map((h) => { try { return new URL(h, host.origin).href; } catch { return null; } })
+      .filter((u) => u && host.allowed(u));
     const fresh = found.filter((u) => !urls.includes(u));
     if (!fresh.length) break; // sidan visade inget nytt: slut på listan
     urls.push(...new Set(fresh));
