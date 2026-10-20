@@ -1,6 +1,6 @@
 // Tryck på ett set: en ruta med alla kort i setet, pris i kronor och sortering.
-// Namn, bild och nummer kommer från TCGdex. Priserna från data/card-history/<set>.json.
-import { esc, kr, fmt, loading, getJSON, API, setLogo, cardImg } from "./site.js";
+// Namn, bild och nummer kommer från TCGdex (eller data/card-images.json om TCGdex saknar bilder). Priserna från data/card-history/<set>.json.
+import { esc, kr, fmt, loading, getJSON, API, setLogo, cardImg, extraCardImgsReady } from "./site.js";
 import { openCardPrice } from "./cardprice.js";
 
 const SORTS = {
@@ -34,7 +34,7 @@ function sorted() {
 }
 
 function tile(c) {
-  const src = c.image ? `${c.image}/low.webp` : "";
+  const src = cardImg(c, "low");
   return `<li class="sm-card" data-id="${esc(c.id)}" role="button" tabindex="0" aria-label="Visa ${esc(c.name)} i stort format">
     <span class="sm-img${src ? "" : " has-back"}">${src
       ? `<img src="${esc(src)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.src='img/kortbaksida.webp';this.parentNode.classList.add('has-back');if(!this.parentNode.querySelector('.sm-soon')){const s=document.createElement('span');s.className='sm-soon';s.textContent='Bilder kommer snart';this.parentNode.append(s);}">`
@@ -60,7 +60,7 @@ function renderCards() {
 const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
 const EASE = "cubic-bezier(.2,.8,.2,1)";
-const cardSrc = (c, size) => (c.image ? `${c.image}/${size}.webp` : "img/kortbaksida.webp");
+const cardSrc = (c, size) => cardImg(c, size) || (c.image ? `${c.image}/${size}.webp` : "img/kortbaksida.webp");
 
 let zdlg = null, zlist = [], zi = 0, zbusy = false, ztoken = 0;
 const zq = (s) => zdlg.querySelector(s);
@@ -233,7 +233,7 @@ export async function openSet(id) {
   body.innerHTML = loading("Ninjan räknar korten");
   d.showModal();
   try {
-    const [set, p] = await Promise.all([getJSON(`${API}/sets/${encodeURIComponent(id)}`), prices(id)]);
+    const [set, p] = await Promise.all([getJSON(`${API}/sets/${encodeURIComponent(id)}`), prices(id), extraCardImgsReady]);
     const cards = (set.cards || []).map((c) => ({ ...c, price: p.prices.get(c.id) ?? null }));
     current = { set, cards, date: p.date, sort: "price-desc" };
     const logo = setLogo(set);

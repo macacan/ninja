@@ -222,8 +222,9 @@ async function findCards(raw) {
 }
 
 function resultTile(c, i) {
-  const img = c.image ? `${c.image}/low.webp` : "img/kortbaksida.webp";
-  const isBack = !c.image;
+  const src = cardImg(c, "low");
+  const img = src || "img/kortbaksida.webp";
+  const isBack = !src;
   return `<div class="ctile plain" data-id="${esc(c.id)}" role="button" tabindex="0" aria-label="Välj ${esc(c.name)}">
     <span class="cimg${isBack ? " has-back" : ""}">
       <img src="${esc(img)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.src='img/kortbaksida.webp';this.parentNode.classList.add('has-back');">
@@ -324,8 +325,9 @@ function updateOut() {
 
 function renderCard() {
   const c = state.card, cm = c.pricing?.cardmarket || {};
-  const img = c.image ? `${c.image}/high.webp` : "img/kortbaksida.webp";
-  const isBack = !c.image;
+  const src = cardImg(c, "high");
+  const img = src || "img/kortbaksida.webp";
+  const isBack = !src;
   $("#val-card").innerHTML = `<div class="val-top">
       <div class="val-side">
         <div class="val-img${isBack ? " has-back" : ""}" role="button" tabindex="0" aria-label="Förstora kortet i ditt skick"><span class="vd-card"><img src="${esc(img)}" alt="${esc(c.name)}" referrerpolicy="no-referrer" onerror="this.src='img/kortbaksida.webp';this.closest('.val-img').classList.add('has-back');"></span>${isBack ? `<span class="val-soon">Bilder kommer snart</span>` : ""}<span class="vz-tip" aria-hidden="true">Tryck för att förstora</span></div>

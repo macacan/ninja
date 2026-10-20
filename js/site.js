@@ -161,10 +161,19 @@ export async function getJSON(url, ttl = TTL) {
   return d;
 }
 
+// Kortbilder som TCGdex saknar (t.ex. 30th Classic Collection), se data/card-images.json.
+let extraCardImgs = {};
+export const extraCardImgsReady = fetch("data/card-images.json").then((r) => r.json()).then((d) => (extraCardImgs = d)).catch(() => {});
+
 // Returnerar bildadress för ett kort. Använder TCGdex webp om den finns,
+// annars extra kortbild (från data/card-images.json),
 // annars TCGplayer-bilden via variants_detailed eller sparad länk.
 export function cardImg(c, size = "low") {
   if (!c) return null;
+  const extra = extraCardImgs[c.id];
+  if (extra) {
+    return typeof extra === "string" ? extra : extra[size] || extra.low || extra.high || null;
+  }
   const raw = c.image || c.img;
   if (raw) {
     if (typeof raw === "string" && (raw.startsWith("http://") || raw.startsWith("https://")) && (raw.includes("tcgplayer.com") || raw.endsWith(".jpg") || raw.endsWith(".jpeg") || raw.endsWith(".png") || raw.endsWith(".webp"))) {

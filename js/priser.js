@@ -30,8 +30,9 @@ const change = (pct) => (pct == null ? "" : `<span class="chg ${pct >= 0 ? "up" 
 let current = [];   // korten som visas just nu, för att kunna bläddra i den stora vyn
 
 function tile(c, i) {
-  const img = c.image ? `${c.image}/low.webp` : "img/kortbaksida.webp";
-  const isBack = !c.image;
+  const src = cardImg(c, "low");
+  const img = src || "img/kortbaksida.webp";
+  const isBack = !src;
   return `<button type="button" class="ctile ${finish(c)}" data-i="${i}" aria-label="Visa ${esc(c.name)} större">
     <span class="cimg${isBack ? " has-back" : ""}">
       <img src="${esc(img)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.src='img/kortbaksida.webp';this.parentNode.classList.add('has-back');">
@@ -247,7 +248,7 @@ async function openCard(i) {
   body.innerHTML = `
     <div class="cm-card-wrap">
       <div class="cm-card ${fin}" style="--rx:0deg;--ry:0deg;--mx:50%;--my:50%">
-        ${full.image ? `<img src="${esc(full.image)}/high.webp" alt="${esc(full.name || c.name)}" onload="this.parentNode.classList.add('loaded')" referrerpolicy="no-referrer" onerror="this.src='img/kortbaksida.webp';this.parentNode.classList.add('has-back');">` : `<img src="img/kortbaksida.webp" alt="Kortets baksida" onload="this.parentNode.classList.add('loaded')"><span class="csoon" style="position:absolute;inset:auto 12px 14px;padding:6px 12px;font-size:0.8rem">Bilder kommer snart</span>`}
+        ${cardImg(full, "high") ? `<img src="${esc(cardImg(full, "high"))}" alt="${esc(full.name || c.name)}" onload="this.parentNode.classList.add('loaded')" referrerpolicy="no-referrer" onerror="this.src='img/kortbaksida.webp';this.parentNode.classList.add('has-back');">` : `<img src="img/kortbaksida.webp" alt="Kortets baksida" onload="this.parentNode.classList.add('loaded')"><span class="csoon" style="position:absolute;inset:auto 12px 14px;padding:6px 12px;font-size:0.8rem">Bilder kommer snart</span>`}
         <i class="cm-holo"></i><i class="cm-glare"></i>
       </div>
       <ul class="cm-facts">${facts}</ul>

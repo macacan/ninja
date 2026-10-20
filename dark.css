@@ -65,3 +65,20 @@ input[type=search],select,.shop-search{background:#1e2230}
 .ph{background:repeating-linear-gradient(45deg,#1e2230 0 6px,#262b3b 6px 12px)}
 .next-rel{border-color:#3a4058;box-shadow:4px 4px 0 #05060a}
 .rc-prod em{background:#3a2f55;color:#d9c9ff}
+
+/* Sektionsbakgrunder för nattläge */
+.restock {
+  background:
+    linear-gradient(135deg, rgba(10, 12, 22, 0.70) 0%, rgba(10, 12, 22, 0.42) 48%, rgba(10, 12, 22, 0.78) 100%),
+    radial-gradient(circle at 88% 18%, rgba(140, 180, 255, 0.20) 0%, transparent 48%),
+    url("img/pokemon-restock-night.jpg") center 48% / cover no-repeat,
+    #131422;
+}
+.val-hero {
+  background:
+    linear-gradient(135deg, rgba(14, 16, 28, 0.76) 0%, rgba(14, 16, 28, 0.60) 48%, rgba(14, 16, 28, 0.84) 100%),
+    radial-gradient(circle at 82% 28%, rgba(242, 182, 50, 0.22) 0%, transparent 48%),
+    url("img/pokemon-nature-night.jpg") center 58% / cover no-repeat,
+    #131422;
+}
+

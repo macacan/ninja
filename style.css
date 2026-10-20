@@ -1595,9 +1595,9 @@ input[type=search]::-webkit-search-results-decoration {
   position: relative;
   margin: 28px 0 32px;
   background:
-    linear-gradient(135deg, rgba(14, 16, 28, 0.76) 0%, rgba(14, 16, 28, 0.60) 48%, rgba(14, 16, 28, 0.84) 100%),
+    linear-gradient(135deg, rgba(14, 16, 28, 0.64) 0%, rgba(14, 16, 28, 0.40) 48%, rgba(14, 16, 28, 0.72) 100%),
     radial-gradient(circle at 82% 28%, rgba(242, 182, 50, 0.22) 0%, transparent 48%),
-    url("img/pokemon-nature-bg.jpg") center 58% / cover no-repeat,
+    url("img/pokemon-nature-day.jpg") center 58% / cover no-repeat,
     #131422;
   color: #fff;
   border-radius: 14px;
@@ -1608,6 +1608,7 @@ input[type=search]::-webkit-search-results-decoration {
   grid-template-columns: 1.15fr 0.85fr;
   align-items: center;
   gap: 36px;
+  transition: background 0.3s ease;
 }
 .val-hero::before {
   content: "";
@@ -2595,11 +2596,45 @@ input[type=search]::-webkit-search-results-decoration {
 /* ---------- Precis inne: lagerflöde och packöppnare ---------- */
 .restock{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:32px;align-items:center;margin:30px var(--px) 4px;padding:30px 32px;border-radius:14px;color:#fff;overflow:hidden;
   background:
-    linear-gradient(135deg, rgba(14, 16, 28, 0.68) 0%, rgba(14, 16, 28, 0.44) 48%, rgba(14, 16, 28, 0.74) 100%),
+    linear-gradient(135deg, rgba(14, 16, 28, 0.64) 0%, rgba(14, 16, 28, 0.40) 48%, rgba(14, 16, 28, 0.72) 100%),
     radial-gradient(circle at 88% 18%, rgba(242, 182, 50, 0.22) 0%, transparent 48%),
-    url("img/pokemon-restock-bg.jpg") center 48% / cover no-repeat,
+    url("img/pokemon-restock-day.jpg") center 48% / cover no-repeat,
     #131422;
-  box-shadow: 0 calc(var(--px)*-1) 0 0 var(--ink), 0 var(--px) 0 0 var(--ink), calc(var(--px)*-1) 0 0 0 var(--ink), var(--px) 0 0 0 var(--ink), 0 16px 36px rgba(19, 20, 34, 0.25)}
+  box-shadow: 0 calc(var(--px)*-1) 0 0 var(--ink), 0 var(--px) 0 0 var(--ink), calc(var(--px)*-1) 0 0 0 var(--ink), var(--px) 0 0 0 var(--ink), 0 16px 36px rgba(19, 20, 34, 0.25);
+  transition: background 0.3s ease;}
+
+/* Nattläge för restock och val-hero via [data-theme="dark"] och prefers-color-scheme */
+[data-theme="dark"] .restock {
+  background:
+    linear-gradient(135deg, rgba(10, 12, 22, 0.70) 0%, rgba(10, 12, 22, 0.42) 48%, rgba(10, 12, 22, 0.78) 100%),
+    radial-gradient(circle at 88% 18%, rgba(140, 180, 255, 0.20) 0%, transparent 48%),
+    url("img/pokemon-restock-night.jpg") center 48% / cover no-repeat,
+    #131422;
+}
+[data-theme="dark"] .val-hero {
+  background:
+    linear-gradient(135deg, rgba(14, 16, 28, 0.76) 0%, rgba(14, 16, 28, 0.60) 48%, rgba(14, 16, 28, 0.84) 100%),
+    radial-gradient(circle at 82% 28%, rgba(242, 182, 50, 0.22) 0%, transparent 48%),
+    url("img/pokemon-nature-night.jpg") center 58% / cover no-repeat,
+    #131422;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .restock {
+    background:
+      linear-gradient(135deg, rgba(10, 12, 22, 0.70) 0%, rgba(10, 12, 22, 0.42) 48%, rgba(10, 12, 22, 0.78) 100%),
+      radial-gradient(circle at 88% 18%, rgba(140, 180, 255, 0.20) 0%, transparent 48%),
+      url("img/pokemon-restock-night.jpg") center 48% / cover no-repeat,
+      #131422;
+  }
+  :root:not([data-theme="light"]) .val-hero {
+    background:
+      linear-gradient(135deg, rgba(14, 16, 28, 0.76) 0%, rgba(14, 16, 28, 0.60) 48%, rgba(14, 16, 28, 0.84) 100%),
+      radial-gradient(circle at 82% 28%, rgba(242, 182, 50, 0.22) 0%, transparent 48%),
+      url("img/pokemon-nature-night.jpg") center 58% / cover no-repeat,
+      #131422;
+  }
+}
 .live-badge{display:inline-flex;align-items:center;gap:8px;padding:5px 12px;border:1px solid rgba(255,255,255,.25);border-radius:999px;font:600 .72rem/1 var(--pixel);letter-spacing:1px;text-transform:uppercase;color:var(--gold);background:rgba(14,16,28,.45);backdrop-filter:blur(4px)}
 .live-badge i{width:8px;height:8px;border-radius:50%;background:#ff4d3a;box-shadow:0 0 0 0 rgba(255,77,58,.7);animation:livePulse 1.6s infinite}
 @keyframes livePulse{70%{box-shadow:0 0 0 8px rgba(255,77,58,0)}100%{box-shadow:0 0 0 0 rgba(255,77,58,0)}}
