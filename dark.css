@@ -172,3 +172,9 @@ input.shop-search { border-color: #0b0c12; }
 
 /* "I lager"-chipsen på produktkorten: svart text i mörkt läge. */
 .c.in { color: #0b0c12; }
+
+/* Mobilmenyn och fokusmarkeringarna i mörkt läge: neutrala i stället för gula och orange. */
+.mm-sheet li a[aria-current=page] { background: var(--surface); color: var(--ink); }
+.menu-btn[aria-expanded=true] { background: var(--surface); color: var(--ink); border-color: var(--ink); }
+:focus-visible { outline-color: #e8eaf1; }
+.header-search:focus-within { box-shadow: 0 0 0 3px rgba(232, 234, 241, 0.25); }
