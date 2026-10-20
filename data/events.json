@@ -1,6 +1,19 @@
 {
- "updated": 1792498840010,
+ "updated": 1792502440096,
  "events": [
+  {
+   "at": 1792500145103,
+   "store": "toyspace",
+   "product": "toyspace:https://toyspace.se/pokemon-tcg-mega-evolution-blister-pok10055-101",
+   "group": "mega-evolution|booster-pack|en||boosterpaket",
+   "title": "Pokemon TCG: Mega Evolution - boosterpaket",
+   "url": "https://toyspace.se/pokemon-tcg-mega-evolution-blister-pok10055-101",
+   "price": 78,
+   "type": "Booster Pack",
+   "set": "Mega Evolution",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1792496250186,
    "store": "toyspace",
