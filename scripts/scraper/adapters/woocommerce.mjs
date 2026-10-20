@@ -21,7 +21,8 @@ export async function woocommerce(host, ctx) {
         const minor = p.prices?.currency_minor_unit ?? 2;
         items.push({
           pid: String(p.id),
-          title: p.name?.replace(/&#8211;/g, "–").replace(/&amp;/g, "&"),
+          // HTML-tecken i namnet: &amp;, &#038; (&), &#8211; (–), &#8217; (’) osv.
+          title: p.name?.replace(/&#(\d+);/g, (_, n) => String.fromCharCode(+n)).replace(/&amp;/g, "&").replace(/&quot;/g, '"').replace(/&apos;/g, "'"),
           url: p.permalink,
           price: Number(p.prices?.price) / 10 ** minor,
           currency: p.prices?.currency_code || "SEK",

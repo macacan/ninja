@@ -155,7 +155,8 @@ export async function createEngine({ statuses } = {}) {
           if (!o && isNew && !quiet && (p.available || p.preorder)) found.push({ ...base, kind: p.preorder && !p.available ? "forbestallning" : "ny" });
           else if (o && !o.available && !o.preorder && p.preorder && !p.available) found.push({ ...base, kind: "forbestallning" });
           else if (o && !o.available && p.available) found.push({ ...base, kind: "tillbaka" });
-          else if (o && (p.available || p.preorder) && p.price < o.price * 0.99) {
+          // Mer än 60 % billigare är nästan alltid fel valuta (dollar i stället för kronor), inte en rea.
+          else if (o && (p.available || p.preorder) && p.price < o.price * 0.99 && p.price >= o.price * 0.4) {
             // Pris som pendlar (rea av och på) ska inte ge en ny notis varje varv.
             const last = o.lastDrop;
             if (!last || now - last.at > DROP_COOLDOWN || p.price < last.price * 0.99) {
@@ -164,7 +165,14 @@ export async function createEngine({ statuses } = {}) {
             }
           }
         }
-        p.lastDrop ||= o?.lastDrop;
+        // Priset blev över tre gånger högre: det gamla var i fel valuta (dollarpriser från Shopify Markets,
+        // se adapters/shopify.mjs). Ta bort produktens falska prissänkningar och orimligt låga historikpunkter.
+        if (o && o.price > 0 && p.price > o.price * 3) {
+          delete p.lastDrop;
+          events = events.filter((ev) => !(ev.product === p.id && ev.kind === "prissankt"));
+          const pts = history[groupKey(p)];
+          if (pts) history[groupKey(p)] = pts.filter(([, v]) => v >= p.price * 0.35);
+        } else p.lastDrop ||= o?.lastDrop;
         merged.push(p);
       }
       // Delvis genomläsning (sitemap-butiker): behåll produkter vi inte hann läsa om, om de finns kvar i sitemapen.

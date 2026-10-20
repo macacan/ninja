@@ -294,7 +294,8 @@ try {
   const week = Date.now() - 7 * 864e5;
   for (const ev of events) {
     if (ev.at < week) continue;
-    if (ev.kind === "prissankt" && !recentDrop.has(ev.product)) recentDrop.set(ev.product, ev.from);
+    // Mer än 60 % lägre är nästan alltid ett valutafel (dollar i stället för kronor), inte en rea.
+    if (ev.kind === "prissankt" && !recentDrop.has(ev.product) && ev.price >= ev.from * 0.4) recentDrop.set(ev.product, ev.from);
     if (ev.kind === "ny") recentNew.add(ev.product);
   }
   // Sökning från länk, t.ex. butiker.html?q=Delta Reign#products

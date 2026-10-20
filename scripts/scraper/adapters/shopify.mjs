@@ -2,6 +2,10 @@
 // Jättebutiker (över maxPages × 250 produkter) läses i stället via sina Pokémon-kollektioner.
 import { generic } from "./generic.mjs";
 
+// Butiker med Shopify Markets visar priset i besökarens valuta. GitHub Actions kör från USA och fick
+// därför dollarpriser som sparades som kronor (1999 kr blev 207). Vi ber alltid uttryckligen om svenska priser.
+const SEK = "&currency=SEK&country=SE";
+
 // Kollektioner som bara innehåller sådant vi ändå inte bevakar: graderat, lösa kort, figurer, tillbehör.
 const SKIP_COLLECTION = /slab|psa|grad|single|lösa|losa|plush|gosedjur|figur|sleeve|binder|pärm|parm|playmat|tillbeh|accessor|mystery/i;
 
@@ -26,7 +30,7 @@ function toItem(host, p) {
 async function readList(host, path, maxPages, seen, items) {
   let page = 1, products = [];
   for (; page <= maxPages; page++) {
-    ({ products = [] } = await host.get(`${path}?limit=250&page=${page}`, { type: "json" }));
+    ({ products = [] } = await host.get(`${path}?limit=250&page=${page}${SEK}`, { type: "json" }));
     for (const p of products) {
       if (seen.has(p.id)) continue;
       seen.add(p.id);
@@ -46,11 +50,11 @@ async function pokemonCollections(host) {
     if (collections.length < 250) break;
   }
   return all.filter((c) => /pok[eé]mon/i.test(`${c.handle} ${c.title}`) && !SKIP_COLLECTION.test(c.handle) && c.products_count !== 0
-    && host.allowed(`/collections/${c.handle}/products.json?limit=250&page=1`));
+    && host.allowed(`/collections/${c.handle}/products.json?limit=250&page=1${SEK}`));
 }
 
 export async function shopify(host, ctx) {
-  if (!host.allowed("/products.json?limit=250&page=1")) return generic(host, ctx);
+  if (!host.allowed(`/products.json?limit=250&page=1${SEK}`)) return generic(host, ctx);
   const items = [], seen = new Set();
   // Jättebutik sedan tidigare: läs bara Pokémon-kollektionerna.
   if (ctx.state?.collections) {

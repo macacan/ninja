@@ -9,13 +9,29 @@ async function homeShop() {
   const el = $("#home-shop");
   if (!el.children.length) el.innerHTML = skeleton(4);
   try {
-    const [p, s] = await Promise.all(["data/products.json", "data/stores-status.json"].map((u) => fetch(u, { cache: "no-cache" }).then((r) => r.json())));
-    const names = Object.fromEntries(s.stores.map((x) => [x.id, x.name]));
-    // En per produkt: samma ETB från fem butiker ska bara synas en gång.
-    const seen = new Set();
-    const list = p.products.filter((x) => x.available && x.image).sort((a, b) => b.lastChange - a.lastChange)
-      .filter((x) => { const k = groupKey(x); return !seen.has(k) && seen.add(k); }).slice(0, 12);
-    el.innerHTML = list.map((x) => productCard(x, names[x.store])).join("") || '<div class="msg">Inget i lager just nu.</div>';
+    const [p, s, e] = await Promise.all(["data/products.json", "data/stores-status.json", "data/events.json"]
+      .map((u) => fetch(u, { cache: "no-cache" }).then((r) => r.json()).catch(() => ({}))));
+    const names = Object.fromEntries((s.stores || []).map((x) => [x.id, x.name]));
+    // Samma etiketter som på butikssidan: prissänkt eller nytt den senaste veckan.
+    const week = Date.now() - 7 * 864e5, drop = new Map(), fresh = new Set();
+    for (const ev of e.events || []) {
+      if (ev.at < week) continue;
+      if (ev.kind === "prissankt" && !drop.has(ev.product)) drop.set(ev.product, { from: ev.from, at: ev.at });
+      if (ev.kind === "ny") fresh.add(ev.product);
+    }
+    // Prissänkt räknas bara om priset fortfarande är lägre än före sänkningen. Mer än 60 % lägre är
+    // nästan alltid ett valutafel (dollar i stället för kronor) och visas inte.
+    const dropOf = (x) => { const d = drop.get(x.id); return d && x.price < d.from && x.price >= d.from * 0.4 ? d : null; };
+    // Prissänkta (senaste sänkningen först) varvas med det som ändrades senast, så att båda syns
+    // oavsett hur många kort som får plats på en rad. En per produkt: samma ETB från fem butiker visas en gång.
+    const seen = new Set(), once = (x) => { const k = groupKey(x); return !seen.has(k) && seen.add(k); };
+    const inStock = (p.products || []).filter((x) => x.available && x.image);
+    const drops = inStock.filter(dropOf).sort((a, b) => dropOf(b).at - dropOf(a).at).filter(once).slice(0, 6);
+    const latest = inStock.filter((x) => !dropOf(x)).sort((a, b) => b.lastChange - a.lastChange).filter(once).slice(0, 12 - drops.length);
+    const list = [];
+    for (let i = 0; list.length < drops.length + latest.length; i++) { if (drops[i]) list.push(drops[i]); if (latest[i]) list.push(latest[i]); }
+    el.innerHTML = list.map((x) => productCard(x, names[x.store], { drop: dropOf(x)?.from, isNew: fresh.has(x.id) })).join("")
+      || '<div class="msg">Inget i lager just nu.</div>';
     fillRows(el, 2);
   } catch { el.closest(".wrap") && (el.innerHTML = '<div class="msg">Butikslagret uppdateras snart.</div>'); }
 }
