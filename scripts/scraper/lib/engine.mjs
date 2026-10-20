@@ -91,7 +91,7 @@ export async function createEngine({ statuses } = {}) {
       const host = await hostFor(store);
       const before = host.requests;
       // Upp till 40 sidor: stora Shopify-butiker (Aquitaz, Dragon's Lair, RGB Kingz) har över 3 000 produkter.
-      const ctx = { maxPages: 40, pagesPerRun, sitemapMaxAge, state: (state[store.id] ||= {}), setNames: state.sets.names, listing: store.listing,
+      const ctx = { maxPages: 40, pagesPerRun, sitemapMaxAge, state: (state[store.id] ||= {}), setNames: state.sets.names, listing: store.listing, category: store.category,
         // Länkarna ska gå till butikens egen framsida, t.ex. productPath "/produkt/{handle}".
         productUrl: store.productPath && ((h) => `https://${store.domain}${store.productPath.replace("{handle}", encodeURIComponent(h))}`) };
       const raw = await ADAPTERS[store.platform](host, ctx);
@@ -118,7 +118,7 @@ export async function createEngine({ statuses } = {}) {
       }
       // Butiken visade bara andra valutor (t.ex. efter var anropet kom ifrån): ett fel, inte en tom butik.
       if (!list.length && foreign.size) throw new Error(`butiken visade priser i ${[...foreign].join(", ")}, inte SEK`);
-      return { ok: true, products: list, partial: raw.partial, known: raw.known, requests: host.requests - before, ms: Date.now() - t0, delay: host.delay };
+      return { ok: true, products: list, partial: raw.partial, known: raw.known, quiet: raw.quiet, requests: host.requests - before, ms: Date.now() - t0, delay: host.delay };
     } catch (e) {
       return { ok: false, error: e.message.slice(0, 160), ms: Date.now() - t0, blocked: !!e.blocked, retryAfter: e.retryAfter || 0 };
     }
@@ -142,7 +142,8 @@ export async function createEngine({ statuses } = {}) {
       // Bara den allra första lyckade kontrollen av en butik är tyst. Tidigare räckte ett enda fel (timeout)
       // för att nästa lyckade kontroll också blev tyst, och då missades påfyllningar.
       const firstRun = !prev?.lastOkAt && !prev?.ok && !old.length;
-      const quiet = (state.reclassify || []).includes(store.id);
+      // Tyst även när adaptern själv ber om det (t.ex. Webhallen första gången kategorin läses via API:et).
+      const quiet = (state.reclassify || []).includes(store.id) || !!res.quiet;
       const fresh = new Map(res.products.map((p) => [p.id, p]));
       const merged = [];
       for (const p of res.products) {
@@ -195,7 +196,7 @@ export async function createEngine({ statuses } = {}) {
       for (const o of old) if (!keep.has(o.id)) (gone[store.id] ||= {})[o.id] = { ...o, goneAt: now };
       for (const [id, t] of Object.entries(gone[store.id] || {})) if (now - t.goneAt > GONE_DAYS * 864e5) delete gone[store.id][id];
       products.set(store.id, merged);
-      if (quiet) state.reclassify = state.reclassify.filter((id) => id !== store.id);
+      if (quiet && state.reclassify) state.reclassify = state.reclassify.filter((id) => id !== store.id);
       events = [...found, ...events].slice(0, MAX_EVENTS);
     }
     status[store.id] = {
