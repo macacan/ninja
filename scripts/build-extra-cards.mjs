@@ -1,7 +1,13 @@
-// Mappar och sparar extra kortbilder som TCGdex saknar till data/card-images.json
-import { readFileSync, writeFileSync } from "node:fs";
+// Mappar och sparar extra kortbilder som TCGdex saknar till data/card-images.json.
+// Bilderna kommer från Scrydex, som tillåter att kortbilderna används (scrydex.com/docs, "Images").
+//   node scripts/build-extra-cards.mjs
+// Har du en kortlista från Scrydex API (data/me55c-cards.json, [{ id, images: { small, large } }]) används
+// adresserna i den, som Scrydex rekommenderar. Annars byggs adresserna från kortets Scrydex-id.
+import { readFileSync, writeFileSync, existsSync } from "node:fs";
 
-const me55c = JSON.parse(readFileSync("data/me55c-cards.json", "utf8"));
+const scrydexImages = (id) => ({ small: `https://images.scrydex.com/pokemon/${id}/small`, large: `https://images.scrydex.com/pokemon/${id}/large` });
+const me55c = existsSync("data/me55c-cards.json") ? JSON.parse(readFileSync("data/me55c-cards.json", "utf8")) : null;
+const lookup = (id) => (Array.isArray(me55c) ? me55c.find((m) => m.id === id) : null) || { id, images: scrydexImages(id) };
 
 const nameMap = {
   "Charizard": "me55c-4",
@@ -43,20 +49,14 @@ try {
   Object.assign(cardImages, JSON.parse(readFileSync("data/card-images.json", "utf8")));
 } catch {}
 
-if (Array.isArray(me55c)) {
-  for (const c of tcgdex.cards) {
-    let key = c.name;
-    if (c.id === "30th-c-019") key = "Darkrai & Cresselia LEGEND_top";
-    if (c.id === "30th-c-020") key = "Darkrai & Cresselia LEGEND_bot";
-    const pkmId = nameMap[key];
-    const found = me55c.find(m => m.id === pkmId);
-    if (found) {
-      cardImages[c.id] = {
-        low: found.images.small,
-        high: found.images.large
-      };
-    }
-  }
+for (const c of tcgdex.cards) {
+  let key = c.name;
+  if (c.id === "30th-c-019") key = "Darkrai & Cresselia LEGEND_top";
+  if (c.id === "30th-c-020") key = "Darkrai & Cresselia LEGEND_bot";
+  const pkmId = nameMap[key];
+  if (!pkmId) { console.warn(`Ingen Scrydex-bild för ${c.id} ${c.name}`); continue; }
+  const found = lookup(pkmId);
+  cardImages[c.id] = { low: found.images.small, high: found.images.large };
 }
 
 // Mew RGB Rare cards from 30th Celebration
