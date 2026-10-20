@@ -1,6 +1,6 @@
 {
  "_info": "Byggs av scripts/update-releases.mjs. Ändra inte här, ändra i data/releases.json.",
- "updated": 1792446705296,
+ "updated": 1792455585549,
  "releases": [
   {
    "id": "30th-celebration",
@@ -54,25 +54,6 @@
     "https://rarecandy.com/blog/pokemon-tcg-30th-celebration-release-calendar",
     "https://insider-gaming.com/pokemon-tcg-30th-celebration-release-date-pre-order/"
    ]
-  },
-  {
-   "id": "deck-crafter-s-collection-2026",
-   "set": "Deck Crafter's Collection 2026",
-   "language": "en",
-   "match": [
-    "Deck Crafter's Collection 2026"
-   ],
-   "auto": true,
-   "waves": [
-    {
-     "date": "2026-10-23",
-     "products": [
-      "Deck Crafter's Collection 2026"
-     ],
-     "auto": true
-    }
-   ],
-   "source": "https://bulbapedia.bulbagarden.net/wiki/Deck_Crafter's_Collection_2026_(TCG)"
   },
   {
    "id": "delta-reign",
@@ -133,7 +114,7 @@
  ],
  "sources": {
   "manual": true,
-  "bulbapedia": true,
+  "bulbapedia": false,
   "tcgdex": true
  }
 }
