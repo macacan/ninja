@@ -1,6 +1,19 @@
 {
- "updated": 1792515092452,
+ "updated": 1792518692892,
  "events": [
+  {
+   "at": 1792518514851,
+   "store": "dragon-s-lair",
+   "product": "dragon-s-lair:15554363064668",
+   "group": "prismatic-evolutions|premium-collection|en||super",
+   "title": "Pokemon TCG SV8.5: Prismatic Evolutions Super Premium Collection",
+   "url": "https://dragonslair.se/products/pokemon-tcg-sv85-prismatic-evolutions-super-premium-collection-pokemon",
+   "price": 3295,
+   "type": "Premium Collection",
+   "set": "Prismatic Evolutions",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1792515029726,
    "store": "bangerpack",
