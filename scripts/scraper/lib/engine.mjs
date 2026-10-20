@@ -2,7 +2,7 @@
 // Används både av run.mjs (en körning över alla butiker) och daemon.mjs (löpande, varannan minut).
 import { readFile, writeFile, mkdir, rename } from "node:fs/promises";
 import { Host } from "./http.mjs";
-import { classify } from "./classify.mjs";
+import { classify, CLASSIFY_VERSION } from "./classify.mjs";
 import { notify } from "./notify.mjs";
 import { shopify } from "../adapters/shopify.mjs";
 import { woocommerce } from "../adapters/woocommerce.mjs";
@@ -49,6 +49,11 @@ export async function createEngine({ statuses } = {}) {
   let events = (await readJSON("data/events.json", { events: [] })).events;
   const status = Object.fromEntries((await readJSON("data/stores-status.json", { stores: [] })).stores.map((s) => [s.id, s]));
   const hosts = new Map();
+  // Ny version av igenkänningen: varje butiks nästa lyckade kontroll sparar nyfunna produkter tyst.
+  if (state.classifyVersion !== CLASSIFY_VERSION) {
+    state.classifyVersion = CLASSIFY_VERSION;
+    state.reclassify = stores.map((s) => s.id);
+  }
   // Prishistorik: lägsta pris i lager per produktgrupp och dag. Sparas i data/price-history.json.
   const history = (await readJSON("data/price-history.json", { days: {} })).days || {};
   const HISTORY_DAYS = 180;
@@ -120,6 +125,7 @@ export async function createEngine({ statuses } = {}) {
       // Bara den allra första lyckade kontrollen av en butik är tyst. Tidigare räckte ett enda fel (timeout)
       // för att nästa lyckade kontroll också blev tyst, och då missades påfyllningar.
       const firstRun = !prev?.lastOkAt && !prev?.ok && !old.length;
+      const quiet = (state.reclassify || []).includes(store.id);
       const fresh = new Map(res.products.map((p) => [p.id, p]));
       const merged = [];
       for (const p of res.products) {
@@ -133,13 +139,13 @@ export async function createEngine({ statuses } = {}) {
         p.lastChange = o && o.available === p.available && o.price === p.price ? o.lastChange : now;
         // När produkten först kom i lager och först gick att förbeställa. Okänt (null) om den redan
         // var det första gången vi såg butiken, eftersom vi då inte vet när det hände.
-        const brandNew = !firstRun && (!o || isNew);
+        const brandNew = !firstRun && !(quiet && !o) && (!o || isNew);
         p.firstInStock = o?.firstInStock ?? (p.available && (o ? !o.available : brandNew) ? now : null);
         p.firstOrderable = o?.firstOrderable ?? (p.preorder && (o ? !o.preorder : brandNew) ? now : null);
         // Första gången vi ser en butik sparar vi bara läget, så att ingen får hundratals "nya" notiser.
         if (!firstRun) {
           const base = { at: now, store: store.id, product: p.id, group: groupKey(p), title: p.title, url: p.url, price: p.price, type: p.type, set: p.set, lang: p.lang };
-          if (!o && isNew && (p.available || p.preorder)) found.push({ ...base, kind: p.preorder && !p.available ? "forbestallning" : "ny" });
+          if (!o && isNew && !quiet && (p.available || p.preorder)) found.push({ ...base, kind: p.preorder && !p.available ? "forbestallning" : "ny" });
           else if (o && !o.available && !o.preorder && p.preorder && !p.available) found.push({ ...base, kind: "forbestallning" });
           else if (o && !o.available && p.available) found.push({ ...base, kind: "tillbaka" });
           else if (o && (p.available || p.preorder) && p.price < o.price * 0.99) {
@@ -161,6 +167,7 @@ export async function createEngine({ statuses } = {}) {
       for (const o of old) if (!keep.has(o.id)) (gone[store.id] ||= {})[o.id] = { ...o, goneAt: now };
       for (const [id, t] of Object.entries(gone[store.id] || {})) if (now - t.goneAt > GONE_DAYS * 864e5) delete gone[store.id][id];
       products.set(store.id, merged);
+      if (quiet) state.reclassify = state.reclassify.filter((id) => id !== store.id);
       events = [...found, ...events].slice(0, MAX_EVENTS);
     }
     status[store.id] = {

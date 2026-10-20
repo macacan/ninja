@@ -1,6 +1,12 @@
 // Avgör om en butiksprodukt är en förseglad Pokémon-produkt, och i så fall vilken typ, vilket språk och vilket set.
 
+import { readFileSync } from "node:fs";
+
 const POKEMON = /pok[eé]mon/i;
+
+// Höjs när igenkänningen ändras så att fler produkter räknas. Då sparas de nyfunna produkterna tyst
+// vid nästa kontroll av varje butik, i stället för att larmas som hundratals "nya" (se engine.mjs).
+export const CLASSIFY_VERSION = 2;
 
 // Ordningen spelar roll: mer specifika typer först.
 const TYPES = [
@@ -47,11 +53,38 @@ const LANGS = [
 // Tyska produkter tas inte med.
 const GERMAN = /\bdeutsch|tysk|\bger\b/i;
 
+// Många butiker skriver inte "Pokémon" i titeln ("30th Celebration Elite Trainer Box"). Då räcker det med
+// ett känt setnamn, en japansk/kinesisk setkod eller ett Pokémon-namn, så länge det inte är ett annat kortspel.
+const OTHER_TCG = /one piece|\bop-?\d{2}\b|yu-?gi-?oh|magic:? the gathering|\bmtg\b|lorcana|digimon|flesh (?:and|&) blood|dragon ball|weiss schwarz|union arena|star wars unlimited|riftbound|grand archive|metazoo|gundam|sorcery|altered|vanguard|battle spirits|shadowverse|final fantasy|kayou|naruto|hololive/i;
+// Pokémon-set från Japan och Kina som inte finns under engelskt namn hos TCGdex, plus vanliga produktnamn.
+const POKE_WORDS = /\b(?:mega evolution|30th celebration|terastal|shiny treasure|raging surf|abyss eye|black crystal|gem pack|mega (?:brave|symphonia|dream|inferno)|inferno x|pok[eé] ?ball|first partners?|lumiose|paldea\w*|night wanderer|stellar miracle|battle partners|hot wind arena|super electric breaker|cyber judge|wild force|crimson haze|mask of change|ruler of the black flame|snow hazard|clay burst|triplet beat|violet ex|scarlet ex|storm emerald\w*|azure legends)\b/i;
+// Setkoder som "SV4a", "SV8a", "M2", "M1L", "CSV5C", "CSV9.5C" (i parentes eller som eget ord).
+const SET_CODE = /\((?:c?sv\d{1,2}(?:\.\d)?[a-z]?c?|m\d{1,2}[a-z]?|s\d{1,2}[a-z]?)\)|\bc?sv\d{1,2}(?:\.\d)?[a-z]c?\b|\bcsv\d/i;
+// Setnamn som också är vanliga ord och därför inte räcker som bevis.
+const VAGUE_SETS = new Set(["dragon", "platinum", "emerald", "sample", "jungle", "fossil", "generations", "expedition", "unleashed", "wizards black star promos", "jumbo cards", "best of game", "w promotional", "miscellaneous promos"]);
+
+let MONS = null;
+function pokemonNames() {
+  if (MONS) return MONS;
+  try {
+    const d = JSON.parse(readFileSync(new URL("../../../data/pokemon-names.json", import.meta.url), "utf8"));
+    MONS = new Set((d.pokemon || []).map((p) => p.name.toLowerCase()).filter((n) => n.length >= 4));
+  } catch { MONS = new Set(); }
+  return MONS;
+}
+
+function looksPokemon(title, hits) {
+  if (POKEMON.test(title)) return true;
+  if (OTHER_TCG.test(title)) return false;
+  if (hits.some((s) => !VAGUE_SETS.has(s.toLowerCase())) || POKE_WORDS.test(title) || SET_CODE.test(title)) return true;
+  const words = title.toLowerCase().match(/[\p{L}'.-]+/gu) || [];
+  return words.some((w) => pokemonNames().has(w));
+}
+
 export function classify(title, setNames = [], seriesNames = []) {
-  if (!title || !POKEMON.test(title) || NOT_SEALED.test(title) || GERMAN.test(title)) return null;
+  if (!title || NOT_SEALED.test(title) || GERMAN.test(title)) return null;
   const type = TYPES.find(([, re]) => re.test(title))?.[0];
   if (!type) return null;
-  const lang = LANGS.find(([, re]) => re.test(title))?.[0] || "en";
   // Set som heter som sin serie ("Scarlet & Violet") står ofta med i titeln bara som serienamn,
   // så de får lägst prioritet. Annars vinner det längsta namnet.
   const low = title.toLowerCase();
@@ -60,6 +93,8 @@ export function classify(title, setNames = [], seriesNames = []) {
   // "Mega Evolutions" (felstavat serienamn) ska inte tolkas som XY-setet "Evolutions".
   const lowNoMega = low.replace(/mega evolutions?/g, " ");
   const hits = setNames.filter((s) => s === "Evolutions" ? /\bevolutions\b/.test(lowNoMega) && !/prismatic evolutions/.test(low) : (s.length > 3 ? low.includes(s.toLowerCase()) : /^\d{3}$/.test(s) && new RegExp(`\\b${s}\\b`).test(low)));
+  if (!looksPokemon(title, hits)) return null;
+  const lang = LANGS.find(([, re]) => re.test(title))?.[0] || "en";
   const set = hits.sort((a, b) => series.has(a.toLowerCase()) - series.has(b.toLowerCase()) || b.length - a.length)[0] || null;
   return { type, lang, set };
 }
