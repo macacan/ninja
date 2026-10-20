@@ -73,17 +73,27 @@ export function makeCloud(w, rand) {
 
 // Himmel i klassisk 8-bitarsstil: platta färgband med schackrutiga pixelövergångar.
 export const SKY = ["#8fd0ff", "#a6daff", "#bde4ff", "#d3eeff", "#e8f7ff"];
-export function buildSky(W, horizon) {
+// Kvällshimmel: mörkblått högst upp, ner mot en orange solnedgång vid horisonten.
+export const SKY_DUSK = ["#1d2150", "#343a78", "#6b3f86", "#b4587a", "#f08e5c"];
+// Nattlig himmel. Ljusare än den verkar, eftersom nattljuset läggs över hela scenen.
+export const SKY_NIGHT = ["#1e2a6e", "#2a3880", "#3a4a92", "#4a5ca0", "#5e70ae"];
+const isNight = () => document.documentElement.dataset.theme === "dark";
+// Scener som ska bygga om sig när man byter mellan ljust och mörkt läge.
+const sceneListeners = new Set();
+new MutationObserver(() => sceneListeners.forEach((f) => f())).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+// Månen: en tunn halvmåne i pixlar.
+const MOON = ["..yyy.", ".yy...", "yy....", "yy....", ".yy...", "..yyy."];
+export function buildSky(W, horizon, palette = SKY) {
   const c = document.createElement("canvas"); c.width = W; c.height = horizon;
   const g = c.getContext("2d");
-  const band = horizon / SKY.length;
+  const band = horizon / palette.length;
   for (let y = 0; y < horizon; y++) {
-    const i = Math.min(SKY.length - 1, Math.floor(y / band));
-    const next = SKY[Math.min(SKY.length - 1, i + 1)];
+    const i = Math.min(palette.length - 1, Math.floor(y / band));
+    const next = palette[Math.min(palette.length - 1, i + 1)];
     const intoBand = y - i * band;
-    g.fillStyle = SKY[i]; g.fillRect(0, y, W, 1);
+    g.fillStyle = palette[i]; g.fillRect(0, y, W, 1);
     // De två sista raderna i varje band blandas med nästa färg i ett rutmönster.
-    if (i < SKY.length - 1 && intoBand >= band - 2) {
+    if (i < palette.length - 1 && intoBand >= band - 2) {
       g.fillStyle = next;
       const step = intoBand >= band - 1 ? 2 : 4;
       for (let x = (y % 2) * (step / 2); x < W; x += step) g.fillRect(x, y, 1, 1);
@@ -92,7 +102,7 @@ export function buildSky(W, horizon) {
   return c;
 }
 
-function buildStatic(W, H, o, rand) {
+function buildStatic(W, H, o, rand, sign = null) {
   const c = document.createElement("canvas"); c.width = W; c.height = H;
   const g = c.getContext("2d");
   const px = (x, y, col) => { g.fillStyle = col; g.fillRect(x, y, 1, 1); };
@@ -100,20 +110,66 @@ function buildStatic(W, H, o, rand) {
   const gt = H - o.ground;
   const ph = [rand() * 9, rand() * 9, rand() * 9, rand() * 9];
 
+  const base = gt - 4, amp = Math.min(30, base - 6);
+  const hillAmp = Math.min(12, gt - 3);
+  const hillTop = (x) => gt - Math.round(hillAmp * (0.55 + 0.3 * Math.sin(x / 17 + ph[2]) + 0.15 * Math.sin(x / 7 + ph[3])));
+
+  // Skylten på berget, som Hollywoodskylten. Den sitter uppe till vänster där loggan brukar sitta (se signBox i
+  // mountScene) men alltid ovanför de gröna kullarna. Varje bokstavspixel blir s × s.
+  let signGeo = null;
+  if (o.sign && o.mountains) {
+    const word = [...o.sign.toUpperCase()].filter((ch) => GLYPH[ch]);
+    const s = H >= 90 ? 3 : 2;
+    const x0 = sign ? sign.x : 7;
+    const w = word.reduce((n, ch) => n + (GLYPH[ch][0].length + 1) * s, -s);
+    let hillMin = Infinity;
+    for (let x = x0 - 2; x < x0 + w + 2; x++) hillMin = Math.min(hillMin, hillTop(x));
+    const want = sign ? (sign.center ? sign.y - Math.round((5 * s) / 2) : sign.y) : 6;
+    signGeo = { word, s, x0, x1: x0 + w - 1, y: Math.max(4, Math.min(want, hillMin - 5 * s - 3)) };
+  }
+  // Under skylten reser sig berget till en kulle, så att bokstäverna står på bergssidan i stället för i luften.
+  const TAPER = 18;
+  const ridgeTop = (x) => {
+    if (!signGeo) return Infinity;
+    const d = x < signGeo.x0 - 4 ? signGeo.x0 - 4 - x : x > signGeo.x1 + 4 ? x - signGeo.x1 - 4 : 0;
+    if (d >= TAPER) return Infinity;
+    const top = signGeo.y - 3;
+    return top + Math.round(((base - top) * (1 - Math.cos((Math.PI * d) / TAPER))) / 2);
+  };
   if (o.mountains) {
-    const base = gt - 4;
-    const amp = Math.min(30, base - 6);
     for (let x = 0; x < W; x++) {
-      const h = Math.round(amp * (0.55 + 0.3 * Math.sin(x / 23 + ph[0]) + 0.15 * Math.sin(x / 9 + ph[1])));
-      const top = base - h;
+      const natural = base - Math.round(amp * (0.55 + 0.3 * Math.sin(x / 23 + ph[0]) + 0.15 * Math.sin(x / 9 + ph[1])));
+      const top = Math.min(natural, ridgeTop(x)), h = base - top;
       col(x, top, base + 1, "#c9d0f2");
       px(x, top, "#8f9bd0");
-      if (h > amp * 0.78) { col(x, top + 1, top + 3, "#ffffff"); px(x, top + 3, "#e6e9fa"); }
+      // Ingen snö på kullen med skylten, så att de vita bokstäverna syns.
+      if (h > amp * 0.78 && natural <= ridgeTop(x)) { col(x, top + 1, top + 3, "#ffffff"); px(x, top + 3, "#e6e9fa"); }
     }
   }
 
-  const hillAmp = Math.min(12, gt - 3);
-  const hillTop = (x) => gt - Math.round(hillAmp * (0.55 + 0.3 * Math.sin(x / 17 + ph[2]) + 0.15 * Math.sin(x / 7 + ph[3])));
+  if (signGeo) {
+    const { word, s, y } = signGeo;
+    const lit = [], letters = [];
+    let x = signGeo.x0;
+    for (const ch of word) {
+      const gw = GLYPH[ch][0].length;
+      GLYPH[ch].forEach((row, dy) => [...row].forEach((c, dx) => { if (c === "#") lit.push([x + dx * s, y + dy * s]); }));
+      letters.push([x, gw * s]);
+      x += (gw + 1) * s;
+    }
+    // Ben som håller bokstäverna och går ner i berget.
+    g.fillStyle = "#4b5080";
+    for (const [lx, lw] of letters) { g.fillRect(lx + 1, y + 5 * s, 1, 3); g.fillRect(lx + lw - 2, y + 5 * s, 1, 3); }
+    // Skugga på bergssidan, mörk kontur och vita bokstäver.
+    g.fillStyle = "#9ea8dc";
+    for (const [lx, ly] of lit) g.fillRect(lx + 2, ly + 2, s, s);
+    g.fillStyle = "#1b1b2f";
+    for (const [lx, ly] of lit) g.fillRect(lx - 1, ly - 1, s + 2, s + 2);
+    g.fillStyle = "#ffffff";
+    for (const [lx, ly] of lit) g.fillRect(lx, ly, s, s);
+    signGeo.lit = lit;
+  }
+
   for (let x = 0; x < W; x++) { const t = hillTop(x); col(x, t, gt + 1, "#c8ead9"); px(x, t, "#7fc4a6"); }
 
   const trees = [];
@@ -215,6 +271,7 @@ function buildStatic(W, H, o, rand) {
   }
 
   // Ninjans kortbutik längs vägen: randig markis, skylt och skyltfönster.
+  const shopLamps = [];
   if (o.shop && W > 200) {
     const x0 = Math.round(W * 0.88) - 13, bottom = gt + 10, top = bottom - 15;
     g.fillStyle = "#1b1b2f"; g.fillRect(x0 - 1, top - 8, 28, 24);
@@ -231,6 +288,8 @@ function buildStatic(W, H, o, rand) {
       g.fillStyle = "#8ec5ff"; g.fillRect(wx, top + 9, 5, 4);
       g.fillStyle = "#ffffff"; g.fillRect(wx, top + 9, 1, 2);
       g.fillStyle = "#f2b8a4"; g.fillRect(wx + 2, top + 11, 2, 2);
+      // Kvällsljus: fönstrets lampa (se draw i mountScene).
+      shopLamps.push({ x: wx + 2, y: top + 11, wx, wy: top + 9 });
     }
   }
 
@@ -240,14 +299,37 @@ function buildStatic(W, H, o, rand) {
     if (o.path && y >= H - 15 && y <= H - 8) continue;
     px(x, y, flowers[i % flowers.length]);
   }
-  return { canvas: c, gt, hillTop, trees };
+  return { canvas: c, gt, hillTop, trees, sign: signGeo, shopLamps };
 }
+
+// Bokstäverna till skylten på berget (5 pixlar höga).
+const GLYPH = {
+  P: ["###.", "#..#", "###.", "#...", "#..."], A: [".##.", "#..#", "####", "#..#", "#..#"],
+  C: [".###", "#...", "#...", "#...", ".###"], K: ["#..#", "#.#.", "##..", "#.#.", "#..#"],
+  N: ["#..#", "##.#", "#.##", "#..#", "#..#"], I: ["###", ".#.", ".#.", ".#.", "###"],
+  J: ["..##", "...#", "...#", "#..#", ".##."],
+};
 
 export function mountScene(canvas, opts = {}) {
   const o = { height: 100, ground: 26, mountains: true, trees: true, pond: true, path: true, ninja: true, ninjaDir: 1, blob: true, birds: true, sky: true, seed: 7, ...opts };
   const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
-  let W, H, scene, sky, clouds, tufts, birds, frame = 0, ninjaX, blobX, timer, events = [], nextEvent = 40, rand;
+  let W, H, scene, sky, clouds, tufts, birds, stars = [], frame = 0, ninjaX, blobX, timer, events = [], nextEvent = 40, rand;
   const ctx = canvas.getContext("2d");
+
+  // Var skylten på berget ska sitta, i scenens pixlar. Scenen börjar där headern börjar (se heroUnderHeader i home.js).
+  // På mobilen ritas scenen ovanpå headern, så skylten tar loggans plats. På dator ligger headern med loggan
+  // över scenen, så skylten hamnar under headern i linje med loggan.
+  function signBox(scale) {
+    const logo = document.querySelector(".site-header .logo"), header = logo?.closest(".site-header");
+    if (!logo) return null;
+    const l = logo.getBoundingClientRect(), h = header.getBoundingClientRect(), c = canvas.getBoundingClientRect();
+    const onTop = getComputedStyle(header).position === "static";
+    return {
+      x: Math.max(2, Math.round((l.left - c.left) / scale)),
+      y: Math.round((onTop ? l.top + l.height / 2 - h.top : h.height + 12) / scale),
+      center: onTop,
+    };
+  }
 
   function setup() {
     if (!canvas.clientWidth) return;
@@ -259,9 +341,12 @@ export function mountScene(canvas, opts = {}) {
     // Exakt heltalsskala på höjden, annars blir pixlarna olika stora.
     canvas.style.height = `${H * scale}px`;
     rand = rng(o.seed);
-    scene = buildStatic(W, H, o, rand);
+    scene = buildStatic(W, H, o, rand, o.sign ? signBox(scale) : null);
     events = [];
-    sky = o.sky ? buildSky(W, scene.gt + 1) : null;
+    sky = o.sky ? buildSky(W, scene.gt + 1, isNight() ? SKY_NIGHT : SKY) : null;
+    // Stjärnorna får en egen slumpföljd, så att dagscenerna inte ändras.
+    const sr = rng(o.seed + 99);
+    stars = Array.from({ length: Math.round(W / 5) }, () => ({ x: Math.floor(sr() * W), y: Math.floor(sr() * Math.max(4, scene.gt - 22)), ph: Math.floor(sr() * 23), c: sr() < 0.2 ? "#fff3b0" : "#ffffff" }));
     const skyH = Math.max(scene.gt - 24, 6);
     clouds = Array.from({ length: Math.max(2, Math.round(W / 70)) }, (_, i) => ({
       img: makeCloud(18 + Math.floor(rand() * 18), rand),
@@ -281,6 +366,7 @@ export function mountScene(canvas, opts = {}) {
     ninjaX = o.ninjaDir > 0 ? -14 : W + 2;
     draw();
   }
+  sceneListeners.add(setup);
 
   // ---------- Slumpade händelser ----------
   // Varje händelse har en egen livslängd och ritas i rätt lager (himmel eller mark).
@@ -338,8 +424,15 @@ export function mountScene(canvas, opts = {}) {
   }
 
   function draw() {
+    const night = isNight();
     ctx.clearRect(0, 0, W, H);
     if (sky) ctx.drawImage(sky, 0, 0);
+    if (night) {
+      // Stjärnorna blinkar var för sig, och månen står i övre vänstra hörnet.
+      for (const s of stars) if ((frame + s.ph) % 23 < 18) { ctx.fillStyle = s.c; ctx.fillRect(s.x, s.y, 1, 1); }
+      const mx = Math.round(W * 0.14);
+      MOON.forEach((row, j) => [...row].forEach((ch, i) => { if (ch === "y") { ctx.fillStyle = "#fff6c9"; ctx.fillRect(mx + i, 3 + j, 1, 1); } }));
+    }
     for (const c of clouds) ctx.drawImage(c.img, Math.round(c.x), c.y);
     drawEvents("sky");
     for (const b of birds) drawSprite(ctx, Math.floor(frame / 3) % 2 ? SPRITES.birdA : SPRITES.birdB, Math.round(b.x), b.y);
@@ -369,6 +462,7 @@ export function mountScene(canvas, opts = {}) {
 
     drawEvents("ground");
 
+    let torch = null;
     if (o.ninja && o.path) {
       const jump = events.find((e) => e.type === "jump");
       const hop = jump ? [0, 2, 4, 5, 6, 6, 5, 4, 2, 0][jump.age] || 0 : 0;
@@ -377,6 +471,53 @@ export function mountScene(canvas, opts = {}) {
       drawSprite(ctx, Math.floor(frame / 3) % 2 ? SPRITES.ninjaA : SPRITES.ninjaB, Math.round(ninjaX), y, flip);
       const sx = flip ? Math.round(ninjaX) - 2 : Math.round(ninjaX) + 11;
       drawSprite(ctx, Math.floor(frame / 5) % 2 ? SPRITES.sparkA : SPRITES.sparkB, sx, y + 6);
+      // Facklan bärs i handen. Den ritas efter nattljuset, så att lågan syns klart.
+      if (night) torch = { x: flip ? Math.round(ninjaX) - 2 : Math.round(ninjaX) + 12, y: y + 2 };
+    }
+
+    if (night) {
+      // Nattljus: en blå multiplicering över hela scenen, så att dagens färger blir mörka och mjuka.
+      ctx.globalCompositeOperation = "multiply";
+      ctx.fillStyle = "#8f97cf";
+      ctx.fillRect(0, 0, W, H);
+      ctx.globalCompositeOperation = "source-over";
+      // Butikens fönster lyser inifrån, med ett svagt ljusskenet ut över gatan.
+      for (const { x, y, wx, wy } of scene.shopLamps || []) {
+        const gr = ctx.createRadialGradient(x, y, 0, x, y, 11);
+        gr.addColorStop(0, "rgba(255,210,140,.22)"); gr.addColorStop(1, "rgba(255,210,140,0)");
+        ctx.save(); ctx.globalCompositeOperation = "lighter"; ctx.fillStyle = gr; ctx.fillRect(x - 11, y - 11, 22, 22); ctx.restore();
+        ctx.fillStyle = "#fff0c0"; ctx.fillRect(wx, wy, 5, 4);
+      }
+      // Skylten på berget är upplyst på natten: strålkastare underifrån och varmvita bokstäver ovanpå nattljuset.
+      if (scene.sign?.lit) {
+        const { lit, s, x0, x1, y } = scene.sign;
+        const beam = ctx.createLinearGradient(0, y + 5 * s + 3, 0, y - 4);
+        beam.addColorStop(0, "rgba(255,214,140,.38)");
+        beam.addColorStop(1, "rgba(255,214,140,0)");
+        ctx.globalCompositeOperation = "lighter";
+        ctx.fillStyle = beam;
+        ctx.fillRect(x0 - 3, y - 4, x1 - x0 + 7, 5 * s + 7);
+        ctx.globalCompositeOperation = "source-over";
+        ctx.fillStyle = "#14142a";
+        for (const [lx, ly] of lit) ctx.fillRect(lx - 1, ly - 1, s + 2, s + 2);
+        ctx.fillStyle = "#fff4cf";
+        for (const [lx, ly] of lit) ctx.fillRect(lx, ly, s, s);
+      }
+    }
+    if (torch) {
+      const { x: tx, y: ty } = torch;
+      // Ljusskenet runt facklan, som flimrar med lågan.
+      const glow = ctx.createRadialGradient(tx, ty, 0, tx, ty, 12);
+      glow.addColorStop(0, `rgba(255,190,90,${frame % 2 ? 0.55 : 0.45})`);
+      glow.addColorStop(1, "rgba(255,190,90,0)");
+      ctx.globalCompositeOperation = "lighter";
+      ctx.fillStyle = glow;
+      ctx.fillRect(tx - 12, ty - 12, 24, 24);
+      ctx.globalCompositeOperation = "source-over";
+      // Skaftet och lågan, som flaxar mellan två bilder.
+      ctx.fillStyle = "#6b4325"; ctx.fillRect(tx, ty, 1, 4);
+      ctx.fillStyle = "#ff8a3d"; ctx.fillRect(tx - 1, ty - 2, 3, 2);
+      ctx.fillStyle = "#ffd34d"; ctx.fillRect(tx, ty - 3 - (frame % 2), 1, 2);
     }
   }
 
@@ -420,6 +561,8 @@ const ICONS = {
   info: ["..kkkkkk..", ".kbbbbbbk.", "kbbbwwbbbk", "kbbbbbbbbk", "kbbbwwbbbk", "kbbbwwbbbk", "kbbbwwbbbk", "kbbbwwbbbk", ".kbbbbbbk.", "..kkkkkk.."],
   search: ["..kkkk....", ".kwwwwk...", "kwbwwwwk..", "kwwwwwwk..", "kwwwwwwk..", ".kwwwwk...", "..kkkkkk..", "......kkk.", ".......kkk", "........kk"],
   camera: ["..........", "..kkk.....", ".kkkkkkkk.", "knnnkkknnk", "knnkbbkrnk", "knkbwbbknk", "knkbbbbknk", "knnkbbknnk", "knnnkknnnk", ".kkkkkkkk."],
+  bell: ["....kk....", "...kyyk...", "..kyywyk..", "..kyywyk..", "..kyyyyk..", ".kyyyyyyk.", "kyyyyyyyyk", "kkkkkkkkkk", "....kk....", ".........."],
+  phone: ["..kkkkkk..", "..kwwwwk..", "..kbbbbk..", "..kbwbbk..", "..kbbbbk..", "..kbbbbk..", "..kbbbbk..", "..kwwwwk..", "..kwkkwk..", "..kkkkkk.."],
   shop: ["..kkkkkk..", ".k......k.", "kkkkkkkkkk", "krwrwrwrwk", "kkkkkkkkkk", ".kwwwwwwk.", ".kwkkwwwk.", ".kwkkwbwk.", ".kwkkwwwk.", ".kkkkkkkk."],
 };
 
@@ -434,7 +577,7 @@ export function icon(name, size = 22) {
 export function mountAllScenes() {
   const presets = {
     // Startsidans landskap: hela scenen i dubbel skala, så att den blir hälften så hög som förut.
-    hero: { height: 112, smallHeight: 58, scale: 2, ground: 26, seed: 7, shop: true },
+    hero: { height: 112, smallHeight: 58, scale: 2, ground: 26, seed: 7, shop: true, sign: "PACKNINJA" },
     // Remsan under sidrubrikerna: lägre och i mindre skala, så att sidhuvudet inte tar halva skärmen.
     strip: { height: 30, smallHeight: 24, ground: 9, scale: 2, mountains: false, pond: false, path: false, ninja: false, seed: 21 },
     footer: { height: 52, ground: 22, mountains: false, pond: true, ninjaDir: -1, seed: 3 },

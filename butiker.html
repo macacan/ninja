@@ -92,61 +92,74 @@
 
     <section id="tab-notiser" hidden>
       <div class="section"><h2>Notiser</h2></div>
-      <p class="lead-sm">Ninjan säger till när något du vill ha dyker upp. Ställ in kanal och urval här. Inställningarna stannar i din webbläsare, inget konto behövs.</p>
+      <div class="ntf">
+        <div class="ntf-intro">
+          <p>Ninjan säger till när något du vill ha dyker upp. Välj hur du vill få besked och vad du bryr dig om. Allt sparas i din webbläsare, inget konto behövs.</p>
+          <div class="ntf-status">
+            <span><small>Kanal</small><em id="sum-channels">Inget valt</em></span>
+            <span><small>Notiser</small><em id="sum-watch">0</em></span>
+          </div>
+        </div>
 
-      <div class="acc">
-        <h3 class="acc-group">1. Kanal</h3>
-        <details class="acc-row" id="acc-channels">
-          <summary><span><b>Var ninjan ska höra av sig</b><small>I webbläsaren eller i mobilen</small></span><em id="sum-channels">Inget valt</em></summary>
-          <div class="acc-body">
-            <div class="channel">
+        <h3 class="ntf-step"><i>1</i>Hur du får besked</h3>
+        <div class="ntf-channels">
+          <article class="ntf-chan">
+            <span class="ntf-ic" data-icon="bell" data-size="26"></span>
+            <div>
               <b>I webbläsaren</b>
-              <p class="muted">Notiser när något i ditt urval händer, så länge Ninjaloot är öppen i en flik.</p>
+              <p class="muted">Ett pling när något i ditt urval händer, så länge Ninjaloot är öppen i en flik.</p>
               <button class="btn small" id="p-browser" type="button">Slå på webbläsarnotiser</button>
             </div>
-            <div class="channel">
+          </article>
+          <article class="ntf-chan">
+            <span class="ntf-ic" data-icon="phone" data-size="26"></span>
+            <div>
               <b>I mobilen med ntfy</b>
-              <p class="muted">Gratis app utan konto. Installera <a href="https://ntfy.sh" target="_blank" rel="noopener">ntfy</a> för Android eller iPhone och prenumerera på ett ämne. Notiserna kommer även när sidan är stängd. Mobilnotiserna följer ämnet du väljer, inte urvalet nedan.</p>
+              <p class="muted">Gratis app utan konto. Installera <a href="https://ntfy.sh" target="_blank" rel="noopener">ntfy</a> och prenumerera på ett ämne, så kommer notiserna även när sidan är stängd. Mobilen följer ämnet du väljer, inte urvalet nedan.</p>
               <ul class="topics" id="topics"></ul>
             </div>
-          </div>
-        </details>
-
-        <h3 class="acc-group">2. Urval</h3>
-        <details class="acc-row">
-          <summary><span><b>Butiker</b><small>Bocka för butikerna du handlar i</small></span><em id="sum-stores"></em></summary>
-          <div class="acc-body"><div class="acc-tools"><input type="search" class="acc-find" data-for="p-stores" placeholder="Sök butik…" aria-label="Sök butik"><button type="button" class="link" data-all="p-stores">Alla</button><button type="button" class="link" data-none="p-stores">Inga</button></div><div class="checks" id="p-stores"></div></div>
-        </details>
-        <details class="acc-row">
-          <summary><span><b>Händelser</b><small>Nytt, påfyllt, förbeställning eller billigare</small></span><em id="sum-kinds"></em></summary>
-          <div class="acc-body"><div class="checks" id="p-kinds"></div></div>
-        </details>
-        <details class="acc-row">
-          <summary><span><b>Pokémon-set</b><small>Bara de set du samlar på</small></span><em id="sum-sets"></em></summary>
-          <div class="acc-body"><div class="acc-tools"><input type="search" class="acc-find" data-for="p-sets" placeholder="Sök set…" aria-label="Sök set"><button type="button" class="link" data-all="p-sets">Alla</button><button type="button" class="link" data-none="p-sets">Inga</button></div><div class="checks" id="p-sets"></div></div>
-        </details>
-        <details class="acc-row">
-          <summary><span><b>Smalna av mer</b><small>Språk, sorts produkt och högsta pris</small></span><em id="sum-more"></em></summary>
-          <div class="acc-body">
-            <fieldset><legend>Språk</legend><div class="checks" id="p-langs"></div></fieldset>
-            <fieldset><legend>Produkttyper</legend><div class="checks" id="p-types"></div></fieldset>
-            <fieldset><legend>Maxpris</legend><label class="price-cap"><input id="p-max" type="number" min="0" step="50" inputmode="numeric" placeholder="Inget tak"> kr</label></fieldset>
-          </div>
-        </details>
-
-        <div class="acc-actions">
-          <button class="btn primary" id="p-save" type="button">Spara mina val</button>
-          <button class="btn small" id="p-reset" type="button">Börja om</button>
-          <a class="more" href="#products" data-goto="products">Till lagret</a>
-          <span id="p-status" class="muted" role="status"></span>
+          </article>
         </div>
-        <p class="acc-match" id="p-match"></p>
 
-        <details class="acc-row" id="acc-watch">
-          <summary><span><b>Mina klockor</b><small>Produkter du har tryckt på klockan för. Dem hör du alltid om.</small></span><em id="sum-watch">0</em></summary>
-          <div class="acc-body"><ul class="watch-list" id="watch-list"></ul></div>
-        </details>
-        <p class="muted" style="margin:12px 0 0">Notiser kan dröja eller utebli. Läs mer i <a href="villkor.html#t7">användarvillkoren</a>.</p>
+        <h3 class="ntf-step"><i>2</i>Vad du får besked om</h3>
+        <div class="ntf-list">
+          <details class="ntf-row">
+            <summary><span class="ntf-ic" data-icon="shop" data-size="22"></span><span><b>Butiker</b><small>Bocka för butikerna du handlar i</small></span><em id="sum-stores"></em></summary>
+            <div class="ntf-body"><div class="ntf-tools"><input type="search" class="acc-find" data-for="p-stores" placeholder="Sök butik…" aria-label="Sök butik"><button type="button" class="link" data-all="p-stores">Alla</button><button type="button" class="link" data-none="p-stores">Inga</button></div><div class="checks" id="p-stores"></div></div>
+          </details>
+          <details class="ntf-row">
+            <summary><span class="ntf-ic" data-icon="bell" data-size="22"></span><span><b>Händelser</b><small>Nytt, påfyllt, förbeställning eller billigare</small></span><em id="sum-kinds"></em></summary>
+            <div class="ntf-body"><div class="checks" id="p-kinds"></div></div>
+          </details>
+          <details class="ntf-row">
+            <summary><span class="ntf-ic" data-icon="card" data-size="22"></span><span><b>Pokémon-set</b><small>Bara de set du samlar på</small></span><em id="sum-sets"></em></summary>
+            <div class="ntf-body"><div class="ntf-tools"><input type="search" class="acc-find" data-for="p-sets" placeholder="Sök set…" aria-label="Sök set"><button type="button" class="link" data-all="p-sets">Alla</button><button type="button" class="link" data-none="p-sets">Inga</button></div><div class="checks" id="p-sets"></div></div>
+          </details>
+          <details class="ntf-row">
+            <summary><span class="ntf-ic" data-icon="search" data-size="22"></span><span><b>Fler filter</b><small>Språk, sorts produkt och högsta pris</small></span><em id="sum-more"></em></summary>
+            <div class="ntf-body">
+              <fieldset><legend>Språk</legend><div class="checks" id="p-langs"></div></fieldset>
+              <fieldset><legend>Produkttyper</legend><div class="checks" id="p-types"></div></fieldset>
+              <fieldset><legend>Maxpris</legend><label class="price-cap"><input id="p-max" type="number" min="0" step="50" inputmode="numeric" placeholder="Inget tak"> kr</label></fieldset>
+            </div>
+          </details>
+        </div>
+
+        <div class="ntf-bar">
+          <p class="ntf-match" id="p-match"></p>
+          <span id="p-status" class="ntf-saved" role="status"></span>
+          <div class="ntf-actions">
+            <button class="btn small" id="p-reset" type="button">Börja om</button>
+            <button class="btn primary" id="p-save" type="button">Spara mina val</button>
+          </div>
+        </div>
+
+        <h3 class="ntf-step"><i>3</i>Mina notiser</h3>
+        <div class="ntf-watch">
+          <p class="muted">Produkter du tryckt på klockan för under <a href="#products" data-goto="products">Produkter</a>. Dem hör du alltid om, oavsett urvalet ovan.</p>
+          <ul class="watch-list" id="watch-list"></ul>
+        </div>
+        <p class="muted ntf-fine">Notiser kan dröja eller utebli. Läs mer i <a href="villkor.html#t7">användarvillkoren</a>.</p>
       </div>
     </section>
 

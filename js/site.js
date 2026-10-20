@@ -20,22 +20,27 @@ const THEME_ICON = `<svg width="22" height="22" viewBox="0 0 24 24" aria-hidden=
 const ICONS = ["★", "✦", "♦", "●"];
 
 const NAV = [
-  ["index.html", "Hem", "home"],
-  ["slapp.html", "Släpp", "calendar"],
-  ["butiker.html", "Butiker", "shop"],
-  ["priser.html", "Kortpriser", "coin"],
-  ["vardering.html", "Värdering", "card"],
-  ["nyheter.html", "Nyheter", "news"],
+  ["index.html", "Hem"],
+  ["slapp.html", "Släpp"],
+  ["butiker.html#products", "Produkter"],
+  ["priser.html", "Kortpriser"],
+  ["vardering.html", "Värdering"],
+  ["nyheter.html", "Nyheter"],
 ];
 
+// Filnamnet för sidan man är på (artikel.html hör till Nyheter).
+const pageOf = () => ({ "artikel.html": "nyheter.html" }[location.pathname.split("/").pop()] || location.pathname.split("/").pop() || "index.html");
+
 function header() {
-  const here = { "artikel.html": "nyheter.html" }[location.pathname.split("/").pop()] || location.pathname.split("/").pop() || "index.html";
+  const here = pageOf();
+  // På mobilen visas sidans namn i loggan i stället för "Ninjaloot" (startsidan behåller namnet).
+  const mobileTitle = here === "index.html" ? "Ninjaloot" : NAV.find(([href]) => href.split("#")[0] === here)?.[1] || "Ninjaloot";
   return `<a class="skip" href="#main">Hoppa till innehållet</a>
   <div class="ticker" aria-label="Senaste info"><div class="ticker-track" id="ticker"></div></div>
   <header class="site-header"><div class="wrap">
-    <a class="logo" href="index.html"><img src="logo.svg" alt=""><span><b>Ninjaloot</b><small>Kortsläpp & priser</small></span></a>
+    <a class="logo" href="index.html"><img src="logo.svg" alt=""><span><b class="brand-desk">Ninjaloot</b><b class="brand-mob">${esc(mobileTitle)}</b><small>Kortsläpp & priser</small></span></a>
     <nav class="main-nav" aria-label="Huvudmeny"><ul>
-      ${NAV.map(([href, label, ic]) => `<li><a href="${href}"${href === here ? ' aria-current="page"' : ""}>${icon(ic, 18)}${label}</a></li>`).join("")}
+      ${NAV.map(([href, label]) => `<li><a href="${href}"${href.split("#")[0] === here ? ' aria-current="page"' : ""}>${label}</a></li>`).join("")}
     </ul></nav>
     <form id="header-search" class="header-search" action="${searchTarget()}" role="search">
       <input type="search" name="q" placeholder="Sök kort, t.ex. Pikachu" aria-label="Sök kort">
@@ -49,14 +54,14 @@ function header() {
 
 // Mobilen: hamburgerknappen sitter i headern och öppnar menyn med alla sidor och sökfältet.
 function tabbar() {
-  const here = { "artikel.html": "nyheter.html" }[location.pathname.split("/").pop()] || location.pathname.split("/").pop() || "index.html";
+  const here = pageOf();
   return `<div class="mobile-menu" id="mobile-menu" hidden>
     <div class="mm-sheet" role="dialog" aria-label="Meny">
       <button type="button" class="mm-close" aria-label="Stäng menyn">✕</button>
       <form class="mm-search" action="${searchTarget()}" role="search">
         <input type="search" name="q" placeholder="Sök kort, t.ex. Pikachu" aria-label="Sök kort">
       </form>
-      <ul>${NAV.map(([href, label, ic]) => `<li><a href="${href}"${href === here ? ' aria-current="page"' : ""}>${icon(ic, 26)}<span>${label}</span></a></li>`).join("")}</ul>
+      <ul>${NAV.map(([href, label]) => `<li><a href="${href}"${href.split("#")[0] === here ? ' aria-current="page"' : ""}>${label}</a></li>`).join("")}</ul>
       <button type="button" class="mm-theme" data-theme-toggle>${THEME_ICON}<span>Mörkt läge</span></button>
     </div>
   </div>`;
@@ -120,7 +125,8 @@ export function mountChrome() {
     document.body.classList.toggle("menu-open", open);
   };
   // Hamburgaren ligger fast uppe till höger: i sidans topp på raden med loggan, och högst upp i fönstret när man scrollat.
-  const placeMenuBtn = () => menuBtn.style.setProperty("--menu-top", Math.max(8, menuBtn.parentElement.getBoundingClientRect().top + 8) + "px");
+  // Sätts på <html> så att även menyns sökrad (som ligger utanför headern) kan följa knappens läge.
+  const placeMenuBtn = () => document.documentElement.style.setProperty("--menu-top", Math.max(8, menuBtn.parentElement.getBoundingClientRect().top + 8) + "px");
   addEventListener("scroll", placeMenuBtn, { passive: true });
   addEventListener("resize", placeMenuBtn);
   placeMenuBtn();

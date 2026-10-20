@@ -6,14 +6,15 @@ import { recordCard, mountRecent } from "./recent.js";
 import { mountCardAutocomplete } from "./card-autocomplete.js";
 import { CONDITIONS, DEFAULT_COND, gradeMult, isVintage } from "./valuation.js";
 import { openScanner, narrowByTotal, rankByLook } from "./card-scanner.js";
+import { showReveal } from "./card-reveal.js";
 
-// Fyra kriterier, fem svar vardera med delbetyg.
+// Fyra kriterier, som graderingsbolagen: centrering, hörn, kanter och yta. Smuts ingår i ytan.
+// Varje kriterium har fem svar, och varje svar har ett delbetyg.
 const CRITERIA = [
   ["Centrering", "Hur jämna ramarna är runt bilden", [["Nästan perfekt", 10], ["Bra", 9], ["Märkbart sned", 8], ["Tydligt sned", 6], ["Mycket sned", 3]]],
   ["Hörn", "Titta efter vitning och avrundning", [["Skarpa, ingen vitning", 10], ["Minimal vitning", 9], ["Lite vitning", 8], ["Tydlig vitning eller rundade", 6], ["Skadade eller vikta", 1]]],
   ["Kanter", "Vita prickar och hack längs kanten", [["Rena och raka", 10], ["Någon liten prick", 9], ["Några vita prickar", 8], ["Tydlig kantvitning", 6], ["Sprickor eller flagor", 1]]],
-  ["Yta", "Repor och trycklinjer i vinklat ljus", [["Inga repor eller linjer", 10], ["Enstaka hårfin repa", 9], ["Några lätta repor", 8], ["Tydliga repor eller trycklinjer", 6], ["Intryck, veck eller skador", 1]]],
-  ["Smuts", "Svarta prickar, bruna fläckar och matt glans", [["Rent och blankt", 10], ["Någon liten prick", 9], ["Några prickar eller en liten fläck", 8], ["Fläckar och mattare glans", 6], ["Smutsigt eller fuktfläckar", 1]]],
+  ["Yta", "Repor, trycklinjer, fläckar och matt glans", [["Inga repor, fläckar eller matthet", 10], ["Enstaka hårfin repa eller liten prick", 9], ["Några lätta repor eller matt glans", 8], ["Tydliga repor, trycklinjer eller fläckar", 6], ["Intryck eller stora skador", 1]]],
 ];
 
 // ---------- Skadorna på kortbilden ----------
@@ -150,7 +151,9 @@ function cornerWear(R, len, w) {
 
 function drawDamage() {
   if (!dmg) return;
-  const [cen, cor, edg, sur, dir] = state.crit;
+  const [cen, cor, edg, sur] = state.crit;
+  // Smuts ingår i ytan, så fläckarna och den matta glansen följer ytreglaget.
+  const dir = sur;
   const ramp = (L, t, w = 0.5) => clamp01((L - t) / w);
 
   // Centrering
@@ -183,7 +186,7 @@ function drawDamage() {
   dmg.dent.style.opacity = ramp(sur, 3.75, 0.25);
   dmg.scuffs.forEach((d) => d.el.setAttribute("opacity", f2(ramp(sur, d.t, 0.35))));
 
-  // Smuts: prickarna växer fram, fläckarna tonas in och glansen blir mattare.
+  // Smuts (del av ytan): prickarna växer fram, fläckarna tonas in och glansen blir mattare.
   dmg.specks.forEach((d) => d.el.setAttribute("r", f2(d.r * ramp(dir, d.t, 0.3))));
   dmg.stains.forEach((d) => d.el.setAttribute("opacity", f2(ramp(dir, d.t, 0.5))));
   const dull = clamp01((dir - 1.5) / 2.5);
@@ -192,7 +195,7 @@ function drawDamage() {
   dmg.pic.style.filter = dull > 0.01 ? `saturate(${f2(1 - dull * 0.08)}) contrast(${f2(1 - dull * 0.025)}) brightness(${f2(1 - dull * 0.0125)})` : "";
 }
 
-const state = { card: null, rate: null, cond: DEFAULT_COND, crit: [1, 1, 1, 1, 1], cost: 400 };
+const state = { card: null, rate: null, year: null, cond: DEFAULT_COND, crit: [1, 1, 1, 1], cost: 400 };
 let found = [], shown = 0, searchId = 0;
 const PAGE = 12;
 
@@ -257,11 +260,12 @@ async function search(raw, total = null, photo = null) {
     // Skannat kort: filtrera på setets storlek och sortera efter hur lika bilderna är fotot.
     const { list, sure } = photo ? await rankByLook(photo, await narrowByTotal(all, total)) : { list: all, sure: false };
     if (my !== searchId) return;
-    // Är träffen tydlig eller finns bara ett enda matchande kort öppnas kortet direkt.
+    // Säker träff från kameran visas som ett förhandsvisat kort med värde. Annars öppnas ett enda kort direkt.
     found = list; shown = PAGE;
     $("#vr-title").textContent = title ? `Välj ditt kort: ${title}` : "Välj ditt kort";
     renderResults();
-    if (sure || (list.length === 1 && !photo)) pick(list[0].id);
+    if (sure) reveal(list[0].id);
+    else if (list.length === 1 && !photo) pick(list[0].id);
   } catch {
     if (my === searchId) $("#vr-grid").innerHTML = '<div class="msg">Kunde inte nå TCGdex just nu. Försök igen om en stund.</div>';
   }
@@ -272,46 +276,86 @@ async function search(raw, total = null, photo = null) {
 // Reglagen ger sedan betyget, så man kan finjustera efter att ha valt skick.
 const baseEur = (c) => { const cm = c.pricing?.cardmarket || {}; return cm.trend ?? cm.avg ?? cm["trend-holo"] ?? null; };
 const baseSek = () => { const e = baseEur(state.card); return e != null && state.rate ? e * state.rate : null; };
-function estGrade() {
-  const s = CRITERIA.map(([, , opts], i) => lerpArr(opts.map((o) => o[1]), state.crit[i]));
-  const avg = s.reduce((a, b) => a + b, 0) / s.length;
-  return Math.max(1, Math.min(10, Math.round((avg + Math.min(...s)) / 2)));
+// Avrundning till närmaste 5 kr, eller 10 kr från 100 kr och uppåt.
+const round = (n) => { const step = Math.abs(n) >= 100 ? 10 : 5; return Math.round(n / step) * step; };
+// Linjär interpolation längs en kurva av [x, y]-punkter sorterade efter x.
+const curve = (pts, x) => {
+  x = Math.max(pts[0][0], Math.min(pts[pts.length - 1][0], x));
+  for (let k = 0; k < pts.length - 1; k++) {
+    const [x0, y0] = pts[k], [x1, y1] = pts[k + 1];
+    if (x <= x1) return y0 + ((y1 - y0) * (x - x0)) / (x1 - x0);
+  }
+  return pts[pts.length - 1][1];
+};
+// Ograderat pris i procent av trendpriset, för varje betygsnivå. Svaren "Mint" till "Dåligt" ligger på dessa punkter.
+// Under 1 finns ingen gradering, men priset fortsätter sjunka när man drar ner fler reglage.
+const RAW_CURVE = [[-2, 0.02], [1, 0.15], [2, 0.22], [3, 0.3], [4, 0.4], [5, 0.5], [6, 0.65], [7, 0.7], [8, 0.9], [9, 1], [10, 1.15]];
+// Kontinuerlig poäng, från -2 till 10. Varje reglage påverkar den så fort det inte står på max.
+// Centrering räknas som max ända ner till 9 (55/45 eller 60/40), och mjukt därunder.
+function exactScore() {
+  const s = [0, 1, 2, 3].map((i) => lerpArr(CRITERIA[i][2].map((o) => o[1]), state.crit[i]));
+  const eff = s.map((v, i) => (i === 0 ? (v >= 9 ? 10 : v >= 8 ? 10 + 2 * (v - 9) : v) : v));
+  // Lägsta-kriteriet ger taket. Varje reglage som inte är max drar av en poäng, och den första är gratis.
+  const pen = eff.reduce((a, v) => a + clamp01(10 - v), 0);
+  return Math.max(-2, Math.min(10, Math.min(...eff) - Math.max(0, pen - 1)));
 }
-// Reglagens läge för varje skick, valda så att betyget blir 10, 9, 7, 6, 4 och 1 och texterna stämmer med skicket.
-// Dåligt är alla reglage i botten.
-const COND_PRESET = [[0.3, 0.3, 0.3, 0.3, 0.3], [1, 1, 1, 1, 1], [2.4, 2.4, 2.4, 2.4, 2.4], [2.6, 3, 3, 2.8, 2.8], [3.2, 3.4, 3.4, 3.3, 3.3], [4, 4, 4, 4, 4]];
-// När man drar i reglagen följer skicket med betyget, så att det ograderade värdet ändras direkt.
-const gradeToCond = (g) => (g >= 10 ? 0 : g === 9 ? 1 : g >= 7 ? 2 : g >= 5 ? 3 : g >= 3 ? 4 : 5);
-const round = (n) => Math.round(n / 10) * 10 || Math.round(n);
+// Det visade betyget: den exakta poängen, nedåt avrundad så att ett snäpp under max syns. Lägst 1.
+function estGrade() {
+  return Math.max(1, Math.floor(exactScore() + 1e-9));
+}
+// Ograderat pris för skicket. Dåligt kan inte kosta mer än Cardmarkets lägsta annons, om den finns.
+// Den blir gradvis begränsad under 2, så att priset hänger ihop när man drar i reglagen.
+function rawSek() {
+  const base = baseSek();
+  if (base == null) return null;
+  const score = exactScore();
+  let v = base * curve(RAW_CURVE, score);
+  const low = state.card.pricing?.cardmarket?.low;
+  if (low != null && state.rate) v -= clamp01(2 - score) * Math.max(0, v - low * state.rate);
+  return v;
+}
+// Graderat pris för den exakta poängen.
+function gradedSek(vintage) {
+  const base = baseSek();
+  if (base == null) return null;
+  const pts = [[-2, 0.05], ...Array.from({ length: 10 }, (_, k) => [k + 1, gradeMult(k + 1, vintage)])];
+  return base * curve(pts, exactScore());
+}
+// Reglagens läge för varje skick. Varje preset ger ett betyg som stämmer med skicket (10, 9, 6, 4, 3 och 1).
+// Ordningen är centrering, hörn, kanter och yta, med svarens nummer 0 (bäst) till 4 (sämst).
+const COND_PRESET = [[0, 0, 0, 0], [1, 1, 0, 0], [1, 2, 1, 1], [1, 3, 2, 2], [2, 3, 3, 3], [4, 4, 4, 4]];
+// Betyget styr skicket, så att det ograderade värdet och skicket hänger ihop med reglagen.
+const gradeToCond = (g) => (g >= 10 ? 0 : g >= 8 ? 1 : g >= 6 ? 2 : g >= 4 ? 3 : g >= 2 ? 4 : 5);
 const condText = (n) => (n === "Near Mint" ? "i nyskick" : n === "Mint" ? "i skick mint" : `i skick ${n.toLowerCase()}`);
 
 // Mobil: liten ruta bredvid kortet med betyg och värde, så man ser dem medan man drar.
 function liveHTML() {
-  const base = baseSek(), [cname, , cmult] = CONDITIONS[state.cond];
+  const base = baseSek(), [cname] = CONDITIONS[state.cond];
   return `<div class="vl-text"><small>Ograderat värde</small>
-      <b>${base == null ? "Inget pris" : `ca ${kr(round(base * cmult))}`}</b>
+      <b>${base == null ? "Inget pris" : `ca ${kr(round(rawSek()))}`}</b>
       <small>${esc(cname)}</small></div>`;
 }
 
 function outputHTML() {
   const base = baseSek();
   if (base == null) return '<div class="msg">Cardmarket har inget pris för det här kortet än, så vi kan inte värdera det.</div>';
-  const vintage = isVintage(state.card.id);
-  const [cname, , cmult] = CONDITIONS[state.cond];
-  const raw = base * cmult, g = estGrade();
-  const gv = base * gradeMult(g, vintage), cost = Math.max(0, +state.cost || 0), gain = gv - raw - cost;
-  const verdict = gain > 200 ? ["good", "Lönar sig sannolikt", `Räkna med cirka ${kr(gain)} mer än att sälja ograderat, efter kostnaden.`]
-    : gain > 0 ? ["mid", "Lönar sig knappt", `Vinsten blir bara cirka ${kr(gain)}. Ett lägre betyg än väntat gör det till en förlust.`]
-    : ["bad", "Lönar sig inte", g >= 9 ? "Kortet är för billigt för att gradering ska löna sig." : "Med det betyget du bedömer blir det inte värt kostnaden."];
-  const tier = (label, v, on) => `<li class="vt${on ? " on" : ""}"><span>${label}</span><b>${kr(round(v))}</b></li>`;
+  const vintage = isVintage(state.year);
+  const [cname] = CONDITIONS[state.cond];
+  const raw = rawSek(), g = estGrade();
+  const gv = gradedSek(vintage), cost = Math.max(0, +state.cost || 0);
+  const netto = gv - (raw + cost);
+  const verdict = netto > 0 ? ["good", "Lönar sig!", `Vid betyg ${g} är den uppskattade nettovinsten ca +${kr(round(netto))} efter graderingskostnad.`]
+    : base < 300 ? ["bad", "Lönar sig inte", "Kortets grundvärde är för lågt för att täcka graderingskostnaden."]
+    : ["bad", `Lönar sig inte vid betyg ${g}`, `Värdeökningen (${gv - raw < 0 ? "−" : "+"}${kr(round(Math.abs(gv - raw)))}) täcker inte graderingskostnaden på ${kr(cost)}. För detta kort krävs oftast betyg 10 för att gå med vinst.`];
+  const tier = (label, v, on) => `<li class="vt${on ? " on" : ""}"><span>${label}</span><b>ca ${kr(round(v))}</b></li>`;
   return `<div class="vo-main"><span class="vo-label">Ungefärligt värde ${condText(cname)}</span>
       <b class="vo-price">ca ${kr(round(raw))}</b>
       <small>Cardmarkets trendpris i nyskick: ${kr(round(base))}${state.card.pricing?.cardmarket?.low != null ? ` · lägsta annons ${kr(round(state.card.pricing.cardmarket.low * state.rate))}` : ""}</small></div>
     <ul class="vo-tiers" aria-label="Riktvärden per betyg">
       ${tier("Ograderat, ditt skick", raw, false)}${tier("Graderat", gv, true)}
     </ul>
-    <p class="hint">Riktvärden. Graderade priser skiljer mycket mellan kort${vintage ? ", och kort från Wizards-eran har högre premie för toppbetyg" : ""}, så jämför med sålda priser för just ditt kort innan du betalar för gradering.</p>
-    <div class="vo-grade"><div class="gcircle${g === 10 ? " gold" : ""}" role="img" aria-label="Ditt estimerade betyg ${g} av 10"><b>${g}</b><span>/10</span></div><div><b>Ditt estimerade betyg</b><p class="muted">Vår egen uppskattning av dina svar, inte en officiell gradering. Det svagaste kriteriet väger tyngst, precis som hos graderingsbolagen.</p></div></div>
+    <p class="hint vo-disclaimer"><b>Observera:</b> Alla priser och betyg är ungefärliga uppskattningar. Ograderat nypris baseras på Cardmarkets europeiska trendpris (via TCGdex) omräknat till SEK. Lägsta annonspris på Cardmarket avser ofta sämre skick eller andra språk än engelska. Det graderade värdet är en schablonmässig beräkning – kontrollera alltid faktiska sålda priser (t.ex. på Tradera eller eBay) innan du betalar för gradering.${vintage ? " Kort från före 2017 har dessutom större spridning i graderade priser." : ""}</p>
+    <div class="vo-grade"><div class="gcircle${g === 10 ? " gold" : ""}" role="img" aria-label="Ditt estimerade betyg ${g} av 10"><b>${g}</b><span>/10</span></div><div><b>Ditt estimerade betyg</b><p class="muted">Endast en indikation baserad på dina val – inte en garanti för vilket betyg PSA, BGS eller CGC ger vid en fysisk granskning. Det svagaste kriteriet väger tyngst, precis som hos graderingsbolagen.</p></div></div>
     <div class="verdict ${verdict[0]}"><b>${verdict[1]}</b><span>${verdict[2]}</span></div>`;
 }
 
@@ -423,12 +467,23 @@ async function pick(id) {
   box.scrollTop = 0; cardModal.scrollTop = 0;
   try {
     const [card] = await Promise.all([getJSON(`${API}/cards/${encodeURIComponent(id)}`), getRate()]);
-    Object.assign(state, { card, cond: DEFAULT_COND, crit: COND_PRESET[DEFAULT_COND].slice() });
+    // Utgivningsåret finns på setet, inte på kortet. Om det saknas räknas kortet som modernt.
+    const set = await getJSON(`${API}/sets/${encodeURIComponent(card.set?.id || "")}`).catch(() => null);
+    const year = set?.releaseDate ? +set.releaseDate.slice(0, 4) : null;
+    Object.assign(state, { card, year, cond: DEFAULT_COND, crit: COND_PRESET[DEFAULT_COND].slice() });
     recordCard({ id: card.id, name: card.name, set: card.set?.name, localId: card.localId, total: card.set?.cardCount?.official, image: card.image, eur: baseEur(card) });
     renderCard();
   } catch {
     box.innerHTML = '<div class="msg">Kortet kunde inte laddas just nu. Försök igen om en stund.</div>';
   }
+}
+
+// Säker träff från kameran: visar kortet med marknadsvärdet. Gradera öppnar värderingen med pre-gradingen.
+async function reveal(id) {
+  const [card, rate] = await Promise.all([getJSON(`${API}/cards/${encodeURIComponent(id)}`).catch(() => null), getRate()]);
+  if (!card) return pick(id);
+  const e = baseEur(card);
+  showReveal({ card, sek: e != null && rate ? e * rate : null, onGrade: () => pick(card.id) });
 }
 
 // ---------- Kortet i stort format, i nuvarande skick ----------
@@ -556,10 +611,23 @@ $("#header-search").addEventListener("submit", (e) => {
 });
 // "Värdera kort" i hero-delen öppnar sökfältet i headern (på mobilen är det dolt bakom en knapp).
 $("#val-search-open")?.addEventListener("click", () => { openModal(); vmInput.focus(); });
-const startScan = () => openScanner(({ name, number, total, canvas }) => {
+const startScan = () => openScanner(({ name, number, total, canvas, cardId }) => {
+  if (cardId) {
+    reveal(cardId);
+    return;
+  }
   const q = [name, number].filter(Boolean).join(" ");
   input.value = q;
   search(q, total, canvas);
+}, ({ name, number }) => {
+  // Halv läsning: fyll i det som gick att läsa, så användaren kan komplettera i stället för att skriva från noll.
+  const q = [name, number].filter(Boolean).join(" ");
+  input.value = q;
+  vmInput.value = q;
+  openModal();
+  vmInput.focus();
+  // Visa förslag direkt för det ifyllda, t.ex. hela kortnamnet när bara början gick att läsa.
+  vmInput.dispatchEvent(new Event("input", { bubbles: true }));
 });
 $("#scan-open")?.addEventListener("click", startScan);
 $("#vm-scan")?.addEventListener("click", startScan);

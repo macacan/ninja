@@ -1,5 +1,5 @@
 // Bevakningens motor: läser en butik, slår ihop med senast kända läge och hittar förändringar.
-// Används både av run.mjs (en körning över alla butiker) och daemon.mjs (löpande, varannan minut).
+// Används både av run.mjs (en körning över alla butiker) och daemon.mjs (löpande, var tionde minut).
 import { readFile, writeFile, mkdir, rename } from "node:fs/promises";
 import { Host } from "./http.mjs";
 import { classify, CLASSIFY_VERSION, looksPokemonTitle } from "./classify.mjs";
@@ -7,6 +7,7 @@ import { notify } from "./notify.mjs";
 import { shopify } from "../adapters/shopify.mjs";
 import { woocommerce } from "../adapters/woocommerce.mjs";
 import { generic } from "../adapters/generic.mjs";
+import { webhallen } from "../adapters/webhallen.mjs";
 import { groupKey, groupProducts, lowestInStock } from "../../../js/group.js";
 
 const ROOT = new URL("../../../", import.meta.url);
@@ -26,7 +27,7 @@ async function writeJSON(p, d, compact = false) {
   }
 }
 
-const ADAPTERS = { shopify, woocommerce, generic };
+const ADAPTERS = { shopify, woocommerce, generic, webhallen };
 const ROBOTS_MAX_AGE = 6 * 3600e3;
 const MAX_EVENTS = 500;
 // En produkt som försvinner ur butikens lista och kommer tillbaka inom två veckor är inte "ny".
@@ -77,8 +78,9 @@ export async function createEngine({ statuses } = {}) {
   async function hostFor(store) {
     const h = hosts.get(store.id);
     if (h && Date.now() - h.at < ROBOTS_MAX_AGE) return h.host;
-    const host = await new Host(store.domain).init();
-    if (h) { host.last = h.host.last; host.delay = Math.max(host.delay, h.host.delay); }
+    // feed: butiker med egen framsida (t.ex. byggd i Lovable) men katalogen hos Shopify läses från Shopify-domänen.
+    const host = await new Host(store.feed || store.domain).init();
+    if (h) { host.last = h.host.last; host.delay = Math.max(host.delay, h.host.delay); host.cache = h.host.cache; }
     hosts.set(store.id, { host, at: Date.now() });
     return host;
   }
@@ -89,14 +91,20 @@ export async function createEngine({ statuses } = {}) {
       const host = await hostFor(store);
       const before = host.requests;
       // Upp till 40 sidor: stora Shopify-butiker (Aquitaz, Dragon's Lair, RGB Kingz) har över 3 000 produkter.
-      const ctx = { maxPages: 40, pagesPerRun, sitemapMaxAge, state: (state[store.id] ||= {}), setNames: state.sets.names, listing: store.listing };
+      const ctx = { maxPages: 40, pagesPerRun, sitemapMaxAge, state: (state[store.id] ||= {}), setNames: state.sets.names, listing: store.listing,
+        // Länkarna ska gå till butikens egen framsida, t.ex. productPath "/produkt/{handle}".
+        productUrl: store.productPath && ((h) => `https://${store.domain}${store.productPath.replace("{handle}", encodeURIComponent(h))}`) };
       const raw = await ADAPTERS[store.platform](host, ctx);
-      const list = [], same = new Set();
+      const list = [], same = new Set(), foreign = new Set();
       for (const r of raw) {
         const c = classify(r.title, state.sets.names, state.sets.series);
         if (!c || !(r.price > 0)) continue;
+        // Orimligt låga priser för stora förseglade produkter (enstaka paket eller skydd felmärkta som hel box)
+        if (c.type === "Booster Box" && r.price < 250) continue;
+        if (c.type === "Elite Trainer Box" && r.price < 200) continue;
+        if (c.type === "Ultra-Premium Collection" && r.price < 500) continue;
         // Bara svenska priser. Butiker med flera språkversioner (t.ex. /fi/, /dk/) visar annars euro och danska kronor.
-        if (r.currency && r.currency.toUpperCase() !== "SEK") continue;
+        if (r.currency && r.currency.toUpperCase() !== "SEK") { foreign.add(r.currency.toUpperCase()); continue; }
         // Samma produkt under två adresser (t.ex. språkversioner eller dubbla listningar) räknas en gång.
         const twin = `${r.title.trim().toLowerCase()}|${r.price}`;
         if (same.has(twin)) continue;
@@ -108,6 +116,8 @@ export async function createEngine({ statuses } = {}) {
         list.push({ id: `${store.id}:${r.pid}`, store: store.id, title: r.title.trim(), url, price: Math.round(r.price * 100) / 100,
           currency: r.currency, available: r.available, preorder: !!r.preorder, image, ...c, isNew: r.isNew });
       }
+      // Butiken visade bara andra valutor (t.ex. efter var anropet kom ifrån): ett fel, inte en tom butik.
+      if (!list.length && foreign.size) throw new Error(`butiken visade priser i ${[...foreign].join(", ")}, inte SEK`);
       return { ok: true, products: list, partial: raw.partial, known: raw.known, requests: host.requests - before, ms: Date.now() - t0, delay: host.delay };
     } catch (e) {
       return { ok: false, error: e.message.slice(0, 160), ms: Date.now() - t0, blocked: !!e.blocked, retryAfter: e.retryAfter || 0 };

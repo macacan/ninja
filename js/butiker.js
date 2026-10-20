@@ -10,7 +10,7 @@ const KIND = {
   forbestallning: { label: "Förbeställning", cls: "k-pre" },
 };
 const PAGE = 48;
-let products = [], events = [], stores = [], storeName = {}, shown = PAGE, eventKind = "";
+let products = [], events = [], stores = [], storeName = {}, storeLogos = {}, shown = PAGE, eventKind = "";
 
 const load = (p) => fetch(p, { cache: "no-cache" }).then((r) => (r.ok ? r.json() : Promise.reject(r.status)));
 
@@ -212,11 +212,13 @@ function renderStores() {
   const order = { tillstand: 0, "ej-forbjuden": 1, "inga-bilder": 1, okand: 2, forbjuden: 3 };
   $("#stores").innerHTML = [...stores].sort((a, b) => order[a.status] - order[b.status] || a.name.localeCompare(b.name, "sv")).map((s) => {
     const active = ["tillstand", "ej-forbjuden", "inga-bilder"].includes(s.status);
-    const state = !active ? (s.note || "") : s.ok === false ? `Kunde inte läsas senast` : s.checkedAt ? `Kollad ${ago(new Date(s.checkedAt).toISOString())}${s.interval ? ` · var ${s.interval === 2 ? "annan" : `${s.interval}:e`} minut` : ""}` : "Inte kollad än";
+    const state = !active ? (s.note || "") : s.ok === false ? `Kunde inte läsas senast` : s.checkedAt ? `Kollad ${ago(new Date(s.checkedAt).toISOString())}` : "Inte kollad än";
+    // Butikens egen ikon (se scripts/update-store-logos.mjs), annars första bokstaven.
+    const logo = storeLogos[s.id];
     return `<li class="store ${active ? "" : "off"}">
-      <span class="dot ${!active ? "grey" : s.ok === false ? "red" : s.checkedAt ? "green" : "grey"}"></span>
-      <div><b>${esc(s.name)}</b><span class="muted">${esc(s.domain)}${active ? ` · ${s.count} produkter` : ""}</span></div>
-      <span class="st">${STATUS[s.status]}</span>
+      <span class="slogo">${logo ? `<img src="${esc(logo)}" alt="" loading="lazy" decoding="async" onerror="this.replaceWith(Object.assign(document.createElement('b'),{textContent:this.dataset.l}))" data-l="${esc(s.name[0])}">` : `<b>${esc(s.name[0])}</b>`}</span>
+      <div><b class="sdom" title="${esc(s.name)}">${esc(s.domain)}</b>${active ? `<span class="muted">${s.count} produkter</span>` : ""}</div>
+      <span class="st ${active ? "on" : s.status === "forbjuden" ? "no" : ""}">${STATUS[s.status]}</span>
       <span class="muted when">${esc(state)}</span>
     </li>`;
   }).join("");
@@ -270,6 +272,7 @@ try {
   products = p.products; events = e.events; stores = s.stores;
   groups = groupProducts(products);
   priceHist = (await load("data/price-history.json").catch(() => ({ days: {} }))).days || {};
+  storeLogos = await load("data/store-logos.json").catch(() => ({}));
   // "Släpps 6 nov" på produkter vars omgång inte har kommit än.
   const today = new Date(); today.setHours(0, 0, 0, 0);
   for (const r of await releaseSets().catch(() => [])) for (const w of r.waves) {

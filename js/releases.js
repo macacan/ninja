@@ -162,6 +162,51 @@ export function nextHTML(r, ctx) {
   </div>`;
 }
 
+// ---------- Tidslinje ----------
+// Ett steg per datum, med alla set som släpps då. Utgångsläget visar aktuellt släpp (det senaste som
+// släppts, dagens räknas in) och de två närmaste kommande. Stegen räknas om vid varje sidladdning, så på
+// en släppdag flyttas tidslinjen ett steg fram av sig själv. shift bläddrar bakåt eller framåt därifrån.
+const TL_SIZE = 3;
+export function timelineSteps(releases) {
+  const byDate = new Map();
+  for (const r of releases) r.waves.forEach((w, wi) => {
+    if (!byDate.has(w.date)) byDate.set(w.date, []);
+    byDate.get(w.date).push({ r, wi, w });
+  });
+  const dates = [...byDate.keys()].sort();
+  const endOfToday = +startOfToday() + 864e5;
+  return { dates, byDate, current: dates.findLastIndex((s) => +d(s) < endOfToday) };
+}
+
+// Ger { nav, list }: bläddringsknapparna och själva tidslinjen.
+export function timelineHTML(releases, ctx, shift = 0) {
+  const { dates, byDate, current } = timelineSteps(releases);
+  const start = Math.max(0, Math.max(current, 0) + shift);
+  const label = (j) => (j < current ? "Släppt" : j === current ? "Aktuellt" : j === current + 1 ? "Nästa" : "Kommande");
+  const nav = `<button type="button" class="cal-nav" data-tl="-1" aria-label="Tidigare släpp"${start <= 0 ? " disabled" : ""}>◀</button>
+    <button type="button" class="btn small" data-tl="now"${shift === 0 ? " disabled" : ""}>Nu</button>
+    <button type="button" class="cal-nav" data-tl="1" aria-label="Senare släpp"${start + TL_SIZE >= dates.length ? " disabled" : ""}>▶</button>`;
+  const steps = Array.from({ length: TL_SIZE }, (_, k) => start + k).map((j) => {
+    const s = dates[j];
+    if (!s) return `<li class="tl-step empty"><span class="tl-dot" aria-hidden="true"></span><div class="tl-card"><span class="kicker">${label(j)}</span><p class="muted">Inget mer inlagt än.</p></div></li>`;
+    const released = j <= current;
+    return `<li class="tl-step ${j === current ? "current" : released ? "past" : "upcoming"}">
+      <span class="tl-dot" aria-hidden="true"></span>
+      <div class="tl-card">
+        <header class="tl-head">${dateBox(s)}
+          <div><span class="kicker">${label(j)} · ${released ? "släpptes " : ""}${esc(inDays(daysUntil(s)))}</span><h3>${esc(long(s))}</h3></div>
+        </header>
+        <ul class="tl-rel">${byDate.get(s).map(({ r, wi, w }) => `<li>
+          <div><b>${esc(r.set)}</b><span>${esc(waveText(w, r))}${w.preliminary || r.preliminary ? " · preliminärt" : ""}</span></div>
+          ${pillHTML(pill(r, ctx, wi))}
+          <button type="button" class="btn small" data-open="${esc(r.id)}" data-wave="${wi}">Produkter och butiker</button>
+        </li>`).join("")}</ul>
+      </div>
+    </li>`;
+  });
+  return { nav, list: `<ol class="tl" aria-label="Släpptidslinje">${steps.join("")}</ol>` };
+}
+
 // Kompakt kort per set: rubrik, status och en rad per omgång. Allt annat finns i detaljvyn.
 export function releaseCard(r, ctx) {
   const today = startOfToday();
