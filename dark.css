@@ -1,7 +1,8 @@
 /* Mörkt tema. Laddas med media="(prefers-color-scheme: dark)" och styrs av js/theme.js (systemet, eller användarens val). */
 /* Mjukt mörk blågrå i stället för nästan svart, så att sidan inte känns som ett svart hål. */
 :root{--bg:#1b1e28;--card:#232734;--surface:#2a2f3e;--ink:#e8eaf1;--ink-solid:#353c5c;--muted:#a3abbe;--line:#363c4e;--navy:#aab8e0}
-.site-header{background:rgba(35,39,52,.92);box-shadow:0 6px 18px -12px rgba(0,0,0,.6)}
+/* Helt ogenomskinligt sidhuvud i mörkt läge, så att landskapet bakom inte syns igenom. */
+.site-header{background:#232734;box-shadow:0 6px 18px -12px rgba(0,0,0,.6)}
 .page-head{background:var(--card)}
 .page-head h1{color:var(--ink)}
 .page-head p{color:var(--muted)}
