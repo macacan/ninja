@@ -268,7 +268,6 @@ function offersHTML(it, names) {
   const perPack = (anat?.packs && lowPrice) ? Math.round(lowPrice / anat.packs) : null;
   const anatBanner = anat ? `<div class="rg-anat-bar">
     <div class="rg-anat-info">
-      <span class="rg-anat-icon">📦</span>
       <div>
         <b>${anat.packs ? `${anat.packs} boosterpaket` : "Förseglad produkt"}${perPack ? ` · ca ${perPack} kr/pack` : ""}</b>
         <small>${anat.promos?.length ? `${anat.promos.length} st promokort (${anat.promos.map((p) => p.name).join(", ")})` : anat.promoNote || (anat.accessories?.[0] || "")}</small>

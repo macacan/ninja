@@ -35,7 +35,7 @@
         <h2>Vad är ditt kort värt? <span class="hl">Se det direkt i kronor.</span></h2>
         
         <p class="val-hero-lead">
-          Sök bland över 20&nbsp;000 Pokémonkort och se aktuella marknadsvärden i kronor. Välj skick, skanna kortet med kameran och testa vår pre-grading för att se om det lönar sig att gradera till PSA 10!
+          Sök bland över 20&nbsp;000 Pokémonkort och se aktuella marknadsvärden i kronor.
         </p>
 
         <!-- Sökformulär direkt i Hero -->
@@ -151,9 +151,9 @@
             </div>
             <span class="val-pin val-pin-1" title="Kortnamn & HP">1</span>
             <span class="val-pin val-pin-2" title="Illustration & Holo-folie">2</span>
-            <span class="val-pin val-pin-3" title="Setkod">3</span>
-            <span class="val-pin val-pin-4" title="Kortnummer & Sällsynthet">4</span>
-            <span class="val-pin val-pin-6" title="Här sitter 1st Edition-stämpeln på äldre kort">6</span>
+            <span class="val-pin val-pin-3" title="Setkod">4</span>
+            <span class="val-pin val-pin-4" title="Kortnummer & Sällsynthet">5</span>
+            <span class="val-pin val-pin-6" title="Här sitter 1st Edition-stämpeln på äldre kort">3</span>
           </div>
           <span class="val-side-label">Framsida</span>
 
@@ -161,7 +161,7 @@
           <div class="val-anatomy-backrow">
             <div class="val-card-back">
               <img src="img/kortbaksida.webp" alt="Pokémonkortets baksida" width="828" height="1147" loading="lazy">
-              <span class="val-pin val-pin-5" title="Baksidan">5</span>
+              <span class="val-pin val-pin-5" title="Baksidan">6</span>
             </div>
             <p><b>Baksida</b><br>Vita prickar och flagor syns tydligast mot den blå kanten.</p>
           </div>
@@ -185,29 +185,29 @@
           <li>
             <span class="val-point-badge">3</span>
             <div>
+              <strong>Vintage & 1st Edition</strong>
+              <p>På klassiska kort från 1999–2000 finns en liten "Edition 1"-stämpel till vänster under bildrutan. Den kan multiplicera värdet 10–50 gånger! Det här kortet är nytt, så siffran visar bara var stämpeln sitter.</p>
+            </div>
+          </li>
+          <li>
+            <span class="val-point-badge">4</span>
+            <div>
               <strong>Set-symbol & Kod</strong>
               <p>På moderna kort står en liten box med setkoden (t.ex. MEW, 151, SV3) nere i vänstra hörnet. Äldre kort har en symbol till höger under bilden.</p>
             </div>
           </li>
           <li>
-            <span class="val-point-badge">4</span>
+            <span class="val-point-badge">5</span>
             <div>
               <strong>Kortnummer & Sällsynthet</strong>
               <p>Visas som t.ex. 199/165 följt av en symbol. Numret är nyckeln för att skilja mellan vanliga versioner och dyrbara specialkort.</p>
             </div>
           </li>
           <li>
-            <span class="val-point-badge">5</span>
+            <span class="val-point-badge">6</span>
             <div>
               <strong>Baksidan (Centrering & Kanter)</strong>
               <p>Baksidan på kortet avslöjar snabbt om det är Near Mint. Titta noga längs den mörkblå kanten efter minsta vita kantflaga (edge wear).</p>
-            </div>
-          </li>
-          <li>
-            <span class="val-point-badge">6</span>
-            <div>
-              <strong>Vintage & 1st Edition</strong>
-              <p>På klassiska kort från 1999–2000 finns en liten "Edition 1"-stämpel till vänster under bildrutan. Den kan multiplicera värdet 10–50 gånger! Det här kortet är nytt, så siffran visar bara var stämpeln sitter.</p>
             </div>
           </li>
         </ul>
@@ -386,6 +386,13 @@
           <li><b>Japanska kort</b> har bokstäver i stället för symboler. Koderna står vid varje raritet ovan.</li>
           <li><b>Gold Star</b> (2004–2007) har en liten stjärna efter namnet och är bland de dyraste korten, oavsett symbol.</li>
         </ul>
+        <div class="val-odds-cta">
+          <div>
+            <b>Hur ofta får man de här korten?</b>
+            <small>Se vad som finns i ett boosterpaket och ungefär hur många av varje sällsynthet en booster box ger.</small>
+          </div>
+          <button type="button" class="btn small gold" id="val-odds-btn">Booster-guide & pull rates</button>
+        </div>
       </section>
 
       <!-- Skickguide -->
@@ -610,6 +617,11 @@
             <li>Räkna in frakt, försäkring och eventuell tull i graderingskostnaden.</li>
           </ol>
         </article>
+        <article class="gcard-info">
+          <span class="gnum">4</span>
+          <h3>Välj graderingsbolag</h3>
+          <p>PSA är störst för Pokémonkort och ger oftast högst pris vid försäljning, särskilt för betyget 10. CGC och Beckett är vanliga alternativ som ibland är billigare eller snabbare. Avgifter och väntetider ändras ofta, så kolla dem hos bolaget innan du skickar.</p>
+        </article>
       </div>
     </section>
 
@@ -700,6 +712,10 @@
 </dialog>
 
 <!-- Värderingen av ett valt kort: egen popup ovanpå sökträffarna. -->
+<dialog id="anat-modal" class="card-modal anat-modal" aria-label="Vad finns i ett boosterpaket?">
+  <button type="button" class="cm-close" aria-label="Stäng">✕</button>
+  <div class="anat-modal-body"></div>
+</dialog>
 <dialog id="val-card-modal" class="card-modal val-modal val-card-modal" aria-label="Värdering av kortet">
   <button type="button" class="cm-close" aria-label="Stäng">✕</button>
   <section id="val-card" class="val" aria-live="polite"></section>

@@ -131,7 +131,7 @@ function groupCard(g, open) {
   const anat = anatomyData ? matchAnatomy(anatText, lead.type, anatomyData, lead.lang || "en") : null;
   const bestPrice = g.low != null ? g.low : g.lowPre;
   const perPack = (anat?.packs && bestPrice) ? Math.round(bestPrice / anat.packs) : null;
-  const anatChip = anat ? `<button type="button" class="c anat-c" data-anat-title="${esc(title)}" data-anat-match="${esc(anatText)}" data-anat-lang="${esc(lead.lang || "en")}" data-anat-type="${esc(lead.type)}" data-anat-price="${bestPrice || ""}" title="Visa vad som ingår i boxen">📦 ${anat.packs ? `${anat.packs} pack` : "Innehåll"}${perPack ? ` (${perPack} kr/st)` : ""} · Vad ingår?</button>` : "";
+  const anatChip = anat ? `<button type="button" class="c anat-c" data-anat-title="${esc(title)}" data-anat-match="${esc(anatText)}" data-anat-lang="${esc(lead.lang || "en")}" data-anat-type="${esc(lead.type)}" data-anat-price="${bestPrice || ""}" title="Visa vad som ingår i boxen">${anat.packs ? `${anat.packs} pack` : "Innehåll"}${perPack ? ` (${perPack} kr/st)` : ""} · Vad ingår?</button>` : "";
 
   return `<article class="gcard${open ? " open" : ""}" data-key="${esc(g.key)}">
     <div class="pimg">${img ? `<img src="${esc(img)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.remove()">` : `<span class="noimg"><b>${esc(lead.type)}</b>Bild finns hos butiken</span>`}${badge}

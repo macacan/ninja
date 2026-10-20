@@ -7,6 +7,7 @@ import { mountCardAutocomplete } from "./card-autocomplete.js";
 import { CONDITIONS, DEFAULT_COND, gradeMult, isVintage } from "./valuation.js";
 import { openScanner, narrowByTotal, rankByLook } from "./card-scanner.js";
 import { showReveal } from "./card-reveal.js";
+import { getAnatomyData, renderPullRatesModal } from "./anatomy.js";
 
 // Fyra kriterier, som graderingsbolagen: centrering, hörn, kanter och yta. Smuts ingår i ytan.
 // Varje kriterium har fem svar, och varje svar har ett delbetyg.
@@ -641,6 +642,16 @@ const startScan = () => openScanner(({ name, number, total, canvas, cardId }) =>
 });
 $("#scan-open")?.addEventListener("click", startScan);
 $("#vm-scan")?.addEventListener("click", startScan);
+
+// Booster-guiden under sällsynthetstabellen: vad som finns i ett paket och hur ofta varje sällsynthet dyker upp
+const oddsModal = $("#anat-modal");
+$("#val-odds-btn")?.addEventListener("click", async () => {
+  oddsModal.querySelector(".anat-modal-body").innerHTML = renderPullRatesModal(await getAnatomyData());
+  if (!oddsModal.open) oddsModal.showModal();
+});
+oddsModal?.addEventListener("click", (e) => {
+  if (e.target === oddsModal || e.target.closest(".cm-close")) oddsModal.close();
+});
 // Tryck en gång på ett kort: knappen "Värdera detta kort" visas mitt på kortet. Knappen öppnar värderingen.
 // Tryck utanför kortet döljer knappen igen.
 let armed = null;

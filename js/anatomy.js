@@ -159,7 +159,7 @@ export function renderAnatomyModal(title, anatomy, lowestPrice = null) {
       ` : ""}
       <div class="ap-item">
         <span class="ap-lbl">Antal paket</span>
-        <b class="ap-val">📦 ${anatomy.packs ? `${anatomy.packs} st` : anatomy.packOptions ? `${anatomy.packOptions.join(" eller ")} st` : "–"}</b>
+        <b class="ap-val">${anatomy.packs ? `${anatomy.packs} st` : anatomy.packOptions ? `${anatomy.packOptions.join(" eller ")} st` : "–"}</b>
       </div>
     </div>
     ` : ""}
@@ -167,12 +167,12 @@ export function renderAnatomyModal(title, anatomy, lowestPrice = null) {
     <div class="anat-grid">
       <!-- Paket & Promos -->
       <div class="anat-section">
-        <h3><span class="anat-icon">📦</span> Innehåll & Paket</h3>
+        <h3>Innehåll & Paket</h3>
         <div class="anat-pack-box">
           <div class="anat-pack-count"><b>${anatomy.packs || (anatomy.packOptions ? anatomy.packOptions.join("/") : "–")}</b><span>Boosterpaket</span></div>
           <p class="anat-pack-desc">${anatomy.packSet ? `Från expansionen <b>${esc(anatomy.packSet)}</b>` : "Officiella fabriksförseglade paket med 10 kort per paket"}</p>
           ${anatomy.packOptions && !anatomy.packs ? `<p class="anat-pack-desc">Finns med ${anatomy.packOptions.join(" eller ")} paket. Kolla hos butiken vilken det är.</p>` : ""}
-          ${anatomy.packSource === "Bulbapedia" ? `<p class="anat-pack-desc">Antal paket enligt <a href="https://bulbapedia.bulbagarden.net/" target="_blank" rel="noopener">Bulbapedia</a>.</p>` : ""}
+          ${anatomy.packSource === "Bulbapedia" ? `<details class="anat-src"><summary class="anat-info" aria-label="Varifrån kommer antalet paket?">i</summary><p>Antal paket enligt <a href="https://bulbapedia.bulbagarden.net/" target="_blank" rel="noopener">Bulbapedia</a>.</p></details>` : ""}
         </div>
 
         ${anatomy.promos && anatomy.promos.length ? `
@@ -197,7 +197,7 @@ export function renderAnatomyModal(title, anatomy, lowestPrice = null) {
 
       <!-- Tillbehör -->
       <div class="anat-section">
-        <h3><span class="anat-icon">🎲</span> Medföljande Tillbehör</h3>
+        <h3>Medföljande Tillbehör</h3>
         <ul class="anat-acc-list">
           ${(anatomy.accessories || []).map(a => `<li><span class="acc-chk">✓</span> ${esc(a)}</li>`).join("")}
         </ul>
@@ -205,62 +205,90 @@ export function renderAnatomyModal(title, anatomy, lowestPrice = null) {
     </div>
 
     <div class="anat-footer">
-      <button type="button" class="btn small" data-show-odds="true">🎯 Se vinstchanser & pull rates i paketen →</button>
+      <button type="button" class="btn small" data-show-odds="true">Se vinstchanser & pull rates i paketen →</button>
     </div>
   </div>`;
 }
 
-// Bygg HTML för Booster-Anatomi & Pull Rates guide
+// ---------- Vad finns i ett boosterpaket? ----------
+// Sällsynthetssymbolerna som de står nere i hörnet på korten: ● common, ◆ uncommon, ★ rare, ★★ double rare,
+// silverstjärnor för ultra rare och guldstjärnor för illustration-, special illustration- och hyper rare.
+const STAR = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6-4.9-4.6 6.6-.8z"/></svg>';
+const stars = (n, cls) => `<span class="rsy ${cls}">${STAR.repeat(n)}</span>`;
+export function raritySymbol(sym) {
+  switch (sym) {
+    case "c": return '<span class="rsy rsy-c" aria-label="Common"><i></i></span>';
+    case "u": return '<span class="rsy rsy-u" aria-label="Uncommon"><i></i></span>';
+    case "r": return stars(1, "rsy-black");
+    case "rr": return stars(2, "rsy-black");
+    case "ur": return stars(2, "rsy-silver");
+    case "ir": return stars(1, "rsy-gold");
+    case "sir": return stars(2, "rsy-gold");
+    case "hr": return stars(3, "rsy-gold");
+    case "ace": return '<span class="rsy rsy-ace">ACE SPEC</span>';
+    default: return "";
+  }
+}
+
+// Ett litet kort i paketet. Platserna som kan bli något bättre visar symbolerna de kan bli.
+function packCard(sym) {
+  const face = {
+    c: raritySymbol("c"),
+    u: raritySymbol("u"),
+    rev: `${raritySymbol("c")}${raritySymbol("u")}`,
+    hit: `${raritySymbol("ir")}${raritySymbol("sir")}`,
+    r: raritySymbol("r"),
+    energy: '<span class="pk-ico-energy" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M13 2 5 13h5l-1 9 8-11h-5z"/></svg></span>',
+    code: '<span class="pk-ico-code" aria-hidden="true"><i></i><i></i><i></i><i></i></span>',
+  }[sym];
+  return `<span class="pk-card pk-${sym}">${face}</span>`;
+}
+
 export function renderPullRatesModal(data) {
   const pr = data?.pullRates;
   if (!pr) return "";
+  const slots = pr.packSlots || [];
+  const spread = slots.flatMap((s) => Array.from({ length: s.n }, () => packCard(s.sym))).join("");
+  const total = slots.reduce((n, s) => n + s.n, 0);
+  const playable = slots.filter((s) => !["energy", "code"].includes(s.sym)).reduce((n, s) => n + s.n, 0);
+  const BOX = 36;
 
-  return `<div class="odds-modal-content">
-    <div class="odds-head">
-      <span class="anat-tag">Officiell Booster Anatomi & Community Odds</span>
-      <h2>Vad finns i ett Pokémon-boosterpaket?</h2>
-      <p class="muted">Varje modernt boosterpaket (Scarlet & Violet) innehåller exakt 10 spelkort, 1 Basic Energy och 1 kodkort. Så här är platserna fördelade:</p>
+  // En booster box som 36 rutor där ungefär så många paket som brukar ge kortet lyser. Rutorna tas i en fast
+  // blandad ordning, så att träffarna ser slumpade ut i stället för att bilda ränder.
+  const order = Array.from({ length: BOX }, (_, i) => (i * 23 + 7) % BOX);
+  const boxGrid = (every) => {
+    const hits = Math.max(1, Math.round(BOX / every));
+    const lit = new Set(order.slice(0, hits));
+    return `<span class="bx-grid" aria-hidden="true">${Array.from({ length: BOX }, (_, i) => `<i${lit.has(i) ? ' class="on"' : ""}></i>`).join("")}</span>`;
+  };
+  const perBox = (every) => (BOX / every).toLocaleString("sv-SE", { maximumFractionDigits: 1 });
+
+  return `<div class="pk-modal">
+    <span class="anat-tag">Boosterpaket</span>
+    <h2 class="pk-title">Vad finns i ett paket?</h2>
+    <p class="pk-lead"><b>${total} kort</b>: ${playable} spelkort, ett energikort och ett kodkort.</p>
+
+    <div class="pk-spread" role="img" aria-label="${total} kort i rad: ${slots.map((s) => `${s.n} ${s.title}`).join(", ")}">${spread}</div>
+    <div class="pk-brace" aria-hidden="true">
+      <span style="flex:${playable}">${playable} spelkort</span>
+      <span style="flex:${total - playable}">extra</span>
     </div>
 
-    <!-- Slot-för-slot fördelning -->
-    <div class="odds-slots">
-      <h3>Kortens ordning i paketet (12 kort)</h3>
-      <div class="slots-flow">
-        ${(pr.packSlots || []).map(s => `
-          <div class="slot-card slot-${s.cls}">
-            <div class="slot-num">${esc(s.slot)}</div>
-            <div class="slot-body">
-              <b>${esc(s.title)}</b>
-              <p>${esc(s.desc)}</p>
-              <span class="slot-rate">${esc(s.rate)}</span>
-            </div>
-          </div>
-        `).join("")}
-      </div>
-    </div>
+    <ul class="pk-legend">
+      ${slots.map((s) => `<li>${packCard(s.sym)}<span><b>${s.n} × ${esc(s.title)}</b><small>${esc(s.note)}</small></span></li>`).join("")}
+    </ul>
 
-    <!-- Sannolikheter / Pull rates -->
-    <div class="odds-rates-sec">
-      <h3>Ungefärliga vinstchanser per paket (Pull Rates)</h3>
-      <p class="muted">Baserat på community-öppningar av över 8 000 boosterpaket per set i Scarlet & Violet-eran:</p>
-      <div class="rates-grid">
-        ${(pr.odds || []).map(o => `
-          <div class="rate-card" style="border-top-color:${o.color}">
-            <div class="rate-icon">${o.icon}</div>
-            <div class="rate-code" style="color:${o.color}">${esc(o.code)}</div>
-            <b class="rate-name">${esc(o.name)}</b>
-            <div class="rate-stat">
-              <span class="rate-odds">${esc(o.odds)}</span>
-              <span class="rate-pct" style="background:${o.color}20; color:${o.color}">${esc(o.pct)}</span>
-            </div>
-            <p class="rate-desc">${esc(o.desc)}</p>
-          </div>
-        `).join("")}
-      </div>
-    </div>
+    <h3 class="pk-sub">Det här får du ungefär i en booster box</h3>
+    <p class="pk-lead">En booster box har ${BOX} paket. Rutorna är paketen, och de som lyser brukar ge kortet.</p>
+    <ul class="bx-rows">
+      ${(pr.odds || []).map((o) => `<li class="bx-row bx-${o.sym}">
+        <span class="bx-sym">${raritySymbol(o.sym)}</span>
+        <span class="bx-name"><b>${esc(o.name)}</b><small>${esc(o.ex)}</small></span>
+        ${boxGrid(o.every)}
+        <span class="bx-num"><b>≈ ${perBox(o.every)} st</b><small>1 på ${o.every} paket</small></span>
+      </li>`).join("")}
+    </ul>
 
-    <div class="odds-note">
-      <p>⚠️ <b>Viktigt att veta:</b> Pokémon Company publicerar aldrig officiella procentuella vinstchanser. Chanserna ovan är empiriska genomsnitt från stora samlarstudier. Varje enskilt paket är unikt och slumpmässigt.</p>
-    </div>
+    <p class="odds-note">${esc(pr.note || "")}</p>
   </div>`;
 }

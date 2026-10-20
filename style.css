@@ -26,12 +26,6 @@ canvas.scene{display:block;width:100%;image-rendering:pixelated;image-rendering:
 /* ---------- Pixelram: hörnen klipps som i gamla spel ---------- */
 .px-frame{box-shadow:0 calc(var(--px)*-1) 0 0 var(--ink),0 var(--px) 0 0 var(--ink),calc(var(--px)*-1) 0 0 0 var(--ink),var(--px) 0 0 0 var(--ink)}
 
-/* ---------- Topprad (ticker) ---------- */
-.ticker{background:var(--ink-solid);color:#fff;font:500 13px/1 var(--pixel);overflow:hidden;white-space:nowrap}
-.ticker-track{display:inline-flex;gap:48px;padding:9px 0;animation:ticker 160s linear infinite}
-.ticker-track span{display:inline-flex;align-items:center;gap:10px}
-.ticker:hover .ticker-track{animation-play-state:paused}
-@keyframes ticker{to{transform:translateX(-50%)}}
 
 /* ---------- Header ---------- */
 .site-header{position:sticky;top:0;z-index:30;background:rgba(251,252,253,.92);backdrop-filter:saturate(1.4) blur(10px);border-bottom:1px solid var(--line);box-shadow:0 6px 18px -12px rgba(27,27,47,.25)}
@@ -329,7 +323,6 @@ input[type=search]{width:100%;max-width:360px}
 
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important}
-  .ticker-track{transform:none}
 }
 
 
@@ -672,7 +665,8 @@ input[type=search],select,.shop-search{background:#fff}
 .next-logo{height:84px;max-width:220px;object-fit:contain;flex:none}
 
 /* Aktuella släpp: ett kompakt kort per set */
-.rc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,440px),1fr));gap:16px;align-items:start}
+/* Korten i samma rad blir lika höga, och sidfoten med knappen ligger i botten, så att raderna går jämnt. */
+.rc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,440px),1fr));gap:16px;align-items:stretch}
 .rc{display:flex;flex-direction:column;gap:10px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;box-shadow:0 1px 2px rgba(27,27,47,.06)}
 .rc.over{opacity:.8}
 .rc-head{display:flex;align-items:center;gap:14px}
@@ -691,7 +685,7 @@ span.rc-logo{display:grid;place-items:center;background:var(--surface);border-ra
 .rc-date{font:700 1rem var(--cond);text-transform:uppercase}
 .rc-prod{font-size:.88rem;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .rc-prod em{font-style:normal;font-size:.72rem;background:var(--lilac);padding:1px 6px;border-radius:4px}
-.rc-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;padding-top:10px;border-top:1px solid var(--line)}
+.rc-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;padding-top:10px;border-top:1px solid var(--line);margin-top:auto}
 .rc-count{font-size:.85rem;color:var(--muted)}
 .rc-count b{color:var(--ink)}
 
@@ -2340,6 +2334,21 @@ input[type=search]::-webkit-search-results-decoration {
   gap: 6px;
 }
 .val-rarity-notes b { color: var(--ink); }
+/* Ingång till booster-guiden under sällsynthetstabellen */
+.val-odds-cta {
+  margin-top: 12px;
+  padding: 14px 16px;
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--gold);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.val-odds-cta b { display: block; font-size: 0.95rem; color: var(--ink); }
+.val-odds-cta small { display: block; font-size: 0.82rem; color: var(--muted); line-height: 1.4; max-width: 40ch; }
 /* Skickguiden: PSA-kolumn och tips under tabellen. */
 .val-psa { display: inline-block; white-space: nowrap; padding: 2px 7px; border-radius: 6px; background: var(--ink-solid); color: #fff; font: 700 0.78rem var(--sans); }
 .val-cond td:nth-child(3), .val-cond td:nth-child(4) { white-space: nowrap; }
@@ -2601,17 +2610,31 @@ input[type=search]::-webkit-search-results-decoration {
   .val-hero-search button {
     width: 100%;
   }
+  /* Korten högst upp i scenen och lite större. Egna svävanimationer med sidokorten närmare mitten,
+     annars tar desktopens ±105 px över och de större korten sticker ut över kanten. */
   .val-hero-stage {
-    height: 300px;
+    height: 312px;
+    align-items: flex-start;
+    padding-top: 18px;
   }
   .val-card-3d {
-    width: 150px;
+    width: 168px;
   }
   .val-card-left {
-    transform: translate(-65px, 14px) rotateY(-14deg) rotateZ(-6deg) scale(0.85);
+    transform: translate(-80px, 16px) rotateY(-14deg) rotateZ(-6deg) scale(0.88);
+    animation-name: valFloatLeftM;
   }
   .val-card-right {
-    transform: translate(65px, 12px) rotateY(14deg) rotateZ(6deg) scale(0.85);
+    transform: translate(80px, 12px) rotateY(14deg) rotateZ(6deg) scale(0.88);
+    animation-name: valFloatRightM;
+  }
+  @keyframes valFloatLeftM {
+    0%, 100% { transform: translate(-80px, 16px) rotateY(-14deg) rotateZ(-6deg) scale(0.88); }
+    50% { transform: translate(-80px, 6px) rotateY(-11deg) rotateZ(-5deg) scale(0.88); }
+  }
+  @keyframes valFloatRightM {
+    0%, 100% { transform: translate(80px, 12px) rotateY(14deg) rotateZ(6deg) scale(0.88); }
+    50% { transform: translate(80px, 2px) rotateY(11deg) rotateZ(5deg) scale(0.88); }
   }
   .val-how-grid {
     grid-template-columns: 1fr;
@@ -2627,7 +2650,7 @@ input[type=search]::-webkit-search-results-decoration {
 
 /* ---------- Kortskanner ---------- */
 .val-hero-search .scan-btn{display:inline-flex;align-items:center;gap:6px;background:var(--surface);padding:12px 14px}
-.beta-tag{font:700 .72rem/1 var(--pixel);text-transform:uppercase;letter-spacing:.5px;padding:4px 6px;margin-left:4px;background:var(--gold);color:var(--ink);vertical-align:middle}
+.beta-tag{font:700 .72rem/1 var(--pixel);text-transform:uppercase;letter-spacing:.5px;padding:4px 6px;margin-left:4px;background:var(--gold);color:#1b1b2f;vertical-align:middle}
 /* Mörk "AI-kamera": glasknappar, cyan–violett accent och hörnvinklar i stället för en hel ram. */
 .scan{--ai1:#22d3ee;--ai2:#a855f7;--ai-grad:linear-gradient(135deg,var(--ai1),#6366f1 55%,var(--ai2));width:calc(100vw - 24px);max-width:440px;max-height:calc(100dvh - 24px);overflow:auto;padding:0;border:1px solid rgba(255,255,255,.08);border-radius:26px;background:#07080f;color:#e8eaf6;box-shadow:0 30px 80px rgba(0,0,0,.7),0 0 0 1px rgba(168,85,247,.12),0 0 60px rgba(99,102,241,.18)}
 .scan::backdrop{background:rgba(4,5,12,.86);backdrop-filter:blur(10px)}
@@ -2727,13 +2750,14 @@ input[type=search]::-webkit-search-results-decoration {
   .val-hero-content { display: contents; }
   .val-hero-content > * { order: 2; position: relative; z-index: 1; }
   .val-hero-content > .val-hero-badge { order: 0; justify-self: start; }
-  .val-hero-stage { order: 1; margin: 8px 0 4px; }
+  .val-hero-stage { order: 1; margin: 0 0 4px; }
 }
 
 /* Hero-delen har bara knappar nu: sökningen sker i headern. */
-.val-hero-search { background: none; box-shadow: none; padding: 0; gap: 10px; flex-direction: row; }
+.val-hero-search { background: none; box-shadow: none; padding: 0; gap: 10px; flex-direction: row; align-items: stretch; }
 .val-hero-search:focus-within { box-shadow: none; }
-.val-hero-search .btn { flex: 1 1 0; padding: 14px 18px; }
+.val-hero-search .btn { flex: 1 1 0; padding: 14px 18px; white-space: nowrap; }
+@media (max-width: 400px) { .val-hero-search .btn { padding: 14px 10px; } }
 
 /* ---------- Precis inne: lagerflöde och packöppnare ---------- */
 .restock{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:32px;align-items:center;margin:30px var(--px) 4px;padding:30px 32px;border-radius:14px;color:#fff;overflow:hidden;
@@ -3305,9 +3329,9 @@ button.zm-price:hover{background:#1f2132}
 .anat-section{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px}
 .anat-section h3{margin:0 0 14px;font:700 1.1rem var(--pixel);display:flex;align-items:center;gap:8px}
 .anat-pack-box{background:var(--surface);border-radius:10px;padding:12px 14px;margin-bottom:14px;display:flex;align-items:center;gap:14px}
-.anat-pack-count{display:flex;flex-direction:column;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:6px 12px;min-width:64px}
+.anat-pack-count{display:flex;flex-direction:column;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:6px 12px;min-width:max-content;flex:none}
 .anat-pack-count b{font:700 1.6rem/1 var(--cond);color:var(--red)}
-.anat-pack-count span{font-size:.7rem;text-transform:uppercase;color:var(--muted);font-weight:600}
+.anat-pack-count span{font-size:.7rem;text-transform:uppercase;color:var(--muted);font-weight:600;white-space:nowrap}
 .anat-pack-desc{margin:0;font-size:.88rem;color:var(--ink)}
 .anat-sub{font:700 .85rem var(--sans);text-transform:uppercase;letter-spacing:.4px;color:var(--muted);margin:14px 0 8px}
 .anat-promo-list{list-style:none;margin:0;padding:0;display:grid;gap:8px}
@@ -3322,32 +3346,72 @@ button.zm-price:hover{background:#1f2132}
 .acc-chk{color:#16a34a;font-weight:bold;flex:none}
 .anat-footer{border-top:1px solid var(--line);padding-top:18px;display:flex;justify-content:center}
 
-/* Pull rates & Odds */
-.odds-modal-content{padding:4px 0}
-.odds-head{margin-bottom:20px;padding-right:40px}
-.odds-head h2{margin:6px 0 8px;font:700 1.6rem/1.2 var(--pixel)}
-.odds-slots{margin-bottom:28px}
-.odds-slots h3, .odds-rates-sec h3{margin:0 0 12px;font:700 1.15rem var(--pixel)}
-.slots-flow{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
-.slot-card{border:1px solid var(--line);border-radius:10px;background:var(--surface);padding:12px;display:flex;flex-direction:column;gap:6px}
-.slot-card.slot-hit{border-color:#f59e0b;background:rgba(245,158,11,.1)}
-.slot-card.slot-r{border-color:#8b5cf6;background:rgba(139,92,246,.1)}
-.slot-card.slot-rh{border-color:#ec4899;background:rgba(236,72,153,.1)}
-.slot-num{font:700 .75rem var(--sans);color:var(--muted);text-transform:uppercase}
-.slot-body b{font-size:.95rem;color:var(--ink);display:block;margin-bottom:2px}
-.slot-body p{margin:0 0 6px;font-size:.82rem;color:var(--muted);line-height:1.35}
-.slot-rate{display:inline-block;font:600 .75rem/1 var(--sans);background:var(--card);border:1px solid var(--line);border-radius:6px;padding:4px 8px;color:var(--ink)}
-.rates-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin-top:12px}
-.rate-card{border:1px solid var(--line);border-top-width:4px;border-radius:10px;background:var(--card);padding:14px;display:flex;flex-direction:column;gap:6px;box-shadow:0 2px 6px rgba(0,0,0,.04)}
-.rate-icon{font-size:1.4rem;line-height:1}
-.rate-code{font:800 .75rem var(--sans);letter-spacing:1px;text-transform:uppercase}
-.rate-name{font-size:.95rem;color:var(--ink)}
-.rate-stat{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:4px 0}
-.rate-odds{font:700 .95rem var(--sans);color:var(--ink)}
-.rate-pct{font:700 .8rem/1 var(--sans);padding:3px 6px;border-radius:6px}
-.rate-desc{margin:0;font-size:.8rem;color:var(--muted);line-height:1.35}
-.odds-note{margin-top:20px;padding:12px 16px;background:var(--surface);border-radius:8px;font-size:.85rem;color:var(--muted)}
-.odds-note p{margin:0}
+/* Vad finns i ett boosterpaket? Symbolerna är kortens egna sällsynthetssymboler. */
+.pk-modal{--gold-star:#e0a91b;--silver-star:#c4cad6;--holo:linear-gradient(135deg,#ff9ad5,#ffe08a 30%,#8ff0d0 60%,#9ab8ff)}
+.pk-title{margin:6px 40px 6px 0;font:700 1.5rem/1.2 var(--pixel)}
+.pk-sub{margin:28px 0 4px;font:700 1.15rem/1.3 var(--pixel)}
+.pk-lead{margin:0 0 14px;color:var(--muted);font-size:.92rem}
+.pk-lead b{color:var(--ink)}
+
+.rsy{display:inline-flex;align-items:center;gap:1px;line-height:1;vertical-align:middle}
+.rsy svg{width:14px;height:14px;fill:currentColor}
+.rsy-c i{width:11px;height:11px;border-radius:50%;background:currentColor}
+.rsy-u i{width:10px;height:10px;background:currentColor;transform:rotate(45deg);margin:0 1px}
+.rsy-black{color:var(--ink)}
+.rsy-silver svg{fill:var(--silver-star);stroke:#5d6577;stroke-width:1.4}
+.rsy-gold svg{fill:var(--gold-star);stroke:#8a5a00;stroke-width:1.2}
+.rsy-ace{font:800 .62rem/1 var(--sans);letter-spacing:.4px;color:#fff;background:linear-gradient(90deg,#d6338a,#9b4dff);padding:3px 5px;border-radius:4px}
+
+/* Paketet utlagt som kort */
+.pk-spread{display:grid;grid-template-columns:repeat(12,1fr);gap:5px}
+.pk-card{aspect-ratio:63/88;border-radius:5px;border:2px solid var(--line);background:var(--surface);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;color:var(--ink);position:relative;overflow:hidden}
+.pk-card .rsy svg{width:12px;height:12px}
+.pk-c{color:var(--muted)}
+.pk-rev{background:var(--holo);border-color:#e98bc4;color:#1b1b2f}
+.pk-rev .rsy{color:#1b1b2f}
+.pk-hit{border-color:var(--gold-star);background:radial-gradient(circle at 50% 35%,rgba(224,169,27,.35),var(--surface) 70%);box-shadow:0 0 0 2px rgba(224,169,27,.25)}
+.pk-r{border-color:#8b5cf6;background:radial-gradient(circle at 50% 35%,rgba(139,92,246,.28),var(--surface) 70%)}
+.pk-ico-energy svg{width:16px;height:16px;fill:#1b1b2f}
+.pk-ico-energy{width:22px;height:22px;border-radius:50%;background:#f2c94c;display:grid;place-items:center}
+.pk-ico-code{display:grid;grid-template-columns:repeat(2,6px);gap:2px}
+.pk-ico-code i{width:6px;height:6px;background:var(--muted)}
+.pk-ico-code i:nth-child(2),.pk-ico-code i:nth-child(3){background:var(--ink)}
+.pk-brace{display:flex;gap:5px;margin:6px 0 16px;font:600 .75rem/1 var(--sans);color:var(--muted);text-align:center}
+.pk-brace span{border-top:2px solid var(--line);padding-top:6px}
+
+/* Förklaring under paketet */
+.pk-legend{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px 14px}
+.pk-legend li{display:flex;align-items:center;gap:10px}
+.pk-legend .pk-card{width:30px;flex:none}
+.pk-legend b{display:block;font-size:.9rem;color:var(--ink)}
+.pk-legend small{display:block;font-size:.8rem;color:var(--muted);line-height:1.3}
+
+/* En booster box: 36 rutor per sällsynthet */
+.bx-rows{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.bx-row{display:grid;grid-template-columns:52px minmax(0,1fr) auto 78px;align-items:center;gap:12px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+.bx-sym{display:flex;justify-content:center}
+.bx-sym .rsy svg{width:17px;height:17px}
+.bx-name b{display:block;font-size:.92rem;color:var(--ink)}
+.bx-name small,.bx-num small{display:block;font-size:.76rem;color:var(--muted);line-height:1.3}
+.bx-num{text-align:right}
+.bx-num b{display:block;font:700 1rem/1.2 var(--sans);color:var(--ink);white-space:nowrap}
+.bx-grid{display:grid;grid-template-columns:repeat(12,9px);gap:3px}
+.bx-grid i{width:9px;height:9px;border-radius:2px;background:var(--line)}
+.bx-grid i.on{background:var(--hit,var(--ink));box-shadow:0 0 6px var(--hit,transparent)}
+.bx-rr{--hit:#6b7bff}
+.bx-ir,.bx-sir,.bx-hr{--hit:var(--gold-star)}
+.bx-ur{--hit:var(--silver-star)}
+.bx-ace{--hit:#d6338a}
+.odds-note{margin:18px 0 0;padding:12px 16px;background:var(--surface);border-radius:8px;font-size:.85rem;color:var(--muted)}
+
+@media (max-width:620px){
+  .pk-spread{grid-template-columns:repeat(6,1fr)}
+  .pk-brace{display:none}
+  .bx-row{grid-template-columns:40px minmax(0,1fr) auto;grid-template-areas:"sym name num" "grid grid grid"}
+  .bx-sym{grid-area:sym}.bx-name{grid-area:name}.bx-num{grid-area:num}
+  .bx-grid{grid-area:grid;grid-template-columns:repeat(18,1fr)}
+  .bx-grid i{width:auto;aspect-ratio:1;height:auto}
+}
 
 /* Release modal anatomy bar */
 .rg-anat-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--gold);border-radius:10px;padding:12px 16px;margin:12px 0 16px;flex-wrap:wrap}
@@ -3357,3 +3421,11 @@ button.zm-price:hover{background:#1f2132}
 .rg-anat-info small{display:block;font-size:.82rem;color:var(--muted);white-space:normal}
 
 
+
+/* Info-knappen efter antalet paket: en ruta som visar källan när man trycker på i:et */
+.anat-src{position:relative;flex:none}
+.anat-src summary{list-style:none;display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;border:2px solid var(--ink);font:700 .75rem/1 var(--sans);color:var(--ink);cursor:pointer;user-select:none}
+.anat-src summary::-webkit-details-marker{display:none}
+.anat-src summary:hover,.anat-src[open] summary{background:var(--gold);border-color:var(--gold);color:#1b1b2f}
+.anat-src p{position:absolute;right:0;top:calc(100% + 8px);z-index:3;width:max-content;max-width:220px;margin:0;padding:8px 10px;background:var(--card);border:1px solid var(--line);border-radius:8px;box-shadow:0 8px 20px rgba(0,0,0,.25);font-size:.8rem;line-height:1.4;color:var(--ink)}
+.anat-src p a{color:var(--navy);font-weight:600}

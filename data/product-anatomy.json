@@ -129,9 +129,21 @@
       "packs": 16,
       "packSet": "151",
       "promos": [
-        { "name": "Mew ex (Metal Hyper Rare)", "code": "MEW 205/165 Metal", "note": "Äkta metallkort" },
-        { "name": "Mew ex (Special Illustration Rare)", "code": "SVP 053", "note": "Full art promokort" },
-        { "name": "Mewtwo (Illustration Rare)", "code": "SVP 052", "note": "Full art promokort" }
+        {
+          "name": "Mew ex (Metal Hyper Rare)",
+          "code": "MEW 205/165 Metal",
+          "note": "Äkta metallkort"
+        },
+        {
+          "name": "Mew ex (Special Illustration Rare)",
+          "code": "SVP 053",
+          "note": "Full art promokort"
+        },
+        {
+          "name": "Mewtwo (Illustration Rare)",
+          "code": "SVP 052",
+          "note": "Full art promokort"
+        }
       ],
       "accessories": [
         "Stor tygmatta med sydda kanter (stitched-edge playmat)",
@@ -148,7 +160,11 @@
       "packs": 9,
       "packSet": "151",
       "promos": [
-        { "name": "Snorlax (Illustration Rare)", "code": "SVP 051", "note": "Full art foil promo" }
+        {
+          "name": "Snorlax (Illustration Rare)",
+          "code": "SVP 051",
+          "note": "Full art foil promo"
+        }
       ],
       "accessories": [
         "65 kortfickor (sleeves) med Snorlax",
@@ -164,9 +180,18 @@
       "packs": 3,
       "packSet": "151",
       "promos": [
-        { "name": "Bulbasaur (Foil promo)", "code": "SVP 046" },
-        { "name": "Charmander (Foil promo)", "code": "SVP 047" },
-        { "name": "Squirtle (Foil promo)", "code": "SVP 048" }
+        {
+          "name": "Bulbasaur (Foil promo)",
+          "code": "SVP 046"
+        },
+        {
+          "name": "Charmander (Foil promo)",
+          "code": "SVP 047"
+        },
+        {
+          "name": "Squirtle (Foil promo)",
+          "code": "SVP 048"
+        }
       ],
       "accessories": [
         "En gigantisk dubbelsidig affisch med illustrationer av alla ursprungliga 151 Pokémon",
@@ -190,9 +215,18 @@
       "packs": 4,
       "packSet": "151",
       "promos": [
-        { "name": "Zapdos ex (Foil promo)", "code": "SVP 049" },
-        { "name": "Electabuzz (Foil promo)", "code": "SVP 041" },
-        { "name": "Zapdos ex (Oversized Jumbo-kort)", "code": "Jumbo Promo" }
+        {
+          "name": "Zapdos ex (Foil promo)",
+          "code": "SVP 049"
+        },
+        {
+          "name": "Electabuzz (Foil promo)",
+          "code": "SVP 041"
+        },
+        {
+          "name": "Zapdos ex (Oversized Jumbo-kort)",
+          "code": "Jumbo Promo"
+        }
       ],
       "accessories": [
         "4 boosterpaket från 151",
@@ -204,9 +238,18 @@
       "packs": 4,
       "packSet": "151",
       "promos": [
-        { "name": "Alakazam ex (Foil promo)", "code": "SVP 050" },
-        { "name": "Kadabra (Foil promo)", "code": "SVP 040" },
-        { "name": "Abra (Foil promo)", "code": "SVP 039" }
+        {
+          "name": "Alakazam ex (Foil promo)",
+          "code": "SVP 050"
+        },
+        {
+          "name": "Kadabra (Foil promo)",
+          "code": "SVP 040"
+        },
+        {
+          "name": "Abra (Foil promo)",
+          "code": "SVP 039"
+        }
       ],
       "accessories": [
         "4 boosterpaket från 151",
@@ -218,7 +261,11 @@
       "packs": 9,
       "packSet": "Prismatic Evolutions",
       "promos": [
-        { "name": "Eevee (Special Illustration Rare)", "code": "SVP 170", "note": "Mycket eftertraktad SIR-promo med Eevee" }
+        {
+          "name": "Eevee (Special Illustration Rare)",
+          "code": "SVP 170",
+          "note": "Mycket eftertraktad SIR-promo med Eevee"
+        }
       ],
       "accessories": [
         "65 kortfickor (sleeves) med Eevee och dess utvecklingar",
@@ -234,9 +281,18 @@
       "packs": 3,
       "packSet": "Prismatic Evolutions",
       "promos": [
-        { "name": "Vaporeon (Foil promo)", "code": "SVP Promo" },
-        { "name": "Jolteon (Foil promo)", "code": "SVP Promo" },
-        { "name": "Flareon (Foil promo)", "code": "SVP Promo" }
+        {
+          "name": "Vaporeon (Foil promo)",
+          "code": "SVP Promo"
+        },
+        {
+          "name": "Jolteon (Foil promo)",
+          "code": "SVP Promo"
+        },
+        {
+          "name": "Flareon (Foil promo)",
+          "code": "SVP Promo"
+        }
       ],
       "accessories": [
         "Dubbelsidig stor affisch med Eeveelutions",
@@ -259,7 +315,11 @@
       "packs": 9,
       "packSet": "Surging Sparks",
       "promos": [
-        { "name": "Magneton (Illustration Rare)", "code": "SVP 154", "note": "Exklusivt folierat art-kort ritat av GIDORA" }
+        {
+          "name": "Magneton (Illustration Rare)",
+          "code": "SVP 154",
+          "note": "Exklusivt folierat art-kort ritat av GIDORA"
+        }
       ],
       "accessories": [
         "65 kortfickor (sleeves) med Stellar Tera Pikachu",
@@ -275,7 +335,11 @@
       "packs": 9,
       "packSet": "Stellar Crown",
       "promos": [
-        { "name": "Noctowl (Illustration Rare)", "code": "SVP 141", "note": "Full art foil promo" }
+        {
+          "name": "Noctowl (Illustration Rare)",
+          "code": "SVP 141",
+          "note": "Full art foil promo"
+        }
       ],
       "accessories": [
         "65 kortfickor (sleeves) med Stellar Terapagos",
@@ -291,9 +355,19 @@
       "packs": 6,
       "packSet": "Blandade serier (t.ex. 151, Obsidian Flames)",
       "promos": [
-        { "name": "Charizard ex (Etched Foil)", "code": "SVP 074", "note": "Full art etched foil" },
-        { "name": "Charmander (Foil promo)", "code": "SVP 044" },
-        { "name": "Charmeleon (Foil promo)", "code": "SVP 045" }
+        {
+          "name": "Charizard ex (Etched Foil)",
+          "code": "SVP 074",
+          "note": "Full art etched foil"
+        },
+        {
+          "name": "Charmander (Foil promo)",
+          "code": "SVP 044"
+        },
+        {
+          "name": "Charmeleon (Foil promo)",
+          "code": "SVP 045"
+        }
       ],
       "accessories": [
         "1 magnetisk kortskyddshållare (one-touch slab) med ställ",
@@ -304,69 +378,87 @@
     }
   },
   "pullRates": {
+    "note": "Ungefärliga snitt från stora öppningar av engelska paket från Scarlet & Violet och Mega Evolution. Pokémon Company publicerar inga officiella odds, och chanserna skiljer sig en del mellan set.",
     "packSlots": [
-      { "slot": "Kort 1–4", "title": "Common", "desc": "Vanliga grundkort från setet (cirkelsymbol).", "rate": "100% garanterat (4 st)", "cls": "c" },
-      { "slot": "Kort 5–7", "title": "Uncommon", "desc": "Ovanliga Pokémon- och tränarkort (rombsymbol).", "rate": "100% garanterat (3 st)", "cls": "u" },
-      { "slot": "Kort 8", "title": "Reverse Holo / ACE SPEC", "desc": "Glänsande kortram. I nyare set kan detta kort ersättas av ett kraftfullt rosa ACE SPEC-kort eller Shiny Rare.", "rate": "Reverse Holo (ca 95%) · ACE SPEC (ca 5%)", "cls": "rh" },
-      { "slot": "Kort 9", "title": "Hit-slot / Stor vinstchans", "desc": "Det andra glansiga kortet. Här gömmer sig setets mest eftertraktade konstkort (Illustration Rares, Special Illustration Rares och guldiga Hyper Rares).", "rate": "Reverse (ca 85%) · IR (1 på 13) · SIR (1 på 32) · Guld (1 på 54)", "cls": "hit" },
-      { "slot": "Kort 10", "title": "Rare / Double Rare / Full Art", "desc": "Huvudplatsen för sällsynthet (stjärnsymbol). Alltid minst ett glänsande Rare, med stor chans för Pokémon ex eller Full Art Ultra Rare.", "rate": "Holo Rare (ca 75%) · Double Rare ex (1 på 6) · Ultra Rare (1 på 15)", "cls": "r" },
-      { "slot": "Kort 11", "title": "Basic Energy", "desc": "Ett energikort (Grass, Fire, Water, Lightning, Psychic, Fighting, Darkness eller Metal). Chans för sällsynt glänsande Holo Energy.", "rate": "Standard (ca 70%) · Holofoil Energy (ca 30%)", "cls": "e" },
-      { "slot": "Kort 12", "title": "TCG Live Kodkort", "desc": "Digital kod som ger ett motsvarande paket i det officiella spelet Pokémon TCG Live.", "rate": "100% (1 st i varje paket)", "cls": "code" }
+      {
+        "n": 4,
+        "sym": "c",
+        "title": "Common",
+        "note": "Setets vanliga kort"
+      },
+      {
+        "n": 3,
+        "sym": "u",
+        "title": "Uncommon",
+        "note": "Lite ovanligare kort"
+      },
+      {
+        "n": 1,
+        "sym": "rev",
+        "title": "Reverse holo",
+        "note": "Glansig bakgrund. Ibland ett ACE SPEC i stället"
+      },
+      {
+        "n": 1,
+        "sym": "hit",
+        "title": "Reverse holo eller hit",
+        "note": "Här dyker IR, SIR och guldkort upp"
+      },
+      {
+        "n": 1,
+        "sym": "r",
+        "title": "Rare eller bättre",
+        "note": "Alltid minst ★, ibland ★★ eller full art"
+      },
+      {
+        "n": 1,
+        "sym": "energy",
+        "title": "Basic energy",
+        "note": "Räknas inte som spelkort"
+      },
+      {
+        "n": 1,
+        "sym": "code",
+        "title": "Kodkort",
+        "note": "Kod till Pokémon TCG Live"
+      }
     ],
     "odds": [
       {
-        "name": "Double Rare (ex)",
-        "code": "RR",
-        "odds": "1 på 6 paket",
-        "pct": "16.7%",
-        "icon": "⭐⭐",
-        "color": "#3b82f6",
-        "desc": "Kraftfulla Pokémon ex med dubbel stjärna. I genomsnitt 6 st per Booster Box."
+        "sym": "rr",
+        "name": "Double Rare",
+        "ex": "Pokémon ex med två svarta stjärnor",
+        "every": 6
       },
       {
-        "name": "Illustration Rare (IR)",
-        "code": "IR",
-        "odds": "1 på 13 paket",
-        "pct": "7.7%",
-        "icon": "🎨",
-        "color": "#eab308",
-        "desc": "Unika full-art illustrationer som sträcker sig över hela kortet. Cirka 3 st per Booster Box."
+        "sym": "ir",
+        "name": "Illustration Rare",
+        "ex": "Bilden täcker hela kortet, en guldstjärna",
+        "every": 13
       },
       {
-        "name": "Ultra Rare (Full Art)",
-        "code": "UR",
-        "odds": "1 på 15 paket",
-        "pct": "6.7%",
-        "icon": "✨",
-        "color": "#8b5cf6",
-        "desc": "Folierade tränare eller Pokémon ex med etsad textur och stjärnglans. Ca 2 st per Booster Box."
+        "sym": "ur",
+        "name": "Ultra Rare",
+        "ex": "Full art med etsad yta, två silverstjärnor",
+        "every": 15
       },
       {
-        "name": "ACE SPEC Rare",
-        "code": "ACE",
-        "odds": "1 på 20 paket",
-        "pct": "5.0%",
-        "icon": "⚡",
-        "color": "#ec4899",
-        "desc": "Matchavgörande rosa metallglänsande kort (tillåts endast 1 per kortlek). Ca 1-2 per Booster Box."
+        "sym": "ace",
+        "name": "ACE SPEC",
+        "ex": "Starkt tränarkort, bara ett per kortlek",
+        "every": 20
       },
       {
-        "name": "Special Illustration Rare (SIR)",
-        "code": "SIR",
-        "odds": "1 på 32 paket",
-        "pct": "3.1%",
-        "icon": "👑",
-        "color": "#f97316",
-        "desc": "De mest eftertraktade och värdefulla korten i hela setet (t.ex. Charizard, Pikachu, Eeveelutions). Snittar ca 1 st per Booster Box."
+        "sym": "sir",
+        "name": "Special Illustration Rare",
+        "ex": "Setets dyraste konstkort, två guldstjärnor",
+        "every": 32
       },
       {
-        "name": "Hyper Rare (Guld)",
-        "code": "HR",
-        "odds": "1 på 54 paket",
-        "pct": "1.8%",
-        "icon": "🏆",
-        "color": "#ffd700",
-        "desc": "Exklusiva helguldiga kort med trippelstjärna. Dyker upp ungefär i varannan Booster Box."
+        "sym": "hr",
+        "name": "Hyper Rare",
+        "ex": "Helt guldigt kort, tre guldstjärnor",
+        "every": 54
       }
     ]
   }

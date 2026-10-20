@@ -137,10 +137,3 @@ if (anatModal) {
     }
   });
 }
-$("#slapp-odds-btn")?.addEventListener("click", async () => {
-  if (anatModal) {
-    const d = await getAnatomyData();
-    anatModal.querySelector(".anat-modal-body").innerHTML = renderPullRatesModal(d);
-    if (!anatModal.open) anatModal.showModal();
-  }
-});

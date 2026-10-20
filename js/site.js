@@ -36,7 +36,6 @@ function header() {
   // På mobilen visas sidans namn i loggan i stället för "Packninja" (startsidan behåller namnet).
   const mobileTitle = here === "index.html" ? "Packninja" : NAV.find(([href]) => href.split("#")[0] === here)?.[1] || "Packninja";
   return `<a class="skip" href="#main">Hoppa till innehållet</a>
-  <div class="ticker" aria-label="Senaste info"><div class="ticker-track" id="ticker"></div></div>
   <header class="site-header"><div class="wrap">
     <a class="logo" href="index.html"><img src="logo.svg" alt=""><span><b class="brand-desk">Packninja</b><b class="brand-mob">${esc(mobileTitle)}</b><small>Kortsläpp & priser</small></span></a>
     <nav class="main-nav" aria-label="Huvudmeny"><ul>
@@ -99,18 +98,6 @@ function footer() {
   </div></footer>`;
 }
 
-async function fillTicker() {
-  const items = ["Priser från Cardmarket uppdateras dagligen", "Gratis, utan konto och utan reklam", "Hobbyprojekt: Priser är vägledande – dubbelkolla alltid hos butiken"];
-  try {
-    const [next] = await upcomingReleases();
-    if (next) { const d = daysUntil(next.date); items.unshift(`Nästa drop: ${next.name} ${d === 0 ? "i dag" : `om ${d} ${d === 1 ? "dag" : "dagar"}`}`); }
-  } catch {}
-  try { const n = await news(); items.push(`Nyheter uppdaterade ${ago(n.updated)}`); if (n.articles[0]) items.push(`Senaste: ${n.articles[0].title}`); } catch {}
-  // Två kopior av listan gör att rullningen blir sömlös.
-  const html = items.map((t) => `<span>${esc(t)}</span>`).join("");
-  $("#ticker").innerHTML = html + html;
-}
-
 // Sökfältet i headern söker kortpriser, utom på värderingssidan där det värderar kortet.
 const searchTarget = () => (location.pathname.endsWith("vardering.html") ? "vardering.html" : "priser.html");
 
@@ -138,7 +125,6 @@ export function mountChrome() {
   document.querySelectorAll("[data-icon]").forEach((el) => el.insertAdjacentHTML("afterbegin", icon(el.dataset.icon, +el.dataset.size || 28)));
   mountAllScenes();
   mountBanners();
-  fillTicker();
   startBrowserNotices();
   const menuInput = $(".mm-search input");
   if (menuInput) mountCardAutocomplete(menuInput, { formAction: searchTarget() });

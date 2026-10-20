@@ -20,7 +20,7 @@ input[type=search],select,.shop-search{background:#2a2f3e}
 .price-cap input{background:#2a2f3e}
 .toc a:hover{background:#403315}
 .todo{background:#494218}
-.qc[aria-pressed=true]{background:#403315}
+.qc[aria-pressed=true]{background:var(--surface);border-color:var(--line)}
 .dot-pre{color:#1b1b2f}
 .bell{background:rgba(35,39,52,.92);color:var(--ink);border-color:#3a4052;box-shadow:0 2px 8px rgba(0,0,0,.45)}
 .bell[aria-pressed=true]{color:#1b1b2f}
@@ -39,12 +39,11 @@ input[type=search],select,.shop-search{background:#2a2f3e}
 .cad-footer{background:#292e3b}
 .cad-footer:hover,
 .cad-footer.is-active{background:#2d3340}
-.guide-tips{background:#3c3114}
+.guide-tips{background:#3c3114;border:2px solid #0b0c12;box-shadow:4px 4px 0 #0b0c12}
 .verdict.good{background:#203326}
 .verdict.mid{background:#3c3117}
 .verdict.bad{background:#381f1a}
 .badge-pulse{color:#1b1b2f}
-.val-hero-search{background:#2a2f3e}
 .val-data-table tr:hover td{background:#1e252d}
 .rsec{background:#2a2f3e}
 .val-cond-tip{background:#3c3117}
@@ -77,6 +76,8 @@ input[type=search],select,.shop-search{background:#2a2f3e}
     radial-gradient(circle at 88% 18%, rgba(140, 180, 255, 0.20) 0%, transparent 48%),
     url("img/pokemon-restock-night.jpg") center 48% / cover no-repeat,
     #131422;
+  /* Svart pixelram i stället för den ljusa textfärgen */
+  box-shadow: 0 calc(var(--px)*-1) 0 0 #0b0c12, 0 var(--px) 0 0 #0b0c12, calc(var(--px)*-1) 0 0 0 #0b0c12, var(--px) 0 0 0 #0b0c12, 0 16px 36px rgba(0, 0, 0, 0.45);
 }
 .val-hero {
   background:
@@ -84,6 +85,8 @@ input[type=search],select,.shop-search{background:#2a2f3e}
     radial-gradient(circle at 82% 28%, rgba(242, 182, 50, 0.22) 0%, transparent 48%),
     url("img/pokemon-nature-night.jpg") center 58% / cover no-repeat,
     #131422;
+  /* Svart pixelram i stället för den ljusa textfärgen */
+  box-shadow: 0 calc(var(--px)*-1) 0 0 #0b0c12, 0 var(--px) 0 0 #0b0c12, calc(var(--px)*-1) 0 0 0 #0b0c12, var(--px) 0 0 0 #0b0c12, 0 16px 36px rgba(0, 0, 0, 0.45);
 }
 
 /* Valt skick i nattläge: mörk bakgrund med ljus text, i stället för den vita ljusläges-gradienten. */
@@ -119,3 +122,49 @@ input[type=search],select,.shop-search{background:#2a2f3e}
   color: #b4bbcd;
 }
 
+
+/* Svarta sällsynthetsstjärnor (Rare, Double Rare) är svarta med ljus kant, så att de skiljer sig från silverstjärnorna. */
+.rsy-black svg { fill: #0b0c12; stroke: #e8eaf1; stroke-width: 1.4px; }
+
+/* "Vad är ditt kort värt?" på startsidan: mörk marinblå i stället för ljus lavendel, så att den vita texten syns. */
+.price-band { background: linear-gradient(135deg, #273056 0%, #1f2742 100%); box-shadow: 0 calc(var(--px)*-1) 0 0 #0b0c12, 0 var(--px) 0 0 #0b0c12, calc(var(--px)*-1) 0 0 0 #0b0c12, var(--px) 0 0 0 #0b0c12; }
+.price-band .search-row .card-suggest-wrap { border-color: #0b0c12; }
+
+/* Svarta pixelramar i stället för den ljusa textfärgen: strecket ovanför sidfotens landskap och tidslinjens kort.
+   Det aktuella släppet behåller sin gröna ram. */
+.site-footer canvas.scene { border-top-color: #0b0c12; }
+.tl-card { border-color: #0b0c12; box-shadow: 4px 4px 0 #0b0c12; }
+.tl-step.current .tl-card { border-color: var(--mint); }
+
+/* Butiker: sökfältet med svart ram i mörkt läge. */
+input.shop-search { border-color: #0b0c12; }
+
+/* Sök-knappen på startsidans prisband: svart ram i mörkt läge. */
+.price-band .btn { box-shadow: 0 -3px 0 0 #0b0c12, 0 3px 0 0 #0b0c12, -3px 0 0 0 #0b0c12, 3px 0 0 0 #0b0c12; border-color: #0b0c12; }
+
+/* Svarta ramar runt knappar i mörkt läge i stället för den ljusa textfärgen. */
+.btn { box-shadow: 0 calc(var(--px)*-1) 0 0 #0b0c12, 0 var(--px) 0 0 #0b0c12, calc(var(--px)*-1) 0 0 0 #0b0c12, var(--px) 0 0 0 #0b0c12, inset 0 -4px 0 0 rgba(0, 0, 0, 0.25); }
+.btn:active { box-shadow: 0 calc(var(--px)*-1) 0 0 #0b0c12, 0 var(--px) 0 0 #0b0c12, calc(var(--px)*-1) 0 0 0 #0b0c12, var(--px) 0 0 0 #0b0c12, inset 0 4px 0 0 rgba(0, 0, 0, 0.3); }
+
+/* Knapparna "Produkter och butiker" på Släpp är lika de övriga mörka knapparna i mörkt läge, i stället för orange. */
+.rc-foot .btn.primary { background: var(--card); color: var(--ink); }
+
+/* Kalenderns produktchips är mörka med svart ram i mörkt läge, i stället för starkt orange. */
+.ev-drop { background: #2a2f3e; color: var(--ink); box-shadow: 0 0 0 2px #0b0c12; }
+
+/* Kortsökens ram i mörkt läge: svart i stället för den ljusa textfärgen. */
+.card-search .card-suggest-wrap, .search-row .card-suggest-wrap { border-color: #0b0c12; }
+
+/* Svarta streck i mörkt läge på alla sidor: under sidhuvudet och under banderollen. */
+.page-head, .site-header { border-bottom-color: #0b0c12; }
+
+/* Svart streck längst ner på sidfotens landskap i mörkt läge. */
+.site-footer canvas.scene { border-bottom: 4px solid #0b0c12; }
+
+/* Svarta pixelramar och streck i mörkt läge: "Nästa släpp" på startsidan (px-frame) och linjen under startsidans landskap. */
+.px-frame { box-shadow: 0 calc(var(--px)*-1) 0 0 #0b0c12, 0 var(--px) 0 0 #0b0c12, calc(var(--px)*-1) 0 0 0 #0b0c12, var(--px) 0 0 0 #0b0c12; }
+.hero { border-bottom-color: #0b0c12; }
+
+/* Flikarna (Produkter, Händelser, Butiker, Notiser) med svarta kanter i mörkt läge. */
+.seg { border-color: #0b0c12; }
+.seg button + button { border-left-color: #0b0c12; }
