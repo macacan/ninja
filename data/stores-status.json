@@ -1,5 +1,5 @@
 {
- "updated": 1792623865433,
+ "updated": 1792624505450,
  "stores": [
   {
    "id": "alara-games",
@@ -92,14 +92,14 @@
    "name": "Card Mountain",
    "domain": "cardmountain.se",
    "status": "ej-forbjuden",
-   "checkedAt": 1792623591842,
+   "checkedAt": 1792624499677,
    "ok": true,
-   "lastOkAt": 1792623591842,
+   "lastOkAt": 1792624499677,
    "count": 53,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 15
+   "interval": 60
   },
   {
    "id": "cardclub",
