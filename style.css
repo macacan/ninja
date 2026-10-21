@@ -865,8 +865,9 @@ span.rd-logo{display:grid;place-items:center;background:var(--surface);border-ra
 .ctile .glare{position:absolute;inset:0;pointer-events:none;background:linear-gradient(115deg,transparent 35%,rgba(255,255,255,.45) 50%,transparent 65%);background-size:250% 100%;background-position:120% 0;transition:background-position .6s}
 .ctile:hover .glare{background-position:-20% 0}
 .ctile.holo .glare,.ctile.rainbow .glare{background:linear-gradient(115deg,transparent 30%,rgba(255,255,255,.5) 48%,transparent 66%),repeating-linear-gradient(115deg,rgba(255,80,80,.18) 0 8%,rgba(255,220,80,.18) 8% 16%,rgba(80,255,160,.18) 16% 24%,rgba(80,170,255,.18) 24% 32%,rgba(200,90,255,.18) 32% 40%);background-size:250% 100%,300% 100%;mix-blend-mode:color-dodge;opacity:0;transition:opacity .2s,background-position .8s}
-.ctile.holo:hover .glare,.ctile.rainbow:hover .glare{opacity:1;background-position:-20% 0,-60% 0}
+.ctile.holo:hover .glare,.ctile.rainbow:hover .glare{opacity:.65;background-position:-20% 0,-60% 0}
 .cname{font:700 1rem/1.15 var(--cond);text-transform:uppercase;margin-top:4px}
+.cname-ja{font:400 .8rem var(--sans);text-transform:none;color:var(--muted)}
 .cset{font-size:.76rem;color:var(--muted)}
 .crow{display:flex;align-items:baseline;justify-content:space-between;gap:6px}
 .cprice{font:700 1.05rem var(--sans)}
@@ -915,16 +916,17 @@ span.rd-logo{display:grid;place-items:center;background:var(--surface);border-ra
 .cm-card.active{transition:transform .06s linear;box-shadow:0 24px 52px -10px rgba(15,17,30,.65)}
 .cm-card img{width:100%;height:100%;object-fit:cover;display:block}
 @keyframes idle{0%,100%{transform:rotateX(2deg) rotateY(-6deg)}50%{transform:rotateX(-2deg) rotateY(6deg)}}
-.cm-glare{position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at var(--mx) var(--my),rgba(255,255,255,.55),rgba(255,255,255,0) 45%);mix-blend-mode:soft-light;opacity:.7}
+/* Glans och regnbåge är dämpade så att kortets egna färger syns igenom, även på specialkort. */
+.cm-glare{position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at var(--mx) var(--my),rgba(255,255,255,.45),rgba(255,255,255,0) 45%);mix-blend-mode:soft-light;opacity:.55}
 .cm-holo{position:absolute;inset:0;pointer-events:none;opacity:0}
-.cm-card.holo .cm-holo{opacity:.35;mix-blend-mode:color-dodge;
+.cm-card.holo .cm-holo{opacity:.22;mix-blend-mode:color-dodge;
   background:repeating-linear-gradient(110deg,#ff6b6b 0%,#ffd93d 7%,#6bff95 14%,#6bc8ff 21%,#c56bff 28%,#ff6b6b 35%);
   background-size:300% 300%;background-position:var(--mx) var(--my);filter:brightness(.7) contrast(1.4) saturate(.9)}
-.cm-card.rainbow .cm-holo{opacity:.42;mix-blend-mode:color-dodge;
-  background:radial-gradient(circle at var(--mx) var(--my),rgba(255,255,255,.35),transparent 40%),
+.cm-card.rainbow .cm-holo{opacity:.24;mix-blend-mode:color-dodge;
+  background:radial-gradient(circle at var(--mx) var(--my),rgba(255,255,255,.2),transparent 40%),
     repeating-linear-gradient(110deg,#ff5f6d 0%,#ffc371 6%,#7dff9e 12%,#5cc8ff 18%,#c77dff 24%,#ff5f6d 30%),
     repeating-linear-gradient(20deg,rgba(255,255,255,.25) 0 1px,transparent 1px 6px);
-  background-size:100% 100%,260% 260%,100% 100%;background-position:center,var(--mx) var(--my),center;filter:brightness(.8) contrast(1.5)}
+  background-size:100% 100%,260% 260%,100% 100%;background-position:center,var(--mx) var(--my),center;filter:brightness(.65) contrast(1.4)}
 .cm-finish{font:600 .75rem var(--sans);text-transform:uppercase;letter-spacing:.6px;color:var(--muted)}
 .cm-info h2{margin:0;font:700 2rem/1.05 var(--cond);text-transform:uppercase;padding-right:44px}
 .cm-price{font:700 2rem var(--sans);display:flex;align-items:center;gap:10px;margin-top:8px}

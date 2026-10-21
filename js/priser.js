@@ -2,6 +2,10 @@ import { API, $, esc, kr, getJSON, getList, skeleton, liveStamp, cardImg } from 
 import { mountChart } from "./pricechart.js";
 import { recordCard, mountRecent } from "./recent.js";
 import { mountCardAutocomplete, parseCardQuery, resolvePokemonName, loadDataset, sameNumber, filterByNumber, apiNumber } from "./card-autocomplete.js";
+import { langMark } from "./langmark.js";
+import { apiFor, findJapanese } from "./japanese.js";
+
+const isJa = () => $("#lang").value === "ja";
 
 // ---------- Valuta ----------
 let rates = null;
@@ -37,9 +41,9 @@ function tile(c, i) {
     <span class="cimg${isBack ? " has-back" : ""}">
       <img src="${esc(img)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.src='img/kortbaksida.webp';this.parentNode.classList.add('has-back');">
       ${isBack ? `<span class="csoon">Bilder kommer snart</span>` : ""}
-      <i class="glare"></i>
+      <i class="glare"></i>${langMark(c.lang)}
     </span>
-    <span class="cname">${esc(c.name)}</span>
+    <span class="cname">${c.en ? `${esc(c.en)} <small class="cname-ja">${esc(c.name)}</small>` : esc(c.name)}</span>
     <span class="cset">${esc(c.set || "")}${c.localId ? ` · #${esc(c.localId)}` : ""}</span>
     <span class="crow"><span class="cprice">${c.eur != null ? sek(c.eur) : "<small>Inget pris</small>"}</span>${change(c.change)}</span>
     ${c.rarity && c.rarity !== "None" ? `<span class="crar">${esc(c.rarity)}</span>` : ""}
@@ -47,9 +51,11 @@ function tile(c, i) {
 }
 
 // Gör ett fullständigt TCGdex-kort till samma form som korten i trendfilen.
-function slim(c) {
+// meta: { lang, en } för japanska kort (språk och Pokémonens engelska namn).
+function slim(c, meta = {}) {
   const cm = c.pricing?.cardmarket || {};
   return {
+    lang: meta.lang || "en", en: meta.en || null,
     id: c.id, name: c.name, image: c.image, set: c.set?.name, localId: c.localId, rarity: c.rarity, variants: c.variants,
     eur: cm.trend ?? cm.avg ?? cm["trend-holo"] ?? null, avg7: cm.avg7 ?? null, avg30: cm.avg30 ?? null,
     change: cm.avg7 && cm.avg30 ? Math.round((cm.avg7 / cm.avg30 - 1) * 1000) / 10 : null, full: c,
@@ -86,8 +92,8 @@ let found = [], loaded = [], next = 0, searchId = 0;
 async function loadDetails() {
   const ids = found.slice(next, next + PAGE);
   next += ids.length;
-  const cards = await Promise.all(ids.map((c) => getJSON(`${API}/cards/${encodeURIComponent(c.id)}`).catch(() => null)));
-  return cards.filter(Boolean).map(slim);
+  const cards = await Promise.all(ids.map((c) => getJSON(`${apiFor(c.lang)}/cards/${encodeURIComponent(c.id)}`).catch(() => null)));
+  return cards.map((card, i) => card && slim(card, ids[i])).filter(Boolean);
 }
 
 function applyView() {
@@ -110,13 +116,18 @@ function applyView() {
 }
 
 async function search() {
-  const rawQ = $("#pq").value.trim(), rarity = $("#rarity").value, set = $("#set").value;
+  const ja = isJa();
+  // Set och sällsynthet finns bara för de engelska korten.
+  $("#set").disabled = $("#rarity").disabled = ja;
+  $("#lang-beta").hidden = $("#ja-note").hidden = !ja;
+  const rawQ = $("#pq").value.trim(), rarity = ja ? "" : $("#rarity").value, set = ja ? "" : $("#set").value;
   const parsed = parseCardQuery(rawQ);
   const data = await loadDataset().catch(() => null);
   const resolvedName = parsed.textPart ? (resolvePokemonName(parsed.textPart, data) || parsed.textPart) : "";
 
   const params = new URLSearchParams();
   if (rawQ) params.set("q", rawQ);
+  if (ja) params.set("lang", "ja");
   if (rarity) params.set("rarity", rarity);
   if (set) params.set("set", set);
   for (const k of ["range", "sort"]) if ($(`#${k}`).value) params.set(k, $(`#${k}`).value);
@@ -128,6 +139,7 @@ async function search() {
   if (!hasQuery) return;
 
   const my = ++searchId;
+  if (ja) return searchJa(my, parsed, resolvedName);
   if (parsed.numPart && resolvedName) {
     $("#res-title").textContent = `${resolvedName} #${parsed.numPart}`;
   } else if (parsed.numPart && !resolvedName) {
@@ -194,6 +206,30 @@ async function search() {
   }
 }
 
+// Japanska kort (beta): Pokémonens engelska namn → Pokédex-nummer → japanska kort med samma Pokémon.
+async function searchJa(my, parsed, name) {
+  $("#res-title").textContent = name ? `Japanska kort: ${name}${parsed.numPart ? ` #${parsed.numPart}` : ""}` : "Japanska kort";
+  $("#prices").innerHTML = skeleton(8);
+  try {
+    const list = name || parsed.numPart ? await findJapanese(name, parsed.numPart, parsed.setTotal) : null;
+    if (my !== searchId) return;
+    if (!list) {
+      found = loaded = []; next = 0;
+      $("#res-count").textContent = "";
+      $("#more").hidden = true;
+      $("#prices").innerHTML = '<div class="msg">Japanska kort går just nu bara att söka fram med en Pokémons engelska namn, t.ex. Pikachu eller Charizard.</div>';
+      return;
+    }
+    found = list.sort((a, b) => !!b.image - !!a.image);
+    next = 0;
+    await getRates();
+    loaded = await loadDetails();
+    if (my === searchId) applyView();
+  } catch {
+    $("#prices").innerHTML = '<div class="msg">Kunde inte nå TCGdex just nu. Försök igen om en stund.</div>';
+  }
+}
+
 $("#more").addEventListener("click", async () => {
   $("#more").disabled = true;
   loaded = loaded.concat(await loadDetails());
@@ -202,7 +238,7 @@ $("#more").addEventListener("click", async () => {
 });
 $("#price-form").addEventListener("submit", (e) => { e.preventDefault(); search(); });
 for (const id of ["#range", "#sort"]) $(id).addEventListener("change", () => (loaded.length ? applyView() : null));
-for (const id of ["#set", "#rarity"]) $(id).addEventListener("change", search);
+for (const id of ["#set", "#rarity", "#lang"]) $(id).addEventListener("change", search);
 
 mountCardAutocomplete($("#pq"), {
   onSelect: (val) => {
@@ -233,11 +269,13 @@ async function openCard(i) {
   const body = modal.querySelector(".cm-body");
   body.innerHTML = `<div class="cm-load">Hämtar kortet…</div>`;
   if (!modal.open) modal.showModal();
-  const full = c.full || (await getJSON(`${API}/cards/${encodeURIComponent(c.id)}`).catch(() => null)) || {};
+  const full = c.full || (await getJSON(`${apiFor(c.lang)}/cards/${encodeURIComponent(c.id)}`).catch(() => null)) || {};
   if (shownIndex !== i) return;
   await getRates();
+  const ja = c.lang === "ja";
   const cm = full.pricing?.cardmarket || {}, tp = full.pricing?.tcgplayer || {};
-  recordCard({ id: c.id, name: c.name, set: full.set?.name, localId: full.localId || c.localId, total: full.set?.cardCount?.official, image: c.image || full.image, eur: cm.trend ?? cm.avg ?? null });
+  // "Senast sökta" hämtar korten från den engelska databasen, så japanska kort sparas inte där.
+  if (!ja) recordCard({ id: c.id, name: c.name, set: full.set?.name, localId: full.localId || c.localId, total: full.set?.cardCount?.official, image: c.image || full.image, eur: cm.trend ?? cm.avg ?? null });
   const fin = finish({ ...c, variants: full.variants });
   const row = (label, v, cur) => (v == null ? "" : `<tr><th>${label}</th><td>${sek(v, cur)}</td></tr>`);
   const tpRows = Object.entries(tp).filter(([, v]) => v && typeof v === "object" && v.marketPrice != null)
@@ -258,18 +296,19 @@ async function openCard(i) {
       <ul class="cm-facts">${facts}</ul>
     </div>
     <div class="cm-info">
-      <h2 id="cm-name">${esc(full.name || c.name)}</h2>
+      <h2 id="cm-name">${ja && c.en ? `${esc(c.en)} <small class="cname-ja">${esc(full.name || c.name)}</small> <span class="beta-tag">Beta</span>` : esc(full.name || c.name)}</h2>
       <div class="cm-price">${c.eur != null ? sek(c.eur) : "Inget pris ännu"} ${change(c.change)}</div>
       <p class="muted">Cardmarkets trendpris i kronor. Vägledande, uppdateras dagligen.</p>
       <div class="pchart"></div>
       ${cm.trend != null || cm.avg != null ? `<h3>Cardmarket (Europa)</h3><table class="cm-table">${row("Trend", cm.trend, "EUR")}${row("Snitt", cm.avg, "EUR")}${row("Lägsta", cm.low, "EUR")}${row("Snitt 1 dag", cm.avg1, "EUR")}${row("Snitt 7 dagar", cm.avg7, "EUR")}${row("Snitt 30 dagar", cm.avg30, "EUR")}${row("Trend holo", cm["trend-holo"] || null, "EUR")}</table>` : ""}
       ${tpRows ? `<h3>TCGplayer (USA)</h3><table class="cm-table">${tpRows}</table>` : ""}
       <div class="cm-links">
-        <a class="btn primary small" href="https://www.cardmarket.com/en/Pokemon/Products/Search?searchString=${encodeURIComponent(full.name || c.name)}" target="_blank" rel="noopener">Cardmarket ↗</a>
-        <a class="btn small" href="https://www.tcgplayer.com/search/pokemon/product?q=${encodeURIComponent(full.name || c.name)}" target="_blank" rel="noopener">TCGplayer ↗</a>
+        <a class="btn primary small" href="https://www.cardmarket.com/en/Pokemon/Products/Search?searchString=${encodeURIComponent(ja ? c.en || full.name : full.name || c.name)}" target="_blank" rel="noopener">Cardmarket ↗</a>
+        ${ja ? "" : `<a class="btn small" href="https://www.tcgplayer.com/search/pokemon/product?q=${encodeURIComponent(full.name || c.name)}" target="_blank" rel="noopener">TCGplayer ↗</a>`}
       </div>
     </div>`;
-  if (full.id) mountChart(body.querySelector(".pchart"), full, rates?.EUR).catch(() => {});
+  // Prishistoriken finns bara för de engelska korten.
+  if (full.id && !ja) mountChart(body.querySelector(".pchart"), full, rates?.EUR).catch(() => {});
   modal.querySelector(".prev").hidden = i <= 0;
   modal.querySelector(".next").hidden = i >= current.length - 1;
 }
@@ -331,5 +370,5 @@ async function fillFilters() {
 mountRecent($("#recent"), { eyebrow: "Nyligen sökta", title: "Senast sökta kort", hint: "Korten du senast öppnat. Sparas bara i den här webbläsaren." });
 await fillFilters();
 const p = new URLSearchParams(location.search);
-for (const [k, id] of [["q", "#pq"], ["rarity", "#rarity"], ["set", "#set"], ["range", "#range"], ["sort", "#sort"]]) if (p.get(k)) $(id).value = p.get(k);
+for (const [k, id] of [["q", "#pq"], ["lang", "#lang"], ["rarity", "#rarity"], ["set", "#set"], ["range", "#range"], ["sort", "#sort"]]) if (p.get(k)) $(id).value = p.get(k);
 if (p.get("q") || p.get("rarity") || p.get("set")) search(); else landing();

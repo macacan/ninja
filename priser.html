@@ -9,8 +9,8 @@
 <meta name="theme-color" content="#1b1e28" media="(prefers-color-scheme: dark)">
 <link rel="icon" href="logo.svg">
 <link href="fonts/fonts.css" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=20261021h">
-<link rel="stylesheet" href="dark.css?v=20261021j" id="dark-css" media="(prefers-color-scheme: dark)">
+<link rel="stylesheet" href="style.css?v=20261021m">
+<link rel="stylesheet" href="dark.css?v=20261021m" id="dark-css" media="(prefers-color-scheme: dark)">
 <script src="js/theme.js?v=20261021"></script>
 </head>
 <body>
@@ -25,6 +25,8 @@
   <div class="wrap">
     <form id="price-form" class="card-search" role="search">
       <input id="pq" name="q" type="search" placeholder="Sök kort, t.ex. Pikachu eller Charizard ex" aria-label="Sök kort">
+      <label class="drop"><span>Språk<em class="beta-tag" id="lang-beta" title="Japanska kort är under uppbyggnad och inte kompletta" hidden>Beta</em></span><select id="lang" name="lang" autocomplete="off">
+        <option value="en">Engelska</option><option value="ja">Japanska (beta)</option></select></label>
       <label class="drop"><span>Set</span><select id="set" name="set"><option value="">Alla</option></select></label>
       <label class="drop"><span>Sällsynthet</span><select id="rarity" name="rarity"><option value="">Alla</option></select></label>
       <label class="drop"><span>Pris</span><select id="range" name="range">
@@ -50,6 +52,7 @@
 
     <section id="results" hidden>
       <div class="section"><h2 id="res-title">Sökresultat</h2><span id="res-count" class="muted"></span></div>
+      <p class="hint" id="ja-note" hidden><span class="beta-tag">Beta</span> Japanska kort är inte kompletta än. Sök på Pokémonens engelska namn, t.ex. Pikachu. Tränar- och energikort ingår inte. Priserna kommer från Cardmarket.</p>
       <div id="prices" class="cgrid"></div>
       <div class="more-row"><button id="more" class="btn" type="button" hidden>Visa fler</button></div>
     </section>
@@ -202,6 +205,6 @@
     <div class="cm-body"></div>
   </dialog>
 </main>
-<script type="module" src="js/priser.js?v=20261021"></script>
+<script type="module" src="js/priser.js?v=20261021l"></script>
 </body>
 </html>

@@ -2,6 +2,8 @@
 // Utgångspriset är Cardmarkets trendpris (via TCGdex). Skick och betyg är tumregler, se "Så räknar vi" på sidan.
 import { API, $, esc, kr, getJSON, getList, skeleton, loading, cardImg } from "./site.js";
 import { parseCardQuery, resolvePokemonName, loadDataset, filterByNumber, apiNumber } from "./card-autocomplete.js";
+import { apiFor, findJapanese } from "./japanese.js";
+import { langMark } from "./langmark.js";
 import { recordCard, mountRecent } from "./recent.js";
 import { mountCardAutocomplete } from "./card-autocomplete.js";
 import { CONDITIONS, DEFAULT_COND, gradeMult, isVintage } from "./valuation.js";
@@ -196,7 +198,11 @@ function drawDamage() {
   dmg.pic.style.filter = dull > 0.01 ? `saturate(${f2(1 - dull * 0.08)}) contrast(${f2(1 - dull * 0.025)}) brightness(${f2(1 - dull * 0.0125)})` : "";
 }
 
-const state = { card: null, rate: null, year: null, cond: DEFAULT_COND, crit: [1, 1, 1, 1], cost: 400 };
+// lang och en: språket på det valda kortet och, för japanska kort, Pokémonens engelska namn.
+const state = { card: null, lang: "en", en: null, rate: null, year: null, cond: DEFAULT_COND, crit: [1, 1, 1, 1], cost: 400 };
+const isJa = () => $("#vm-lang").value === "ja";
+// Japanska kort visas med det engelska namnet först och det japanska under.
+const cardTitle = (c) => (state.lang === "ja" && state.en ? `${esc(state.en)} <small class="cname-ja">${esc(c.name)}</small> <span class="beta-tag">Beta</span>` : esc(c.name));
 let found = [], shown = 0, searchId = 0;
 const PAGE = 12;
 
@@ -213,6 +219,10 @@ async function findCards(raw) {
   const name = parsed.textPart ? (resolvePokemonName(parsed.textPart, data) || parsed.textPart) : "";
   let num = parsed.numPart;
   let list = [];
+  if (isJa()) {
+    list = (await findJapanese(name, num, parsed.setTotal)) || [];
+    return { list: list.sort((a, b) => !!b.image - !!a.image), title: ["Japanska", name, num && `#${num}`].filter(Boolean).join(" ") };
+  }
   if (name && num) {
     // Exakt nummer: 4, 04 och 004 är samma kort, och "004/123" väljer i första hand set med 123 kort.
     list = await filterByNumber(await getList(`${API}/cards?${new URLSearchParams({ name, localId: apiNumber(num) })}`), num, parsed.setTotal);
@@ -230,12 +240,12 @@ function resultTile(c, i) {
   const src = cardImg(c, "low");
   const img = src || "img/kortbaksida.webp";
   const isBack = !src;
-  return `<div class="ctile plain" data-id="${esc(c.id)}" role="button" tabindex="0" aria-label="Välj ${esc(c.name)}">
+  return `<div class="ctile plain" data-id="${esc(c.id)}" data-lang="${c.lang || "en"}" data-en="${esc(c.en || "")}" role="button" tabindex="0" aria-label="Välj ${esc(c.en || c.name)}">
     <span class="cimg${isBack ? " has-back" : ""}">
       <img src="${esc(img)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.src='img/kortbaksida.webp';this.parentNode.classList.add('has-back');">
-      ${isBack ? `<span class="csoon">Bilder kommer snart</span>` : ""}
+      ${isBack ? `<span class="csoon">Bilder kommer snart</span>` : ""}${langMark(c.lang)}
     </span>
-    <span class="cname">${esc(c.name)}</span>
+    <span class="cname">${c.en ? `${esc(c.en)} <small class="cname-ja">${esc(c.name)}</small>` : esc(c.name)}</span>
     <span class="cset">#${esc(c.localId || "")} · ${esc(c.id.split("-")[0].toUpperCase())}</span>
   </div>`;
 }
@@ -254,7 +264,9 @@ async function search(raw, total = null, photo = null, nameHint = null) {
   openModal();
   $("#vm-q").value = q;
   $("#vm-empty").hidden = true;
-  history.replaceState(null, "", `?q=${encodeURIComponent(q)}`);
+  const ja = isJa();
+  $("#vm-lang-beta").hidden = $("#vr-ja-note").hidden = !ja;
+  history.replaceState(null, "", `?q=${encodeURIComponent(q)}${ja ? "&lang=ja" : ""}`);
   $("#val-results").hidden = false;
   $("#vr-grid").innerHTML = skeleton(6);
   const my = ++searchId;
@@ -274,8 +286,8 @@ async function search(raw, total = null, photo = null, nameHint = null) {
     found = list; shown = PAGE;
     $("#vr-title").textContent = title ? `Välj ditt kort: ${title}` : "Välj ditt kort";
     renderResults();
-    if (sure) reveal(list[0].id);
-    else if (list.length === 1 && !photo) pick(list[0].id);
+    if (sure) reveal(list[0].id, list[0].lang, list[0].en);
+    else if (list.length === 1 && !photo) pick(list[0].id, list[0].lang, list[0].en);
   } catch {
     if (my === searchId) $("#vr-grid").innerHTML = '<div class="msg">Kunde inte nå TCGdex just nu. Försök igen om en stund.</div>';
   }
@@ -386,12 +398,12 @@ function renderCard() {
       <div class="val-side">
         <div class="val-img${isBack ? " has-back" : ""}" role="button" tabindex="0" aria-label="Förstora kortet i ditt skick"><span class="vd-card"><img src="${esc(img)}" alt="${esc(c.name)}" referrerpolicy="no-referrer" onerror="this.src='img/kortbaksida.webp';this.closest('.val-img').classList.add('has-back');"></span>${isBack ? `<span class="val-soon">Bilder kommer snart</span>` : ""}<span class="vz-tip" aria-hidden="true">Tryck för att förstora</span></div>
         <div class="val-meta">
-          <div class="val-mtitle"><b>${esc(c.name)}</b><small>${esc(c.set?.name || "")} · #${esc(c.localId || "")}</small></div>
+          <div class="val-mtitle"><b>${cardTitle(c)}</b><small>${esc(c.set?.name || "")} · #${esc(c.localId || "")}</small></div>
           <div class="val-live" id="val-live" aria-hidden="true">${liveHTML()}</div>
         </div>
       </div>
       <div class="val-info">
-        <h2 class="val-dh">${esc(c.name)}</h2>
+        <h2 class="val-dh">${cardTitle(c)}</h2>
         <p class="muted val-dsub">${esc(c.set?.name || "")} · #${esc(c.localId || "")}${c.rarity && c.rarity !== "None" ? ` · ${esc(c.rarity)}` : ""}</p>
         <details class="acc"${WIDE.matches ? " open" : ""}>
           <summary><span>2. Välj skick</span><span class="acc-val" data-acc="cond"></span></summary>
@@ -418,7 +430,7 @@ function renderCard() {
       </div>
       <div class="val-out" id="val-out">${outputHTML()}</div>
     </div>
-    <p class="hint">Priser från Cardmarket via TCGdex${cm.updated ? `, uppdaterade ${esc(String(cm.updated).slice(0, 10))}` : ""}. Allt är vägledande uppskattningar. <a href="priser.html?q=${encodeURIComponent(c.name)}">Se alla priser för ${esc(c.name)}</a>.</p>`;
+    <p class="hint">Priser från Cardmarket via TCGdex${cm.updated ? `, uppdaterade ${esc(String(cm.updated).slice(0, 10))}` : ""}. Allt är vägledande uppskattningar. ${state.lang === "ja" && state.en ? `<a href="priser.html?q=${encodeURIComponent(state.en)}&lang=ja">Se alla japanska ${esc(state.en)}-kort</a>` : `<a href="priser.html?q=${encodeURIComponent(c.name)}">Se alla priser för ${esc(c.name)}</a>`}.</p>`;
   buildDamage($("#val-card .val-img"), img);
   syncSliders();
   drawDamage();
@@ -469,19 +481,23 @@ function animateCrit(target) {
   requestAnimationFrame(step);
 }
 
-async function pick(id) {
-  history.replaceState(null, "", `?id=${encodeURIComponent(id)}`);
+// lang och en: "ja" och Pokémonens engelska namn för japanska kort. Allt annat (senast värderade, skannern,
+// förslagen i sökrutan) ger engelska kort.
+async function pick(id, lang = "en", en = null) {
+  state.lang = lang; state.en = en || null;
+  history.replaceState(null, "", `?id=${encodeURIComponent(id)}${lang === "ja" ? `&lang=ja${en ? `&en=${encodeURIComponent(en)}` : ""}` : ""}`);
   const box = $("#val-card");
   box.innerHTML = loading("Ninjan värderar");
   if (!cardModal.open) cardModal.showModal();
   box.scrollTop = 0; cardModal.scrollTop = 0;
   try {
-    const [card] = await Promise.all([getJSON(`${API}/cards/${encodeURIComponent(id)}`), getRate()]);
+    const [card] = await Promise.all([getJSON(`${apiFor(lang)}/cards/${encodeURIComponent(id)}`), getRate()]);
     // Utgivningsåret finns på setet, inte på kortet. Om det saknas räknas kortet som modernt.
-    const set = await getJSON(`${API}/sets/${encodeURIComponent(card.set?.id || "")}`).catch(() => null);
+    const set = await getJSON(`${apiFor(lang)}/sets/${encodeURIComponent(card.set?.id || "")}`).catch(() => null);
     const year = set?.releaseDate ? +set.releaseDate.slice(0, 4) : null;
     Object.assign(state, { card, year, cond: DEFAULT_COND, crit: COND_PRESET[DEFAULT_COND].slice() });
-    recordCard({ id: card.id, name: card.name, set: card.set?.name, localId: card.localId, total: card.set?.cardCount?.official, image: card.image, eur: baseEur(card) });
+    // "Senast värderade" hämtar korten från den engelska databasen, så japanska kort sparas inte där.
+    if (lang !== "ja") recordCard({ id: card.id, name: card.name, set: card.set?.name, localId: card.localId, total: card.set?.cardCount?.official, image: card.image, eur: baseEur(card) });
     renderCard();
   } catch {
     box.innerHTML = '<div class="msg">Kortet kunde inte laddas just nu. Försök igen om en stund.</div>';
@@ -489,11 +505,11 @@ async function pick(id) {
 }
 
 // Säker träff från kameran: visar kortet med marknadsvärdet. Gradera öppnar värderingen med pre-gradingen.
-async function reveal(id) {
-  const [card, rate] = await Promise.all([getJSON(`${API}/cards/${encodeURIComponent(id)}`).catch(() => null), getRate()]);
-  if (!card) return pick(id);
+async function reveal(id, lang = "en", en = null) {
+  const [card, rate] = await Promise.all([getJSON(`${apiFor(lang)}/cards/${encodeURIComponent(id)}`).catch(() => null), getRate()]);
+  if (!card) return pick(id, lang, en);
   const e = baseEur(card);
-  showReveal({ card, sek: e != null && rate ? e * rate : null, onGrade: () => pick(card.id) });
+  showReveal({ card, sek: e != null && rate ? e * rate : null, onGrade: () => pick(card.id, lang, en) });
 }
 
 // ---------- Kortet i stort format, i nuvarande skick ----------
@@ -597,14 +613,16 @@ function clearAll() {
   history.replaceState(null, "", location.pathname);
   vmInput.focus();
 }
-mountCardAutocomplete(vmInput, { onSelect: (val, cardId) => (cardId ? pick(cardId) : search(val)) });
+// Förslagen i sökrutan är engelska kort. På japanska söker vi i stället på namnet.
+mountCardAutocomplete(vmInput, { onSelect: (val, cardId) => (cardId && !isJa() ? pick(cardId) : search(val)) });
+$("#vm-lang").addEventListener("change", () => { if (vmInput.value.trim()) search(vmInput.value); else $("#vm-lang-beta").hidden = !isJa(); });
 $("#vm-form").addEventListener("submit", (e) => { e.preventDefault(); search(vmInput.value); });
 $("#vm-clear").addEventListener("click", clearAll);
 modal.addEventListener("click", (e) => { if (e.target === modal || e.target.closest(".cm-close")) modal.close(); });
 modal.addEventListener("close", () => history.replaceState(null, "", location.pathname));
 cardModal.addEventListener("click", (e) => { if (e.target === cardModal || e.target.closest(".cm-close")) cardModal.close(); });
 // Stängs värderingen och sökträffarna finns kvar under, går adressen tillbaka till sökningen.
-cardModal.addEventListener("close", () => history.replaceState(null, "", modal.open && vmInput.value.trim() ? `?q=${encodeURIComponent(vmInput.value.trim())}` : location.pathname));
+cardModal.addEventListener("close", () => history.replaceState(null, "", modal.open && vmInput.value.trim() ? `?q=${encodeURIComponent(vmInput.value.trim())}${isJa() ? "&lang=ja" : ""}` : location.pathname));
 
 // ---------- Händelser ----------
 // Sökningen sker i headerns sökfält, som på den här sidan söker kort att värdera.
@@ -671,7 +689,7 @@ function arm(tile) {
 $("#vr-grid").addEventListener("click", (e) => {
   const tile = e.target.closest("[data-id]");
   if (!tile) return;
-  if (e.target.closest(".ctile-go")) { const id = tile.dataset.id; disarm(); pick(id); return; }
+  if (e.target.closest(".ctile-go")) { const { id, lang, en } = tile.dataset; disarm(); pick(id, lang, en); return; }
   arm(tile);
 });
 $("#vr-grid").addEventListener("keydown", (e) => {
@@ -707,7 +725,8 @@ document.addEventListener("click", (e) => {
 mountRecent($("#recent"), { eyebrow: "Nyligen kollade", title: "Senast värderade kort", onPick: (id) => pick(id) });
 
 const params = new URLSearchParams(location.search);
-if (params.get("id")) pick(params.get("id"));
+if (params.get("lang") === "ja") $("#vm-lang").value = "ja";
+if (params.get("id")) pick(params.get("id"), params.get("lang") === "ja" ? "ja" : "en", params.get("en"));
 else if (params.get("q")) { input.value = params.get("q"); search(params.get("q")); }
 
 
