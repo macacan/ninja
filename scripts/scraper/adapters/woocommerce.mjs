@@ -29,6 +29,8 @@ export async function woocommerce(host, ctx) {
           available: !!p.is_in_stock,
           preorder: !!p.is_on_backorder || /förbeställ|pre-?order/i.test(p.name || ""),
           image: p.images?.[0]?.src || null,
+          // Språket står ofta bara i kategorier, taggar eller adress.
+          hint: [p.slug, ...(p.categories || []).map((c) => `${c.name} ${c.slug}`), ...(p.tags || []).map((t) => `${t.name} ${t.slug}`)].filter(Boolean).join(" | "),
         });
       }
       if (list.length < 100) break;

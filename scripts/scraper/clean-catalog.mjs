@@ -35,11 +35,15 @@ for (const p of products) {
   if (c.type !== p.type) {
     reclassified++;
   }
+  // Titeln säger inget om språket: behåll det som bevakningen hittade i taggar eller adress.
+  const keepLang = c.langGuess && p.lang && !p.langGuess;
+  const { langGuess, ...rest } = p;
   cleaned.push({
-    ...p,
+    ...rest,
     type: c.type,
-    lang: c.lang,
+    lang: keepLang ? p.lang : c.lang,
     set: c.set,
+    ...(c.langGuess && !keepLang ? { langGuess: true } : {}),
   });
 }
 

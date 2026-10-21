@@ -55,6 +55,9 @@ async function sitemapUrls(host, ctx) {
   return allowed.length > ctx.maxSitemapUrls ? poke : allowed;
 }
 
+// Bara sökvägen i adressen, inte domänen: en butik som heter något med "japan" säljer inte bara japanskt.
+const pathOf = (u) => { try { return decodeURIComponent(new URL(u).pathname); } catch { return ""; } };
+
 // Microdata (itemprop="price" osv.), som bl.a. Quickbutik använder.
 function parseMicrodata(html, url) {
   const prop = (name) => {
@@ -73,6 +76,7 @@ function parseMicrodata(html, url) {
     available: /InStock|LimitedAvailability|OnlineOnly/i.test(availability),
     preorder: /PreOrder|PreSale|BackOrder/i.test(availability),
     image: imageUrl(prop("image"), url) || imageUrl(ogImage(html), url),
+    hint: pathOf(url),
   };
 }
 
@@ -102,6 +106,8 @@ export function parseProductPage(html, url) {
         available: /InStock|LimitedAvailability|OnlineOnly/i.test(availability),
         preorder: /PreOrder|PreSale|BackOrder/i.test(availability),
         image: imageUrl(n.image, url) || imageUrl(ogImage(html), url),
+        // Adress och kategori, för språket när titeln inte säger något.
+        hint: [pathOf(url), pathOf(n.url), [].concat(n.category || []).join(" ")].filter(Boolean).join(" | "),
       };
     }
   }
@@ -117,6 +123,7 @@ export function parseProductPage(html, url) {
     available: !/out ?of ?stock|oos|slut/i.test(meta("product:availability") || meta("og:availability") || "instock"),
     preorder: /preorder|pre-order/i.test(meta("product:availability") || ""),
     image: imageUrl(meta("og:image"), url),
+    hint: pathOf(url),
   };
 }
 

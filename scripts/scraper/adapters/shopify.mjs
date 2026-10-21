@@ -27,6 +27,8 @@ function toItem(host, p, ctx) {
     available: avail.length > 0,
     preorder: /förbeställ|pre-?order|preorder/i.test(`${title} ${(p.tags || []).join(" ")}`),
     image: pick.featured_image?.src || p.images?.[0]?.src || null,
+    // Språket står ofta bara i taggar, produkttyp eller adress ("japanese", "pokemon-kinesiska").
+    hint: [p.handle, p.product_type, ...[].concat(p.tags || [])].filter(Boolean).join(" | "),
   };
 }
 

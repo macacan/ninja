@@ -102,12 +102,18 @@ function storeRows(g) {
   // En rad per butik: butikens bästa erbjudande.
   const best = new Map();
   for (const m of g.all) { const o = best.get(m.store); if (!o || rank(m) < rank(o) || (rank(m) === rank(o) && m.price < o.price)) best.set(m.store, m); }
-  return [...best.values()].sort((a, b) => rank(a) - rank(b) || a.price - b.price).map((m) => {
+  const rows = [...best.values()];
+  // Ett pris långt under de andra butikernas är ofta ett annat språk eller en annan produkt med liknande namn.
+  const prices = rows.map((m) => m.price).sort((a, b) => a - b);
+  const median = rows.length >= 3 ? prices[Math.floor(prices.length / 2)] : null;
+  return rows.sort((a, b) => rank(a) - rank(b) || a.price - b.price).map((m) => {
     const st = m.available ? ["in", "I lager"] : m.preorder ? ["pre", "Förbeställning"] : ["out", "Slut"];
+    const lang = m.langGuess ? "Språk ej angivet" : LANG[m.lang] || m.lang;
     return `<li class="srow">
-      <span class="srow-name">${esc(storeName[m.store] || m.store)}</span><span class="srow-price">${kr(m.price)}</span>
+      <span class="srow-name">${esc(storeName[m.store] || m.store)}<small class="srow-lang${m.langGuess ? " guess" : ""}">${esc(lang)}</small></span><span class="srow-price">${kr(m.price)}</span>
       <span class="rs-st ${st[0]}">${st[1]}</span>
       ${rank(m) < 2 ? `<a class="btn small gold" href="${esc(safeUrl(m.url))}" target="_blank" rel="noopener nofollow">Köp</a>` : `<a class="srow-link" href="${esc(safeUrl(m.url))}" target="_blank" rel="noopener nofollow">Till butiken</a>`}
+      ${median && m.price < median * 0.55 ? '<span class="srow-warn">Ovanligt lågt pris – kontrollera språk och produkt hos butiken</span>' : ""}
     </li>`;
   }).join("");
 }

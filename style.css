@@ -812,6 +812,9 @@ span.rd-logo{display:grid;place-items:center;background:var(--surface);border-ra
 .srow .btn,.srow-link{grid-area:act;justify-self:end}
 .srow .btn{min-height:36px;padding:7px 14px;margin:var(--px)}
 .srow-link{font-size:.8rem;color:var(--muted)}
+.srow-lang{display:block;font-size:.75rem;font-weight:400;color:var(--muted)}
+.srow-lang.guess{font-style:italic}
+.srow-warn{grid-column:1/-1;font-size:.78rem;font-weight:700;color:var(--red)}
 .btn.gold{background:var(--gold)}
 .rs-st.out{background:#eceef3;color:var(--muted)}
 @media (max-width:640px){

@@ -97,7 +97,7 @@ export async function createEngine({ statuses } = {}) {
       const raw = await ADAPTERS[store.platform](host, ctx);
       const list = [], same = new Set(), foreign = new Set();
       for (const r of raw) {
-        const c = classify(r.title, state.sets.names, state.sets.series);
+        const c = classify(r.title, state.sets.names, state.sets.series, r.hint);
         if (!c || !(r.price > 0)) continue;
         // Orimligt låga priser för stora förseglade produkter (enstaka paket eller skydd felmärkta som hel box)
         if (c.type === "Booster Box" && r.price < 250) continue;

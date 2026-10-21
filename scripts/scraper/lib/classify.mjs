@@ -6,7 +6,7 @@ const POKEMON = /pok[eé]mon/i;
 
 // Höjs när igenkänningen ändras så att fler produkter räknas. Då sparas de nyfunna produkterna tyst
 // vid nästa kontroll av varje butik, i stället för att larmas som hundratals "nya" (se engine.mjs).
-export const CLASSIFY_VERSION = 5;
+export const CLASSIFY_VERSION = 7;
 
 // Ordningen spelar roll: mer specifika typer först.
 const TYPES = [
@@ -55,9 +55,11 @@ const NOT_SEALED = new RegExp([
 
 const LANGS = [
   ["ja", /japan|japansk|\bjp\b|\bjpn\b|日本/i],
-  ["ko", /korea|koreansk|\bkr\b/i],
-  ["zh", /kinesisk|chinese|simplified|traditional|\(\s*(ch|cn|chn|sc|tc)\s*\)/i],
+  ["ko", /korea|koreansk|\bkr\b|\bkor\b/i],
+  ["zh", /kinesisk|chinese|simplified|traditional|\bcn\b|\bchn\b|\(\s*(ch|cn|chn|sc|tc)\s*\)/i],
   ["fr", /fran[cç]ais|fransk/i],
+  // Sist, så att en japansk eller kinesisk markering vinner om titeln råkar innehålla båda.
+  ["en", /\beng\b|\beng\.|engelsk|english|\(\s*en\s*\)/i],
 ];
 
 // Tyska produkter tas inte med.
@@ -103,7 +105,11 @@ function looksPokemon(title, hits) {
   return words.some((w) => pokemonNames().has(w));
 }
 
-export function classify(title, setNames = [], seriesNames = []) {
+const langOf = (text) => LANGS.find(([, re]) => re.test(text))?.[0] || null;
+
+// hint: butikens taggar, produkttyp, kategorier och adress. Används bara för språket, och bara när titeln
+// inte säger något. Säger ingen av dem något blir det engelska, markerat som gissat (langGuess).
+export function classify(title, setNames = [], seriesNames = [], hint = "") {
   if (!title || NOT_SEALED.test(title) || GERMAN.test(title)) return null;
   const type = TYPES.find(([, re]) => re.test(title))?.[0];
   if (!type) return null;
@@ -116,7 +122,7 @@ export function classify(title, setNames = [], seriesNames = []) {
   const lowNoMega = low.replace(/mega evolutions?/g, " ");
   const hits = setNames.filter((s) => s === "Evolutions" ? /\bevolutions\b/.test(lowNoMega) && !/prismatic evolutions/.test(low) : (s.length > 3 ? low.includes(s.toLowerCase()) : /^\d{3}$/.test(s) && new RegExp(`\\b${s}\\b`).test(low)));
   if (!looksPokemon(title, hits)) return null;
-  const lang = LANGS.find(([, re]) => re.test(title))?.[0] || "en";
+  const lang = langOf(title) || (hint && langOf(hint));
   const set = hits.sort((a, b) => series.has(a.toLowerCase()) - series.has(b.toLowerCase()) || b.length - a.length)[0] || null;
-  return { type, lang, set };
+  return lang ? { type, lang, set } : { type, lang: "en", langGuess: true, set };
 }
