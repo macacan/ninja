@@ -1,6 +1,14 @@
 {
- "updated": "2026-10-21T02:53:51.823Z",
+ "updated": "2026-10-21T03:54:08.217Z",
  "articles": [
+  {
+   "title": "Pokémon TCG Pocket’s Pika Pika! Pikachu missions are live with immersive Pikachu ex reward",
+   "link": "https://pokemonblog.com/2026/10/20/pokemon-tcg-pockets-pika-pika-pikachu-missions-are-live-with-immersive-pikachu-ex-reward/",
+   "date": "2026-10-21T03:22:47.000Z",
+   "summary": "Pokémon Trading Card Game Pocket’s Pika Pika! Pikachu missions are live from Oct. 20, 2026, at 6 a.m. PDT through Oct. 19, 2027, at 10:59 p.m. PDT, celebrating 30 years of the…",
+   "image": "https://pokemonblog.com/wp-content/uploads/2026/10/pokemon_tcg_pocket_pika_pika_pikachu_ex_immersive_card.jpg",
+   "source": "PokemonBlog"
+  },
   {
    "title": "Pokemon TCG Pocket Dual Fusion cards: Full set so far",
    "link": "https://www.dexerto.com/pokemon/pokemon-tcg-pocket-dual-fusion-cards-set-3420587/",
@@ -8,14 +16,6 @@
    "summary": "Pokemon TCG Pocket’s Dual Fusion expansion brings new Pokemon ex and cards to collect. Explore the full card list, featured Pokemon, and release details.",
    "image": "https://www.dexerto.com/cdn-image/wp-content/uploads/2025/07/24/pokemon-tcg-pocket-new-expansion-dual-fusion-set-c1-mega-mewtwo-x-pikachu-venusaur-charizard-blastoise-mega-dragonite-mega-greninja-mew.jpg?width=480&quality=75&format=auto",
    "source": "Dexerto"
-  },
-  {
-   "title": "Pokémon TCG and Santa Cruz launch 30th anniversary blind bag skateboard decks",
-   "link": "https://pokemonblog.com/2026/10/19/pokemon-tcg-and-santa-cruz-launch-30th-anniversary-blind-bag-skateboard-decks/",
-   "date": "2026-10-19T20:54:23.000Z",
-   "summary": "Pokémon and Santa Cruz Skateboards have released a collection of blind bag decks celebrating 30 years of the Pokémon Trading Card Game, with 30 designs featuring artwork from…",
-   "image": "https://pokemonblog.com/wp-content/uploads/2026/10/pokemon_tcg_santa_cruz_skateboard_decks_venusaur_charizard_blastoise.jpg",
-   "source": "PokemonBlog"
   },
   {
    "title": "TCG collector says $100K PSA card order stolen in Pokemon, MTG & Yu-Gi-Oh FedEx truck burglary",
@@ -322,30 +322,5 @@
    "source": "Wargamer"
   }
  ],
- "videos": [
-  {
-   "id": "mMJzv4wmJvU",
-   "title": "[UK] Pokémon TCG Pocket: Dual Fusion 🧬 | Official Trailer",
-   "date": "2026-10-20T21:12:16.000Z",
-   "source": "Pokémon (officiell)"
-  },
-  {
-   "id": "fGszU4YxLBI",
-   "title": "Pokémon TCG Pocket: Dual Fusion 🧬 | Official Trailer",
-   "date": "2026-10-20T13:01:26.000Z",
-   "source": "Pokémon (officiell)"
-  },
-  {
-   "id": "vTJyWfTQsWQ",
-   "title": "TCG Day 2 | 2027 Pokémon Nice Regional Championships",
-   "date": "2026-10-18T19:26:30.000Z",
-   "source": "Pokémon (officiell)"
-  },
-  {
-   "id": "ioLhEOjR-G0",
-   "title": "TCG Day 1 | 2027 Pokémon Nice Regional Championships",
-   "date": "2026-10-17T19:31:50.000Z",
-   "source": "Pokémon (officiell)"
-  }
- ]
+ "videos": []
 }

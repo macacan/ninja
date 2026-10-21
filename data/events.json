@@ -1,6 +1,19 @@
 {
- "updated": 1792551234581,
+ "updated": 1792554854672,
  "events": [
+  {
+   "at": 1792551605375,
+   "store": "shinycards",
+   "product": "shinycards:https://www.shinycards.se/pokemon/booster-pack/pokemon-scarlet-violet-45-paldean-fates-booster-pack",
+   "group": "paldean-fates|booster-pack|en|",
+   "title": "Pokemon Scarlet & Violet 4.5: Paldean Fates Booster Pack",
+   "url": "https://www.shinycards.se/pokemon/booster-pack/pokemon-scarlet-violet-45-paldean-fates-booster-pack",
+   "price": 329,
+   "type": "Booster Pack",
+   "set": "Paldean Fates",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1792544176467,
    "store": "aquitaz",
