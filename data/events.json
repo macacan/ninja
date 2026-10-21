@@ -1,6 +1,19 @@
 {
- "updated": 1792603625939,
+ "updated": 1792607273464,
  "events": [
+  {
+   "at": 1792603797377,
+   "store": "dragon-s-lair",
+   "product": "dragon-s-lair:15554363064668",
+   "group": "prismatic-evolutions|premium-collection|en||super",
+   "title": "Pokemon TCG SV8.5: Prismatic Evolutions Super Premium Collection",
+   "url": "https://dragonslair.se/products/pokemon-tcg-sv85-prismatic-evolutions-super-premium-collection-pokemon",
+   "price": 3295,
+   "type": "Premium Collection",
+   "set": "Prismatic Evolutions",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1792602765716,
    "store": "rahtech",
