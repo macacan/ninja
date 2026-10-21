@@ -1,6 +1,59 @@
 {
- "updated": 1792598226193,
+ "updated": 1792601826276,
  "events": [
+  {
+   "at": 1792600145234,
+   "store": "spelparken",
+   "product": "spelparken:15389680271735",
+   "group": "temporal-forces|booster-pack|en|sleeved",
+   "title": "Temporal Forces – Sleeved Booster Pack",
+   "url": "https://spelparken.se/products/temporal-forces-sleeved-booster-pack",
+   "price": 109,
+   "type": "Booster Pack",
+   "set": "Temporal Forces",
+   "lang": "en",
+   "kind": "ny"
+  },
+  {
+   "at": 1792599269629,
+   "store": "skattkistan",
+   "product": "skattkistan:11216983785810",
+   "group": "30th-celebration|tin|en|mini|mini",
+   "title": "Pokémon TCG: 30th Celebration Mini Tin",
+   "url": "https://skattkistan.net/products/pokemon-tcg-30th-celebration-mini-tin",
+   "price": 295,
+   "type": "Tin",
+   "set": "30th Celebration",
+   "lang": "en",
+   "kind": "prissankt",
+   "from": 339
+  },
+  {
+   "at": 1792598523447,
+   "store": "netgrade",
+   "product": "netgrade:https://netgrade.se/shop/pokemon-tcg-high-class-pack-mega-dream-ex-m2a-booster-pack-japansk",
+   "group": "x|booster-pack|ja||class-dream-high",
+   "title": "⭐ Pokémon TCG – High Class Pack: MEGA Dream ex M2a Booster Pack (Japansk)",
+   "url": "https://netgrade.se/shop/pokemon-tcg-high-class-pack-mega-dream-ex-m2a-booster-pack-japansk",
+   "price": 159,
+   "type": "Booster Pack",
+   "set": null,
+   "lang": "ja",
+   "kind": "ny"
+  },
+  {
+   "at": 1792598329531,
+   "store": "spelparken",
+   "product": "spelparken:15584123748727",
+   "group": "team-up|blister|en||1",
+   "title": "Team Up 1-Pack Blister – Mimikyu Promo",
+   "url": "https://spelparken.se/products/team-up-1-pack-blister-mimikyu-promo",
+   "price": 7499,
+   "type": "Blister",
+   "set": "Team Up",
+   "lang": "en",
+   "kind": "ny"
+  },
   {
    "at": 1792598028502,
    "store": "rgb-kingz",
