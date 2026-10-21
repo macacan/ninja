@@ -82,3 +82,12 @@ GitHub startar schemalagda jobb bara några gånger per dygn för det här repot
 - Repo-variabler: `SCRAPE_INTERVAL_MINUTES` (minuter mellan kontrollerna per butik, standard 15), `SCRAPE_COMMIT_MINUTES` (hur ofta det sparas, standard 60) och `SCRAPE_DAEMON_MINUTES` (längd per körning, standard 330).
 - Boten committar ofta, så kör `git pull --rebase` innan du pushar egna ändringar.
 - Vill du hellre köra på en egen server eller dator: sätt `SCRAPE_ON_ACTIONS=false` och starta daemon.mjs där.
+
+## Kortskannern (värderingssidan)
+
+`js/card-scanner.js`, inga beroenden utöver Tesseract.js.
+
+1. **Hitta kortet:** först kanterna nära ramen på skärmen (snabbt). Hittas de inte letas kortets fyra hörn i hela bilden med kanter och Hough-linjer (`js/scan/quad.js`). Kortet rätas sedan ut med en homografi.
+2. **Bilden:** konstverket görs om till ett litet avtryck (`js/scan/fingerprint.js`) och jämförs med ett index över ca 23 000 kort, som hämtas från KortKoll-projektet (`macacan/Pokescan`, `www/hashes.*`, byggs varje månad).
+3. **Texten:** namn och nummer läses med Tesseract. Stämmer numret inte med något av korten som liknar bilden läses nummerraden igen på fler sätt (gråskala med kontrast för mörka kort, smalare och högre zoner).
+4. **Avgör:** nummer + bild som pekar på samma kort, eller nummer + setstorlek där bilden avgör mellan seten, eller en mycket tydlig bildträff. Annars söks kortet på namn och nummer som förut.
