@@ -1,6 +1,19 @@
 {
- "updated": 1792581952300,
+ "updated": 1792583714550,
  "events": [
+  {
+   "at": 1792583462069,
+   "store": "bangerpack",
+   "product": "bangerpack:https://bangerpack.se/pokemon/elite-trainer-special/pokemon-30th-celebration-binder-collection",
+   "group": "30th-celebration|collection-box|en||binder",
+   "title": "Pokémon 30th Celebration – Binder Collection",
+   "url": "https://bangerpack.se/pokemon/elite-trainer-special/pokemon-30th-celebration-binder-collection",
+   "price": 1295,
+   "type": "Collection Box",
+   "set": "30th Celebration",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1792572755131,
    "store": "cards-by-malcolm",
