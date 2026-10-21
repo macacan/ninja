@@ -16,6 +16,7 @@ npx http-server -p 5173 -c-1
 |---|---|---|
 | Nyheter och videor | `node scripts/update-news.mjs` | varje timme, i `.github/workflows/scrape.yml` (reserv: `news.yml`) |
 | Släppkalendern | `node scripts/update-releases.mjs` | varje timme, i `scrape.yml` (reserv: `news.yml`) |
+| Kortskannerns bildindex | `node scripts/build-card-index.mjs` (kräver `npm i --no-save sharp`) | första dagen varje månad, `.github/workflows/card-index.yml` |
 | Butikslager | `node scripts/scraper/daemon.mjs` | var 15:e minut per butik, sparas en gång i timmen, `.github/workflows/scrape.yml` |
 
 Båda skriver JSON till `data/`, som sidan läser.
@@ -88,6 +89,6 @@ GitHub startar schemalagda jobb bara några gånger per dygn för det här repot
 `js/card-scanner.js`, inga beroenden utöver Tesseract.js.
 
 1. **Hitta kortet:** först kanterna nära ramen på skärmen (snabbt). Hittas de inte letas kortets fyra hörn i hela bilden med kanter och Hough-linjer (`js/scan/quad.js`). Kortet rätas sedan ut med en homografi.
-2. **Bilden:** konstverket görs om till ett litet avtryck (`js/scan/fingerprint.js`) och jämförs med ett index över ca 23 000 kort, som hämtas från KortKoll-projektet (`macacan/Pokescan`, `www/hashes.*`, byggs varje månad).
+2. **Bilden:** konstverket görs om till ett litet avtryck (`js/scan/fingerprint.js`) och jämförs med ett index över ca 22 000 kort i `data/hashes.*`. Det byggs första dagen varje månad av arbetsflödet **Bygg kortindex** (`scripts/build-card-index.mjs`) från TCGdex-bilderna, plus reservbilderna i `data/card-images.json`.
 3. **Texten:** namn och nummer läses med Tesseract. Stämmer numret inte med något av korten som liknar bilden läses nummerraden igen på fler sätt (gråskala med kontrast för mörka kort, smalare och högre zoner).
 4. **Avgör:** nummer + bild som pekar på samma kort, eller nummer + setstorlek där bilden avgör mellan seten, eller en mycket tydlig bildträff. Annars söks kortet på namn och nummer som förut.
