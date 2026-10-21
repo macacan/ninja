@@ -1,6 +1,20 @@
 {
- "updated": 1792563845872,
+ "updated": 1792567230476,
  "events": [
+  {
+   "at": 1792566911231,
+   "store": "cards-by-malcolm",
+   "product": "cards-by-malcolm:https://www.cardsbymalcolm.se/product/23074949/pokemon-tcg-destined-rivals-elite-trainer-box",
+   "group": "destined-rivals|elite-trainer-box|en|",
+   "title": "Pokémon TCG: Destined Rivals Elite Trainer Box",
+   "url": "https://www.cardsbymalcolm.se/product/23074949/pokemon-tcg-destined-rivals-elite-trainer-box",
+   "price": 1999,
+   "type": "Elite Trainer Box",
+   "set": "Destined Rivals",
+   "lang": "en",
+   "kind": "prissankt",
+   "from": 2099
+  },
   {
    "at": 1792559928798,
    "store": "shinycards",
