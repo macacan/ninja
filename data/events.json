@@ -1,6 +1,32 @@
 {
- "updated": 1792610893524,
+ "updated": 1792614513621,
  "events": [
+  {
+   "at": 1792612053498,
+   "store": "westcoast-vault",
+   "product": "westcoast-vault:15681043923284",
+   "group": "paldea-evolved|blister|en||cl",
+   "title": "Pokémon TCG: Paldea Evolved Checklane Booster Pack",
+   "url": "https://westcoastvault.se/products/paldea-evolved-checklane-boosterpack",
+   "price": 169,
+   "type": "Blister",
+   "set": "Paldea Evolved",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1792611122183,
+   "store": "samlarhobby",
+   "product": "samlarhobby:16083257262461",
+   "group": "chaos-rising|elite-trainer-box|en|pc",
+   "title": "Pokémon, Mega Evolution 4: Chaos Rising Pokémon Center, Elite Trainer Box",
+   "url": "https://samlarhobby.se/products/pokemon-mega-evolution-4-chaos-rising-pokemon-center-elite-trainer-box",
+   "price": 2295,
+   "type": "Elite Trainer Box",
+   "set": "Chaos Rising",
+   "lang": "en",
+   "kind": "ny"
+  },
   {
    "at": 1792610213478,
    "store": "samlarhobby",
