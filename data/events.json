@@ -1,6 +1,19 @@
 {
- "updated": 1792558475110,
+ "updated": 1792562075177,
  "events": [
+  {
+   "at": 1792559928798,
+   "store": "shinycards",
+   "product": "shinycards:https://www.shinycards.se/pokemon/booster-pack/mega-evolution-5-pitch-black-booster-pack",
+   "group": "pitch-black|booster-pack|en|",
+   "title": "Pokemon Mega Evolution 5: Pitch Black Booster Pack",
+   "url": "https://www.shinycards.se/pokemon/booster-pack/mega-evolution-5-pitch-black-booster-pack",
+   "price": 75,
+   "type": "Booster Pack",
+   "set": "Pitch Black",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1792551605375,
    "store": "shinycards",
