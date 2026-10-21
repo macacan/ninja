@@ -8,8 +8,13 @@
 //    Tesseract-worker parallellt. Numret måste ha en total som är en känd setstorlek, t.ex. 132 i "013/132".
 // 3. Rörelsekontroll: OCR körs först när kameran hålls stilla.
 // 4. Perceptual dHash (64-bitars skillnadshash) för visuell matchning av kandidatkorten.
+// 5. Hittas inte kortet nära ramen letas dess fyra hörn i hela bilden (kanter + Hough-linjer, scan/quad.js).
+// 6. Bildavtryck av konstverket (scan/fingerprint.js) jämförs med ett färdigt index över alla kort (samma som KortKoll).
+//    Pekar bilden och det lästa numret ut samma kort är skanningen klar, utan att vänta på namnet.
 import { API, esc, getJSON } from "./site.js";
 import { loadDataset } from "./card-autocomplete.js";
+import "./scan/quad.js"; // sätter self.Quad
+import "./scan/fingerprint.js"; // sätter self.Fingerprint
 
 const TESSERACT = "https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/tesseract.min.js";
 const SCAN_INTERVAL = 250; // ms minst mellan två OCR-försök under aktiv kameraström
@@ -509,6 +514,212 @@ export function detectCardCorners(videoOrImg, guide, band = 0.12) {
   return { corners: confident ? corners : guide, confident };
 }
 
+// ---------- 4b. Kortets hörn i hela bilden ----------
+// Kanter (Sobel) och raka linjer (Hough) i en liten kopia av bilden. Fyrhörningen måste ha kortets proportioner och
+// tydlig kant runt om. Klarar kort som ligger snett, långt bort eller utanför ramen. Hörnen i källans koordinater, eller null.
+let quadCanvas = null, quadCtx = null;
+export function findCardQuad(src) {
+  const Q = self.Quad;
+  const sw = src?.videoWidth || src?.width, sh = src?.videoHeight || src?.height;
+  if (!Q || !sw || !sh) return null;
+  const k = 360 / Math.max(sw, sh), w = Math.max(1, Math.round(sw * k)), h = Math.max(1, Math.round(sh * k));
+  if (!quadCanvas || quadCanvas.width !== w || quadCanvas.height !== h) {
+    quadCanvas = Object.assign(document.createElement("canvas"), { width: w, height: h });
+    quadCtx = quadCanvas.getContext("2d", { willReadFrequently: true });
+  }
+  quadCtx.drawImage(src, 0, 0, w, h);
+  const q = Q.find(quadCtx.getImageData(0, 0, w, h).data, w, h);
+  return q ? q.pts.map(([x, y]) => [x / k, y / k]) : null;
+}
+
+// ---------- 4c. Bildavtryck mot alla kort ----------
+// Indexet (ca 23 000 kort, 240 byte per kort) byggs varje månad i KortKoll-projektet och hämtas en gång.
+const ART_BASES = ["https://cdn.jsdelivr.net/gh/macacan/Pokescan@main/www/", "https://raw.githubusercontent.com/macacan/Pokescan/main/www/"];
+let artPromise = null, artFailedAt = 0;
+export function loadArtIndex() {
+  if (!artPromise && Date.now() - artFailedAt < 60e3) return Promise.resolve(null); // misslyckades nyss: försök inte vid varje bild
+  artPromise ||= (async () => {
+    for (const base of ART_BASES) {
+      try {
+        const [j, b] = await Promise.all([
+          fetch(base + "hashes.json").then((r) => (r.ok ? r.json() : Promise.reject())),
+          fetch(base + "hashes.bin").then((r) => (r.ok ? r.arrayBuffer() : Promise.reject())),
+        ]);
+        const db = new Int8Array(b);
+        if (db.length === j.n * j.len) return { ids: j.ids, db, n: j.n, idx: new Map(j.ids.map((id, i) => [id, i])) };
+      } catch {}
+    }
+    artPromise = null;
+    artFailedAt = Date.now();
+    return null;
+  })();
+  return artPromise;
+}
+
+// Avtryck av kortbilden för 25 små förskjutningar, så att en lite snett beskuren bild ändå matchar.
+function artQueries(card) {
+  const FP = self.Fingerprint;
+  let c = card;
+  while (c.width > FP.CW * 2) {
+    const t = Object.assign(document.createElement("canvas"), { width: c.width >> 1, height: c.height >> 1 });
+    const g = t.getContext("2d");
+    g.imageSmoothingQuality = "high";
+    g.drawImage(c, 0, 0, t.width, t.height);
+    c = t;
+  }
+  const f = Object.assign(document.createElement("canvas"), { width: FP.CW, height: FP.CH });
+  const fg = f.getContext("2d", { willReadFrequently: true });
+  fg.imageSmoothingQuality = "high";
+  fg.drawImage(c, 0, 0, FP.CW, FP.CH);
+  const d = fg.getImageData(0, 0, FP.CW, FP.CH).data, out = [];
+  for (const dy of [-0.06, -0.03, 0, 0.03, 0.06]) for (const dx of [-0.06, -0.03, 0, 0.03, 0.06]) out.push(FP.vector(FP.describe(d, FP.CW, FP.CH, 4, dx, dy)));
+  return out;
+}
+
+// De k kort i hela indexet som liknar bilden mest: [{ id, s }], s = likhet (korrelation, 1 = identisk)
+export async function artMatch(card, k = 30) {
+  const a = await loadArtIndex();
+  if (!a || !self.Fingerprint || !card) return [];
+  const FP = self.Fingerprint, best = new Map(), qs = artQueries(card);
+  for (const q of [12, 7, 17, 11, 13].map((i) => qs[i])) for (const t of FP.match(a.db, a.n, q, k)) best.set(t.i, Math.max(best.get(t.i) ?? -1, t.s));
+  return [...best].map(([i, s]) => ({ id: a.ids[i], s })).sort((x, y) => y.s - x.s).slice(0, k);
+}
+
+// Likhet mot just de här korten, { id: s }. Kort som saknas i indexet (t.ex. japanska) är inte med.
+async function artSims(card, ids) {
+  const a = await loadArtIndex();
+  if (!a || !self.Fingerprint || !card) return {};
+  const FP = self.Fingerprint, qs = artQueries(card), out = {};
+  for (const id of ids) {
+    const i = a.idx.get(id);
+    if (i == null) continue;
+    let best = -1;
+    for (const q of qs) {
+      let sc = 0;
+      for (let k = 0, o = i * FP.LEN; k < FP.LEN; k++) sc += a.db[o + k] * q[k];
+      best = Math.max(best, sc / (127 * 127));
+    }
+    out[id] = best;
+  }
+  return out;
+}
+
+const numKey = (n) => String(n ?? "").trim().replace(/^0+(?=\d)/, "").toLowerCase();
+const localOf = (id) => id.slice(id.lastIndexOf("-") + 1);
+// Väger ihop bildträffarna och det lästa numret. Kort-id när numret pekar ut ett av korten som liknar bilden, annars null.
+async function byNumber(art, r) {
+  if (!art.length || !r?.number) return null;
+  {
+    const counts = r.total ? await setCounts() : null;
+    const totalOk = (id) => { const c = counts?.get(setOf(id)); return !c || !r.total || c.official === +r.total || c.total === +r.total; };
+    // Numret (och setstorleken) pekar ut ett av korten som liknar bilden
+    const hits = art.filter((x) => numKey(localOf(x.id)) === numKey(r.number) && totalOk(x.id) && x.s >= 0.55);
+    if (hits.length === 1 || (hits.length > 1 && hits[0].s - hits[1].s >= 0.08)) return hits[0].id;
+  }
+  return null;
+}
+// Alla kort i indexet med numret och setstorleken, sorterade efter likhet med bilden. Ett av dem måste likna bilden
+// rimligt (0,5) och, om flera finns, vara klart mer likt än tvåan.
+async function byNumberThenLook(canvas, r) {
+  const [a, counts] = await Promise.all([loadArtIndex(), setCounts()]);
+  if (!a || !counts.size) return null;
+  const ids = a.ids.filter((id) => {
+    if (numKey(localOf(id)) !== numKey(r.number)) return false;
+    const c = counts.get(setOf(id));
+    return c && (c.official === +r.total || c.total === +r.total);
+  });
+  if (!ids.length || ids.length > 12) return null;
+  const sims = await artSims(canvas, ids);
+  const ranked = ids.filter((id) => sims[id] != null).sort((x, y) => sims[y] - sims[x]);
+  const s0 = sims[ranked[0]] ?? -1, s1 = ranked[1] ? sims[ranked[1]] : -1;
+  return s0 >= 0.5 && s0 - s1 >= 0.08 ? ranked[0] : null;
+}
+// Bildträff som är tydlig på egen hand: hög likhet och långt före tvåan
+const byLook = (art, s, gap) => (art[0] && art[0].s >= s && art[0].s - (art[1]?.s ?? 0) >= gap ? art[0].id : null);
+
+// Nummerraden läst på fler sätt (smalare och högre zon, större förstoring). Används när första läsningen inte
+// stämmer med bilden. ok() avgör om ett nummer duger, och då slutar vi läsa.
+const EXTRA_NUM_ZONES = [
+  // Gråskala med förstärkt kontrast, utan tröskel: klarar ljus text på mörka kort som tröskeln suddar ut
+  [{ x: 0, y: 0.9, w: 0.5, h: 0.1 }, 0],
+  [{ x: 0, y: 0.95, w: 0.5, h: 0.05 }, 0],
+  [{ x: 0.02, y: 0.94, w: 0.4, h: 0.045 }, 2.2],
+  [{ x: 0.02, y: 0.9, w: 0.45, h: 0.09 }, 2.2],
+  [ZONES.numLeft, 2.2],
+  [{ x: 0.02, y: 0.9, w: 0.45, h: 0.09 }, 1.4],
+  [ZONES.numRight, 2.2],
+  [{ x: 0, y: 0.84, w: 0.55, h: 0.16 }, 1.4], // brett band: numret hittas även när kortets nederkant ligger lite fel
+];
+// Zonen i gråskala, utsträckt så att mörkaste och ljusaste delen blir svart och vit. Text ungefär 110 px hög.
+function plainZone(src, zone, outH = 110) {
+  const sw = src.width * zone.w, sh = src.height * zone.h, k = outH / sh;
+  const cv = Object.assign(document.createElement("canvas"), { width: Math.round(sw * k), height: outH });
+  const g = cv.getContext("2d", { willReadFrequently: true });
+  g.imageSmoothingQuality = "high";
+  g.drawImage(src, src.width * zone.x, src.height * zone.y, sw, sh, 0, 0, cv.width, cv.height);
+  const img = g.getImageData(0, 0, cv.width, cv.height), d = img.data, hist = new Uint32Array(256), n = d.length / 4;
+  for (let i = 0; i < d.length; i += 4) hist[(d[i] * 77 + d[i + 1] * 150 + d[i + 2] * 29) >> 8]++;
+  let lo = 0, hi = 255, acc = 0;
+  while (lo < 255 && (acc += hist[lo]) < n * 0.02) lo++;
+  acc = 0;
+  while (hi > 0 && (acc += hist[hi]) < n * 0.02) hi--;
+  const span = Math.max(1, hi - lo);
+  for (let i = 0; i < d.length; i += 4) {
+    const v = Math.max(0, Math.min(255, ((((d[i] * 77 + d[i + 1] * 150 + d[i + 2] * 29) >> 8) - lo) * 255) / span));
+    d[i] = d[i + 1] = d[i + 2] = v;
+  }
+  g.putImageData(img, 0, 0);
+  return cv;
+}
+async function rereadNumber(canvas, ok, zones = EXTRA_NUM_ZONES.length) {
+  const [worker, sizes] = await Promise.all([getWorker("number"), setSizes()]);
+  for (const [zone, scale] of EXTRA_NUM_ZONES.slice(0, zones)) {
+    for (const map of scale ? zoneMaps(canvas, zone, scale) : [plainZone(canvas, zone)]) {
+      const num = findNumber((await worker.recognize(map)).data.text, sizes);
+      if (num && (await ok(num))) return num;
+    }
+  }
+  return null;
+}
+
+// Hittar kortet i ett rätat canvas: först bilden, sedan text. Returnerar avläsningen plus cardId om kortet är säkert.
+async function identify(canvas, { full = false } = {}) {
+  const art = await artMatch(canvas).catch(() => []);
+  // Så tydlig bildträff att textläsningen inte behövs
+  const quick = byLook(art, 0.9, 0.12);
+  if (quick) return { name: null, number: localOf(quick), total: null, numberSure: true, cardId: quick, art };
+  const r = await readCard(canvas, { full });
+  let cardId = await byNumber(art, r);
+  // Numret saknas eller stämmer inte med något kort som liknar bilden (t.ex. 109 läst som 105): läs nummerraden igen
+  // Saknas numret helt sparas första säkra läsningen, så att sökningen på nummer fungerar även om bilden inte känns igen.
+  if (!cardId && (!r.number || (art.length && art[0].s >= 0.55))) {
+    let firstSure = null;
+    // Automatisk skanning (flera gånger i sekunden): bara de tre bästa varianterna, så att nästa bild inte får vänta
+    const num = await rereadNumber(canvas, async (n) => {
+      if (await byNumber(art, n)) return true;
+      if (n.sure && !firstSure) firstSure = n;
+      return false;
+    }, full ? undefined : 3);
+    if (num) { cardId = await byNumber(art, num); Object.assign(r, { number: num.number, total: num.total, numberSure: true }); }
+    else if (firstSure && !r.number) Object.assign(r, { number: firstSure.number, total: firstSure.total, numberSure: true });
+  }
+  // Nummer och setstorlek lästa: jämför bilden med just de kort som har det numret (t.ex. 109/182 finns i flera set)
+  if (!cardId && r.number && r.total) cardId = await byNumberThenLook(canvas, r);
+  // Sist: en bildträff som är klart bättre än alla andra kort räcker
+  cardId ||= byLook(art, 0.85, 0.08) || byLook(art, 0.72, 0.15);
+  return { ...r, cardId, art };
+}
+
+const fallbackRect = (w, h) => [[w * 0.1, h * 0.1], [w * 0.9, h * 0.1], [w * 0.9, h * 0.9], [w * 0.1, h * 0.9]];
+// Ett foto eller en bild: hitta kortet, räta ut det och identifiera det.
+export async function scanImage(img, { full = true } = {}) {
+  const corners = findCardQuad(img) || detectCardCorners(img, fallbackRect(img.width, img.height), 0.35).corners;
+  const warped = unwarpCard(img, corners);
+  const canvas = Object.assign(document.createElement("canvas"), { width: warped.width, height: warped.height });
+  canvas.getContext("2d").drawImage(warped, 0, 0);
+  return { ...(await identify(canvas, { full })), canvas };
+}
+
 // ---------- 5. Tolka Text och Pokémonnamn ----------
 const norm = (s) => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9]/g, "");
 function editDist(a, b) {
@@ -717,6 +928,15 @@ function cardHash(card) {
 
 // Sorterar kandidatkorten efter visuell likhet via dHash
 export async function rankByLook(canvas, list, limit = 150) {
+  // Bildavtrycken i indexet: snabbare och säkrare än att ladda ner varje kandidats bild
+  if (canvas && list.length > 1) {
+    const sims = await artSims(canvas, list.map((c) => c.id)).catch(() => ({}));
+    const known = list.filter((c) => sims[c.id] != null).sort((x, y) => sims[y.id] - sims[x.id]);
+    if (known.length >= 2) {
+      const s0 = sims[known[0].id], s1 = sims[known[1].id];
+      return { list: [...known, ...list.filter((c) => sims[c.id] == null)], sure: s0 >= 0.5 && s0 - s1 >= 0.08 };
+    }
+  }
   const withImg = list.filter((c) => c.image).slice(0, limit);
   if (!canvas || withImg.length < 2) return { list, sure: list.length === 1 };
   const myHash = computeDHash(canvas);
@@ -809,7 +1029,7 @@ function ui() {
       [img.width * 0.9, img.height * 0.9],
       [img.width * 0.1, img.height * 0.9],
     ];
-    const { corners } = detectCardCorners(img, defaultRect, 0.35);
+    const corners = findCardQuad(img) || detectCardCorners(img, defaultRect, 0.35).corners;
     const unwarped = unwarpCard(img, corners);
 
     // Pågår en kameraskanning läses fotot direkt efter den. Kameran fortsätter om fotot inte gav någon träff.
@@ -960,7 +1180,9 @@ function grabUnwarpedFrame() {
   const defaultCorners = getDefaultFrameCorners();
   if (!defaultCorners) return null;
 
-  const { corners } = detectCardCorners(video, defaultCorners);
+  // Kortet nära ramen först (snabbt), annars kortets hörn var som helst i bilden
+  const near = detectCardCorners(video, defaultCorners);
+  const corners = near.confident ? near.corners : findCardQuad(video) || near.corners;
   return unwarpCard(video, corners, CARD_W, CARD_H);
 }
 
@@ -1037,60 +1259,6 @@ async function runScan(manual) {
   }
 }
 
-// Snabb lokal pHash-databas för direktidentifiering (< 5 ms)
-let indexedCards = [];
-let indexingPromise = null;
-
-async function ensureLocalIndex() {
-  if (indexingPromise) return indexingPromise;
-  indexingPromise = (async () => {
-    try {
-      const res = await fetch("data/card-trends.json").then((r) => r.json()).catch(() => null);
-      const top = res?.top || [];
-      for (const c of top) {
-        if (!c.image) continue;
-        const h = await cardHash(c);
-        if (h) {
-          indexedCards.push({
-            id: c.id,
-            name: c.name,
-            localId: c.localId,
-            set: c.set,
-            hashStr: h,
-            hashBig: BigInt("0x" + h)
-          });
-        }
-      }
-    } catch {}
-  })();
-  return indexingPromise;
-}
-
-export function findInstantVisualMatch(myHashStr) {
-  if (!myHashStr || !indexedCards.length) return null;
-  const myHashBig = BigInt("0x" + myHashStr);
-  let best = null;
-  let minD = 65;
-  for (const c of indexedCards) {
-    let xor = myHashBig ^ c.hashBig;
-    let d = 0;
-    while (xor > 0n) {
-      xor &= xor - 1n;
-      d++;
-    }
-    if (d < minD) {
-      minD = d;
-      best = c;
-      if (d === 0) break;
-    }
-  }
-  // Hamming-avstånd <= 10 (av 64 bitar) är en mycket säker visuell träff
-  if (best && minD <= 10) {
-    return { ...best, distance: minD, sure: true };
-  }
-  return null;
-}
-
 let last = null, lastNum = null;
 async function attempt(canvas, { fromFile = false, manual = false } = {}) {
   if (busy) return;
@@ -1099,29 +1267,20 @@ async function attempt(canvas, { fromFile = false, manual = false } = {}) {
   frameEl()?.classList.remove("is-moving");
   if (!fromFile) status("Läser av…");
   try {
-    // 1. Blixtsnabb visuell pHash-match (< 1 ms). Identifierar direkt utan OCR om kortet känns igen.
-    const dhash = computeDHash(canvas);
-    const instantMatch = findInstantVisualMatch(dhash);
-    if (instantMatch && instantMatch.sure) {
-      status(`Hittade <b>${esc(instantMatch.name)}</b>!`);
+    // 1. Bilden mot alla kort, sedan texten. Pekar de ut samma kort (eller är bildträffen mycket tydlig) är vi klara.
+    const r = await identify(canvas, { full: manual || fromFile });
+    if (!dialog.open) return;
+    if (r.cardId) {
+      status(`Hittade <b>${esc(r.name || "kortet")}</b>!`);
       dialog.querySelector(".scan-hud-status")?.classList.add("success");
       if ("vibrate" in navigator) navigator.vibrate(45);
       stop();
       dialog.close();
-      onFound?.({
-        name: instantMatch.name,
-        number: instantMatch.localId || null,
-        total: null,
-        cardId: instantMatch.id,
-        canvas,
-        dhash
-      });
+      onFound?.({ name: r.name, number: r.number, total: r.total, cardId: r.cardId, canvas, dhash: r.dhash });
       return;
     }
 
-    // 2. OCR körs enbart vid behov om visuell match saknas
-    const r = await readCard(canvas, { full: manual || fromFile });
-    if (!dialog.open) return;
+    // 2. Annars som förut: namn och nummer söks i TCGdex
     const numKey = r.number && `${r.number}/${r.total}`;
     // Ett nummer räknas om det lästes med snedstreck, eller likadant två gånger i rad
     const numOk = numKey && (r.numberSure || lastNum === numKey);
@@ -1223,7 +1382,7 @@ export async function openScanner(callback, partialCallback) {
   getWorker("name").catch(() => {});
   getWorker("number").catch(() => {});
   setSizes().catch(() => {});
-  ensureLocalIndex().catch(() => {});
+  loadArtIndex().catch(() => {});
 
   try {
     stream = await navigator.mediaDevices.getUserMedia({
