@@ -961,7 +961,7 @@ let dialog = null, stream = null, timer = null, animFrame = null, busy = false;
 let onFound = null, onPartial = null;
 let smoothedCorners = null;
 let torchSupported = false, torchActive = false;
-let stillTicks = 0, lastScanAt = 0, pendingForce = false;
+let stillTicks = 0, lastScanAt = 0;
 let pauseUntil = 0, openedAt = 0; // pauseUntil: auto-skanningen väntar så att ett felmeddelande hinner läsas
 const NUDGE_AFTER = 2000; // ms utan träff innan "Skanna nu" lyfts fram
 const PAUSE_AFTER_MISS = 3500; // ms paus efter en misslyckad manuell skanning eller ett foto
@@ -987,19 +987,28 @@ function ui() {
         </svg>
       </button>
       <p class="scan-tip">Håll kortet i ramen. Glänser det? Luta det lätt.</p>
+      <div class="scan-freeze" aria-hidden="true" hidden>
+        <canvas></canvas>
+        <i class="holo-sheen"></i><i class="holo-grid"></i><i class="holo-beam"></i>
+        <svg class="holo-quad" preserveAspectRatio="none"><polygon /></svg>
+      </div>
     </div>
     <div class="scan-actions">
-      <label class="scan-ghost">Välj foto<input type="file" accept="image/*" hidden></label>
-      <button class="scan-now" type="button">Skanna nu</button>
-      <button class="scan-ghost" type="button" data-close>Stäng</button>
+      <label class="scan-ghost scan-live">Välj foto<input type="file" accept="image/*" hidden></label>
+      <button class="scan-now scan-live" type="button">Skanna nu</button>
+      <button class="scan-ghost scan-live" type="button" data-close>Stäng</button>
+      <button class="scan-ghost scan-frozen-btn" type="button" data-cancel>Avbryt</button>
+      <button class="scan-now scan-frozen-btn" type="button" data-retry>Försök igen</button>
     </div>`;
 
   document.body.append(dialog);
   dialog.addEventListener("close", stop);
   dialog.querySelector("[data-close]").addEventListener("click", () => dialog.close());
 
-  // Skanna nu: tvingar fram en omedelbar avläsning i full upplösning, även om kameran rör sig
+  // Skanna nu: bilden fryses och söks igenom noggrant tills kortet hittas, eller tills man trycker Avbryt / Försök igen
   dialog.querySelector(".scan-now").addEventListener("click", () => runScan(true));
+  dialog.querySelector("[data-cancel]").addEventListener("click", () => dialog.close());
+  dialog.querySelector("[data-retry]").addEventListener("click", unfreeze);
 
   // Ficklampa
   const torchBtn = dialog.querySelector(".scan-torch");
@@ -1021,21 +1030,8 @@ function ui() {
     if (!file) return;
     const img = await createImageBitmap(file).catch(() => null);
     if (!img) return status("Bilden gick inte att läsa.");
-
-    // Hitta hörn och rätsikta bilden automatiskt
-    const defaultRect = [
-      [img.width * 0.1, img.height * 0.1],
-      [img.width * 0.9, img.height * 0.1],
-      [img.width * 0.9, img.height * 0.9],
-      [img.width * 0.1, img.height * 0.9],
-    ];
-    const corners = findCardQuad(img) || detectCardCorners(img, defaultRect, 0.35).corners;
-    const unwarped = unwarpCard(img, corners);
-
-    // Pågår en kameraskanning läses fotot direkt efter den. Kameran fortsätter om fotot inte gav någon träff.
-    status("Läser fotot…");
-    await waitIdle();
-    await attempt(unwarped, { fromFile: true });
+    // Fotot visas fryst med samma holografiska sökning som när man tar en bild
+    frozenScan(freeze(img), { fromFile: true });
   });
 
   return dialog;
@@ -1148,7 +1144,7 @@ function startHudLoop() {
   const defaultCorners = getDefaultFrameCorners() || [[0, 0], [420, 0], [420, 587], [0, 587]];
 
   const loop = () => {
-    if (!dialog.open || !video || !video.videoWidth) {
+    if (!dialog.open || !video || !video.videoWidth || frozen) {
       animFrame = requestAnimationFrame(loop);
       return;
     }
@@ -1220,7 +1216,7 @@ function motionLevel(video) {
 // Körs var MOTION_TICK ms. OCR startar först när kameran varit stilla en stund och ingen skanning pågår.
 function motionTick() {
   const video = dialog?.querySelector("video");
-  if (!dialog?.open || !video?.videoWidth || busy || Date.now() < pauseUntil) return;
+  if (!dialog?.open || !video?.videoWidth || busy || frozen || Date.now() < pauseUntil) return;
 
   // Ingen träff efter en stund: lyft fram "Skanna nu"
   if (Date.now() - openedAt > NUDGE_AFTER) dialog.querySelector(".scan-now")?.classList.add("nudge");
@@ -1239,13 +1235,13 @@ function motionTick() {
 
 // Startar en skanning av aktuell bild.
 async function runScan(manual) {
-  if (busy) {
-    if (manual) {
-      pendingForce = true;
-      status("Läser av… tar en ny bild direkt efter.");
-    }
+  if (manual) {
+    const video = dialog.querySelector("video");
+    if (!stream || !video?.videoWidth) return status("Kameran är inte igång. Välj ett foto av kortet i stället.");
+    frozenScan(freeze(video), { fromFile: false });
     return;
   }
+  if (busy || frozen) return;
   const cv = grabUnwarpedFrame();
   if (!cv) {
     if (manual) status("Kameran är inte igång. Välj ett foto av kortet i stället.");
@@ -1253,9 +1249,131 @@ async function runScan(manual) {
   }
   lastScanAt = Date.now();
   await attempt(cv, { manual });
-  if (pendingForce && dialog?.open) {
-    pendingForce = false;
-    runScan(true);
+}
+
+// ---------- 9. Fryst bild med holografisk sökning ----------
+// "Skanna nu" (och ett valt foto) fryser bilden. Den söks igenom med alla metoder: kortets hörn på flera sätt,
+// bildindexet och alla varianter av nummerraden. Sökningen pågår tills kortet hittas eller man trycker
+// Avbryt (stänger) eller Försök igen (tillbaka till kameran).
+let frozen = false, scanToken = 0, holoTimer = null;
+const HOLO_MSGS = ["Jämför med 23 000 kort…", "Läser kortnumret…", "Kollar setet…", "Letar efter kortets kanter…", "Matchar konstverket…", "Läser namnet…"];
+
+// Visar en stillbild av källan (video eller foto) och returnerar den som canvas att söka i
+function freeze(src) {
+  const box = dialog.querySelector(".scan-freeze"), cv = box.querySelector("canvas");
+  cv.width = src.videoWidth || src.width;
+  cv.height = src.videoHeight || src.height;
+  cv.getContext("2d").drawImage(src, 0, 0, cv.width, cv.height);
+  // Foton visas hela (contain), kamerabilden som videon (cover), så att kortet står där man såg det
+  cv.style.objectFit = src.videoWidth ? "cover" : "contain";
+  box.hidden = false;
+  box.querySelector(".holo-quad").classList.remove("on");
+  dialog.classList.remove("found", "missed");
+  dialog.classList.add("frozen");
+  frozen = true;
+  dialog.querySelector(".scan-hud")?.getContext("2d").clearRect(0, 0, 9999, 9999);
+  if ("vibrate" in navigator) navigator.vibrate(20);
+  let i = 0;
+  clearInterval(holoTimer);
+  status(HOLO_MSGS[0]);
+  holoTimer = setInterval(() => status(HOLO_MSGS[++i % HOLO_MSGS.length]), 1300);
+  return cv;
+}
+
+// Tillbaka till levande kamera. En pågående sökning får inte längre visa något resultat.
+function unfreeze() {
+  scanToken++;
+  frozen = false;
+  clearInterval(holoTimer);
+  dialog.classList.remove("frozen", "found", "missed");
+  dialog.querySelector(".scan-freeze").hidden = true;
+  stillTicks = 0;
+  pauseUntil = 0;
+  last = lastNum = null;
+  status(stream ? "Håll kortet i ramen…" : "Välj ett foto av kortet.");
+}
+
+// Kortets kontur på den frusna bilden (i bildens koordinater), som en glödande ram
+function showQuad(cv, corners) {
+  const svg = dialog.querySelector(".holo-quad");
+  const box = svg.parentElement.getBoundingClientRect();
+  const cover = cv.style.objectFit === "cover";
+  const k = (cover ? Math.max : Math.min)(box.width / cv.width, box.height / cv.height);
+  const ox = (box.width - cv.width * k) / 2, oy = (box.height - cv.height * k) / 2;
+  svg.setAttribute("viewBox", `0 0 ${box.width} ${box.height}`);
+  svg.querySelector("polygon").setAttribute("points", corners.map(([x, y]) => `${(x * k + ox).toFixed(1)},${(y * k + oy).toFixed(1)}`).join(" "));
+  svg.classList.add("on");
+}
+
+async function frozenScan(snap, { fromFile }) {
+  const token = ++scanToken;
+  await waitIdle(); // en automatisk avläsning kan pågå, textläsarna delas
+  if (token !== scanToken || !dialog.open) return;
+  busy = true;
+  const alive = () => token === scanToken && dialog.open;
+  try {
+    // Kortets hörn på flera sätt: nära ramen, var som helst i bilden, och till sist ramen själv
+    const guide = fromFile ? fallbackRect(snap.width, snap.height) : getDefaultFrameCorners();
+    const near = fromFile ? detectCardCorners(snap, guide, 0.35) : detectCardCorners(snap, guide);
+    const quad = findCardQuad(snap);
+    const tries = [near.confident && near.corners, quad, !near.confident && near.corners].filter(Boolean);
+    // Först snabbt med varje uppsättning hörn, sedan grundligt (hela kortet och alla nummervarianter) med den bästa
+    let best = null;
+    const run = async (corners, full) => {
+      showQuad(snap, corners);
+      const warped = unwarpCard(snap, corners);
+      const canvas = Object.assign(document.createElement("canvas"), { width: warped.width, height: warped.height });
+      canvas.getContext("2d").drawImage(warped, 0, 0);
+      const r = await identify(canvas, { full });
+      const score = (r.number && r.numberSure ? 2 : 0) + (r.number && r.total ? 1 : 0) + (r.name ? 1 : 0);
+      if (!best || score > best.score) best = { r: { ...r, canvas }, score, corners };
+      return r;
+    };
+    for (const corners of tries) {
+      const r = await run(corners, false);
+      if (!alive()) return;
+      if (r.cardId) return done({ ...r, canvas: best.r.canvas });
+    }
+    if (best.score < 3) {
+      status("Söker noggrannare…");
+      const r = await run(best.corners, true);
+      if (!alive()) return;
+      if (r.cardId) return done({ ...r, canvas: best.r.canvas });
+    }
+    // Inget säkert kort, men ett läst nummer: sök på det som förut (en stillbild kan inte läsas två gånger)
+    if (best.r.number) return done(best.r);
+    // Bara ett namn: fyll i sökrutan i stället för att påstå att kortet är hittat
+    if (best.r.name && onPartial) {
+      stop();
+      dialog.close();
+      onPartial({ name: best.r.name, number: null, total: null });
+      return;
+    }
+    clearInterval(holoTimer);
+    dialog.classList.add("missed");
+    status("Hittade inget kort. Tryck <b>Försök igen</b> och håll kortet stilla i ramen.");
+  } catch (err) {
+    if (!alive()) return;
+    clearInterval(holoTimer);
+    dialog.classList.add("missed");
+    status(esc(err.message || "Något gick fel. Försök igen."));
+  } finally {
+    busy = false;
+  }
+
+  function done(r) {
+    clearInterval(holoTimer);
+    dialog.classList.add("found");
+    const label = r.cardId ? r.name || "kortet" : [r.name, r.number && (r.total ? `${r.number}/${r.total}` : r.number)].filter(Boolean).join(" · ");
+    status(`Hittade <b>${esc(label)}</b>!`);
+    if ("vibrate" in navigator) navigator.vibrate(45);
+    // Låt "hittad"-blixten synas en kort stund innan resultatet öppnas
+    setTimeout(() => {
+      if (!alive()) return;
+      stop();
+      dialog.close();
+      if (r.cardId || r.number || r.name) onFound?.({ name: r.name, number: r.number, total: r.total, cardId: r.cardId, canvas: r.canvas, dhash: r.dhash });
+    }, 650);
   }
 }
 
@@ -1326,6 +1444,12 @@ async function attempt(canvas, { fromFile = false, manual = false } = {}) {
 }
 
 function stop() {
+  frozen = false;
+  scanToken++;
+  clearInterval(holoTimer);
+  dialog?.classList.remove("frozen", "found", "missed");
+  const fz = dialog?.querySelector(".scan-freeze");
+  if (fz) fz.hidden = true;
   clearInterval(timer);
   timer = null;
   cancelAnimationFrame(animFrame);
@@ -1334,7 +1458,6 @@ function stop() {
   hasPrevMotion = false;
   torchActive = false;
   dialog?.querySelector(".scan-torch")?.classList.remove("active");
-  pendingForce = false;
   stream?.getTracks().forEach((t) => t.stop());
   stream = null;
 }
@@ -1367,7 +1490,6 @@ export async function openScanner(callback, partialCallback) {
   smoothedCorners = null;
   hasPrevMotion = false;
   stillTicks = 0;
-  pendingForce = false;
   pauseUntil = 0;
   openedAt = Date.now();
   const d = ui();
