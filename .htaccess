@@ -62,8 +62,14 @@ Options -Indexes
     Header set Cache-Control "max-age=600, must-revalidate"
   </FilesMatch>
 
-  # Static images and styling can be cached longer
-  <FilesMatch "\.(css|js|svg|jpg|jpeg|png|webp|gif|ico|woff|woff2|ttf)$">
+  # Code and styling: always revalidate (a cheap 304 when unchanged). With a long max-age, a phone kept an old
+  # butiker.js for weeks while the HTML was new, and the page crashed without showing any products.
+  <FilesMatch "\.(css|js)$">
+    Header set Cache-Control "no-cache"
+  </FilesMatch>
+
+  # Images and fonts rarely change and can be cached longer
+  <FilesMatch "\.(svg|jpg|jpeg|png|webp|gif|ico|woff|woff2|ttf)$">
     Header set Cache-Control "max-age=2592000, public"
   </FilesMatch>
 </IfModule>

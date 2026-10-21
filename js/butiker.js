@@ -246,7 +246,7 @@ function setView(v) {
   document.querySelectorAll("#view button").forEach((b) => b.setAttribute("aria-pressed", b.dataset.v === v));
   try { localStorage.setItem("nl:view", v); } catch {}
 }
-$("#view").addEventListener("click", (e) => { const b = e.target.closest("[data-v]"); if (b) setView(b.dataset.v); });
+$("#view")?.addEventListener("click", (e) => { const b = e.target.closest("[data-v]"); if (b) setView(b.dataset.v); });
 let savedView = "grid";
 try { savedView = localStorage.getItem("nl:view") || "grid"; } catch {}
 setView(savedView === "list" ? "list" : "grid");
