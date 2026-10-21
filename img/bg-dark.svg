@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="420" height="420" viewBox="0 0 420 420">
+  <!-- Bakgrundsmönster för mörkt läge: några tunna linjeteckningar som upprepas. Mild, så att innehållet syns först. -->
+  <g fill="none" stroke="#c9d2ee" stroke-opacity=".0525" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Boll -->
+    <g transform="translate(62 74) rotate(-18)">
+      <circle r="26"/>
+      <path d="M-26 0H-8M8 0H26"/>
+      <circle r="8"/>
+      <circle r="3"/>
+    </g>
+    <!-- Litet spöke -->
+    <g transform="translate(300 64)">
+      <path d="M-20 26V-2a20 20 0 0 1 40 0v28l-7-6-6.5 6-6.5-6-6.5 6-6.5-6z"/>
+      <circle cx="-7" cy="-2" r="2.5"/>
+      <circle cx="7" cy="-2" r="2.5"/>
+    </g>
+    <!-- Gnistor -->
+    <path d="M178 150l4 10 10 4-10 4-4 10-4-10-10-4 10-4z"/>
+    <path d="M378 214l3 7 7 3-7 3-3 7-3-7-7-3 7-3z"/>
+    <path d="M30 262l3 7 7 3-7 3-3 7-3-7-7-3 7-3z"/>
+    <!-- Kort -->
+    <g transform="translate(124 268) rotate(-12)">
+      <rect x="-20" y="-28" width="40" height="56" rx="4"/>
+      <rect x="-13" y="-21" width="26" height="22" rx="2"/>
+      <path d="M-13 9H13M-13 16H6"/>
+    </g>
+    <!-- Liten kattlik figur -->
+    <g transform="translate(250 326)">
+      <path d="M-22 -6l-4-22 16 10a24 24 0 0 1 20 0l16-10-4 22a24 22 0 1 1-44 0z"/>
+      <circle cx="-8" cy="2" r="2.5"/>
+      <circle cx="8" cy="2" r="2.5"/>
+      <path d="M-5 11q5 4 10 0"/>
+    </g>
+    <!-- Blixt -->
+    <path d="M356 116l-18 26h14l-10 24 22-30h-14l8-20z"/>
+    <!-- Liten boll -->
+    <g transform="translate(372 368) rotate(24)">
+      <circle r="15"/>
+      <path d="M-15 0H-5M5 0H15"/>
+      <circle r="5"/>
+    </g>
+    <!-- Boosterpaket -->
+    <g transform="translate(222 196) rotate(10)">
+      <path d="M-18 -30h36l-3 4 3 4v44l-3 4 3 4h-36l3-4-3-4v-44l3-4z"/>
+      <path d="M-10 -8h20M-10 0h14"/>
+    </g>
+    <!-- Liten stjärna -->
+    <path d="M70 380l3.5 7.5 8 1-6 5.5 1.6 8-7.1-4-7.1 4 1.6-8-6-5.5 8-1z"/>
+  </g>
+</svg>

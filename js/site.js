@@ -3,6 +3,7 @@ import { icon, mountAllScenes } from "./pixel.js";
 import { mountBanners } from "./banners.js";
 import { startBrowserNotices } from "./prefs.js";
 import { mountCardAutocomplete } from "./card-autocomplete.js";
+import { langMark } from "./langmark.js";
 
 export const API = "https://api.tcgdex.net/v2/en";
 export const $ = (s, root = document) => root.querySelector(s);
@@ -326,7 +327,7 @@ export function productCard(p, storeName, flags = {}) {
     : flags.drop ? '<span class="pbadge sale">Prissänkt</span>'
     : flags.isNew ? '<span class="pbadge new">Nytt</span>' : "";
   return `<article class="pcard${p.available || p.preorder ? "" : " is-out"}">
-    <div class="pimg">${p.image ? `<img src="${esc(p.image)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.remove()">` : `<span class="noimg"><b>${esc(p.type || "Förseglat")}</b>Bild finns hos butiken</span>`}${badge}</div>
+    <div class="pimg">${p.image ? `<img src="${esc(p.image)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.remove()">` : `<span class="noimg"><b>${esc(p.type || "Förseglat")}</b>Bild finns hos butiken</span>`}${badge}${langMark(p.lang)}</div>
     <div class="pbody">
       <span class="pstore">${esc(storeName || p.store)}${p.lang && p.lang !== "en" ? ` · ${esc(p.lang.toUpperCase())}` : ""}</span>
       <h3><a class="stretch" href="${esc(safeUrl(p.url))}" target="_blank" rel="noopener nofollow">${esc(p.title)}</a></h3>

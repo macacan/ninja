@@ -6,7 +6,8 @@ node_modules/
 .env.*
 !.env.example
 
-# Internal research (state.json for the scraper must be committed: the Actions job needs it between runs)
+# Internal research. scripts/scraper/state.json stays in the repo as a fallback, but the Actions job keeps
+# its up-to-date copy in the Actions cache and no longer commits it (see .github/workflows/scrape.yml).
 research/
 *.log
 

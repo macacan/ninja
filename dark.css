@@ -3,9 +3,16 @@
 :root{--bg:#1b1e28;--card:#232734;--surface:#2a2f3e;--ink:#e8eaf1;--ink-solid:#353c5c;--muted:#a3abbe;--line:#363c4e;--navy:#aab8e0}
 /* Helt ogenomskinligt sidhuvud i mörkt läge, så att landskapet bakom inte syns igenom. */
 .site-header{background:#232734;box-shadow:0 6px 18px -12px rgba(0,0,0,.6)}
+/* Milt mönster med linjeteckningar (bollar, spöke, kort, paket) bakom innehållet. Följer med när man scrollar. */
+body{background:var(--bg) url(img/bg-dark.svg?v=2) repeat;background-size:420px}
 .page-head{background:var(--card)}
 .page-head h1{color:var(--ink)}
 .page-head p{color:var(--muted)}
+/* Brödsmulorna: guldlänk och ljus text, så att de syns tydligt mot den mörka bakgrunden. */
+.crumbs{color:#c3c9d9;font-size:.82rem}
+.crumbs [aria-current]{color:var(--ink);font-weight:600}
+.srow-chg.down{color:#4cc764}
+.crumbs a{color:var(--gold)}
 .tcard .art,.pimg,.product .art.cardimg{color:#1b1b2f}
 .skel .art,.skel i{background:#2a2f3e;border-color:#2a2f3e}
 
@@ -21,7 +28,16 @@ input[type=search],select,.shop-search{background:#2a2f3e}
 .price-cap input{background:#2a2f3e}
 .toc a:hover{background:#403315}
 .todo{background:#494218}
-.qc[aria-pressed=true]{background:var(--surface);border-color:var(--line)}
+/* Av: grå text och släckt lampa. På: ljus text, färgad ram och svagt färgad bakgrund i lampans färg. */
+.qc[aria-pressed=false]{color:var(--muted)}
+.qc[aria-pressed=true]{color:var(--ink);background:rgba(242,182,50,.14);border-color:var(--gold)}
+#c-in[aria-pressed=true]{background:rgba(47,179,68,.16);border-color:#2fb344}
+/* Lamporna lyser när filtret är på och är släckta när det är av. */
+.qc i{transition:opacity .2s,box-shadow .2s}
+.qc[aria-pressed=false] i{opacity:.3;filter:grayscale(.7)}
+.qc[aria-pressed=true] .dot-in{box-shadow:0 0 4px 1px rgba(47,179,68,.9),0 0 10px 3px rgba(47,179,68,.45)}
+.qc[aria-pressed=true] .dot-pre{box-shadow:0 0 4px 1px rgba(242,182,50,.9),0 0 10px 3px rgba(242,182,50,.45)}
+.qc[aria-pressed=true] svg{color:var(--gold);filter:drop-shadow(0 0 4px rgba(242,182,50,.7))}
 .dot-pre{color:#1b1b2f}
 .bell{background:rgba(35,39,52,.92);color:var(--ink);border-color:#3a4052;box-shadow:0 2px 8px rgba(0,0,0,.45)}
 .bell[aria-pressed=true]{color:#1b1b2f}
@@ -53,7 +69,8 @@ input[type=search],select,.shop-search{background:#2a2f3e}
 .cal-nav{border-color:#3a4058;box-shadow:3px 3px 0 #05060a}
 .day.weekend{background:#262a37}
 .day.out{background:#1f222d;color:#575e73}
-.day.has:not(.out){background:#2b2414}
+/* Dagar med släpp: lite ljusare blågrå ruta med en röd list upptill (samma rött som "Produkter"). */
+.day.has:not(.out){background:#2c3248;box-shadow:inset 0 3px 0 var(--red)}
 .day.today .num{box-shadow:none}
 .lg-drop,.lg-set{box-shadow:0 0 0 2px #3a4058}
 .ev-drop{box-shadow:none}
@@ -65,7 +82,7 @@ input[type=search],select,.shop-search{background:#2a2f3e}
 .pill.in,.rs-st.in{background:#17331f;color:#7fdc95}
 .pill.pre,.rs-st.pre{background:#1f2a4d;color:#a9bbff}
 .rd-tabs button[aria-selected=true]{background:#e8eaf1;border-color:#e8eaf1;color:#1b1e28}
-.day[data-day]:hover{background:#3a3018}
+.day[data-day]:hover{background:#353c56}
 .ph{background:repeating-linear-gradient(45deg,#2a2f3e 0 6px,#323849 6px 12px)}
 .next-rel{border-color:#3a4058;box-shadow:4px 4px 0 #05060a}
 .rc-prod em{background:#3a2f55;color:#d9c9ff}

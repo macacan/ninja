@@ -411,6 +411,13 @@ input[type=search]{width:100%;max-width:360px}
 .day .num{font:700 1rem/1 var(--sans);width:28px;height:28px;display:grid;place-items:center;border-radius:4px}
 .day.today .num{background:var(--red);color:#fff;box-shadow:0 0 0 2px var(--ink)}
 .day.has:not(.out){background:#fffbef}
+/* Ninjan står på dagens datum och gungar lite. */
+.day.today{position:relative}
+.today-ninja{position:absolute;inset:0;margin:auto;width:72px;height:72px;pointer-events:none;animation:ninjaBob 2.4s ease-in-out infinite}
+/* Har dagen släpp får chippen platsen, och ninjan flyttar upp i hörnet. */
+.day.today.has .today-ninja{inset:6px 6px auto auto;margin:0;width:34px;height:34px}
+@keyframes ninjaBob{50%{transform:translateY(-3px) rotate(-4deg)}}
+@media (prefers-reduced-motion:reduce){.today-ninja{animation:none}}
 .evs{list-style:none;margin:0;padding:0;display:grid;gap:5px}
 .ev{display:flex;flex-direction:column;align-items:flex-start;gap:3px;font:600 .74rem/1.2 var(--sans);padding:5px 6px;border-radius:4px;min-width:0}
 .ev span{overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
@@ -437,6 +444,8 @@ input[type=search]{width:100%;max-width:360px}
   .dots i{width:7px;height:7px}
   .cal-dow span{font-size:.7rem}
   .agenda{display:grid}
+  .today-ninja{inset:auto 0 3px;width:26px;height:26px}
+  .day.today.has .today-ninja{inset:2px 2px auto auto;width:20px;height:20px}
 }
 @media (max-width:640px){
   .tcard .art{height:76px}
@@ -475,6 +484,12 @@ input[type=search]{width:100%;max-width:360px}
 .pbadge.sale{background:#e3262f}
 .pbadge.new{background:var(--gold);color:var(--ink)}
 .pbadge.pre{background:var(--navy)}
+/* Språksymbol nere till höger på bilden (japanska, koreanska, kinesiska). Bilden är alltid vit, även i mörkt läge. */
+.plang{position:absolute;right:10px;bottom:10px;z-index:2;min-width:32px;height:22px;padding:0 6px;border:2px solid;border-radius:11px;display:grid;place-items:center;font:700 .72rem/1 var(--sans);letter-spacing:.5px;box-shadow:0 1px 3px rgba(0,0,0,.25)}
+.plang.ja{background:#fff;color:#bc002d;border-color:#bc002d}
+.plang.ko{background:#fff;color:#003478;border-color:#cd2e3a}
+.plang.zh{background:#de2910;color:#ffde00;border-color:#de2910}
+.ggrid[data-view=list] .plang{right:4px;bottom:4px;min-width:28px;height:18px;font-size:.65rem}
 .pbody{display:flex;flex-direction:column;gap:4px;padding:2px 14px 14px;flex:1}
 .pstore{font:600 .74rem/1.2 var(--sans);color:var(--muted);text-transform:uppercase;letter-spacing:.5px}
 .pcard h3{margin:0;font:700 1.08rem/1.15 var(--cond);text-transform:uppercase;letter-spacing:.2px;color:var(--ink);
@@ -764,6 +779,8 @@ span.rd-logo{display:grid;place-items:center;background:var(--surface);border-ra
 .qchips{display:flex;gap:6px;flex-wrap:wrap}
 .qc{display:inline-flex;align-items:center;gap:7px;font:600 .9rem var(--sans);padding:0 14px;min-height:46px;border:2px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);cursor:pointer}
 .qc[aria-pressed=true]{border-color:var(--ink);background:#fff3d6}
+.qc[aria-pressed=false]{color:var(--muted)}
+.qc[aria-pressed=false] i{opacity:.35}
 .qc i{width:8px;height:8px;border-radius:50%}
 .dot-in{background:#2fb344}.dot-pre{background:var(--gold)}
 .qc b{background:var(--surface);border-radius:5px;padding:1px 7px;font-size:.8rem}
@@ -788,6 +805,11 @@ span.rd-logo{display:grid;place-items:center;background:var(--surface);border-ra
 .gtoggle{all:unset;cursor:pointer;margin-top:4px;padding:10px 0 2px;border-top:1px solid var(--line);font:700 .9rem var(--sans);color:var(--red)}
 .gtoggle:focus-visible{outline:3px solid var(--red)}
 .gdetail{display:grid;gap:8px;margin-top:4px}
+/* Pilen i en rund knapp, så att det syns att man kan fälla ut och stänga jämförelsen. */
+.garrow{display:inline-grid;place-items:center;width:24px;height:24px;margin-left:8px;border-radius:50%;background:var(--surface);border:1px solid var(--line);font-size:.65rem;line-height:1;vertical-align:middle}
+.gtoggle[aria-expanded=true] .garrow{background:var(--red);border-color:var(--red);color:#fff}
+.gtoggle.gclose{display:flex;align-items:center;justify-content:center;gap:0;margin-top:2px;padding:10px;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
+.gtoggle.gclose .garrow{margin:0 8px 0 0}
 /* Listvy: bilden till vänster, texten till höger */
 .ggrid[data-view=list]{grid-template-columns:1fr;gap:8px}
 .ggrid[data-view=list] .gcard{flex-direction:row}
@@ -815,6 +837,11 @@ span.rd-logo{display:grid;place-items:center;background:var(--surface);border-ra
 .srow-lang{display:block;font-size:.75rem;font-weight:400;color:var(--muted)}
 .srow-lang.guess{font-style:italic}
 .srow-warn{grid-column:1/-1;font-size:.78rem;font-weight:700;color:var(--red)}
+/* Butiken som senast ändrade pris: guldkant och en rad överst med tid och tidigare pris. */
+.srow.changed{box-shadow:inset 0 0 0 2px var(--gold);grid-template-areas:"chg chg" "name price" "st act"}
+.srow-chg{grid-area:chg;font-size:.78rem;font-weight:700}
+.srow-chg.down{color:#1f8a35}
+.srow-chg.up{color:var(--red)}
 .btn.gold{background:var(--gold)}
 .rs-st.out{background:#eceef3;color:var(--muted)}
 @media (max-width:640px){

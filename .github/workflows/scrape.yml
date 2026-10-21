@@ -2,7 +2,7 @@ name: Butiksbevakning
 
 # GitHub startar schemalagda jobb högst några gånger per dygn för det här repot, oavsett vad cron säger.
 # Därför kör jobbet i stället daemon.mjs (var 15:e minut per butik) i nästan sex timmar, hämtar nyheter och
-# sparar till repot en gång i timmen och startar sedan nästa körning själv. Schemat nedan är bara en reserv som startar
+# sparar till repot var 15:e minut och startar sedan nästa körning själv. Schemat nedan är bara en reserv som startar
 # kedjan igen om den skulle brytas (t.ex. om GitHub avbryter ett jobb).
 on:
   schedule:
@@ -28,7 +28,8 @@ jobs:
     timeout-minutes: 355
     env:
       DAEMON_MINUTES: ${{ vars.SCRAPE_DAEMON_MINUTES || 330 }}
-      COMMIT_EVERY: ${{ vars.SCRAPE_COMMIT_MINUTES || 60 }}
+      # Var 15:e minut: samma takt som butikerna kollas, så att sidan ligger högst en kvart efter.
+      COMMIT_EVERY: ${{ vars.SCRAPE_COMMIT_MINUTES || 15 }}
       DAEMON_INTERVAL: ${{ vars.SCRAPE_INTERVAL_MINUTES || 15 }}
       DAEMON_PAGES: 25 # sitemap-butiker: fler produktsidor per varv när varven är glesare
     steps:
@@ -36,11 +37,19 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
+      # Bevakningens minne (state.json, 2 MB) sparas i Actions-cachen i stället för i repot. Det stod för
+      # ungefär två tredjedelar av repots tillväxt. Saknas cachen används filen som ligger i repot.
+      - name: Hämta bevakningens minne
+        uses: actions/cache/restore@v4
+        with:
+          path: scripts/scraper/state.json
+          key: scrape-state-${{ github.run_id }}
+          restore-keys: scrape-state-
       - name: Bevaka butikerna och hämta nyheter
         run: |
           git config user.name "packninja-bot"
           git config user.email "packninja-bot@users.noreply.github.com"
-          FILES="data/news.json data/release-calendar.json data/products.json data/events.json data/stores-status.json data/notify.json data/price-history.json scripts/scraper/state.json"
+          FILES="data/news.json data/release-calendar.json data/products.json data/events.json data/stores-status.json data/notify.json data/price-history.json"
           save() {
             node scripts/update-news.mjs || echo "::warning::Nyheterna kunde inte hämtas den här gången"
             node scripts/update-releases.mjs || echo "::warning::Släppkalendern kunde inte uppdateras den här gången"
@@ -65,6 +74,12 @@ jobs:
           done
           wait $PID || echo "::warning::Bevakningen avslutades med fel"
           save
+      - name: Spara bevakningens minne
+        if: always() && !cancelled()
+        uses: actions/cache/save@v4
+        with:
+          path: scripts/scraper/state.json
+          key: scrape-state-${{ github.run_id }}-${{ github.run_attempt }}
       - name: Starta nästa körning
         if: always() && !cancelled()
         env:

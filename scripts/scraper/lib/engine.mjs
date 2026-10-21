@@ -157,6 +157,9 @@ export async function createEngine({ statuses } = {}) {
         // Produkter som hittas tyst efter en ny klassningsversion har funnits i butiken länge; de får ingen
         // ändringstid förrän de faktiskt ändras, annars skulle de fylla "Nytt i butikerna" på startsidan.
         p.lastChange = o && o.available === p.available && o.price === p.price ? o.lastChange : quiet && !o ? 0 : now;
+        // Senaste prisändringen i butiken, upp eller ner. Visas som markering i "Jämför butiker".
+        if (o && o.price > 0 && p.price !== o.price) p.priceChange = { from: o.price, at: now };
+        else if (o?.priceChange) p.priceChange = o.priceChange;
         // När produkten först kom i lager och först gick att förbeställa. Okänt (null) om den redan
         // var det första gången vi såg butiken, eftersom vi då inte vet när det hände.
         const brandNew = !firstRun && !(quiet && !o) && (!o || isNew);
@@ -182,6 +185,7 @@ export async function createEngine({ statuses } = {}) {
         // se adapters/shopify.mjs). Ta bort produktens falska prissänkningar och orimligt låga historikpunkter.
         if (o && o.price > 0 && p.price > o.price * 3) {
           delete p.lastDrop;
+          delete p.priceChange;
           if (o.available === p.available) p.lastChange = o.lastChange; // en rättelse, ingen ändring i butiken
           events = events.filter((ev) => !(ev.product === p.id && ev.kind === "prissankt"));
           const pts = history[groupKey(p)];

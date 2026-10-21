@@ -1,4 +1,5 @@
 import { $, esc, kr, fmt, ago, loading, liveStamp, releaseSets, safeUrl } from "./site.js";
+import { langMark } from "./langmark.js";
 import { groupKey, groupProducts, groupTitle, lowestInStock } from "./group.js";
 import { typeOf } from "./releases.js";
 import { getPrefs, savePrefs, matches, KINDS, startBrowserNotices } from "./prefs.js";
@@ -97,6 +98,16 @@ function historyBox(g) {
   </div>`;
 }
 
+// "i dag 14:32", "i går 09:05" eller "18 okt. 14:32".
+function when(t) {
+  const d = new Date(t), now = new Date();
+  const time = d.toLocaleTimeString("sv-SE", { hour: "2-digit", minute: "2-digit" });
+  const yesterday = new Date(now); yesterday.setDate(now.getDate() - 1);
+  if (d.toDateString() === now.toDateString()) return `i dag ${time}`;
+  if (d.toDateString() === yesterday.toDateString()) return `i går ${time}`;
+  return `${d.toLocaleDateString("sv-SE", { day: "numeric", month: "short" })} ${time}`;
+}
+
 function storeRows(g) {
   const rank = (m) => (m.available ? 0 : m.preorder ? 1 : 2);
   // En rad per butik: butikens bästa erbjudande.
@@ -106,10 +117,15 @@ function storeRows(g) {
   // Ett pris långt under de andra butikernas är ofta ett annat språk eller en annan produkt med liknande namn.
   const prices = rows.map((m) => m.price).sort((a, b) => a - b);
   const median = rows.length >= 3 ? prices[Math.floor(prices.length / 2)] : null;
+  // Butiken som senast ändrade sitt pris får en markering.
+  const changed = rows.filter((m) => m.priceChange).sort((a, b) => b.priceChange.at - a.priceChange.at)[0];
   return rows.sort((a, b) => rank(a) - rank(b) || a.price - b.price).map((m) => {
     const st = m.available ? ["in", "I lager"] : m.preorder ? ["pre", "Förbeställning"] : ["out", "Slut"];
     const lang = m.langGuess ? "Språk ej angivet" : LANG[m.lang] || m.lang;
-    return `<li class="srow">
+    const pc = m === changed ? m.priceChange : null;
+    const up = pc && m.price > pc.from;
+    return `<li class="srow${pc ? " changed" : ""}">
+      ${pc ? `<span class="srow-chg ${up ? "up" : "down"}"><span aria-hidden="true">${up ? "▲" : "▼"}</span> Senast ändrat pris ${when(pc.at)} · var ${kr(pc.from)}</span>` : ""}
       <span class="srow-name">${esc(storeName[m.store] || m.store)}<small class="srow-lang${m.langGuess ? " guess" : ""}">${esc(lang)}</small></span><span class="srow-price">${kr(m.price)}</span>
       <span class="rs-st ${st[0]}">${st[1]}</span>
       ${rank(m) < 2 ? `<a class="btn small gold" href="${esc(safeUrl(m.url))}" target="_blank" rel="noopener nofollow">Köp</a>` : `<a class="srow-link" href="${esc(safeUrl(m.url))}" target="_blank" rel="noopener nofollow">Till butiken</a>`}
@@ -130,7 +146,7 @@ function groupCard(g, open) {
   const title = groupTitle(g.all);
 
   return `<article class="gcard${open ? " open" : ""}" data-key="${esc(g.key)}">
-    <div class="pimg">${img ? `<img src="${esc(img)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.remove()">` : `<span class="noimg"><b>${esc(lead.type)}</b>Bild finns hos butiken</span>`}${badge}
+    <div class="pimg">${img ? `<img src="${esc(img)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.remove()">` : `<span class="noimg"><b>${esc(lead.type)}</b>Bild finns hos butiken</span>`}${badge}${langMark(lead.lang)}
       <button type="button" class="bell" aria-pressed="${watched}" aria-label="${watched ? "Sluta bevaka" : "Bevaka"} ${esc(title)}"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M12 3a6 6 0 0 0-6 6v4l-2 3h16l-2-3V9a6 6 0 0 0-6-6zm-2 15a2 2 0 0 0 4 0" fill="${watched ? "currentColor" : "none"}" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></button>
     </div>
     <div class="gbody">
@@ -144,8 +160,9 @@ function groupCard(g, open) {
         ${g.out.length ? `<span class="c out">Slut ${new Set(g.out.map((m) => m.store)).size}</span>` : ""}
         ${rel ? `<span class="c rel">Släpps ${rel}</span>` : ""}
       </div>
-      <button type="button" class="gtoggle" aria-expanded="${!!open}">Jämför ${g.stores} ${g.stores === 1 ? "butik" : "butiker"} <span aria-hidden="true">${open ? "▴" : "▾"}</span></button>
-      <div class="gdetail"${open ? "" : " hidden"}>${open ? `${historyBox(g)}<ul class="srows">${storeRows(g)}</ul>` : ""}</div>
+      <button type="button" class="gtoggle" aria-expanded="${!!open}">${open ? "Stäng jämförelsen" : `Jämför ${g.stores} ${g.stores === 1 ? "butik" : "butiker"}`}<span class="garrow" aria-hidden="true">${open ? "▲" : "▼"}</span></button>
+      <div class="gdetail"${open ? "" : " hidden"}>${open ? `${historyBox(g)}<ul class="srows">${storeRows(g)}</ul>
+        <button type="button" class="gtoggle gclose" aria-expanded="true"><span class="garrow" aria-hidden="true">▲</span>Stäng jämförelsen</button>` : ""}</div>
     </div>
   </article>`;
 }
@@ -176,7 +193,10 @@ $("#products").addEventListener("click", (e) => {
   const key = card.dataset.key;
   if (e.target.closest(".gtoggle")) {
     if (openGroups.has(key)) openGroups.delete(key); else openGroups.add(key);
+    const fromBottom = !!e.target.closest(".gclose");
     card.outerHTML = groupCard(groupInfo(key), openGroups.has(key));
+    // Stängd från knappen längst ner: listan försvinner, så visa kortet igen i stället för tom yta.
+    if (fromBottom) document.querySelector(`#products .gcard[data-key="${CSS.escape(key)}"]`)?.scrollIntoView({ block: "nearest", behavior: "smooth" });
   }
   if (e.target.closest(".bell")) {
     const p = getPrefs();
