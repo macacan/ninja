@@ -1,6 +1,32 @@
 {
- "updated": 1792607273464,
+ "updated": 1792610893524,
  "events": [
+  {
+   "at": 1792610213478,
+   "store": "samlarhobby",
+   "product": "samlarhobby:15965020782973",
+   "group": "x|tin|en||gengar-summer",
+   "title": "Pokémon, Mega Gengar ex Tin Summer 2026",
+   "url": "https://samlarhobby.se/products/pokemon-mega-gengar-x-ex-tin-summer-2026",
+   "price": 499,
+   "type": "Tin",
+   "set": null,
+   "lang": "en",
+   "kind": "ny"
+  },
+  {
+   "at": 1792610213478,
+   "store": "samlarhobby",
+   "product": "samlarhobby:15965020717437",
+   "group": "x|tin|en||clefable-summer",
+   "title": "Pokémon, Mega Clefable ex Tin Summer 2026",
+   "url": "https://samlarhobby.se/products/pokemon-mega-clefable-x-ex-tin-summer-2026",
+   "price": 499,
+   "type": "Tin",
+   "set": null,
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1792603797377,
    "store": "dragon-s-lair",
