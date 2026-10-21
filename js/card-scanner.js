@@ -9,7 +9,7 @@
 // 3. Rörelsekontroll: OCR körs först när kameran hålls stilla.
 // 4. Perceptual dHash (64-bitars skillnadshash) för visuell matchning av kandidatkorten.
 // 5. Hittas inte kortet nära ramen letas dess fyra hörn i hela bilden (kanter + Hough-linjer, scan/quad.js).
-// 6. Bildavtryck av konstverket (scan/fingerprint.js) jämförs med ett färdigt index över alla kort (samma som KortKoll).
+// 6. Bildavtryck av konstverket (scan/fingerprint.js) jämförs med ett färdigt index över alla kort (data/hashes.*).
 //    Pekar bilden och det lästa numret ut samma kort är skanningen klar, utan att vänta på namnet.
 import { API, esc, getJSON } from "./site.js";
 import { loadDataset } from "./card-autocomplete.js";
@@ -533,8 +533,8 @@ export function findCardQuad(src) {
 }
 
 // ---------- 4c. Bildavtryck mot alla kort ----------
-// Indexet (ca 23 000 kort, 240 byte per kort) byggs varje månad i KortKoll-projektet och hämtas en gång.
-const ART_BASES = ["https://cdn.jsdelivr.net/gh/macacan/Pokescan@main/www/", "https://raw.githubusercontent.com/macacan/Pokescan/main/www/"];
+// Indexet (ca 22 000 kort, 240 byte per kort) ligger i data/ och byggs varje månad av scripts/build-card-index.mjs.
+const ART_BASES = ["data/"];
 let artPromise = null, artFailedAt = 0;
 export function loadArtIndex() {
   if (!artPromise && Date.now() - artFailedAt < 60e3) return Promise.resolve(null); // misslyckades nyss: försök inte vid varje bild

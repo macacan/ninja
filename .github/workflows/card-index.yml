@@ -1,0 +1,29 @@
+name: Bygg kortindex
+
+# Bildindexet som kortskannern jämför med (data/hashes.*): ett avtryck per kort från TCGdex-bilderna.
+# Körs första dagen varje månad (nya set) och för hand under Actions > Bygg kortindex > Run workflow.
+on:
+  schedule:
+    - cron: "0 3 1 * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  index:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm i --no-save --no-audit --no-fund sharp
+      - run: node scripts/build-card-index.mjs
+      - name: Spara om något ändrats
+        run: |
+          git config user.name "packninja-bot"
+          git config user.email "packninja-bot@users.noreply.github.com"
+          git add data/hashes.bin data/hashes.json
+          git diff --cached --quiet || (git commit -m "Uppdatera kortskannerns bildindex" && git pull --rebase && git push)
