@@ -1,6 +1,19 @@
 {
- "updated": 1792664150664,
+ "updated": 1792665130690,
  "events": [
+  {
+   "at": 1792664547604,
+   "store": "toyspace",
+   "product": "toyspace:https://toyspace.se/pokemon-super-premium-collection-eevee-ex-sv8-5-pok10106",
+   "group": "prismatic-evolutions|premium-collection|en||eevee-super",
+   "title": "Pokemon TCG: Prismatic Evolutions Super Premium Collection – Eevee ex (SV8.5)",
+   "url": "https://toyspace.se/pokemon-super-premium-collection-eevee-ex-sv8-5-pok10106",
+   "price": 3365,
+   "type": "Premium Collection",
+   "set": "Prismatic Evolutions",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1792661881295,
    "store": "toyspace",
