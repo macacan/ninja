@@ -1,6 +1,20 @@
 {
- "updated": 1792635305781,
+ "updated": 1792638245870,
  "events": [
+  {
+   "at": 1792638182849,
+   "store": "skattkistan",
+   "product": "skattkistan:11216983785810",
+   "group": "30th-celebration|tin|en|mini|mini",
+   "title": "Pokémon TCG: 30th Celebration Mini Tin",
+   "url": "https://skattkistan.net/products/pokemon-tcg-30th-celebration-mini-tin",
+   "price": 279,
+   "type": "Tin",
+   "set": "30th Celebration",
+   "lang": "en",
+   "kind": "prissankt",
+   "from": 295
+  },
   {
    "at": 1792623338183,
    "store": "pokemurre",
