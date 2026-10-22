@@ -1,0 +1,8 @@
+{
+ "_info": "Kort som TCGdex saknar i setets kortlista men som har pris (data/card-history) och bild (data/card-images.json). Setsidorna tar med dem. Nyckel = TCGdex-setets id. Korten har ingen värderingssida, eftersom TCGdex inte känner till dem.",
+ "30th": [
+  { "id": "30th-R", "localId": "R", "name": "Mew RGB Edition (Red)" },
+  { "id": "30th-G", "localId": "G", "name": "Mew RGB Edition (Green)" },
+  { "id": "30th-B", "localId": "B", "name": "Mew RGB Edition (Blue)" }
+ ]
+}
