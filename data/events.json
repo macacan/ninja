@@ -1,6 +1,20 @@
 {
- "updated": 1792706791234,
+ "updated": 1792707691265,
  "events": [
+  {
+   "at": 1792706939728,
+   "store": "poketalk",
+   "product": "poketalk:11354472612182",
+   "group": "x|booster-pack|en||30th-anniversary-celebration",
+   "title": "Pokémon TCG: 30th Anniversary Celebration Booster Pack",
+   "url": "https://poketalk.se/products/pokemon-tcg-30th-anniversary-celebration-booster-pack-1",
+   "price": 179,
+   "type": "Booster Pack",
+   "set": null,
+   "lang": "en",
+   "kind": "prissankt",
+   "from": 189
+  },
   {
    "at": 1792706017229,
    "store": "poketalk",
