@@ -136,6 +136,14 @@ export function mountChrome() {
   });
 }
 
+// Våra egna datafiler, alltid färska. Delar av sidan som ber om samma fil samtidigt (startsidans listor och
+// flödet hämtar båda products.json, 3–4 MB, varje minut) får samma hämtning i stället för var sin.
+const inflight = new Map();
+export function liveJSON(url) {
+  if (!inflight.has(url)) inflight.set(url, fetch(url, { cache: "no-cache" }).then((r) => r.json()).finally(() => inflight.delete(url)));
+  return inflight.get(url);
+}
+
 // TCGdex ber att man cachar svar lokalt. Vi sparar dem i webbläsaren i 6 timmar.
 const TTL = 6 * 3600e3;
 export async function getJSON(url, ttl = TTL) {
