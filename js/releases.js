@@ -2,7 +2,7 @@
 //   Data:  releaseData() laddar släppkalendern (data/release-calendar.json) och butikernas produkter en gång.
 //   Vyer:  nextHTML (nästa släpp), releaseCard (kompakt kort), detailHTML (allt om ett släpp, i en dialog),
 //          galleryHTML + bindGallery (produktrutor med butiker), används också av kalenderns dagvy.
-import { esc, kr, releaseSets, daysUntil, clockTime, setLogo, getJSON, API, safeUrl, setPages } from "./site.js";
+import { esc, kr, releaseSets, daysUntil, clockTime, setLogo, getJSON, API, safeUrl, setPages, extraLogosReady } from "./site.js";
 import { getAnatomyData, matchAnatomy, renderAnatomyModal } from "./anatomy.js";
 
 let anatomyData = null;
@@ -413,6 +413,9 @@ export function releaseData() {
     await Promise.all(releases.filter((r) => r.tcgdex).map(async (r) => {
       try { const logo = setLogo(await getJSON(`${API}/sets/${encodeURIComponent(r.tcgdex)}`)); if (logo) logos.set(r.id, logo); } catch {}
     }));
+    // Släpp som TCGdex inte har än: loggan från data/releases.json (logo) eller data/set-logos.json (släppets id).
+    await extraLogosReady;
+    for (const r of releases) if (!logos.has(r.id)) { const logo = r.logo || setLogo({ id: r.id }); if (logo) logos.set(r.id, logo); }
     const lookup = (key) => { const [id, w] = key.split("|"); return items.get(id).filter((it) => w === "" || it.wave === +w); };
     return { releases, byId, products, names, items, mine, logos, lookup, pages };
   })());

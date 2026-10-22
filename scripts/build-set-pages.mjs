@@ -41,7 +41,8 @@ for (const r of calendar) {
   const first = r.waves?.map((w) => w.date).sort()[0] || null;
   const page = r.tcgdex && bySetId.get(r.tcgdex);
   if (page) { page.cal = r; page.match = r.match || []; continue; }
-  pages.push({ id: null, calId: r.id, name: r.set, serie: r.series || null, date: first, cardCount: null, logo: null, cards: [],
+  // Loggan: handskriven i data/releases.json (logo), annars från scripts/update-set-logos.mjs när setet dyker upp där.
+  pages.push({ id: null, calId: r.id, name: r.set, serie: r.series || null, date: first, cardCount: null, logo: r.logo || extraLogos[r.id] || null, cards: [],
     language: r.language || "en", match: r.match || [r.set], cal: r, slug: r.id });
 }
 
