@@ -1,0 +1,5 @@
+# Hittat ett säkerhetsproblem på Lootninja? Hör av dig, så åtgärdar vi det.
+Contact: mailto:kontakt@lootninja.se
+Expires: 2027-10-22T00:00:00.000Z
+Preferred-Languages: sv, en
+Canonical: https://lootninja.se/.well-known/security.txt

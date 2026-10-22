@@ -36,7 +36,7 @@
     <div class="wrap">
       <nav class="crumbs" aria-label="Brödsmulor"><a href="index.html">Hem</a><span aria-hidden="true">›</span><span aria-current="page">Integritet och kakor</span></nav>
       <h1 class="sr-only">Integritet och kakor</h1>
-      <p>Gäller från 18 oktober 2026. Kort sagt: inga konton, ingen spårning, ingen reklam och inga kakor.</p>
+      <p>Gäller från 22 oktober 2026. Kort sagt: inga konton, ingen spårning, ingen reklam och inga kakor.</p>
     </div>
     <canvas class="scene" data-scene="strip" aria-hidden="true"></canvas>
   </header>
@@ -68,18 +68,21 @@
         <tr><td>Senast sökta och värderade kort</td><td>Visas längst ner på Kortpriser och Gradering</td><td>Tills du rensar</td></tr>
         <tr><td>Antal öppnade pack i dag och ljud av/på</td><td>Packöppnaren på startsidan</td><td>Räknaren gäller ett dygn</td></tr>
         <tr><td>Visningsläge i butikslistan</td><td>Kommer ihåg hur du vill se listan</td><td>Tills du rensar</td></tr>
+        <tr><td>Ljust eller mörkt läge</td><td>Kommer ihåg om du har valt ljust eller mörkt utseende</td><td>Tills du rensar</td></tr>
       </tbody>
     </table>
 
     <h2 id="p4">4. Uppgifter som behandlas</h2>
     <p><b>Serverloggar.</b> Som på alla webbplatser registrerar vår webbhotell, Hostinger, tekniska uppgifter när du besöker sidan: IP-adress, tid, vilken sida som hämtades och webbläsartyp. Det behövs för att sidan ska kunna levereras och skyddas mot missbruk. Rättslig grund: berättigat intresse. Hostinger är vårt personuppgiftsbiträde och lagrar uppgifterna inom EU.</p>
-    <p><b>Dagsgräns för pack.</b> Om dagsgränsen för packöppnaren är påslagen räknar servern hur många pack som öppnats per IP-adress. IP-adressen sparas aldrig i klartext, bara som en saltad kontrollsumma som inte går att räkna tillbaka. Rättslig grund: berättigat intresse av att begränsa missbruk.</p>
+    <p><b>Dagsgräns för pack.</b> Om dagsgränsen för packöppnaren är påslagen räknar servern hur många pack som öppnats per IP-adress. IP-adressen sparas aldrig i klartext, bara som en kontrollsumma med ett slumpat salt som byts varje natt, så att den inte går att räkna tillbaka. Rättslig grund: berättigat intresse av att begränsa missbruk.</p>
     <p><b>Mejl till oss.</b> Skriver du till oss sparar vi mejlet så länge det behövs för att svara.</p>
 
     <h2 id="p5">5. Andra tjänster som sidan hämtar från</h2>
     <p>När sidan visar innehåll från andra hämtar din webbläsare det direkt från dem. De ser då din IP-adress, precis som vid vilket webbesök som helst, men vi skickar ingen information om dig till dem.</p>
     <ul>
       <li><b>TCGdex</b>: kortdata, kortbilder och priser.</li>
+      <li><b>Pokémon TCG API (pokemontcg.io), Scrydex och TCGplayer</b>: kortbilder och setloggor som TCGdex saknar.</li>
+      <li><b>Pokémon (pokemon.com)</b>: officiella produktbilder i släppkalendern.</li>
       <li><b>Frankfurter</b>: valutakursen euro till kronor.</li>
       <li><b>Butikerna och nyhetssajterna</b>: produkt- och artikelbilder.</li>
       <li><b>YouTube</b>: miniatyrbilder. Själva videon laddas först när du klickar, via youtube-nocookie.com.</li>
@@ -87,6 +90,7 @@
       <li><b>ntfy</b>: om du själv väljer mobilnotiser där gäller deras villkor. Vi får inte veta vem som prenumererar.</li>
     </ul>
     <p>Typsnitten ligger på vår egen server, så Google får inget anrop.</p>
+    <p>Rättslig grund: berättigat intresse av att kunna visa kortbilder, priser och produkter. Några av tjänsterna (till exempel YouTube, jsDelivr och bildservrarna) kan ligga utanför EU, oftast i USA. Överföringen sker då med stöd av EU:s ramverk för dataskydd mellan EU och USA (Data Privacy Framework) eller tjänstens egna standardavtalsklausuler. Vill du undvika det kan du blockera bilder från andra webbplatser i webbläsaren. Sidan fungerar ändå, men utan bilderna.</p>
 
     <h2 id="p6">6. Kameran</h2>
     <p>Kortskannern använder kameran först när du trycker på <i>Skanna</i> och ger webbläsaren tillåtelse. Bilden behandlas bara i din webbläsare och laddas aldrig upp till oss eller någon annan.</p>
