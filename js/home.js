@@ -1,5 +1,5 @@
 import { groupKey } from "./group.js";
-import { $, esc, fmt, kr, loading, skeleton, upcomingReleases, daysUntil, latestSets, setCard, setLogo, setPages, news, newsItem, productCard, liveStamp, fillRows, liveJSON } from "./site.js";
+import { $, esc, fmt, kr, loading, skeleton, upcomingReleases, daysUntil, latestSets, setCard, setLogo, setPages, news, newsItem, productCard, liveStamp, fillRows, liveJSON, liveStock } from "./site.js";
 import { bindSetCards } from "./setcards.js";
 import "./restock.js";
 
@@ -12,8 +12,7 @@ async function homeShop() {
   if (!upd.children.length) upd.innerHTML = skeleton(4);
   if (!shop.children.length) shop.innerHTML = skeleton(4);
   try {
-    const [p, s, e] = await Promise.all(["data/stock.json", "data/stores-status.json", "data/events.json"]
-      .map((u) => liveJSON(u).catch(() => ({}))));
+    const [[p, s], e] = await Promise.all([liveStock().catch(() => [{}, {}]), liveJSON("data/events.json").catch(() => ({}))]);
     const names = Object.fromEntries((s.stores || []).map((x) => [x.id, x.name]));
     // Samma etiketter som på butikssidan: prissänkt eller nytt den senaste veckan.
     const week = Date.now() - 7 * 864e5, drop = new Map(), fresh = new Map();

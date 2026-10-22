@@ -154,6 +154,13 @@ export const setLink = (set, pages) => {
   return url ? `<a href="${esc(url)}">${esc(set.name)}</a>` : esc(set?.name || "");
 };
 
+// Det som går att köpa (data/stock.json) och butikernas status. Bevakningen skriver båda i samma sparning. Är
+// stock.json äldre kör bevakningen en version som inte skriver den, och då används hela products.json i stället.
+export async function liveStock() {
+  const [stock, status] = await Promise.all([liveJSON("data/stock.json").catch(() => null), liveJSON("data/stores-status.json")]);
+  return [stock && stock.updated >= status.updated - 60e3 ? stock : await liveJSON("data/products.json"), status];
+}
+
 // TCGdex ber att man cachar svar lokalt. Vi sparar dem i webbläsaren i 6 timmar.
 const TTL = 6 * 3600e3;
 export async function getJSON(url, ttl = TTL) {
