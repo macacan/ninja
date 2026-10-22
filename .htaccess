@@ -38,11 +38,10 @@ Options -Indexes
   Header always set Referrer-Policy "strict-origin-when-cross-origin"
   # Camera only for our own pages (card scanner); no microphone, location or payment APIs.
   Header always set Permissions-Policy "camera=(self), microphone=(), geolocation=(), payment=(), usb=()"
-  # Enforced: these rules cannot break anything the site uses today.
-  Header always set Content-Security-Policy "object-src 'none'; base-uri 'self'; frame-ancestors 'self'; form-action 'self'"
-  # Full policy in report-only mode: violations show in the browser console but nothing is blocked.
-  # When the console has been clean on every page for a while, the header can be renamed to Content-Security-Policy.
-  Header always set Content-Security-Policy-Report-Only "default-src 'self'; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' blob: https://cdn.jsdelivr.net https://cdn.tailwindcss.com; worker-src 'self' blob: https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; font-src 'self'; connect-src 'self' https:; media-src 'self' blob:; frame-src https://www.youtube-nocookie.com; object-src 'none'; base-uri 'self'; frame-ancestors 'self'; form-action 'self'"
+  # Full policy, enforced. Tested clean on every page and through the card scanner's OCR worker (blob worker + WASM).
+  # Adding a new external script, font or iframe source? Add its host here too, or the browser will block it.
+  # If something breaks in production, rename the header to Content-Security-Policy-Report-Only to stop blocking.
+  Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' blob: https://cdn.jsdelivr.net https://cdn.tailwindcss.com; worker-src 'self' blob: https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; font-src 'self'; connect-src 'self' https:; media-src 'self' blob:; frame-src https://www.youtube-nocookie.com; object-src 'none'; base-uri 'self'; frame-ancestors 'self'; form-action 'self'"
 </IfModule>
 
 # 5. Gzip Compression

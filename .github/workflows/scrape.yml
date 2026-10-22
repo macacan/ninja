@@ -32,6 +32,8 @@ jobs:
       COMMIT_EVERY: ${{ vars.SCRAPE_COMMIT_MINUTES || 15 }}
       DAEMON_INTERVAL: ${{ vars.SCRAPE_INTERVAL_MINUTES || 15 }}
       DAEMON_PAGES: 25 # sitemap-butiker: fler produktsidor per varv när varven är glesare
+      # Skrivtoken för de reserverade ntfy-ämnena (repo-secret). Saknas den skickas notiserna utan inloggning.
+      NTFY_TOKEN: ${{ secrets.NTFY_TOKEN }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
