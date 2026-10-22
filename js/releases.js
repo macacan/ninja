@@ -201,7 +201,7 @@ export function timelineHTML(releases, ctx, shift = 0) {
           <div><span class="kicker">${label(j)} · ${released ? "släpptes " : ""}${esc(inDays(daysUntil(s)))}</span><h3>${esc(long(s))}</h3></div>
         </header>
         <ul class="tl-rel">${byDate.get(s).map(({ r, wi, w }) => `<li>
-          <div><b>${esc(r.set)}</b><span>${esc(waveText(w, r))}${w.preliminary || r.preliminary ? " · preliminärt" : ""}</span></div>
+          <div>${ctx.logos.get(r.id) ? `<img class="tl-logo" src="${esc(ctx.logos.get(r.id))}" alt="${esc(r.set)}" loading="lazy">` : `<b>${esc(r.set)}</b>`}<span>${esc(waveText(w, r))}${w.preliminary || r.preliminary ? " · preliminärt" : ""}</span></div>
           ${pillHTML(pill(r, ctx, wi))}
           <button type="button" class="btn small" data-open="${esc(r.id)}" data-wave="${wi}">Produkter och butiker</button>
         </li>`).join("")}</ul>
@@ -411,6 +411,8 @@ export function releaseData() {
     await Promise.all(releases.filter((r) => r.tcgdex).map(async (r) => {
       try { const logo = setLogo(await getJSON(`${API}/sets/${encodeURIComponent(r.tcgdex)}`)); if (logo) logos.set(r.id, logo); } catch {}
     }));
+    // Ikoner från Bulbapedia för set som TCGdex ännu inte har.
+    for (const r of releases) if (r.icon && !logos.has(r.id)) logos.set(r.id, r.icon);
     const lookup = (key) => { const [id, w] = key.split("|"); return items.get(id).filter((it) => w === "" || it.wave === +w); };
     return { releases, byId, products, names, items, mine, logos, lookup };
   })());

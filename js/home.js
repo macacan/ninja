@@ -56,11 +56,9 @@ async function nextDrop() {
     const [r] = await upcomingReleases();
     if (!r) { el.innerHTML = '<div class="msg">Inga kommande släpp inlagda just nu.</div>'; return; }
     const d = daysUntil(r.date);
-    const weeks = Math.floor(d / 7), days = d % 7;
     el.innerHTML = `<div class="next-drop px-frame">
       <div class="countdown" aria-label="${d} dagar kvar">
-        <div><b>${String(weeks).padStart(2, "0")}</b><small>veckor</small></div>
-        <div><b>${String(days).padStart(2, "0")}</b><small>dagar</small></div>
+        <div><b>${String(d).padStart(2, "0")}</b><small>dagar kvar</small></div>
       </div>
       <div><h3>${esc(r.name)}</h3><p>${fmt(r.date)}${r.type ? ` · ${esc(r.type)}` : ""}${r.note ? ` · ${esc(r.note)}` : ""}</p></div>
       <a class="btn primary small" href="slapp.html">Alla släpp</a>

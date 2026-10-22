@@ -6,13 +6,12 @@ export const MONTHS = ["januari", "februari", "mars", "april", "maj", "juni", "j
 const pad = (n) => String(n).padStart(2, "0");
 export const dayKey = (y, m, d) => `${y}-${pad(m + 1)}-${pad(d)}`;
 
-const thumb = (src) => `<img src="${esc(src)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.remove()">`;
 const dot = (it) => `<i class="${it.kind === "set" ? "lg-set" : "lg-drop"}"></i>`;
 const chip = (it) => `<li class="ev ${it.kind === "set" ? "ev-set" : "ev-drop"}" title="${esc(it.title)}">
-  ${it.logo ? `<img class="ev-logo" src="${esc(it.logo)}" alt="" loading="lazy">` : it.images?.length ? `<span class="ev-imgs">${it.images.slice(0, 3).map(thumb).join("")}</span>` : ""}
+  ${it.logo || it.setLogo ? `<img class="ev-logo" src="${esc(it.logo || it.setLogo)}" alt="" loading="lazy">` : ""}
   <span>${esc(it.title)}</span></li>`;
 
-// events: Map "ÅÅÅÅ-MM-DD" → [{ kind: "drop" | "set", title, sub, logo, images }]
+// events: Map "ÅÅÅÅ-MM-DD" → [{ kind: "drop" | "set", title, sub, logo, setLogo }]
 export function mountCalendar(events, onDay) {
   const now = new Date();
   const todayKey = dayKey(now.getFullYear(), now.getMonth(), now.getDate());
