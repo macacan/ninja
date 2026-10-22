@@ -1,6 +1,32 @@
 {
- "updated": 1792657160456,
+ "updated": 1792658080796,
  "events": [
+  {
+   "at": 1792657330054,
+   "store": "poketalk",
+   "product": "poketalk:10907219231062",
+   "group": "journey-together|booster-pack|en|",
+   "title": "Pokémon Scarlet & Violet: Journey Together Booster Pack",
+   "url": "https://poketalk.se/products/pokemon-scarlet-violet-journey-together-booster-pack",
+   "price": 85,
+   "type": "Booster Pack",
+   "set": "Journey Together",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1792657330054,
+   "store": "poketalk",
+   "product": "poketalk:10163617923414",
+   "group": "journey-together|booster-box|en|",
+   "title": "Pokémon Scarlet & Violet: Journey Together Booster Box",
+   "url": "https://poketalk.se/products/pokemon-scarlet-violet-journey-together-booster-box-1",
+   "price": 2899,
+   "type": "Booster Box",
+   "set": "Journey Together",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1792638182849,
    "store": "skattkistan",
