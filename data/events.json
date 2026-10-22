@@ -1,6 +1,19 @@
 {
- "updated": 1792681611424,
+ "updated": 1792682531449,
  "events": [
+  {
+   "at": 1792682143425,
+   "store": "rgb-kingz",
+   "product": "rgb-kingz:16128139624778",
+   "group": "ascended-heroes|collection-box|en||gardevoir-poster",
+   "title": "Pokémon TCG: Mega Evolution – Ascended Heroes Premium Poster Collection – Mega Gardevoir (ENG)",
+   "url": "https://rgbkingz.com/products/pokemon-tcg-mega-evolution-ascended-heroes-premium-poster-collection-mega-gardevoir-eng",
+   "price": 2199,
+   "type": "Collection Box",
+   "set": "Ascended Heroes",
+   "lang": "en",
+   "kind": "ny"
+  },
   {
    "at": 1792680948577,
    "store": "mystery-shack",
