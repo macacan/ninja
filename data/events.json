@@ -1,6 +1,19 @@
 {
- "updated": 1792696060280,
+ "updated": 1792696980294,
  "events": [
+  {
+   "at": 1792696503453,
+   "store": "dragon-s-lair",
+   "product": "dragon-s-lair:15867479064924",
+   "group": "x|blister|en||2|enhanced-gengar",
+   "title": "Pokémon 2-Pack Enhanced Blister Gengar",
+   "url": "https://dragonslair.se/products/pokemon-2-pack-enhanced-blister-gengar",
+   "price": 229,
+   "type": "Blister",
+   "set": null,
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1792695933222,
    "store": "majki-poke",
