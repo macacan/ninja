@@ -24,11 +24,13 @@ jobs:
       - run: node scripts/update-product-contents.mjs || echo "Produktinnehållet kunde inte uppdateras den här gången"
       # Alla set och kortlistor till setsidorna (data/sets/), sedan sidorna själva och sitemapen.
       - run: node scripts/update-sets.mjs || echo "Seten kunde inte hämtas den här gången"
+      # Kortbilder som TCGdex saknar (Pokémon TCG API och Scrydex).
+      - run: node scripts/update-card-images.mjs || echo "Kortbilderna kunde inte uppdateras den här gången"
       - run: node scripts/build-set-pages.mjs
       - run: node scripts/build-sitemap.mjs --ping || echo "IndexNow kunde inte pingas den här gången"
       - name: Spara om något ändrats
         run: |
           git config user.name "packninja-bot"
           git config user.email "packninja-bot@users.noreply.github.com"
-          git add data/card-trends.json data/card-history data/pokemon-names.json data/product-contents.json data/sets data/set-pages.json set sitemap.xml scripts/sitemap-state.json
+          git add data/card-trends.json data/card-history data/pokemon-names.json data/product-contents.json data/sets data/set-pages.json data/card-images.json scripts/card-images-state.json set sitemap.xml scripts/sitemap-state.json
           git diff --cached --quiet || (git commit -m "Uppdatera korttrender och setsidor" && git pull --rebase -X theirs && git push)

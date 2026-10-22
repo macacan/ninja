@@ -3,6 +3,8 @@
 import { writeFile, readFile } from "node:fs/promises";
 
 const OUT = new URL("../data/set-logos.json", import.meta.url);
+// Set vars namn skiljer sig för mycket för att matchas automatiskt: TCGdex-id → Pokémon TCG API-id.
+const ALIAS = { sve: "sve", svp: "svp", exu: "ex10" };
 const tokens = (s) => s.toLowerCase().replace(/&/g, " and ").replace(/[^a-z0-9]+/g, " ").trim().split(" ").filter(Boolean);
 
 async function getJSON(url, tries = 4) {
@@ -27,6 +29,7 @@ for (const s of missing) {
   const want = tokens(s.name), date = detail?.releaseDate?.replace(/-/g, "/");
   // Alla ord i TCGdex-namnet ska finnas i det andra namnet. Vid flera träffar vinner samma releasedatum, sedan kortast namn.
   const cands = ptcg.filter((p) => p.images?.logo && want.every((w) => tokens(p.name).includes(w)));
+  if (ALIAS[s.id]) { const a = ptcg.find((p) => p.id === ALIAS[s.id]); if (a?.images?.logo) out[s.id] = a.images.logo; continue; }
   const best = cands.sort((a, b) => (b.releaseDate === date) - (a.releaseDate === date) || a.name.length - b.name.length)[0];
   if (best && (best.releaseDate === date || cands.length === 1)) out[s.id] = best.images.logo;
 }

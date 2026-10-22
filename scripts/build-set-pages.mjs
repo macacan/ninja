@@ -5,6 +5,7 @@
 //   data/card-history/<id>.json   priser i kronor och sällsynthet för de senaste seten (scripts/update-card-trends.mjs)
 //   data/release-calendar.json    kommande släpp, även set som TCGdex inte har än
 //   data/set-logos.json           loggor för set som TCGdex saknar logga för
+//   data/card-images.json         kortbilder som TCGdex saknar (scripts/update-card-images.mjs)
 // Butikernas lager står inte i HTML:en (det ändras hela tiden) utan hämtas live av js/setpage.js.
 // Skriver också data/set-pages.json (set-id → adress) så att släppsidan kan länka hit.
 import { readFile, writeFile, readdir, mkdir, unlink } from "node:fs/promises";
@@ -29,6 +30,7 @@ const setFiles = (await readdir(at("data/sets/")).catch(() => [])).filter((f) =>
 const sets = (await Promise.all(setFiles.map((f) => readJSON(`data/sets/${f}`, null)))).filter(Boolean);
 const calendar = (await readJSON("data/release-calendar.json", { releases: [] })).releases || [];
 const extraLogos = await readJSON("data/set-logos.json", {});
+const extraImages = await readJSON("data/card-images.json", {});
 
 const pages = sets.map((s) => ({
   id: s.id, name: s.name, serie: s.serie?.name || null, date: s.releaseDate, cardCount: s.cardCount,
@@ -89,6 +91,7 @@ const head = ({ title, desc, url, ld }) => `<!doctype html>
 <link rel="icon" href="logo.svg" type="image/svg+xml">
 <link rel="icon" href="img/favicon-48.png" sizes="48x48" type="image/png">
 <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Lootninja">
 <meta property="og:locale" content="sv_SE">
@@ -134,7 +137,7 @@ const logoImg = (p, cls) => p.logo
   ? `<img class="${cls}" src="${esc(p.logo)}" alt="${esc(p.name)}" loading="lazy" decoding="async" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:this.className+' set-word',textContent:this.alt}))">`
   : `<span class="${cls} set-word">${esc(p.name)}</span>`;
 const cardHref = (c) => `vardering.html?id=${encodeURIComponent(c.id)}`;
-const cardImg = (c) => (c.image ? `${c.image}/low.webp` : "img/kortbaksida.webp");
+const cardImg = (c) => extraImages[c.id]?.low || (c.image ? `${c.image}/low.webp` : "img/kortbaksida.webp");
 const count = (p) => p.cardCount?.official ?? p.cards.length;
 
 function intro(p) {
