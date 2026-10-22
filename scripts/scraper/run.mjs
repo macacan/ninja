@@ -1,4 +1,4 @@
-// Packninjas butiksbevakning, en körning över alla butiker (passar schemalagda jobb som GitHub Actions).
+// Lootninjas butiksbevakning, en körning över alla butiker (passar schemalagda jobb som GitHub Actions).
 //   node scripts/scraper/run.mjs                 alla butiker med tillåten status
 //   node scripts/scraper/run.mjs --only=swepoke  bara vissa butiker (kommaseparerat id)
 //   SCRAPE_STATUSES=tillstand node ...           bara butiker som gett skriftligt tillstånd

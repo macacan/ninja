@@ -14,7 +14,7 @@ const MIN_PRICE = 2;      // euro: billigare kort ger brus i procentuella förä
 async function getJSON(url, tries = 3) {
   for (let i = 0; i < tries; i++) {
     try {
-      const r = await fetch(url, { headers: { "user-agent": "PackninjaTrends/1.0" }, signal: AbortSignal.timeout(20000) });
+      const r = await fetch(url, { headers: { "user-agent": "LootninjaTrends/1.0" }, signal: AbortSignal.timeout(20000) });
       if (r.ok) return await r.json();
     } catch {}
     await new Promise((r) => setTimeout(r, 1500 * (i + 1)));

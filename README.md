@@ -1,4 +1,4 @@
-# Packninja
+# Lootninja
 
 Statisk webbplats för kortsläpp, set, kortpriser, nyheter och butikslager.
 

@@ -1,47 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://packninja.se/</loc>
+    <loc>https://lootninja.se/</loc>
     <changefreq>hourly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://packninja.se/priser.html</loc>
+    <loc>https://lootninja.se/priser.html</loc>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://packninja.se/butiker.html</loc>
+    <loc>https://lootninja.se/butiker.html</loc>
     <changefreq>hourly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://packninja.se/slapp.html</loc>
+    <loc>https://lootninja.se/slapp.html</loc>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://packninja.se/vardering.html</loc>
+    <loc>https://lootninja.se/vardering.html</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://packninja.se/nyheter.html</loc>
+    <loc>https://lootninja.se/nyheter.html</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://packninja.se/om.html</loc>
+    <loc>https://lootninja.se/om.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://packninja.se/villkor.html</loc>
+    <loc>https://lootninja.se/villkor.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
-    <loc>https://packninja.se/integritet.html</loc>
+    <loc>https://lootninja.se/integritet.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.4</priority>
   </url>
