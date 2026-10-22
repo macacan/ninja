@@ -1,6 +1,19 @@
 {
- "updated": 1792686859430,
+ "updated": 1792687800102,
  "events": [
+  {
+   "at": 1792686905300,
+   "store": "kantovault",
+   "product": "kantovault:11734042837333",
+   "group": "sun-moon|booster-box|ja||bout-remix",
+   "title": "Pokémon Sun & Moon: Remix Bout Booster Box",
+   "url": "https://kantovault.se/products/pokemon-sun-moon-remix-bout-booster-box",
+   "price": 6490,
+   "type": "Booster Box",
+   "set": "Sun & Moon",
+   "lang": "ja",
+   "kind": "ny"
+  },
   {
    "at": 1792685280661,
    "store": "rgb-kingz",
