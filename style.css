@@ -3554,3 +3554,9 @@ button.zm-price:hover{background:#1f2132}
 /* Notiser: instruktionen för iPhone och iPad (visas bara där, se js/push.js). */
 .ntf-ios{margin:8px 0 12px;padding:10px 12px;border-radius:8px;background:var(--surface);font-size:.92rem;line-height:1.5}
 .ntf-ios b{font:inherit;font-weight:700;text-transform:none;letter-spacing:0}
+.ntf-guide{margin:16px 0 0}
+.ntf-howto{margin:0;padding-left:22px;line-height:1.55}
+.ntf-howto>li{margin:0 0 10px}
+.ntf-howto ul{margin:6px 0 0;padding-left:18px}
+.ntf-howto ul li{margin:4px 0}
+.ntf-help{margin:6px 0 0;padding:10px 12px;border-radius:8px;background:var(--surface);font-size:.92rem;line-height:1.5}
