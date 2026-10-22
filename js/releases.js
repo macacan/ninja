@@ -2,7 +2,7 @@
 //   Data:  releaseData() laddar släppkalendern (data/release-calendar.json) och butikernas produkter en gång.
 //   Vyer:  nextHTML (nästa släpp), releaseCard (kompakt kort), detailHTML (allt om ett släpp, i en dialog),
 //          galleryHTML + bindGallery (produktrutor med butiker), används också av kalenderns dagvy.
-import { esc, kr, releaseSets, daysUntil, clockTime, setLogo, getJSON, API, safeUrl } from "./site.js";
+import { esc, kr, releaseSets, daysUntil, clockTime, setLogo, getJSON, API, safeUrl, setPages } from "./site.js";
 import { getAnatomyData, matchAnatomy, renderAnatomyModal } from "./anatomy.js";
 
 let anatomyData = null;
@@ -359,6 +359,7 @@ export function detailHTML(r, ctx, waveIndex = null) {
       <a class="btn primary small" href="butiker.html#notiser">Få notis när ${esc(r.set)} kommer in</a>
       <a class="btn small" href="butiker.html?q=${encodeURIComponent(r.match?.[0] || r.set)}#products">Alla produkter och priser</a>
       ${r.tcgdex ? `<a class="btn small" href="priser.html?set=${encodeURIComponent(r.tcgdex)}">Kort och priser</a>` : ""}
+      ${ctx.pages?.releases?.[r.id] ? `<a class="btn small" href="${esc(ctx.pages.releases[r.id])}">Allt om ${esc(r.set)}</a>` : ""}
     </div>
     ${r.source ? `<p class="rd-src">Källa: <a href="${esc(safeUrl(r.source))}" target="_blank" rel="noopener">Bulbapedia</a></p>` : ""}
   </div>`;
@@ -398,10 +399,11 @@ export function bindDetail(root, ctx) {
 let dataPromise = null;
 export function releaseData() {
   return (dataPromise ||= (async () => {
-    const [releases, products, status] = await Promise.all([
+    const [releases, products, status, pages] = await Promise.all([
       releaseSets(),
       fetch("data/products.json", { cache: "no-cache" }).then((r) => r.json()).catch(() => ({ products: [] })),
       fetch("data/stores-status.json", { cache: "no-cache" }).then((r) => r.json()).catch(() => ({ stores: [] })),
+      setPages(),
     ]);
     const names = Object.fromEntries(status.stores.map((s) => [s.id, s.name]));
     const items = new Map(), mine = new Map(), byId = new Map(releases.map((r) => [r.id, r]));
@@ -412,6 +414,6 @@ export function releaseData() {
       try { const logo = setLogo(await getJSON(`${API}/sets/${encodeURIComponent(r.tcgdex)}`)); if (logo) logos.set(r.id, logo); } catch {}
     }));
     const lookup = (key) => { const [id, w] = key.split("|"); return items.get(id).filter((it) => w === "" || it.wave === +w); };
-    return { releases, byId, products, names, items, mine, logos, lookup };
+    return { releases, byId, products, names, items, mine, logos, lookup, pages };
   })());
 }

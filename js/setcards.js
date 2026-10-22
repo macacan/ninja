@@ -1,6 +1,6 @@
 // Tryck på ett set: en ruta med alla kort i setet, pris i kronor och sortering.
 // Namn, bild och nummer kommer från TCGdex (eller data/card-images.json om TCGdex saknar bilder). Priserna från data/card-history/<set>.json.
-import { esc, kr, fmt, loading, getJSON, API, setLogo, cardImg, extraCardImgsReady } from "./site.js";
+import { esc, kr, fmt, loading, getJSON, API, setLogo, cardImg, extraCardImgsReady, setPages } from "./site.js";
 import { openCardPrice } from "./cardprice.js";
 
 const SORTS = {
@@ -233,12 +233,14 @@ export async function openSet(id) {
   body.innerHTML = loading("Ninjan räknar korten");
   d.showModal();
   try {
-    const [set, p] = await Promise.all([getJSON(`${API}/sets/${encodeURIComponent(id)}`), prices(id), extraCardImgsReady]);
+    const [set, p, pages] = await Promise.all([getJSON(`${API}/sets/${encodeURIComponent(id)}`), prices(id), setPages(), extraCardImgsReady]);
+    // Länken till setets egen sida visas inte när rutan öppnas på just den sidan.
+    const page = pages.sets?.[id], onPage = page && location.pathname.endsWith(page);
     const cards = (set.cards || []).map((c) => ({ ...c, price: p.prices.get(c.id) ?? null }));
     current = { set, cards, date: p.date, sort: "price-desc" };
     const logo = setLogo(set);
     body.innerHTML = `<div class="sm-head">${logo ? `<img class="sm-logo" src="${esc(logo)}" alt="">` : ""}
-        <div><h3>${esc(set.name)}</h3><p class="muted">${esc(set.serie?.name || "")}</p></div></div>
+        <div><h3>${esc(set.name)}</h3><p class="muted">${esc(set.serie?.name || "")}${page && !onPage ? ` · <a href="${esc(page)}">Setets sida</a>` : ""}</p></div></div>
       <div class="sm-bar"><span class="sm-count"></span>
         <label>Sortera <select class="sm-sort">${Object.entries(SORTS).map(([k, [label]]) => `<option value="${k}">${label}</option>`).join("")}</select></label></div>
       <ul class="sm-grid"></ul>`;

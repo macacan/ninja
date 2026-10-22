@@ -66,7 +66,10 @@ if (rate) {
       if (pts.at(-1)?.[0] === today) pts[pts.length - 1] = point; else pts.push(point);
       while (pts.length && pts[0][0] < oldest) pts.shift();
     }
-    await writeFile(f, JSON.stringify({ updated: Date.now(), set: s.name, rate, cards: h.cards }) + "\n");
+    // Sällsyntheten per kort visas på setsidorna (scripts/build-set-pages.mjs).
+    const rarity = { ...h.rarity };
+    for (const c of cards) if (c.set?.id === s.id && c.rarity) rarity[c.id] = c.rarity;
+    await writeFile(f, JSON.stringify({ updated: Date.now(), set: s.name, rate, cards: h.cards, rarity }) + "\n");
   }
 }
 

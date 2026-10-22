@@ -11,7 +11,7 @@ permissions:
 jobs:
   trends:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 40
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -22,9 +22,13 @@ jobs:
       - run: node scripts/build-pokemon-names.mjs || echo "Pokémonnamnen kunde inte uppdateras den här gången"
       # Antal boosterpaket per produkt från Bulbapedia, för pris per booster på butikssidan.
       - run: node scripts/update-product-contents.mjs || echo "Produktinnehållet kunde inte uppdateras den här gången"
+      # Alla set och kortlistor till setsidorna (data/sets/), sedan sidorna själva och sitemapen.
+      - run: node scripts/update-sets.mjs || echo "Seten kunde inte hämtas den här gången"
+      - run: node scripts/build-set-pages.mjs
+      - run: node scripts/build-sitemap.mjs --ping || echo "IndexNow kunde inte pingas den här gången"
       - name: Spara om något ändrats
         run: |
           git config user.name "packninja-bot"
           git config user.email "packninja-bot@users.noreply.github.com"
-          git add data/card-trends.json data/card-history data/pokemon-names.json data/product-contents.json
-          git diff --cached --quiet || (git commit -m "Uppdatera korttrender" && git pull --rebase && git push)
+          git add data/card-trends.json data/card-history data/pokemon-names.json data/product-contents.json data/sets data/set-pages.json set sitemap.xml scripts/sitemap-state.json
+          git diff --cached --quiet || (git commit -m "Uppdatera korttrender och setsidor" && git pull --rebase -X theirs && git push)
