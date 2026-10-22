@@ -1,6 +1,19 @@
 {
- "updated": 1792688700122,
+ "updated": 1792689640139,
  "events": [
+  {
+   "at": 1792688777846,
+   "store": "rahtech",
+   "product": "rahtech:15796596310342",
+   "group": "30th-celebration|booster-pack|en|",
+   "title": "Mega 30th Celebration – Booster Pack (ENG)",
+   "url": "https://rahtech.se/products/mega-30th-celebration-booster-pack-eng-1",
+   "price": 149,
+   "type": "Booster Pack",
+   "set": "30th Celebration",
+   "lang": "en",
+   "kind": "ny"
+  },
   {
    "at": 1792687814223,
    "store": "kantovault",
