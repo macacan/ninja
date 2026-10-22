@@ -1,6 +1,19 @@
 {
- "updated": 1792682531449,
+ "updated": 1792683170685,
  "events": [
+  {
+   "at": 1792683040321,
+   "store": "shinycards",
+   "product": "shinycards:https://www.shinycards.se/pokemon/booster-box/pokemon-tcg-30th-celebration-booster-box-japansk",
+   "group": "30th-celebration|booster-box|ja|",
+   "title": "Pokemon 30th Celebration Booster Box (Japansk)",
+   "url": "https://www.shinycards.se/pokemon/booster-box/pokemon-tcg-30th-celebration-booster-box-japansk",
+   "price": 2699,
+   "type": "Booster Box",
+   "set": "30th Celebration",
+   "lang": "ja",
+   "kind": "tillbaka"
+  },
   {
    "at": 1792682143425,
    "store": "rgb-kingz",
