@@ -6,6 +6,7 @@
 //   data/release-calendar.json    kommande släpp, även set som TCGdex inte har än
 //   data/set-logos.json           loggor för set som TCGdex saknar logga för
 //   data/card-images.json         kortbilder som TCGdex saknar (scripts/update-card-images.mjs)
+//   data/extra-cards.json         handskrivna kort som TCGdex saknar i setets kortlista (t.ex. Mew RGB Edition)
 // Butikernas lager står inte i HTML:en (det ändras hela tiden) utan hämtas live av js/setpage.js.
 // Skriver också data/set-pages.json (set-id → adress) så att släppsidan kan länka hit.
 import { readFile, writeFile, readdir, mkdir, unlink } from "node:fs/promises";
@@ -31,11 +32,14 @@ const sets = (await Promise.all(setFiles.map((f) => readJSON(`data/sets/${f}`, n
 const calendar = (await readJSON("data/release-calendar.json", { releases: [] })).releases || [];
 const extraLogos = await readJSON("data/set-logos.json", {});
 const extraImages = await readJSON("data/card-images.json", {});
+const extraCards = await readJSON("data/extra-cards.json", {});
 
-const pages = sets.map((s) => ({
-  id: s.id, name: s.name, serie: s.serie?.name || null, date: s.releaseDate, cardCount: s.cardCount,
-  logo: s.logo || extraLogos[s.id] || null, cards: s.cards || [], language: "en", match: [],
-}));
+const pages = sets.map((s) => {
+  const cards = s.cards || [], known = new Set(cards.map((c) => c.id));
+  const extra = (extraCards[s.id] || []).filter((c) => !known.has(c.id)).map((c) => ({ ...c, image: null, extra: true }));
+  return { id: s.id, name: s.name, serie: s.serie?.name || null, date: s.releaseDate, cardCount: s.cardCount,
+    logo: s.logo || extraLogos[s.id] || null, cards: [...cards, ...extra], language: "en", match: [] };
+});
 const bySetId = new Map(pages.map((p) => [p.id, p]));
 for (const r of calendar) {
   const first = r.waves?.map((w) => w.date).sort()[0] || null;
@@ -106,7 +110,7 @@ const head = ({ title, desc, url, ld }) => `<!doctype html>
 <meta name="twitter:card" content="summary_large_image">
 <script type="application/ld+json">${JSON.stringify(ld).replace(/</g, "\\u003c")}</script>
 <link href="fonts/fonts.css" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=20261022c">
+<link rel="stylesheet" href="style.css?v=20261022d">
 <link rel="stylesheet" href="dark.css?v=20261022a" id="dark-css" media="(prefers-color-scheme: dark)">
 <script src="js/theme.js?v=20261021"></script>
 </head>
@@ -174,18 +178,22 @@ function topHtml(p) {
   if (!top.length) return "";
   return `
     <div class="section" id="dyrast"><h2>Dyraste korten i ${esc(p.name)}</h2></div>
-    <ul class="set-top">${top.map((c) => `
-      <li><a href="${cardHref(c)}">
+    <ul class="set-top">${top.map((c) => {
+      // Kort som TCGdex saknar (data/extra-cards.json) har ingen värderingssida att länka till.
+      const [open, close] = c.extra ? ['<span class="set-top-item">', "</span>"] : [`<a href="${cardHref(c)}">`, "</a>"];
+      return `
+      <li>${open}
         <img src="${esc(cardImg(c))}" alt="${esc(`${c.name} ${c.localId}`)}" loading="lazy" decoding="async" width="245" height="337" onerror="this.src='img/kortbaksida.webp'">
         <b>${esc(c.name)}</b><small>#${esc(c.localId)}${p.rarity[c.id] ? ` · ${esc(p.rarity[c.id])}` : ""}</small>
-        <span class="set-price">${kr(p.prices.get(c.id))}</span></a></li>`).join("")}
+        <span class="set-price">${kr(p.prices.get(c.id))}</span>${close}</li>`;
+    }).join("")}
     </ul>`;
 }
 
 function cardsHtml(p) {
   if (!p.cards.length) return "";
   const hasRarity = p.cards.some((c) => p.rarity[c.id]);
-  const rows = [...p.cards].sort(byNumber).map((c) => `<tr><td>${esc(c.localId)}</td><td><a href="${cardHref(c)}">${esc(c.name)}</a></td>${hasRarity ? `<td>${esc(p.rarity[c.id] || "")}</td>` : ""}<td class="num">${p.prices.has(c.id) ? kr(p.prices.get(c.id)) : "–"}</td></tr>`).join("\n");
+  const rows = [...p.cards].sort(byNumber).map((c) => `<tr><td>${esc(c.localId)}</td><td>${c.extra ? esc(c.name) : `<a href="${cardHref(c)}">${esc(c.name)}</a>`}</td>${hasRarity ? `<td>${esc(p.rarity[c.id] || "")}</td>` : ""}<td class="num">${p.prices.has(c.id) ? kr(p.prices.get(c.id)) : "–"}</td></tr>`).join("\n");
   const note = p.prices.size
     ? `Pris = Cardmarkets trendpris för ett ograderat kort i nyskick, omräknat till kronor ${longDate(p.priceDate)}. Tryck på ett kort för prishistorik och värdering.`
     : "Tryck på ett kort för att se dagens pris i kronor och värdera ditt exemplar.";
