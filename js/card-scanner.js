@@ -17,6 +17,9 @@ import "./scan/quad.js"; // sätter self.Quad
 import "./scan/fingerprint.js"; // sätter self.Fingerprint
 
 const TESSERACT = "https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/tesseract.min.js";
+// SRI: webbläsaren vägrar köra filen om CDN:et skulle leverera något annat än exakt version 5.1.1.
+// Byts versionen ovan måste hashen räknas om (openssl dgst -sha384 -binary fil | base64).
+const TESSERACT_SRI = "sha384-GJqSu7vueQ9qN0E9yLPb3Wtpd7OrgK8KmYzC8T1IysG1bcvxvIO4qtYR/D3A991F";
 const SCAN_INTERVAL = 250; // ms minst mellan två OCR-försök under aktiv kameraström
 const MOTION_TICK = 150; // ms mellan två stabilitetskontroller
 const MOTION_LIMIT = 10; // medelskillnad (0–255 per pixel) under vilken kameran räknas som stilla
@@ -41,9 +44,10 @@ const OCR_PARAMS = {
 };
 let scriptPromise = null;
 const workers = {};
-function loadScript(src) {
+function loadScript(src, integrity) {
   return new Promise((resolve, reject) => {
     const s = document.createElement("script");
+    if (integrity) { s.integrity = integrity; s.crossOrigin = "anonymous"; }
     s.src = src;
     s.onload = resolve;
     s.onerror = () => reject(new Error("Kunde inte ladda textläsaren."));
@@ -53,7 +57,7 @@ function loadScript(src) {
 
 function getWorker(kind) {
   if (!workers[kind]) {
-    scriptPromise ||= window.Tesseract ? Promise.resolve() : loadScript(TESSERACT).catch((err) => { scriptPromise = null; throw err; });
+    scriptPromise ||= window.Tesseract ? Promise.resolve() : loadScript(TESSERACT, TESSERACT_SRI).catch((err) => { scriptPromise = null; throw err; });
     workers[kind] = scriptPromise
       .then(() => window.Tesseract.createWorker("eng"))
       .then(async (w) => { await w.setParameters(OCR_PARAMS[kind]); return w; })

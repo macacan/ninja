@@ -19,10 +19,10 @@ function line(e, storeName) {
 }
 
 // Tre försök med paus, så att en kort störning hos ntfy inte gör att en påfyllningsnotis försvinner.
-async function post(url, body, label) {
+async function post(url, body, label, extraHeaders = {}) {
   for (let i = 0; ; i++) {
     try {
-      const r = await fetch(url, { method: "POST", headers: { "content-type": "application/json" }, body, signal: AbortSignal.timeout(15000) });
+      const r = await fetch(url, { method: "POST", headers: { "content-type": "application/json", ...extraHeaders }, body, signal: AbortSignal.timeout(15000) });
       if (r.ok) return;
       if (r.status < 500 && r.status !== 429) throw Object.assign(new Error(`${label} ${r.status}`), { final: true });
       if (i >= 2) throw new Error(`${label} ${r.status}`);
@@ -33,7 +33,11 @@ async function post(url, body, label) {
   }
 }
 
-const ntfy = (topic, msg) => post("https://ntfy.sh", JSON.stringify({ topic, ...msg }), "ntfy");
+// Ämnena är publika, så utan skrivskydd kan vem som helst skicka falska notiser till prenumeranterna.
+// Reservera ämnena hos ntfy (bara ägaren får skriva) och lägg åtkomsttoken i miljövariabeln NTFY_TOKEN.
+// Token får aldrig ligga i config.json eller någon annan fil i repot.
+const ntfyAuth = () => (process.env.NTFY_TOKEN ? { authorization: `Bearer ${process.env.NTFY_TOKEN}` } : {});
+const ntfy = (topic, msg) => post("https://ntfy.sh", JSON.stringify({ topic, ...msg }), "ntfy", ntfyAuth());
 
 async function toNtfy(base, events, storeName) {
   // Två sorters ämnen: ett med allt, och ett per produkttyp (t.ex. packninja-xyz-elite-trainer-box).
