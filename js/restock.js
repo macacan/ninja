@@ -402,6 +402,7 @@ function renderDeck(set, { model, picks, info }) {
       <div class="pull-actions">
         <button type="button" class="btn small" data-skip>Visa alla</button>
         <button type="button" class="btn small primary" data-again hidden>Öppna ett till</button>
+        <a class="btn small" href="butiker.html#notiser" data-notis hidden>Få ett pling när nya boxar kommer in</a>
       </div>
       ${SHOW_ODDS ? `<details class="odds" open><summary>Dropchans för ${esc(set.name)}</summary>${oddsTable(model)}</details>` : ""}
     </div>`;
@@ -473,6 +474,7 @@ function renderDeck(set, { model, picks, info }) {
     total.innerHTML = `${sum > 0 ? `Packet var värt ca <b>${kr(sum)}</b>${info[best].value ? ` · bästa kort: ${esc(picks[best].card.name)} (ca ${kr(info[best].value)})` : ""}. ` : ""}`
       + (again ? `<b class="pull-again">Under ${DAY_MIN} kr, så du får öppna ett till!</b>` : `Det var dagens pack. Nästa pack om ${untilTomorrow()}.`);
     pull.querySelector("[data-again]").hidden = !again;
+    pull.querySelector("[data-notis]").hidden = again; // efter dagens pack: tipsa om notiser i stället
     stage.hidden = true; swipeHint.hidden = true;
     count.textContent = `Alla ${N} kort dragna`;
     nameEl.textContent = info[best].value ? picks[best].card.name : "";

@@ -1,52 +1,31 @@
 import { groupKey } from "./group.js";
-import { $, esc, fmt, kr, loading, skeleton, upcomingReleases, daysUntil, latestSets, setCard, setLogo, setPages, news, newsItem, productCard, liveStamp, fillRows, liveJSON, liveStock } from "./site.js";
+import { $, esc, fmt, skeleton, upcomingReleases, daysUntil, latestSets, setCard, setLogo, setPages, news, newsItem, productCard, fillRows, liveStock } from "./site.js";
+import { getPrefs } from "./prefs.js";
 import { bindSetCards } from "./setcards.js";
 import "./restock.js";
 
-// Två listor från samma data, hämtade om varje minut:
-// "Senast uppdaterade" = prissänkningar och produkter som nyss kom in eller fick nytt pris.
-// "Nytt i butikerna" = bara produkter som dök upp för första gången den senaste veckan.
-// En per produkt: samma ETB från fem butiker visas en gång. Visar bara hela rader.
-async function homeShop() {
-  const upd = $("#home-updated"), shop = $("#home-shop");
-  if (!upd.children.length) upd.innerHTML = skeleton(4);
-  if (!shop.children.length) shop.innerHTML = skeleton(4);
+// Dina bevakade: produkterna man bevakar med klockan på butikssidan, hämtade om varje minut.
+// En per produkt: butiken med lägst pris i lager, annars lägst pris för förbeställning. Syns bara om man bevakar något.
+async function homeWatch() {
+  const wrap = $("#home-watch-wrap"), el = $("#home-watch");
+  const watch = new Set(getPrefs().watch || []);
+  wrap.hidden = !watch.size;
+  if (!watch.size) return;
+  if (!el.children.length) el.innerHTML = skeleton(4);
   try {
-    const [[p, s], e] = await Promise.all([liveStock().catch(() => [{}, {}]), liveJSON("data/events.json").catch(() => ({}))]);
+    const [p, s] = await liveStock();
     const names = Object.fromEntries((s.stores || []).map((x) => [x.id, x.name]));
-    // Samma etiketter som på butikssidan: prissänkt eller nytt den senaste veckan.
-    const week = Date.now() - 7 * 864e5, drop = new Map(), fresh = new Map();
-    for (const ev of e.events || []) {
-      if (ev.at < week) continue;
-      if (ev.kind === "prissankt" && !drop.has(ev.product)) drop.set(ev.product, { from: ev.from, at: ev.at });
-      if (ev.kind === "ny") fresh.set(ev.product, Math.max(ev.at, fresh.get(ev.product) || 0));
+    const best = new Map();
+    for (const x of p.products || []) {
+      const k = groupKey(x);
+      if (!watch.has(k) || !(x.available || x.preorder)) continue;
+      const cur = best.get(k);
+      if (!cur || (x.available && !cur.available) || (!!x.available === !!cur.available && x.price < cur.price)) best.set(k, x);
     }
-    // Prissänkt räknas bara om priset fortfarande är lägre än före sänkningen. Mer än 60 % lägre är
-    // nästan alltid ett valutafel (dollar i stället för kronor) och visas inte.
-    const dropOf = (x) => { const d = drop.get(x.id); return d && x.price < d.from && x.price >= d.from * 0.4 ? d : null; };
-    const dedupe = () => { const seen = new Set(); return (x) => { const k = groupKey(x); return !seen.has(k) && seen.add(k); }; };
-    const inStock = (p.products || []).filter((x) => x.available && x.image);
-
-    // Senast uppdaterade: prissänkta (senaste sänkningen först) varvas med det som ändrades senast.
-    const once = dedupe();
-    const drops = inStock.filter(dropOf).sort((a, b) => dropOf(b).at - dropOf(a).at).filter(once).slice(0, 6);
-    const latest = inStock.filter((x) => !dropOf(x)).sort((a, b) => b.lastChange - a.lastChange).filter(once).slice(0, 12 - drops.length);
-    const list = [];
-    for (let i = 0; list.length < drops.length + latest.length; i++) { if (drops[i]) list.push(drops[i]); if (latest[i]) list.push(latest[i]); }
-    upd.innerHTML = list.map((x) => productCard(x, names[x.store], { drop: dropOf(x)?.from, isNew: fresh.has(x.id) })).join("")
-      || '<div class="msg">Inget i lager just nu.</div>';
-    fillRows(upd, 2);
-
-    // Nytt i butikerna: nyast först, och bara produkter som är nya för första gången.
-    const onceNew = dedupe();
-    const newest = inStock.filter((x) => fresh.has(x.id)).sort((a, b) => fresh.get(b.id) - fresh.get(a.id)).filter(onceNew).slice(0, 8);
-    shop.innerHTML = newest.map((x) => productCard(x, names[x.store], { drop: dropOf(x)?.from, isNew: true })).join("")
-      || '<div class="msg">Inga nya produkter den senaste veckan.</div>';
-    fillRows(shop, 2);
-  } catch {
-    upd.innerHTML = '<div class="msg">Butikslagret uppdateras snart.</div>';
-    shop.innerHTML = '<div class="msg">Butikslagret uppdateras snart.</div>';
-  }
+    const list = [...best.values()].sort((a, b) => !!b.available - !!a.available || a.price - b.price);
+    el.innerHTML = list.map((x) => productCard(x, names[x.store])).join("")
+      || '<div class="msg">Inget av det du bevakar finns i lager just nu.</div>';
+  } catch { el.innerHTML = '<div class="msg">Butikslagret uppdateras snart.</div>'; }
 }
 
 async function nextDrop() {
@@ -94,7 +73,7 @@ const heroUnderHeader = () => {
 heroUnderHeader();
 addEventListener("resize", heroUnderHeader);
 nextDrop();
-homeShop();
-setInterval(homeShop, 60e3);
+homeWatch();
+setInterval(homeWatch, 60e3);
 homeSets();
 homeNews();

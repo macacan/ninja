@@ -208,6 +208,10 @@ input[type=search]{width:100%;max-width:360px}
 @keyframes spin{25%{transform:scaleX(.5)}50%{transform:scaleX(.1)}75%{transform:scaleX(.5)}}
 @media (max-width:980px){.price-band{grid-template-columns:auto 1fr}.price-band form{grid-column:1/-1}}
 @media (max-width:720px){.price-band{grid-template-columns:1fr}.price-band .coins{display:none}}
+/* Kortvärdet överst på startsidan, direkt under bannern. */
+.price-band.is-top{margin-top:clamp(16px,3vw,28px)}
+.price-band.is-top .search-row > :first-child{flex:1 1 auto}
+.price-band.is-top .search-row > .btn{flex:0 0 auto;padding-inline:22px}
 
 /* ---------- Nyheter ---------- */
 .news-list{display:grid;gap:14px}
@@ -2901,6 +2905,7 @@ input[type=search]::-webkit-search-results-decoration {
 .live-badge i{width:8px;height:8px;border-radius:50%;background:#ff4d3a;box-shadow:0 0 0 0 rgba(255,77,58,.7);animation:livePulse 1.6s infinite}
 @keyframes livePulse{70%{box-shadow:0 0 0 8px rgba(255,77,58,0)}100%{box-shadow:0 0 0 0 rgba(255,77,58,0)}}
 .restock h2{margin:12px 0 8px;font:600 1.9rem/1.1 var(--pixel);text-shadow:0 2px 4px rgba(0,0,0,.45)}
+.restock-actions{display:flex;flex-wrap:wrap;gap:8px}
 .restock-lead{margin:0 0 14px;max-width:46ch;color:#e1e6f5;font-size:.95rem;line-height:1.55;text-shadow:0 1px 2px rgba(0,0,0,.4)}
 .restock-feed{position:relative;list-style:none;margin:0 0 16px;padding:0;display:grid;gap:8px}
 .rf{animation:rfIn .5s ease both;animation-delay:calc(var(--i)*90ms)}
