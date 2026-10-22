@@ -1,6 +1,45 @@
 {
- "updated": 1792677030986,
+ "updated": 1792677951005,
  "events": [
+  {
+   "at": 1792677201529,
+   "store": "sf-bokhandeln",
+   "product": "sf-bokhandeln:https://www.sfbok.se/sv/spel/samlarkortspel-tcg-ccg/pokemon-trading-card-game/737198/pokemon-tcg-scarlet-violet-destined-rivals-elite-trainer-box",
+   "group": "destined-rivals|elite-trainer-box|en|",
+   "title": "Pokemon TCG: Scarlet & Violet: Destined Rivals Elite Trainer Box",
+   "url": "https://www.sfbok.se/sv/spel/samlarkortspel-tcg-ccg/pokemon-trading-card-game/737198/pokemon-tcg-scarlet-violet-destined-rivals-elite-trainer-box",
+   "price": 849,
+   "type": "Elite Trainer Box",
+   "set": "Destined Rivals",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1792677190405,
+   "store": "shinycards",
+   "product": "shinycards:https://www.shinycards.se/pokemon/booster-pack/pokemon-sword-shield-4-vivid-voltage-booster-pack",
+   "group": "vivid-voltage|booster-pack|en|",
+   "title": "Pokemon Sword & Shield 4: Vivid Voltage Booster Pack",
+   "url": "https://www.shinycards.se/pokemon/booster-pack/pokemon-sword-shield-4-vivid-voltage-booster-pack",
+   "price": 149,
+   "type": "Booster Pack",
+   "set": "Vivid Voltage",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1792677190405,
+   "store": "shinycards",
+   "product": "shinycards:https://www.shinycards.se/pokemon/elite-trainer-box/pokemon-sword-shield-10-astral-radiance-elite-trainer-box",
+   "group": "astral-radiance|elite-trainer-box|en|",
+   "title": "Pokemon Sword & Shield 10: Astral Radiance Elite Trainer Box",
+   "url": "https://www.shinycards.se/pokemon/elite-trainer-box/pokemon-sword-shield-10-astral-radiance-elite-trainer-box",
+   "price": 1699,
+   "type": "Elite Trainer Box",
+   "set": "Astral Radiance",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1792676376670,
    "store": "rgb-kingz",
