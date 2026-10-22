@@ -1,6 +1,6 @@
 {
   "_info": "botInfoUrl och contactEmail är frivilliga. Lämnas de tomma syns boten bara som \"PackninjaBot/1.0 (prisbevakning)\". ntfyTopic är början på de publika ntfy-ämnen som notiserna skickas till.",
   "botInfoUrl": "https://lootninja.se/om.html#bot",
-  "contactEmail": "kontakt@lootninja.se",
+  "contactEmail": "hej@lootninja.se",
   "ntfyTopic": "packninja-72d27451"
 }
