@@ -1,7 +1,6 @@
 // Delade delar för alla sidor: header, footer, API-hjälpare och kortrendering.
 import { icon, mountAllScenes } from "./pixel.js";
 import { mountBanners } from "./banners.js";
-import { startBrowserNotices } from "./prefs.js";
 import { mountCardAutocomplete } from "./card-autocomplete.js";
 import { langMark } from "./langmark.js";
 
@@ -127,7 +126,6 @@ export function mountChrome() {
   document.querySelectorAll("[data-icon]").forEach((el) => el.insertAdjacentHTML("afterbegin", icon(el.dataset.icon, +el.dataset.size || 28)));
   mountAllScenes();
   mountBanners();
-  startBrowserNotices();
   const menuInput = $(".mm-search input");
   if (menuInput) mountCardAutocomplete(menuInput, { formAction: searchTarget() });
   const headerInput = $("#header-search input");

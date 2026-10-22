@@ -2,7 +2,8 @@ import { $, esc, kr, fmt, ago, loading, liveStamp, releaseSets, safeUrl } from "
 import { langMark } from "./langmark.js";
 import { groupKey, groupProducts, groupTitle, lowestInStock } from "./group.js";
 import { typeOf } from "./releases.js";
-import { getPrefs, savePrefs, matches, KINDS, startBrowserNotices } from "./prefs.js";
+import { getPrefs, savePrefs, matches, KINDS } from "./prefs.js";
+import { pushState, enablePush, disablePush, syncPush } from "./push.js";
 const KIND = {
   ny: { label: "Nytt", cls: "k-new" },
   tillbaka: { label: "Tillbaka i lager", cls: "k-back" },
@@ -204,6 +205,7 @@ $("#products").addEventListener("click", (e) => {
     if (set.has(key)) set.delete(key); else set.add(key);
     p.watch = [...set];
     savePrefs(p);
+    syncPush();
     card.outerHTML = groupCard(groupInfo(key), openGroups.has(key));
     updateWatchCount();
     if (pressed("#c-watch")) renderProducts();
@@ -324,7 +326,6 @@ try {
 }
 
 // ---------- Notiser och urval ----------
-function slug(s) { return s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, ""); }
 // Kryssrutor: alla ikryssade betyder "alla" och sparas som en tom lista. Ingen ikryssad sparas som "__none__".
 function checkList(id, items, selected, label = (x) => x, count = null) {
   const all = !selected.length;
@@ -353,8 +354,7 @@ function refreshSummary() {
   $("#sum-sets").textContent = countText("p-sets");
   const more = [countText("p-langs") !== "Alla" && `${countText("p-langs")} språk`, countText("p-types") !== "Alla" && `${countText("p-types")} typer`, p.maxPrice && `max ${kr(p.maxPrice)}`].filter(Boolean);
   $("#sum-more").textContent = more.join(" · ") || "Alla";
-  const on = getPrefs().browser && "Notification" in window && Notification.permission === "granted";
-  $("#sum-channels").textContent = on ? "Webbläsarnotiser på" : "Inget valt";
+  $("#sum-channels").textContent = pushState() === "on" ? "Pushnotiser på" : "Inget valt";
   const n = products.filter((x) => productMatches(x, p)).length;
   $("#p-match").innerHTML = `<b>${n.toLocaleString("sv-SE")}</b> av ${products.length.toLocaleString("sv-SE")} förseglade produkter matchar dina val.`;
   renderWatchList();
@@ -371,8 +371,7 @@ function renderPrefs() {
   checkList("p-langs", [...new Set(products.map((x) => x.lang))].sort(), p.langs || [], (l) => LANG[l] || l.toUpperCase());
   checkList("p-types", [...new Set(products.map((x) => x.type))].sort(), p.types);
   $("#p-max").value = p.maxPrice || "";
-  updateBrowserButton();
-  renderTopics();
+  updatePushButton();
   refreshSummary();
 }
 
@@ -396,6 +395,7 @@ $("#tab-notiser").addEventListener("click", (e) => {
     const p = getPrefs();
     p.watch = (p.watch || []).filter((k) => k !== rm.dataset.unwatch);
     savePrefs(p);
+    syncPush();
     updateWatchCount();
     refreshSummary();
     renderProducts();
@@ -414,6 +414,7 @@ function renderWatchList() {
 
 $("#p-save").addEventListener("click", () => {
   savePrefs(draftPrefs());
+  syncPush();
   $("#p-status").textContent = "Sparat.";
   setTimeout(() => ($("#p-status").textContent = ""), 2500);
   renderEvents();
@@ -422,46 +423,36 @@ $("#p-reset").addEventListener("click", () => {
   const p = getPrefs();
   Object.assign(p, { kinds: Object.keys(KINDS), types: [], stores: [], sets: [], langs: [], maxPrice: 0 });
   savePrefs(p);
+  syncPush();
   renderPrefs();
   renderEvents();
 });
 
-function updateBrowserButton() {
-  const btn = $("#p-browser");
-  if (!("Notification" in window)) { btn.disabled = true; btn.textContent = "Webbläsaren stöder inte notiser"; return; }
-  if (Notification.permission === "denied") { btn.disabled = true; btn.textContent = "Notiser är blockerade i webbläsaren"; return; }
-  const on = getPrefs().browser && Notification.permission === "granted";
-  btn.textContent = on ? "Stäng av webbläsarnotiser" : "Slå på webbläsarnotiser";
-  btn.classList.toggle("primary", !on);
+function updatePushButton() {
+  const btn = $("#p-push"), state = pushState();
+  $("#p-push-ios").hidden = state !== "ios-install";
+  btn.hidden = state === "ios-install";
+  btn.disabled = state === "unsupported" || state === "denied";
+  btn.textContent = { on: "Stäng av pushnotiser", off: "Slå på pushnotiser", denied: "Notiser är blockerade i webbläsaren", unsupported: "Webbläsaren stöder inte pushnotiser" }[state] || "Slå på pushnotiser";
+  btn.classList.toggle("primary", state === "off");
+  $("#p-push-note").textContent = state === "denied" ? "Tillåt notiser för lootninja.se i webbläsarens inställningar och ladda om sidan." : "";
 }
-$("#p-browser").addEventListener("click", async () => {
-  const p = getPrefs();
-  if (p.browser && Notification.permission === "granted") { p.browser = false; savePrefs(p); updateBrowserButton(); return; }
-  if (await Notification.requestPermission() !== "granted") { updateBrowserButton(); return; }
-  p.browser = true; p.lastSeen = 0;
-  savePrefs(p);
-  updateBrowserButton();
+$("#p-push").addEventListener("click", async () => {
+  const btn = $("#p-push");
+  btn.disabled = true;
+  let note = "";
+  try {
+    if (pushState() === "on") { await disablePush(); note = "Pushnotiserna är avstängda."; }
+    else if (await enablePush()) note = "Klart! Notiserna följer urvalet nedan. Spara när du ändrar något.";
+  } catch {
+    note = "Det gick inte att slå på notiserna just nu. Försök igen om en stund.";
+  }
+  btn.disabled = false;
+  updatePushButton();
+  if (note) $("#p-push-note").textContent = note;
   refreshSummary();
-  startBrowserNotices();
 });
-
-async function renderTopics() {
-  let base = null;
-  try { base = (await (await fetch("data/notify.json", { cache: "no-cache" })).json()).ntfyTopic; } catch {}
-  if (!base) { $("#topics").innerHTML = '<li class="muted">Mobilnotiser är inte igång ännu.</li>'; return; }
-  const rows = [["Allt i alla butiker", `${base}-alla`], ...[...new Set(products.map((x) => x.type))].sort().map((t) => [t, `${base}-${slug(t)}`])];
-  $("#topics").innerHTML = rows.map(([label, topic]) => `<li>
-    <span><b>${esc(label)}</b><code>${esc(topic)}</code></span>
-    <span class="topic-actions"><button class="btn small" type="button" data-copy="${esc(topic)}">Kopiera</button>
-    <a class="btn small primary" href="https://ntfy.sh/${encodeURIComponent(topic)}" target="_blank" rel="noopener">Öppna</a></span>
-  </li>`).join("");
-}
-$("#topics").addEventListener("click", async (e) => {
-  const b = e.target.closest("[data-copy]");
-  if (!b) return;
-  try { await navigator.clipboard.writeText(b.dataset.copy); b.textContent = "Kopierat!"; } catch { b.textContent = b.dataset.copy; }
-  setTimeout(() => (b.textContent = "Kopiera"), 2000);
-});
+syncPush();
 
 $("#only-mine").addEventListener("change", renderEvents);
 document.addEventListener("click", (e) => { const a = e.target.closest("[data-goto]"); if (a) { e.preventDefault(); showTab(a.dataset.goto); } });
