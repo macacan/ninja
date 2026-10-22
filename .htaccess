@@ -5,6 +5,7 @@ ErrorDocument 404 /404.html
 
 # 2. Force UTF-8 Charset
 AddDefaultCharset UTF-8
+AddType application/manifest+json .webmanifest
 
 # 3. Security: Block hidden files, dev files, and scripts if accidentally uploaded
 <FilesMatch "(^\.|\.(cmd|sh|md|yml|yaml|mjs|env|log|bak|config))$">
