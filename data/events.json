@@ -1,6 +1,19 @@
 {
- "updated": 1792672430876,
+ "updated": 1792673370889,
  "events": [
+  {
+   "at": 1792673285744,
+   "store": "kantovault",
+   "product": "kantovault:11366106988885",
+   "group": "30th-celebration|collection-box|ja||futuristic",
+   "title": "Pokémon 30th Celebration Futuristic Box (Japansk)",
+   "url": "https://kantovault.se/products/pokemon-30th-celebration-futuristic-box",
+   "price": 5490,
+   "type": "Collection Box",
+   "set": "30th Celebration",
+   "lang": "ja",
+   "kind": "tillbaka"
+  },
   {
    "at": 1792672309174,
    "store": "shinycards",
