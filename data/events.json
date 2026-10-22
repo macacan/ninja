@@ -1,6 +1,33 @@
 {
- "updated": 1792677951005,
+ "updated": 1792678871029,
  "events": [
+  {
+   "at": 1792678311682,
+   "store": "dragon-s-lair",
+   "product": "dragon-s-lair:15554371158364",
+   "group": "x|booster-pack|ja||raging-surf",
+   "title": "Pokémon TCG - Raging Surf Booster Japansk",
+   "url": "https://dragonslair.se/products/pokemon-tcg-raging-surf-booster-japansk-pokemon",
+   "price": 55,
+   "type": "Booster Pack",
+   "set": null,
+   "lang": "ja",
+   "kind": "prissankt",
+   "from": 89
+  },
+  {
+   "at": 1792678157432,
+   "store": "shinycards",
+   "product": "shinycards:https://www.shinycards.se/nyheter/pokemon-scarlet-violet-65-shrouded-fable-elite-trainer-box",
+   "group": "shrouded-fable|elite-trainer-box|en|",
+   "title": "Pokemon Scarlet & Violet 6.5: Shrouded Fable Elite Trainer Box",
+   "url": "https://www.shinycards.se/nyheter/pokemon-scarlet-violet-65-shrouded-fable-elite-trainer-box",
+   "price": 1199,
+   "type": "Elite Trainer Box",
+   "set": "Shrouded Fable",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1792677201529,
    "store": "sf-bokhandeln",
