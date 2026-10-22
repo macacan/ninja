@@ -77,14 +77,9 @@ function footer() {
         <p>Ett ideellt hobbyprojekt. Ninjan smyger fram kortsläpp, set och priser – gratis och utan konto. Priser och lager är vägledande och kan innehålla felaktigheter.</p>
       </div>
       <div><h2>Utforska</h2><ul>${NAV.map(([h, l]) => `<li><a href="${h}">${l}</a></li>`).join("")}<li><a href="set/">Alla set</a></li></ul></div>
-      <div><h2>Källor</h2><ul>
-        <li><a href="https://tcgdex.dev" rel="noopener">TCGdex</a></li>
-        <li><a href="https://www.cardmarket.com" rel="noopener">Cardmarket</a></li>
-        <li><a href="https://frankfurter.dev" rel="noopener">Frankfurter (ECB)</a></li>
-        <li><a href="om.html#kallor">Alla källor</a></li>
-      </ul></div>
       <div><h2>Mer</h2><ul>
         <li><a href="om.html">Om Lootninja</a></li>
+        <li><a href="om.html#kallor">Alla källor</a></li>
         <li><a href="om.html#bevakning">Så fungerar bevakningen</a></li>
         <li><a href="butiker.html#notiser">Notiser</a></li>
         <li><a href="villkor.html">Användarvillkor</a></li>

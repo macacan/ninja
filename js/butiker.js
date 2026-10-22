@@ -37,7 +37,7 @@ function renderEvents() {
 }
 
 // ---------- Produkter ----------
-const PRICE = { "": [0, Infinity], "0-200": [0, 200], "200-500": [200, 500], "500-1000": [500, 1000], "1000-": [1000, Infinity] };
+const PRICE = { "": [0, Infinity], "0-50": [0, 50], "50-100": [50, 100], "100-200": [100, 200], "200-500": [200, 500], "500-1000": [500, 1000], "1000-": [1000, Infinity] };
 const LANG = { en: "Engelska", ja: "Japanska", ko: "Koreanska", zh: "Kinesiska", fr: "Franska" };
 const TYPE_LABEL = { "Booster Pack": "Boosterpaket", "Booster Box": "Boosterbox", "Elite Trainer Box": "Elite Trainer Box (ETB)", Blister: "Blister", Tin: "Tin" };
 let recentDrop = new Map();
@@ -54,8 +54,9 @@ function filtered() {
   const inS = pressed("#c-in"), pre = pressed("#c-pre"), watchOnly = pressed("#c-watch");
   const watch = new Set(getPrefs().watch || []);
   const words = q.split(/\s+/).filter(Boolean);
-  return products.filter((p) => (!v("#f-store") || p.store === v("#f-store")) && (!v("#f-type") || p.type === v("#f-type"))
-    && (!v("#f-set") || p.set === v("#f-set")) && (!v("#f-lang") || p.lang === v("#f-lang"))
+  const selStores = picked("f-store"), selSets = picked("f-set");
+  return products.filter((p) => (!selStores.length || selStores.includes(p.store)) && (!v("#f-type") || p.type === v("#f-type"))
+    && (!selSets.length || selSets.includes(p.set)) && (!v("#f-lang") || p.lang === v("#f-lang"))
     && p.price >= lo && p.price < hi
     && ((!inS && !pre) || (inS && p.available) || (pre && p.preorder && !p.available))
     && (!watchOnly || watch.has(groupKey(p)))
@@ -215,6 +216,33 @@ $("#products").addEventListener("click", (e) => {
 for (const id of ["#c-in", "#c-pre", "#c-watch"]) {
   $(id).addEventListener("click", () => { $(id).setAttribute("aria-pressed", String(!pressed(id))); shown = PAGE; renderProducts(); });
 }
+
+// Flervalsfilter för Set och Butik. Ingen ikryssad betyder alla. Panelen stängs när man klickar utanför.
+const picked = (id) => [...document.querySelectorAll(`#${id} input:checked`)].map((b) => b.value);
+function multiFill(id, items) {
+  $(`#${id}`).innerHTML = items.map((x) => `<label class="chk"><input type="checkbox" value="${esc(x.value)}">
+    <span>${esc(x.text)}</span>${x.count ? `<small>${x.count}</small>` : ""}</label>`).join("");
+  $(`#${id}`).addEventListener("change", () => {
+    const on = picked(id), first = document.querySelector(`#${id} input:checked`)?.closest(".chk").querySelector("span").textContent;
+    $(`#${id}-sum`).textContent = !on.length ? "Alla" : on.length === 1 ? first : `${on.length} valda`;
+    shown = PAGE; renderProducts();
+  });
+}
+function closeMulti(except = null) {
+  document.querySelectorAll(".mdrop-btn").forEach((btn) => {
+    if (btn === except) return;
+    btn.setAttribute("aria-expanded", "false");
+    btn.nextElementSibling.hidden = true;
+  });
+}
+document.querySelectorAll(".mdrop-btn").forEach((btn) => btn.addEventListener("click", () => {
+  const panel = btn.nextElementSibling, open = panel.hidden;
+  closeMulti(btn);
+  panel.hidden = !open;
+  btn.setAttribute("aria-expanded", String(open));
+}));
+document.addEventListener("click", (e) => { if (!e.target.closest(".mdrop")) closeMulti(); });
+document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeMulti(); });
 // ---------- Butiker ----------
 const STATUS = { tillstand: "Tillstånd", "ej-forbjuden": "Bevakas", "inga-bilder": "Bevakas, utan bilder", okand: "Ej kontrollerad", forbjuden: "Bevakas inte" };
 function renderStores() {
@@ -266,12 +294,13 @@ document.fonts?.ready.then(fitAll);
 function setView(v) {
   $("#products").dataset.view = v;
   document.querySelectorAll("#view button").forEach((b) => b.setAttribute("aria-pressed", b.dataset.v === v));
-  try { localStorage.setItem("nl:view", v); } catch {}
+  try { localStorage.setItem("nl:view2", v); } catch {}
 }
 $("#view")?.addEventListener("click", (e) => { const b = e.target.closest("[data-v]"); if (b) setView(b.dataset.v); });
-let savedView = "grid";
-try { savedView = localStorage.getItem("nl:view") || "grid"; } catch {}
-setView(savedView === "list" ? "list" : "grid");
+// Listvyn är standard. Ett sparat val går före standarden. Nyckeln bytte namn så att gamla kortval inte gäller.
+let savedView = "list";
+try { savedView = localStorage.getItem("nl:view2") || "list"; } catch {}
+setView(savedView === "grid" ? "grid" : "list");
 $("#filters").addEventListener("submit", (e) => e.preventDefault());
 $("#more").addEventListener("click", () => { shown += PAGE; renderProducts(); });
 
@@ -296,12 +325,13 @@ try {
   updateWatchCount();
   storeName = Object.fromEntries(stores.map((x) => [x.id, x.name]));
   const used = new Set(products.map((x) => x.store));
-  $("#f-store").insertAdjacentHTML("beforeend", stores.filter((x) => used.has(x.id)).sort((a, b) => a.name.localeCompare(b.name, "sv"))
-    .map((x) => `<option value="${esc(x.id)}">${esc(x.name)}</option>`).join(""));
+  const perStore = products.reduce((a, x) => ((a[x.store] = (a[x.store] || 0) + 1), a), {});
+  multiFill("f-store", stores.filter((x) => used.has(x.id)).sort((a, b) => a.name.localeCompare(b.name, "sv"))
+    .map((x) => ({ value: x.id, text: x.name, count: perStore[x.id] })));
   const opts = (id, values, label = (x) => x) => $(id).insertAdjacentHTML("beforeend", values.map((x) => `<option value="${esc(x)}">${esc(label(x))}</option>`).join(""));
   opts("#f-type", [...new Set(products.map((x) => x.type))].sort());
   const perSet = products.reduce((a, x) => (x.set && (a[x.set] = (a[x.set] || 0) + 1), a), {});
-  opts("#f-set", Object.keys(perSet).sort((a, b) => a.localeCompare(b, "sv")), (s) => `${s} (${perSet[s]})`);
+  multiFill("f-set", Object.keys(perSet).sort((a, b) => a.localeCompare(b, "sv")).map((s) => ({ value: s, text: s, count: perSet[s] })));
   opts("#f-lang", [...new Set(products.map((x) => x.lang))].sort(), (l) => LANG[l] || l.toUpperCase());
   // Etiketter på korten: prissänkt eller nytt den senaste veckan.
   const week = Date.now() - 7 * 864e5;

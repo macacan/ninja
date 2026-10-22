@@ -43,19 +43,18 @@
   <div class="wrap">
     <form id="price-form" class="card-search" role="search">
       <input id="pq" name="q" type="search" placeholder="Sök kort, t.ex. Pikachu eller Charizard ex" aria-label="Sök kort">
-      <label class="drop"><span>Språk<em class="beta-tag" id="lang-beta" title="Japanska kort är under uppbyggnad och inte kompletta" hidden>Beta</em></span><select id="lang" name="lang" autocomplete="off">
-        <option value="en">Engelska</option><option value="ja">Japanska (beta)</option></select></label>
-      <label class="drop"><span>Set</span><select id="set" name="set"><option value="">Alla</option></select></label>
-      <label class="drop"><span>Sällsynthet</span><select id="rarity" name="rarity"><option value="">Alla</option></select></label>
-      <label class="drop"><span>Pris</span><select id="range" name="range">
-        <option value="">Alla</option><option value="0-50">Under 50 kr</option><option value="50-250">50–250 kr</option>
-        <option value="250-1000">250–1 000 kr</option><option value="1000-">Över 1 000 kr</option></select></label>
+      <button type="button" class="btn small" id="adv-toggle" aria-expanded="false" aria-controls="adv">Filter</button>
+      <div class="adv" id="adv" hidden>
+        <label class="drop"><span>Språk<em class="beta-tag" id="lang-beta" title="Japanska kort är under uppbyggnad och inte kompletta" hidden>Beta</em></span><select id="lang" name="lang" autocomplete="off">
+          <option value="en">Engelska</option><option value="ja">Japanska (beta)</option></select></label>
+        <label class="drop"><span>Set</span><select id="set" name="set"><option value="">Alla</option></select></label>
+        <label class="drop"><span>Sällsynthet</span><select id="rarity" name="rarity"><option value="">Alla</option></select></label>
+      </div>
       <label class="drop"><span>Sortera</span><select id="sort" name="sort">
         <option value="price-desc">Dyrast först</option><option value="price-asc">Billigast först</option>
         <option value="rising">Stiger mest</option><option value="falling">Sjunker mest</option><option value="number">Kortnummer</option></select></label>
       <button class="btn primary" type="submit">Sök</button>
     </form>
-    <p class="hint">Populärt: <a href="?q=Charizard">Charizard</a> · <a href="?q=Pikachu">Pikachu</a> · <a href="?q=Umbreon">Umbreon</a> · <a href="?q=Gengar">Gengar</a> · <a href="?rarity=Special%20illustration%20rare">Special illustration rare</a> · <a href="?rarity=Hyper%20rare">Hyper rare</a>. Tryck på ett kort för stor bild och alla priser.</p>
 
     <section id="landing">
       <div class="section"><h2>Trendar nu</h2></div>
@@ -69,7 +68,7 @@
     </section>
 
     <section id="results" hidden>
-      <div class="section"><h2 id="res-title">Sökresultat</h2><span id="res-count" class="muted"></span></div>
+      <div class="section"><h2 id="res-title">Sökresultat</h2></div>
       <p class="hint" id="ja-note" hidden><span class="beta-tag">Beta</span> Japanska kort är inte kompletta än. Sök på Pokémonens engelska namn, t.ex. Pikachu. Tränar- och energikort ingår inte. Priserna kommer från Cardmarket.</p>
       <div id="prices" class="cgrid"></div>
       <div class="more-row"><button id="more" class="btn" type="button" hidden>Visa fler</button></div>

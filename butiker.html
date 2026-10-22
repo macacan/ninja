@@ -76,10 +76,17 @@
           <div class="drops">
             <label class="drop"><span>Typ</span><select id="f-type"><option value="">Alla</option></select></label>
             <label class="drop"><span>Pris</span><select id="f-price">
-              <option value="">Alla</option><option value="0-200">Under 200 kr</option><option value="200-500">200–500 kr</option>
+              <option value="">Alla</option><option value="0-50">Under 50 kr</option><option value="50-100">50–100 kr</option>
+              <option value="100-200">100–200 kr</option><option value="200-500">200–500 kr</option>
               <option value="500-1000">500–1 000 kr</option><option value="1000-">Över 1 000 kr</option></select></label>
-            <label class="drop"><span>Set</span><select id="f-set"><option value="">Alla</option></select></label>
-            <label class="drop"><span>Butik</span><select id="f-store"><option value="">Alla</option></select></label>
+            <div class="drop mdrop" id="f-set-drop">
+              <button type="button" class="mdrop-btn" aria-expanded="false" aria-controls="f-set"><span>Set</span><b id="f-set-sum">Alla</b></button>
+              <div class="mpanel" id="f-set" hidden></div>
+            </div>
+            <div class="drop mdrop" id="f-store-drop">
+              <button type="button" class="mdrop-btn" aria-expanded="false" aria-controls="f-store"><span>Butik</span><b id="f-store-sum">Alla</b></button>
+              <div class="mpanel" id="f-store" hidden></div>
+            </div>
             <label class="drop"><span>Språk</span><select id="f-lang"><option value="">Alla</option></select></label>
           </div>
           <div class="shopbar-right">

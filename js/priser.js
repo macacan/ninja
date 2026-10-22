@@ -84,7 +84,6 @@ async function landing() {
 }
 
 // ---------- Sök ----------
-const RANGE = { "": [0, Infinity], "0-50": [0, 50], "50-250": [50, 250], "250-1000": [250, 1000], "1000-": [1000, Infinity] };
 const PAGE = 24;
 let found = [], loaded = [], next = 0, searchId = 0;
 
@@ -97,10 +96,8 @@ async function loadDetails() {
 }
 
 function applyView() {
-  const [lo, hi] = RANGE[$("#range").value];
   const sort = $("#sort").value;
-  const kronor = (c) => (c.eur != null && rates?.EUR ? c.eur * rates.EUR : c.eur ?? -1);
-  let list = loaded.filter((c) => { const v = kronor(c); return lo === 0 && hi === Infinity ? true : v >= lo && v < hi; });
+  let list = [...loaded];
   const cmp = {
     "price-desc": (a, b) => (b.eur ?? -1) - (a.eur ?? -1),
     "price-asc": (a, b) => (a.eur ?? Infinity) - (b.eur ?? Infinity),
@@ -111,7 +108,6 @@ function applyView() {
   list = list.sort(cmp);
   current = list;
   renderGrid($("#prices"), list);
-  $("#res-count").textContent = `${list.length} av ${found.length} kort${next < found.length ? " (fler finns)" : ""}`;
   $("#more").hidden = next >= found.length;
 }
 
@@ -130,7 +126,7 @@ async function search() {
   if (ja) params.set("lang", "ja");
   if (rarity) params.set("rarity", rarity);
   if (set) params.set("set", set);
-  for (const k of ["range", "sort"]) if ($(`#${k}`).value) params.set(k, $(`#${k}`).value);
+  if ($("#sort").value) params.set("sort", $("#sort").value);
   history.replaceState(null, "", params.toString() ? `?${params}` : location.pathname);
 
   const hasQuery = rawQ || rarity || set;
@@ -215,7 +211,6 @@ async function searchJa(my, parsed, name) {
     if (my !== searchId) return;
     if (!list) {
       found = loaded = []; next = 0;
-      $("#res-count").textContent = "";
       $("#more").hidden = true;
       $("#prices").innerHTML = '<div class="msg">Japanska kort går just nu bara att söka fram med en Pokémons engelska namn, t.ex. Pikachu eller Charizard.</div>';
       return;
@@ -237,8 +232,12 @@ $("#more").addEventListener("click", async () => {
   applyView();
 });
 $("#price-form").addEventListener("submit", (e) => { e.preventDefault(); search(); });
-for (const id of ["#range", "#sort"]) $(id).addEventListener("change", () => (loaded.length ? applyView() : null));
+$("#sort").addEventListener("change", () => (loaded.length ? applyView() : null));
 for (const id of ["#set", "#rarity", "#lang"]) $(id).addEventListener("change", search);
+// Filter-knappen fäller ut språk, set och sällsynthet. Öppnas automatiskt om en länk redan har valt något där.
+const advToggle = $("#adv-toggle"), adv = $("#adv");
+const setAdv = (open) => { adv.hidden = !open; advToggle.setAttribute("aria-expanded", String(open)); };
+advToggle.addEventListener("click", () => setAdv(adv.hidden));
 
 mountCardAutocomplete($("#pq"), {
   onSelect: (val) => {
@@ -371,5 +370,6 @@ async function fillFilters() {
 mountRecent($("#recent"), { eyebrow: "Nyligen sökta", title: "Senast sökta kort", hint: "Korten du senast öppnat. Sparas bara i den här webbläsaren." });
 await fillFilters();
 const p = new URLSearchParams(location.search);
-for (const [k, id] of [["q", "#pq"], ["lang", "#lang"], ["rarity", "#rarity"], ["set", "#set"], ["range", "#range"], ["sort", "#sort"]]) if (p.get(k)) $(id).value = p.get(k);
+for (const [k, id] of [["q", "#pq"], ["lang", "#lang"], ["rarity", "#rarity"], ["set", "#set"], ["sort", "#sort"]]) if (p.get(k)) $(id).value = p.get(k);
+if (p.get("lang") === "ja" || p.get("rarity") || p.get("set")) setAdv(true);
 if (p.get("q") || p.get("rarity") || p.get("set")) search(); else landing();

@@ -147,29 +147,6 @@ function buildStatic(W, H, o, rand, sign = null) {
     }
   }
 
-  if (signGeo) {
-    const { word, s, y } = signGeo;
-    const lit = [], letters = [];
-    let x = signGeo.x0;
-    for (const ch of word) {
-      const gw = GLYPH[ch][0].length;
-      GLYPH[ch].forEach((row, dy) => [...row].forEach((c, dx) => { if (c === "#") lit.push([x + dx * s, y + dy * s]); }));
-      letters.push([x, gw * s]);
-      x += (gw + 1) * s;
-    }
-    // Ben som håller bokstäverna och går ner i berget.
-    g.fillStyle = "#4b5080";
-    for (const [lx, lw] of letters) { g.fillRect(lx + 1, y + 5 * s, 1, 3); g.fillRect(lx + lw - 2, y + 5 * s, 1, 3); }
-    // Skugga på bergssidan, mörk kontur och vita bokstäver.
-    g.fillStyle = "#9ea8dc";
-    for (const [lx, ly] of lit) g.fillRect(lx + 2, ly + 2, s, s);
-    g.fillStyle = "#1b1b2f";
-    for (const [lx, ly] of lit) g.fillRect(lx - 1, ly - 1, s + 2, s + 2);
-    g.fillStyle = "#ffffff";
-    for (const [lx, ly] of lit) g.fillRect(lx, ly, s, s);
-    signGeo.lit = lit;
-  }
-
   for (let x = 0; x < W; x++) { const t = hillTop(x); col(x, t, gt + 1, "#c8ead9"); px(x, t, "#7fc4a6"); }
 
   const trees = [];
@@ -195,6 +172,30 @@ function buildStatic(W, H, o, rand, sign = null) {
         col(x, cy + r, base + 1, "#8a5a3b");
       }
     }
+  }
+
+  // Skylten ritas efter träden, så att de står bakom bokstäverna och inte tvärtom.
+  if (signGeo) {
+    const { word, s, y } = signGeo;
+    const lit = [], letters = [];
+    let x = signGeo.x0;
+    for (const ch of word) {
+      const gw = GLYPH[ch][0].length;
+      GLYPH[ch].forEach((row, dy) => [...row].forEach((c, dx) => { if (c === "#") lit.push([x + dx * s, y + dy * s]); }));
+      letters.push([x, gw * s]);
+      x += (gw + 1) * s;
+    }
+    // Ben som håller bokstäverna och går ner i berget.
+    g.fillStyle = "#4b5080";
+    for (const [lx, lw] of letters) { g.fillRect(lx + 1, y + 5 * s, 1, 3); g.fillRect(lx + lw - 2, y + 5 * s, 1, 3); }
+    // Skugga på bergssidan, mörk kontur och vita bokstäver.
+    g.fillStyle = "#9ea8dc";
+    for (const [lx, ly] of lit) g.fillRect(lx + 2, ly + 2, s, s);
+    g.fillStyle = "#1b1b2f";
+    for (const [lx, ly] of lit) g.fillRect(lx - 1, ly - 1, s + 2, s + 2);
+    g.fillStyle = "#ffffff";
+    for (const [lx, ly] of lit) g.fillRect(lx, ly, s, s);
+    signGeo.lit = lit;
   }
 
   // Marken med lite pixelbrus.

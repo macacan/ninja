@@ -519,6 +519,14 @@ input[type=search]{width:100%;max-width:360px}
   background-repeat:no-repeat;background-position:right center;background-size:10px}
 .drop select:focus-visible{outline:none}
 .drop:focus-within{background:var(--surface);box-shadow:0 0 0 2px var(--ink)}
+/* Flervalsfilter (Set, Butik): en knapp som fäller ut en lista med kryssrutor. */
+.drop.mdrop{padding:0}
+.mdrop-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 10px;border:0;background:transparent;color:var(--ink);font:inherit;font-size:.92rem;cursor:pointer;white-space:nowrap}
+.mdrop-btn span{font-weight:600}
+.mdrop-btn b{font-weight:400;color:var(--muted);max-width:150px;overflow:hidden;text-overflow:ellipsis}
+.mdrop-btn::after{content:"";width:6px;height:6px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:translateY(-2px) rotate(45deg);margin-left:2px}
+.mdrop-btn[aria-expanded=true]::after{transform:translateY(2px) rotate(225deg)}
+.mpanel{position:absolute;top:calc(100% + 4px);left:0;z-index:30;width:260px;max-width:calc(100vw - 28px);max-height:320px;overflow-y:auto;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 12px 30px rgba(0,0,0,.2);padding:6px}
 .count{font-size:.9rem;color:var(--muted);padding:0 6px}
 .viewtoggle{display:flex;gap:2px;margin-left:4px}
 .viewtoggle button{min-height:38px;padding:0 12px;border:0;border-radius:6px;background:transparent;cursor:pointer;font:700 .85rem var(--sans);color:#9aa0b0}
@@ -561,8 +569,11 @@ input[type=search]{width:100%;max-width:360px}
   .pbadge{top:8px;right:8px;font-size:.7rem;padding:4px 6px}
   .pgrid[data-density=small] .pcard h3{font-size:.8rem}
   .pgrid[data-density=small] .pstore{display:none}
-  .shopbar-row{flex-direction:column;align-items:stretch;flex-wrap:nowrap}
-  .drops{flex-wrap:nowrap;overflow-x:auto;margin:0 -14px;padding:0 14px}
+  .shopbar-row{flex-direction:column;align-items:stretch;flex-wrap:nowrap;position:relative}
+  .drops{flex-wrap:wrap}
+  /* På mobilen fälls listan ut under hela filterraden, så den ryms på skärmen. */
+  .mdrop{position:static}
+  .mpanel{left:0;right:0;width:auto;max-width:none}
   .drop{flex:none;min-height:44px}
   .shopbar-right{justify-content:space-between;flex-wrap:nowrap;gap:0;min-width:0}
   .shopbar-right .drop span{display:none}
@@ -781,12 +792,15 @@ span.rd-logo{display:grid;place-items:center;background:var(--surface);border-ra
 /* ---------- Produktvy: samma produkt i alla butiker ---------- */
 .viewbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:10px}
 .viewbar .shop-search{flex:1 1 320px;width:auto;margin:0}
-.qchips{display:flex;gap:6px;flex-wrap:wrap}
-.qc{display:inline-flex;align-items:center;gap:7px;font:600 .9rem var(--sans);padding:0 14px;min-height:46px;border:2px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);cursor:pointer}
+.viewbar .shop-search:focus-visible{outline:none}
+.qchips{display:flex;gap:6px;flex-wrap:nowrap}
+.qc{display:inline-flex;align-items:center;gap:6px;font:600 .8rem var(--sans);padding:0 10px;min-height:36px;border:2px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);cursor:pointer;white-space:nowrap}
 .qc[aria-pressed=true]{border-color:var(--ink);background:#fff3d6}
 .qc[aria-pressed=false]{color:var(--muted)}
 .qc[aria-pressed=false] i{opacity:.35}
 .qc i{width:8px;height:8px;border-radius:50%}
+.qc[aria-pressed=true] .dot-in{box-shadow:0 0 8px 2px rgba(47,179,68,.8)}
+.qc[aria-pressed=true] .dot-pre{box-shadow:0 0 8px 2px rgba(242,182,50,.9)}
 .dot-in{background:#2fb344}.dot-pre{background:var(--gold)}
 .qc b{background:var(--surface);border-radius:5px;padding:1px 7px;font-size:.8rem}
 .seg2{display:inline-flex;border:2px solid var(--line);border-radius:8px;overflow:hidden;margin-left:auto}
@@ -860,6 +874,10 @@ span.rd-logo{display:grid;place-items:center;background:var(--surface);border-ra
 .card-search{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:30px;padding:10px;background:var(--card);border:1px solid var(--line);border-radius:12px}
 .card-search input[type=search]{flex:1 1 280px;max-width:none}
 .card-search .btn{margin:var(--px) var(--px) var(--px) auto}
+/* Filter-knappen och de dolda filtren (språk, set, sällsynthet) som fälls ut på en egen rad. */
+.card-search #adv-toggle{margin:0;flex:none}
+.card-search .adv{display:flex;gap:8px;flex-wrap:wrap;flex:1 1 100%}
+.card-search .adv[hidden]{display:none}
 .cgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:16px}
 .ctile{all:unset;box-sizing:border-box;cursor:pointer;display:flex;flex-direction:column;gap:4px;padding:10px;background:var(--card);border:1px solid var(--line);border-radius:12px;transition:transform .15s,box-shadow .15s,border-color .15s}
 .ctile:hover{transform:translateY(-3px);border-color:var(--ink);box-shadow:0 8px 0 -3px var(--ink)}
