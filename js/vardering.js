@@ -16,19 +16,23 @@ import { showReveal } from "./card-reveal.js";
 import { getAnatomyData, renderPullRatesModal } from "./anatomy.js";
 
 // Fyra kriterier, som graderingsbolagen: centrering, hörn, kanter och yta. Smuts ingår i ytan.
-// Varje kriterium har fem svar, och varje svar har ett delbetyg.
+// Varje kriterium har fem svar, och varje svar har ett delbetyg enligt PSA:s skala (psacard.com/gradingstandards):
+// centrering 55/45 för 10, 60/40 för 9, 65/35 för 8, 70/30 för 7, 80/20 för 6 och 85/15 för 5. Lätt rundade hörn ger ungefär 5,
+// ett lätt veck högst 4 och flera veck 2. En trycklinje eller hårfin repa stoppar ett kort på 9.
 const CRITERIA = [
-  ["Centrering", "Hur jämna ramarna är runt bilden", [["Nästan perfekt", 10], ["Bra", 9], ["Märkbart sned", 8], ["Tydligt sned", 6], ["Mycket sned", 3]]],
-  ["Hörn", "Titta efter vitning och avrundning", [["Skarpa, ingen vitning", 10], ["Minimal vitning", 9], ["Lite vitning", 8], ["Tydlig vitning eller rundade", 6], ["Skadade eller vikta", 1]]],
-  ["Kanter", "Vita prickar och hack längs kanten", [["Rena och raka", 10], ["Någon liten prick", 9], ["Några vita prickar", 8], ["Tydlig kantvitning", 6], ["Sprickor eller flagor", 1]]],
-  ["Yta", "Repor, trycklinjer, fläckar och matt glans", [["Inga repor, fläckar eller matthet", 10], ["Enstaka hårfin repa eller liten prick", 9], ["Några lätta repor eller matt glans", 8], ["Tydliga repor, trycklinjer eller fläckar", 6], ["Intryck eller stora skador", 1]]],
+  ["Centrering", "Jämför ramarnas bredd, vänster mot höger och topp mot botten", [["Perfekt, 55/45 eller bättre", 10], ["Lite sned, ca 60/40", 9], ["Märkbart sned, ca 65/35", 8], ["Tydligt sned, ca 70/30", 7], ["Mycket sned, 85/15 eller sämre", 5]]],
+  ["Hörn", "Titta efter vitning och avrundning", [["Skarpa, ingen vitning", 10], ["Minimal vitning på ett hörn", 9], ["Lite vitning på några hörn", 8], ["Tydlig vitning eller lätt rundade", 5], ["Rundade eller skadade", 2]]],
+  ["Kanter", "Vita prickar och hack längs kanten", [["Rena och raka", 10], ["Någon liten prick", 9], ["Några vita prickar", 8], ["Tydlig kantvitning eller små hack", 6], ["Flagor, sprickor eller kraftigt slitage", 3]]],
+  ["Yta", "Repor, trycklinjer, fläckar, matt glans och veck", [["Inga repor, fläckar eller matthet", 10], ["En trycklinje, hårfin repa eller liten prick", 9], ["Några lätta repor eller lite matt glans", 6], ["Tydliga repor, fläckar eller ett lätt veck", 4], ["Flera eller kraftiga veck, intryck", 2]]],
 ];
+// PSA:s namn på betygen.
+const PSA_NAME = { 10: "Gem Mint", 9: "Mint", 8: "NM-MT", 7: "Near Mint", 6: "EX-MT", 5: "Excellent", 4: "VG-EX", 3: "Very Good", 2: "Good", 1: "Poor" };
 
 // ---------- Skadorna på kortbilden ----------
 // Reglagen är steglösa (0 till 4) och ritar skadorna direkt på det stora kortet, i kortets mått 63 x 88.
 // Varje prick och repa har en egen tröskel, så det blir gradvis fler ju längre man drar.
 const CW = 63, CH = 88, SHIFT = 1.5; // hur långt kortet glider vid max sned centrering, i procent av bredden
-const CENTER_RATIO = [0.52, 0.56, 0.6, 0.64, 0.7]; // flyttar bara lite, ramen syns alltid på båda sidor
+const CENTER_RATIO = [0.53, 0.6, 0.65, 0.7, 0.85]; // samma som svaren, men kortet flyttas bara lite så ramen syns på båda sidor
 const rng = (seed) => () => (seed = (seed * 16807) % 2147483647) / 2147483647;
 const clamp01 = (n) => Math.max(0, Math.min(1, n));
 const lerpArr = (arr, x) => { const i = Math.min(arr.length - 2, Math.floor(x)); return arr[i] + (arr[i + 1] - arr[i]) * (x - i); };
@@ -164,7 +168,7 @@ function drawDamage() {
   const ramp = (L, t, w = 0.5) => clamp01((L - t) / w);
 
   // Centrering
-  dmg.card.style.transform = `translateX(${f2(clamp01((lerpArr(CENTER_RATIO, cen) - 0.5) / 0.2) * SHIFT)}%)`;
+  dmg.card.style.transform = `translateX(${f2(clamp01((lerpArr(CENTER_RATIO, cen) - 0.5) / 0.3) * SHIFT)}%)`;
 
   // Hörn: rundningen växer från ungefär 2,8 till 5,5 enheter.
   const R = 2.85 + Math.max(0, cor - 1.6) * 1.1;
@@ -304,6 +308,9 @@ const baseEur = (c) => { const cm = c.pricing?.cardmarket || {}; return cm.trend
 const baseSek = () => { const e = baseEur(state.card); return e != null && state.rate ? e * state.rate : null; };
 // Avrundning till närmaste 5 kr, eller 10 kr från 100 kr och uppåt.
 const round = (n) => { const step = Math.abs(n) >= 100 ? 10 : 5; return Math.round(n / step) * step; };
+// Blir priset 0 kr efter avrundningen visas "under 5 kr" i stället.
+const krr = (n) => (round(n) <= 0 ? "under 5 kr" : kr(round(n)));
+const ca = (n) => (round(n) <= 0 ? "under 5 kr" : `ca ${kr(round(n))}`);
 // Linjär interpolation längs en kurva av [x, y]-punkter sorterade efter x.
 const curve = (pts, x) => {
   x = Math.max(pts[0][0], Math.min(pts[pts.length - 1][0], x));
@@ -317,13 +324,12 @@ const curve = (pts, x) => {
 // Under 1 finns ingen gradering, men priset fortsätter sjunka när man drar ner fler reglage.
 const RAW_CURVE = [[-2, 0.02], [1, 0.15], [2, 0.22], [3, 0.3], [4, 0.4], [5, 0.5], [6, 0.65], [7, 0.7], [8, 0.9], [9, 1], [10, 1.15]];
 // Kontinuerlig poäng, från -2 till 10. Varje reglage påverkar den så fort det inte står på max.
-// Centrering räknas som max ända ner till 9 (55/45 eller 60/40), och mjukt därunder.
+// Som hos PSA kräver 10 att allt är perfekt, även centreringen (55/45). 60/40 ger högst 9.
 function exactScore() {
   const s = [0, 1, 2, 3].map((i) => lerpArr(CRITERIA[i][2].map((o) => o[1]), state.crit[i]));
-  const eff = s.map((v, i) => (i === 0 ? (v >= 9 ? 10 : v >= 8 ? 10 + 2 * (v - 9) : v) : v));
   // Lägsta-kriteriet ger taket. Varje reglage som inte är max drar av en poäng, och den första är gratis.
-  const pen = eff.reduce((a, v) => a + clamp01(10 - v), 0);
-  return Math.max(-2, Math.min(10, Math.min(...eff) - Math.max(0, pen - 1)));
+  const pen = s.reduce((a, v) => a + clamp01(10 - v), 0);
+  return Math.max(-2, Math.min(10, Math.min(...s) - Math.max(0, pen - 1)));
 }
 // Det visade betyget: den exakta poängen, nedåt avrundad så att ett snäpp under max syns. Lägst 1.
 function estGrade() {
@@ -349,7 +355,7 @@ function gradedSek(vintage) {
 }
 // Reglagens läge för varje skick. Varje preset ger ett betyg som stämmer med skicket (10, 9, 6, 4, 3 och 1).
 // Ordningen är centrering, hörn, kanter och yta, med svarens nummer 0 (bäst) till 4 (sämst).
-const COND_PRESET = [[0, 0, 0, 0], [1, 1, 0, 0], [1, 2, 1, 1], [1, 3, 2, 2], [2, 3, 3, 3], [4, 4, 4, 4]];
+const COND_PRESET = [[0, 0, 0, 0], [0, 1, 0, 0], [1, 2, 1, 0], [0, 2, 2, 2], [0, 3, 3, 2], [4, 4, 4, 4]];
 // Betyget styr skicket, så att det ograderade värdet och skicket hänger ihop med reglagen.
 const gradeToCond = (g) => (g >= 10 ? 0 : g >= 8 ? 1 : g >= 6 ? 2 : g >= 4 ? 3 : g >= 2 ? 4 : 5);
 const condText = (n) => (n === "Near Mint" ? "i nyskick" : n === "Mint" ? "i skick mint" : `i skick ${n.toLowerCase()}`);
@@ -358,7 +364,7 @@ const condText = (n) => (n === "Near Mint" ? "i nyskick" : n === "Mint" ? "i ski
 function liveHTML() {
   const base = baseSek(), [cname] = CONDITIONS[state.cond];
   return `<div class="vl-text"><small>Ograderat värde</small>
-      <b>${base == null ? "Inget pris" : `ca ${kr(round(rawSek()))}`}</b>
+      <b>${base == null ? "Inget pris" : ca(rawSek())}</b>
       <small>${esc(cname)}</small></div>`;
 }
 
@@ -370,18 +376,18 @@ function outputHTML() {
   const raw = rawSek(), g = estGrade();
   const gv = gradedSek(vintage), cost = Math.max(0, +state.cost || 0);
   const netto = gv - (raw + cost);
-  const verdict = netto > 0 ? ["good", "Lönar sig!", `Vid betyg ${g} är den uppskattade nettovinsten ca +${kr(round(netto))} efter graderingskostnad.`]
+  const verdict = netto > 0 ? ["good", "Lönar sig!", `Vid betyg ${g} är den uppskattade nettovinsten ${round(netto) <= 0 ? "under 5 kr" : `ca +${kr(round(netto))}`} efter graderingskostnad.`]
     : base < 300 ? ["bad", "Lönar sig inte", "Kortets grundvärde är för lågt för att täcka graderingskostnaden."]
-    : ["bad", `Lönar sig inte vid betyg ${g}`, `Värdeökningen (${gv - raw < 0 ? "−" : "+"}${kr(round(Math.abs(gv - raw)))}) täcker inte graderingskostnaden på ${kr(cost)}. För detta kort krävs oftast betyg 10 för att gå med vinst.`];
-  const tier = (label, v, on) => `<li class="vt${on ? " on" : ""}"><span>${label}</span><b>ca ${kr(round(v))}</b></li>`;
+    : ["bad", `Lönar sig inte vid betyg ${g}`, `Värdeökningen (${round(Math.abs(gv - raw)) <= 0 ? "under 5 kr" : `${gv - raw < 0 ? "−" : "+"}${kr(round(Math.abs(gv - raw)))}`}) täcker inte graderingskostnaden på ${kr(cost)}. För detta kort krävs oftast betyg 10 för att gå med vinst.`];
+  const tier = (label, v, on) => `<li class="vt${on ? " on" : ""}"><span>${label}</span><b>${ca(v)}</b></li>`;
   return `<div class="vo-main"><span class="vo-label">Ungefärligt värde ${condText(cname)}</span>
-      <b class="vo-price">ca ${kr(round(raw))}</b>
-      <small>Cardmarkets trendpris i nyskick: ${kr(round(base))}${state.card.pricing?.cardmarket?.low != null ? ` · lägsta annons ${kr(round(state.card.pricing.cardmarket.low * state.rate))}` : ""}</small></div>
+      <b class="vo-price">${ca(raw)}</b>
+      <small>Cardmarkets trendpris i nyskick: ${krr(base)}${state.card.pricing?.cardmarket?.low != null ? ` · lägsta annons ${krr(state.card.pricing.cardmarket.low * state.rate)}` : ""}</small></div>
     <ul class="vo-tiers" aria-label="Riktvärden per betyg">
       ${tier("Ograderat, ditt skick", raw, false)}${tier("Graderat", gv, true)}
     </ul>
     <p class="hint vo-disclaimer"><b>Observera:</b> Alla priser och betyg är ungefärliga uppskattningar. Ograderat nypris baseras på Cardmarkets europeiska trendpris (via TCGdex) omräknat till SEK. Lägsta annonspris på Cardmarket avser ofta sämre skick eller andra språk än engelska. Det graderade värdet är en schablonmässig beräkning – kontrollera alltid faktiska sålda priser (t.ex. på Tradera eller eBay) innan du betalar för gradering.${vintage ? " Kort från före 2017 har dessutom större spridning i graderade priser." : ""}</p>
-    <div class="vo-grade"><div class="gcircle${g === 10 ? " gold" : ""}" role="img" aria-label="Ditt estimerade betyg ${g} av 10"><b>${g}</b><span>/10</span></div><div><b>Ditt estimerade betyg</b><p class="muted">Endast en indikation baserad på dina val – inte en garanti för vilket betyg PSA, BGS eller CGC ger vid en fysisk granskning. Det svagaste kriteriet väger tyngst, precis som hos graderingsbolagen.</p></div></div>
+    <div class="vo-grade"><div class="gcircle${g === 10 ? " gold" : ""}" role="img" aria-label="Ditt estimerade betyg ${g} av 10, ${PSA_NAME[g]}"><b>${g}</b><span>/10</span></div><div><b>Ditt estimerade betyg: ${PSA_NAME[g]}</b><p class="muted">Endast en indikation baserad på dina val – inte en garanti för vilket betyg PSA, BGS eller CGC ger vid en fysisk granskning. Det svagaste kriteriet väger tyngst, precis som hos graderingsbolagen.</p></div></div>
     <div class="verdict ${verdict[0]}"><b>${verdict[1]}</b><span>${verdict[2]}</span></div>`;
 }
 

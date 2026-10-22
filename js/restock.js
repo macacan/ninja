@@ -9,7 +9,9 @@ const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
 const BACK = "img/kortbaksida.webp";
 
 // ---------- Flödet ----------
-let seen = null; // produkter som redan visats, så att nya kan markeras
+let seen = null; // produkter som redan visats, i ordning, så att nya kan markeras
+// Vid uppdatering: nya produkter faller in uppifrån med guldglöd, de gamla glider ner till sin nya plats
+// och en liten skylt visar hur många som kom in. Är listan oförändrad uppdateras bara tiden.
 async function feed() {
   const el = $("#restock-feed");
   if (!el) return;
@@ -20,21 +22,36 @@ async function feed() {
     const inStock = p.products.filter((x) => x.available);
     const list = inStock.filter((x) => x.image).sort((a, b) => b.lastChange - a.lastChange)
       .filter((x) => { const k = groupKey(x); return !used.has(k) && used.add(k); }).slice(0, 4);
+    const meta = (x) => `${esc(names[x.store] || x.store)} · ${kr(x.price)}${x.lastChange ? ` · ${ago(x.lastChange)}` : ""}`;
     const first = seen === null;
-    const fresh = new Set(list.map((x) => x.url).filter((u) => !first && !seen.has(u)));
-    seen = new Set(list.map((x) => x.url));
+    if (!first && list.length && list.length === seen.length && list.every((x, i) => x.url === seen[i])) {
+      el.querySelectorAll(".rf small").forEach((small, i) => { small.innerHTML = meta(list[i]); });
+      return;
+    }
+    const fresh = new Set(list.map((x) => x.url).filter((u) => !first && !seen.includes(u)));
+    seen = list.map((x) => x.url);
+    const old = [...el.querySelectorAll(".rf[data-url]")];
+    const before = new Map(old.map((li) => [li.dataset.url, li.getBoundingClientRect().top]));
+    const imgs = new Map(old.map((li) => [li.dataset.url, li.querySelector(".rf-img img")]));
     el.innerHTML = list.map((x, i) => {
       const justIn = fresh.has(x.url) || Date.now() - x.lastChange < 3 * 3600e3;
-      return `<li class="rf${fresh.has(x.url) ? " is-fresh" : ""}" style="--i:${i}">
+      return `<li class="rf${first ? "" : fresh.has(x.url) ? " is-fresh" : " is-update"}" style="--i:${i}" data-url="${esc(x.url)}">
         <a href="${esc(safeUrl(x.url))}" target="_blank" rel="noopener nofollow">
           <span class="rf-img"><img src="${esc(x.image)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.remove()"></span>
-          <span class="rf-body"><b>${esc(x.title)}</b><small>${esc(names[x.store] || x.store)} · ${kr(x.price)}${x.lastChange ? ` · ${ago(x.lastChange)}` : ""}</small></span>
+          <span class="rf-body"><b>${esc(x.title)}</b><small>${meta(x)}</small></span>
           ${justIn ? '<span class="rf-tag">Nytt</span>' : ""}
         </a></li>`;
     }).join("") || '<li class="rf-empty">Inget nytt i lager just nu.</li>';
-    const stores = s.stores.filter((x) => x.checkedAt && x.ok).length;
-    const count = $("#restock-count");
-    if (count) count.textContent = `${inStock.length.toLocaleString("sv-SE")} produkter i lager hos ${stores} butiker just nu`;
+    // Produkter som ligger kvar behåller sin redan laddade bild, så att den inte blinkar vitt.
+    for (const li of el.querySelectorAll(".rf.is-update")) { const img = imgs.get(li.dataset.url); if (img) li.querySelector(".rf-img img")?.replaceWith(img); }
+    if (!fresh.size || reduce) return;
+    // De som fanns kvar glider från sin gamla plats till den nya.
+    for (const li of el.querySelectorAll(".rf.is-update")) {
+      const top = before.get(li.dataset.url);
+      if (top != null) li.animate([{ transform: `translateY(${top - li.getBoundingClientRect().top}px)` }, { transform: "none" }], { duration: 500, easing: "cubic-bezier(.2,.8,.2,1)" });
+    }
+    el.insertAdjacentHTML("beforeend", `<li class="rf-toast" aria-hidden="true"><i></i>+${fresh.size} nytt i lager</li>`);
+    setTimeout(() => el.querySelector(".rf-toast")?.remove(), 3600);
   } catch {
     el.innerHTML = '<li class="rf-empty">Lagret uppdateras snart.</li>';
   }
@@ -141,43 +158,27 @@ const setImage = (img, src) => new Promise((res) => {
 });
 const hue = (id) => [...id].reduce((h, c) => (h * 31 + c.charCodeAt(0)) % 360, 7);
 
-// ---------- Dagsgräns: 10 pack per IP-adress och dag ----------
-// Gränsen räknas av api/pack-limit.php på servern (per IP). Finns ingen PHP-server, till exempel vid lokal utveckling,
-// används i stället en räknare i webbläsaren, som bara gäller den webbläsaren.
-const PACK_LIMIT = 10;
-const LIMIT_ON = false; // sätt till true för att slå på dagsgränsen igen
-let quotaLeft = PACK_LIMIT;
-
-const localKey = () => { const d = new Date(); return `nl:packs:${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`; };
-const localUsed = () => { try { return +localStorage.getItem(localKey()) || 0; } catch { return 0; } };
-
-// action: "status" tittar bara, "open" räknar upp ett öppnande. Returnerar { ok, left }.
-async function packQuota(action) {
-  if (!LIMIT_ON) return { ok: true, left: PACK_LIMIT };
-  try {
-    const r = await fetch(`api/pack-limit.php?action=${action}`, { method: action === "open" ? "POST" : "GET", cache: "no-store" });
-    if (r.status === 429) return { ok: false, left: 0 };
-    if (!r.ok || !(r.headers.get("content-type") || "").includes("json")) throw new Error("ingen server");
-    const j = await r.json();
-    return { ok: j.ok !== false, left: Math.max(0, j.left ?? PACK_LIMIT) };
-  } catch {
-    let used = localUsed();
-    if (action === "open") {
-      if (used >= PACK_LIMIT) return { ok: false, left: 0 };
-      used++;
-      try { localStorage.setItem(localKey(), String(used)); } catch {}
-    }
-    return { ok: used < PACK_LIMIT || action === "open", left: Math.max(0, PACK_LIMIT - used) };
-  }
+// ---------- Dagens pack ----------
+// Ett pack per dag. Är packet värt under 10 kr får man öppna ett nytt, tills ett pack är värt minst 10 kr.
+// Dagen sparas i webbläsaren och börjar om vid midnatt. Den räknas som klar så fort packet dras, inte när
+// alla kort har visats, så att man inte kan ladda om sidan och dra ett nytt.
+const DAY_MIN = 10; // kronor
+const DAY_KEY = "nl:pack-day";
+const today = () => { const d = new Date(); return `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`; };
+const doneToday = () => { try { return localStorage.getItem(DAY_KEY) === today(); } catch { return false; } };
+const markDone = () => { try { localStorage.setItem(DAY_KEY, today()); } catch {} };
+// Tid kvar till midnatt, t.ex. "7 h 12 min".
+function untilTomorrow() {
+  const now = new Date(), next = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+  const m = Math.ceil((next - now) / 60e3), h = Math.floor(m / 60);
+  return h ? `${h} h ${m % 60} min` : `${m} min`;
 }
+const defaultHint = () => (doneToday()
+  ? `Du har öppnat dagens pack. Nästa pack om ${untilTomorrow()}.`
+  : "Välj ett pack och tryck för att öppna det · ett pack per dag");
 
-const defaultHint = () => (!LIMIT_ON ? "Välj ett pack och tryck för att öppna det" : quotaLeft > 0
-  ? `Välj ett pack och tryck för att öppna det · ${quotaLeft} kvar idag`
-  : `Du har öppnat dina ${PACK_LIMIT} pack för idag. Kom tillbaka i morgon!`);
-
-function applyQuota(left) {
-  quotaLeft = Math.max(0, left);
-  $("#pack-row")?.classList.toggle("is-locked", quotaLeft <= 0);
+function applyLock() {
+  $("#pack-row")?.classList.toggle("is-locked", doneToday());
   const hint = $("#stage-hint");
   if (hint && !$("#pack-row")?.hidden) hint.textContent = defaultHint();
 }
@@ -255,7 +256,8 @@ async function setupPacks() {
     packPool = sets.filter((s) => setLogo(s) && (s.cards || []).filter((c) => c.image).length >= 20);
     if (!packPool.length) throw new Error("inga set");
     renderPacks();
-    packQuota("status").then((q) => applyQuota(q.left));
+    applyLock();
+    setInterval(applyLock, 60e3); // nedräkningen räknar ner, och packen låses upp vid midnatt
   } catch {
     row.innerHTML = '<p class="stage-hint">Packen kunde inte laddas just nu.</p>';
   }
@@ -265,10 +267,8 @@ async function openPack(btn) {
   if (busy) return;
   const set = packSets.find((s) => s.id === btn.dataset.set);
   if (!set) return;
+  if (doneToday()) return applyLock(); // dagens pack är redan öppnat, tipset förklarar det
   busy = true;
-  const q = await packQuota("open");
-  applyQuota(q.left);
-  if (!q.ok) { busy = false; return; } // dagens 10 är slut, tipset förklarar det
   const row = $("#pack-row"), hint = $("#stage-hint");
   row.classList.add("has-chosen");
   btn.classList.add("is-chosen");
@@ -286,6 +286,7 @@ async function openPack(btn) {
       const rarity = d?.rarity && d.rarity !== "None" ? d.rarity : "";
       return { d, value, rarity, tier: tierOf(rarity, value) };
     }));
+    if (info.reduce((s, x) => s + (x.value || 0), 0) >= DAY_MIN) markDone();
     return { model, picks, info };
   });
   await wait(450); // packet glider till mitten, utan skakning
@@ -400,7 +401,7 @@ function renderDeck(set, { model, picks, info }) {
       <p class="pull-total" aria-live="polite"></p>
       <div class="pull-actions">
         <button type="button" class="btn small" data-skip>Visa alla</button>
-        <button type="button" class="btn small primary" data-again>Öppna ett till</button>
+        <button type="button" class="btn small primary" data-again hidden>Öppna ett till</button>
       </div>
       ${SHOW_ODDS ? `<details class="odds" open><summary>Dropchans för ${esc(set.name)}</summary>${oddsTable(model)}</details>` : ""}
     </div>`;
@@ -467,7 +468,11 @@ function renderDeck(set, { model, picks, info }) {
   const finish = () => {
     const sum = info.reduce((s, x) => s + (x.value || 0), 0);
     const best = info.reduce((b, x, i) => ((x.value || 0) > (info[b].value || 0) ? i : b), 0);
-    total.innerHTML = sum > 0 ? `Packet var värt ca <b>${kr(sum)}</b>${info[best].value ? ` · bästa kort: ${esc(picks[best].card.name)} (ca ${kr(info[best].value)})` : ""}.` : "";
+    // Under 10 kr: man får öppna ett nytt. Annars var det dagens pack.
+    const again = sum < DAY_MIN;
+    total.innerHTML = `${sum > 0 ? `Packet var värt ca <b>${kr(sum)}</b>${info[best].value ? ` · bästa kort: ${esc(picks[best].card.name)} (ca ${kr(info[best].value)})` : ""}. ` : ""}`
+      + (again ? `<b class="pull-again">Under ${DAY_MIN} kr, så du får öppna ett till!</b>` : `Det var dagens pack. Nästa pack om ${untilTomorrow()}.`);
+    pull.querySelector("[data-again]").hidden = !again;
     stage.hidden = true; swipeHint.hidden = true;
     count.textContent = `Alla ${N} kort dragna`;
     nameEl.textContent = info[best].value ? picks[best].card.name : "";
@@ -574,7 +579,7 @@ function reset() {
   row.hidden = false;
   row.classList.remove("has-chosen");
   if (packPool.length) renderPacks(); // nya slumpade pack till nästa öppning
-  $("#stage-hint").textContent = defaultHint();
+  applyLock();
 }
 
 $("#pack-row")?.addEventListener("click", (e) => { const b = e.target.closest(".pack"); if (b) openPack(b); });

@@ -40,10 +40,12 @@ export async function openCardPrice(id) {
   const eur = cm.trend ?? cm.avg ?? cm["trend-holo"] ?? null;
   const base = eur != null && rate ? eur * rate : null;
   const round = (n) => Math.round(n / 10) * 10 || Math.round(n);
+  // Blir det 0 kr efter avrundningen visas "under 5 kr" i stället.
+  const est = (n) => (round(n) ? `ca ${kr(round(n))}` : "under 5 kr");
   const values = base == null ? "" : `<h3>Värde per skick</h3>
-    <table class="cm-table">${CONDITIONS.map(([n, , m]) => `<tr><th>${esc(n)}</th><td>ca ${kr(round(base * m))}</td></tr>`).join("")}</table>
+    <table class="cm-table">${CONDITIONS.map(([n, , m]) => `<tr><th>${esc(n)}</th><td>${est(base * m)}</td></tr>`).join("")}</table>
     <h3>Graderat (riktvärden)</h3>
-    <table class="cm-table">${[10, 9, 8].map((g) => `<tr><th>Betyg ${g}</th><td>ca ${kr(round(base * gradeMult(g)))}</td></tr>`).join("")}</table>
+    <table class="cm-table">${[10, 9, 8].map((g) => `<tr><th>Betyg ${g}</th><td>${est(base * gradeMult(g))}</td></tr>`).join("")}</table>
     <p class="muted">Grova tumregler utgående från nyskickspriset. Graderade priser skiljer mycket mellan kort.</p>`;
   const imgUrl = cardImg(card, "low");
   body.innerHTML = `<div class="pm-head">
