@@ -84,16 +84,12 @@ select option:checked{background:#3b4a6b;color:#fff}
 .ev-drop{box-shadow:none}
 .ev-set{color:#cfdcff;box-shadow:0 0 0 1px #2c4566}
 /* Släppsidan */
-.rc-note{background:#403315}
-.rc-waves button:hover{background:#323849}
 .pill,.rs-st.listed,.rs-st.out{background:#323849;color:#9aa2b6}
 .pill.in,.rs-st.in{background:#17331f;color:#7fdc95}
 .pill.pre,.rs-st.pre{background:#1f2a4d;color:#a9bbff}
 .rd-tabs button[aria-selected=true]{background:#e8eaf1;border-color:#e8eaf1;color:#1b1e28}
 .day[data-day]:hover{background:#353c56}
 .ph{background:repeating-linear-gradient(45deg,#2a2f3e 0 6px,#323849 6px 12px)}
-.next-rel{border-color:#3a4058;box-shadow:4px 4px 0 #05060a}
-.rc-prod em{background:#3a2f55;color:#d9c9ff}
 
 /* Sektionsbakgrunder för nattläge */
 .restock {
@@ -159,8 +155,6 @@ select option:checked{background:#3b4a6b;color:#fff}
 /* Svarta pixelramar i stället för den ljusa textfärgen: strecket ovanför sidfotens landskap och tidslinjens kort.
    Det aktuella släppet behåller sin gröna ram. */
 .site-footer canvas.scene { border-top-color: #0b0c12; }
-.tl-card { border-color: #0b0c12; box-shadow: 4px 4px 0 #0b0c12; }
-.tl-step.current .tl-card { border-color: var(--mint); }
 
 /* Butiker: sökfältet med svart ram i mörkt läge. */
 input.shop-search { border-color: #0b0c12; }
@@ -173,7 +167,6 @@ input.shop-search { border-color: #0b0c12; }
 .btn:active { box-shadow: 0 calc(var(--px)*-1) 0 0 #0b0c12, 0 var(--px) 0 0 #0b0c12, calc(var(--px)*-1) 0 0 0 #0b0c12, var(--px) 0 0 0 #0b0c12, inset 0 4px 0 0 rgba(0, 0, 0, 0.3); }
 
 /* Knapparna "Produkter och butiker" på Släpp är lika de övriga mörka knapparna i mörkt läge, i stället för orange. */
-.rc-foot .btn.primary { background: var(--card); color: var(--ink); }
 
 /* Kalenderns produktchips är mörka med svart ram i mörkt läge, i stället för starkt orange. */
 .ev-drop { background: #2a2f3e; color: var(--ink); box-shadow: 0 0 0 2px #0b0c12; }

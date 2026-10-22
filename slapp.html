@@ -41,18 +41,21 @@
   </header>
 
   <div class="wrap">
-    <p class="muted" style="font-size:0.92rem;margin:20px 0 10px;">Håll koll på nya set och vad boxarna innehåller.</p>
+    <p class="rel-intro muted">Alla kommande Pokémon-släpp med datum, produkter och svenska butiker. Uppdateras automatiskt.</p>
 
-    <div class="section" id="tidslinje"><h2>Tidslinje</h2><div class="tl-nav" id="tl-nav" role="group" aria-label="Bläddra i tidslinjen"></div></div>
-    <div id="next-release"></div>
+    <!-- Nästa stora släpp: nästa nya set, med nedräkning, förrelease och knappar för notis och kalender. -->
+    <section class="rel-hero px-frame" id="rel-hero" aria-label="Nästa stora släpp"></section>
 
-    <div class="section" id="aktuella"><h2>Alla släpp</h2></div>
-    <div id="releases" class="rc-grid"></div>
-    <div id="announced"></div>
-    <p class="hint">Datumen gäller den europeiska lanseringen. Leveranserna till svenska butiker kan dröja några dagar. Nya släpp läggs till automatiskt när de annonseras.</p>
+    <div class="section" id="kommande"><h2>Kommande släpp</h2>
+      <div class="seg2 rel-view" id="rel-view" role="group" aria-label="Visning">
+        <button type="button" data-view="list" aria-pressed="true">Lista</button>
+        <button type="button" data-view="cal" aria-pressed="false">Kalender</button>
+      </div>
+    </div>
+    <div class="chips rel-filter" id="rel-filter" role="group" aria-label="Språk"></div>
+    <div class="rel-list" id="rel-list"></div>
 
-    <div class="section" id="kalender"><h2>Kalender</h2></div>
-    <section class="cal" aria-labelledby="cal-title">
+    <section class="cal" id="kalender" aria-labelledby="cal-title" hidden>
       <div class="cal-head">
         <button class="cal-nav" id="prev" aria-label="Föregående månad">◀</button>
         <h3 id="cal-title" aria-live="polite"></h3>
@@ -73,11 +76,14 @@
       <ol class="agenda" id="agenda" aria-label="Släpp den här månaden"></ol>
     </section>
 
-    <div class="section" id="set"><h2>Alla set</h2>
-      <input id="q" type="search" placeholder="Sök set…" aria-label="Sök set">
-    </div>
-    <div id="latest" class="grid"></div>
-    <p class="more-row"><a class="btn" href="set/">Alla set med kortlistor, från Base Set till i dag</a></p>
+    <details class="rel-recent" id="rel-recent">
+      <summary>Nyligen släppta <span class="acc-val" id="rel-recent-count"></span></summary>
+      <div class="rel-list" id="rel-recent-list"></div>
+    </details>
+
+    <p class="hint">Datumen gäller den europeiska lanseringen. Leveranserna till svenska butiker kan dröja några dagar. Nya släpp läggs till automatiskt när de annonseras.</p>
+
+    <p class="more-row" id="set"><a class="btn" href="set/">Alla set med kortlistor, från Base Set till i dag</a></p>
   </div>
   <dialog id="rel-modal" class="card-modal rel-modal" aria-label="Släpp">
     <button type="button" class="cm-close" aria-label="Stäng">✕</button>

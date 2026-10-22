@@ -1,7 +1,7 @@
 // Släpp: data, koppling till butikernas produkter och vyerna på släppsidan.
 //   Data:  releaseData() laddar släppkalendern (data/release-calendar.json) och butikernas produkter en gång.
-//   Vyer:  nextHTML (nästa släpp), releaseCard (kompakt kort), detailHTML (allt om ett släpp, i en dialog),
-//          galleryHTML + bindGallery (produktrutor med butiker), används också av kalenderns dagvy.
+//   Vyer:  detailHTML (allt om ett släpp, i en dialog), galleryHTML + bindGallery (produktrutor med butiker),
+//          används också av kalenderns dagvy. Listan och "nästa stora släpp" byggs i js/slapp.js med hjälparna här.
 import { esc, kr, releaseSets, daysUntil, clockTime, setLogo, getJSON, API, safeUrl, setPages, extraLogosReady } from "./site.js";
 import { getAnatomyData, matchAnatomy, renderAnatomyModal } from "./anatomy.js";
 
@@ -13,8 +13,8 @@ const MONTH = ["januari", "februari", "mars", "april", "maj", "juni", "juli", "a
 export const LANG = { en: "Engelska", ja: "Japanska", ko: "Koreanska", zh: "Kinesiska", fr: "Franska" };
 const d = (s) => new Date(`${s}T12:00:00`);
 export const short = (s) => `${d(s).getDate()} ${MON[d(s).getMonth()]}`;
-const long = (s) => `${d(s).getDate()} ${MONTH[d(s).getMonth()]} ${d(s).getFullYear()}`;
-const inDays = (n) => (n === 0 ? "i dag" : n === 1 ? "i morgon" : n > 0 ? `om ${n} dagar` : `för ${-n} dagar sedan`);
+export const long = (s) => `${d(s).getDate()} ${MONTH[d(s).getMonth()]} ${d(s).getFullYear()}`;
+export const inDays = (n) => (n === 0 ? "i dag" : n === 1 ? "i morgon" : n > 0 ? `om ${n} dagar` : `för ${-n} dagar sedan`);
 const startOfToday = () => { const t = new Date(); t.setHours(0, 0, 0, 0); return t; };
 const plural = (n, one, many) => `${n} ${n === 1 ? one : many}`;
 const SHOW_STORES = 8;
@@ -122,7 +122,7 @@ export function pill(r, ctx, waveIndex = null) {
   if (list.length) return { cls: "out", text: "Slut just nu" };
   return { cls: "none", text: upcoming ? "Inte listad än" : "Inga butiker" };
 }
-const pillHTML = (p) => `<span class="pill ${p.cls}">${esc(p.text)}</span>`;
+export const pillHTML = (p) => `<span class="pill ${p.cls}">${esc(p.text)}</span>`;
 
 // ---------- Datum och status ----------
 export const nextWave = (r) => r.waves.find((w) => d(w.date) >= startOfToday()) || null;
@@ -138,104 +138,18 @@ function status(r) {
   if (!next) return `Släpptes ${long(r.waves[0].date)}`;
   return `Släpptes ${long(r.waves[0].date)} · nästa omgång ${short(next.date)}, ${inDays(daysUntil(next.date))}${pre}`;
 }
-const meta = (r) => [r.series, LANG[r.language] || r.language].filter(Boolean).join(" · ");
-const waveText = (w, r) => (w.products.length === 1 && w.products[0] === r.set ? "Fristående produkt"
+export const meta = (r) => [r.series, LANG[r.language] || r.language].filter(Boolean).join(" · ");
+export const waveText = (w, r) => (w.products.length === 1 && w.products[0] === r.set ? "Fristående produkt"
   : w.products.length ? w.products.join(" · ") : r.auto && r.waves.length === 1 ? "Setet släpps" : "Produkter inte klara än");
 const logoHTML = (r, ctx, cls) => {
   const logo = ctx.logos.get(r.id);
   return logo ? `<img class="${cls}" src="${esc(logo)}" alt="" loading="lazy" decoding="async">` : `<span class="${cls} wordlogo">${esc(r.set)}</span>`;
 };
-const dateBox = (s, cls = "") => s
+export const dateBox = (s, cls = "") => s
   ? `<span class="datebox ${cls}${d(s) < startOfToday() ? " past" : ""}"><b>${d(s).getDate()}</b><span>${MON[d(s).getMonth()]}</span></span>`
   : `<span class="datebox ${cls} tbd"><b>?</b><span>datum</span></span>`;
 
 // ---------- Vyer ----------
-// Det allra närmaste släppet, stort överst på sidan.
-export function nextHTML(r, ctx) {
-  const w = nextWave(r), wi = r.waves.indexOf(w);
-  const days = daysUntil(w.date);
-  return `<div class="next-rel">
-    ${dateBox(w.date, "big")}
-    <div class="next-main">
-      <span class="kicker">Nästa släpp · ${esc(inDays(days))}</span>
-      <h3>${esc(r.set)}</h3>
-      <p>${esc(waveText(w, r))}</p>
-      <div class="next-foot">${pillHTML(pill(r, ctx, wi))}<button type="button" class="btn small primary" data-open="${esc(r.id)}" data-wave="${wi}">Produkter och butiker</button></div>
-    </div>
-    ${ctx.logos.get(r.id) ? `<img class="next-logo" src="${esc(ctx.logos.get(r.id))}" alt="" loading="lazy">` : ""}
-  </div>`;
-}
-
-// ---------- Tidslinje ----------
-// Ett steg per datum, med alla set som släpps då. Utgångsläget visar aktuellt släpp (det senaste som
-// släppts, dagens räknas in) och de två närmaste kommande. Stegen räknas om vid varje sidladdning, så på
-// en släppdag flyttas tidslinjen ett steg fram av sig själv. shift bläddrar bakåt eller framåt därifrån.
-const TL_SIZE = 3;
-export function timelineSteps(releases) {
-  const byDate = new Map();
-  for (const r of releases) r.waves.forEach((w, wi) => {
-    if (!byDate.has(w.date)) byDate.set(w.date, []);
-    byDate.get(w.date).push({ r, wi, w });
-  });
-  const dates = [...byDate.keys()].sort();
-  const endOfToday = +startOfToday() + 864e5;
-  return { dates, byDate, current: dates.findLastIndex((s) => +d(s) < endOfToday) };
-}
-
-// Ger { nav, list }: bläddringsknapparna och själva tidslinjen.
-export function timelineHTML(releases, ctx, shift = 0) {
-  const { dates, byDate, current } = timelineSteps(releases);
-  const start = Math.max(0, Math.max(current, 0) + shift);
-  const label = (j) => (j < current ? "Släppt" : j === current ? "Aktuellt" : j === current + 1 ? "Nästa" : "Kommande");
-  const nav = `<button type="button" class="cal-nav" data-tl="-1" aria-label="Tidigare släpp"${start <= 0 ? " disabled" : ""}>◀</button>
-    <button type="button" class="btn small" data-tl="now"${shift === 0 ? " disabled" : ""}>Nu</button>
-    <button type="button" class="cal-nav" data-tl="1" aria-label="Senare släpp"${start + TL_SIZE >= dates.length ? " disabled" : ""}>▶</button>`;
-  const steps = Array.from({ length: TL_SIZE }, (_, k) => start + k).map((j) => {
-    const s = dates[j];
-    if (!s) return `<li class="tl-step empty"><span class="tl-dot" aria-hidden="true"></span><div class="tl-card"><span class="kicker">${label(j)}</span><p class="muted">Inget mer inlagt än.</p></div></li>`;
-    const released = j <= current;
-    return `<li class="tl-step ${j === current ? "current" : released ? "past" : "upcoming"}">
-      <span class="tl-dot" aria-hidden="true"></span>
-      <div class="tl-card">
-        <header class="tl-head">${dateBox(s)}
-          <div><span class="kicker">${label(j)} · ${released ? "släpptes " : ""}${esc(inDays(daysUntil(s)))}</span><h3>${esc(long(s))}</h3></div>
-        </header>
-        <ul class="tl-rel">${byDate.get(s).map(({ r, wi, w }) => `<li>
-          <div>${ctx.logos.get(r.id) ? `<img class="tl-logo" src="${esc(ctx.logos.get(r.id))}" alt="${esc(r.set)}" loading="lazy">` : `<b>${esc(r.set)}</b>`}<span>${esc(waveText(w, r))}${w.preliminary || r.preliminary ? " · preliminärt" : ""}</span></div>
-          ${pillHTML(pill(r, ctx, wi))}
-          <button type="button" class="btn small" data-open="${esc(r.id)}" data-wave="${wi}">Produkter och butiker</button>
-        </li>`).join("")}</ul>
-      </div>
-    </li>`;
-  });
-  return { nav, list: `<ol class="tl" aria-label="Släpptidslinje">${steps.join("")}</ol>` };
-}
-
-// Kompakt kort per set: rubrik, status och en rad per omgång. Allt annat finns i detaljvyn.
-export function releaseCard(r, ctx) {
-  const today = startOfToday();
-  const { list, inStock, preorder } = storesFor(r, ctx);
-  const flags = [r.preliminary ? "Preliminärt datum" : "", r.auto ? "Automatiskt inlagt" : ""].filter(Boolean);
-  return `<article class="rc${isOver(r) ? " over" : ""}" id="rel-${esc(r.id)}">
-    <header class="rc-head">
-      ${logoHTML(r, ctx, "rc-logo")}
-      <div><h3>${esc(r.set)}</h3><span class="rc-meta">${esc(meta(r))}${flags.map((f) => ` · <em>${esc(f)}</em>`).join("")}</span></div>
-    </header>
-    <p class="rc-status">${esc(status(r))}</p>
-    ${r.prerelease ? `<p class="rc-note">Förrelease i spelbutiker ${short(r.prerelease.from)}–${short(r.prerelease.to)}</p>` : ""}
-    ${r.waves.length ? `<ol class="rc-waves">${r.waves.map((w, i) => `<li class="${d(w.date) < today ? "done" : ""}">
-      <button type="button" data-open="${esc(r.id)}" data-wave="${i}">
-        <span class="rc-date">${short(w.date)}</span>
-        <span class="rc-prod">${esc(waveText(w, r))}${w.preliminary ? " <em>preliminärt</em>" : ""}</span>
-        ${pillHTML(pill(r, ctx, i))}
-      </button></li>`).join("")}</ol>` : ""}
-    <footer class="rc-foot">
-      <span class="rc-count">${list.length ? `<b>${list.length}</b> ${list.length === 1 ? "butik listar" : "butiker listar"} det${inStock ? ` · <b>${inStock}</b> i lager` : ""}${preorder ? ` · <b>${preorder}</b> förbeställ` : ""}` : "Ingen svensk butik har listat det än"}</span>
-      <button type="button" class="btn small primary" data-open="${esc(r.id)}">Produkter och butiker</button>
-    </footer>
-  </article>`;
-}
-
 // Rutor med bild, pris och antal butiker. Tryck på en ruta för att se butikerna som säljer den.
 export function galleryHTML(items, key) {
   if (!items.length) return "";
