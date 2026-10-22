@@ -110,7 +110,7 @@ const head = ({ title, desc, url, ld }) => `<!doctype html>
 <meta name="twitter:card" content="summary_large_image">
 <script type="application/ld+json">${JSON.stringify(ld).replace(/</g, "\\u003c")}</script>
 <link href="fonts/fonts.css" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=20261022d">
+<link rel="stylesheet" href="style.css?v=20261022e">
 <link rel="stylesheet" href="dark.css?v=20261022a" id="dark-css" media="(prefers-color-scheme: dark)">
 <script src="js/theme.js?v=20261021"></script>
 </head>
@@ -132,7 +132,7 @@ const pageHead = (crumbs) => `
   </header>`;
 const foot = `
 </main>
-<script type="module" src="js/setpage.js?v=20261022b"></script>
+<script type="module" src="js/setpage.js?v=20261022c"></script>
 </body>
 </html>
 `;
@@ -144,6 +144,8 @@ const logoImg = (p, cls) => p.logo
 const cardHref = (c) => `vardering.html?id=${encodeURIComponent(c.id)}`;
 const cardImg = (c) => extraImages[c.id]?.low || (c.image ? `${c.image}/low.webp` : "img/kortbaksida.webp");
 const count = (p) => p.cardCount?.official ?? p.cards.length;
+// Bilden som visas när man håller musen över kortets namn i listan (js/setpage.js). Bara kort som har en bild.
+const peek = (c) => (extraImages[c.id] || c.image ? ` data-img="${esc(cardImg(c))}"` : "");
 
 function intro(p) {
   const n = count(p), total = p.cardCount?.total;
@@ -193,7 +195,7 @@ function topHtml(p) {
 function cardsHtml(p) {
   if (!p.cards.length) return "";
   const hasRarity = p.cards.some((c) => p.rarity[c.id]);
-  const rows = [...p.cards].sort(byNumber).map((c) => `<tr><td>${esc(c.localId)}</td><td>${c.extra ? esc(c.name) : `<a href="${cardHref(c)}">${esc(c.name)}</a>`}</td>${hasRarity ? `<td>${esc(p.rarity[c.id] || "")}</td>` : ""}<td class="num">${p.prices.has(c.id) ? kr(p.prices.get(c.id)) : "–"}</td></tr>`).join("\n");
+  const rows = [...p.cards].sort(byNumber).map((c) => `<tr><td>${esc(c.localId)}</td><td>${c.extra ? `<span${peek(c)}>${esc(c.name)}</span>` : `<a href="${cardHref(c)}"${peek(c)}>${esc(c.name)}</a>`}</td>${hasRarity ? `<td>${esc(p.rarity[c.id] || "")}</td>` : ""}<td class="num">${p.prices.has(c.id) ? kr(p.prices.get(c.id)) : "–"}</td></tr>`).join("\n");
   const note = p.prices.size
     ? `Pris = Cardmarkets trendpris för ett ograderat kort i nyskick, omräknat till kronor ${longDate(p.priceDate)}. Tryck på ett kort för prishistorik och värdering.`
     : "Tryck på ett kort för att se dagens pris i kronor och värdera ditt exemplar.";

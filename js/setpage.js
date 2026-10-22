@@ -40,3 +40,31 @@ async function stock() {
 }
 
 if (grid) { stock(); setInterval(stock, 60e3); }
+
+// Kortlistan: håll musen över ett namn så visas kortet bredvid pekaren. Bara med mus, inte på pekskärm.
+const table = $(".set-table.cards");
+if (table && matchMedia("(hover: hover) and (pointer: fine)").matches) {
+  const peek = Object.assign(document.createElement("img"), { className: "card-peek", alt: "", hidden: true, decoding: "async" });
+  peek.referrerPolicy = "no-referrer";
+  peek.onerror = () => { peek.hidden = true; };
+  document.body.append(peek);
+  const place = (x, y) => {
+    const w = peek.offsetWidth || 220, h = peek.offsetHeight || 308, gap = 18;
+    const left = x + gap + w > innerWidth - 8 ? x - gap - w : x + gap;
+    const top = Math.max(8, Math.min(y - h / 2, innerHeight - h - 8));
+    peek.style.transform = `translate(${left}px, ${top}px)`;
+  };
+  table.addEventListener("pointerover", (e) => {
+    const el = e.target.closest("[data-img]");
+    if (!el) return;
+    if (peek.getAttribute("src") !== el.dataset.img) peek.src = el.dataset.img;
+    peek.hidden = false;
+    place(e.clientX, e.clientY);
+  });
+  table.addEventListener("pointermove", (e) => { if (!peek.hidden) place(e.clientX, e.clientY); });
+  table.addEventListener("pointerout", (e) => {
+    const el = e.target.closest("[data-img]");
+    if (el && !el.contains(e.relatedTarget)) peek.hidden = true;
+  });
+  addEventListener("scroll", () => { peek.hidden = true; }, { passive: true });
+}
