@@ -1,6 +1,19 @@
 {
- "updated": 1792685039386,
+ "updated": 1792685959401,
  "events": [
+  {
+   "at": 1792685280661,
+   "store": "rgb-kingz",
+   "product": "rgb-kingz:16128235831626",
+   "group": "ascended-heroes|collection-box|en||charmander-sticker-tech",
+   "title": "Pokémon TCG: Mega Evolution – Ascended Heroes Tech Sticker Collection – Charmander (ENG)",
+   "url": "https://rgbkingz.com/products/pokemon-tcg-mega-evolution-ascended-heroes-tech-sticker-collection-charmander-eng",
+   "price": 629,
+   "type": "Collection Box",
+   "set": "Ascended Heroes",
+   "lang": "en",
+   "kind": "ny"
+  },
   {
    "at": 1792684428582,
    "store": "shinycards",
