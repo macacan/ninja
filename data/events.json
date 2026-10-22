@@ -1,6 +1,19 @@
 {
- "updated": 1792676110958,
+ "updated": 1792677030986,
  "events": [
+  {
+   "at": 1792676376670,
+   "store": "rgb-kingz",
+   "product": "rgb-kingz:16127802900810",
+   "group": "mega-evolution|booster-pack|en|",
+   "title": "Pokémon TCG: Mega Evolution Booster Pack (ENG)",
+   "url": "https://rgbkingz.com/products/pokemon-tcg-mega-evolution-booster-pack-eng",
+   "price": 149,
+   "type": "Booster Pack",
+   "set": "Mega Evolution",
+   "lang": "en",
+   "kind": "ny"
+  },
   {
    "at": 1792675105909,
    "store": "rgb-kingz",
