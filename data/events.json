@@ -1,6 +1,33 @@
 {
- "updated": 1792695140258,
+ "updated": 1792696060280,
  "events": [
+  {
+   "at": 1792695933222,
+   "store": "majki-poke",
+   "product": "majki-poke:15353692586370",
+   "group": "30th-celebration|booster-pack|en|",
+   "title": "30th Celebration – Booster Pack (ENG)",
+   "url": "https://majkipoke.se/products/30th-celebration-booster-pack-eng",
+   "price": 219,
+   "type": "Booster Pack",
+   "set": "30th Celebration",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1792695368345,
+   "store": "samlargrottan",
+   "product": "samlargrottan:https://www.samlargrottan.se/product-page/pokémon-sword-shield-silver-tempest-booster-box-display",
+   "group": "silver-tempest|booster-box|en|",
+   "title": "Pokémon: Silver Tempest Booster Box",
+   "url": "https://www.samlargrottan.se/product-page/pok%C3%A9mon-sword-shield-silver-tempest-booster-box-display",
+   "price": 5299,
+   "type": "Booster Box",
+   "set": "Silver Tempest",
+   "lang": "en",
+   "kind": "prissankt",
+   "from": 5399
+  },
   {
    "at": 1792695073262,
    "store": "pokemurre",
