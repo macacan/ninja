@@ -1,6 +1,20 @@
 {
- "updated": 1792697900316,
+ "updated": 1792698780343,
  "events": [
+  {
+   "at": 1792698671186,
+   "store": "kantovault",
+   "product": "kantovault:10370629206357",
+   "group": "prismatic-evolutions|booster-bundle|en|",
+   "title": "Pokémon Scarlet & Violet: Prismatic Evolutions Booster Bundle",
+   "url": "https://kantovault.se/products/pokemon-scarlet-violet-prismatic-evolutions-booster-bundle",
+   "price": 1249,
+   "type": "Booster Bundle",
+   "set": "Prismatic Evolutions",
+   "lang": "en",
+   "kind": "prissankt",
+   "from": 1295
+  },
   {
    "at": 1792696503453,
    "store": "dragon-s-lair",
