@@ -4,7 +4,7 @@
 import { writeFile, mkdir } from "node:fs/promises";
 import { readCapped } from "./scraper/lib/http.mjs";
 
-const UA = "PackninjaNews/1.0 (+https://github.com/; RSS-läsare)";
+const UA = "LootninjaNews/1.0 (+https://github.com/; RSS-läsare)";
 const OUT = new URL("../data/news.json", import.meta.url);
 
 // Bara artiklar om samlarkort, inte om tv-spelen.

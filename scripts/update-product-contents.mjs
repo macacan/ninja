@@ -7,7 +7,7 @@
 import { writeFileSync } from "node:fs";
 
 const WIKI = "https://bulbapedia.bulbagarden.net/w/api.php";
-const UA = "PackninjaBot/1.0 (https://packninja.se/om.html#bot; daglig hämtning av produktinnehåll)";
+const UA = "PackninjaBot/1.0 (https://lootninja.se/om.html#bot; daglig hämtning av produktinnehåll)";
 // Engelska produkter. "TCG Era"-sidorna gäller Japan och hoppas över.
 const PAGES = [
   "Mega Evolution TCG Series merchandise",

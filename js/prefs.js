@@ -33,7 +33,7 @@ export function matches(e, p = getPrefs(), product = null) {
 export const hasFilters = (p = getPrefs()) =>
   p.stores.length > 0 || p.types.length > 0 || p.sets.length > 0 || p.langs?.length > 0 || p.maxPrice > 0 || p.kinds.length < Object.keys(KINDS).length;
 
-// Webbläsarnotiser medan någon Packninja-flik är öppen. Kollar händelserna varannan minut.
+// Webbläsarnotiser medan någon Lootninja-flik är öppen. Kollar händelserna varannan minut.
 const POLL_MS = 2 * 60e3;
 export function startBrowserNotices() {
   const p = getPrefs();
@@ -49,7 +49,7 @@ export function startBrowserNotices() {
     savePrefs(prefs);
     if (!fresh.length) return;
     if (fresh.length > 3) {
-      new Notification("Packninja", { body: `${fresh.length} nya händelser som matchar ditt urval.`, icon: "logo.svg", tag: "pn-summary" });
+      new Notification("Lootninja", { body: `${fresh.length} nya händelser som matchar ditt urval.`, icon: "logo.svg", tag: "pn-summary" });
       return;
     }
     for (const e of fresh) {

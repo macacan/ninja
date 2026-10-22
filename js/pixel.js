@@ -13,7 +13,7 @@ export const SPRITES = {
     "...kkkkkk...", "..knnnnnnk..", ".knnnnnnnnk.", "rkrrrrrrrrk.", "rkssssssssk.", ".kskksskksk.",
     ".knnnnnnnnk.", "..knnnnnnk..", "..knnnnnkwwk", ".knnnnnnkwmk", ".knnnnnnkwwk", "..knnnnnkkkk", "...kk.kk....",
   ],
-  // Mossling: Packninjas egen lilla varelse som gömmer sig i gräset.
+  // Mossling: Lootninjas egen lilla varelse som gömmer sig i gräset.
   blob: ["...gG...", "..gGg...", ".kkkkkk.", "kppppppk", "kpkppkpk", "kppppppk", "kppkkppk", ".kkkkkk."],
   blobBlink: ["...gG...", "..gGg...", ".kkkkkk.", "kppppppk", "kppppppk", "kppppppk", "kppkkppk", ".kkkkkk."],
   tuftA: ["G...G", "GG.GG", ".GgG.", "ggggg"],
@@ -307,7 +307,8 @@ const GLYPH = {
   P: ["###.", "#..#", "###.", "#...", "#..."], A: [".##.", "#..#", "####", "#..#", "#..#"],
   C: [".###", "#...", "#...", "#...", ".###"], K: ["#..#", "#.#.", "##..", "#.#.", "#..#"],
   N: ["#..#", "##.#", "#.##", "#..#", "#..#"], I: ["###", ".#.", ".#.", ".#.", "###"],
-  J: ["..##", "...#", "...#", "#..#", ".##."],
+  J: ["..##", "...#", "...#", "#..#", ".##."], L: ["#...", "#...", "#...", "#...", "####"],
+  O: [".##.", "#..#", "#..#", "#..#", ".##."], T: ["####", ".#..", ".#..", ".#..", ".#.."],
 };
 
 export function mountScene(canvas, opts = {}) {
@@ -581,7 +582,7 @@ export function icon(name, size = 22) {
 export function mountAllScenes() {
   const presets = {
     // Startsidans landskap: hela scenen i dubbel skala, så att den blir hälften så hög som förut.
-    hero: { height: 112, smallHeight: 58, scale: 2, ground: 26, seed: 7, shop: true, sign: "PACKNINJA" },
+    hero: { height: 112, smallHeight: 58, scale: 2, ground: 26, seed: 7, shop: true, sign: "LOOTNINJA" },
     // Remsan under sidrubrikerna: lägre och i mindre skala, så att sidhuvudet inte tar halva skärmen.
     strip: { height: 30, smallHeight: 24, ground: 9, scale: 2, mountains: false, pond: false, path: false, ninja: false, seed: 21 },
     footer: { height: 52, ground: 22, mountains: false, pond: true, ninjaDir: -1, seed: 3 },

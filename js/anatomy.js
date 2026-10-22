@@ -1,4 +1,4 @@
-// Produkt-anatomi och Pull Rates för Packninja.
+// Produkt-anatomi och Pull Rates för Lootninja.
 // Visar vad boxar innehåller (packs, promokort, tillbehör) och chanser/odds per boosterpaket.
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 const kr = (n) => (n > 0 && n < 0.5 ? "under 1 kr" : Math.round(n).toLocaleString("sv-SE") + " kr");
