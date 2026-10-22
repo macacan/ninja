@@ -1,6 +1,47 @@
 {
- "updated": 1792698780343,
+ "updated": 1792699720362,
  "events": [
+  {
+   "at": 1792699640606,
+   "store": "spelparken",
+   "product": "spelparken:15378914771319",
+   "group": "paldean-fates|tin|en||",
+   "title": "Paldean Fates Tin (5 Booster Packs)",
+   "url": "https://spelparken.se/products/paldea-fates-tin-5-booster-packs",
+   "price": 1499,
+   "type": "Tin",
+   "set": "Paldean Fates",
+   "lang": "en",
+   "kind": "ny"
+  },
+  {
+   "at": 1792699575521,
+   "store": "kantovault",
+   "product": "kantovault:11537112498517",
+   "group": "journey-together|booster-bundle|en|",
+   "title": "Pokémon Scarlet & Violet: Journey Together Booster Bundle",
+   "url": "https://kantovault.se/products/pokemon-scarlet-violet-journey-together-booster-bundle",
+   "price": 595,
+   "type": "Booster Bundle",
+   "set": "Journey Together",
+   "lang": "en",
+   "kind": "prissankt",
+   "from": 649
+  },
+  {
+   "at": 1792699575521,
+   "store": "kantovault",
+   "product": "kantovault:11491105767765",
+   "group": "x|booster-box|zh||gem-s6-vol",
+   "title": "Pokémon Gem Pack Vol 6 Booster Box (Kinesisk)",
+   "url": "https://kantovault.se/products/pokemon-gem-pack-vol-6-booster-box-kinesisk",
+   "price": 349,
+   "type": "Booster Box",
+   "set": null,
+   "lang": "zh",
+   "kind": "prissankt",
+   "from": 399
+  },
   {
    "at": 1792698671186,
    "store": "kantovault",
