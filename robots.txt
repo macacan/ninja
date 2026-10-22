@@ -1,9 +1,10 @@
 User-agent: *
 Allow: /
 
-# Block crawling of internal data and scripts
+# Interna filer. data/ och js/ får INTE spärras: Google behöver dem för att kunna visa sidorna.
 Disallow: /data/card-history/
 Disallow: /research/
 Disallow: /scripts/
+Disallow: /api/
 
 Sitemap: https://lootninja.se/sitemap.xml

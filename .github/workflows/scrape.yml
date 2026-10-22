@@ -51,10 +51,12 @@ jobs:
         run: |
           git config user.name "packninja-bot"
           git config user.email "packninja-bot@users.noreply.github.com"
-          FILES="data/news.json data/release-calendar.json data/products.json data/events.json data/stores-status.json data/notify.json data/price-history.json"
+          FILES="data/news.json data/release-calendar.json data/products.json data/events.json data/stores-status.json data/notify.json data/price-history.json sitemap.xml scripts/sitemap-state.json"
           save() {
             node scripts/update-news.mjs || echo "::warning::Nyheterna kunde inte hämtas den här gången"
             node scripts/update-releases.mjs || echo "::warning::Släppkalendern kunde inte uppdateras den här gången"
+            # Datum i sitemapen och ping till IndexNow (Bing m.fl.), högst en gång per dag och sida.
+            node scripts/build-sitemap.mjs --ping || echo "::warning::IndexNow kunde inte pingas den här gången"
             git add $FILES
             git diff --cached --quiet && return 0
             git commit -q -m "Uppdatera butikslager och nyheter"

@@ -20,9 +20,12 @@ AddDefaultCharset UTF-8
 # Block access to internal directories if accidentally uploaded to public_html
 RedirectMatch 403 ^/(research|scripts|\.github|\.claude)/
 
-# 4. HTTPS Redirect
+# 4. One address for the whole site: https://lootninja.se (no www), so search engines never see duplicates.
+# www goes straight to https without www, in a single redirect.
 <IfModule mod_rewrite.c>
   RewriteEngine On
+  RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+  RewriteRule ^ https://%1%{REQUEST_URI} [L,R=301]
   RewriteCond %{HTTPS} off
   RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 </IfModule>
@@ -51,9 +54,16 @@ Options -Indexes
 
 # 6. Browser Caching
 <IfModule mod_headers.c>
-  # Dynamic data files (products, prices, news) should never be stale in browser cache
+  # Dynamic data files (products, prices, news) should never be stale in browser cache.
+  # Search engines may fetch them to render the pages, but should not list them as search results.
   <FilesMatch "\.(json)$">
     Header set Cache-Control "no-cache, must-revalidate"
+    Header set X-Robots-Tag "noindex"
+  </FilesMatch>
+
+  # The sitemap changes at most once a day
+  <FilesMatch "^sitemap\.xml$">
+    Header set Cache-Control "max-age=3600, must-revalidate"
   </FilesMatch>
 
   # HTML pages revalidate quickly
