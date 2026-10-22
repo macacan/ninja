@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-22T06:47:48.720Z",
+ "updated": "2026-10-22T07:03:04.575Z",
  "articles": [
   {
    "title": "Video: Pokémon TCG retrospective revisits Black & White, XY and Sun & Moon cards",
@@ -322,5 +322,30 @@
    "source": "Wargamer"
   }
  ],
- "videos": []
+ "videos": [
+  {
+   "id": "mMJzv4wmJvU",
+   "title": "[UK] Pokémon TCG Pocket: Dual Fusion 🧬 | Official Trailer",
+   "date": "2026-10-20T21:12:16.000Z",
+   "source": "Pokémon (officiell)"
+  },
+  {
+   "id": "fGszU4YxLBI",
+   "title": "Pokémon TCG Pocket: Dual Fusion 🧬 | Official Trailer",
+   "date": "2026-10-20T13:01:26.000Z",
+   "source": "Pokémon (officiell)"
+  },
+  {
+   "id": "vTJyWfTQsWQ",
+   "title": "TCG Day 2 | 2027 Pokémon Nice Regional Championships",
+   "date": "2026-10-18T19:26:30.000Z",
+   "source": "Pokémon (officiell)"
+  },
+  {
+   "id": "ioLhEOjR-G0",
+   "title": "TCG Day 1 | 2027 Pokémon Nice Regional Championships",
+   "date": "2026-10-17T19:31:50.000Z",
+   "source": "Pokémon (officiell)"
+  }
+ ]
 }
