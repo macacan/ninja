@@ -1,6 +1,32 @@
 {
- "updated": 1792690560163,
+ "updated": 1792691460184,
  "events": [
+  {
+   "at": 1792690660408,
+   "store": "the-swedish-fish",
+   "product": "the-swedish-fish:16325",
+   "group": "30th-celebration|booster-pack|en|",
+   "title": "Pokemon 30th Celebration Booster Pack Bundle",
+   "url": "https://theswedishfish.se/product/pokemon-30th-celebration-booster-pack-bundle/",
+   "price": 1899,
+   "type": "Booster Pack",
+   "set": "30th Celebration",
+   "lang": "en",
+   "kind": "ny"
+  },
+  {
+   "at": 1792690660408,
+   "store": "the-swedish-fish",
+   "product": "the-swedish-fish:11720",
+   "group": "lost-origin|build-battle|en|",
+   "title": "Pokemon Lost Origin Build & Battle Stadium",
+   "url": "https://theswedishfish.se/product/pokemon-lost-origin-battle-stadium/",
+   "price": 2499,
+   "type": "Build & Battle",
+   "set": "Lost Origin",
+   "lang": "en",
+   "kind": "ny"
+  },
   {
    "at": 1792688777846,
    "store": "rahtech",
