@@ -1,6 +1,19 @@
 {
- "updated": 1792705871212,
+ "updated": 1792706791234,
  "events": [
+  {
+   "at": 1792706017229,
+   "store": "poketalk",
+   "product": "poketalk:11392507511126",
+   "group": "astral-radiance|booster-pack|en|",
+   "title": "Pokémon Sword & Shield: Astral Radiance Booster Pack",
+   "url": "https://poketalk.se/products/pokemon-sword-shield-astral-radiance-booster-pack-1",
+   "price": 119,
+   "type": "Booster Pack",
+   "set": "Astral Radiance",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1792705100571,
    "store": "poketalk",
