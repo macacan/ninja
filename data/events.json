@@ -1,6 +1,47 @@
 {
- "updated": 1792701560410,
+ "updated": 1792702480437,
  "events": [
+  {
+   "at": 1792702290090,
+   "store": "kantovault",
+   "product": "kantovault:11681745174869",
+   "group": "x|booster-box|en||gathering-terastal",
+   "title": "Pokémon Terastal Gathering (CSV9.5C) Booster Box",
+   "url": "https://kantovault.se/products/pokemon-terastal-gathering-csv9-5c-booster-box",
+   "price": 849,
+   "type": "Booster Box",
+   "set": null,
+   "lang": "en",
+   "kind": "prissankt",
+   "from": 999
+  },
+  {
+   "at": 1792702290090,
+   "store": "kantovault",
+   "product": "kantovault:11228426633557",
+   "group": "x|booster-box|zh||gem-s4-vol",
+   "title": "Pokémon Gem Pack Vol 4 Booster Box (Kinesisk)",
+   "url": "https://kantovault.se/products/pokemon-gem-pack-vol-4-booster-box-kinesisk",
+   "price": 399,
+   "type": "Booster Box",
+   "set": null,
+   "lang": "zh",
+   "kind": "prissankt",
+   "from": 479
+  },
+  {
+   "at": 1792701628279,
+   "store": "poketalk",
+   "product": "poketalk:10115810623830",
+   "group": "x|ultra-premium-collection|en||charizard-x",
+   "title": "Pokémon TCG: Mega Charizard X Ultra Premium Collection",
+   "url": "https://poketalk.se/products/pokemon-tcg-mega-charizard-x-ex-ultra-premium-collection",
+   "price": 2799,
+   "type": "Ultra-Premium Collection",
+   "set": null,
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1792701386921,
    "store": "kantovault",
