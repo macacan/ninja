@@ -1,6 +1,19 @@
 {
- "updated": 1792667850754,
+ "updated": 1792668790781,
  "events": [
+  {
+   "at": 1792668405393,
+   "store": "shinycards",
+   "product": "shinycards:https://www.shinycards.se/pokemon/collection-box/pokemon-charizard-ex-special-collection",
+   "group": "x|premium-collection|en||charizard",
+   "title": "Pokemon Charizard ex Special Collection",
+   "url": "https://www.shinycards.se/pokemon/collection-box/pokemon-charizard-ex-special-collection",
+   "price": 899,
+   "type": "Premium Collection",
+   "set": null,
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1792665568428,
    "store": "dragon-s-lair",
