@@ -1,6 +1,19 @@
 {
- "updated": 1792680691405,
+ "updated": 1792681611424,
  "events": [
+  {
+   "at": 1792680948577,
+   "store": "mystery-shack",
+   "product": "mystery-shack:https://mysteryshack.se/products/kopia-chasing-glory-together-slim-booster-box-csv10c-kinesisk",
+   "group": "x|booster-box|zh||gathering-terastal",
+   "title": "Terastal Gathering Booster Box (Kinesisk)",
+   "url": "https://mysteryshack.se/products/kopia-chasing-glory-together-slim-booster-box-csv10c-kinesisk",
+   "price": 979,
+   "type": "Booster Box",
+   "set": null,
+   "lang": "zh",
+   "kind": "ny"
+  },
   {
    "at": 1792679758257,
    "store": "cardclub",
