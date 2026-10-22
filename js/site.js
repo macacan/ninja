@@ -138,7 +138,7 @@ export function mountChrome() {
 }
 
 // Våra egna datafiler, alltid färska. Delar av sidan som ber om samma fil samtidigt (startsidans listor och
-// flödet hämtar båda products.json, 3–4 MB, varje minut) får samma hämtning i stället för var sin.
+// flödet hämtar båda stock.json varje minut) får samma hämtning i stället för var sin.
 const inflight = new Map();
 export function liveJSON(url) {
   if (!inflight.has(url)) inflight.set(url, fetch(url, { cache: "no-cache" }).then((r) => r.json()).finally(() => inflight.delete(url)));
@@ -148,6 +148,11 @@ export function liveJSON(url) {
 // Adresserna till setsidorna i set/ (scripts/build-set-pages.mjs): { sets: { <tcgdex-id>: url }, releases: { <släpp-id>: url } }.
 let setPagesData;
 export const setPages = () => (setPagesData ??= fetch("data/set-pages.json", { cache: "no-cache" }).then((r) => r.json()).catch(() => ({ sets: {}, releases: {} })));
+// Ett korts set (TCGdex: { id, name }) som länk till setsidan, eller bara namnet om sidan saknas.
+export const setLink = (set, pages) => {
+  const url = set?.id && pages?.sets?.[set.id];
+  return url ? `<a href="${esc(url)}">${esc(set.name)}</a>` : esc(set?.name || "");
+};
 
 // TCGdex ber att man cachar svar lokalt. Vi sparar dem i webbläsaren i 6 timmar.
 const TTL = 6 * 3600e3;
@@ -224,18 +229,19 @@ export function setArt(s) {
     onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'wordmark',innerHTML:this.dataset.w}))" data-w="${esc(word.replace(/^<span class="wordmark">|<\/span>$/g, ""))}"></div>`;
 }
 
-export function card(title, date, tag, extra, i, soon, artHtml, badge, attrs = "") {
+export function card(title, date, tag, extra, i, soon, artHtml, badge, attrs = "", href = "") {
   return `<article class="tcard"${attrs ? ` ${attrs}` : ""}>${badge ? `<span class="badge ${badge.hot ? "hot" : ""}">${esc(badge.text)}</span>` : ""}${artHtml || art(i)}
-    <h3>${esc(title)}</h3>
+    <h3>${href ? `<a class="stretch" href="${esc(href)}">${esc(title)}</a>` : esc(title)}</h3>
     <span class="tag ${soon ? "soon" : ""}">${esc(tag)}</span>
     <div class="meta"><span>${date ? fmt(date) : "Datum ej satt"}</span><span>${esc(extra)}</span></div></article>`;
 }
 
-// Set som släppts de senaste 60 dagarna får en "Nytt"-etikett. Tryck på setet för att se alla kort (se setcards.js).
-export const setCard = (s, i) => {
-  const age = s.releaseDate ? -daysUntil(s.releaseDate) : 999;
+// Set som släppts de senaste 60 dagarna får en "Nytt"-etikett. Setet länkar till sin sida i set/ (pages = setPages()),
+// och sökmotorerna hittar sidorna den vägen. Har setet ingen sida än öppnar ett tryck alla kort i en ruta (setcards.js).
+export const setCard = (s, i, pages) => {
+  const age = s.releaseDate ? -daysUntil(s.releaseDate) : 999, page = pages?.sets?.[s.id];
   return card(s.name, s.releaseDate, s.serie?.name || "Set", `${s.cardCount?.official ?? "?"} kort`, i, false, setArt(s, i), age <= 60 ? { text: "Nytt" } : null,
-    `data-set="${esc(s.id)}" role="button" tabindex="0" aria-label="Visa alla kort i ${esc(s.name)}"`);
+    page ? "" : `data-set="${esc(s.id)}" role="button" tabindex="0" aria-label="Visa alla kort i ${esc(s.name)}"`, page);
 };
 
 // De senaste fysiska seten. TCG Pocket är ett mobilspel utan butikssläpp och hoppas över.

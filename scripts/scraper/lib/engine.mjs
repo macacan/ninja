@@ -229,6 +229,11 @@ export async function createEngine({ statuses } = {}) {
         count: (products.get(s.id) || []).length, error: null, note: allowedStatuses.includes(s.status) ? null : s.note });
     await mkdir(file("data/"), { recursive: true });
     await writeJSON("data/products.json", { updated: now, products: all }, true);
+    // Bara det som går att köpa, med fälten sidorna visar: startsidan och setsidorna läser den här (ca 1 MB
+    // i stället för 4 MB). Butikssidan och släppkalendern behöver även slutsålt och läser products.json.
+    const live = all.filter((p) => p.available || p.preorder).map(({ id, store, title, url, price, available, preorder, image, type, lang, set, lastChange }) =>
+      ({ id, store, title, url, price, available, preorder, image, type, lang, set, lastChange }));
+    await writeJSON("data/stock.json", { updated: now, products: live }, true);
     // Dagens lägsta pris i lager per grupp. Under dagen behålls det lägsta vi sett.
     const today = new Date(now).toLocaleDateString("sv-SE");
     const oldest = new Date(now - HISTORY_DAYS * 864e5).toLocaleDateString("sv-SE");

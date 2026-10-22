@@ -1,4 +1,4 @@
-import { API, $, esc, kr, getJSON, getList, skeleton, liveStamp, cardImg } from "./site.js";
+import { API, $, esc, kr, getJSON, getList, skeleton, liveStamp, cardImg, setPages, setLink } from "./site.js";
 import { mountChart } from "./pricechart.js";
 import { recordCard, mountRecent } from "./recent.js";
 import { mountCardAutocomplete, parseCardQuery, resolvePokemonName, loadDataset, sameNumber, filterByNumber, apiNumber } from "./card-autocomplete.js";
@@ -280,8 +280,9 @@ async function openCard(i) {
   const row = (label, v, cur) => (v == null ? "" : `<tr><th>${label}</th><td>${sek(v, cur)}</td></tr>`);
   const tpRows = Object.entries(tp).filter(([, v]) => v && typeof v === "object" && v.marketPrice != null)
     .map(([k, v]) => row({ normal: "Vanlig", holofoil: "Holo", reverseHolofoil: "Reverse holo", "1stEditionHolofoil": "1st edition holo" }[k] || k, v.marketPrice, "USD")).join("");
+  const pages = ja ? null : await setPages();
   const facts = [
-    full.set?.name && `<li><b>Set</b>${esc(full.set.name)}${full.localId ? ` · #${esc(full.localId)}` : ""}</li>`,
+    full.set?.name && `<li><b>Set</b>${setLink(full.set, pages)}${full.localId ? ` · #${esc(full.localId)}` : ""}</li>`,
     full.rarity && `<li><b>Sällsynthet</b>${esc(full.rarity)}</li>`,
     full.illustrator && `<li><b>Illustratör</b>${esc(full.illustrator)}</li>`,
     full.hp && `<li><b>HP</b>${esc(full.hp)}${full.types?.length ? ` · ${esc(full.types.join(", "))}` : ""}</li>`,

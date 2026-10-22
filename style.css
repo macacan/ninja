@@ -457,6 +457,7 @@ input[type=search]{width:100%;max-width:360px}
 /* Länken med .stretch täcker hela kortet, så att hela ytan går att klicka på. */
 .stretch::after{content:"";position:absolute;inset:0;z-index:1;border-radius:inherit}
 .tcard .stretch,.news .stretch{position:static}
+.tcard h3 a{color:inherit;text-decoration:none}
 .product .meta a{background:var(--red);color:#fff;padding:6px 10px;border-radius:6px;text-decoration:none}
 .tcard:hover .meta a.stretch{text-decoration:underline}
 .product .stock{position:absolute;top:18px;left:18px;z-index:1;box-shadow:0 0 0 2px #fff}

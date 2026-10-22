@@ -1,6 +1,6 @@
 // Släppsidan, uppifrån och ner: tidslinje, alla släpp, annonserade släpp, kalender och alla set.
 // Allt om ett enskilt släpp (produkter, butiker, omgångar) öppnas i en dialog.
-import { $, esc, loading, skeleton, fillRows, latestSets, setCard, setLogo } from "./site.js";
+import { $, esc, loading, skeleton, fillRows, latestSets, setCard, setLogo, setPages } from "./site.js";
 import { releaseData, nextWave, isOver, timelineHTML, releaseCard, detailHTML, fillDetail, bindDetail, pill, LANG } from "./releases.js";
 import { mountCalendar, MONTHS } from "./calendar.js";
 import { bindSetCards } from "./setcards.js";
@@ -92,7 +92,7 @@ for (const r of ctx.releases) r.waves.forEach((w, wi) => {
   });
 });
 const known = new Set(ctx.releases.flatMap((r) => [r.tcgdex, r.set.toLowerCase()]).filter(Boolean));
-const sets = await latestSets(24).catch(() => []);
+const [sets, pages] = await Promise.all([latestSets(24).catch(() => []), setPages()]);
 for (const s of sets) if (s.releaseDate && !known.has(s.id) && !known.has(s.name.toLowerCase())) {
   add(s.releaseDate, { kind: "set", setId: s.id, title: s.name, sub: `nytt set${s.cardCount?.official ? ` · ${s.cardCount.official} kort` : ""}`, logo: setLogo(s) });
 }
@@ -108,6 +108,7 @@ function openDay(k) {
       ${it.logo || it.setLogo ? `<img src="${esc(it.logo || it.setLogo)}" alt="" loading="lazy">` : `<span class="dm-dot">${it.kind === "set" ? '<i class="lg-set"></i>' : '<i class="lg-drop"></i>'}</span>`}
       <span><b>${esc(it.title)}</b><small>${esc(it.sub || "")}</small></span>
       ${it.release ? `<button type="button" class="btn small primary" data-open="${esc(it.release)}" data-wave="${it.wave}">Visa</button>`
+        : pages.sets?.[it.setId] ? `<a class="btn small" href="${esc(pages.sets[it.setId])}">Allt om setet</a>`
         : `<a class="btn small" href="priser.html?set=${encodeURIComponent(it.setId)}">Kort och priser</a>`}
     </li>`).join("")}</ul>`;
   dayModal.showModal();
@@ -119,7 +120,7 @@ mountCalendar(events, openDay);
 const shownSets = sets.slice(0, 20);
 function renderSets() {
   const q = $("#q").value.toLowerCase();
-  $("#latest").innerHTML = shownSets.filter((s) => s.name.toLowerCase().includes(q)).map(setCard).join("")
+  $("#latest").innerHTML = shownSets.filter((s) => s.name.toLowerCase().includes(q)).map((s, i) => setCard(s, i, pages)).join("")
     || '<div class="msg">Inga set matchade.</div>';
   if (!q) fillRows($("#latest"), 4);
   else [...$("#latest").children].forEach((c) => (c.hidden = false));

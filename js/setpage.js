@@ -12,7 +12,7 @@ const grid = $("#set-stock"), countEl = $("#set-stock-count");
 async function stock() {
   if (!grid.children.length) grid.innerHTML = skeleton(4);
   try {
-    const [p, s] = await Promise.all([liveJSON("data/products.json"), liveJSON("data/stores-status.json")]);
+    const [p, s] = await Promise.all([liveJSON("data/stock.json"), liveJSON("data/stores-status.json")]);
     const name = grid.dataset.name, lang = grid.dataset.lang;
     // Samma koppling som släppkalendern: bevakningens setklassning eller något av setets sökord i namnet.
     const terms = JSON.parse(grid.dataset.match || "[]").map((t) => t.toLowerCase());
