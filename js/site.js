@@ -223,7 +223,7 @@ export function art(i, src, alt, kind = "") {
 
 // Loggor för set som TCGdex saknar, se scripts/update-set-logos.mjs.
 let extraLogos = {};
-const extraLogosReady = fetch("data/set-logos.json").then((r) => r.json()).then((d) => (extraLogos = d)).catch(() => {});
+export const extraLogosReady = fetch("data/set-logos.json").then((r) => r.json()).then((d) => (extraLogos = d)).catch(() => {});
 
 export const setLogo = (s) => (s.logo ? `${s.logo}.webp` : extraLogos[s.id] || null);
 
