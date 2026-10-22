@@ -201,7 +201,7 @@ export function timelineHTML(releases, ctx, shift = 0) {
           <div><span class="kicker">${label(j)} · ${released ? "släpptes " : ""}${esc(inDays(daysUntil(s)))}</span><h3>${esc(long(s))}</h3></div>
         </header>
         <ul class="tl-rel">${byDate.get(s).map(({ r, wi, w }) => `<li>
-          <div><b>${esc(r.set)}</b><span>${esc(waveText(w, r))}${w.preliminary || r.preliminary ? " · preliminärt" : ""}</span></div>
+          <div>${ctx.logos.get(r.id) ? `<img class="tl-logo" src="${esc(ctx.logos.get(r.id))}" alt="${esc(r.set)}" loading="lazy">` : `<b>${esc(r.set)}</b>`}<span>${esc(waveText(w, r))}${w.preliminary || r.preliminary ? " · preliminärt" : ""}</span></div>
           ${pillHTML(pill(r, ctx, wi))}
           <button type="button" class="btn small" data-open="${esc(r.id)}" data-wave="${wi}">Produkter och butiker</button>
         </li>`).join("")}</ul>

@@ -1,6 +1,6 @@
 // Släppsidan, uppifrån och ner: tidslinje, alla släpp, annonserade släpp, kalender och alla set.
 // Allt om ett enskilt släpp (produkter, butiker, omgångar) öppnas i en dialog.
-import { $, esc, loading, skeleton, fillRows, latestSets, setCard, setLogo, setPages } from "./site.js";
+import { $, esc, loading, skeleton, fillRows, latestSets, setCard, setLogo, setPages, card } from "./site.js";
 import { releaseData, nextWave, isOver, timelineHTML, releaseCard, detailHTML, fillDetail, bindDetail, pill, LANG } from "./releases.js";
 import { mountCalendar, MONTHS } from "./calendar.js";
 import { bindSetCards } from "./setcards.js";
@@ -83,12 +83,11 @@ if (linked) openRelease(linked);
 const events = new Map();
 const add = (k, it) => { if (!events.has(k)) events.set(k, []); events.get(k).push(it); };
 for (const r of ctx.releases) r.waves.forEach((w, wi) => {
-  const items = ctx.lookup(`${r.id}|${wi}`);
   add(w.date, {
     kind: w.products.length ? "drop" : "set", release: r.id, wave: wi,
     title: w.products.length && !(w.products.length === 1 && w.products[0] === r.set) ? `${r.set}: ${w.products.join(" · ")}` : r.set,
     sub: [w.products.length ? (w.products.length === 1 ? "" : `${w.products.length} produkter`) : "nytt set", r.language !== "en" ? LANG[r.language] : ""].filter(Boolean).join(" · "),
-    logo: !w.products.length ? ctx.logos.get(r.id) : null, setLogo: ctx.logos.get(r.id), images: items.map((it) => it.image).filter(Boolean),
+    logo: !w.products.length ? ctx.logos.get(r.id) : null, setLogo: ctx.logos.get(r.id),
   });
 });
 const known = new Set(ctx.releases.flatMap((r) => [r.tcgdex, r.set.toLowerCase()]).filter(Boolean));
@@ -114,20 +113,38 @@ function openDay(k) {
   dayModal.showModal();
 }
 dayModal.addEventListener("click", (e) => { if (e.target === dayModal || e.target.closest(".cm-close")) dayModal.close(); });
+// Kalendern byter adressens hash mot månaden, så länken #set måste läsas innan den.
+const toSets = location.hash === "#set";
 mountCalendar(events, openDay);
 
 // ---------- Alla set ----------
-const shownSets = sets.slice(0, 20);
+// Kommande släpp som ännu inte finns bland seten visas med en "Kommande"-etikett, blandat med seten efter datum.
+// Energi-set (t.ex. "Mega Evolution Energy") är bara grundenergi och visas inte bland seten.
+const shownSets = sets.filter((s) => !/energy/i.test(s.name)).slice(0, 20);
+const shownNames = new Set(shownSets.map((s) => s.name.toLowerCase()));
+const upcomingSets = ctx.releases.filter((r) => nextWave(r) && !shownNames.has(r.set.toLowerCase()));
+const upcomingCard = (r) => {
+  const w = nextWave(r), logo = ctx.logos.get(r.id);
+  // Utan logga visas kortets baksida med ett frågetecken.
+  const art = logo ? `<div class="art logo"><img src="${esc(logo)}" alt="${esc(r.set)}" loading="lazy" decoding="async"></div>`
+    : `<div class="art mystery" aria-hidden="true"><b>?</b></div>`;
+  return card(r.set, w.date, LANG[r.language] || "Set", w.preliminary || r.preliminary ? "Preliminärt" : "", 0, true, art, { text: "Kommande" },
+    `data-open="${esc(r.id)}" role="button" tabindex="0" aria-label="Visa ${esc(r.set)}"`);
+};
 function renderSets() {
   const q = $("#q").value.toLowerCase();
-  $("#latest").innerHTML = shownSets.filter((s) => s.name.toLowerCase().includes(q)).map((s, i) => setCard(s, i, pages)).join("")
-    || '<div class="msg">Inga set matchade.</div>';
+  const items = [
+    ...upcomingSets.filter((r) => r.set.toLowerCase().includes(q)).map((r) => ({ date: nextWave(r).date, html: upcomingCard(r) })),
+    ...shownSets.filter((s) => s.name.toLowerCase().includes(q)).map((s, i) => ({ date: s.releaseDate || "", html: setCard(s, i, pages) })),
+  ].sort((a, b) => b.date.localeCompare(a.date));
+  $("#latest").innerHTML = items.map((x) => x.html).join("") || '<div class="msg">Inga set matchade.</div>';
   if (!q) fillRows($("#latest"), 4);
   else [...$("#latest").children].forEach((c) => (c.hidden = false));
 }
 $("#q").addEventListener("input", renderSets);
 bindSetCards($("#latest"));
 renderSets();
+if (toSets) $("#set").scrollIntoView({ behavior: "instant" });
 
 const anatModal = $("#anat-modal");
 if (anatModal) {

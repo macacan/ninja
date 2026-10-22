@@ -141,11 +141,14 @@ canvas.scene{display:block;width:100%;image-rendering:pixelated;image-rendering:
   background-color:#eef5fe;border:2px solid #dbe8f8;
   background-image:linear-gradient(#e2eefc 1px,transparent 1px),linear-gradient(90deg,#e2eefc 1px,transparent 1px);background-size:8px 8px}
 .tcard .art.logo img{filter:drop-shadow(0 2px 0 rgba(27,27,47,.18))}
+.art.mystery{position:relative;background:#10121d url("img/kortbaksida.webp") center/cover no-repeat;display:grid;place-items:center}
+.art.mystery::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 50%,rgba(16,18,29,.2),rgba(16,18,29,.7))}
+.art.mystery b{position:relative;font:700 3.4rem/1 var(--pixel);color:var(--gold);text-shadow:3px 3px 0 #1b1b2f,0 0 18px rgba(242,182,50,.55)}
 .wordmark{display:grid;gap:4px;text-align:center;padding:6px 10px}
 .wordmark b{font:700 1.15rem/1.05 var(--pixel);color:var(--navy);text-shadow:2px 2px 0 #fff,3px 3px 0 #c9d8f0}
 .wordmark small{font:600 .68rem/1 var(--pixel);text-transform:uppercase;letter-spacing:.8px;color:var(--red)}
 .tcard .art img{max-width:100%;max-height:100%;display:block}
-.tcard .art.logo{padding:10px}
+.tcard .art.logo{padding:10px;grid-template-rows:minmax(0,1fr);grid-template-columns:minmax(0,1fr)}
 .tcard .art.logo img{object-fit:contain;width:100%;height:100%;transition:transform .2s steps(3)}
 .tcard:hover .art.logo img{transform:scale(1.06)}
 .tcard .art.cardimg{height:auto;aspect-ratio:5/6;padding:12px}
@@ -666,6 +669,7 @@ input[type=search],select,.shop-search{background:#fff}
 .tl-rel{list-style:none;margin:0;padding:0;display:grid;gap:8px}
 .tl-rel li{display:grid;gap:8px;justify-items:start;background:var(--surface);border-radius:10px;padding:10px 12px}
 .tl-rel b{display:block;font:700 .98rem/1.25 var(--cond);text-transform:uppercase}
+.tl-logo{height:44px;max-width:100%;object-fit:contain;display:block}
 .tl-rel span{font-size:.82rem;color:var(--muted);line-height:1.35}
 .tl-rel .pill{justify-self:start}
 .tl-rel .btn{margin:0}
@@ -1079,8 +1083,7 @@ span.rd-logo{display:grid;place-items:center;background:var(--surface);border-ra
 .day[data-day]{cursor:pointer;transition:background .15s}
 .day[data-day]:hover{background:#fff3d6}
 .day[data-day]:focus-visible{outline:3px solid var(--gold);outline-offset:-3px}
-.ev-imgs{display:flex;gap:3px}
-.ev-imgs img{width:30px;height:30px;object-fit:contain;background:#fff;border-radius:4px;padding:1px}
+.ev-logo{height:24px;max-width:100%;object-fit:contain;background:#fff;border-radius:3px;padding:1px}
 @media (max-width:760px){
   .rg{grid-template-columns:repeat(2,minmax(0,1fr))}
   .of{grid-template-columns:40px 1fr auto;grid-template-areas:"img main price" "img st buy"}

@@ -36,6 +36,7 @@
       "set": "Delta Reign",
       "series": "Mega Evolution",
       "language": "en",
+      "logo": "img/set-icons/delta-reign.png",
       "match": ["Delta Reign"],
       "about": "Nytt huvudset i Mega Evolution-serien med Mega Rayquaza ex som stjärna. Booster-produkterna och Elite Trainer Box är rapporterade i media, Build & Battle Box är officiellt bekräftad.",
       "prerelease": { "from": "2026-10-24", "to": "2026-11-01" },
