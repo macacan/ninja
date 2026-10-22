@@ -2,7 +2,7 @@
 //  1. ett levande flöde av de senast inkomna produkterna, som uppdateras varje minut
 //  2. en packöppnare: välj ett pack från de senaste seten, riv upp det och dra korten ett i taget
 import { groupKey } from "./group.js";
-import { $, esc, kr, ago, latestSets, setLogo, getJSON, API, safeUrl, liveJSON } from "./site.js";
+import { $, esc, kr, ago, latestSets, setLogo, getJSON, API, safeUrl, liveStock } from "./site.js";
 
 const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -14,7 +14,7 @@ async function feed() {
   const el = $("#restock-feed");
   if (!el) return;
   try {
-    const [p, s] = await Promise.all([liveJSON("data/stock.json"), liveJSON("data/stores-status.json")]);
+    const [p, s] = await liveStock();
     const names = Object.fromEntries(s.stores.map((x) => [x.id, x.name]));
     const used = new Set();
     const inStock = p.products.filter((x) => x.available);

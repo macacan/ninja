@@ -1,6 +1,6 @@
 // Setsidorna i set/ (byggs av scripts/build-set-pages.mjs). Allt om setet står redan i HTML:en, här läggs bara
 // det levande till: butikernas lager för setet (uppdateras varje minut) och knappen som visar alla kort med bilder.
-import { $, esc, liveJSON, productCard, skeleton } from "./site.js";
+import { $, esc, liveStock, productCard, skeleton } from "./site.js";
 import { groupKey } from "./group.js";
 import { bindSetCards } from "./setcards.js";
 
@@ -12,7 +12,7 @@ const grid = $("#set-stock"), countEl = $("#set-stock-count");
 async function stock() {
   if (!grid.children.length) grid.innerHTML = skeleton(4);
   try {
-    const [p, s] = await Promise.all([liveJSON("data/stock.json"), liveJSON("data/stores-status.json")]);
+    const [p, s] = await liveStock();
     const name = grid.dataset.name, lang = grid.dataset.lang;
     // Samma koppling som släppkalendern: bevakningens setklassning eller något av setets sökord i namnet.
     const terms = JSON.parse(grid.dataset.match || "[]").map((t) => t.toLowerCase());
