@@ -35,20 +35,820 @@
   "hash": "45dfa33620ad0cd2",
   "lastmod": "2026-10-22"
  },
+ "set/151.html": {
+  "hash": "fb3d86de8c9509f4",
+  "lastmod": "2026-10-22"
+ },
  "set/30th-celebration.html": {
   "hash": "7abb3ef0093446d2",
+  "lastmod": "2026-10-22"
+ },
+ "set/30th-classic-collection.html": {
+  "hash": "e1219e8642a1909d",
+  "lastmod": "2026-10-22"
+ },
+ "set/ancient-origins.html": {
+  "hash": "bc38177bd22438a5",
+  "lastmod": "2026-10-22"
+ },
+ "set/aquapolis.html": {
+  "hash": "e33cfaf740b78ca1",
+  "lastmod": "2026-10-22"
+ },
+ "set/arceus.html": {
+  "hash": "62f6a3795cc0fad4",
+  "lastmod": "2026-10-22"
+ },
+ "set/ascended-heroes.html": {
+  "hash": "666bb507a17c8fec",
+  "lastmod": "2026-10-22"
+ },
+ "set/astral-radiance-trainer-gallery.html": {
+  "hash": "06801caa968842b1",
+  "lastmod": "2026-10-22"
+ },
+ "set/astral-radiance.html": {
+  "hash": "3e06a02b15c79056",
   "lastmod": "2026-10-22"
  },
  "set/aura-seeker.html": {
   "hash": "7d833e8202698889",
   "lastmod": "2026-10-22"
  },
+ "set/base-set-2.html": {
+  "hash": "849d78e293eb4eba",
+  "lastmod": "2026-10-22"
+ },
+ "set/base-set.html": {
+  "hash": "67680499cad52421",
+  "lastmod": "2026-10-22"
+ },
+ "set/battle-styles.html": {
+  "hash": "35c2165f7dcb139b",
+  "lastmod": "2026-10-22"
+ },
+ "set/best-of-game.html": {
+  "hash": "2bf0804a02af8dcb",
+  "lastmod": "2026-10-22"
+ },
+ "set/black-and-white.html": {
+  "hash": "7934025217e0d70f",
+  "lastmod": "2026-10-22"
+ },
+ "set/black-bolt.html": {
+  "hash": "4671f0ebd94a9dbe",
+  "lastmod": "2026-10-22"
+ },
+ "set/boundaries-crossed.html": {
+  "hash": "63bd4632f7809c18",
+  "lastmod": "2026-10-22"
+ },
+ "set/breakpoint.html": {
+  "hash": "0e19de02f0a62358",
+  "lastmod": "2026-10-22"
+ },
+ "set/breakthrough.html": {
+  "hash": "babd91dd290b3a81",
+  "lastmod": "2026-10-22"
+ },
+ "set/brilliant-stars-trainer-gallery.html": {
+  "hash": "04793408a1473bcb",
+  "lastmod": "2026-10-22"
+ },
+ "set/brilliant-stars.html": {
+  "hash": "04a78d31cb61fefe",
+  "lastmod": "2026-10-22"
+ },
+ "set/burning-shadows.html": {
+  "hash": "e0fcd409d194ee73",
+  "lastmod": "2026-10-22"
+ },
+ "set/bw-black-star-promos.html": {
+  "hash": "8ef281ef96ed6090",
+  "lastmod": "2026-10-22"
+ },
+ "set/bw-trainer-kit-excadrill.html": {
+  "hash": "b0196bd2d79c7c08",
+  "lastmod": "2026-10-22"
+ },
+ "set/bw-trainer-kit-zoroark.html": {
+  "hash": "87956d0ef3d6d269",
+  "lastmod": "2026-10-22"
+ },
+ "set/call-of-legends.html": {
+  "hash": "ade9740440215ecd",
+  "lastmod": "2026-10-22"
+ },
+ "set/celebrations-classic-collection.html": {
+  "hash": "81c20a602be15e8b",
+  "lastmod": "2026-10-22"
+ },
+ "set/celebrations.html": {
+  "hash": "9d358567a66b62dd",
+  "lastmod": "2026-10-22"
+ },
+ "set/celestial-storm.html": {
+  "hash": "3128354c0ca411a9",
+  "lastmod": "2026-10-22"
+ },
+ "set/champion-s-path.html": {
+  "hash": "13354cbb2ff44cdf",
+  "lastmod": "2026-10-22"
+ },
+ "set/chaos-rising.html": {
+  "hash": "ae9d373349b5f33b",
+  "lastmod": "2026-10-22"
+ },
+ "set/chilling-reign.html": {
+  "hash": "96c1780793dade5c",
+  "lastmod": "2026-10-22"
+ },
+ "set/cosmic-eclipse.html": {
+  "hash": "336a1771e1f471bf",
+  "lastmod": "2026-10-22"
+ },
+ "set/crimson-invasion.html": {
+  "hash": "8ed312b2da0fadd9",
+  "lastmod": "2026-10-22"
+ },
+ "set/crown-zenith-galarian-gallery.html": {
+  "hash": "82e883c6cd175a91",
+  "lastmod": "2026-10-22"
+ },
+ "set/crown-zenith.html": {
+  "hash": "9f4f17770ee3ed63",
+  "lastmod": "2026-10-22"
+ },
+ "set/crystal-guardians.html": {
+  "hash": "ae34f801afa09c29",
+  "lastmod": "2026-10-22"
+ },
+ "set/dark-explorers.html": {
+  "hash": "24cfa03584319c8c",
+  "lastmod": "2026-10-22"
+ },
+ "set/darkness-ablaze.html": {
+  "hash": "a0aa65ba2c552127",
+  "lastmod": "2026-10-22"
+ },
  "set/delta-reign.html": {
   "hash": "a9e5500227f012ef",
   "lastmod": "2026-10-22"
  },
+ "set/delta-species.html": {
+  "hash": "afd0dbec7d6cea4e",
+  "lastmod": "2026-10-22"
+ },
+ "set/deoxys.html": {
+  "hash": "98ac3827812570d0",
+  "lastmod": "2026-10-22"
+ },
+ "set/destined-rivals.html": {
+  "hash": "2e233b74b27b4d6e",
+  "lastmod": "2026-10-22"
+ },
+ "set/detective-pikachu.html": {
+  "hash": "f5aa82f6c3f15e8b",
+  "lastmod": "2026-10-22"
+ },
+ "set/diamond-and-pearl.html": {
+  "hash": "c52058827121ed63",
+  "lastmod": "2026-10-22"
+ },
+ "set/double-crisis.html": {
+  "hash": "03c8a9284e804fdf",
+  "lastmod": "2026-10-22"
+ },
+ "set/dp-black-star-promos.html": {
+  "hash": "2916db487f0a410f",
+  "lastmod": "2026-10-22"
+ },
+ "set/dp-trainer-kit-lucario.html": {
+  "hash": "dd7d46b75c6fa014",
+  "lastmod": "2026-10-22"
+ },
+ "set/dp-trainer-kit-manaphy.html": {
+  "hash": "b43dc9f542b407da",
+  "lastmod": "2026-10-22"
+ },
+ "set/dragon-frontiers.html": {
+  "hash": "d3719e5fe20a800f",
+  "lastmod": "2026-10-22"
+ },
+ "set/dragon-majesty.html": {
+  "hash": "5a502a9ece6ba6c3",
+  "lastmod": "2026-10-22"
+ },
+ "set/dragon-vault.html": {
+  "hash": "89104cc696b86ae3",
+  "lastmod": "2026-10-22"
+ },
+ "set/dragon.html": {
+  "hash": "ee0cfbe747e7322e",
+  "lastmod": "2026-10-22"
+ },
+ "set/dragons-exalted.html": {
+  "hash": "744b710a0541f8dd",
+  "lastmod": "2026-10-22"
+ },
+ "set/emerald.html": {
+  "hash": "8136abc118899743",
+  "lastmod": "2026-10-22"
+ },
+ "set/emerging-powers.html": {
+  "hash": "d70316ea157ec779",
+  "lastmod": "2026-10-22"
+ },
+ "set/evolutions.html": {
+  "hash": "ba4c46cec3566874",
+  "lastmod": "2026-10-22"
+ },
+ "set/evolving-skies.html": {
+  "hash": "eb24e8dcb4d58db7",
+  "lastmod": "2026-10-22"
+ },
+ "set/ex-trainer-kit-2-minun.html": {
+  "hash": "f55d34661e00f4e1",
+  "lastmod": "2026-10-22"
+ },
+ "set/ex-trainer-kit-2-plusle.html": {
+  "hash": "e7b39e22c4da0881",
+  "lastmod": "2026-10-22"
+ },
+ "set/ex-trainer-kit-latias.html": {
+  "hash": "9e9ab7b15480c890",
+  "lastmod": "2026-10-22"
+ },
+ "set/ex-trainer-kit-latios.html": {
+  "hash": "641e4cfabacb4798",
+  "lastmod": "2026-10-22"
+ },
+ "set/expedition-base-set.html": {
+  "hash": "f0ac7c4dbf3d2dee",
+  "lastmod": "2026-10-22"
+ },
+ "set/fates-collide.html": {
+  "hash": "5521eca60bf6342a",
+  "lastmod": "2026-10-22"
+ },
+ "set/firered-and-leafgreen.html": {
+  "hash": "f9a6e29f98af453c",
+  "lastmod": "2026-10-22"
+ },
+ "set/flashfire.html": {
+  "hash": "98b97fde7085dcb9",
+  "lastmod": "2026-10-22"
+ },
+ "set/forbidden-light.html": {
+  "hash": "7356463335ae0cb4",
+  "lastmod": "2026-10-22"
+ },
+ "set/fossil.html": {
+  "hash": "dea27e339e624633",
+  "lastmod": "2026-10-22"
+ },
+ "set/furious-fists.html": {
+  "hash": "4bf19a209e345923",
+  "lastmod": "2026-10-22"
+ },
+ "set/fusion-strike.html": {
+  "hash": "eea90ad3a0248a9e",
+  "lastmod": "2026-10-22"
+ },
+ "set/generations.html": {
+  "hash": "b653176a6439f4e5",
+  "lastmod": "2026-10-22"
+ },
+ "set/great-encounters.html": {
+  "hash": "d407e8d76b0068de",
+  "lastmod": "2026-10-22"
+ },
+ "set/guardians-rising.html": {
+  "hash": "fa7a4d6c857b573c",
+  "lastmod": "2026-10-22"
+ },
+ "set/gym-challenge.html": {
+  "hash": "552ddd4ec50b0b06",
+  "lastmod": "2026-10-22"
+ },
+ "set/gym-heroes.html": {
+  "hash": "98fa1430c4c3af01",
+  "lastmod": "2026-10-22"
+ },
+ "set/heartgold-soulsilver.html": {
+  "hash": "5687f7e34cbaae57",
+  "lastmod": "2026-10-22"
+ },
+ "set/hgss-black-star-promos.html": {
+  "hash": "cdadc872f794e645",
+  "lastmod": "2026-10-22"
+ },
+ "set/hidden-fates-shiny-vault.html": {
+  "hash": "175e76792e25302c",
+  "lastmod": "2026-10-22"
+ },
+ "set/hidden-fates.html": {
+  "hash": "01094d6802f23158",
+  "lastmod": "2026-10-22"
+ },
+ "set/hidden-legends.html": {
+  "hash": "62122a4e40c7915b",
+  "lastmod": "2026-10-22"
+ },
+ "set/holon-phantoms.html": {
+  "hash": "06a035be9745c9d2",
+  "lastmod": "2026-10-22"
+ },
+ "set/hs-trainer-kit-gyarados.html": {
+  "hash": "dd107566037f6ce9",
+  "lastmod": "2026-10-22"
+ },
+ "set/hs-trainer-kit-raichu.html": {
+  "hash": "96ffd21af3168e07",
+  "lastmod": "2026-10-22"
+ },
  "set/": {
   "hash": "30a7adc202c4afec",
+  "lastmod": "2026-10-22"
+ },
+ "set/journey-together.html": {
+  "hash": "48c645d33cc73c21",
+  "lastmod": "2026-10-22"
+ },
+ "set/jungle.html": {
+  "hash": "d367f1257262b65c",
+  "lastmod": "2026-10-22"
+ },
+ "set/kalos-starter-set.html": {
+  "hash": "67d237aaff85f3cc",
+  "lastmod": "2026-10-22"
+ },
+ "set/legend-maker.html": {
+  "hash": "42b4a1a30d6e4358",
+  "lastmod": "2026-10-22"
+ },
+ "set/legendary-collection.html": {
+  "hash": "7fb0254555b404ff",
+  "lastmod": "2026-10-22"
+ },
+ "set/legendary-treasures.html": {
+  "hash": "e1017e8d2a524977",
+  "lastmod": "2026-10-22"
+ },
+ "set/legends-awakened.html": {
+  "hash": "b597c331edc67483",
+  "lastmod": "2026-10-22"
+ },
+ "set/lost-origin-trainer-gallery.html": {
+  "hash": "a93260d4a262c00f",
+  "lastmod": "2026-10-22"
+ },
+ "set/lost-origin.html": {
+  "hash": "2385a80494fd60a7",
+  "lastmod": "2026-10-22"
+ },
+ "set/lost-thunder.html": {
+  "hash": "00418d8fbdc32c7b",
+  "lastmod": "2026-10-22"
+ },
+ "set/majestic-dawn.html": {
+  "hash": "b7ffb51de99edd2d",
+  "lastmod": "2026-10-22"
+ },
+ "set/mcdonald-s-collection-2011.html": {
+  "hash": "4adc505df59a2adb",
+  "lastmod": "2026-10-22"
+ },
+ "set/mcdonald-s-collection-2012.html": {
+  "hash": "475f4d05c28827e6",
+  "lastmod": "2026-10-22"
+ },
+ "set/mcdonald-s-collection-2014.html": {
+  "hash": "a397286017f841a1",
+  "lastmod": "2026-10-22"
+ },
+ "set/mcdonald-s-collection-2015.html": {
+  "hash": "f44bb2e90ffb26f8",
+  "lastmod": "2026-10-22"
+ },
+ "set/mcdonald-s-collection-2016.html": {
+  "hash": "db7c8a06990e9dcd",
+  "lastmod": "2026-10-22"
+ },
+ "set/mcdonald-s-collection-2017.html": {
+  "hash": "ae0b0a52739a6f4c",
+  "lastmod": "2026-10-22"
+ },
+ "set/mcdonald-s-collection-2018.html": {
+  "hash": "885e69dbeff78cbe",
+  "lastmod": "2026-10-22"
+ },
+ "set/mcdonald-s-collection-2019.html": {
+  "hash": "f97c4df2fad54f50",
+  "lastmod": "2026-10-22"
+ },
+ "set/mcdonald-s-collection-2021.html": {
+  "hash": "704560c86ea7d8b1",
+  "lastmod": "2026-10-22"
+ },
+ "set/mcdonald-s-collection-2022.html": {
+  "hash": "0c295dd615444ba6",
+  "lastmod": "2026-10-22"
+ },
+ "set/mcdonald-s-collection-2023.html": {
+  "hash": "d97e509c5eb66dcd",
+  "lastmod": "2026-10-22"
+ },
+ "set/mcdonald-s-collection-2024.html": {
+  "hash": "41da9ce74dad862d",
+  "lastmod": "2026-10-22"
+ },
+ "set/mega-evolution-energy.html": {
+  "hash": "c3bfea3d3047bf3e",
+  "lastmod": "2026-10-22"
+ },
+ "set/mega-evolution.html": {
+  "hash": "61ff1843a6893951",
+  "lastmod": "2026-10-22"
+ },
+ "set/mep-black-star-promos.html": {
+  "hash": "4c35b839f66955a2",
+  "lastmod": "2026-10-22"
+ },
+ "set/miscellaneous-promos.html": {
+  "hash": "92e19405047df50a",
+  "lastmod": "2026-10-22"
+ },
+ "set/my-first-battle.html": {
+  "hash": "8aca2937c1aca66a",
+  "lastmod": "2026-10-22"
+ },
+ "set/mysterious-treasures.html": {
+  "hash": "aeb0a07b93aa4821",
+  "lastmod": "2026-10-22"
+ },
+ "set/neo-destiny.html": {
+  "hash": "a70bf9d3bc696a80",
+  "lastmod": "2026-10-22"
+ },
+ "set/neo-discovery.html": {
+  "hash": "4c84122e935a2a82",
+  "lastmod": "2026-10-22"
+ },
+ "set/neo-genesis.html": {
+  "hash": "e8a29ca81b166b34",
+  "lastmod": "2026-10-22"
+ },
+ "set/neo-revelation.html": {
+  "hash": "9b6a2e0153645150",
+  "lastmod": "2026-10-22"
+ },
+ "set/next-destinies.html": {
+  "hash": "7575edf9d0168480",
+  "lastmod": "2026-10-22"
+ },
+ "set/nintendo-black-star-promos.html": {
+  "hash": "7b7983b9b1b8b98b",
+  "lastmod": "2026-10-22"
+ },
+ "set/noble-victories.html": {
+  "hash": "109f8cac05006ad3",
+  "lastmod": "2026-10-22"
+ },
+ "set/obsidian-flames.html": {
+  "hash": "6ac70be36df46779",
+  "lastmod": "2026-10-22"
+ },
+ "set/paldea-evolved.html": {
+  "hash": "e8bba64b703ddf7b",
+  "lastmod": "2026-10-22"
+ },
+ "set/paldean-fates.html": {
+  "hash": "ab3c7bdd84bc8504",
+  "lastmod": "2026-10-22"
+ },
+ "set/paradox-rift.html": {
+  "hash": "0282cd24ee5aa512",
+  "lastmod": "2026-10-22"
+ },
+ "set/perfect-order.html": {
+  "hash": "3f06068179ded52d",
+  "lastmod": "2026-10-22"
+ },
+ "set/phantasmal-flames.html": {
+  "hash": "1e2e647f6dd9b9ac",
+  "lastmod": "2026-10-22"
+ },
+ "set/phantom-forces.html": {
+  "hash": "1f5ff13baa5572f6",
+  "lastmod": "2026-10-22"
+ },
+ "set/pitch-black.html": {
+  "hash": "b4b9d809396af191",
+  "lastmod": "2026-10-22"
+ },
+ "set/plasma-blast.html": {
+  "hash": "1ec6e36a7828dd1c",
+  "lastmod": "2026-10-22"
+ },
+ "set/plasma-freeze.html": {
+  "hash": "d600fa14b7b03d18",
+  "lastmod": "2026-10-22"
+ },
+ "set/plasma-storm.html": {
+  "hash": "3cafdd3e3da4a69f",
+  "lastmod": "2026-10-22"
+ },
+ "set/platinum.html": {
+  "hash": "d2716cb808a2da18",
+  "lastmod": "2026-10-22"
+ },
+ "set/poke-card-creator-pack.html": {
+  "hash": "80cf4abfde21c877",
+  "lastmod": "2026-10-22"
+ },
+ "set/pokemon-futsal-2020.html": {
+  "hash": "59c3d97d8c61c3be",
+  "lastmod": "2026-10-22"
+ },
+ "set/pokemon-go.html": {
+  "hash": "5288b017ac4976b3",
+  "lastmod": "2026-10-22"
+ },
+ "set/pokemon-rumble.html": {
+  "hash": "9938ed32f4294ad1",
+  "lastmod": "2026-10-22"
+ },
+ "set/pop-series-1.html": {
+  "hash": "12e297251f69d8c8",
+  "lastmod": "2026-10-22"
+ },
+ "set/pop-series-2.html": {
+  "hash": "17479e926bd0aaf2",
+  "lastmod": "2026-10-22"
+ },
+ "set/pop-series-3.html": {
+  "hash": "285b5571676a819b",
+  "lastmod": "2026-10-22"
+ },
+ "set/pop-series-4.html": {
+  "hash": "e26138335760b48e",
+  "lastmod": "2026-10-22"
+ },
+ "set/pop-series-5.html": {
+  "hash": "9edabe8e4234e963",
+  "lastmod": "2026-10-22"
+ },
+ "set/pop-series-6.html": {
+  "hash": "f626d84b372ab81c",
+  "lastmod": "2026-10-22"
+ },
+ "set/pop-series-7.html": {
+  "hash": "e8f26c69743ff447",
+  "lastmod": "2026-10-22"
+ },
+ "set/pop-series-8.html": {
+  "hash": "b91067643b647b70",
+  "lastmod": "2026-10-22"
+ },
+ "set/pop-series-9.html": {
+  "hash": "d69a987cb539041a",
+  "lastmod": "2026-10-22"
+ },
+ "set/power-keepers.html": {
+  "hash": "3e606da963079e7d",
+  "lastmod": "2026-10-22"
+ },
+ "set/primal-clash.html": {
+  "hash": "bc2c91e8abd123ea",
+  "lastmod": "2026-10-22"
+ },
+ "set/prismatic-evolutions.html": {
+  "hash": "ee5c9bc8e3866c74",
+  "lastmod": "2026-10-22"
+ },
+ "set/rebel-clash.html": {
+  "hash": "6ca9292faaa07283",
+  "lastmod": "2026-10-22"
+ },
+ "set/rising-rivals.html": {
+  "hash": "b1353849efffb3b0",
+  "lastmod": "2026-10-22"
+ },
+ "set/roaring-skies.html": {
+  "hash": "3629bd57403542cc",
+  "lastmod": "2026-10-22"
+ },
+ "set/ruby-and-sapphire.html": {
+  "hash": "2e600678efc3ece4",
+  "lastmod": "2026-10-22"
+ },
+ "set/sandstorm.html": {
+  "hash": "38e6d47eb6fc2eb1",
+  "lastmod": "2026-10-22"
+ },
+ "set/scarlet-and-violet-energy.html": {
+  "hash": "b8ffc792c3d2fd5b",
+  "lastmod": "2026-10-22"
+ },
+ "set/scarlet-and-violet.html": {
+  "hash": "7a88948edc2e6dba",
+  "lastmod": "2026-10-22"
+ },
+ "set/secret-wonders.html": {
+  "hash": "c877e5bab497b0a4",
+  "lastmod": "2026-10-22"
+ },
+ "set/shining-fates-shiny-vault.html": {
+  "hash": "492e3859fa0528f9",
+  "lastmod": "2026-10-22"
+ },
+ "set/shining-fates.html": {
+  "hash": "966987b1f2df14b6",
+  "lastmod": "2026-10-22"
+ },
+ "set/shining-legends.html": {
+  "hash": "eafb99ff606b5cdb",
+  "lastmod": "2026-10-22"
+ },
+ "set/shrouded-fable.html": {
+  "hash": "fdd2473b39ff1353",
+  "lastmod": "2026-10-22"
+ },
+ "set/silver-tempest-trainer-gallery.html": {
+  "hash": "b473a53f71ef0eaf",
+  "lastmod": "2026-10-22"
+ },
+ "set/silver-tempest.html": {
+  "hash": "82e7793b6093d882",
+  "lastmod": "2026-10-22"
+ },
+ "set/skyridge.html": {
+  "hash": "cd447e4c574722d5",
+  "lastmod": "2026-10-22"
+ },
+ "set/sm-black-star-promos.html": {
+  "hash": "d3f56a340b271f1c",
+  "lastmod": "2026-10-22"
+ },
+ "set/sm-trainer-kit-alolan-raichu.html": {
+  "hash": "02fa1617189f8f06",
+  "lastmod": "2026-10-22"
+ },
+ "set/sm-trainer-kit-lycanroc.html": {
+  "hash": "b363026ab378c498",
+  "lastmod": "2026-10-22"
+ },
+ "set/southern-islands.html": {
+  "hash": "9c712c744403a5d6",
+  "lastmod": "2026-10-22"
+ },
+ "set/steam-siege.html": {
+  "hash": "6287ec3fc97eb464",
+  "lastmod": "2026-10-22"
+ },
+ "set/stellar-crown.html": {
+  "hash": "0bdfe980af02b381",
+  "lastmod": "2026-10-22"
+ },
+ "set/stormfront.html": {
+  "hash": "cd6418454a0fc473",
+  "lastmod": "2026-10-22"
+ },
+ "set/sun-and-moon.html": {
+  "hash": "c1edaae225b1cd97",
+  "lastmod": "2026-10-22"
+ },
+ "set/supreme-victors.html": {
+  "hash": "6656b722c7db9512",
+  "lastmod": "2026-10-22"
+ },
+ "set/surging-sparks.html": {
+  "hash": "ced72812f487f4f2",
+  "lastmod": "2026-10-22"
+ },
+ "set/svp-black-star-promos.html": {
+  "hash": "e90ac475f650e247",
+  "lastmod": "2026-10-22"
+ },
+ "set/sword-and-shield.html": {
+  "hash": "9d9e3e5e514f1f1f",
+  "lastmod": "2026-10-22"
+ },
+ "set/swsh-black-star-promos.html": {
+  "hash": "e85644cf4526e523",
+  "lastmod": "2026-10-22"
+ },
+ "set/team-magma-vs-team-aqua.html": {
+  "hash": "9279a126900d2389",
+  "lastmod": "2026-10-22"
+ },
+ "set/team-rocket-returns.html": {
+  "hash": "63aaca9adc102a6e",
+  "lastmod": "2026-10-22"
+ },
+ "set/team-rocket.html": {
+  "hash": "7343c030b94c3c0d",
+  "lastmod": "2026-10-22"
+ },
+ "set/team-up.html": {
+  "hash": "6cfb3ca72821a02a",
+  "lastmod": "2026-10-22"
+ },
+ "set/temporal-forces.html": {
+  "hash": "25d5a6e1772666b3",
+  "lastmod": "2026-10-22"
+ },
+ "set/triumphant.html": {
+  "hash": "eb29e961a11360db",
+  "lastmod": "2026-10-22"
+ },
+ "set/twilight-masquerade.html": {
+  "hash": "9754183b2177bf7c",
+  "lastmod": "2026-10-22"
+ },
+ "set/ultra-prism.html": {
+  "hash": "4eee6a4af73f2450",
+  "lastmod": "2026-10-22"
+ },
+ "set/unbroken-bonds.html": {
+  "hash": "0030bdd51a7e1570",
+  "lastmod": "2026-10-22"
+ },
+ "set/undaunted.html": {
+  "hash": "4f9ad886367e3d1f",
+  "lastmod": "2026-10-22"
+ },
+ "set/unified-minds.html": {
+  "hash": "ac3b0435f13d057a",
+  "lastmod": "2026-10-22"
+ },
+ "set/unleashed.html": {
+  "hash": "7956839044b6fdf6",
+  "lastmod": "2026-10-22"
+ },
+ "set/unseen-forces-unown-collection.html": {
+  "hash": "b1e824ee2e9442f4",
+  "lastmod": "2026-10-22"
+ },
+ "set/unseen-forces.html": {
+  "hash": "af9564101d970c5b",
+  "lastmod": "2026-10-22"
+ },
+ "set/vivid-voltage.html": {
+  "hash": "fa16d98a267e01f6",
+  "lastmod": "2026-10-22"
+ },
+ "set/white-flare.html": {
+  "hash": "3c484f051bc44e47",
+  "lastmod": "2026-10-22"
+ },
+ "set/wizards-black-star-promos.html": {
+  "hash": "119d971af37a0fed",
+  "lastmod": "2026-10-22"
+ },
+ "set/xy-black-star-promos.html": {
+  "hash": "07460f157abf92aa",
+  "lastmod": "2026-10-22"
+ },
+ "set/xy-trainer-kit-bisharp.html": {
+  "hash": "c50663afb0aeb6bf",
+  "lastmod": "2026-10-22"
+ },
+ "set/xy-trainer-kit-latias.html": {
+  "hash": "a3b22bab68f8e3e2",
+  "lastmod": "2026-10-22"
+ },
+ "set/xy-trainer-kit-latios.html": {
+  "hash": "3b406e469de25ca5",
+  "lastmod": "2026-10-22"
+ },
+ "set/xy-trainer-kit-noivern.html": {
+  "hash": "8ed23fa695437c55",
+  "lastmod": "2026-10-22"
+ },
+ "set/xy-trainer-kit-pikachu-libre.html": {
+  "hash": "789b8dbf6c30d082",
+  "lastmod": "2026-10-22"
+ },
+ "set/xy-trainer-kit-suicune.html": {
+  "hash": "727296d08ea6cc5f",
+  "lastmod": "2026-10-22"
+ },
+ "set/xy-trainer-kit-sylveon.html": {
+  "hash": "2da723a889fc52ad",
+  "lastmod": "2026-10-22"
+ },
+ "set/xy-trainer-kit-wigglytuff.html": {
+  "hash": "11cf94a61da2c6ad",
+  "lastmod": "2026-10-22"
+ },
+ "set/xy.html": {
+  "hash": "d84a7929602c2d51",
+  "lastmod": "2026-10-22"
+ },
+ "set/yellow-a-alternate.html": {
+  "hash": "c6cfafd6d5d0e7a4",
   "lastmod": "2026-10-22"
  }
 }
