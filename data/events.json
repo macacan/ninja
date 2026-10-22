@@ -1,6 +1,32 @@
 {
- "updated": 1792671530848,
+ "updated": 1792672430876,
  "events": [
+  {
+   "at": 1792672309174,
+   "store": "shinycards",
+   "product": "shinycards:https://www.shinycards.se/pokemon/collection-box/pokemon-combined-powers-premium-collection-box",
+   "group": "x|premium-collection|en||combined-powers",
+   "title": "Pokemon Combined Powers Premium Collection Box",
+   "url": "https://www.shinycards.se/pokemon/collection-box/pokemon-combined-powers-premium-collection-box",
+   "price": 1599,
+   "type": "Premium Collection",
+   "set": null,
+   "lang": "en",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1792671957335,
+   "store": "tcgstore",
+   "product": "tcgstore:11366695862599",
+   "group": "30th-celebration|booster-bundle|en|",
+   "title": "Pokémon TCG: 30th Celebration Booster Bundle",
+   "url": "https://tcgstore.se/products/pokemon-mega-evolution-30th-celebration-booster-bundle",
+   "price": 1099,
+   "type": "Booster Bundle",
+   "set": "30th Celebration",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1792668405393,
    "store": "shinycards",
