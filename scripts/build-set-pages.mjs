@@ -16,7 +16,7 @@ const at = (p) => new URL(p, ROOT);
 const readJSON = async (p, fallback) => JSON.parse(await readFile(at(p), "utf8").catch(() => "null")) ?? fallback;
 
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
-const slugify = (s) => s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/&/g, " and ").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+const slugify = (s) => s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/&/g, " and ").replace(/['\u2019]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 const MONTH = ["januari", "februari", "mars", "april", "maj", "juni", "juli", "augusti", "september", "oktober", "november", "december"];
 const longDate = (s) => { const [y, m, d] = s.split("-").map(Number); return `${d} ${MONTH[m - 1]} ${y}`; };
 const kr = (n) => (n < 0.5 ? "under 1 kr" : `${Math.round(n).toLocaleString("sv-SE").replace(/\u00a0/g, " ")} kr`);
@@ -212,7 +212,7 @@ function setPage(p, all) {
     : `${p.name} – kortlista och släppdatum | Lootninja`;
   const desc = release
     ? `${p.name} ${upcoming(p) || !p.date ? "släpps" : "släpptes"} ${p.date ? longDate(p.date) : "snart"}${p.cal?.preliminary ? " (preliminärt)" : ""}. Se alla produkter, släppdatum och vilka svenska butiker som har ${upcoming(p) ? "förbeställning eller lager" : "setet i lager"}.`
-    : `Alla ${count(p)} kort i ${p.name}${p.serie ? ` (${p.serie})` : ""}${priced ? " med priser i kronor" : ""}. Släpptes ${longDate(p.date)}.${top ? ` Dyrast just nu: ${top.name} (${kr(p.prices.get(top.id))}).` : ""} Se var setet finns i lager i Sverige.`;
+    : `Alla ${p.cards.length} kort i ${p.name}${p.serie ? ` (${p.serie})` : ""}${priced ? " med priser i kronor" : ""}. Släpptes ${longDate(p.date)}.${top ? ` Dyrast just nu: ${top.name} (${kr(p.prices.get(top.id))}).` : ""} Se var setet finns i lager i Sverige.`;
   const crumbs = [["Hem", `${SITE}/`, "index.html"], ["Kalender", `${SITE}/slapp.html`, "slapp.html"], ["Alla set", `${SITE}/set/`, "set/"], [p.name, p.url, null]];
   const facts = [p.serie && `Serie: ${esc(p.serie)}`, p.date && (upcoming(p) ? `Släpps <time datetime="${p.date}">${longDate(p.date)}</time>` : `Släpptes <time datetime="${p.date}">${longDate(p.date)}</time>`),
     count(p) && `${count(p)} kort${p.cardCount?.total > count(p) ? ` (${p.cardCount.total} med hemliga)` : ""}`, p.language !== "en" && `Språk: ${LANG[p.language] || p.language}`].filter(Boolean);
