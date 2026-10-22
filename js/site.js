@@ -29,14 +29,15 @@ const NAV = [
   ["nyheter.html", "Nyheter"],
 ];
 
-// Filnamnet för sidan man är på (artikel.html hör till Nyheter).
-const pageOf = () => ({ "artikel.html": "nyheter.html" }[location.pathname.split("/").pop()] || location.pathname.split("/").pop() || "index.html");
+// Filnamnet för sidan man är på (artikel.html hör till Nyheter, setsidorna i set/ till Kalender).
+const pageOf = () => (location.pathname.includes("/set/") ? "slapp.html"
+  : { "artikel.html": "nyheter.html" }[location.pathname.split("/").pop()] || location.pathname.split("/").pop() || "index.html");
 
 function header() {
   const here = pageOf();
   // På mobilen visas sidans namn i loggan i stället för "Lootninja" (startsidan behåller namnet).
   const mobileTitle = here === "index.html" ? "Lootninja" : NAV.find(([href]) => href.split("#")[0] === here)?.[1] || "Lootninja";
-  return `<a class="skip" href="#main">Hoppa till innehållet</a>
+  return `<a class="skip" href="${esc(location.pathname)}#main">Hoppa till innehållet</a>
   <header class="site-header"><div class="wrap">
     <a class="logo" href="index.html"><img src="logo.svg" alt=""><span><b class="brand-desk">Lootninja</b><b class="brand-mob">${esc(mobileTitle)}</b><small>Kortsläpp & priser</small></span></a>
     <nav class="main-nav" aria-label="Huvudmeny"><ul>
@@ -76,7 +77,7 @@ function footer() {
         <a class="logo" href="index.html"><img src="logo.svg" alt=""><span><b>Lootninja</b><small>Kortsläpp & priser</small></span></a>
         <p>Ett ideellt hobbyprojekt. Ninjan smyger fram kortsläpp, set och priser – gratis och utan konto. Priser och lager är vägledande och kan innehålla felaktigheter.</p>
       </div>
-      <div><h2>Utforska</h2><ul>${NAV.map(([h, l]) => `<li><a href="${h}">${l}</a></li>`).join("")}</ul></div>
+      <div><h2>Utforska</h2><ul>${NAV.map(([h, l]) => `<li><a href="${h}">${l}</a></li>`).join("")}<li><a href="set/">Alla set</a></li></ul></div>
       <div><h2>Källor</h2><ul>
         <li><a href="https://tcgdex.dev" rel="noopener">TCGdex</a></li>
         <li><a href="https://www.cardmarket.com" rel="noopener">Cardmarket</a></li>
@@ -143,6 +144,10 @@ export function liveJSON(url) {
   if (!inflight.has(url)) inflight.set(url, fetch(url, { cache: "no-cache" }).then((r) => r.json()).finally(() => inflight.delete(url)));
   return inflight.get(url);
 }
+
+// Adresserna till setsidorna i set/ (scripts/build-set-pages.mjs): { sets: { <tcgdex-id>: url }, releases: { <släpp-id>: url } }.
+let setPagesData;
+export const setPages = () => (setPagesData ??= fetch("data/set-pages.json", { cache: "no-cache" }).then((r) => r.json()).catch(() => ({ sets: {}, releases: {} })));
 
 // TCGdex ber att man cachar svar lokalt. Vi sparar dem i webbläsaren i 6 timmar.
 const TTL = 6 * 3600e3;

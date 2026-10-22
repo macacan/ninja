@@ -4,7 +4,7 @@
 // bevakningens täta commits inte ändrar sitemapen hela tiden.
 // --ping: skickar sidorna som fick nytt datum till IndexNow (Bing, DuckDuckGo, Yandex m.fl.). Google har ingen
 // ping längre, utan läser sitemapen själv när den är inskickad i Search Console.
-import { readFile, writeFile } from "node:fs/promises";
+import { readFile, writeFile, readdir } from "node:fs/promises";
 import { createHash } from "node:crypto";
 
 const SITE = "https://lootninja.se";
@@ -26,6 +26,10 @@ const PAGES = [
   ["villkor.html", ["villkor.html"]],
   ["integritet.html", ["integritet.html"]],
 ];
+// Setsidorna (scripts/build-set-pages.mjs). Allt de visar står i själva HTML-filen.
+for (const f of (await readdir(new URL("set/", ROOT)).catch(() => [])).filter((f) => f.endsWith(".html")).sort()) {
+  PAGES.push([f === "index.html" ? "set/" : `set/${f}`, [`set/${f}`]]);
+}
 
 const today = new Date().toISOString().slice(0, 10);
 const fingerprint = async (files) => {
