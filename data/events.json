@@ -1,6 +1,59 @@
 {
- "updated": 1792684079358,
+ "updated": 1792685039386,
  "events": [
+  {
+   "at": 1792684428582,
+   "store": "shinycards",
+   "product": "shinycards:https://www.shinycards.se/pokemon/collection-box/pokemon-day-2026-collection-box",
+   "group": "x|collection-box|en||day",
+   "title": "Pokemon Day 2026 Collection",
+   "url": "https://www.shinycards.se/pokemon/collection-box/pokemon-day-2026-collection-box",
+   "price": 499,
+   "type": "Collection Box",
+   "set": null,
+   "lang": "en",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1792684428582,
+   "store": "shinycards",
+   "product": "shinycards:https://www.shinycards.se/pokemon/booster-pack/pokemon-ascend-heroes-booster-pack",
+   "group": "mega-evolution|booster-pack|en||ascend-heroes",
+   "title": "Pokemon Mega Evolution 2.5: Ascend Heroes Booster Pack",
+   "url": "https://www.shinycards.se/pokemon/booster-pack/pokemon-ascend-heroes-booster-pack",
+   "price": 229,
+   "type": "Booster Pack",
+   "set": "Mega Evolution",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1792684347835,
+   "store": "rgb-kingz",
+   "product": "rgb-kingz:16128163873098",
+   "group": "ascended-heroes|collection-box|en||lucario-poster",
+   "title": "Pokémon TCG: Mega Evolution – Ascended Heroes Premium Poster Collection – Mega Lucario (ENG)",
+   "url": "https://rgbkingz.com/products/pokemon-tcg-mega-evolution-ascended-heroes-premium-poster-collection-mega-lucario-eng",
+   "price": 2199,
+   "type": "Collection Box",
+   "set": "Ascended Heroes",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1792684347835,
+   "store": "rgb-kingz",
+   "product": "rgb-kingz:16127802900810",
+   "group": "mega-evolution|booster-pack|en|",
+   "title": "Pokémon TCG: Mega Evolution Booster Pack (ENG)",
+   "url": "https://rgbkingz.com/products/pokemon-tcg-mega-evolution-booster-pack-eng",
+   "price": 129,
+   "type": "Booster Pack",
+   "set": "Mega Evolution",
+   "lang": "en",
+   "kind": "prissankt",
+   "from": 149
+  },
   {
    "at": 1792683277718,
    "store": "goblinen",
