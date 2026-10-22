@@ -2,7 +2,8 @@
 // Begränsar hur många pack en besökare får öppna per dag: 10 per IP-adress.
 //   GET  api/pack-limit.php?action=status  -> hur många som är kvar
 //   POST api/pack-limit.php?action=open    -> räknar upp ett öppnande, eller 429 om dagens 10 är slut
-// IP-adressen sparas aldrig i klartext, bara som saltad hash. Räknaren nollställs vid midnatt (svensk tid).
+// IP-adressen sparas aldrig i klartext, bara som saltad hash. Räknaren och saltet byts vid midnatt (svensk tid), så att
+// gårdagens summor inte går att räkna tillbaka genom att prova alla IP-adresser.
 
 header('Content-Type: application/json; charset=utf-8');
 header('Cache-Control: no-store');
@@ -65,8 +66,7 @@ if (!$fh || !flock($fh, LOCK_EX)) {
 
 $data = json_decode(stream_get_contents($fh) ?: '{}', true);
 if (!is_array($data)) $data = [];
-$data['salt'] = $data['salt'] ?? bin2hex(random_bytes(16));
-if (($data['day'] ?? '') !== $day) { $data['day'] = $day; $data['ips'] = []; }
+if (($data['day'] ?? '') !== $day || empty($data['salt'])) { $data = ['day' => $day, 'salt' => bin2hex(random_bytes(16)), 'ips' => []]; }
 
 $key = hash('sha256', $data['salt'] . '|' . $ip . '|' . $day);
 $used = (int)($data['ips'][$key] ?? 0);
