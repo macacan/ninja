@@ -23,5 +23,5 @@ jobs:
         run: |
           git config user.name "packninja-bot"
           git config user.email "packninja-bot@users.noreply.github.com"
-          git add data/news.json data/set-logos.json data/release-calendar.json
+          git add data/news.json data/set-logos.json data/release-calendar.json img/set-logos
           git diff --cached --quiet || (git commit -m "Uppdatera nyheter" && git pull --rebase -X theirs && git push)
