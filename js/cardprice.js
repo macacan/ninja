@@ -1,6 +1,6 @@
 // Prisfönster för ett kort: prishistorik, Cardmarket- och TCGplayer-priser samt värde per skick och betyg.
 // Öppnas ovanpå den förstorade kortvyn, utan att lämna sidan.
-import { API, esc, kr, getJSON, cardImg, extraCardImgsReady } from "./site.js";
+import { API, esc, kr, getJSON, cardImg, extraCardImgsReady, setPages, setLink } from "./site.js";
 import { mountChart } from "./pricechart.js";
 import { CONDITIONS, gradeMult } from "./valuation.js";
 
@@ -28,7 +28,7 @@ export async function openCardPrice(id) {
   const d = dialog(), body = d.querySelector(".pm-body"), my = ++token;
   body.innerHTML = '<div class="cm-load">Hämtar priser…</div>';
   if (!d.open) d.showModal();
-  const [card, rates] = await Promise.all([getJSON(`${API}/cards/${encodeURIComponent(id)}`).catch(() => null), getRates(), extraCardImgsReady]);
+  const [card, rates, pages] = await Promise.all([getJSON(`${API}/cards/${encodeURIComponent(id)}`).catch(() => null), getRates(), setPages(), extraCardImgsReady]);
   const rate = rates.EUR;
   if (my !== token) return;
   if (!card) { body.innerHTML = '<div class="msg">Priset kunde inte hämtas just nu.</div>'; return; }
@@ -48,7 +48,7 @@ export async function openCardPrice(id) {
   const imgUrl = cardImg(card, "low");
   body.innerHTML = `<div class="pm-head">
       ${imgUrl ? `<img class="pm-img" src="${esc(imgUrl)}" alt="" referrerpolicy="no-referrer">` : ""}
-      <div><h2>${esc(card.name)}</h2><p class="muted">${esc(card.set?.name || "")} · #${esc(card.localId || "")}${card.rarity && card.rarity !== "None" ? ` · ${esc(card.rarity)}` : ""}</p>
+      <div><h2>${esc(card.name)}</h2><p class="muted">${setLink(card.set, pages)} · #${esc(card.localId || "")}${card.rarity && card.rarity !== "None" ? ` · ${esc(card.rarity)}` : ""}</p>
       <div class="cm-price">${base != null ? kr(base) : "Inget pris ännu"}</div>
       <p class="muted">Cardmarkets trendpris i kronor. Vägledande, uppdateras dagligen.</p></div></div>
     <div class="pchart"></div>

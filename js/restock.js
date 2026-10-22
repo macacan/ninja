@@ -14,7 +14,7 @@ async function feed() {
   const el = $("#restock-feed");
   if (!el) return;
   try {
-    const [p, s] = await Promise.all([liveJSON("data/products.json"), liveJSON("data/stores-status.json")]);
+    const [p, s] = await Promise.all([liveJSON("data/stock.json"), liveJSON("data/stores-status.json")]);
     const names = Object.fromEntries(s.stores.map((x) => [x.id, x.name]));
     const used = new Set();
     const inStock = p.products.filter((x) => x.available);

@@ -51,7 +51,7 @@ jobs:
         run: |
           git config user.name "packninja-bot"
           git config user.email "packninja-bot@users.noreply.github.com"
-          FILES="data/news.json data/release-calendar.json data/products.json data/events.json data/stores-status.json data/notify.json data/price-history.json sitemap.xml scripts/sitemap-state.json set data/set-pages.json"
+          FILES="data/news.json data/release-calendar.json data/products.json data/stock.json data/events.json data/stores-status.json data/notify.json data/price-history.json sitemap.xml scripts/sitemap-state.json set data/set-pages.json"
           save() {
             node scripts/update-news.mjs || echo "::warning::Nyheterna kunde inte hämtas den här gången"
             node scripts/update-releases.mjs || echo "::warning::Släppkalendern kunde inte uppdateras den här gången"

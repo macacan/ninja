@@ -99,6 +99,7 @@ GitHub startar schemalagda jobb bara några gånger per dygn för det här repot
 - **`sitemap.xml`** byggs av `node scripts/build-sitemap.mjs`. En sida får dagens datum (`lastmod`) när dess HTML eller datan den visar ändrats, högst en gång per dag. Bevakningsjobbet (`scrape.yml`) kör skriptet vid varje sparning. Ny sida? Lägg till den i `PAGES` i skriptet.
 - **IndexNow** (Bing, DuckDuckGo, Yahoo, Ecosia, Yandex m.fl.) pingas automatiskt med sidorna som fått nytt datum. Nyckeln ligger i `b8d9e432225c36038641009f3d2fd24e.txt` i roten och får inte tas bort.
 - **Setsidorna** (`set/<namn>.html` och översikten `set/index.html`) byggs av `node scripts/build-set-pages.mjs` från `data/sets/` (alla set och kort från TCGdex, hämtas av `scripts/update-sets.mjs`), prishistoriken i `data/card-history/` och släppkalendern. Ändra aldrig filerna i `set/` för hand, de skrivs över. Korttrender-jobbet (`trends.yml`) hämtar seten och bygger sidorna varje morgon, och bevakningsjobbet bygger om dem när släppkalendern ändras. Butikernas lager på sidorna hämtas live av `js/setpage.js`.
+- **`data/stock.json`** skrivs av bevakningen bredvid `products.json` och innehåller bara det som går att köpa (ca 1 MB i stället för 4 MB). Startsidan och setsidorna läser den, så att sidorna laddar snabbt, vilket Google väger in.
 - `artikel.html` är `noindex`: artiklarna är sammanfattningar av andras texter och ska inte konkurrera med originalen.
 - `.htaccess` skickar `www.` och `http://` till `https://lootninja.se` i ett enda steg, och märker JSON-filerna `noindex`.
 

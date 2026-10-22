@@ -1,5 +1,5 @@
 import { groupKey } from "./group.js";
-import { $, esc, fmt, kr, loading, skeleton, upcomingReleases, daysUntil, latestSets, setCard, setLogo, news, newsItem, productCard, liveStamp, fillRows, liveJSON } from "./site.js";
+import { $, esc, fmt, kr, loading, skeleton, upcomingReleases, daysUntil, latestSets, setCard, setLogo, setPages, news, newsItem, productCard, liveStamp, fillRows, liveJSON } from "./site.js";
 import { bindSetCards } from "./setcards.js";
 import "./restock.js";
 
@@ -12,7 +12,7 @@ async function homeShop() {
   if (!upd.children.length) upd.innerHTML = skeleton(4);
   if (!shop.children.length) shop.innerHTML = skeleton(4);
   try {
-    const [p, s, e] = await Promise.all(["data/products.json", "data/stores-status.json", "data/events.json"]
+    const [p, s, e] = await Promise.all(["data/stock.json", "data/stores-status.json", "data/events.json"]
       .map((u) => liveJSON(u).catch(() => ({}))));
     const names = Object.fromEntries((s.stores || []).map((x) => [x.id, x.name]));
     // Samma etiketter som på butikssidan: prissänkt eller nytt den senaste veckan.
@@ -80,9 +80,9 @@ async function homeSets() {
   const el = $("#home-sets");
   el.innerHTML = skeleton(4);
   try {
-    const sets = await latestSets(16);
+    const [sets, pages] = await Promise.all([latestSets(16), setPages()]);
     // Senaste set: fem stycken, på en rad på dator (se #home-sets i style.css).
-    el.innerHTML = sets.filter((s) => setLogo(s)).slice(0, 5).map(setCard).join("");
+    el.innerHTML = sets.filter((s) => setLogo(s)).slice(0, 5).map((s, i) => setCard(s, i, pages)).join("");
     bindSetCards(el);
     fillRows(el, 2);
   } catch { el.innerHTML = '<div class="msg">Kunde inte nå TCGdex just nu.</div>'; }

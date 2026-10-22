@@ -1,6 +1,10 @@
 // Gratis kortvärdering: sök kort, välj skick, gör en egen pre-grading och se om gradering lönar sig.
 // Utgångspriset är Cardmarkets trendpris (via TCGdex). Skick och betyg är tumregler, se "Så räknar vi" på sidan.
-import { API, $, esc, kr, getJSON, getList, skeleton, loading, cardImg } from "./site.js";
+import { API, $, esc, kr, getJSON, getList, skeleton, loading, cardImg, setPages, setLink } from "./site.js";
+
+// Setets namn länkar till setsidan. Hinner listan inte laddas före första kortet visas bara namnet.
+let pages = null;
+setPages().then((m) => (pages = m));
 import { parseCardQuery, resolvePokemonName, loadDataset, filterByNumber, apiNumber } from "./card-autocomplete.js";
 import { apiFor, findJapanese } from "./japanese.js";
 import { langMark } from "./langmark.js";
@@ -404,7 +408,7 @@ function renderCard() {
       </div>
       <div class="val-info">
         <h2 class="val-dh">${cardTitle(c)}</h2>
-        <p class="muted val-dsub">${esc(c.set?.name || "")} · #${esc(c.localId || "")}${c.rarity && c.rarity !== "None" ? ` · ${esc(c.rarity)}` : ""}</p>
+        <p class="muted val-dsub">${setLink(c.set, pages)} · #${esc(c.localId || "")}${c.rarity && c.rarity !== "None" ? ` · ${esc(c.rarity)}` : ""}</p>
         <details class="acc"${WIDE.matches ? " open" : ""}>
           <summary><span>2. Välj skick</span><span class="acc-val" data-acc="cond"></span></summary>
           <div class="chips" role="radiogroup" aria-label="Kortets skick">${CONDITIONS.map(([n, d], i) => `<label class="chip"><input type="radio" name="cond" value="${i}"${i === state.cond ? " checked" : ""}><span><b>${n}</b><small>${d}</small></span></label>`).join("")}</div>

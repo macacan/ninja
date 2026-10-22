@@ -82,6 +82,8 @@ const head = ({ title, desc, url, ld }) => `<!doctype html>
 <title>${esc(title)}</title>
 <meta name="description" content="${esc(desc)}">
 <link rel="canonical" href="${url}">
+<meta name="robots" content="max-image-preview:large">
+<link rel="preconnect" href="https://assets.tcgdex.net">
 <meta name="theme-color" content="#ffffff">
 <meta name="theme-color" content="#1b1e28" media="(prefers-color-scheme: dark)">
 <link rel="icon" href="logo.svg" type="image/svg+xml">
@@ -100,7 +102,7 @@ const head = ({ title, desc, url, ld }) => `<!doctype html>
 <meta name="twitter:card" content="summary_large_image">
 <script type="application/ld+json">${JSON.stringify(ld).replace(/</g, "\\u003c")}</script>
 <link href="fonts/fonts.css" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=20261022b">
+<link rel="stylesheet" href="style.css?v=20261022c">
 <link rel="stylesheet" href="dark.css?v=20261022a" id="dark-css" media="(prefers-color-scheme: dark)">
 <script src="js/theme.js?v=20261021"></script>
 </head>
@@ -122,7 +124,7 @@ const pageHead = (crumbs) => `
   </header>`;
 const foot = `
 </main>
-<script type="module" src="js/setpage.js?v=20261022"></script>
+<script type="module" src="js/setpage.js?v=20261022b"></script>
 </body>
 </html>
 `;
