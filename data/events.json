@@ -1,6 +1,20 @@
 {
- "updated": 1792665130690,
+ "updated": 1792666050721,
  "events": [
+  {
+   "at": 1792665568428,
+   "store": "dragon-s-lair",
+   "product": "dragon-s-lair:15853576323420",
+   "group": "30th-celebration|booster-box|ja|",
+   "title": "Pokemon Tcg 30th Celebration Booster Box (20 boosters) (Japansk) (m6a)",
+   "url": "https://dragonslair.se/products/pokemon-tcg-30th-celebration-booster-box-20-boosters-japansk",
+   "price": 2445,
+   "type": "Booster Box",
+   "set": "30th Celebration",
+   "lang": "ja",
+   "kind": "prissankt",
+   "from": 2490
+  },
   {
    "at": 1792664547604,
    "store": "toyspace",
