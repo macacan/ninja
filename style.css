@@ -3550,3 +3550,7 @@ button.zm-price:hover{background:#1f2132}
   .set-tiles{grid-template-columns:repeat(auto-fill,minmax(140px,1fr))}
   .set-top{grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px}
 }
+
+/* Notiser: instruktionen för iPhone och iPad (visas bara där, se js/push.js). */
+.ntf-ios{margin:8px 0 12px;padding:10px 12px;border-radius:8px;background:var(--surface);font-size:.92rem;line-height:1.5}
+.ntf-ios b{font:inherit;font-weight:700;text-transform:none;letter-spacing:0}

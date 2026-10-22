@@ -32,8 +32,8 @@ jobs:
       COMMIT_EVERY: ${{ vars.SCRAPE_COMMIT_MINUTES || 15 }}
       DAEMON_INTERVAL: ${{ vars.SCRAPE_INTERVAL_MINUTES || 15 }}
       DAEMON_PAGES: 25 # sitemap-butiker: fler produktsidor per varv när varven är glesare
-      # Skrivtoken för de reserverade ntfy-ämnena (repo-secret). Saknas den skickas notiserna utan inloggning.
-      NTFY_TOKEN: ${{ secrets.NTFY_TOKEN }}
+      # Hemlig nyckel för pushnotiserna (repo-secret). Saknas den skickas inga notiser, men bevakningen går ändå.
+      VAPID_PRIVATE_KEY: ${{ secrets.VAPID_PRIVATE_KEY }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -51,7 +51,7 @@ jobs:
         run: |
           git config user.name "packninja-bot"
           git config user.email "packninja-bot@users.noreply.github.com"
-          FILES="data/news.json data/release-calendar.json data/products.json data/stock.json data/events.json data/stores-status.json data/notify.json data/price-history.json sitemap.xml scripts/sitemap-state.json set data/set-pages.json"
+          FILES="data/news.json data/release-calendar.json data/products.json data/stock.json data/events.json data/stores-status.json data/price-history.json sitemap.xml scripts/sitemap-state.json set data/set-pages.json"
           save() {
             node scripts/update-news.mjs || echo "::warning::Nyheterna kunde inte hämtas den här gången"
             node scripts/update-releases.mjs || echo "::warning::Släppkalendern kunde inte uppdateras den här gången"

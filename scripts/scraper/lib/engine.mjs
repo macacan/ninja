@@ -249,7 +249,6 @@ export async function createEngine({ statuses } = {}) {
     await writeJSON("data/price-history.json", { updated: now, days: history }, true);
     await writeJSON("data/events.json", { updated: now, events });
     await writeJSON("data/stores-status.json", { updated: now, stores: statusList });
-    await writeJSON("data/notify.json", { ntfyTopic: process.env.NTFY_TOPIC || cfg.ntfyTopic || null });
     await writeJSON("scripts/scraper/state.json", state, true);
     return all.length;
   }
@@ -257,6 +256,6 @@ export async function createEngine({ statuses } = {}) {
   return {
     stores, cfg, allowed: stores.filter((s) => allowedStatuses.includes(s.status)),
     scrape, apply, save, hostFor,
-    notify: (list) => notify(list, storeName, cfg),
+    notify: (list) => notify(list, storeName),
   };
 }

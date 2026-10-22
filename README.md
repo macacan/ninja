@@ -84,6 +84,15 @@ GitHub startar schemalagda jobb bara några gånger per dygn för det här repot
 - Boten committar ofta, så kör `git pull --rebase` innan du pushar egna ändringar.
 - Vill du hellre köra på en egen server eller dator: sätt `SCRAPE_ON_ACTIONS=false` och starta daemon.mjs där.
 
+## Pushnotiser
+
+Besökarna slår på pushnotiser under Butiker → Notiser. De fungerar på Android och dator, och på iPhone/iPad från iOS 16.4 när Lootninja är tillagd på hemskärmen (därför `"display": "standalone"` i `site.webmanifest`).
+
+- **I webbläsaren:** `js/push.js` registrerar `sw.js` (som visar notiserna), prenumererar hos webbläsarens notistjänst och skickar adressen, nycklarna och urvalet till `api/push.php`. Urvalet skickas igen när man sparar eller bevakar en produkt.
+- **På webbhotellet:** `api/push.php` sparar prenumerationerna i `lootninja-push.json` bredvid `public_html` (kan inte laddas ner), som packräknaren.
+- **I bevakningen:** `scripts/scraper/lib/notify.mjs` hämtar prenumerationerna, filtrerar händelserna per person och skickar krypterade notiser med `scripts/scraper/lib/webpush.mjs` (inga beroenden). Adresser som notistjänsten säger inte finns längre tas bort.
+- **Nyckeln:** VAPID-nyckelparets publika del står i `js/push.js`, `api/push.php` och `webpush.mjs`. Den hemliga delen ligger bara i repo-secret **`VAPID_PRIVATE_KEY`** (och miljövariabeln med samma namn om du kör daemon.mjs själv). Utan den skickas inga notiser, men bevakningen går ändå. Byter du nyckelpar slutar alla befintliga prenumerationer att fungera, och besökarna måste slå på notiserna igen.
+
 ## Kortskannern (värderingssidan)
 
 `js/card-scanner.js`, inga beroenden utöver Tesseract.js.

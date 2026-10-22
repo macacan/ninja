@@ -1,71 +1,77 @@
-// Skickar nya händelser till mobilen via ntfy.
-// ntfy-ämnet läses från config.json eller miljövariabeln NTFY_TOPIC.
+// Skickar nya händelser som pushnotiser till besökarna som slagit på dem (Butiker → Notiser på sidan).
+// Prenumerationerna och varje besökares urval ligger i api/push.php på webbhotellet. Hämtningen därifrån och
+// notiserna signeras med den hemliga VAPID-nyckeln i miljövariabeln VAPID_PRIVATE_KEY (repo-secret).
+// Nyckeln får aldrig ligga i config.json eller någon annan fil i repot.
+import { vapidKey, jwt, sendPush } from "./webpush.mjs";
 
-const KIND = {
-  ny: { label: "Ny produkt", tag: "new" },
-  tillbaka: { label: "Tillbaka i lager", tag: "white_check_mark" },
-  prissankt: { label: "Prissänkt", tag: "chart_with_downwards_trend" },
-  forbestallning: { label: "Förbeställning öppen", tag: "calendar" },
-};
-const MAX_SINGLE = 8; // fler händelser än så i en körning blir en sammanfattning, så att ingen får notisspam
+const API = process.env.PUSH_API || "https://lootninja.se/api/push.php";
+const AUDIENCE = "https://lootninja.se/api/push.php"; // samma som AUDIENCE i api/push.php, även när PUSH_API pekar på en testserver
+const KIND = { ny: "Ny produkt", tillbaka: "Tillbaka i lager", prissankt: "Prissänkt", forbestallning: "Förbeställning öppen" };
+const MAX_SINGLE = 3; // fler händelser än så till samma person blir en sammanfattning, så att ingen får notisspam
+const CONCURRENCY = 8;
 
 const kr = (n) => `${Math.round(n).toLocaleString("sv-SE")} kr`;
-export const slug = (s) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 
-function line(e, storeName) {
-  const k = KIND[e.kind] || { label: e.kind };
+// Samma regler som matches() i js/prefs.js. Tom lista betyder "alla".
+function matches(e, p) {
+  if (e.group && (p.watch || []).includes(e.group)) return true;
+  if (p.kinds?.length && !p.kinds.includes(e.kind)) return false;
+  if (p.stores?.length && !p.stores.includes(e.store)) return false;
+  if (p.types?.length && !p.types.includes(e.type)) return false;
+  if (p.sets?.length && !p.sets.includes(e.set)) return false;
+  if (p.langs?.length && !p.langs.includes(e.lang)) return false;
+  if (p.maxPrice > 0 && e.price > p.maxPrice) return false;
+  return true;
+}
+
+function message(e, storeName) {
   const price = e.kind === "prissankt" ? `${kr(e.from)} → ${kr(e.price)}` : kr(e.price);
-  return { title: `${k.label}: ${e.title}`, body: `${storeName[e.store] || e.store} · ${price}`, tag: k.tag };
+  return { title: `${KIND[e.kind] || e.kind}: ${e.title}`, body: `${storeName[e.store] || e.store} · ${price}`, url: e.url, tag: `${e.product}-${e.kind}` };
+}
+function summary(list) {
+  const counts = Object.entries(list.reduce((a, e) => ((a[e.kind] = (a[e.kind] || 0) + 1), a), {}))
+    .map(([k, n]) => `${n} ${(KIND[k] || k).toLowerCase()}`).join(", ");
+  return { title: `${list.length} nya händelser i butikerna`, body: `${counts}. Tryck för hela listan.`, url: "https://lootninja.se/butiker.html#events", tag: "summary" };
 }
 
-// Tre försök med paus, så att en kort störning hos ntfy inte gör att en påfyllningsnotis försvinner.
-async function post(url, body, label, extraHeaders = {}) {
-  for (let i = 0; ; i++) {
-    try {
-      const r = await fetch(url, { method: "POST", headers: { "content-type": "application/json", ...extraHeaders }, body, signal: AbortSignal.timeout(15000) });
-      if (r.ok) return;
-      if (r.status < 500 && r.status !== 429) throw Object.assign(new Error(`${label} ${r.status}`), { final: true });
-      if (i >= 2) throw new Error(`${label} ${r.status}`);
-    } catch (e) {
-      if (e.final || i >= 2) throw e;
-    }
-    await new Promise((r) => setTimeout(r, 3000 * (i + 1)));
-  }
+async function api(action, key, body) {
+  const token = jwt(key, { aud: AUDIENCE, exp: Math.floor(Date.now() / 1000) + 300 });
+  const r = await fetch(`${API}?action=${action}`, {
+    method: body ? "POST" : "GET",
+    headers: { "x-lootninja-auth": token, "user-agent": "PackninjaBot/1.0 (+https://lootninja.se/om.html#bot)", ...(body ? { "content-type": "application/json" } : {}) },
+    body: body ? JSON.stringify(body) : undefined,
+    signal: AbortSignal.timeout(20000),
+  });
+  if (!r.ok) throw new Error(`push.php ${action} ${r.status}`);
+  return r.json();
 }
 
-// Ämnena är publika, så utan skrivskydd kan vem som helst skicka falska notiser till prenumeranterna.
-// Reservera ämnena hos ntfy (bara ägaren får skriva) och lägg åtkomsttoken i miljövariabeln NTFY_TOKEN.
-// Token får aldrig ligga i config.json eller någon annan fil i repot.
-const ntfyAuth = () => (process.env.NTFY_TOKEN ? { authorization: `Bearer ${process.env.NTFY_TOKEN}` } : {});
-const ntfy = (topic, msg) => post("https://ntfy.sh", JSON.stringify({ topic, ...msg }), "ntfy", ntfyAuth());
-
-async function toNtfy(base, events, storeName) {
-  // Två sorters ämnen: ett med allt, och ett per produkttyp (t.ex. packninja-xyz-elite-trainer-box).
-  const groups = new Map([[`${base}-alla`, events]]);
-  for (const e of events) {
-    const t = `${base}-${slug(e.type || "ovrigt")}`;
-    if (!groups.has(t)) groups.set(t, []);
-    groups.get(t).push(e);
-  }
-  for (const [topic, list] of groups) {
-    if (list.length > MAX_SINGLE) {
-      const counts = Object.entries(list.reduce((a, e) => ((a[e.kind] = (a[e.kind] || 0) + 1), a), {}))
-        .map(([k, n]) => `${n} ${(KIND[k]?.label || k).toLowerCase()}`).join(", ");
-      await ntfy(topic, { title: `${list.length} nya händelser i butikerna`, message: `${counts}. Öppna Lootninja för hela listan.`, tags: ["bell"] });
-      continue;
-    }
-    for (const e of list) {
-      const l = line(e, storeName);
-      await ntfy(topic, { title: l.title, message: l.body, tags: [l.tag], click: e.url, priority: e.kind === "tillbaka" || e.kind === "forbestallning" ? 4 : 3 });
-    }
-  }
-}
-
-export async function notify(events, storeName, cfg = {}) {
+export async function notify(events, storeName) {
   if (!events.length) return;
-  const topic = process.env.NTFY_TOPIC || cfg.ntfyTopic;
-  const jobs = [];
-  if (topic) jobs.push(toNtfy(topic, events, storeName).then(() => console.log(`Notiser skickade till ntfy (${topic}-…).`)));
+  if (!process.env.VAPID_PRIVATE_KEY) { console.log("Pushnotiser hoppas över: VAPID_PRIVATE_KEY saknas."); return; }
   // En trasig notistjänst får aldrig stoppa själva bevakningen.
-  for (const r of await Promise.allSettled(jobs)) if (r.status === "rejected") console.warn(`Notiser misslyckades: ${r.reason.message}`);
+  try {
+    const key = vapidKey(process.env.VAPID_PRIVATE_KEY);
+    const { subs } = await api("list", key);
+    const gone = [];
+    let sent = 0, failed = 0, i = 0;
+    await Promise.all(Array.from({ length: CONCURRENCY }, async () => {
+      while (i < subs.length) {
+        const s = subs[i++], mine = events.filter((e) => matches(e, s.prefs || {}));
+        if (!mine.length) continue;
+        const msgs = mine.length > MAX_SINGLE ? [summary(mine)] : mine.map((e) => message(e, storeName));
+        const urgent = mine.some((e) => e.kind === "tillbaka" || e.kind === "forbestallning");
+        for (const m of msgs) {
+          try {
+            if (await sendPush(s, m, key, { urgency: urgent ? "high" : "normal" }) === "gone") { gone.push(s.id); break; }
+            sent++;
+          } catch (e) { failed++; if (failed <= 3) console.warn(`Pushnotis misslyckades: ${e.message}`); }
+        }
+      }
+    }));
+    if (gone.length) await api("prune", key, { ids: gone });
+    console.log(`Pushnotiser: ${sent} skickade till ${subs.length} prenumeranter${failed ? `, ${failed} misslyckades` : ""}${gone.length ? `, ${gone.length} borttagna` : ""}.`);
+  } catch (e) {
+    console.warn(`Pushnotiser misslyckades: ${e.message}`);
+  }
 }
