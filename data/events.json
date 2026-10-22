@@ -1,6 +1,62 @@
 {
- "updated": 1792687800102,
+ "updated": 1792688700122,
  "events": [
+  {
+   "at": 1792687814223,
+   "store": "kantovault",
+   "product": "kantovault:11680475840853",
+   "group": "ascended-heroes|booster-pack|en|",
+   "title": "Pokémon Mega Evolution: Ascended Heroes Booster Pack",
+   "url": "https://kantovault.se/products/pokemon-mega-evolution-ascended-heroes-booster-pack",
+   "price": 175,
+   "type": "Booster Pack",
+   "set": "Ascended Heroes",
+   "lang": "en",
+   "kind": "prissankt",
+   "from": 185
+  },
+  {
+   "at": 1792687814223,
+   "store": "kantovault",
+   "product": "kantovault:10016556843349",
+   "group": "x|collection-box|ja|pc|center-fukuoka",
+   "title": "Pokémon Center Fukuoka Special Box",
+   "url": "https://kantovault.se/products/pokemon-center-fukuoka-special-box",
+   "price": 1649,
+   "type": "Collection Box",
+   "set": null,
+   "lang": "ja",
+   "kind": "prissankt",
+   "from": 1790
+  },
+  {
+   "at": 1792687814223,
+   "store": "kantovault",
+   "product": "kantovault:10013019701589",
+   "group": "x|collection-box|ja|pc|center-hiroshima",
+   "title": "Pokémon Center Hiroshima Special Box",
+   "url": "https://kantovault.se/products/pokemon-center-hiroshima-special-box",
+   "price": 1890,
+   "type": "Collection Box",
+   "set": null,
+   "lang": "ja",
+   "kind": "prissankt",
+   "from": 1990
+  },
+  {
+   "at": 1792687814223,
+   "store": "kantovault",
+   "product": "kantovault:10013019275605",
+   "group": "x|collection-box|ja|pc|center-tohoku",
+   "title": "Pokémon Center Tohoku Special Box",
+   "url": "https://kantovault.se/products/pokemon-center-tohoku-special-box",
+   "price": 1590,
+   "type": "Collection Box",
+   "set": null,
+   "lang": "ja",
+   "kind": "prissankt",
+   "from": 1749
+  },
   {
    "at": 1792686905300,
    "store": "kantovault",
