@@ -1,6 +1,32 @@
 {
- "updated": 1792692380200,
+ "updated": 1792693300218,
  "events": [
+  {
+   "at": 1792693271048,
+   "store": "pokemurre",
+   "product": "pokemurre:11256462672210",
+   "group": "x|booster-pack|ja||shiny-star",
+   "title": "Pokemon Shiny Star V S4A Booster Pack (Japansk)",
+   "url": "https://pokemurre.se/products/pokemon-shiny-star-v-s4a-booster-pack-japansk",
+   "price": 189,
+   "type": "Booster Pack",
+   "set": null,
+   "lang": "ja",
+   "kind": "ny"
+  },
+  {
+   "at": 1792693271048,
+   "store": "pokemurre",
+   "product": "pokemurre:11256453005650",
+   "group": "x|booster-pack|ja||hazard-snow",
+   "title": "Pokemon Snow Hazard SV2P Booster Pack (Japansk)",
+   "url": "https://pokemurre.se/products/pokemon-snow-hazard-sv2p-booster-pack-japansk",
+   "price": 39,
+   "type": "Booster Pack",
+   "set": null,
+   "lang": "ja",
+   "kind": "ny"
+  },
   {
    "at": 1792690660408,
    "store": "the-swedish-fish",
