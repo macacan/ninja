@@ -1,6 +1,46 @@
 {
- "updated": 1792699720362,
+ "updated": 1792700640385,
  "events": [
+  {
+   "at": 1792700541010,
+   "store": "spelparken",
+   "product": "spelparken:15318500049271",
+   "group": "fusion-strike|booster-box|en|",
+   "title": "Fusion Strike – 18-Pack Booster Box",
+   "url": "https://spelparken.se/products/fusion-strike-18-pack-booster-box",
+   "price": 6249,
+   "type": "Booster Box",
+   "set": "Fusion Strike",
+   "lang": "en",
+   "kind": "ny"
+  },
+  {
+   "at": 1792700541010,
+   "store": "spelparken",
+   "product": "spelparken:15541912240503",
+   "group": "fusion-strike|booster-box|en|",
+   "title": "Fusion Strike Booster Box",
+   "url": "https://spelparken.se/products/fusion-strike-18-pack-booster-box-kopia",
+   "price": 12499,
+   "type": "Booster Box",
+   "set": "Fusion Strike",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1792700480001,
+   "store": "kantovault",
+   "product": "kantovault:11514512769365",
+   "group": "perfect-order|booster-bundle|en|",
+   "title": "Pokémon Mega Evolution: Perfect Order Booster Bundle",
+   "url": "https://kantovault.se/products/pokemon-mega-evolution-perfect-order-booster-bundle",
+   "price": 499,
+   "type": "Booster Bundle",
+   "set": "Perfect Order",
+   "lang": "en",
+   "kind": "prissankt",
+   "from": 549
+  },
   {
    "at": 1792699640606,
    "store": "spelparken",
