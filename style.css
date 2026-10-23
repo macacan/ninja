@@ -3679,3 +3679,7 @@ button.zm-price:hover{background:#1f2132}
   .countdown small{font-size:.68rem}
   .pack-set{font-size:.62rem}
 }
+
+/* Sök bland seten på översikten (set/). */
+.set-search{margin-top:16px}
+.set-search input[type=search]{width:100%;max-width:440px}

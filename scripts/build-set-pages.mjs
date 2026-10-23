@@ -110,7 +110,7 @@ const head = ({ title, desc, url, ld }) => `<!doctype html>
 <meta name="twitter:card" content="summary_large_image">
 <script type="application/ld+json">${JSON.stringify(ld).replace(/</g, "\\u003c")}</script>
 <link href="fonts/fonts.css" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=20261023a">
+<link rel="stylesheet" href="style.css?v=20261023b">
 <link rel="stylesheet" href="dark.css?v=20261023a" id="dark-css" media="(prefers-color-scheme: dark)">
 <script src="js/theme.js?v=20261021"></script>
 </head>
@@ -216,7 +216,8 @@ function relatedHtml(p, all) {
     <ul class="set-tiles">${list.map(tile).join("")}</ul>`;
 }
 
-const tile = (p) => `<li><a href="set/${p.slug}.html">${logoImg(p, "set-tile-logo")}<b>${esc(p.name)}</b><small>${p.date ? (upcoming(p) ? `Släpps ${longDate(p.date)}` : longDate(p.date)) : "Datum ej satt"}${count(p) ? ` · ${count(p)} kort` : ""}</small></a></li>`;
+const fold = (s) => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
+const tile = (p) => `<li data-q="${esc(fold([p.name, p.serie, p.id].filter(Boolean).join(" ")))}"><a href="set/${p.slug}.html">${logoImg(p, "set-tile-logo")}<b>${esc(p.name)}</b><small>${p.date ? (upcoming(p) ? `Släpps ${longDate(p.date)}` : longDate(p.date)) : "Datum ej satt"}${count(p) ? ` · ${count(p)} kort` : ""}</small></a></li>`;
 
 function setPage(p, all) {
   const priced = p.prices?.size > 0;
@@ -275,15 +276,38 @@ function indexPage(all) {
       <div>
         <h1>Alla Pokémon TCG-set</h1>
         <p>Varje set har en egen sida med alla kort, priser i kronor för de senaste seten, släppdatum och vilka svenska butiker som har setet i lager. Kommande set står först, sedan alla set per serie, nyast först.</p>
+        <form class="set-search" role="search" onsubmit="return false">
+          <input type="search" id="set-q" placeholder="Sök set, t.ex. Pikachu eller Scarlet" aria-label="Sök set" autocomplete="off">
+        </form>
       </div>
     </section>
+    <p class="lead-sm" id="set-none" hidden>Inget set matchar. Prova ett annat namn eller en serie, till exempel Scarlet.</p>
 ${soon.length ? `
     <div class="section"><h2>Aktuella och kommande set</h2><a class="more" href="slapp.html">Släppkalendern</a></div>
     <ul class="set-tiles">${soon.map(tile).join("")}</ul>` : ""}
 ${[...series].map(([name, list]) => `
     <div class="section"><h2>${esc(name)}</h2></div>
     <ul class="set-tiles">${list.map(tile).join("")}</ul>`).join("")}
-  </div>${foot}`;
+  </div>${foot}<script>
+(() => {
+  const q = document.getElementById("set-q"), none = document.getElementById("set-none");
+  const fold = (s) => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
+  const lists = [...document.querySelectorAll(".set-tiles")];
+  q.addEventListener("input", () => {
+    const t = fold(q.value.trim());
+    let shown = 0;
+    for (const ul of lists) {
+      let any = false;
+      for (const li of ul.children) { const ok = !t || li.dataset.q.includes(t); li.hidden = !ok; any = any || ok; }
+      ul.hidden = !any;
+      const h = ul.previousElementSibling;
+      if (h && h.classList.contains("section")) h.hidden = !any;
+      if (any) shown += [...ul.children].filter((li) => !li.hidden).length;
+    }
+    none.hidden = shown > 0;
+  });
+})();
+</script>`;
 }
 
 // ---------- Skriv ----------

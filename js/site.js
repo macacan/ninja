@@ -25,11 +25,12 @@ const NAV = [
   ["priser.html", "Kortpriser"],
   ["vardering.html", "Värdering"],
   ["slapp.html", "Kalender"],
+  ["set/", "Set"],
   ["nyheter.html", "Nyheter"],
 ];
 
-// Filnamnet för sidan man är på (artikel.html hör till Nyheter, setsidorna i set/ till Kalender).
-const pageOf = () => (location.pathname.includes("/set/") ? "slapp.html"
+// Filnamnet för sidan man är på (artikel.html hör till Nyheter, setsidorna i set/ till Set).
+const pageOf = () => (location.pathname.includes("/set/") ? "set/"
   : { "artikel.html": "nyheter.html" }[location.pathname.split("/").pop()] || location.pathname.split("/").pop() || "index.html");
 
 function header() {
