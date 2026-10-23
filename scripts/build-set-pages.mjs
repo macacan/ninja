@@ -111,7 +111,7 @@ const head = ({ title, desc, url, ld }) => `<!doctype html>
 <script type="application/ld+json">${JSON.stringify(ld).replace(/</g, "\\u003c")}</script>
 <link href="fonts/fonts.css" rel="stylesheet">
 <link rel="stylesheet" href="style.css?v=20261023a">
-<link rel="stylesheet" href="dark.css?v=20261022a" id="dark-css" media="(prefers-color-scheme: dark)">
+<link rel="stylesheet" href="dark.css?v=20261023a" id="dark-css" media="(prefers-color-scheme: dark)">
 <script src="js/theme.js?v=20261021"></script>
 </head>
 <body>
