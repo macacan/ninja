@@ -1,6 +1,32 @@
 {
- "updated": 1792766469503,
+ "updated": 1792767389523,
  "events": [
+  {
+   "at": 1792766934638,
+   "store": "shinycards",
+   "product": "shinycards:https://www.shinycards.se/pokemon/scarlet-violet/black-white/pokemon-scarlet-violet-105-black-bolt-white-flare-poster-collection",
+   "group": "white-flare|collection-box|en||bolt-poster",
+   "title": "Pokemon Scarlet & Violet 10.5: Black Bolt & White Flare Poster Collection",
+   "url": "https://www.shinycards.se/pokemon/scarlet-violet/black-white/pokemon-scarlet-violet-105-black-bolt-white-flare-poster-collection",
+   "price": 699,
+   "type": "Collection Box",
+   "set": "White Flare",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1792766654286,
+   "store": "webhallen",
+   "product": "webhallen:399539",
+   "group": "x|tin|en||gengar-summer",
+   "title": "Pokemon Tin Summer EX Mega Gengar",
+   "url": "https://www.webhallen.com/se/product/399539-Pokemon-Tin-Summer-EX-Mega-Gengar",
+   "price": 399,
+   "type": "Tin",
+   "set": null,
+   "lang": "en",
+   "kind": "ny"
+  },
   {
    "at": 1792765015818,
    "store": "toyspace",
