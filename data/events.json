@@ -1,6 +1,48 @@
 {
- "updated": 1792747470075,
+ "updated": 1792748390100,
  "events": [
+  {
+   "at": 1792748371079,
+   "store": "aquitaz",
+   "product": "aquitaz:10722535309658",
+   "group": "chaos-rising|booster-pack|en|sleeved",
+   "title": "Pokémon Mega Evolution: Chaos Rising Sleeved Booster Pack (10 Kort) (ENG)",
+   "url": "https://aquitaz.se/products/pokemon-mega-evolution-chaos-rising-sleeved-booster-pack-10-kort-eng",
+   "price": 79,
+   "type": "Booster Pack",
+   "set": "Chaos Rising",
+   "lang": "en",
+   "kind": "prissankt",
+   "from": 99
+  },
+  {
+   "at": 1792748371079,
+   "store": "aquitaz",
+   "product": "aquitaz:10665561817434",
+   "group": "perfect-order|booster-pack|en|sleeved",
+   "title": "Pokémon Mega Evolution: Perfect Order Sleeved Booster Pack (10 Kort) (ENG)",
+   "url": "https://aquitaz.se/products/pokemon-mega-evolution-perfect-order-sleeved-booster-pack-10-kort-eng",
+   "price": 79,
+   "type": "Booster Pack",
+   "set": "Perfect Order",
+   "lang": "en",
+   "kind": "prissankt",
+   "from": 99
+  },
+  {
+   "at": 1792748371079,
+   "store": "aquitaz",
+   "product": "aquitaz:10815229395290",
+   "group": "pitch-black|booster-pack|en|sleeved",
+   "title": "Pokemon Mega Evolution: Pitch Black Sleeved Booster Pack (10 Cards) (ENG)",
+   "url": "https://aquitaz.se/products/pokemon-mega-evolution-pitch-black-sleeved-booster-pack-10-cards-eng",
+   "price": 79,
+   "type": "Booster Pack",
+   "set": "Pitch Black",
+   "lang": "en",
+   "kind": "prissankt",
+   "from": 99
+  },
   {
    "at": 1792746865610,
    "store": "bangerpack",
