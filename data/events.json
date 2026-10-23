@@ -1,6 +1,19 @@
 {
- "updated": 1792761232144,
+ "updated": 1792762152162,
  "events": [
+  {
+   "at": 1792761770958,
+   "store": "sweet-nerds",
+   "product": "sweet-nerds:https://sweetnerds.se/sv/products/pokemon-30th-celebration-booster-box-jp",
+   "group": "30th-celebration|booster-box|ja|",
+   "title": "Pokémon 30th Celebration Booster Box (JP)",
+   "url": "https://sweetnerds.se/sv/products/pokemon-30th-celebration-booster-box-jp",
+   "price": 2499,
+   "type": "Booster Box",
+   "set": "30th Celebration",
+   "lang": "ja",
+   "kind": "tillbaka"
+  },
   {
    "at": 1792760711512,
    "store": "toyspace",
