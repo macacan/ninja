@@ -1,6 +1,19 @@
 {
- "updated": 1792764629451,
+ "updated": 1792765549479,
  "events": [
+  {
+   "at": 1792765015818,
+   "store": "toyspace",
+   "product": "toyspace:https://toyspace.se/pokemon-tcg-shrouded-fable-kingambit-collection",
+   "group": "shrouded-fable|collection-box|en||boosterpaket-kingambit-konstkort",
+   "title": "Pokemon TCG: Shrouded Fable Box med Kingambit-konstkort och boosterpaket",
+   "url": "https://toyspace.se/pokemon-tcg-shrouded-fable-kingambit-collection",
+   "price": 639,
+   "type": "Collection Box",
+   "set": "Shrouded Fable",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1792763926939,
    "store": "rgb-kingz",
