@@ -1,6 +1,19 @@
 {
- "updated": 1792753891251,
+ "updated": 1792754811275,
  "events": [
+  {
+   "at": 1792753896413,
+   "store": "toyspace",
+   "product": "toyspace:https://toyspace.se/pokemon-tcg-pitch-black-boosterpaket-pok10425-101",
+   "group": "pitch-black|booster-pack|en|",
+   "title": "Pokémon TCG Mega Evolution Pitch Black Boosterpaket",
+   "url": "https://toyspace.se/pokemon-tcg-pitch-black-boosterpaket-pok10425-101",
+   "price": 93,
+   "type": "Booster Pack",
+   "set": "Pitch Black",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1792750763068,
    "store": "bangerpack",
