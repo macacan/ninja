@@ -1,6 +1,32 @@
 {
- "updated": 1792792822203,
+ "updated": 1792793742232,
  "events": [
+  {
+   "at": 1792792880724,
+   "store": "pokemurre",
+   "product": "pokemurre:11259503804754",
+   "group": "x|booster-pack|ja||region",
+   "title": "Pokemon Battle Region S9A Booster Pack (Japansk)",
+   "url": "https://pokemurre.se/products/pokemon-battle-region-s9a-booster-pack-japansk",
+   "price": 65,
+   "type": "Booster Pack",
+   "set": null,
+   "lang": "ja",
+   "kind": "ny"
+  },
+  {
+   "at": 1792792880724,
+   "store": "pokemurre",
+   "product": "pokemurre:10256557637970",
+   "group": "x|booster-pack|ja||universe-vstar",
+   "title": "Pokémon VSTAR Universe Booster Pack S12a (Japanese)",
+   "url": "https://pokemurre.se/products/vstar-universe-booster-pack-s12a-japanese",
+   "price": 249,
+   "type": "Booster Pack",
+   "set": null,
+   "lang": "ja",
+   "kind": "tillbaka"
+  },
   {
    "at": 1792792080757,
    "store": "tcgaddan",
@@ -6552,32 +6578,6 @@
    "url": "https://cardclub.se/products/forbestallning-pokemon-tcg-abyss-eye-m5-booster-box-japansk",
    "price": 1299,
    "type": "Booster Box",
-   "set": null,
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1792363762539,
-   "store": "cardclub",
-   "product": "cardclub:15333800640835",
-   "group": "x|booster-box|en||gem",
-   "title": "Pokémon TCG: Gem Pack 4 Booster box",
-   "url": "https://cardclub.se/products/pokemon-tcg-gem-pack-4-booster-box-kinesisk",
-   "price": 699,
-   "type": "Booster Box",
-   "set": null,
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1792363762539,
-   "store": "cardclub",
-   "product": "cardclub:15333800476995",
-   "group": "x|collection-box|en||gallade-set",
-   "title": "Pokémon TCG: Special Card Set Mega Gallade ex box",
-   "url": "https://cardclub.se/products/pokemon-tcg-special-card-set-mega-gallade-ex-box-japansk",
-   "price": 299,
-   "type": "Collection Box",
    "set": null,
    "lang": "en",
    "kind": "ny"
