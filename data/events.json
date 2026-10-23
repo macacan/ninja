@@ -1,6 +1,19 @@
 {
- "updated": 1792746550045,
+ "updated": 1792747470075,
  "events": [
+  {
+   "at": 1792746865610,
+   "store": "bangerpack",
+   "product": "bangerpack:https://bangerpack.se/pokemon/boosters-packs/pokemon-darkness-ablaze-booster",
+   "group": "darkness-ablaze|booster-pack|en|",
+   "title": "Pokémon Darkness Ablaze – Booster",
+   "url": "https://bangerpack.se/pokemon/boosters-packs/pokemon-darkness-ablaze-booster",
+   "price": 239,
+   "type": "Booster Pack",
+   "set": "Darkness Ablaze",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1792706939728,
    "store": "poketalk",
