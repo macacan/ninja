@@ -1,6 +1,72 @@
 {
- "updated": 1792750191172,
+ "updated": 1792751131190,
  "events": [
+  {
+   "at": 1792750763068,
+   "store": "bangerpack",
+   "product": "bangerpack:https://bangerpack.se/pokemon/boosters-packs/pokemon-perfect-order-booster",
+   "group": "perfect-order|booster-pack|en|",
+   "title": "Pokémon Perfect Order – Booster",
+   "url": "https://bangerpack.se/pokemon/boosters-packs/pokemon-perfect-order-booster",
+   "price": 119,
+   "type": "Booster Pack",
+   "set": "Perfect Order",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1792750763068,
+   "store": "bangerpack",
+   "product": "bangerpack:https://bangerpack.se/pokemon/boosters-packs/pokemon-prismatic-evolutions-booster-enstaka",
+   "group": "prismatic-evolutions|booster-pack|en|",
+   "title": "Pokémon Prismatic Evolutions – Booster",
+   "url": "https://bangerpack.se/pokemon/boosters-packs/pokemon-prismatic-evolutions-booster-enstaka",
+   "price": 269,
+   "type": "Booster Pack",
+   "set": "Prismatic Evolutions",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1792750763068,
+   "store": "bangerpack",
+   "product": "bangerpack:https://bangerpack.se/pokemon/boosters-packs/pokemon-black-bolt-booster",
+   "group": "black-bolt|booster-pack|en|",
+   "title": "Pokémon Black Bolt – Booster",
+   "url": "https://bangerpack.se/pokemon/boosters-packs/pokemon-black-bolt-booster",
+   "price": 239,
+   "type": "Booster Pack",
+   "set": "Black Bolt",
+   "lang": "en",
+   "kind": "prissankt",
+   "from": 249
+  },
+  {
+   "at": 1792750381763,
+   "store": "westcoast-vault",
+   "product": "westcoast-vault:15899074199892",
+   "group": "prismatic-evolutions|booster-bundle|en|",
+   "title": "Pokémon TCG: Prismatic Evolutions Booster Bundle",
+   "url": "https://westcoastvault.se/products/pokemon-tcg-prismatic-evolutions-booster-bundle",
+   "price": 1290,
+   "type": "Booster Bundle",
+   "set": "Prismatic Evolutions",
+   "lang": "en",
+   "kind": "ny"
+  },
+  {
+   "at": 1792750381763,
+   "store": "westcoast-vault",
+   "product": "westcoast-vault:15838405951828",
+   "group": "30th-celebration|booster-pack|en|",
+   "title": "Pokémon TCG: 30th celebration Booster Pack",
+   "url": "https://westcoastvault.se/products/pokemon-tcg-30th-celebration-booster-pack",
+   "price": 169,
+   "type": "Booster Pack",
+   "set": "30th Celebration",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1792748953879,
    "store": "shinycards",
