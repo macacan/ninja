@@ -1,6 +1,32 @@
 {
- "updated": 1792762749987,
+ "updated": 1792763669415,
  "events": [
+  {
+   "at": 1792763081293,
+   "store": "toyspace",
+   "product": "toyspace:https://toyspace.se/pokemon-tcg-30-arsfirande-bundle-pok10451-101",
+   "group": "30th-celebration|booster-bundle|en|",
+   "title": "Pokémon TCG 30th Celebration Booster Bundle",
+   "url": "https://toyspace.se/pokemon-tcg-30-arsfirande-bundle-pok10451-101",
+   "price": 920,
+   "type": "Booster Bundle",
+   "set": "30th Celebration",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1792763028575,
+   "store": "tcgstore",
+   "product": "tcgstore:10881934819655",
+   "group": "chaos-rising|booster-box|en|",
+   "title": "Pokémon Mega Evolution: Chaos Rising Booster Box",
+   "url": "https://tcgstore.se/products/pokemon-mega-evolution-chaos-rising-booster-box",
+   "price": 2899,
+   "type": "Booster Box",
+   "set": "Chaos Rising",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1792762644235,
    "store": "toyspace",
