@@ -3,8 +3,15 @@
 :root{--bg:#1b1e28;--card:#232734;--surface:#2a2f3e;--ink:#e8eaf1;--ink-solid:#353c5c;--muted:#a3abbe;--line:#363c4e;--navy:#aab8e0}
 /* Helt ogenomskinligt sidhuvud i mörkt läge, så att landskapet bakom inte syns igenom. */
 .site-header{background:#232734;box-shadow:0 6px 18px -12px rgba(0,0,0,.6)}
-/* Milt mönster med linjeteckningar (bollar, spöke, kort, paket) bakom innehållet. Följer med när man scrollar. */
+/* Milt mönster med linjeteckningar på mindre skärmar. */
 body{background:var(--bg) url(img/bg-dark.svg?v=2) repeat;background-size:420px}
+/* Webbplats-takeover: stämningsfull samlarbakgrund på stora desktopskärmar (öppna packs till vänster, beundra kort till höger) */
+@media (min-width: 1360px){
+  body{
+    background:#0d1017 url("img/takeover-bg.jpg") no-repeat center top fixed;
+    background-size:max(100%, 1920px) auto;
+  }
+}
 .page-head{background:var(--card)}
 .page-head h1{color:var(--ink)}
 .page-head p{color:var(--muted)}
