@@ -1,6 +1,19 @@
 {
- "updated": 1792760312116,
+ "updated": 1792761232144,
  "events": [
+  {
+   "at": 1792760711512,
+   "store": "toyspace",
+   "product": "toyspace:https://toyspace.se/pokemon-tcg-kaos-uppgang-boosterpaket-pok10407-101",
+   "group": "chaos-rising|booster-pack|en|",
+   "title": "Max 5 per kund. Pokémon TCG Mega Evolution Chaos Rising Boosterpaket",
+   "url": "https://toyspace.se/pokemon-tcg-kaos-uppgang-boosterpaket-pok10407-101",
+   "price": 89,
+   "type": "Booster Pack",
+   "set": "Chaos Rising",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1792759152183,
    "store": "collected",
