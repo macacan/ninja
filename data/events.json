@@ -1,6 +1,45 @@
 {
- "updated": 1792748390100,
+ "updated": 1792749291144,
  "events": [
+  {
+   "at": 1792748953879,
+   "store": "shinycards",
+   "product": "shinycards:https://www.shinycards.se/pokemon/blister-pack/pokemon-mega-evolution-enhanced-2-pack-blister-gengar",
+   "group": "team-rocket|blister|en||2",
+   "title": "Pokemon Mega Evolution: Enhanced 2-Pack Blister - Gengar, Marshadow & Team Rocket's Mimikyu",
+   "url": "https://www.shinycards.se/pokemon/blister-pack/pokemon-mega-evolution-enhanced-2-pack-blister-gengar",
+   "price": 229,
+   "type": "Blister",
+   "set": "Team Rocket",
+   "lang": "en",
+   "kind": "ny"
+  },
+  {
+   "at": 1792748815407,
+   "store": "bangerpack",
+   "product": "bangerpack:https://bangerpack.se/pokemon/boosters-packs/pokemon-white-flare-booster",
+   "group": "white-flare|booster-pack|en|",
+   "title": "Pokémon White Flare – Booster",
+   "url": "https://bangerpack.se/pokemon/boosters-packs/pokemon-white-flare-booster",
+   "price": 229,
+   "type": "Booster Pack",
+   "set": "White Flare",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1792748815407,
+   "store": "bangerpack",
+   "product": "bangerpack:https://bangerpack.se/pokemon/boosters-packs/pokemon-crown-zenith-booster",
+   "group": "crown-zenith|booster-pack|en|",
+   "title": "Pokémon Crown Zenith – Booster",
+   "url": "https://bangerpack.se/pokemon/boosters-packs/pokemon-crown-zenith-booster",
+   "price": 449,
+   "type": "Booster Pack",
+   "set": "Crown Zenith",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1792748371079,
    "store": "aquitaz",
