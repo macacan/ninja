@@ -1,6 +1,32 @@
 {
- "updated": 1792758472072,
+ "updated": 1792759392098,
  "events": [
+  {
+   "at": 1792759152183,
+   "store": "collected",
+   "product": "collected:11209178284374",
+   "group": "30th-celebration|booster-box|ja|",
+   "title": "Pokémon TCG: 30th CELEBRATION Booster Box (Japansk) – M6A",
+   "url": "https://collected.se/products/products-pokemon-tcg-30th-celebration-booster-box-m6a",
+   "price": 2699,
+   "type": "Booster Box",
+   "set": "30th Celebration",
+   "lang": "ja",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1792759152183,
+   "store": "collected",
+   "product": "collected:11181272858966",
+   "group": "white-flare|booster-box|ja|",
+   "title": "Pokémon TCG: White Flare Booster Box (Japansk) - SV11W",
+   "url": "https://collected.se/products/pokemon-white-flare-booster-box-japansk",
+   "price": 2125,
+   "type": "Booster Box",
+   "set": "White Flare",
+   "lang": "ja",
+   "kind": "tillbaka"
+  },
   {
    "at": 1792753896413,
    "store": "toyspace",
