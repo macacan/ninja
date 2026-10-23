@@ -1,6 +1,32 @@
 {
- "updated": 1792790062133,
+ "updated": 1792790962154,
  "events": [
+  {
+   "at": 1792790202951,
+   "store": "poketalk",
+   "product": "poketalk:10373501845846",
+   "group": "white-flare|booster-pack|en|",
+   "title": "Pokémon Scarlet & Violet: White Flare Booster Pack",
+   "url": "https://poketalk.se/products/pokemon-scarlet-violet-white-flare-booster-pack-1",
+   "price": 169,
+   "type": "Booster Pack",
+   "set": "White Flare",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1792790202951,
+   "store": "poketalk",
+   "product": "poketalk:10373450006870",
+   "group": "black-bolt|booster-pack|en|",
+   "title": "Pokémon Scarlet & Violet: Black Bolt Booster Pack",
+   "url": "https://poketalk.se/products/pokemon-scarlet-violet-black-bolt-booster-pack-1",
+   "price": 179,
+   "type": "Booster Pack",
+   "set": "Black Bolt",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1792786236038,
    "store": "sweet-nerds",
@@ -6552,32 +6578,6 @@
    "price": 599,
    "type": "Collection Box",
    "set": null,
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1792363762539,
-   "store": "cardclub",
-   "product": "cardclub:15333495308611",
-   "group": "x|collection-box|en||figure-lucario",
-   "title": "Pokémon TCG: Mega Lucario ex Figure Collection box",
-   "url": "https://cardclub.se/products/pokemon-tcg-mega-lucario-ex-figure-collection-box",
-   "price": 699,
-   "type": "Collection Box",
-   "set": null,
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1792363762539,
-   "store": "cardclub",
-   "product": "cardclub:15298764996931",
-   "group": "perfect-order|booster-pack|en|",
-   "title": "Pokémon TCG: Perfect Order M3 Booster pack",
-   "url": "https://cardclub.se/products/pokemon-tcg-perfect-order-m3-booster-pack",
-   "price": 79,
-   "type": "Booster Pack",
-   "set": "Perfect Order",
    "lang": "en",
    "kind": "ny"
   }
