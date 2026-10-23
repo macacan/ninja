@@ -1,6 +1,19 @@
 {
- "updated": 1792771989322,
+ "updated": 1792772889347,
  "events": [
+  {
+   "at": 1792772502155,
+   "store": "sweet-nerds",
+   "product": "sweet-nerds:https://sweetnerds.se/sv/products/pokemon-tcg-mega-30th-celebration-card-set-3-promo-cards-2-booster-packs-jp",
+   "group": "30th-celebration|booster-pack|ja|",
+   "title": "Pokémon TCG MEGA 30th Celebration Card Set - 3 Promo Cards + 2 Booster Packs (JP)",
+   "url": "https://sweetnerds.se/sv/products/pokemon-tcg-mega-30th-celebration-card-set-3-promo-cards-2-booster-packs-jp",
+   "price": 349,
+   "type": "Booster Pack",
+   "set": "30th Celebration",
+   "lang": "ja",
+   "kind": "ny"
+  },
   {
    "at": 1792769565103,
    "store": "sweet-nerds",
