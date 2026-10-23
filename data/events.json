@@ -1,6 +1,32 @@
 {
- "updated": 1792767389523,
+ "updated": 1792769189091,
  "events": [
+  {
+   "at": 1792768519741,
+   "store": "tcgaddan",
+   "product": "tcgaddan:16071743340876",
+   "group": "x|tin|en||galarian-zapdos",
+   "title": "Galarian Zapdos Tin",
+   "url": "https://tcgaddan.se/products/galarian-articuno-tin",
+   "price": 1599,
+   "type": "Tin",
+   "set": null,
+   "lang": "en",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1792768519741,
+   "store": "tcgaddan",
+   "product": "tcgaddan:16057925763404",
+   "group": "crown-zenith|booster-pack|en|",
+   "title": "Crown Zenith Booster Pack",
+   "url": "https://tcgaddan.se/products/crown-zenith-booster-pack",
+   "price": 379,
+   "type": "Booster Pack",
+   "set": "Crown Zenith",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1792766934638,
    "store": "shinycards",
