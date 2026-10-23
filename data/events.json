@@ -1,6 +1,20 @@
 {
- "updated": 1792791902180,
+ "updated": 1792792822203,
  "events": [
+  {
+   "at": 1792792080757,
+   "store": "tcgaddan",
+   "product": "tcgaddan:16131210281292",
+   "group": "x|booster-pack|zh||chinese-gathering-terastal",
+   "title": "Terastal Gathering Booster Pack Chinese",
+   "url": "https://tcgaddan.se/products/terastal-gathering-booster-pack",
+   "price": 79,
+   "type": "Booster Pack",
+   "set": null,
+   "lang": "zh",
+   "kind": "prissankt",
+   "from": 99
+  },
   {
    "at": 1792790202951,
    "store": "poketalk",
@@ -6563,19 +6577,6 @@
    "title": "Pokémon TCG: Special Card Set Mega Gallade ex box",
    "url": "https://cardclub.se/products/pokemon-tcg-special-card-set-mega-gallade-ex-box-japansk",
    "price": 299,
-   "type": "Collection Box",
-   "set": null,
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1792363762539,
-   "store": "cardclub",
-   "product": "cardclub:15333496095043",
-   "group": "x|collection-box|en||latias",
-   "title": "Pokémon TCG: Mega Latias ex box",
-   "url": "https://cardclub.se/products/pokemon-tcg-mega-latias-ex-box",
-   "price": 599,
    "type": "Collection Box",
    "set": null,
    "lang": "en",
