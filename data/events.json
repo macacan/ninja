@@ -1,6 +1,32 @@
 {
- "updated": 1792785710653,
+ "updated": 1792786630672,
  "events": [
+  {
+   "at": 1792786236038,
+   "store": "sweet-nerds",
+   "product": "sweet-nerds:https://sweetnerds.se/sv/products/pokemon-full-metal-wall-sm9b-booster-box-jp",
+   "group": "x|booster-box|ja||full-metal-wall",
+   "title": "Pokémon Full Metal Wall (SM9b) Booster Box (JP)",
+   "url": "https://sweetnerds.se/sv/products/pokemon-full-metal-wall-sm9b-booster-box-jp",
+   "price": 4099,
+   "type": "Booster Box",
+   "set": null,
+   "lang": "ja",
+   "kind": "ny"
+  },
+  {
+   "at": 1792786236038,
+   "store": "sweet-nerds",
+   "product": "sweet-nerds:https://sweetnerds.se/sv/products/pokemon-alter-genesis-sm12-booster-box-jp",
+   "group": "x|booster-box|ja||alter-genesis",
+   "title": "Pokémon Alter Genesis (SM12) Booster Box (JP)",
+   "url": "https://sweetnerds.se/sv/products/pokemon-alter-genesis-sm12-booster-box-jp",
+   "price": 5999,
+   "type": "Booster Box",
+   "set": null,
+   "lang": "ja",
+   "kind": "ny"
+  },
   {
    "at": 1792783456106,
    "store": "speltrollet",
@@ -6552,32 +6578,6 @@
    "price": 79,
    "type": "Booster Pack",
    "set": "Perfect Order",
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1792363762539,
-   "store": "cardclub",
-   "product": "cardclub:14971031617859",
-   "group": "destined-rivals|booster-pack|en|",
-   "title": "Pokémon TCG: Destined Rivals SV10 Booster pack",
-   "url": "https://cardclub.se/products/forbestall-destined-rivals-sv10-booster-pack",
-   "price": 129,
-   "type": "Booster Pack",
-   "set": "Destined Rivals",
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1792363762539,
-   "store": "cardclub",
-   "product": "cardclub:15285399454019",
-   "group": "x|booster-pack|en||ninja-spinner",
-   "title": "Pokémon TCG: Ninja Spinner m4 Booster pack",
-   "url": "https://cardclub.se/products/forbestallning-pokemon-tcg-ninja-spinner-m4-booster-pack-japansk",
-   "price": 39,
-   "type": "Booster Pack",
-   "set": null,
    "lang": "en",
    "kind": "ny"
   }
