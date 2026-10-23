@@ -1,6 +1,19 @@
 {
- "updated": 1792763669415,
+ "updated": 1792764629451,
  "events": [
+  {
+   "at": 1792763926939,
+   "store": "rgb-kingz",
+   "product": "rgb-kingz:16130397274442",
+   "group": "evolving-skies|booster-pack|en|",
+   "title": "Pokémon TCG: Sword & Shield – Evolving Skies Booster Pack (ENG)",
+   "url": "https://rgbkingz.com/products/pokemon-tcg-sword-shield-evolving-skies-booster-pack-eng",
+   "price": 799,
+   "type": "Booster Pack",
+   "set": "Evolving Skies",
+   "lang": "en",
+   "kind": "ny"
+  },
   {
    "at": 1792763081293,
    "store": "toyspace",
