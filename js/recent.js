@@ -46,7 +46,7 @@ export function mountRecent(root, opts = {}) {
       <div class="recent-row" role="list">${list.map((c, i) => {
         const price = c.eur != null ? kr(c.eur * rate) : "Inget pris";
         const sub = [c.set, c.localId && (c.total ? `${c.localId}/${c.total}` : c.localId)].filter(Boolean).join(" · ");
-        const meta = own ? `<b class="rbadge">${c.count} sök</b><small>${ago(c.t)}</small>`
+        const meta = own ? `<b class="rbadge">${c.count} ${c.count === 1 ? "gång" : "gånger"}</b><small>${ago(c.t)}</small>`
           : `<b class="rbadge">#${i + 1}</b>${c.change != null ? `<small class="${c.change >= 0 ? "up" : "down"}">${c.change >= 0 ? "▲" : "▼"} ${String(Math.abs(c.change)).replace(".", ",")} %</small>` : ""}`;
         return `<a class="rcard" role="listitem" href="vardering.html?id=${encodeURIComponent(c.id)}" data-id="${esc(c.id)}">
           <span class="rimg">${c.image ? `<img src="${esc(c.image)}/low.webp" alt="" loading="lazy" decoding="async" onerror="this.remove()">` : ""}</span>

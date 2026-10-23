@@ -210,6 +210,17 @@ input[type=search]{width:100%;max-width:360px}
 @media (max-width:720px){.price-band{grid-template-columns:1fr}.price-band .coins{display:none}}
 /* Kortvärdet överst på startsidan, direkt under bannern. */
 .price-band.is-top{margin-top:clamp(16px,3vw,28px)}
+/* Rubriken är en knapp som fäller ut sökfältet på mobilen. På större skärmar ser den ut som en vanlig rubrik. */
+.pb-toggle{all:unset;font:inherit;color:inherit;display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;box-sizing:border-box}
+@media (min-width:721px){.pb-toggle{cursor:text;pointer-events:none}}
+@media (max-width:720px){
+  .pb-toggle{cursor:pointer}
+  .pb-toggle::after{content:"";flex:none;width:9px;height:9px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:rotate(45deg) translateY(-3px);transition:transform .2s}
+  .pb-toggle[aria-expanded=true]::after{transform:rotate(225deg) translateY(-3px)}
+  .pb-toggle:focus-visible{outline:3px solid var(--gold);outline-offset:4px;border-radius:4px}
+  .price-band.is-top:not(.is-open) .search-row{display:none}
+  .price-band.is-top{gap:14px}
+}
 .price-band.is-top .search-row > :first-child{flex:1 1 auto}
 .price-band.is-top .search-row > .btn{flex:0 0 auto;padding-inline:22px}
 
@@ -1138,6 +1149,25 @@ span.rd-logo{display:grid;place-items:center;background:var(--surface);border-ra
 .pg[aria-current=page]{background:var(--ink-solid);color:#fff;border-color:var(--ink)}
 .pg[aria-disabled=true]{opacity:.4;pointer-events:none}
 .pg-step{font-family:var(--sans);font-size:.88rem}
+/* Nyheter: ämnesflikar, märkning för TCG Pocket och kompakta kort på mobilen */
+.news-tabs{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 18px;scroll-margin-top:90px}
+.news-tab{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border:1px solid var(--line);border-radius:999px;background:var(--card);color:var(--ink);text-decoration:none;font:600 .9rem var(--sans)}
+.news-tab span{font-size:.78rem;color:var(--muted)}
+.news-tab:hover{border-color:var(--ink)}
+.news-tab[aria-current=true]{background:var(--ink-solid);border-color:var(--ink);color:#fff}
+.news-tab[aria-current=true] span{color:rgba(255,255,255,.75)}
+.tag-digital{display:inline-block;margin-left:6px;padding:2px 6px;border-radius:4px;background:var(--surface);color:var(--muted);font:600 .68rem/1.3 var(--sans);letter-spacing:.4px;vertical-align:1px}
+@media (max-width:600px){
+  .acard{display:grid;grid-template-columns:112px 1fr}
+  .acard-img{aspect-ratio:auto;height:100%;min-height:112px}
+  .acard-src{display:none}
+  .acard-body{padding:12px 14px;gap:4px}
+  .acard h3{font-size:.98rem}
+  .acard p{-webkit-line-clamp:2;font-size:.85rem}
+  .acard-more{padding-top:4px;font-size:.82rem}
+  .news-tabs{flex-wrap:nowrap;overflow-x:auto;margin-inline:-14px;padding:0 14px 4px;scrollbar-width:none}
+  .news-tab{flex:none}
+}
 .article{display:grid;grid-template-columns:1.1fr 1fr;gap:32px;align-items:start;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:28px;margin-top:8px}
 .article-src{font-size:.88rem;color:var(--muted)}
 .article-src b{color:var(--red);text-transform:uppercase;letter-spacing:.4px;font-size:.8rem}
@@ -2826,10 +2856,13 @@ input[type=search]::-webkit-search-results-decoration {
   .val-hero-stage { order: 1; margin: 0 0 4px; }
 }
 
-/* Hero-delen har bara knappar nu: sökningen sker i headern. */
-.val-hero-search { background: none; box-shadow: none; padding: 0; gap: 10px; flex-direction: row; align-items: stretch; }
+/* Hero-delen: sökrutan överst över hela bredden, knapparna under. Knapparna bryts till egna rader när de inte får plats. */
+.val-hero-search { background: none; box-shadow: none; padding: 0; gap: 10px; flex-direction: row; flex-wrap: wrap; align-items: stretch; }
 .val-hero-search:focus-within { box-shadow: none; }
-.val-hero-search .btn { flex: 1 1 0; padding: 14px 18px; white-space: nowrap; }
+.val-hero-search .card-suggest-wrap { flex: 1 1 100%; min-width: 0; }
+.val-hero-search input[type=search] { width: 100%; max-width: none; padding: 13px 16px; border: 2px solid var(--ink); border-radius: 8px; background: var(--card); font: 500 1rem var(--sans); color: var(--ink); }
+.val-hero-search input[type=search]:focus { outline: none; box-shadow: 0 0 0 3px var(--gold); }
+.val-hero-search .btn { flex: 1 1 auto; width: auto; padding: 14px 18px; white-space: nowrap; }
 @media (max-width: 400px) { .val-hero-search .btn { padding: 14px 10px; } }
 
 /* ---------- Precis inne: lagerflöde och packöppnare ---------- */
@@ -3218,6 +3251,15 @@ input[type=search]::-webkit-search-results-decoration {
 .sound-btn[aria-pressed="true"]{color:#9aa1b5}
 .sound-btn:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 #pack-stage > .stage-hint{padding-inline:44px}
+#pack-stage:not(.is-opening) > .sound-btn{display:none}
+
+/* Värdering: förbehållet. Huvudbudskapet syns alltid, detaljerna fälls ut med "Så räknar vi". */
+.vo-disclaimer summary{list-style:none;cursor:pointer}
+.vo-disclaimer summary::-webkit-details-marker{display:none}
+.vo-disclaimer .vo-more{white-space:nowrap;text-decoration:underline;text-underline-offset:2px}
+.vo-disclaimer .vo-more::after{content:" ▾"}
+.vo-disclaimer[open] .vo-more::after{content:" ▴"}
+.vo-disclaimer > p{margin:6px 0 0}
 
 /* ---------- Prisfönster från förstorat kort ---------- */
 button.zm-price{cursor:pointer;color:#fff}
@@ -3348,6 +3390,13 @@ button.zm-price:hover{background:#1f2132}
   .crit-range{height:20px;margin:0}
   .val-live{display:flex;flex-direction:column;align-items:flex-start;gap:2px}
   .val-card-modal .val-grade{margin-top:0;padding-top:0;border-top:0}
+  /* Nerscrollat: litet kort till vänster och namn och värde bredvid, så att reglagen får plats. */
+  .val-side .val-img{transition:width .2s ease}
+  #val-card.is-compact .val-side{grid-template-columns:auto 1fr;justify-items:start;text-align:left;gap:12px;padding-top:6px}
+  #val-card.is-compact .val-side .val-img{width:72px}
+  #val-card.is-compact .vz-tip{display:none}
+  #val-card.is-compact .val-meta{justify-content:flex-start;gap:4px 14px}
+  #val-card.is-compact .val-mtitle{padding-top:0}
 }
 
 /* ---------- Värdering: skick och pre-grading som dropdowns ---------- */
@@ -3360,14 +3409,14 @@ button.zm-price:hover{background:#1f2132}
 .acc-val{margin-left:auto;font:600 .85rem/1.2 var(--pixel);text-transform:none;color:var(--muted)}
 .acc[open] > .chips, .acc[open] > p, .acc[open] > .crit-s{animation:accIn .2s ease-out}
 @keyframes accIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
-/* Desktop: inga dropdowns, och kostnaden för gradering ligger under värdet till höger. */
+/* Desktop: inga dropdowns, och kostnaden för gradering ligger under reglagen till vänster. */
 @media (min-width:761px){
   .acc summary{display:none}
   .acc{border-bottom:0;margin-bottom:0}
   .val-grade{display:contents}
-  .val-grade > .acc:not(.cost-acc){grid-column:1;grid-row:1 / span 2;align-self:start}
-  .val-out{grid-column:2;grid-row:1}
-  .val-grade > .cost-acc{grid-column:2;grid-row:2;align-self:start;margin-top:12px}
+  .val-grade > .acc:not(.cost-acc){grid-column:1;grid-row:1;align-self:start}
+  .val-out{grid-column:2;grid-row:1 / span 2}
+  .val-grade > .cost-acc{grid-column:1;grid-row:2;align-self:start;margin-top:12px}
 }
 /* Mobil: kostnaden är en dropdown, ihopfälld som standard. Rubriken finns i raden ovanför. */
 @media (max-width:760px){
@@ -3572,3 +3621,61 @@ button.zm-price:hover{background:#1f2132}
 .ntf-howto ul{margin:6px 0 0;padding-left:18px}
 .ntf-howto ul li{margin:4px 0}
 .ntf-help{margin:6px 0 0;padding:10px 12px;border-radius:8px;background:var(--surface);font-size:.92rem;line-height:1.5}
+
+/* ---------- Mobil: tätare layout, så att mer ryms på skärmen ---------- */
+@media (max-width:600px){
+  /* Nyheter på startsidan: liten bild till vänster i stället för en stor bild ovanför. */
+  .news-cols{gap:10px}
+  .news-cols .news{grid-template-columns:104px 1fr;align-items:stretch;gap:0;border-top-width:2px}
+  .news-cols .news-img{aspect-ratio:auto;height:100%;min-height:96px}
+  .news-cols .news-body{padding:10px 12px;gap:4px}
+  .news-cols .news h3{font-size:.95rem;line-height:1.3}
+  .news-cols .news p{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font-size:.84rem}
+
+  /* Kortrutor (Kortpriser och sökträffarna i Värdering): tre kort per rad. */
+  .cgrid{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+  .ctile{padding:6px;gap:2px;border-radius:9px}
+  .cname{font-size:.78rem;margin-top:2px;overflow-wrap:anywhere}
+  .cset,.crar{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .cset{font-size:.66rem}
+  .crow{flex-wrap:wrap;gap:0 4px}
+  .cprice{font-size:.86rem}
+  .crar{font-size:.6rem}
+
+  /* Butiker, listvyn: mindre bild och tätare text. */
+  .ggrid[data-view=list] .gcard .pimg{flex-basis:92px}
+  .ggrid[data-view=list] .gbody{padding:8px 10px;gap:3px}
+  .ggrid[data-view=list] .gcard h3{font-size:.95rem}
+  .ggrid[data-view=list] .gtoggle{min-height:36px;padding:8px 0 0;margin-top:2px}
+  .gupdated{font-size:.72rem}
+
+  /* Filtren: rullistan fyller hela knappen, så att man inte måste träffa själva texten. */
+  .drop:not(.mdrop){padding:0 0 0 10px}
+  .drop select{min-height:40px;padding-right:24px;background-position:right 8px center}
+
+  /* Graderingsguiden: liten bild bredvid texten. */
+  .grade-parts{gap:8px}
+  .grade-parts li{flex-direction:row}
+  .grade-part-media{flex:0 0 96px;aspect-ratio:auto}
+  .grade-part-text{padding:10px 12px}
+  .grade-part-text b{font-size:.95rem}
+  .grade-part-text span{font-size:.82rem;line-height:1.4}
+
+  /* Setlistan: tre set per rad. */
+  .set-tiles{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+  .set-tiles a{padding:8px;gap:2px;font-size:.8rem;line-height:1.25}
+  .set-tiles small{font-size:.66rem}
+  .set-tile-logo{height:44px;margin-bottom:4px}
+  .set-tile-logo.set-word{height:auto;min-height:44px;font-size:.8rem;overflow-wrap:anywhere}
+
+  /* Kortlistan på setsidorna */
+  .set-table th,.set-table td{padding:5px 8px}
+
+  /* Värderingens tabeller: tätare rader och smalare symbolkolumn */
+  .val-data-table tr{padding:8px 2px}
+  .val-rarity tr{grid-template-columns:56px 1fr}
+
+  /* För liten text */
+  .countdown small{font-size:.68rem}
+  .pack-set{font-size:.62rem}
+}

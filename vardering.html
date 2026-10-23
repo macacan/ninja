@@ -26,7 +26,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Hem","item":"https://lootninja.se/"},{"@type":"ListItem","position":2,"name":"Värdering","item":"https://lootninja.se/vardering.html"}]}</script>
 <link href="fonts/fonts.css" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=20261022h">
+<link rel="stylesheet" href="style.css?v=20261023a">
 <link rel="stylesheet" href="dark.css?v=20261022a" id="dark-css" media="(prefers-color-scheme: dark)">
 <script src="js/theme.js?v=20261021"></script>
 </head>
@@ -57,10 +57,11 @@
         </p>
 
         <!-- Sökformulär direkt i Hero -->
-        <div class="val-hero-search">
+        <form class="val-hero-search" id="val-hero-form" role="search">
+          <input id="val-hero-q" name="q" type="search" placeholder="T.ex. Charizard 4/102" aria-label="Sök kort att värdera" autocomplete="off">
+          <button class="btn primary" type="submit" id="val-search-open">Värdera kort <span class="beta-tag">Beta</span></button>
           <button class="btn scan-btn" type="button" id="scan-open" aria-label="Skanna kort med kameran (beta)"><span data-icon="camera" data-size="20"></span><span>Skanna</span><span class="beta-tag">Beta</span></button>
-          <button class="btn primary" type="button" id="val-search-open">Värdera kort</button>
-        </div>
+        </form>
       </div>
 
       <!-- 3D Holografisk Kortscen -->
@@ -133,7 +134,7 @@
             Vinkla kortet under en lampa och titta på hörn, kanter, yta och baksida. Ett kort som ser nytt ut får fullt pris, men redan små vita prickar eller en repa i folien kan halvera det.
           </p>
           <div class="val-how-tip">
-            <b>Vi räknar så här:</b> Mint 115 %, Near Mint 100 %, Excellent 70 %, Lätt spelat 50 %, Spelat 30 % och Dåligt 15 %.
+            <b>Hur mycket skicket drar av:</b> se <a href="#condition-title">skicket i procent av priset</a> längre ner.
           </div>
         </article>
 
@@ -143,7 +144,7 @@
             Det som någon begär i en annons säger lite. Vi använder Cardmarkets trendpris, som bygger på köp som faktiskt har gått igenom, och räknar om det till kronor.
           </p>
           <div class="val-how-tip">
-            <b>Funderar du på gradering?</b> Räkna i kalkylatorn ovan på om ett högt PSA-betyg skulle betala avgiften och lite till.
+            <b>Funderar du på gradering?</b> <a href="#val-hero-q">Värdera kortet</a> och räkna i graderingskalkylatorn på om ett högt PSA-betyg skulle betala avgiften och lite till.
           </div>
         </article>
       </div>
@@ -527,8 +528,8 @@
           <h4>Charizard ex</h4>
           <span class="val-bench-set">151 · #199 · Special Illustration</span>
           <div class="val-bench-prices">
-            <div><span>Near Mint:</span> <b>ca 1 400 kr</b></div>
-            <div class="psa10"><span>PSA 10:</span> <b>ca 3 950 kr</b></div>
+            <div><span>Near Mint:</span> <b data-bench="nm">…</b></div>
+            <div class="psa10"><span>PSA 10:</span> <b data-bench="psa10">…</b></div>
           </div>
           <button type="button" class="btn small primary val-bench-btn" data-val-pick="sv03.5-199">Värdera kortet</button>
         </article>
@@ -541,8 +542,8 @@
           <h4>Pikachu</h4>
           <span class="val-bench-set">151 · #173 · Illustration Rare</span>
           <div class="val-bench-prices">
-            <div><span>Near Mint:</span> <b>ca 280 kr</b></div>
-            <div class="psa10"><span>PSA 10:</span> <b>ca 850 kr</b></div>
+            <div><span>Near Mint:</span> <b data-bench="nm">…</b></div>
+            <div class="psa10"><span>PSA 10:</span> <b data-bench="psa10">…</b></div>
           </div>
           <button type="button" class="btn small primary val-bench-btn" data-val-pick="sv03.5-173">Värdera kortet</button>
         </article>
@@ -555,8 +556,8 @@
           <h4>Umbreon VMAX</h4>
           <span class="val-bench-set">Evolving Skies · #215 · Alt Art</span>
           <div class="val-bench-prices">
-            <div><span>Near Mint:</span> <b>ca 6 500 kr</b></div>
-            <div class="psa10"><span>PSA 10:</span> <b>ca 12 500 kr</b></div>
+            <div><span>Near Mint:</span> <b data-bench="nm">…</b></div>
+            <div class="psa10"><span>PSA 10:</span> <b data-bench="psa10">…</b></div>
           </div>
           <button type="button" class="btn small primary val-bench-btn" data-val-pick="swsh7-215">Värdera kortet</button>
         </article>
@@ -569,8 +570,8 @@
           <h4>Charizard</h4>
           <span class="val-bench-set">Base Set (1999) · #4 · Holo Rare</span>
           <div class="val-bench-prices">
-            <div><span>Near Mint:</span> <b>ca 3 500 kr</b></div>
-            <div class="psa10"><span>PSA 10:</span> <b>80 000+ kr</b></div>
+            <div><span>Near Mint:</span> <b data-bench="nm">…</b></div>
+            <div class="psa10"><span>PSA 10:</span> <b data-bench="psa10">…</b></div>
           </div>
           <button type="button" class="btn small primary val-bench-btn" data-val-pick="base1-4">Värdera kortet</button>
         </article>
@@ -588,60 +589,30 @@
         <article class="gcard-info">
           <span class="gnum">1</span>
           <h3>Utgångspris</h3>
-          <p>Vi utgår från Cardmarkets officiella trendpris för kortet i nyskick, hämtat via TCGdex och automatiskt omräknat till svenska kronor med dagens ECB-växelkurs via Frankfurter.</p>
+          <p>Vi utgår från Cardmarkets trendpris för kortet i nyskick, hämtat via TCGdex och omräknat till kronor med dagens ECB-växelkurs via Frankfurter. Marknaden rör sig varje dag, och i Sverige, till exempel på Tradera, kan slutpriserna avvika från Cardmarket.</p>
         </article>
         <article class="gcard-info">
           <span class="gnum">2</span>
-          <h3>Skicktumregler</h3>
-          <p>Ett kort i sämre skick säljs för mindre. Procentsatserna per skick är etablerade tumregler som erfarna samlare och handlare tillämpar för att räkna av värdet.</p>
+          <h3>Skick och graderat värde</h3>
+          <p>Procentsatserna per skick är tumregler som samlare och handlare använder. Värdet för betygen 1–10 räknas med ungefärliga multiplar av nyskickspriset. Verkliga graderade priser varierar mellan kort, så kolla alltid sålda priser för just ditt kort.</p>
         </article>
         <article class="gcard-info">
           <span class="gnum">3</span>
-          <h3>Graderat värde</h3>
-          <p>Värdet för betygen 8, 9 och 10 beräknas utifrån historiska multiplar av nyskickspriset. Verkliga graderade priser varierar mellan kort, så kolla alltid sålda priser för just ditt kort.</p>
+          <h3>Pre-grading är ingen gradering</h3>
+          <p>Verktyget hjälper dig att hitta vanliga fel på centrering, hörn, kanter och yta. PSA, Beckett och CGC granskar med förstoring och specialbelysning, och ett kort som ser ut som en 10:a för blotta ögat kan ha trycklinjer eller bucklor som sänker betyget.</p>
         </article>
         <article class="gcard-info">
           <span class="gnum">4</span>
-          <h3>Ingen officiell gradering</h3>
-          <p>Vår digitala pre-grading är ett vägledande beslutsstöd och ingen garanti. Graderingsbolag som PSA, BGS och CGC sätter sitt slutgiltiga betyg efter fysisk granskning.</p>
-        </article>
-      </div>
-      <p class="hint">Vill du se fullständig prishistorik och trender för alla kort? Gå till <a href="priser.html">Kortpriser</a>.</p>
-    </section>
-
-    <!-- ======================================================== -->
-    <!-- OM VÅR VÄRDERING OCH GRADERING: RIKTVÄRDEN, INTE FACIT   -->
-    <!-- ======================================================== -->
-    <section class="guide" aria-labelledby="om-title">
-      <div class="val-section-title">
-        <h2 id="om-title">Om vår värdering och gradering</h2>
-      </div>
-      <div class="guide-grid">
-        <article class="gcard-info">
-          <span class="gnum">1</span>
-          <h3>Ungefärliga riktvärden, inte exakta priser</h3>
-          <p>Marknaden för Pokémonkort rör sig varje dag. Råpriserna hämtas från Cardmarkets trendpris via TCGdex och räknas om till kronor. Priser för olika skick och för graderade kort (1–10) räknas ut med en uppskattad marknadsformel. På den svenska marknaden, till exempel på Tradera, kan slutpriserna avvika från Cardmarket.</p>
-        </article>
-        <article class="gcard-info">
-          <span class="gnum">2</span>
-          <h3>Självbedömning mot officiell gradering</h3>
-          <p>Verktyget hjälper dig att upptäcka vanliga fel på centrering, hörn, kanter och yta. Professionella graderare som PSA, Beckett och CGC använder förstoring och specialbelysning. Ett kort som ser ut som en 10:a för blotta ögat kan ha mikroskopiska trycklinjer eller bucklor som sänker betyget.</p>
-        </article>
-        <article class="gcard-info">
-          <span class="gnum">3</span>
-          <h3>Checklista innan du skickar på gradering</h3>
+          <h3>Innan du skickar på gradering</h3>
           <ol class="val-cond-steps">
             <li>Granska kortet utan plastficka under stark lampa.</li>
             <li>Jämför med sålda auktioner för exakt samma kort och betyg.</li>
             <li>Räkna in frakt, försäkring och eventuell tull i graderingskostnaden.</li>
+            <li>PSA ger oftast högst pris, särskilt för betyget 10. CGC och Beckett är ibland billigare eller snabbare. Kolla avgifter och väntetider hos bolaget.</li>
           </ol>
         </article>
-        <article class="gcard-info">
-          <span class="gnum">4</span>
-          <h3>Välj graderingsbolag</h3>
-          <p>PSA är störst för Pokémonkort och ger oftast högst pris vid försäljning, särskilt för betyget 10. CGC och Beckett är vanliga alternativ som ibland är billigare eller snabbare. Avgifter och väntetider ändras ofta, så kolla dem hos bolaget innan du skickar.</p>
-        </article>
       </div>
+      <p class="hint">Vill du se fullständig prishistorik och trender för alla kort? Gå till <a href="priser.html">Kortpriser</a>.</p>
     </section>
 
     <!-- ======================================================== -->
@@ -743,7 +714,7 @@
   <section id="val-card" class="val" aria-live="polite"></section>
 </dialog>
 
-<script type="module" src="js/vardering.js?v=20261022b"></script>
+<script type="module" src="js/vardering.js?v=20261023a"></script>
 <script type="module" src="js/vardering-mobile.js?v=20261021"></script>
 </body>
 </html>

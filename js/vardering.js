@@ -207,10 +207,13 @@ function drawDamage() {
 }
 
 // lang och en: språket på det valda kortet och, för japanska kort, Pokémonens engelska namn.
+// Om "Så räknar vi" i förbehållet är utfällt. Resultatet ritas om vid varje ändring, så valet sparas här.
+let discOpen = false;
 const state = { card: null, lang: "en", en: null, rate: null, year: null, cond: DEFAULT_COND, crit: [1, 1, 1, 1], cost: 400 };
 const isJa = () => $("#vm-lang").value === "ja";
 // Japanska kort visas med det engelska namnet först och det japanska under.
-const cardTitle = (c) => (state.lang === "ja" && state.en ? `${esc(state.en)} <small class="cname-ja">${esc(c.name)}</small> <span class="beta-tag">Beta</span>` : esc(c.name));
+// Värderingen är i beta, så titeln har alltid Beta-taggen.
+const cardTitle = (c) => `${state.lang === "ja" && state.en ? `${esc(state.en)} <small class="cname-ja">${esc(c.name)}</small>` : esc(c.name)} <span class="beta-tag">Beta</span>`;
 let found = [], shown = 0, searchId = 0;
 const PAGE = 12;
 
@@ -221,6 +224,14 @@ async function getRate() {
 }
 
 // ---------- Sök ----------
+// Alla engelska set, nyaste först. Ger setnamn i träfflistan och sorterar träffarna så att nyare kort kommer först.
+let setIndex = null;
+const loadSets = () => (setIndex ??= getJSON(`${API}/sets?sort:field=releaseDate&sort:order=DESC`)
+  .then((sets) => new Map(sets.map((s, i) => [s.id, { name: s.name, order: i, official: s.cardCount?.official }])))
+  .catch(() => new Map()));
+const setIdOf = (c) => c.set?.id || c.id.slice(0, c.id.lastIndexOf("-"));
+let setNames = new Map();
+
 async function findCards(raw) {
   const parsed = parseCardQuery(raw);
   const data = await loadDataset().catch(() => null);
@@ -241,7 +252,11 @@ async function findCards(raw) {
   } else if (name) {
     list = await getList(`${API}/cards?${new URLSearchParams({ name })}`);
   }
-  return { list: [...(list || [])].sort((a, b) => !!b.image - !!a.image), title: [name, num && `#${num}`].filter(Boolean).join(" ") };
+  setNames = await loadSets();
+  // "4/102": set med exakt 102 kort först. Sedan kort med bild, och nyaste set först.
+  const order = (c) => setNames.get(setIdOf(c))?.order ?? Infinity;
+  const exact = (c) => (parsed.setTotal && setNames.get(setIdOf(c))?.official === +parsed.setTotal ? 1 : 0);
+  return { list: [...(list || [])].sort((a, b) => exact(b) - exact(a) || !!b.image - !!a.image || order(a) - order(b)), title: [name, num && `#${num}`].filter(Boolean).join(" ") };
 }
 
 function resultTile(c, i) {
@@ -254,7 +269,7 @@ function resultTile(c, i) {
       ${isBack ? `<span class="csoon">Bilder kommer snart</span>` : ""}${langMark(c.lang)}
     </span>
     <span class="cname">${c.en ? `${esc(c.en)} <small class="cname-ja">${esc(c.name)}</small>` : esc(c.name)}</span>
-    <span class="cset">#${esc(c.localId || "")} · ${esc(c.id.split("-")[0].toUpperCase())}</span>
+    <span class="cset">${esc(setNames.get(setIdOf(c))?.name || setIdOf(c).toUpperCase())} · #${esc(c.localId || "")}</span>
   </div>`;
 }
 
@@ -386,7 +401,8 @@ function outputHTML() {
     <ul class="vo-tiers" aria-label="Riktvärden per betyg">
       ${tier("Ograderat, ditt skick", raw, false)}${tier("Graderat", gv, true)}
     </ul>
-    <p class="hint vo-disclaimer"><b>Observera:</b> Alla priser och betyg är ungefärliga uppskattningar. Ograderat nypris baseras på Cardmarkets europeiska trendpris (via TCGdex) omräknat till SEK. Lägsta annonspris på Cardmarket avser ofta sämre skick eller andra språk än engelska. Det graderade värdet är en schablonmässig beräkning – kontrollera alltid faktiska sålda priser (t.ex. på Tradera eller eBay) innan du betalar för gradering.${vintage ? " Kort från före 2017 har dessutom större spridning i graderade priser." : ""}</p>
+    <details class="hint vo-disclaimer"${discOpen ? " open" : ""}><summary><b>Beta:</b> Alla priser och betyg är uppskattningar. Kolla alltid sålda priser för samma kort, t.ex. på Tradera eller eBay, innan du köper, säljer eller graderar. <span class="vo-more">Så räknar vi</span></summary>
+      <p>Ograderat nypris baseras på Cardmarkets europeiska trendpris (via TCGdex) omräknat till SEK. Lägsta annonspris på Cardmarket avser ofta sämre skick eller andra språk än engelska. Det graderade värdet är en schablonmässig beräkning.${vintage ? " Kort från före 2017 har dessutom större spridning i graderade priser." : ""}</p></details>
     <div class="vo-grade"><div class="gcircle${g === 10 ? " gold" : ""}" role="img" aria-label="Ditt estimerade betyg ${g} av 10, ${PSA_NAME[g]}"><b>${g}</b><span>/10</span></div><div><b>Ditt estimerade betyg: ${PSA_NAME[g]}</b><p class="muted">Endast en indikation baserad på dina val – inte en garanti för vilket betyg PSA, BGS eller CGC ger vid en fysisk granskning. Det svagaste kriteriet väger tyngst, precis som hos graderingsbolagen.</p></div></div>
     <div class="verdict ${verdict[0]}"><b>${verdict[1]}</b><span>${verdict[2]}</span></div>`;
 }
@@ -631,6 +647,14 @@ $("#vm-clear").addEventListener("click", clearAll);
 modal.addEventListener("click", (e) => { if (e.target === modal || e.target.closest(".cm-close")) modal.close(); });
 modal.addEventListener("close", () => history.replaceState(null, "", location.pathname));
 cardModal.addEventListener("click", (e) => { if (e.target === cardModal || e.target.closest(".cm-close")) cardModal.close(); });
+// Mobil: kortet högst upp krymper när man scrollar ner till reglagen och växer igen högst upp.
+// Olika gränser åt varje håll, så att höjdändringen inte får det att slå fram och tillbaka.
+cardModal.addEventListener("scroll", (e) => {
+  const box = $("#val-card"), el = e.target, y = el.scrollTop;
+  // Bara när det finns mer att scrolla än kortet krymper, annars hoppar sidan tillbaka upp och kortet växer igen.
+  if (y > 60 && el.scrollHeight - el.clientHeight > 260) box.classList.add("is-compact");
+  else if (y < 10) box.classList.remove("is-compact");
+}, true);
 // Stängs värderingen och sökträffarna finns kvar under, går adressen tillbaka till sökningen.
 cardModal.addEventListener("close", () => history.replaceState(null, "", modal.open && vmInput.value.trim() ? `?q=${encodeURIComponent(vmInput.value.trim())}${isJa() ? "&lang=ja" : ""}` : location.pathname));
 
@@ -647,8 +671,15 @@ $("#header-search").addEventListener("submit", (e) => {
   }
   search(input.value);
 });
-// "Värdera kort" i hero-delen öppnar sökfältet i headern (på mobilen är det dolt bakom en knapp).
-$("#val-search-open")?.addEventListener("click", () => { openModal(); vmInput.focus(); });
+// Sökrutan i hero-delen söker direkt. Tom ruta öppnar värderingsfönstret med sökrutan i fokus.
+const heroInput = $("#val-hero-q");
+if (heroInput) mountCardAutocomplete(heroInput, { onSelect: (val, cardId) => (cardId && !isJa() ? pick(cardId) : search(val)) });
+$("#val-hero-form")?.addEventListener("submit", (e) => {
+  e.preventDefault();
+  if (heroInput.value.trim()) return search(heroInput.value);
+  openModal();
+  vmInput.focus();
+});
 const startScan = () => openScanner(({ name, number, total, canvas, cardId }) => {
   if (cardId) {
     reveal(cardId);
@@ -716,6 +747,7 @@ $("#val-card").addEventListener("change", (e) => {
   animateCrit(COND_PRESET[state.cond]);
 });
 $("#val-card").addEventListener("click", (e) => { if (e.target.closest(".val-img")) openValZoom(); });
+$("#val-card").addEventListener("toggle", (e) => { if (e.target.matches(".vo-disclaimer")) discOpen = e.target.open; }, true);
 $("#val-card").addEventListener("keydown", (e) => { if ((e.key === "Enter" || e.key === " ") && e.target.matches(".val-img")) { e.preventDefault(); openValZoom(); } });
 $("#val-card").addEventListener("input", (e) => {
   if (e.target.dataset.crit != null) return setCrit(e.target);
@@ -733,6 +765,28 @@ document.addEventListener("click", (e) => {
 
 
 mountRecent($("#recent"), { eyebrow: "Nyligen kollade", title: "Senast värderade kort", onPick: (id) => pick(id) });
+
+// Jämförelsekorten visar dagens pris, räknat på samma sätt som i värderingen: trendpriset i nyskick
+// och PSA 10 med samma multipel som kalkylatorn använder för betyg 10.
+async function loadBench() {
+  const rate = await getRate();
+  await Promise.all([...document.querySelectorAll(".val-bench-card")].map(async (el) => {
+    const id = el.querySelector("[data-val-pick]")?.dataset.valPick;
+    const nm = el.querySelector("[data-bench='nm']"), psa = el.querySelector("[data-bench='psa10']");
+    try {
+      const card = await getJSON(`${API}/cards/${encodeURIComponent(id)}`);
+      const set = await getJSON(`${API}/sets/${encodeURIComponent(card.set?.id || "")}`).catch(() => null);
+      const base = baseEur(card) * rate;
+      if (!Number.isFinite(base)) throw new Error("inget pris");
+      const year = set?.releaseDate ? +set.releaseDate.slice(0, 4) : null;
+      nm.textContent = ca(base);
+      psa.textContent = ca(base * gradeMult(10, isVintage(year)));
+    } catch {
+      nm.textContent = psa.textContent = "se värdering";
+    }
+  }));
+}
+loadBench();
 
 const params = new URLSearchParams(location.search);
 if (params.get("lang") === "ja") $("#vm-lang").value = "ja";

@@ -4,6 +4,14 @@ import { getPrefs } from "./prefs.js";
 import { bindSetCards } from "./setcards.js";
 import "./restock.js";
 
+// "Vad är ditt kort värt?": på mobilen fäller rubriken ut sökfältet och sätter markören i det.
+$(".pb-toggle")?.addEventListener("click", (e) => {
+  const band = e.currentTarget.closest(".price-band");
+  const open = band.classList.toggle("is-open");
+  e.currentTarget.setAttribute("aria-expanded", String(open));
+  if (open) band.querySelector("input[type=search]")?.focus();
+});
+
 // Dina bevakade: produkterna man bevakar med klockan på butikssidan, hämtade om varje minut.
 // En per produkt: butiken med lägst pris i lager, annars lägst pris för förbeställning. Syns bara om man bevakar något.
 async function homeWatch() {

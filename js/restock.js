@@ -270,6 +270,7 @@ async function openPack(btn) {
   if (doneToday()) return applyLock(); // dagens pack är redan öppnat, tipset förklarar det
   busy = true;
   const row = $("#pack-row"), hint = $("#stage-hint");
+  $("#pack-stage").classList.add("is-opening"); // ljudknappen syns bara när ett pack öppnas
   row.classList.add("has-chosen");
   btn.classList.add("is-chosen");
   hint.textContent = "Öppnar…";
@@ -294,7 +295,7 @@ async function openPack(btn) {
   await wait(650);
   let data;
   try { data = await prepared; } catch { data = null; }
-  if (!data) { hint.textContent = "Packet gick inte att öppna just nu. Försök igen."; btn.classList.remove("is-chosen", "is-torn"); row.classList.remove("has-chosen"); busy = false; return; }
+  if (!data) { hint.textContent = "Packet gick inte att öppna just nu. Försök igen."; btn.classList.remove("is-chosen", "is-torn"); row.classList.remove("has-chosen"); $("#pack-stage").classList.remove("is-opening"); busy = false; return; }
   row.hidden = true;
   hint.textContent = "Dra kortet åt sidan för att se nästa";
   renderDeck(set, data);
@@ -580,6 +581,7 @@ function reset() {
   pull.innerHTML = "";
   row.hidden = false;
   row.classList.remove("has-chosen");
+  $("#pack-stage").classList.remove("is-opening");
   if (packPool.length) renderPacks(); // nya slumpade pack till nästa öppning
   applyLock();
 }

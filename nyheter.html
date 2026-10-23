@@ -26,7 +26,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Hem","item":"https://lootninja.se/"},{"@type":"ListItem","position":2,"name":"Nyheter","item":"https://lootninja.se/nyheter.html"}]}</script>
 <link href="fonts/fonts.css" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=20261022h">
+<link rel="stylesheet" href="style.css?v=20261023a">
 <link rel="stylesheet" href="dark.css?v=20261022a" id="dark-css" media="(prefers-color-scheme: dark)">
 <script src="js/theme.js?v=20261021"></script>
 </head>
@@ -41,7 +41,9 @@
   </header>
 
   <div class="wrap">
-    <div class="section"><h2>Artiklar</h2></div>
+    <div class="section"><h2>Artiklar</h2><span class="muted" id="news-updated"></span></div>
+    <p class="lead-sm">Artiklarna är på engelska och öppnas hos källan i en ny flik.</p>
+    <div class="news-tabs" id="news-tabs" role="group" aria-label="Välj ämne"></div>
     <div id="articles" class="agrid"></div>
     <nav class="pager" id="pager" aria-label="Sidor"></nav>
 
@@ -50,6 +52,6 @@
     <div id="videos" class="grid wide"></div>
   </div>
 </main>
-<script type="module" src="js/nyheter.js?v=20261021"></script>
+<script type="module" src="js/nyheter.js?v=20261023a"></script>
 </body>
 </html>
