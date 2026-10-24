@@ -1,6 +1,14 @@
 {
- "updated": "2026-10-24T02:04:44.142Z",
+ "updated": "2026-10-24T02:15:10.992Z",
  "articles": [
+  {
+   "title": "Pokémon TCG Kyogre, Groudon and Giratina promo cards offered with $15 purchase",
+   "link": "https://pokemonblog.com/2026/10/23/pokemon-tcg-kyogre-groudon-and-giratina-promo-cards-offered-with-15-purchase/",
+   "date": "2026-10-24T02:11:19.000Z",
+   "summary": "Pokémon TCG players can receive a promotional Kyogre, Groudon or Giratina card when spending at least $15 on Pokémon TCG products at participating retailers beginning Nov. 6, 2026,…",
+   "image": "https://pokemonblog.com/wp-content/uploads/2026/10/pokemon_tcg_mega_evolution_delta_reign_kyogre_giratina_and_groudon_promo_cards.jpg",
+   "source": "PokemonBlog"
+  },
   {
    "title": "Pokémon TCG Mega Evolution—Delta Reign launches Nov. 6 with five products",
    "link": "https://pokemonblog.com/2026/10/23/pokemon-tcg-mega-evolution-delta-reign-launches-nov-6-with-five-products/",
@@ -15,22 +23,6 @@
    "date": "2026-10-24T01:54:43.000Z",
    "summary": "A new Pokémon TCG retrospective video looks back at cards from the Sword & Shield and Scarlet & Violet series. The video also highlights cards featured in the Pokémon TCG…",
    "image": "https://pokemonblog.com/wp-content/uploads/2026/10/pokemon_tcg_santa_cruz_skateboard_decks_venusaur_charizard_blastoise.jpg",
-   "source": "PokemonBlog"
-  },
-  {
-   "title": "Pokémon TCG Deck Crafter’s Collection launches with 40 cards, including Meowth ex",
-   "link": "https://pokemonblog.com/2026/10/23/pokemon-tcg-deck-crafters-collection-launches-with-40-cards-including-meowth-ex/",
-   "date": "2026-10-24T01:50:16.000Z",
-   "summary": "The Pokémon TCG: Deck Crafter’s Collection launched Oct. 23, 2026, with 40 cards aimed at players building a new deck or upgrading an existing one. The set includes a foil Meowth…",
-   "image": "https://pokemonblog.com/wp-content/uploads/2026/10/pokemon_tcg_deck_crafters_collection.jpg",
-   "source": "PokemonBlog"
-  },
-  {
-   "title": "Pokémon TCG MEGA expansion pack Hado Seeker launches Nov. 27 in Japan",
-   "link": "https://pokemonblog.com/2026/10/23/pokemon-tcg-mega-expansion-pack-hado-seeker-launches-nov-27-in-japan/",
-   "date": "2026-10-24T01:46:08.000Z",
-   "summary": "The Pokémon Trading Card Game’s MEGA expansion pack Hado Seeker will launch in Japan on Nov. 27, 2026. The Pokémon Official YouTube channel announced the release date in a…",
-   "image": "https://pokemonblog.com/wp-content/uploads/2022/02/pokemon_trading_card_game_logo.jpeg",
    "source": "PokemonBlog"
   },
   {
@@ -322,27 +314,15 @@
    "summary": "The Pokémon TCG can now add ‘elaborate stalking’ to the list of crimes it has inspired.",
    "image": "https://www.wargamer.com/wp-content/sites/wargamer/2026/09/pokemon-tcg-gps-tracker.jpg",
    "source": "Wargamer"
+  },
+  {
+   "title": "Target x Pokemon 30th Anniversary event offers custom trading cards and exclusive Mewtwo promo",
+   "link": "https://www.dexerto.com/pokemon/target-x-pokemon-30th-anniversary-event-offers-custom-trading-cards-and-exclusive-mewtwo-promo-3411773/",
+   "date": "2026-09-23T15:45:35.000Z",
+   "summary": "Target’s Pokemon 30th Anniversary event will let fans draw their own TCG card, grab giveaways and potentially claim a limited Mewtwo promo.",
+   "image": "https://www.dexerto.com/cdn-image/wp-content/uploads/2026/09/23/pokemon-x-target-event.jpg?width=480&quality=75&format=auto",
+   "source": "Dexerto"
   }
  ],
- "videos": [
-  {
-   "id": "mMJzv4wmJvU",
-   "title": "[UK] Pokémon TCG Pocket: Dual Fusion 🧬 | Official Trailer",
-   "date": "2026-10-20T21:12:16.000Z",
-   "source": "Pokémon (officiell)",
-   "digital": true
-  },
-  {
-   "id": "vTJyWfTQsWQ",
-   "title": "TCG Day 2 | 2027 Pokémon Nice Regional Championships",
-   "date": "2026-10-18T19:26:30.000Z",
-   "source": "Pokémon (officiell)"
-  },
-  {
-   "id": "ioLhEOjR-G0",
-   "title": "TCG Day 1 | 2027 Pokémon Nice Regional Championships",
-   "date": "2026-10-17T19:31:50.000Z",
-   "source": "Pokémon (officiell)"
-  }
- ]
+ "videos": []
 }
