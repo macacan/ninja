@@ -1,6 +1,19 @@
 {
- "updated": 1792840891317,
+ "updated": 1792841811348,
  "events": [
+  {
+   "at": 1792841428220,
+   "store": "rgb-kingz",
+   "product": "rgb-kingz:16044710363466",
+   "group": "destined-rivals|booster-pack|en|",
+   "title": "Pokémon TCG: Scarlet & Violet – Destined Rivals Booster Pack",
+   "url": "https://rgbkingz.com/products/pokemon-tcg-scarlet-violet-destined-rivals-booster-pack-kopia",
+   "price": 139,
+   "type": "Booster Pack",
+   "set": "Destined Rivals",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1792824648233,
    "store": "rgb-kingz",
@@ -6566,19 +6579,6 @@
    "price": 299,
    "type": "Blister",
    "set": "Chaos Rising",
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1792363762539,
-   "store": "cardclub",
-   "product": "cardclub:15337409642819",
-   "group": "x|premium-collection|en||zygarde",
-   "title": "Pokémon TCG: Mega Zygarde ex Premium Collection box",
-   "url": "https://cardclub.se/products/pokemon-tcg-mega-zygarde-ex-premium-collection-box",
-   "price": 849,
-   "type": "Premium Collection",
-   "set": null,
    "lang": "en",
    "kind": "ny"
   }
