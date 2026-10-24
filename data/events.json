@@ -1,6 +1,19 @@
 {
- "updated": 1792848783186,
+ "updated": 1792849763213,
  "events": [
+  {
+   "at": 1792848985805,
+   "store": "pokemurre",
+   "product": "pokemurre:11260401942866",
+   "group": "30th-celebration|collection-box|ja||forbokning-gen",
+   "title": "FÖRBOKNING! Pokemon MEGA TCG 30th Celebration GEN 9 Box (Japansk)",
+   "url": "https://pokemurre.se/products/forbokning-pokemon-mega-tcg-30th-celebration-gen-9-box-japansk",
+   "price": 339,
+   "type": "Collection Box",
+   "set": "30th Celebration",
+   "lang": "ja",
+   "kind": "ny"
+  },
   {
    "at": 1792848082137,
    "store": "rahtech",
@@ -6567,19 +6580,6 @@
    "price": 799,
    "type": "Collection Box",
    "set": null,
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1792363762539,
-   "store": "cardclub",
-   "product": "cardclub:15337414230339",
-   "group": "chaos-rising|booster-pack|en|",
-   "title": "Pokémon TCG: Chaos Rising M4 Booster pack",
-   "url": "https://cardclub.se/products/pokemon-tcg-chaos-rising-m4-booster-pack",
-   "price": 79,
-   "type": "Booster Pack",
-   "set": "Chaos Rising",
    "lang": "en",
    "kind": "ny"
   }
