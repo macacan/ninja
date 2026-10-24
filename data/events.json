@@ -1,6 +1,32 @@
 {
- "updated": 1792823720812,
+ "updated": 1792824660841,
  "events": [
+  {
+   "at": 1792824648233,
+   "store": "rgb-kingz",
+   "product": "rgb-kingz:15893000028490",
+   "group": "ascended-heroes|collection-box|en||feraligatr",
+   "title": "Pokémon Mega Evolution: Ascended Heroes Mega Feraligatr ex Box",
+   "url": "https://rgbkingz.com/products/pokemon-mega-evolution-ascended-heroes-mega-feraligatr-ex-box",
+   "price": 799,
+   "type": "Collection Box",
+   "set": "Ascended Heroes",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1792824648233,
+   "store": "rgb-kingz",
+   "product": "rgb-kingz:15655037501770",
+   "group": "vivid-voltage|elite-trainer-box|en|",
+   "title": "Pokémon Sword & Shield 4: Vivid Voltage Elite Trainer Box",
+   "url": "https://rgbkingz.com/products/pokemon-sword-shield-4-vivid-voltage-elite-trainer-box",
+   "price": 1499,
+   "type": "Elite Trainer Box",
+   "set": "Vivid Voltage",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1792792880724,
    "store": "pokemurre",
@@ -6552,32 +6578,6 @@
    "url": "https://cardclub.se/products/pokemon-tcg-mega-zygarde-ex-premium-collection-box",
    "price": 849,
    "type": "Premium Collection",
-   "set": null,
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1792363762539,
-   "store": "cardclub",
-   "product": "cardclub:15336059437379",
-   "group": "x|booster-pack|en||abyss-eye",
-   "title": "Pokémon TCG: Abyss Eye m5 Booster pack",
-   "url": "https://cardclub.se/products/forbestallning-pokemon-tcg-abyss-eye-m5-booster-pack-japansk",
-   "price": 49,
-   "type": "Booster Pack",
-   "set": null,
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1792363762539,
-   "store": "cardclub",
-   "product": "cardclub:15336057012547",
-   "group": "x|booster-box|en||abyss-eye",
-   "title": "Pokémon TCG: Abyss Eye m5 Booster box",
-   "url": "https://cardclub.se/products/forbestallning-pokemon-tcg-abyss-eye-m5-booster-box-japansk",
-   "price": 1299,
-   "type": "Booster Box",
    "set": null,
    "lang": "en",
    "kind": "ny"
