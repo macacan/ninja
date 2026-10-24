@@ -190,6 +190,16 @@ input.shop-search { border-color: #0b0c12; }
 /* Flikarna (Produkter, Händelser, Butiker, Notiser) med svarta kanter i mörkt läge. */
 .seg { border-color: #0b0c12; }
 .seg button + button { border-left-color: #0b0c12; }
+.seg button.seg-soon { background: #181a24; color: #727a8e; }
+.seg button.seg-soon:hover { background: #202433; color: #9aa3b6; }
+.seg button.seg-soon[aria-pressed=true] { background: #282d3e; color: #e4e8ef; }
+.seg-soon-badge { background: rgba(148, 163, 184, 0.12); color: #8b95a8; border-color: rgba(148, 163, 184, 0.2); }
+.seg button.seg-soon[aria-pressed=true] .seg-soon-badge { background: rgba(255, 255, 255, 0.1); color: #e4e8ef; border-color: rgba(255, 255, 255, 0.18); }
+.csoon-badge { background: #181a24; border-color: #0b0c12; color: #8b95a8; }
+.ntf-soon-banner { background: #181a24; border-color: #0b0c12; box-shadow: 4px 4px 0 #0b0c12; }
+.ntf-soon-banner b { color: #e4e8ef; }
+.ntf-soon-banner p { color: #9aa3b6; }
+.ntf-soon-banner svg { color: #9aa3b6; }
 
 /* "I lager"-chipsen på produktkorten: svart text i mörkt läge. */
 .c.in { color: #0b0c12; }
