@@ -1,6 +1,19 @@
 {
- "updated": 1792844551419,
+ "updated": 1792845491445,
  "events": [
+  {
+   "at": 1792845356276,
+   "store": "pokemurre",
+   "product": "pokemurre:11260355838290",
+   "group": "30th-celebration|collection-box|ja||forbokning-gen",
+   "title": "FÖRBOKNING! Pokemon MEGA TCG 30th Celebration GEN 2 Box (Japansk)",
+   "url": "https://pokemurre.se/products/forbokning-pokemon-mega-tcg-30th-celebration-gen-2-box-japansk",
+   "price": 399,
+   "type": "Collection Box",
+   "set": "30th Celebration",
+   "lang": "ja",
+   "kind": "ny"
+  },
   {
    "at": 1792843545947,
    "store": "pokemurre",
@@ -6563,19 +6576,6 @@
    "group": "chaos-rising|blister|en||",
    "title": "Pokémon TCG: Chaos Rising M4 Blister (Pawmot)",
    "url": "https://cardclub.se/products/pokemon-tcg-chaos-rising-m4-blister-pawmot",
-   "price": 129,
-   "type": "Blister",
-   "set": "Chaos Rising",
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1792363762539,
-   "store": "cardclub",
-   "product": "cardclub:15337413148995",
-   "group": "chaos-rising|blister|en||",
-   "title": "Pokémon TCG: Chaos Rising M4 Blister (Flygon)",
-   "url": "https://cardclub.se/products/pokemon-tcg-chaos-rising-m4-blister-flygon",
    "price": 129,
    "type": "Blister",
    "set": "Chaos Rising",
