@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-24T00:40:49.857Z",
+ "updated": "2026-10-24T00:48:20.487Z",
  "articles": [
   {
    "title": "Pokémon TCG Mega Evolution—Delta Reign rule changes take effect Nov. 20",
@@ -324,25 +324,5 @@
    "source": "Dexerto"
   }
  ],
- "videos": [
-  {
-   "id": "mMJzv4wmJvU",
-   "title": "[UK] Pokémon TCG Pocket: Dual Fusion 🧬 | Official Trailer",
-   "date": "2026-10-20T21:12:16.000Z",
-   "source": "Pokémon (officiell)",
-   "digital": true
-  },
-  {
-   "id": "vTJyWfTQsWQ",
-   "title": "TCG Day 2 | 2027 Pokémon Nice Regional Championships",
-   "date": "2026-10-18T19:26:30.000Z",
-   "source": "Pokémon (officiell)"
-  },
-  {
-   "id": "ioLhEOjR-G0",
-   "title": "TCG Day 1 | 2027 Pokémon Nice Regional Championships",
-   "date": "2026-10-17T19:31:50.000Z",
-   "source": "Pokémon (officiell)"
-  }
- ]
+ "videos": []
 }
