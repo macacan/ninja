@@ -1,6 +1,19 @@
 {
- "updated": 1792880683528,
+ "updated": 1792881603548,
  "events": [
+  {
+   "at": 1792880715737,
+   "store": "skattkistan",
+   "product": "skattkistan:11224049287506",
+   "group": "30th-celebration|booster-bundle|en|",
+   "title": "Pokémon TCG: 30th Celebration Booster Bundle – 6 boosters",
+   "url": "https://skattkistan.net/products/pokemon-tcg-30th-celebration-booster-bundle-6-boosters",
+   "price": 889,
+   "type": "Booster Bundle",
+   "set": "30th Celebration",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1792859040139,
    "store": "pokemastersvault",
@@ -6568,19 +6581,6 @@
    "price": 499,
    "type": "Collection Box",
    "set": null,
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1792363762539,
-   "store": "cardclub",
-   "product": "cardclub:15365579997507",
-   "group": "mega-evolution|booster-pack|en|",
-   "title": "Pokémon TCG: Mega Evolution M1 Booster pack",
-   "url": "https://cardclub.se/products/pokemon-tcg-mega-evolution-m1-booster-pack",
-   "price": 99,
-   "type": "Booster Pack",
-   "set": "Mega Evolution",
    "lang": "en",
    "kind": "ny"
   }
