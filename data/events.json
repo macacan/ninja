@@ -1,6 +1,20 @@
 {
- "updated": 1792928687565,
+ "updated": 1792929607587,
  "events": [
+  {
+   "at": 1792929481479,
+   "store": "samlarverket",
+   "product": "samlarverket:11177353183575",
+   "group": "ascended-heroes|booster-pack|en|",
+   "title": "Pokémon Ascended Heroes Booster Pack",
+   "url": "https://samlarverket.com/produkt/ascended-heroes-booster-pack",
+   "price": 159,
+   "type": "Booster Pack",
+   "set": "Ascended Heroes",
+   "lang": "en",
+   "kind": "prissankt",
+   "from": 169
+  },
   {
    "at": 1792920459911,
    "store": "samlarverket",
@@ -6568,19 +6582,6 @@
    "title": "Pokémon TCG: Pitch Black M5 Blister (Luxray)",
    "url": "https://cardclub.se/products/pokemon-tcg-pitch-black-m5-blister-luxray",
    "price": 129,
-   "type": "Blister",
-   "set": "Pitch Black",
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1792363762539,
-   "store": "cardclub",
-   "product": "cardclub:15373883539779",
-   "group": "pitch-black|blister|en||",
-   "title": "Pokémon TCG: Pitch Black M5 Blister (Slowpoke)",
-   "url": "https://cardclub.se/products/pokemon-tcg-pitch-black-m5-blister-slowbro",
-   "price": 99,
    "type": "Blister",
    "set": "Pitch Black",
    "lang": "en",
