@@ -1,6 +1,19 @@
 {
- "updated": 1792954730273,
+ "updated": 1792955650301,
  "events": [
+  {
+   "at": 1792954843983,
+   "store": "spelparken",
+   "product": "spelparken:15585791836535",
+   "group": "gym-challenge|booster-pack|en|",
+   "title": "Gym Challenge \"HEAVY\" Booster Pack",
+   "url": "https://spelparken.se/products/gym-challenge-professor-saba-heavy-booster-pack",
+   "price": 18999,
+   "type": "Booster Pack",
+   "set": "Gym Challenge",
+   "lang": "en",
+   "kind": "ny"
+  },
   {
    "at": 1792933242419,
    "store": "westcoast-vault",
@@ -6569,19 +6582,6 @@
    "title": "Pokémon TCG: Mega Dream ex m2a Booster box",
    "url": "https://cardclub.se/products/pokemon-tcg-mega-dream-ex-m2a-booster-box-japansk",
    "price": 1449,
-   "type": "Booster Box",
-   "set": null,
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1792363762539,
-   "store": "cardclub",
-   "product": "cardclub:15394744828227",
-   "group": "x|booster-box|en||ninja-spinner",
-   "title": "Pokémon TCG: Ninja Spinner m4 Booster box",
-   "url": "https://cardclub.se/products/pokemon-tcg-ninja-spinner-m4-booster-box-japansk",
-   "price": 1199,
    "type": "Booster Box",
    "set": null,
    "lang": "en",
