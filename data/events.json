@@ -1,6 +1,34 @@
 {
- "updated": 1792920426937,
+ "updated": 1792921327106,
  "events": [
+  {
+   "at": 1792920459911,
+   "store": "samlarverket",
+   "product": "samlarverket:11183011889495",
+   "group": "30th-celebration|collection-box|en||sylveon",
+   "title": "Pokémon 30th Celebration Sylveon Ex Box",
+   "url": "https://samlarverket.com/produkt/30th-celebration-sylveon-ex-box",
+   "price": 629,
+   "type": "Collection Box",
+   "set": "30th Celebration",
+   "lang": "en",
+   "kind": "prissankt",
+   "from": 679
+  },
+  {
+   "at": 1792920459911,
+   "store": "samlarverket",
+   "product": "samlarverket:11183011496279",
+   "group": "30th-celebration|collection-box|en||greninja",
+   "title": "Pokémon 30th Celebration Greninja Ex Box",
+   "url": "https://samlarverket.com/produkt/30th-celebration-greninja-ex-box",
+   "price": 629,
+   "type": "Collection Box",
+   "set": "30th Celebration",
+   "lang": "en",
+   "kind": "prissankt",
+   "from": 679
+  },
   {
    "at": 1792880715737,
    "store": "skattkistan",
@@ -6555,32 +6583,6 @@
    "price": 99,
    "type": "Blister",
    "set": "Pitch Black",
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1792363762539,
-   "store": "cardclub",
-   "product": "cardclub:15373880623427",
-   "group": "pitch-black|elite-trainer-box|en|",
-   "title": "Pokémon TCG: Pitch Black M5 Elite trainer box",
-   "url": "https://cardclub.se/products/pokemon-tcg-pitch-black-m5-elite-trainer-box",
-   "price": 999,
-   "type": "Elite Trainer Box",
-   "set": "Pitch Black",
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1792363762539,
-   "store": "cardclub",
-   "product": "cardclub:15365584650563",
-   "group": "x|collection-box|en||first-illustration-partner-s2",
-   "title": "Pokémon TCG: First Partner Illustration box Series 2",
-   "url": "https://cardclub.se/products/pokemon-tcg-first-partner-illustration-box-series-2",
-   "price": 499,
-   "type": "Collection Box",
-   "set": null,
    "lang": "en",
    "kind": "ny"
   }
