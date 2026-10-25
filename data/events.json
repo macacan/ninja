@@ -1,6 +1,19 @@
 {
- "updated": 1792966631357,
+ "updated": 1792967551374,
  "events": [
+  {
+   "at": 1792967437088,
+   "store": "rahtech",
+   "product": "rahtech:15801220497734",
+   "group": "phantasmal-flames|booster-pack|en|",
+   "title": "Mega Evolution: Phantasmal Flames – Booster Pack (ENG)",
+   "url": "https://rahtech.se/products/mega-evolution-phantasmal-flames-booster-pack-eng",
+   "price": 129,
+   "type": "Booster Pack",
+   "set": "Phantasmal Flames",
+   "lang": "en",
+   "kind": "ny"
+  },
   {
    "at": 1792964748175,
    "store": "rahtech",
@@ -6569,19 +6582,6 @@
    "title": "Pokémon TCG: Mega Start Deck 100 Battle Collection",
    "url": "https://cardclub.se/products/pokemon-tcg-mega-start-deck-100-battle-collection-japansk",
    "price": 299,
-   "type": "Collection Box",
-   "set": null,
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1792363762539,
-   "store": "cardclub",
-   "product": "cardclub:15394764030275",
-   "group": "x|collection-box|en|pc|center-tohoku",
-   "title": "Pokémon TCG: Special Box Pokemon Center Tohoku",
-   "url": "https://cardclub.se/products/pokemon-tcg-special-box-pokemon-center-tohoku-japansk",
-   "price": 1990,
    "type": "Collection Box",
    "set": null,
    "lang": "en",
