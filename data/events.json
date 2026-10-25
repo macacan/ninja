@@ -1,6 +1,19 @@
 {
- "updated": 1792963891287,
+ "updated": 1792964811311,
  "events": [
+  {
+   "at": 1792964748175,
+   "store": "rahtech",
+   "product": "rahtech:15775204376902",
+   "group": "30th-celebration|collection-box|zh||charizard-collector-dragon-figure-gift",
+   "title": "30th Celebration Charizard Dragon Collector Figure Gift Box (15 Pack) (CH)",
+   "url": "https://rahtech.se/products/30th-celebration-charizard-dragon-collector-figure-gift-box-15-pack-ch",
+   "price": 2699,
+   "type": "Collection Box",
+   "set": "30th Celebration",
+   "lang": "zh",
+   "kind": "tillbaka"
+  },
   {
    "at": 1792958180538,
    "store": "samlargrottan",
@@ -6569,19 +6582,6 @@
    "title": "Pokémon TCG: Special Box Pokemon Center Tohoku",
    "url": "https://cardclub.se/products/pokemon-tcg-special-box-pokemon-center-tohoku-japansk",
    "price": 1990,
-   "type": "Collection Box",
-   "set": null,
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1792363762539,
-   "store": "cardclub",
-   "product": "cardclub:15394763899203",
-   "group": "x|collection-box|en|pc|center-fukuoka",
-   "title": "Pokémon TCG: Special Box Pokemon Center Fukuoka",
-   "url": "https://cardclub.se/products/pokemon-tcg-special-box-pokemon-center-fukuoka-japansk",
-   "price": 2479,
    "type": "Collection Box",
    "set": null,
    "lang": "en",
