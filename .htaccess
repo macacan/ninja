@@ -89,11 +89,6 @@ Options -Indexes
     Header set Cache-Control "no-cache"
   </FilesMatch>
 
-  # The stats dashboard on stats.lootninja.se uses the same fonts
-  <FilesMatch "\.(woff2)$">
-    Header set Access-Control-Allow-Origin "https://stats.lootninja.se"
-  </FilesMatch>
-
   # Images and fonts rarely change and can be cached longer
   <FilesMatch "\.(svg|jpg|jpeg|png|webp|gif|ico|woff|woff2|ttf)$">
     Header set Cache-Control "max-age=2592000, public"

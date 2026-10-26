@@ -17,5 +17,5 @@ DirectoryIndex index.php
 <IfModule mod_headers.c>
   Header always set X-Robots-Tag "noindex, nofollow"
   # Egen policy: översikten hämtar typsnitt och ikon från lootninja.se.
-  Header always set Content-Security-Policy "default-src 'self'; style-src 'self' 'unsafe-inline' https://lootninja.se; font-src https://lootninja.se; img-src 'self' data: https://lootninja.se; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'"
+  Header always set Content-Security-Policy "default-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data: https://lootninja.se; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'"
 </IfModule>

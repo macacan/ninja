@@ -98,8 +98,18 @@ function board(string $title, array $rows, string $unit = 'st', bool $money = fa
 <meta name="robots" content="noindex,nofollow">
 <title>Lootninja Stats</title>
 <link rel="icon" href="https://lootninja.se/img/favicon-48.png">
-<link rel="stylesheet" href="https://lootninja.se/fonts/fonts.css">
+<?php
+// Typsnitten bäddas in direkt från huvudsidans fonts/-mapp: webbläsaren får inte ladda typsnitt från lootninja.se
+// till stats.lootninja.se utan CORS-huvud, och Hostingers CDN skickar inte med det.
+$font = function (string $file): string {
+  $data = @file_get_contents(dirname(__DIR__) . '/fonts/' . $file);
+  return $data === false ? '' : 'url(data:font/woff2;base64,' . base64_encode($data) . ') format("woff2")';
+};
+$pixelify = $font('pixelify-sans-latin-9.woff2'); $inter = $font('inter-latin-7.woff2');
+?>
 <style>
+<?php if ($pixelify): ?>@font-face{font-family:"Pixelify Sans";font-weight:400 700;font-display:swap;src:<?= $pixelify ?>}<?php endif; ?>
+<?php if ($inter): ?>@font-face{font-family:"Inter";font-weight:100 900;font-display:swap;src:<?= $inter ?>}<?php endif; ?>
 :root{--bg:#eceff4;--card:#fbfcfd;--ink:#1b1b2f;--muted:#555b6e;--line:#d9dee7;--gold:#f2b632;--red:#e4572e;--mint:#2f9e7a;--r:6px;
   --pixel:"Pixelify Sans","Courier New",monospace;--sans:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif}
 @media (prefers-color-scheme:dark){:root{--bg:#1b1e28;--card:#232734;--ink:#e8eaf1;--muted:#a3abbe;--line:#363c4e}}
