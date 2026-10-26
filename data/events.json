@@ -1,6 +1,34 @@
 {
- "updated": 1792989235719,
+ "updated": 1792991095777,
  "events": [
+  {
+   "at": 1792990948345,
+   "store": "skattkistan",
+   "product": "skattkistan:11232189743442",
+   "group": "prismatic-evolutions|premium-collection|en||super",
+   "title": "Pokémon TCG: Scarlet & Violet – Prismatic Evolutions Super-Premium Collection",
+   "url": "https://skattkistan.net/products/pokemon-tcg-scarlet-violet-prismatic-evolutions-super-premium-collection",
+   "price": 2999,
+   "type": "Premium Collection",
+   "set": "Prismatic Evolutions",
+   "lang": "en",
+   "kind": "prissankt",
+   "from": 3399
+  },
+  {
+   "at": 1792990947470,
+   "store": "rahtech",
+   "product": "rahtech:15775348162886",
+   "group": "30th-celebration|booster-box|zh|",
+   "title": "30th Celebration Booster Box (20 boosters) (CN)",
+   "url": "https://rahtech.se/products/30th-celebration-booster-box-20-boosters-cn",
+   "price": 1399,
+   "type": "Booster Box",
+   "set": "30th Celebration",
+   "lang": "zh",
+   "kind": "prissankt",
+   "from": 1449
+  },
   {
    "at": 1792976570586,
    "store": "spelparken",
@@ -6558,32 +6586,6 @@
    "price": 199,
    "type": "Blister",
    "set": "Chaos Rising",
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1792363762539,
-   "store": "cardclub",
-   "product": "cardclub:15438614528323",
-   "group": "prismatic-evolutions|premium-collection|en||super",
-   "title": "Pokémon TCG: Prismatic Evolutions SV8.5 Super-Premium Collection",
-   "url": "https://cardclub.se/products/pokemon-tcg-prismatic-evolutions-sv8-5-super-premium-collection",
-   "price": 2999,
-   "type": "Premium Collection",
-   "set": "Prismatic Evolutions",
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1792363762539,
-   "store": "cardclub",
-   "product": "cardclub:15438614593859",
-   "group": "x|collection-box|en||first-illustration-partner-s3",
-   "title": "Pokémon TCG: First Partner Illustration Collection Series 3",
-   "url": "https://cardclub.se/products/pokemon-tcg-first-partner-illustration-collection-series-3",
-   "price": 499,
-   "type": "Collection Box",
-   "set": null,
    "lang": "en",
    "kind": "ny"
   }
