@@ -1,6 +1,20 @@
 {
- "updated": 1793048965182,
+ "updated": 1793049885208,
  "events": [
+  {
+   "at": 1793049322715,
+   "store": "shinycards",
+   "product": "shinycards:https://www.shinycards.se/pokemon/booster-box/pokemon-mega-evolution-4-chaos-rising-booster-box",
+   "group": "chaos-rising|booster-box|en|",
+   "title": "Pokemon Mega Evolution 4: Chaos Rising Booster Box",
+   "url": "https://www.shinycards.se/pokemon/booster-box/pokemon-mega-evolution-4-chaos-rising-booster-box",
+   "price": 2799,
+   "type": "Booster Box",
+   "set": "Chaos Rising",
+   "lang": "en",
+   "kind": "prissankt",
+   "from": 2899
+  },
   {
    "at": 1793046077945,
    "store": "pokemurre",
@@ -6577,19 +6591,6 @@
    "set": "Perfect Order",
    "lang": "en",
    "kind": "tillbaka"
-  },
-  {
-   "at": 1792364036997,
-   "store": "poketalk",
-   "product": "poketalk:9891174646102",
-   "group": "x|collection-box|zh||chinese-reward-simplified-turn",
-   "title": "Pokémon Reward Turn Simplified Chinese Box",
-   "url": "https://poketalk.se/products/gholdengo-booster-box",
-   "price": 62,
-   "type": "Collection Box",
-   "set": null,
-   "lang": "zh",
-   "kind": "ny"
   }
  ]
 }
