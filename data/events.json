@@ -1,6 +1,19 @@
 {
- "updated": 1793035188689,
+ "updated": 1793036128716,
  "events": [
+  {
+   "at": 1793035304050,
+   "store": "spelparken",
+   "product": "spelparken:15237517705591",
+   "group": "silver-tempest|booster-pack|en|",
+   "title": "Silver Tempest Booster Pack",
+   "url": "https://spelparken.se/products/pokemon-sword-shield-silver-tempest-booster-pack-oppnas-live",
+   "price": 189,
+   "type": "Booster Pack",
+   "set": "Silver Tempest",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793034439102,
    "store": "samlarhobby",
@@ -6577,20 +6590,6 @@
    "set": null,
    "lang": "ja",
    "kind": "ny"
-  },
-  {
-   "at": 1792364026794,
-   "store": "pokemastersvault",
-   "product": "pokemastersvault:15734",
-   "group": "x|booster-box|ja||cyber-judge",
-   "title": "Pokémon Scarlet &#038; Violet Cyber Judge Booster Box (sv5M) Japanese",
-   "url": "https://pokemastersvault.com/product/pokemon-scarlet-violet-cyber-judge-booster-box-sv5m-japanese/",
-   "price": 999,
-   "type": "Booster Box",
-   "set": null,
-   "lang": "ja",
-   "kind": "prissankt",
-   "from": 1199
   }
  ]
 }
