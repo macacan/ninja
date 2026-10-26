@@ -13,7 +13,7 @@ date_default_timezone_set('Europe/Stockholm');
 
 const MAX_PACK_VALUE = 25000; // kronor
 const TOKEN_TTL = 7200;       // sekunder
-const TOP = 10;
+const TOP = 30; // topplistan visar 6 åt gången och går att scrolla till 30
 // Namnfiltret (inbyggda ord plus de som lagts till i statistikens dashboard) delas med stats/dashboard.php.
 require __DIR__ . '/name-filter.php';
 

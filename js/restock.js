@@ -269,7 +269,7 @@ async function renderBoard(root, period, mine) {
     const empty = { week: "Ingen har skickat in ett pack den här veckan.", month: "Inga pack den här månaden än.", all: "Topplistan är tom." }[period];
     list.innerHTML = d.entries.length ? d.entries.map((e) => `<li class="hs-row r${e.rank}${e.id === mine ? " is-mine" : ""}">
         <span class="hs-rank" aria-label="Plats ${e.rank}">${e.rank}</span>
-        <span class="hs-card">${e.best_card_img ? `<img src="${esc(safeUrl(e.best_card_img))}" alt="" loading="lazy" decoding="async">` : ""}</span>
+        <span class="hs-card"${e.best_card_img ? ` tabindex="0" role="button" aria-label="Visa ${esc(e.best_card_name || "kortet")} i stort format"` : ""}>${e.best_card_img ? `<img src="${esc(safeUrl(e.best_card_img))}" alt="" loading="lazy" decoding="async">` : ""}</span>
         <span class="hs-who"><b>${esc(e.name)}</b><small>${esc(e.best_card_name || "")}${e.best_card_value ? ` · ${kr(e.best_card_value)}` : ""}</small><small class="hs-meta">${esc(e.set_name || "")} · ${esc(e.date)}</small></span>
         <span class="hs-value">${kr(e.pack_value)}</span>
       </li>`).join("") : `<li class="hs-empty">${empty}</li>`;
@@ -281,10 +281,52 @@ async function renderBoard(root, period, mine) {
   if (me) list.scrollTop = me.offsetTop - list.offsetTop - 8;
 }
 
+// Kortet i stort format när man håller musen över miniatyren (eller trycker på den på mobilen). Bilden läggs direkt i
+// <body> med fast position, så att packytans ram och topplistans rullning inte klipper bort den.
+let peek = null;
+function showPeek(thumb) {
+  const small = thumb.querySelector("img");
+  if (!small) return;
+  if (!peek) { peek = document.createElement("img"); peek.className = "hs-peek"; peek.alt = ""; document.body.append(peek); }
+  peek.src = small.src.replace(/\/low\.webp$/, "/high.webp");
+  const r = thumb.getBoundingClientRect(), w = Math.min(240, innerWidth - 24), h = w * 1.395;
+  // Till höger om miniatyren om det får plats, annars till vänster. Höjden hålls inom fönstret.
+  const left = r.right + 12 + w <= innerWidth - 12 ? r.right + 12 : Math.max(12, r.left - 12 - w);
+  const top = Math.min(Math.max(12, r.top + r.height / 2 - h / 2), innerHeight - h - 12);
+  Object.assign(peek.style, { width: `${w}px`, left: `${left}px`, top: `${top}px` });
+  peek.classList.add("is-on");
+  peek.owner = thumb;
+}
+const hidePeek = () => { peek?.classList.remove("is-on"); if (peek) peek.owner = null; };
+addEventListener("scroll", hidePeek, { passive: true });
+document.addEventListener("click", (e) => { if (!e.target.closest?.(".hs-card")) hidePeek(); });
+
+// Knappen "Topplistan" under packen: visar topplistan i packytan när som helst, även när dagens pack är öppnat.
+function toggleBoard(show) {
+  const btn = $("#hs-open"), box = $("#hs-box");
+  if (!btn || !box) return;
+  show ??= box.hidden;
+  box.hidden = !show;
+  $("#pack-stage").classList.toggle("show-board", show); // packen döljs så att topplistan får hela ytan
+  btn.setAttribute("aria-expanded", String(show));
+  btn.textContent = show ? "Dölj topplistan" : "Topplistan";
+  hidePeek();
+  if (show) { box.innerHTML = ""; showBoard(box, null); }
+}
+$("#hs-open")?.addEventListener("click", () => toggleBoard());
+
 function showBoard(box, mine) {
   box.insertAdjacentHTML("beforeend", boardHTML());
   const root = box.lastElementChild;
   root.querySelector(".hs-tabs").addEventListener("click", (e) => { const b = e.target.closest("button[data-period]"); if (b) renderBoard(root, b.dataset.period, mine); });
+  const list = root.querySelector(".hs-list");
+  list.addEventListener("pointerover", (e) => { const t = e.target.closest(".hs-card[tabindex]"); if (t && e.pointerType === "mouse") showPeek(t); });
+  list.addEventListener("pointerout", (e) => { if (e.pointerType === "mouse" && e.target.closest(".hs-card") && !e.relatedTarget?.closest?.(".hs-card")) hidePeek(); });
+  // Tryck (mobil) eller Enter/mellanslag visar kortet, ett nytt tryck döljer det.
+  list.addEventListener("click", (e) => { const t = e.target.closest(".hs-card[tabindex]"); if (t) (peek?.owner === t && peek.classList.contains("is-on") ? hidePeek() : showPeek(t)); });
+  list.addEventListener("keydown", (e) => { const t = e.target.closest(".hs-card[tabindex]"); if (t && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); peek?.owner === t ? hidePeek() : showPeek(t); } });
+  list.addEventListener("focusout", hidePeek);
+  list.addEventListener("scroll", hidePeek, { passive: true });
   renderBoard(root, "week", mine);
   root.scrollIntoView({ block: "nearest", behavior: reduce ? "auto" : "smooth" });
 }
@@ -377,6 +419,7 @@ async function openPack(btn) {
   const ticket = openTicket(set.id);
   const row = $("#pack-row"), hint = $("#stage-hint");
   $("#pack-stage").classList.add("is-opening"); // ljudknappen syns bara när ett pack öppnas
+  toggleBoard(false);
   row.classList.add("has-chosen");
   btn.classList.add("is-chosen");
   hint.textContent = "Öppnar…";
