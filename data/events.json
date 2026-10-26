@@ -1,6 +1,19 @@
 {
- "updated": 1792976475327,
+ "updated": 1792977315347,
  "events": [
+  {
+   "at": 1792976570586,
+   "store": "spelparken",
+   "product": "spelparken:15542935191927",
+   "group": "x|booster-box|ja||shiny-treasure",
+   "title": "Shiny Treasure ex Booster Box JP",
+   "url": "https://spelparken.se/products/pokemon-shiny-treasure-ex-booster-pack-jp-kopia-1",
+   "price": 2099,
+   "type": "Booster Box",
+   "set": null,
+   "lang": "ja",
+   "kind": "tillbaka"
+  },
   {
    "at": 1792967437088,
    "store": "rahtech",
@@ -6569,19 +6582,6 @@
    "title": "Pokémon TCG: First Partner Illustration Collection Series 3",
    "url": "https://cardclub.se/products/pokemon-tcg-first-partner-illustration-collection-series-3",
    "price": 499,
-   "type": "Collection Box",
-   "set": null,
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1792363762539,
-   "store": "cardclub",
-   "product": "cardclub:15394766782787",
-   "group": "x|collection-box|en||start",
-   "title": "Pokémon TCG: Mega Start Deck 100 Battle Collection",
-   "url": "https://cardclub.se/products/pokemon-tcg-mega-start-deck-100-battle-collection-japansk",
-   "price": 299,
    "type": "Collection Box",
    "set": null,
    "lang": "en",
