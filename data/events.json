@@ -1,6 +1,45 @@
 {
- "updated": 1793017158492,
+ "updated": 1793018058609,
  "events": [
+  {
+   "at": 1793017279448,
+   "store": "tcgaddan",
+   "product": "tcgaddan:16175537717580",
+   "group": "30th-celebration|booster-pack|ja|",
+   "title": "30th Celebration Booster Pack Japanese",
+   "url": "https://tcgaddan.se/products/30th-celebration-booster-pack-japanese",
+   "price": 139,
+   "type": "Booster Pack",
+   "set": "30th Celebration",
+   "lang": "ja",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1793017279448,
+   "store": "tcgaddan",
+   "product": "tcgaddan:16176536486220",
+   "group": "emerald|booster-box|ja|",
+   "title": "Storm Emeralda Booster Box Japanese",
+   "url": "https://tcgaddan.se/products/storm-emeralda-booster-box-japanese",
+   "price": 1399,
+   "type": "Booster Box",
+   "set": "Emerald",
+   "lang": "ja",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1793017279448,
+   "store": "tcgaddan",
+   "product": "tcgaddan:16091473281356",
+   "group": "emerald|booster-pack|ja|",
+   "title": "Storm Emeralda Booster Pack Japanese",
+   "url": "https://tcgaddan.se/products/storm-emeralda-booster-pack-kopia",
+   "price": 49,
+   "type": "Booster Pack",
+   "set": "Emerald",
+   "lang": "ja",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793012876541,
    "store": "shinycards",
@@ -6550,45 +6589,6 @@
    "url": "https://collected.se/products/pokemon-mega-brave-booster-box-japansk-m1l",
    "price": 1190,
    "type": "Booster Box",
-   "set": null,
-   "lang": "ja",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1792363826632,
-   "store": "collected",
-   "product": "collected:11181439549782",
-   "group": "black-bolt|booster-pack|ja|",
-   "title": "Pokémon TCG: Black Bolt Booster Pack (Japansk) - SV11B",
-   "url": "https://collected.se/products/pokemon-black-bolt-booster-pack-japansk-sv11b",
-   "price": 129,
-   "type": "Booster Pack",
-   "set": "Black Bolt",
-   "lang": "ja",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1792363826632,
-   "store": "collected",
-   "product": "collected:11160019239254",
-   "group": "x|booster-box|ja||ninja-spinner",
-   "title": "Pokémon TCG: Ninja Spinner Booster Box (Japansk) – M4",
-   "url": "https://collected.se/products/pokemon-tcg-ninja-spinner-japansk-booster-box",
-   "price": 1190,
-   "type": "Booster Box",
-   "set": null,
-   "lang": "ja",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1792363826632,
-   "store": "collected",
-   "product": "collected:11160016781654",
-   "group": "x|booster-pack|ja||ninja-spinner",
-   "title": "Pokémon TCG: Ninja Spinner Booster Pack (Japansk) – M4",
-   "url": "https://collected.se/products/pokemon-tcg-ninja-spinner-japansk-booster-pack",
-   "price": 49,
-   "type": "Booster Pack",
    "set": null,
    "lang": "ja",
    "kind": "tillbaka"
