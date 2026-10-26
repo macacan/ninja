@@ -1,6 +1,32 @@
 {
- "updated": 1793045288938,
+ "updated": 1793046208967,
  "events": [
+  {
+   "at": 1793046077945,
+   "store": "pokemurre",
+   "product": "pokemurre:11265324253522",
+   "group": "team-rocket|booster-pack|zh|",
+   "title": "Pokémon Glory Of Team Rocket Booster Pack (Kinesisk)",
+   "url": "https://pokemurre.se/products/pokemon-glory-of-team-rocket-booster-pack-kinesisk",
+   "price": 29,
+   "type": "Booster Pack",
+   "set": "Team Rocket",
+   "lang": "zh",
+   "kind": "ny"
+  },
+  {
+   "at": 1793046077945,
+   "store": "pokemurre",
+   "product": "pokemurre:11265311015250",
+   "group": "team-rocket|booster-box|zh|",
+   "title": "Pokémon Glory Of Team Rocket Sealed Booster Box (Kinesisk)",
+   "url": "https://pokemurre.se/products/pokemon-glory-of-team-rocket-sealed-booster-box-kinesisk",
+   "price": 379,
+   "type": "Booster Box",
+   "set": "Team Rocket",
+   "lang": "zh",
+   "kind": "ny"
+  },
   {
    "at": 1793045174414,
    "store": "pokemurre",
@@ -6564,32 +6590,6 @@
    "set": null,
    "lang": "zh",
    "kind": "ny"
-  },
-  {
-   "at": 1792364036997,
-   "store": "poketalk",
-   "product": "poketalk:9249069498710",
-   "group": "x|tin|en||heart-heroic-pikachu",
-   "title": "Pokémon TCG: Battle Heart Heroic Ex Tin Pikachu",
-   "url": "https://poketalk.se/products/pokemon-tcg-heroic-ex-tin-pikachu",
-   "price": 411,
-   "type": "Tin",
-   "set": null,
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1792364036997,
-   "store": "poketalk",
-   "product": "poketalk:9689422627158",
-   "group": "x|booster-pack|en||gem-s2-vol",
-   "title": "Pokemon TCG: Gem Pack Vol 2 Booster Pack",
-   "url": "https://poketalk.se/products/pokemon-tcg-gem-pack-vol-2-booster-pack",
-   "price": 6,
-   "type": "Booster Pack",
-   "set": null,
-   "lang": "en",
-   "kind": "tillbaka"
   }
  ]
 }
