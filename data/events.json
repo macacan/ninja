@@ -1,6 +1,19 @@
 {
- "updated": 1793025398798,
+ "updated": 1793026318834,
  "events": [
+  {
+   "at": 1793025557341,
+   "store": "samlarhobby",
+   "product": "samlarhobby:15152951656829",
+   "group": "scarlet-violet|booster-box|en|",
+   "title": "Pokémon, Scarlet & Violet, Display / Booster Box",
+   "url": "https://samlarhobby.se/products/pokemon-scarlet-violet-display-booster-box",
+   "price": 3295,
+   "type": "Booster Box",
+   "set": "Scarlet & Violet",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793025347936,
    "store": "tcg-card-house",
@@ -6574,19 +6587,6 @@
    "price": 6690,
    "type": "Booster Box",
    "set": "Sun & Moon",
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1792363889323,
-   "store": "kantovault",
-   "product": "kantovault:11697883644245",
-   "group": "hidden-fates|tin|en||charizard",
-   "title": "Pokémon Sun & Moon: Hidden Fates Tin Charizard GX",
-   "url": "https://kantovault.se/products/pokemon-sun-moon-hidden-fates-tin-charizard-gx",
-   "price": 2049,
-   "type": "Tin",
-   "set": "Hidden Fates",
    "lang": "en",
    "kind": "ny"
   }
