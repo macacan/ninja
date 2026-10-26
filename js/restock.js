@@ -314,6 +314,7 @@ function submitForm(box, entry, ticket) {
     const d = await hsPost("submit", { token, name, ...entry });
     if (!d.ok) { msg.textContent = d.error || "Det gick inte att skicka in. Försök igen."; btn.disabled = !!d.error?.includes("Öppna ett nytt"); return; }
     try { localStorage.setItem(NICK_KEY, name); } catch {}
+    track("pack_submit", entry.set_name, entry.pack_value);
     box.innerHTML = `<p class="hs-done">Inskickat! Du ligger <b>${ordinal(d.weekRank)}</b> den här veckan.</p>`;
     showBoard(box, d.id);
   });

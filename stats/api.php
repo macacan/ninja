@@ -44,7 +44,7 @@ $value = is_numeric($value) ? (string)round(max(0, min(1000000, (float)$value)),
 // Bara domännamnet på sidan besökaren kom från, eller "direct".
 $ref = strtolower((string)($in['referrer'] ?? ''));
 $ref = preg_replace('/^www\./', '', $ref);
-$ref = preg_match('/^[a-z0-9.-]{1,100}$/', $ref) ? $ref : 'direct';
+$ref = preg_match('/^[a-z0-9._-]{1,100}$/', $ref) ? $ref : 'direct';
 $device = in_array($in['device'] ?? '', ['mobile', 'tablet', 'desktop'], true) ? $in['device'] : 'desktop';
 
 try {

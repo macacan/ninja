@@ -474,9 +474,9 @@ $("#p-push").addEventListener("click", async () => {
   btn.disabled = true;
   let note = "";
   try {
-    if (pushState() === "on") { await disablePush(); note = "Pushnotiserna är avstängda."; }
-    else if (await enablePush()) note = `Klart! En välkomstnotis ska ha dykt upp nu. Notiserna följer urvalet nedan, spara när du ändrar något. ${silentHelp()}`;
-    else if (Notification.permission === "denied") note = blockedHelp();
+    if (pushState() === "on") { await disablePush(); track("push", "Avstängda"); note = "Pushnotiserna är avstängda."; }
+    else if (await enablePush()) { track("push", "Påslagna"); note = `Klart! En välkomstnotis ska ha dykt upp nu. Notiserna följer urvalet nedan, spara när du ändrar något. ${silentHelp()}`; }
+    else if (Notification.permission === "denied") { track("push", "Nekade"); note = blockedHelp(); }
     else note = "Rutan stängdes utan att notiser tilläts. Tryck igen och välj Tillåt.";
   } catch {
     note = "Det gick inte att slå på notiserna just nu. Försök igen om en stund.";
@@ -488,7 +488,7 @@ $("#p-push").addEventListener("click", async () => {
 });
 // Testnotisen visas direkt av webbläsaren. Syns den inte är det systemet (Stör ej, fokusläge) som stoppar den.
 $("#p-push-test").addEventListener("click", async () => {
-  try { await testPush(); $("#p-push-note").textContent = `Testnotisen är skickad. ${silentHelp()}`; }
+  try { await testPush(); track("push", "Testnotis"); $("#p-push-note").textContent = `Testnotisen är skickad. ${silentHelp()}`; }
   catch { $("#p-push-note").textContent = "Testnotisen gick inte att visa. Stäng av och slå på notiserna igen och försök på nytt."; }
 });
 syncPush();

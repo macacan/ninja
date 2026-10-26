@@ -8,7 +8,7 @@ if (basename($_SERVER['SCRIPT_FILENAME'] ?? '') === 'lib.php') { http_response_c
 date_default_timezone_set('Europe/Stockholm');
 
 const STATS_KEEP_DAYS = 395; // drygt ett år, sedan raderas händelserna
-const STATS_TYPES = ['pageview', 'store_click', 'search', 'watch', 'pack_open'];
+const STATS_TYPES = ['pageview', 'store_click', 'outbound', 'search', 'watch', 'card_view', 'valuation', 'scan', 'pack_open', 'pack_submit', 'push', 'not_found'];
 
 // Cloudflares egna adresser (samma lista som api/pack-limit.php). Bara då går det att lita på CF-Connecting-IP.
 const STATS_CLOUDFLARE = [
@@ -108,4 +108,58 @@ function statsText($v, int $len): ?string {
   $v = trim(preg_replace('/[\x00-\x1F\x7F<>]+/u', ' ', (string)$v) ?? '');
   if ($v === '') return null;
   return mb_substr($v, 0, $len, 'UTF-8');
+}
+
+// ---------- Källor ----------
+// Gör om det sparade värdet (domän, utm_source eller app) till ett namn och en typ av källa. Görs när översikten
+// visas, så att nya regler gäller även gamla besök. "internal" (klick inom Lootninja) är ingen källa: null.
+const STATS_SOURCES = [
+  // [mönster mot värdet, namn, typ]. Första träffen vinner, så AI-tjänster hos Google och Microsoft står före sökmotorerna.
+  ['/(^|\.)(chatgpt\.com|chat\.openai\.com|openai\.com)$|^chatgpt$/', 'ChatGPT', 'AI'],
+  ['/(^|\.)perplexity\.ai$|^perplexity$/', 'Perplexity', 'AI'],
+  ['/^(gemini|bard)\.google\.com$|^gemini$/', 'Gemini', 'AI'],
+  ['/(^|\.)claude\.ai$|^claude$/', 'Claude', 'AI'],
+  ['/^copilot\.microsoft\.com$|^edgeservices\.bing\.com$|^copilot$/', 'Copilot', 'AI'],
+  ['/(^|\.)(grok\.com|x\.ai)$|^grok$/', 'Grok', 'AI'],
+  ['/(^|\.)(deepseek\.com|chat\.mistral\.ai|you\.com|phind\.com|meta\.ai)$/', 'Annan AI', 'AI'],
+  ['/^com\.google\.android\.gm$|(^|\.)mail\.google\.com$|(^|\.)outlook\.(live|office)\.com$/', 'E-post', 'E-post'],
+  ['/(^|\.)google\.[a-z.]+$|^com\.google\.android\.googlequicksearchbox$|^google$/', 'Google', 'Sökmotor'],
+  ['/(^|\.)bing\.com$|^bing$/', 'Bing', 'Sökmotor'],
+  ['/(^|\.)duckduckgo\.com$/', 'DuckDuckGo', 'Sökmotor'],
+  ['/(^|\.)(search\.)?yahoo\.[a-z.]+$/', 'Yahoo', 'Sökmotor'],
+  ['/(^|\.)(ecosia\.org|startpage\.com|qwant\.com|search\.brave\.com|yandex\.[a-z]+)$/', 'Annan sökmotor', 'Sökmotor'],
+  ['/(^|\.)instagram\.com$|^com\.instagram\.|^instagram(-app)?$|^ig$/', 'Instagram', 'Socialt'],
+  ['/(^|\.)(facebook\.com|fb\.com|fb\.me|messenger\.com)$|^com\.facebook\.|^facebook(-app)?$|^fb$/', 'Facebook', 'Socialt'],
+  ['/(^|\.)tiktok\.com$|^tiktok(-app)?$/', 'TikTok', 'Socialt'],
+  ['/(^|\.)(youtube\.com|youtu\.be)$|^youtube$/', 'YouTube', 'Socialt'],
+  ['/(^|\.)reddit\.com$|^reddit$/', 'Reddit', 'Socialt'],
+  ['/^(t\.co|x\.com|twitter\.com)$|^(twitter|x)$/', 'X (Twitter)', 'Socialt'],
+  ['/(^|\.)(discord\.com|discordapp\.com|discord\.gg)$|^discord(-app)?$/', 'Discord', 'Socialt'],
+  ['/(^|\.)snapchat\.com$|^snapchat(-app)?$/', 'Snapchat', 'Socialt'],
+  ['/(^|\.)threads\.(net|com)$|^threads$/', 'Threads', 'Socialt'],
+  ['/(^|\.)(pinterest\.[a-z.]+|pin\.it)$|^pinterest(-app)?$/', 'Pinterest', 'Socialt'],
+  ['/(^|\.)(linkedin\.com|lnkd\.in)$|^linkedin(-app)?$/', 'LinkedIn', 'Socialt'],
+  ['/^line-app$/', 'LINE', 'Socialt'],
+  ['/(^|\.)flashback\.org$/', 'Flashback', 'Forum'],
+  ['/^direct$/', 'Direkt', 'Direkt'],
+];
+
+function statsSource(?string $ref): ?array {
+  $ref = strtolower((string)$ref);
+  if ($ref === 'internal' || $ref === 'lootninja.se') return null;
+  if ($ref === '') $ref = 'direct';
+  foreach (STATS_SOURCES as [$re, $name, $kind]) if (preg_match($re, $ref)) return [$name, $kind];
+  return [$ref, 'Andra sidor'];
+}
+
+// Sidans namn i stället för adressen, t.ex. "/" → "Startsidan" och "/set/151.html" → "Set: 151".
+function statsPageName(string $path): string {
+  static $names = [
+    '/' => 'Startsidan', '/index.html' => 'Startsidan', '/butiker.html' => 'Butiker och lager', '/priser.html' => 'Kortpriser',
+    '/vardering.html' => 'Värdering', '/slapp.html' => 'Släppkalender', '/nyheter.html' => 'Nyheter', '/artikel.html' => 'Artikel',
+    '/om.html' => 'Om Lootninja', '/villkor.html' => 'Villkor', '/integritet.html' => 'Integritet', '/set/' => 'Alla set', '/404.html' => 'Sidan finns inte',
+  ];
+  if (isset($names[$path])) return $names[$path];
+  if (preg_match('#^/set/([a-z0-9-]+)\.html$#', $path, $m)) return 'Set: ' . ucwords(str_replace('-', ' ', $m[1]));
+  return $path;
 }

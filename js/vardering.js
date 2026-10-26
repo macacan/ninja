@@ -8,6 +8,7 @@ setPages().then((m) => (pages = m));
 import { parseCardQuery, resolvePokemonName, loadDataset, filterByNumber, apiNumber } from "./card-autocomplete.js";
 import { apiFor, findJapanese } from "./japanese.js";
 import { langMark } from "./langmark.js";
+import { track } from "./tracker.js";
 import { recordCard, mountRecent } from "./recent.js";
 import { mountCardAutocomplete } from "./card-autocomplete.js";
 import { CONDITIONS, DEFAULT_COND, gradeMult, isVintage } from "./valuation.js";
@@ -290,6 +291,7 @@ async function search(raw, total = null, photo = null, nameHint = null) {
   const ja = isJa();
   $("#vm-lang-beta").hidden = $("#vr-ja-note").hidden = !ja;
   history.replaceState(null, "", `?q=${encodeURIComponent(q)}${ja ? "&lang=ja" : ""}`);
+  if (!photo) track("search", q.toLowerCase());
   $("#val-results").hidden = false;
   $("#vr-grid").innerHTML = skeleton(6);
   const my = ++searchId;
@@ -517,7 +519,9 @@ async function pick(id, lang = "en", en = null) {
   if (!cardModal.open) cardModal.showModal();
   box.scrollTop = 0; cardModal.scrollTop = 0;
   try {
-    const [card] = await Promise.all([getJSON(`${apiFor(lang)}/cards/${encodeURIComponent(id)}`), getRate()]);
+    const [card, rate] = await Promise.all([getJSON(`${apiFor(lang)}/cards/${encodeURIComponent(id)}`), getRate()]);
+    const eur = baseEur(card);
+    track("valuation", [card.name, card.set?.name].filter(Boolean).join(" · "), eur != null && rate ? Math.round(eur * rate) : null);
     // Utgivningsåret finns på setet, inte på kortet. Om det saknas räknas kortet som modernt.
     const set = await getJSON(`${apiFor(lang)}/sets/${encodeURIComponent(card.set?.id || "")}`).catch(() => null);
     const year = set?.releaseDate ? +set.releaseDate.slice(0, 4) : null;
@@ -680,16 +684,20 @@ $("#val-hero-form")?.addEventListener("submit", (e) => {
   openModal();
   vmInput.focus();
 });
-const startScan = () => openScanner(({ name, number, total, canvas, cardId }) => {
+// Kortskannern räknas i steg: öppnad, säker träff, läst text som söks, eller bara delvis läst.
+const startScan = () => { track("scan", "Öppnad"); openScanner(({ name, number, total, canvas, cardId }) => {
   if (cardId) {
+    track("scan", "Säker träff");
     reveal(cardId);
     return;
   }
   // Nummer och setstorlek pekar ut kortet bäst. Namnet följer med som ledtråd.
   const q = number && total ? `${number}/${total}` : [name, number].filter(Boolean).join(" ");
   input.value = [name, number && total ? `${number}/${total}` : number].filter(Boolean).join(" ");
+  track("scan", "Läst, söker");
   search(q, total, canvas, number && total ? name : null);
 }, ({ name, number }) => {
+  track("scan", "Delvis läst");
   // Halv läsning: fyll i det som gick att läsa, så användaren kan komplettera i stället för att skriva från noll.
   const q = [name, number].filter(Boolean).join(" ");
   input.value = q;
@@ -698,7 +706,7 @@ const startScan = () => openScanner(({ name, number, total, canvas, cardId }) =>
   vmInput.focus();
   // Visa förslag direkt för det ifyllda, t.ex. hela kortnamnet när bara början gick att läsa.
   vmInput.dispatchEvent(new Event("input", { bubbles: true }));
-});
+}); };
 $("#scan-open")?.addEventListener("click", startScan);
 $("#vm-scan")?.addEventListener("click", startScan);
 

@@ -4,6 +4,7 @@ import { recordCard, mountRecent } from "./recent.js";
 import { mountCardAutocomplete, parseCardQuery, resolvePokemonName, loadDataset, sameNumber, filterByNumber, apiNumber } from "./card-autocomplete.js";
 import { langMark } from "./langmark.js";
 import { apiFor, findJapanese } from "./japanese.js";
+import { track } from "./tracker.js";
 
 const isJa = () => $("#lang").value === "ja";
 
@@ -128,6 +129,7 @@ async function search() {
   if (set) params.set("set", set);
   if ($("#sort").value) params.set("sort", $("#sort").value);
   history.replaceState(null, "", params.toString() ? `?${params}` : location.pathname);
+  if (rawQ) track("search", rawQ.toLowerCase());
 
   const hasQuery = rawQ || rarity || set;
   $("#landing").hidden = !!hasQuery;
@@ -275,6 +277,7 @@ async function openCard(i) {
   const cm = full.pricing?.cardmarket || {}, tp = full.pricing?.tcgplayer || {};
   // "Senast sökta" hämtar korten från den engelska databasen, så japanska kort sparas inte där.
   if (!ja) recordCard({ id: c.id, name: c.name, set: full.set?.name, localId: full.localId || c.localId, total: full.set?.cardCount?.official, image: c.image || full.image, eur: cm.trend ?? cm.avg ?? null });
+  track("card_view", [full.name || c.name, full.set?.name].filter(Boolean).join(" · "), c.eur != null && rates?.EUR ? Math.round(c.eur * rates.EUR) : null);
   const fin = finish({ ...c, variants: full.variants });
   const row = (label, v, cur) => (v == null ? "" : `<tr><th>${label}</th><td>${sek(v, cur)}</td></tr>`);
   const tpRows = Object.entries(tp).filter(([, v]) => v && typeof v === "object" && v.marketPrice != null)
