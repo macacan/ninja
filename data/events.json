@@ -1,6 +1,34 @@
 {
- "updated": 1793033368636,
+ "updated": 1793034288657,
  "events": [
+  {
+   "at": 1793033742440,
+   "store": "shinycards",
+   "product": "shinycards:https://www.shinycards.se/pokemon/collection-box/pokemon-center-hiroshim-special-collection-box-japansk",
+   "group": "x|premium-collection|ja|pc|center-hiroshim",
+   "title": "Pokemon Center Hiroshim Special Collection Box (Japansk)",
+   "url": "https://www.shinycards.se/pokemon/collection-box/pokemon-center-hiroshim-special-collection-box-japansk",
+   "price": 1499,
+   "type": "Premium Collection",
+   "set": null,
+   "lang": "ja",
+   "kind": "prissankt",
+   "from": 1599
+  },
+  {
+   "at": 1793033742440,
+   "store": "shinycards",
+   "product": "shinycards:https://www.shinycards.se/pokemon/collection-box/pokemon-center-tohoku-special-collection-box-japansk",
+   "group": "x|premium-collection|ja|pc|center-tohoku",
+   "title": "Pokemon Center Tohoku Special Collection Box (Japansk)",
+   "url": "https://www.shinycards.se/pokemon/collection-box/pokemon-center-tohoku-special-collection-box-japansk",
+   "price": 1499,
+   "type": "Premium Collection",
+   "set": null,
+   "lang": "ja",
+   "kind": "prissankt",
+   "from": 1599
+  },
   {
    "at": 1793030624152,
    "store": "rgb-kingz",
@@ -6560,32 +6588,6 @@
    "url": "https://miniaturemetropolis.se/products/pokemon-tcg-enhanced-2-pack-blister-gengar",
    "price": 219,
    "type": "Blister",
-   "set": null,
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1792363889323,
-   "store": "kantovault",
-   "product": "kantovault:11715800891733",
-   "group": "x|booster-pack|en||gem-s7-vol",
-   "title": "Pokémon Gem Pack Vol. 7 Booster Pack",
-   "url": "https://kantovault.se/products/pokemon-gem-pack-vol-7-booster-pack",
-   "price": 39,
-   "type": "Booster Pack",
-   "set": null,
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1792363889323,
-   "store": "kantovault",
-   "product": "kantovault:11715737682261",
-   "group": "x|booster-box|en||gem-s7-vol",
-   "title": "Pokémon Gem Pack Vol. 7 Booster Box",
-   "url": "https://kantovault.se/products/pokemon-gem-pack-vol-7-booster-box",
-   "price": 599,
-   "type": "Booster Box",
    "set": null,
    "lang": "en",
    "kind": "ny"
