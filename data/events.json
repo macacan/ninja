@@ -1,6 +1,47 @@
 {
- "updated": 1793005446764,
+ "updated": 1793006387158,
  "events": [
+  {
+   "at": 1793006253007,
+   "store": "maxgaming",
+   "product": "maxgaming:https://maxgaming.se/sv/pokemon/pokemon-pikachu-special-box-pokemon-center-hiroshima",
+   "group": "x|collection-box|en|pc|center-hiroshima-pikachu",
+   "title": "Pokémon Pikachu Special Box Pokémon Center - Hiroshima",
+   "url": "https://maxgaming.se/sv/pokemon/pokemon-pikachu-special-box-pokemon-center-hiroshima",
+   "price": 1949,
+   "type": "Collection Box",
+   "set": null,
+   "lang": "en",
+   "kind": "prissankt",
+   "from": 1990
+  },
+  {
+   "at": 1793006253007,
+   "store": "maxgaming",
+   "product": "maxgaming:https://maxgaming.se/sv/pokemon/pokemon-pikachu-special-box-pokemon-center-fukuoka",
+   "group": "x|collection-box|en|pc|center-fukuoka-pikachu",
+   "title": "Pokémon Pikachu Special Box Pokémon Center - Fukuoka",
+   "url": "https://maxgaming.se/sv/pokemon/pokemon-pikachu-special-box-pokemon-center-fukuoka",
+   "price": 1790,
+   "type": "Collection Box",
+   "set": null,
+   "lang": "en",
+   "kind": "prissankt",
+   "from": 1890
+  },
+  {
+   "at": 1793006216744,
+   "store": "webhallen",
+   "product": "webhallen:398048",
+   "group": "x|collection-box|en||zygarde",
+   "title": "Pokemon Mega Zygarde Premium EX Collection",
+   "url": "https://www.webhallen.com/se/product/398048-Pokemon-Mega-Zygarde-Premium-EX-Collection",
+   "price": 749,
+   "type": "Collection Box",
+   "set": null,
+   "lang": "en",
+   "kind": "ny"
+  },
   {
    "at": 1793005379316,
    "store": "kantovault",
@@ -6550,45 +6591,6 @@
    "set": "30th Celebration",
    "lang": "ja",
    "kind": "tillbaka"
-  },
-  {
-   "at": 1792363783593,
-   "store": "aquitaz",
-   "product": "aquitaz:10811514913114",
-   "group": "x|collection-box|en||first-illustration-partner-s3",
-   "title": "Pokémon: First Partner Series 3 Illustration Collection Box (ENG)",
-   "url": "https://aquitaz.se/products/pokemon-first-partner-series-3-illustration-collection-box-eng",
-   "price": 75.95,
-   "type": "Collection Box",
-   "set": null,
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1792363762539,
-   "store": "cardclub",
-   "product": "cardclub:15440625107267",
-   "group": "x|booster-pack|en||dream",
-   "title": "Pokémon TCG: Mega Dream ex M2a Booster Pack",
-   "url": "https://cardclub.se/products/pokemon-tcg-mega-dream-ex-m2a-booster-pack-japansk",
-   "price": 119,
-   "type": "Booster Pack",
-   "set": null,
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1792363762539,
-   "store": "cardclub",
-   "product": "cardclub:15440625074499",
-   "group": "emerald|booster-pack|en|",
-   "title": "Pokémon TCG: Storm Emeralda M6 Booster Pack",
-   "url": "https://cardclub.se/products/pokemon-tcg-storm-emeralda-m6-booster-pack-japansk",
-   "price": 79,
-   "type": "Booster Pack",
-   "set": "Emerald",
-   "lang": "en",
-   "kind": "ny"
   }
  ]
 }
