@@ -3852,3 +3852,5 @@ button.zm-price:hover{background:#1f2132}
 .seo-faq summary{cursor:pointer;padding:14px 0;font-weight:700}
 .seo-faq details[open] summary{border-bottom:1px solid var(--line)}
 .seo-faq details p{margin:12px 0 14px}
+/* En vanlig prisuppdatering (inte den billigaste): neutral rad i stället för grön prissänkning. */
+.gpricechg{font-size:.78rem;color:var(--muted);line-height:1.35}

@@ -1,6 +1,6 @@
 import { $, esc, kr, fmt, ago, loading, liveStamp, releaseSets, safeUrl } from "./site.js";
 import { langMark } from "./langmark.js";
-import { groupKey, groupProducts, groupTitle, lowestInStock } from "./group.js";
+import { groupKey, groupProducts, groupTitle, lowestInStock, isLeadDrop, changedAt } from "./group.js";
 import { typeOf } from "./releases.js";
 import { getPrefs, savePrefs, matches, KINDS } from "./prefs.js";
 import { track } from "./tracker.js";
@@ -41,7 +41,6 @@ function renderEvents() {
 const PRICE = { "": [0, Infinity], "0-50": [0, 50], "50-100": [50, 100], "100-200": [100, 200], "200-500": [200, 500], "500-1000": [500, 1000], "1000-": [1000, Infinity] };
 const LANG = { en: "Engelska", ja: "Japanska", ko: "Koreanska", zh: "Kinesiska", fr: "Franska" };
 const TYPE_LABEL = { "Booster Pack": "Boosterpaket", "Booster Box": "Boosterbox", "Elite Trainer Box": "Elite Trainer Box (ETB)", Blister: "Blister", Tin: "Tin" };
-let recentDrop = new Map();
 let groups = new Map(), priceHist = {}, releaseDates = new Map();
 const pressed = (id) => $(id).getAttribute("aria-pressed") === "true";
 
@@ -70,7 +69,7 @@ function groupInfo(key) {
   const inStock = all.filter((m) => m.available), pre = all.filter((m) => m.preorder && !m.available), out = all.filter((m) => !m.available && !m.preorder);
   const low = lowestInStock(all);
   const lowPre = pre.length ? Math.min(...pre.map((m) => m.price)) : null;
-  return { key, all, inStock, pre, out, low, lowPre, last: Math.max(...all.map((m) => m.lastChange || 0)), stores: new Set(all.map((m) => m.store)).size };
+  return { key, all, inStock, pre, out, low, lowPre, last: Math.max(...all.map((m) => m.lastChange || 0)), bump: Math.max(...all.map((m) => changedAt(m, all))), stores: new Set(all.map((m) => m.store)).size };
 }
 
 function sparkline(points) {
@@ -144,13 +143,15 @@ function groupCard(g, open) {
   const meta = [TYPE_LABEL[lead.type] || lead.type, lead.set, lead.lang !== "en" ? LANG[lead.lang] || lead.lang : ""].filter(Boolean).join(" · ");
   const price = g.low != null ? `Från <b>${kr(g.low)}</b> i lager` : g.lowPre != null ? `Förbeställ från <b>${kr(g.lowPre)}</b>` : `Slut överallt · senast <b>${kr(Math.min(...g.all.map((m) => m.price)))}</b>`;
   const rel = releaseDates.get(`${(lead.set || "").toLowerCase()}|${lead.type}`);
+  // Senaste prisändringen den här veckan. Bara en sänkning som gör butiken billigast är en prissänkning
+  // (etikett och grön rad, se isLeadDrop i group.js). Andra ändringar visas som en vanlig prisuppdatering.
+  const week = Date.now() - 7 * 864e5;
+  const latest = g.all.filter((m) => m.priceChange && m.priceChange.at > week).sort((a, b) => b.priceChange.at - a.priceChange.at)[0];
+  const drop = g.all.filter((m) => m.priceChange?.at > week && isLeadDrop(m, g.all)).sort((a, b) => b.priceChange.at - a.priceChange.at)[0];
+  const update = !drop && latest;
   const badge = !g.inStock.length && !g.pre.length ? '<span class="pbadge out">Slut</span>' : !g.inStock.length ? '<span class="pbadge pre">Förbeställ</span>'
-    : g.all.some((m) => recentDrop.has(m.id)) ? '<span class="pbadge sale">Prissänkt</span>' : "";
+    : drop ? '<span class="pbadge sale">Prissänkt</span>' : "";
   const title = groupTitle(g.all);
-  // Senaste prissänkningen i någon butik den här veckan, så att kortet kan säga vilken butik som sänkte.
-  // Samma regel som för etiketten: en sänkning på över 60 % är oftast fel valuta, inte en rea.
-  const drop = g.all.filter((m) => m.priceChange && m.price < m.priceChange.from && m.price >= m.priceChange.from * 0.4 && Date.now() - m.priceChange.at < 7 * 864e5)
-    .sort((a, b) => b.priceChange.at - a.priceChange.at)[0];
 
   return `<article class="gcard${open ? " open" : ""}" data-key="${esc(g.key)}">
     <div class="pimg">${img ? `<img src="${esc(img)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.remove()">` : `<span class="noimg"><b>${esc(lead.type)}</b>Bild finns hos butiken</span>`}${badge}${langMark(lead.lang)}
@@ -162,6 +163,7 @@ function groupCard(g, open) {
       <div class="gprice">${price}</div>
       ${g.last ? `<span class="gupdated">Senast uppdaterad ${ago(new Date(g.last).toISOString())}</span>` : ""}
       ${drop ? `<span class="gdrop"><span aria-hidden="true">▼</span> Prissänkt hos <b>${esc(storeName[drop.store] || drop.store)}</b> · ${when(drop.priceChange.at)} · var ${kr(drop.priceChange.from)}</span>` : ""}
+      ${update ? `<span class="gpricechg">Prisuppdatering hos ${esc(storeName[update.store] || update.store)} · ${when(update.priceChange.at)} · ${kr(update.priceChange.from)} → ${kr(update.price)}</span>` : ""}
       <div class="gchips">
         ${g.inStock.length ? `<span class="c in">I lager ${new Set(g.inStock.map((m) => m.store)).size}</span>` : ""}
         ${g.pre.length ? `<span class="c pre">Förbeställ ${new Set(g.pre.map((m) => m.store)).size}</span>` : ""}
@@ -187,8 +189,8 @@ function renderProducts() {
   const sort = $("#f-sort").value;
   const price = (g) => g.low ?? g.lowPre ?? Infinity;
   keys.sort(sort === "price-asc" ? (a, b) => price(a) - price(b) : sort === "price-desc" ? (a, b) => price(b) - price(a)
-    : sort === "name" ? (a, b) => groupTitle(a.all).localeCompare(groupTitle(b.all), "sv") : sort === "stores" ? (a, b) => b.stores - a.stores || b.last - a.last
-    : (a, b) => b.last - a.last);
+    : sort === "name" ? (a, b) => groupTitle(a.all).localeCompare(groupTitle(b.all), "sv") : sort === "stores" ? (a, b) => b.stores - a.stores || b.bump - a.bump
+    : (a, b) => b.bump - a.bump);
   $("#count").textContent = `${keys.length.toLocaleString("sv-SE")} produkter`;
   grid.innerHTML = keys.slice(0, take).map((g) => groupCard(g, openGroups.has(g.key))).join("") || '<div class="msg">Inga produkter matchar. Prova att ta bort ett filter.</div>';
   $("#more").hidden = keys.length <= take;
@@ -341,13 +343,6 @@ try {
   opts("#f-lang", [...new Set(products.map((x) => x.lang))].sort(), (l) => LANG[l] || l.toUpperCase());
   // Engelska är förvalt. Välj "Alla" för att se japanska, koreanska och övriga språk också.
   if ($("#f-lang").querySelector('option[value="en"]')) $("#f-lang").value = "en";
-  // Etiketter på korten: prissänkt eller nytt den senaste veckan.
-  const week = Date.now() - 7 * 864e5;
-  for (const ev of events) {
-    if (ev.at < week) continue;
-    // Mer än 60 % lägre är nästan alltid ett valutafel (dollar i stället för kronor), inte en rea.
-    if (ev.kind === "prissankt" && !recentDrop.has(ev.product) && ev.price >= ev.from * 0.4) recentDrop.set(ev.product, ev.from);
-  }
   // Sökning från länk, t.ex. butiker.html?q=Delta Reign#products
   const q = new URLSearchParams(location.search).get("q");
   if (q) $("#f-q").value = q;

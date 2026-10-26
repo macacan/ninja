@@ -8,7 +8,7 @@ import { shopify } from "../adapters/shopify.mjs";
 import { woocommerce } from "../adapters/woocommerce.mjs";
 import { generic } from "../adapters/generic.mjs";
 import { webhallen } from "../adapters/webhallen.mjs";
-import { groupKey, groupProducts, lowestInStock } from "../../../js/group.js";
+import { groupKey, groupProducts, lowestInStock, undercuts } from "../../../js/group.js";
 
 const ROOT = new URL("../../../", import.meta.url);
 const file = (p) => new URL(p, ROOT);
@@ -172,7 +172,9 @@ export async function createEngine({ statuses } = {}) {
           else if (o && !o.available && !o.preorder && p.preorder && !p.available) found.push({ ...base, kind: "forbestallning" });
           else if (o && !o.available && p.available) found.push({ ...base, kind: "tillbaka" });
           // Mer än 60 % billigare är nästan alltid fel valuta (dollar i stället för kronor), inte en rea.
-          else if (o && (p.available || p.preorder) && p.price < o.price * 0.99 && p.price >= o.price * 0.4) {
+          // Bara en sänkning som gör butiken billigast av alla butiker med produkten är en prissänkning (undercuts i
+          // js/group.js). Sänker en dyr butik men är fortfarande dyrare än någon annan blir det ingen notis.
+          else if (o && (p.available || p.preorder) && p.price < o.price * 0.99 && p.price >= o.price * 0.4 && undercuts(p, sameProductElsewhere(p, store.id))) {
             // Pris som pendlar (rea av och på) ska inte ge en ny notis varje varv.
             const last = o.lastDrop;
             if (!last || now - last.at > DROP_COOLDOWN || p.price < last.price * 0.99) {
@@ -212,6 +214,13 @@ export async function createEngine({ statuses } = {}) {
     return found;
   }
 
+  // Samma produkt hos andra butiker (samma produktgrupp), för att avgöra om en sänkning gör butiken billigast.
+  function sameProductElsewhere(p, storeId) {
+    const key = groupKey(p), out = [];
+    for (const [sid, list] of products) if (sid !== storeId) for (const x of list) if (groupKey(x) === key) out.push(x);
+    return out;
+  }
+
   // Två sparningar får aldrig gå samtidigt (de skriver samma temporära filer).
   let saving = null;
   async function save() {
@@ -231,8 +240,10 @@ export async function createEngine({ statuses } = {}) {
     await writeJSON("data/products.json", { updated: now, products: all }, true);
     // Bara det som går att köpa, med fälten sidorna visar: startsidan och setsidorna läser den här (ca 1 MB
     // i stället för 4 MB). Butikssidan och släppkalendern behöver även slutsålt och läser products.json.
-    const live = all.filter((p) => p.available || p.preorder).map(({ id, store, title, url, price, available, preorder, image, type, lang, set, lastChange }) =>
-      ({ id, store, title, url, price, available, preorder, image, type, lang, set, lastChange }));
+    // priceChange och första gången i lager behövs för att startsidan ska kunna skilja en prissänkning som gör
+    // butiken billigast från en vanlig prisuppdatering (changedAt i js/group.js).
+    const live = all.filter((p) => p.available || p.preorder).map(({ id, store, title, url, price, available, preorder, image, type, lang, set, lastChange, priceChange, firstInStock, firstOrderable }) =>
+      ({ id, store, title, url, price, available, preorder, image, type, lang, set, lastChange, priceChange, firstInStock, firstOrderable }));
     await writeJSON("data/stock.json", { updated: now, products: live }, true);
     // Dagens lägsta pris i lager per grupp. Under dagen behålls det lägsta vi sett.
     const today = new Date(now).toLocaleDateString("sv-SE");

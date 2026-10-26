@@ -87,3 +87,25 @@ export const lowestInStock = (members) => {
   const prices = members.filter((m) => m.available).map((m) => m.price);
   return prices.length ? Math.min(...prices) : null;
 };
+
+// Prissänkning eller bara prisuppdatering? En butik som sänker räknas som prissänkt bara när den blir billigast:
+// lägre än alla andra butiker som har produkten i lager (eller, om den bara går att förbeställa, lägre än alla
+// andra som har den i lager eller tar förbeställningar). Sänker en dyr butik men är fortfarande dyrare än någon
+// annan är det en vanlig prisuppdatering: ingen markering, ingen notis och produkten flyttas inte överst.
+// others: samma produkt hos andra butiker (övriga medlemmar i gruppen).
+export function undercuts(p, others) {
+  if (!p.available && !p.preorder) return false;
+  const rivals = others.filter((o) => o !== p && o.price > 0 && (p.available ? o.available : o.available || o.preorder));
+  return rivals.every((o) => p.price < o.price);
+}
+
+// En sänkning som gör butiken billigast (se undercuts). Över 60 % lägre är nästan alltid fel valuta, inte en rea.
+export const isLeadDrop = (p, others) => !!p.priceChange && p.price < p.priceChange.from && p.price >= p.priceChange.from * 0.4 && undercuts(p, others);
+
+// När produkten senast ändrades på ett sätt som ska flytta den överst i "Senast ändrad": nytt i lager, förbeställning
+// eller en prissänkning som gör butiken billigast. En vanlig prisuppdatering räknas inte, då gäller tiden innan.
+export function changedAt(p, others) {
+  const priceOnly = p.priceChange && p.lastChange === p.priceChange.at;
+  if (!priceOnly || isLeadDrop(p, others)) return p.lastChange || 0;
+  return Math.max(p.firstInStock || 0, p.firstOrderable || 0);
+}

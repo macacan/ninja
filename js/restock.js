@@ -1,7 +1,7 @@
 // Sektionen "Precis inne i butikerna" på startsidan:
 //  1. ett levande flöde av de senast inkomna produkterna, som uppdateras varje minut
 //  2. en packöppnare: välj ett pack från de senaste seten, riv upp det och dra korten ett i taget
-import { groupKey } from "./group.js";
+import { groupKey, groupProducts, changedAt } from "./group.js";
 import { $, esc, kr, ago, latestSets, setLogo, getJSON, API, safeUrl, liveStock } from "./site.js";
 import { track } from "./tracker.js";
 
@@ -21,9 +21,13 @@ async function feed() {
     const names = Object.fromEntries(s.stores.map((x) => [x.id, x.name]));
     const used = new Set();
     const inStock = p.products.filter((x) => x.available);
-    const list = inStock.filter((x) => x.image).sort((a, b) => b.lastChange - a.lastChange)
+    // Sorteras på senaste riktiga ändring: nytt i lager eller en prissänkning som gör butiken billigast.
+    // En vanlig prisuppdatering hos en dyrare butik flyttar inte upp produkten (changedAt i group.js).
+    const groups = groupProducts(p.products);
+    const at = new Map(inStock.map((x) => [x, changedAt(x, groups.get(groupKey(x)) || [])]));
+    const list = inStock.filter((x) => x.image).sort((a, b) => at.get(b) - at.get(a))
       .filter((x) => { const k = groupKey(x); return !used.has(k) && used.add(k); }).slice(0, 4);
-    const meta = (x) => `${esc(names[x.store] || x.store)} · ${kr(x.price)}${x.lastChange ? ` · ${ago(x.lastChange)}` : ""}`;
+    const meta = (x) => `${esc(names[x.store] || x.store)} · ${kr(x.price)}${at.get(x) ? ` · ${ago(at.get(x))}` : ""}`;
     const first = seen === null;
     if (!first && list.length && list.length === seen.length && list.every((x, i) => x.url === seen[i])) {
       el.querySelectorAll(".rf small").forEach((small, i) => { small.innerHTML = meta(list[i]); });
@@ -35,7 +39,7 @@ async function feed() {
     const before = new Map(old.map((li) => [li.dataset.url, li.getBoundingClientRect().top]));
     const imgs = new Map(old.map((li) => [li.dataset.url, li.querySelector(".rf-img img")]));
     el.innerHTML = list.map((x, i) => {
-      const justIn = fresh.has(x.url) || Date.now() - x.lastChange < 3 * 3600e3;
+      const justIn = fresh.has(x.url) || Date.now() - at.get(x) < 3 * 3600e3;
       return `<li class="rf${first ? "" : fresh.has(x.url) ? " is-fresh" : " is-update"}" style="--i:${i}" data-url="${esc(x.url)}">
         <a href="${esc(safeUrl(x.url))}" target="_blank" rel="noopener nofollow">
           <span class="rf-img"><img src="${esc(x.image)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.remove()"></span>
