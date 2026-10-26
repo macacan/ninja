@@ -1,6 +1,19 @@
 {
- "updated": 1793028158872,
+ "updated": 1793029038895,
  "events": [
+  {
+   "at": 1793028890932,
+   "store": "skattkistan",
+   "product": "skattkistan:11224049287506",
+   "group": "30th-celebration|booster-bundle|en|",
+   "title": "Pokémon TCG: 30th Celebration Booster Bundle – 6 boosters",
+   "url": "https://skattkistan.net/products/pokemon-tcg-30th-celebration-booster-bundle-6-boosters",
+   "price": 889,
+   "type": "Booster Bundle",
+   "set": "30th Celebration",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793025557341,
    "store": "samlarhobby",
@@ -6572,19 +6585,6 @@
    "title": "Pokémon Sun & Moon: GG End Booster Box",
    "url": "https://kantovault.se/products/pokemon-sun-moon-gg-end-booster-box",
    "price": 7990,
-   "type": "Booster Box",
-   "set": "Sun & Moon",
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1792363889323,
-   "store": "kantovault",
-   "product": "kantovault:11698512560469",
-   "group": "sun-moon|booster-box|en||legend-sky",
-   "title": "Pokémon Sun & Moon: Sky Legend Booster Box",
-   "url": "https://kantovault.se/products/pokemon-sun-moon-sky-legend-booster-box",
-   "price": 6690,
    "type": "Booster Box",
    "set": "Sun & Moon",
    "lang": "en",
