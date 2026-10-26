@@ -1,6 +1,45 @@
 {
- "updated": 1793012498361,
+ "updated": 1793013478396,
  "events": [
+  {
+   "at": 1793012876541,
+   "store": "shinycards",
+   "product": "shinycards:https://www.shinycards.se/pokemon/collection-box/kopia-pokemon-center-hiroshim-special-collection-box-japansk",
+   "group": "x|premium-collection|ja|pc|center-fukuoka",
+   "title": "Pokemon Center Fukuoka Special Collection Box (Japansk)",
+   "url": "https://www.shinycards.se/pokemon/collection-box/kopia-pokemon-center-hiroshim-special-collection-box-japansk",
+   "price": 1599,
+   "type": "Premium Collection",
+   "set": null,
+   "lang": "ja",
+   "kind": "ny"
+  },
+  {
+   "at": 1793012876541,
+   "store": "shinycards",
+   "product": "shinycards:https://www.shinycards.se/pokemon/collection-box/pokemon-center-hiroshim-special-collection-box-japansk",
+   "group": "x|premium-collection|ja|pc|center-hiroshim",
+   "title": "Pokemon Center Hiroshim Special Collection Box (Japansk)",
+   "url": "https://www.shinycards.se/pokemon/collection-box/pokemon-center-hiroshim-special-collection-box-japansk",
+   "price": 1599,
+   "type": "Premium Collection",
+   "set": null,
+   "lang": "ja",
+   "kind": "ny"
+  },
+  {
+   "at": 1793012876541,
+   "store": "shinycards",
+   "product": "shinycards:https://www.shinycards.se/pokemon/collection-box/pokemon-center-tohoku-special-collection-box-japansk",
+   "group": "x|premium-collection|ja|pc|center-tohoku",
+   "title": "Pokemon Center Tohoku Special Collection Box (Japansk)",
+   "url": "https://www.shinycards.se/pokemon/collection-box/pokemon-center-tohoku-special-collection-box-japansk",
+   "price": 1599,
+   "type": "Premium Collection",
+   "set": null,
+   "lang": "ja",
+   "kind": "ny"
+  },
   {
    "at": 1793009729765,
    "store": "samlarverket",
@@ -6551,45 +6590,6 @@
    "price": 49,
    "type": "Booster Pack",
    "set": null,
-   "lang": "ja",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1792363826632,
-   "store": "collected",
-   "product": "collected:11160015634774",
-   "group": "x|booster-pack|ja||abyss-eye",
-   "title": "Pokémon TCG: Abyss Eye Booster Pack (Japansk) – M5",
-   "url": "https://collected.se/products/pokemon-tcg-abyss-eye-japansk-booster-pack",
-   "price": 49,
-   "type": "Booster Pack",
-   "set": null,
-   "lang": "ja",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1792363826632,
-   "store": "collected",
-   "product": "collected:11160014618966",
-   "group": "x|booster-box|ja||abyss-eye",
-   "title": "Pokémon TCG: Abyss Eye Booster Box (Japansk) – M5",
-   "url": "https://collected.se/products/pokemon-tcg-abyss-eye-japansk-booster-box",
-   "price": 1190,
-   "type": "Booster Box",
-   "set": null,
-   "lang": "ja",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1792363826632,
-   "store": "collected",
-   "product": "collected:11156430782806",
-   "group": "emerald|booster-pack|ja|",
-   "title": "Pokémon TCG: Storm Emerald Booster Pack (Japansk) - M6",
-   "url": "https://collected.se/products/pokemon-tcg-storm-emerald-booster-pack-japansk",
-   "price": 69,
-   "type": "Booster Pack",
-   "set": "Emerald",
    "lang": "ja",
    "kind": "tillbaka"
   }
