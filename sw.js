@@ -8,8 +8,8 @@ self.addEventListener("push", (e) => {
   try { d = e.data ? e.data.json() : {}; } catch { d = { body: e.data?.text() || "" }; }
   e.waitUntil(self.registration.showNotification(d.title || "Lootninja", {
     body: d.body || "",
-    icon: "/img/icon-192.png",
-    badge: "/img/favicon-48.png",
+    icon: "/img/icon-192.png?v=2",
+    badge: "/img/favicon-48.png?v=2",
     tag: d.tag || undefined,
     data: { url: d.url || "/butiker.html" },
   }));

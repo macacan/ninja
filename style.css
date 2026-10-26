@@ -3837,3 +3837,18 @@ button.zm-price:hover{background:#1f2132}
 .hs-form{grid-template-columns:minmax(0,1fr)}
 .hs-form-row{min-width:0}
 .hs-form input{width:0}
+
+/* Butiker: texten om butiksbevakningen längst ner (för besökare och sökmotorer). */
+.shop-seo{max-width:880px;margin:48px auto 0;padding-top:28px;border-top:1px solid var(--line)}
+.shop-seo h2:first-child{margin-top:0}
+.shop-seo p,.shop-seo li{line-height:1.65}
+.seo-features{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:14px;margin:20px 0 8px}
+.seo-features section{padding:14px 16px;background:var(--card);border:1px solid var(--line);border-radius:10px}
+.seo-features h3{margin:0 0 6px;font-size:1.05rem}
+.seo-features p{margin:0;font-size:.93rem}
+.shop-seo table{margin:6px 0 8px}
+.seo-faq{display:grid;gap:8px}
+.seo-faq details{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:0 16px}
+.seo-faq summary{cursor:pointer;padding:14px 0;font-weight:700}
+.seo-faq details[open] summary{border-bottom:1px solid var(--line)}
+.seo-faq details p{margin:12px 0 14px}

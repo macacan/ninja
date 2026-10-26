@@ -32,7 +32,7 @@ const subscription = async () => (await navigator.serviceWorker.getRegistration(
 // datorn släpper igenom notiser från Lootninja (och inte blockerar dem med Stör ej eller fokusläge).
 export async function localNotice(body, tag = "lootninja-local") {
   const reg = await navigator.serviceWorker.ready;
-  await reg.showNotification("Lootninja", { body, icon: "img/icon-192.png", badge: "img/favicon-48.png", tag, data: { url: "butiker.html#notiser" } });
+  await reg.showNotification("Lootninja", { body, icon: "img/icon-192.png?v=2", badge: "img/favicon-48.png?v=2", tag, data: { url: "butiker.html#notiser" } });
 }
 
 export async function enablePush() {

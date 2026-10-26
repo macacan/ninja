@@ -103,8 +103,8 @@ const headHtml = ({ title, desc, url, ld }) => `<!doctype html>
 <meta name="theme-color" content="#ffffff">
 <meta name="theme-color" content="#1b1e28" media="(prefers-color-scheme: dark)">
 <link rel="icon" href="logo.svg" type="image/svg+xml">
-<link rel="icon" href="img/favicon-48.png" sizes="48x48" type="image/png">
-<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+<link rel="icon" href="img/favicon-48.png?v=2" sizes="48x48" type="image/png">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png?v=2">
 <link rel="manifest" href="site.webmanifest">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Lootninja">
