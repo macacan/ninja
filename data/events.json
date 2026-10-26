@@ -1,6 +1,19 @@
 {
- "updated": 1793042548864,
+ "updated": 1793043448892,
  "events": [
+  {
+   "at": 1793042769550,
+   "store": "dragon-s-lair",
+   "product": "dragon-s-lair:15673205522780",
+   "group": "pitch-black|booster-bundle|en|",
+   "title": "Pokémon TCG: Mega Evolution - Pitch Black Booster Bundle (Max 2 per kund)",
+   "url": "https://dragonslair.se/products/pokemon-tcg-mega-evolution-pitch-black-booster-bundle",
+   "price": 599,
+   "type": "Booster Bundle",
+   "set": "Pitch Black",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793039655756,
    "store": "samlargrottan",
@@ -6578,19 +6591,6 @@
    "lang": "ja",
    "kind": "prissankt",
    "from": 2299
-  },
-  {
-   "at": 1792364026794,
-   "store": "pokemastersvault",
-   "product": "pokemastersvault:19235",
-   "group": "x|booster-pack|ja||raging-surf",
-   "title": "Pokémon Scarlet &#038; Violet Raging Surf Booster Pack (sv3a) Japanese",
-   "url": "https://pokemastersvault.com/product/pokemon-scarlet-violet-raging-surf-booster-pack-sv3a-japanese/",
-   "price": 35,
-   "type": "Booster Pack",
-   "set": null,
-   "lang": "ja",
-   "kind": "ny"
   }
  ]
 }
