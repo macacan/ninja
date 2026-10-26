@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-26T06:31:52.196Z",
+ "updated": "2026-10-26T06:47:07.991Z",
  "articles": [
   {
    "title": "PSA confirms FBI investigating $1 million Pokemon & trading card heist as full stolen list revealed",
@@ -324,25 +324,5 @@
    "source": "Wargamer"
   }
  ],
- "videos": [
-  {
-   "id": "mMJzv4wmJvU",
-   "title": "[UK] Pokémon TCG Pocket: Dual Fusion 🧬 | Official Trailer",
-   "date": "2026-10-20T21:12:16.000Z",
-   "source": "Pokémon (officiell)",
-   "digital": true
-  },
-  {
-   "id": "vTJyWfTQsWQ",
-   "title": "TCG Day 2 | 2027 Pokémon Nice Regional Championships",
-   "date": "2026-10-18T19:26:30.000Z",
-   "source": "Pokémon (officiell)"
-  },
-  {
-   "id": "ioLhEOjR-G0",
-   "title": "TCG Day 1 | 2027 Pokémon Nice Regional Championships",
-   "date": "2026-10-17T19:31:50.000Z",
-   "source": "Pokémon (officiell)"
-  }
- ]
+ "videos": []
 }
