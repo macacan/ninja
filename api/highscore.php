@@ -14,8 +14,8 @@ date_default_timezone_set('Europe/Stockholm');
 const MAX_PACK_VALUE = 25000; // kronor
 const TOKEN_TTL = 7200;       // sekunder
 const TOP = 10;
-// Ord som inte får finnas i ett namn på topplistan (jämförs utan mellanslag, siffror som bokstäver).
-const BLOCKED = ['fitta', 'kuk', 'hora', 'hore', 'neger', 'nigger', 'nigga', 'fuck', 'cunt', 'bitch', 'whore', 'rape', 'nazi', 'hitler', 'faggot', 'bög', 'retard', 'jävla', 'javla', 'knull', 'slyna', 'mongo', 'heil', 'kkk', 'porr', 'porn'];
+// Namnfiltret (inbyggda ord plus de som lagts till i statistikens dashboard) delas med stats/dashboard.php.
+require __DIR__ . '/name-filter.php';
 
 function respond(int $code, array $body): void {
   http_response_code($code);
@@ -110,17 +110,8 @@ function clean($v, int $len): string {
   return mb_substr($v, 0, $len, 'UTF-8');
 }
 
-function nameOk(string $name): bool {
-  if (mb_strlen($name, 'UTF-8') < 2) return false;
-  if (!preg_match('/^[\p{L}\p{N} ._\-!?]+$/u', $name)) return false;
-  $leet = strtr(mb_strtolower($name, 'UTF-8'), ['0' => 'o', '1' => 'i', '3' => 'e', '4' => 'a', '5' => 's', '7' => 't']);
-  $flat = preg_replace('/[\s._\-!?]+/u', '', $leet);
-  $words = preg_split('/[\s._\-!?]+/u', $leet, -1, PREG_SPLIT_NO_EMPTY);
-  foreach (BLOCKED as $w) {
-    // Korta ord (t.ex. "kuk", "rape") bara som egna ord, annars stoppas vanliga namn som Kukui och Grape.
-    if (mb_strlen($w, 'UTF-8') <= 4 ? ($flat === $w || in_array($w, $words, true)) : str_contains($flat, $w)) return false;
-  }
-  return true;
+function nameOk(PDO $db, string $name): bool {
+  return nameShapeOk($name) && nameBlockedBy($name, nameBlockedWords($db)) === null;
 }
 
 // ---------- Anropen ----------
@@ -187,7 +178,7 @@ try {
   $bestName = clean($in['best_card_name'] ?? '', 60);
   $img = is_string($in['best_card_img'] ?? null) ? $in['best_card_img'] : '';
 
-  if (!nameOk($name)) respond(400, ['ok' => false, 'error' => 'Välj ett annat ninjanick: 2–20 tecken, bokstäver, siffror och mellanslag.']);
+  if (!nameOk($db, $name)) respond(400, ['ok' => false, 'error' => 'Välj ett annat ninjanick: 2–20 tecken, bokstäver, siffror och mellanslag.']);
   if ($value === false || $value < 1 || $value > MAX_PACK_VALUE) respond(400, ['ok' => false, 'error' => 'Packets värde ser inte rimligt ut.']);
   if ($bestValue === false || $bestValue < 0 || $bestValue > $value + 1) respond(400, ['ok' => false, 'error' => 'Kortets värde ser inte rimligt ut.']);
   // Kortbilderna kommer alltid från TCGdex.

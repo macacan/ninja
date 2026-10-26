@@ -45,7 +45,11 @@ $value = is_numeric($value) ? (string)round(max(0, min(1000000, (float)$value)),
 $ref = strtolower((string)($in['referrer'] ?? ''));
 $ref = preg_replace('/^www\./', '', $ref);
 $ref = preg_match('/^[a-z0-9._-]{1,100}$/', $ref) ? $ref : 'direct';
-$device = in_array($in['device'] ?? '', ['mobile', 'tablet', 'desktop'], true) ? $in['device'] : 'desktop';
+// Enhetstyp och app avgörs här från webbläsarens User-Agent, som skickas med varje anrop ändå, så att skriptet på
+// sidan inte behöver läsa något från besökarens enhet. Appar som Instagram och TikTok öppnar länkar i en egen
+// webbläsare som ofta inte skickar någon referrer, men som syns i User-Agent.
+$device = statsDevice($ua);
+if ($ref === 'direct') $ref = statsInApp($ua) ?? 'direct';
 
 try {
   $db = statsDb();

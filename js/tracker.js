@@ -1,23 +1,25 @@
 // Besöksstatistik utan kakor: sidvisningar, klick till butikerna, sökningar, bevakningar och öppnade pack skickas till
-// stats.lootninja.se (stats/api.php). Inget sparas i webbläsaren och ingen IP-adress sparas hos oss, se integritet.html.
-// Inget skickas om webbläsaren ber om att inte bli spårad (Do Not Track / Global Privacy Control), eller lokalt.
+// stats.lootninja.se (stats/api.php). Ingen IP-adress sparas hos oss, se integritet.html.
+// Skriptet läser ingenting om enheten (skärm, pekskärm, webbläsare): enhetstyp och app avgör servern från det som
+// webbläsaren ändå skickar med varje anrop. Inget skickas om besökaren stängt av statistiken på integritetssidan,
+// om webbläsaren ber om att inte bli spårad (Do Not Track / Global Privacy Control), eller lokalt.
 const ENDPOINT = "https://stats.lootninja.se/api.php";
+const OPT_OUT = "nl:no-stats";
 
-const off = navigator.doNotTrack === "1" || window.doNotTrack === "1" || navigator.globalPrivacyControl === true
+export const statsOptedOut = () => { try { return localStorage.getItem(OPT_OUT) === "1"; } catch { return false; } };
+const privacyOff = () => statsOptedOut() || navigator.doNotTrack === "1" || window.doNotTrack === "1" || navigator.globalPrivacyControl === true
   || location.hostname !== "lootninja.se";
-
-const device = () => {
-  const w = Math.min(screen.width, innerWidth);
-  return /ipad|tablet/i.test(navigator.userAgent) || (navigator.maxTouchPoints > 1 && w >= 700 && w < 1100) ? "tablet" : w < 700 ? "mobile" : "desktop";
-};
+let off = privacyOff();
+// Besökarens eget val på integritetssidan. Sparas i webbläsaren tills man ändrar det eller rensar webbplatsdata.
+export function setStatsOptOut(out) {
+  try { if (out) localStorage.setItem(OPT_OUT, "1"); else localStorage.removeItem(OPT_OUT); } catch {}
+  off = privacyOff();
+}
 
 // Varifrån besökaren kom, i den här ordningen:
 //  1. utm_source i adressen (ChatGPT lägger till ?utm_source=chatgpt.com på sina länkar, kampanjlänkar likaså)
 //  2. domänen i referrer, t.ex. google.com eller l.instagram.com ("internal" när man klickat runt på Lootninja)
-//  3. appens inbyggda webbläsare, som ofta inte skickar någon referrer (Instagram, Facebook, TikTok, Snapchat …)
-//  4. annars "direct" (bokmärke, inskriven adress, eller en app som inte säger något)
-const IN_APP = [[/Instagram/, "instagram-app"], [/FBAN|FBAV|FB_IAB/, "facebook-app"], [/musical_ly|BytedanceWebview|TikTok/i, "tiktok-app"],
-  [/Snapchat/i, "snapchat-app"], [/Discord/i, "discord-app"], [/LinkedInApp/i, "linkedin-app"], [/Pinterest/i, "pinterest-app"], [/\bLine\//, "line-app"]];
+//  3. annars "direct". Kommer besöket från en app (Instagram, TikTok …) som inte skickar någon referrer, ser servern det.
 const referrer = () => {
   const utm = new URLSearchParams(location.search).get("utm_source");
   if (utm && /^[\w.-]{1,60}$/.test(utm)) return utm.toLowerCase().replace(/^www\./, "");
@@ -25,7 +27,7 @@ const referrer = () => {
     const h = new URL(document.referrer).hostname.replace(/^www\./, "");
     if (h) return h === location.hostname ? "internal" : h;
   } catch {}
-  return IN_APP.find(([re]) => re.test(navigator.userAgent))?.[1] || "direct";
+  return "direct";
 };
 
 let lastSearch = "";
@@ -33,7 +35,7 @@ export function track(type, target = null, value = null) {
   if (off) return;
   // Samma sökning två gånger i rad (t.ex. när man bara byter sortering) räknas en gång.
   if (type === "search") { if (!target || target === lastSearch) return; lastSearch = target; }
-  const body = JSON.stringify({ type, path: location.pathname, target: target == null ? null : String(target).slice(0, 120), value, referrer: type === "pageview" ? referrer() : null, device: device() });
+  const body = JSON.stringify({ type, path: location.pathname, target: target == null ? null : String(target).slice(0, 120), value, referrer: type === "pageview" ? referrer() : null });
   try {
     // text/plain gör att webbläsaren inte behöver fråga servern först (ingen CORS-förfrågan).
     if (navigator.sendBeacon?.(ENDPOINT, new Blob([body], { type: "text/plain" }))) return;

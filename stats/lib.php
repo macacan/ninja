@@ -144,6 +144,22 @@ const STATS_SOURCES = [
   ['/^direct$/', 'Direkt', 'Direkt'],
 ];
 
+// Mobil, surfplatta eller dator från User-Agent. iPad med iPadOS 13+ säger att den är en Mac och räknas som dator.
+function statsDevice(string $ua): string {
+  if (preg_match('/iPad|Tablet|PlayBook|Silk|Kindle|Android(?!.*Mobile)/i', $ua)) return 'tablet';
+  if (preg_match('/Mobi|iPhone|iPod|Android|Windows Phone|BlackBerry|Opera Mini/i', $ua)) return 'mobile';
+  return 'desktop';
+}
+
+// Appens inbyggda webbläsare, eller null.
+function statsInApp(string $ua): ?string {
+  foreach ([
+    '/Instagram/' => 'instagram-app', '/FBAN|FBAV|FB_IAB/' => 'facebook-app', '/musical_ly|BytedanceWebview|TikTok/i' => 'tiktok-app',
+    '/Snapchat/i' => 'snapchat-app', '/Discord/i' => 'discord-app', '/LinkedInApp/i' => 'linkedin-app', '/Pinterest/i' => 'pinterest-app', '/\bLine\//' => 'line-app',
+  ] as $re => $app) if (preg_match($re, $ua)) return $app;
+  return null;
+}
+
 function statsSource(?string $ref): ?array {
   $ref = strtolower((string)$ref);
   if ($ref === 'internal' || $ref === 'lootninja.se') return null;
