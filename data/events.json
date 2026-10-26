@@ -1,6 +1,19 @@
 {
- "updated": 1793004566751,
+ "updated": 1793005446764,
  "events": [
+  {
+   "at": 1793005379316,
+   "store": "kantovault",
+   "product": "kantovault:11526049136981",
+   "group": "destined-rivals|booster-pack|en|",
+   "title": "Pokémon Scarlet & Violet: Destined Rivals Booster Pack",
+   "url": "https://kantovault.se/products/pokemon-scarlet-violet-destined-rivals-booster-pack",
+   "price": 129,
+   "type": "Booster Pack",
+   "set": "Destined Rivals",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793004295871,
    "store": "maxgaming",
@@ -6574,19 +6587,6 @@
    "price": 79,
    "type": "Booster Pack",
    "set": "Emerald",
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1792363762539,
-   "store": "cardclub",
-   "product": "cardclub:15138970206531",
-   "group": "x|booster-pack|en||inferno-x",
-   "title": "Pokémon TCG: Inferno X m2 Booster pack",
-   "url": "https://cardclub.se/products/pokemon-tcg-inferno-x-m2-booster-pack-japansk",
-   "price": 79,
-   "type": "Booster Pack",
-   "set": null,
    "lang": "en",
    "kind": "ny"
   }
