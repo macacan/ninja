@@ -1,6 +1,32 @@
 {
- "updated": 1793022638727,
+ "updated": 1793023558745,
  "events": [
+  {
+   "at": 1793023516713,
+   "store": "aquitaz",
+   "product": "aquitaz:9740947095898",
+   "group": "silver-tempest|booster-pack|en|",
+   "title": "Pokémon Sword & Shield: Silver Tempest Booster Pack (10 Kort) (ENG)",
+   "url": "https://aquitaz.se/products/pokemon-sword-shield-silver-tempest-booster-pack",
+   "price": 199,
+   "type": "Booster Pack",
+   "set": "Silver Tempest",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1793023516713,
+   "store": "aquitaz",
+   "product": "aquitaz:9919776981338",
+   "group": "black-bolt|booster-pack|ja|",
+   "title": "Pokémon Scarlet & Violet: Black Bolt Booster Pack (7 Kort) (JP)",
+   "url": "https://aquitaz.se/products/pokemon-scarlet-violet-black-bolt-booster-pack-jp",
+   "price": 99,
+   "type": "Booster Pack",
+   "set": "Black Bolt",
+   "lang": "ja",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793019250982,
    "store": "aquitaz",
@@ -6565,34 +6591,6 @@
    "lang": "ja",
    "kind": "prissankt",
    "from": 1099
-  },
-  {
-   "at": 1792363885942,
-   "store": "goblinen",
-   "product": "goblinen:15742981636440",
-   "group": "x|deck|en||league-lucario",
-   "title": "Pokémon TCG: Mega Lucario ex League Battle Deck (Max 1/kund!)",
-   "url": "https://goblinen.com/products/pokemon-tcg-mega-lucario-ex-league-battle-deck",
-   "price": 399.2,
-   "type": "Deck",
-   "set": null,
-   "lang": "en",
-   "kind": "prissankt",
-   "from": 499
-  },
-  {
-   "at": 1792363885942,
-   "store": "goblinen",
-   "product": "goblinen:15383495573848",
-   "group": "team-rocket|deck|en||league-mewtwo",
-   "title": "Pokémon TCG: Team Rocket’s Mewtwo ex League Battle Deck",
-   "url": "https://goblinen.com/products/pokemon-tcg-team-rocket-s-mewtwo-ex-league-battle-deck",
-   "price": 396,
-   "type": "Deck",
-   "set": "Team Rocket",
-   "lang": "en",
-   "kind": "prissankt",
-   "from": 495
   }
  ]
 }
