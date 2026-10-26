@@ -147,6 +147,10 @@ function groupCard(g, open) {
   const badge = !g.inStock.length && !g.pre.length ? '<span class="pbadge out">Slut</span>' : !g.inStock.length ? '<span class="pbadge pre">Förbeställ</span>'
     : g.all.some((m) => recentDrop.has(m.id)) ? '<span class="pbadge sale">Prissänkt</span>' : "";
   const title = groupTitle(g.all);
+  // Senaste prissänkningen i någon butik den här veckan, så att kortet kan säga vilken butik som sänkte.
+  // Samma regel som för etiketten: en sänkning på över 60 % är oftast fel valuta, inte en rea.
+  const drop = g.all.filter((m) => m.priceChange && m.price < m.priceChange.from && m.price >= m.priceChange.from * 0.4 && Date.now() - m.priceChange.at < 7 * 864e5)
+    .sort((a, b) => b.priceChange.at - a.priceChange.at)[0];
 
   return `<article class="gcard${open ? " open" : ""}" data-key="${esc(g.key)}">
     <div class="pimg">${img ? `<img src="${esc(img)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.remove()">` : `<span class="noimg"><b>${esc(lead.type)}</b>Bild finns hos butiken</span>`}${badge}${langMark(lead.lang)}
@@ -157,6 +161,7 @@ function groupCard(g, open) {
       <span class="gmeta">${esc(meta)}</span>
       <div class="gprice">${price}</div>
       ${g.last ? `<span class="gupdated">Senast uppdaterad ${ago(new Date(g.last).toISOString())}</span>` : ""}
+      ${drop ? `<span class="gdrop"><span aria-hidden="true">▼</span> Prissänkt hos <b>${esc(storeName[drop.store] || drop.store)}</b> · ${when(drop.priceChange.at)} · var ${kr(drop.priceChange.from)}</span>` : ""}
       <div class="gchips">
         ${g.inStock.length ? `<span class="c in">I lager ${new Set(g.inStock.map((m) => m.store)).size}</span>` : ""}
         ${g.pre.length ? `<span class="c pre">Förbeställ ${new Set(g.pre.map((m) => m.store)).size}</span>` : ""}
@@ -334,6 +339,8 @@ try {
   const perSet = products.reduce((a, x) => (x.set && (a[x.set] = (a[x.set] || 0) + 1), a), {});
   multiFill("f-set", Object.keys(perSet).sort((a, b) => a.localeCompare(b, "sv")).map((s) => ({ value: s, text: s, count: perSet[s] })));
   opts("#f-lang", [...new Set(products.map((x) => x.lang))].sort(), (l) => LANG[l] || l.toUpperCase());
+  // Engelska är förvalt. Välj "Alla" för att se japanska, koreanska och övriga språk också.
+  if ($("#f-lang").querySelector('option[value="en"]')) $("#f-lang").value = "en";
   // Etiketter på korten: prissänkt eller nytt den senaste veckan.
   const week = Date.now() - 7 * 864e5;
   for (const ev of events) {

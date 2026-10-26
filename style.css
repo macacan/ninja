@@ -794,7 +794,10 @@ span.rd-logo{display:grid;place-items:center;background:var(--surface);border-ra
 .viewbar .shop-search:focus-visible{outline:none}
 .qchips{display:flex;gap:6px;flex-wrap:nowrap}
 .qc{display:inline-flex;align-items:center;gap:6px;font:600 .8rem var(--sans);padding:0 10px;min-height:36px;border:2px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);cursor:pointer;white-space:nowrap}
-.qc[aria-pressed=true]{border-color:var(--ink);background:#fff3d6}
+.qc[aria-pressed=true]{border-color:var(--ink);background:var(--card)}
+/* Lamporna och ramarna behåller sina färger, men knapparnas bakgrund är ren. */
+#c-in[aria-pressed=true]{border-color:#2fb344}
+#c-pre[aria-pressed=true]{border-color:#f2b632}
 .qc[aria-pressed=false]{color:var(--muted)}
 .qc[aria-pressed=false] i{opacity:.35}
 .qc i{width:8px;height:8px;border-radius:50%}
@@ -815,6 +818,9 @@ span.rd-logo{display:grid;place-items:center;background:var(--surface);border-ra
 .gcard h3{margin:0;font:700 1.12rem/1.15 var(--cond);text-transform:uppercase}
 .gmeta{font-size:.78rem;color:var(--muted)}
 .gupdated{font-size:.78rem;color:var(--muted)}
+.gdrop{font-size:.82rem;font-weight:600;color:#1f8a35;line-height:1.35}
+.gdrop b{font-weight:800}
+:root:not([data-theme="light"]) .gdrop{color:#5fd38a}
 .gprice{font-size:.95rem}
 .gprice b{font:700 1.35rem var(--sans)}
 .gchips{display:flex;gap:5px;flex-wrap:wrap}
@@ -3774,3 +3780,28 @@ button.zm-price:hover{background:#1f2132}
   .hs-value{font-size:.95rem}
 }
 
+
+/* Listvyn i butiker: när jämförelsen är öppen följer bilden med när man scrollar ner i den.
+   overflow: clip (i stället för hidden) gör att gcard inte blir en scrollbehållare, så att sticky fungerar. */
+.ggrid[data-view=list] .gcard { overflow: hidden; overflow: clip; }
+.ggrid[data-view=list] .gcard.open .pimg {
+  position: sticky;
+  top: 88px;
+  align-self: flex-start;
+  height: auto;
+  aspect-ratio: 5 / 7;
+}
+
+/* Mobil: filtren som en rad med smala piller som går att svepa i sidled, i stället för stora rutor. */
+@media (max-width:640px){
+  .drops{flex-wrap:nowrap;overflow-x:auto;gap:6px;padding:2px 0 8px;margin:0 -16px;padding-inline:16px;scrollbar-width:none}
+  .drops::-webkit-scrollbar{display:none}
+  .drops > .drop,.drops > .mdrop{flex:0 0 auto;min-height:0;height:34px;border:1px solid var(--line);border-radius:999px;background:var(--card);box-shadow:0 1px 2px rgba(27,27,47,.05)}
+  .drops > .drop{padding:0 8px 0 12px;gap:4px}
+  .drops > .drop > span,.drops .mdrop-btn > span{font-size:.74rem;font-weight:600;color:var(--muted)}
+  .drops .drop select{min-height:0;height:100%;font-size:.8rem;font-weight:600;color:var(--ink);padding:0 16px 0 0;max-width:96px;background-position:right 2px center}
+  .drops .mdrop-btn{height:34px;padding:0 10px 0 12px;gap:4px;font-size:.8rem}
+  .drops .mdrop-btn b{font-size:.8rem;font-weight:600;color:var(--ink);max-width:86px}
+  .drops .mdrop-btn::after{width:5px;height:5px;margin-left:0}
+  .viewtoggle{margin-left:0}
+}

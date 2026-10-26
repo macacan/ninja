@@ -6,7 +6,7 @@ const POKEMON = /pok[eé]mon/i;
 
 // Höjs när igenkänningen ändras så att fler produkter räknas. Då sparas de nyfunna produkterna tyst
 // vid nästa kontroll av varje butik, i stället för att larmas som hundratals "nya" (se engine.mjs).
-export const CLASSIFY_VERSION = 7;
+export const CLASSIFY_VERSION = 8;
 
 // Ordningen spelar roll: mer specifika typer först.
 const TYPES = [
@@ -74,6 +74,8 @@ const POKE_WORDS = /\b(?:mega evolution|30th celebration|terastal|shiny treasure
 const SET_CODE = /\((?:c?sv\d{1,2}(?:\.\d)?[a-z]?c?|m\d{1,2}[a-z]?|s\d{1,2}[a-z]?)\)|\bc?sv\d{1,2}(?:\.\d)?[a-z]c?\b|\bcsv\d/i;
 // Setnamn som också är vanliga ord och därför inte räcker som bevis.
 const VAGUE_SETS = new Set(["dragon", "platinum", "emerald", "sample", "jungle", "fossil", "generations", "expedition", "unleashed", "wizards black star promos", "jumbo cards", "best of game", "w promotional", "miscellaneous promos"]);
+// Set som ofta bara är en del av ett produktnamn ("Team Rocket's Mewtwo ex"). Räknas som bevis, men förlorar mot andra set i titeln.
+const LOW_PRIORITY_SETS = new Set(["team rocket"]);
 
 let MONS = null;
 function pokemonNames() {
@@ -123,6 +125,16 @@ export function classify(title, setNames = [], seriesNames = [], hint = "") {
   const hits = setNames.filter((s) => s === "Evolutions" ? /\bevolutions\b/.test(lowNoMega) && !/prismatic evolutions/.test(low) : (s.length > 3 ? low.includes(s.toLowerCase()) : /^\d{3}$/.test(s) && new RegExp(`\\b${s}\\b`).test(low)));
   if (!looksPokemon(title, hits)) return null;
   const lang = langOf(title) || (hint && langOf(hint));
-  const set = hits.sort((a, b) => series.has(a.toLowerCase()) - series.has(b.toLowerCase()) || b.length - a.length)[0] || null;
+  // Flera set i titeln, t.ex. "Black Bolt & White Flare - Black Bolt Elite Trainer Box": setet som står sist,
+  // närmast produktnamnet, är produktens set. Serienamn och vaga ord ("Dragon") kommer sist. Överlappar två
+  // namn i titeln ("30th Celebrations" innehåller både "30th Celebration" och "Celebrations") vinner det längsta.
+  const span = (s) => { const i = low.lastIndexOf(s.toLowerCase()); return [i, i + s.length]; };
+  const weak = (s) => series.has(s.toLowerCase()) * 2 + (VAGUE_SETS.has(s.toLowerCase()) || LOW_PRIORITY_SETS.has(s.toLowerCase()));
+  const set = hits.sort((a, b) => {
+    const w = weak(a) - weak(b);
+    if (w) return w;
+    const [as, ae] = span(a), [bs, be] = span(b);
+    return as < be && bs < ae ? b.length - a.length : be - ae || b.length - a.length;
+  })[0] || null;
   return lang ? { type, lang, set } : { type, lang: "en", langGuess: true, set };
 }

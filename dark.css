@@ -39,10 +39,11 @@ select option:checked{background:#3b4a6b;color:#fff}
 .price-cap input{background:#2a2f3e}
 .toc a:hover{background:#403315}
 .todo{background:#494218}
-/* Av: grå text och släckt lampa. På: ljus text, färgad ram och svagt färgad bakgrund i lampans färg. */
+/* Av: grå text och släckt lampa. På: ljus text, färgad ram i lampans färg och ren bakgrund. */
 .qc[aria-pressed=false]{color:var(--muted)}
-.qc[aria-pressed=true]{color:var(--ink);background:rgba(242,182,50,.14);border-color:var(--gold)}
-#c-in[aria-pressed=true]{background:rgba(47,179,68,.16);border-color:#2fb344}
+.qc[aria-pressed=true]{color:var(--ink);background:var(--card);border-color:var(--ink)}
+#c-in[aria-pressed=true]{border-color:#2fb344}
+#c-pre[aria-pressed=true]{border-color:#f2b632}
 /* Lamporna lyser när filtret är på och är släckta när det är av. */
 .qc i{transition:opacity .2s,box-shadow .2s}
 .qc[aria-pressed=false] i{opacity:.3;filter:grayscale(.7)}
@@ -210,3 +211,12 @@ input.shop-search { border-color: #0b0c12; }
 :focus-visible { outline-color: #e8eaf1; }
 .header-search:focus-within { box-shadow: 0 0 0 3px rgba(232, 234, 241, 0.25); }
 
+
+/* Listvyn i butiker i mörkt läge: bildytan till vänster är mörk, inte vit. Fotot ligger kvar i en ljus ram. */
+.ggrid[data-view=list] .gcard .pimg {
+  background: var(--surface) !important;
+}
+.ggrid[data-view=list] .gcard .pimg img {
+  border-radius: 6px;
+  background: #fff;
+}
