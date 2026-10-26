@@ -1,6 +1,34 @@
 {
- "updated": 1793018978632,
+ "updated": 1793019898662,
  "events": [
+  {
+   "at": 1793019250982,
+   "store": "aquitaz",
+   "product": "aquitaz:10720720191834",
+   "group": "chaos-rising|booster-bundle|en|",
+   "title": "Pokemon Mega Evolution: Chaos Rising Booster Bundle (6 Pack) (ENG)",
+   "url": "https://aquitaz.se/products/pokemon-mega-evolution-chaos-rising-booster-bundle-6-pack-eng",
+   "price": 619,
+   "type": "Booster Bundle",
+   "set": "Chaos Rising",
+   "lang": "en",
+   "kind": "prissankt",
+   "from": 799
+  },
+  {
+   "at": 1793019250982,
+   "store": "aquitaz",
+   "product": "aquitaz:10815266783578",
+   "group": "pitch-black|booster-bundle|en|",
+   "title": "Pokemon Mega Evolution: Pitch Black Booster Bundle (6 Pack) (ENG)",
+   "url": "https://aquitaz.se/products/pokemon-mega-evolution-pitch-black-booster-bundle-6-pack-eng",
+   "price": 619,
+   "type": "Booster Bundle",
+   "set": "Pitch Black",
+   "lang": "en",
+   "kind": "prissankt",
+   "from": 799
+  },
   {
    "at": 1793017279448,
    "store": "tcgaddan",
@@ -6565,33 +6593,6 @@
    "lang": "en",
    "kind": "prissankt",
    "from": 495
-  },
-  {
-   "at": 1792363885942,
-   "store": "goblinen",
-   "product": "goblinen:15489929576792",
-   "group": "x|collection-box|ja|pc|center-hiroshima",
-   "title": "Pokémon TCG: Pokémon Center Hiroshima Special Box (Japansk)",
-   "url": "https://goblinen.com/products/pokemon-tcg-pokemon-center-hiroshima-special-box-japansk",
-   "price": 2636,
-   "type": "Collection Box",
-   "set": null,
-   "lang": "ja",
-   "kind": "prissankt",
-   "from": 3295
-  },
-  {
-   "at": 1792363826632,
-   "store": "collected",
-   "product": "collected:11181537689942",
-   "group": "x|booster-box|ja||brave",
-   "title": "Pokémon TCG: Mega Brave Booster Box (Japansk) – M1L",
-   "url": "https://collected.se/products/pokemon-mega-brave-booster-box-japansk-m1l",
-   "price": 1190,
-   "type": "Booster Box",
-   "set": null,
-   "lang": "ja",
-   "kind": "tillbaka"
   }
  ]
 }
