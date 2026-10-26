@@ -338,7 +338,7 @@ function submitForm(box, entry, ticket) {
   box.innerHTML = `<form class="hs-form">
       <label for="hs-nick">Registrera ditt pack på topplistan:</label>
       <div class="hs-form-row">
-        <input id="hs-nick" name="nick" maxlength="20" minlength="2" required autocomplete="nickname" placeholder="Skriv ditt ninjanick (max 20 tecken)" value="${esc(nick)}">
+        <input id="hs-nick" name="nick" maxlength="20" minlength="2" required autocomplete="nickname" placeholder="Namn" aria-label="Namn" value="${esc(nick)}">
         <button type="submit" class="btn small gold">Skicka in</button>
       </div>
       <p class="hs-msg" role="status"></p>

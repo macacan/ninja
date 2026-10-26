@@ -2999,7 +2999,7 @@ input[type=search]::-webkit-search-results-decoration {
 .pull-total .pull-again{display:block;margin-top:4px}
 
 @media (max-width:900px){
-  .restock{grid-template-columns:1fr;gap:20px;padding:22px 18px}
+  .restock{grid-template-columns:minmax(0,1fr);gap:20px;padding:22px 18px}
   .restock-stage{min-height:320px}
 }
 @media (max-width:640px){
@@ -3805,3 +3805,35 @@ button.zm-price:hover{background:#1f2132}
   .drops .mdrop-btn::after{width:5px;height:5px;margin-left:0}
   .viewtoggle{margin-left:0}
 }
+
+/* Notiser: "Installera Lootninja som app" med steg för Android och iPhone (js/butiker.js). */
+.ntf-install{display:grid;gap:12px;margin:14px 0 4px;padding:16px 18px;background:var(--card);border:2px solid var(--line);border-radius:10px}
+.ntf-install-head{display:flex;gap:14px;align-items:flex-start}
+.ntf-install-head img{flex:none;width:52px;height:52px;border-radius:12px}
+.ntf-install h3{margin:0 0 4px;font:600 1.15rem/1.2 var(--pixel)}
+.ntf-install-head p{margin:0;font-size:.92rem;line-height:1.5}
+.install-done{margin:0;padding:10px 12px;border-radius:8px;background:#e6f6ea;color:#1f6b33;font-weight:600;font-size:.92rem}
+#install-btn{justify-self:start}
+.install-tabs{margin-left:0;justify-self:start}
+.install-tabs button[aria-selected=true]{background:var(--ink-solid);color:#fff}
+.install-steps{margin:0;padding-left:22px;display:grid;gap:8px;font-size:.95rem;line-height:1.5}
+.install-steps li::marker{font:700 .95rem var(--pixel);color:var(--red)}
+@media (max-width:640px){
+  .ntf-install{padding:14px}
+  .install-tabs{justify-self:stretch}
+}
+
+/* Mobil: packytan och resultatet under den får aldrig bli bredare än skärmen. */
+.restock-stage,.restock-main{min-width:0;max-width:100%}
+.pull,.deck,.hs-submit,.hs-form,.pull-actions{min-width:0;max-width:100%}
+.hs-form-row .btn{padding-inline:12px}
+@media (max-width:640px){
+  .hs-form{padding:10px}
+  .hs-form label{font-size:.82rem}
+  .pull-total{font-size:.8rem}
+  .pull-actions .btn{white-space:normal;text-align:center}
+}
+/* Textfältet har en inbyggd minsta bredd (ca 20 tecken). width:0 + flex:1 låter det krympa så att knappen ryms. */
+.hs-form{grid-template-columns:minmax(0,1fr)}
+.hs-form-row{min-width:0}
+.hs-form input{width:0}

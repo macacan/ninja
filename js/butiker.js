@@ -4,7 +4,7 @@ import { groupKey, groupProducts, groupTitle, lowestInStock } from "./group.js";
 import { typeOf } from "./releases.js";
 import { getPrefs, savePrefs, matches, KINDS } from "./prefs.js";
 import { track } from "./tracker.js";
-import { pushState, enablePush, disablePush, syncPush, testPush, blockedHelp, silentHelp } from "./push.js";
+import { pushState, enablePush, disablePush, syncPush, testPush, blockedHelp, silentHelp, isIos, isStandalone } from "./push.js";
 const KIND = {
   ny: { label: "Nytt", cls: "k-new" },
   tillbaka: { label: "Tillbaka i lager", cls: "k-back" },
@@ -499,6 +499,30 @@ $("#p-push-test").addEventListener("click", async () => {
   catch { $("#p-push-note").textContent = "Testnotisen gick inte att visa. Stäng av och slå på notiserna igen och försök på nytt."; }
 });
 syncPush();
+
+// "Installera Lootninja som app": rätt flik för telefonen, en installera-knapp när Chrome erbjuder det
+// (beforeinstallprompt, Android och dator), och ett kvitto när sidan redan körs som app.
+function installTab(ios) {
+  $("#tab-android").setAttribute("aria-selected", String(!ios));
+  $("#tab-ios").setAttribute("aria-selected", String(ios));
+  $("#steps-android").hidden = ios;
+  $("#steps-ios").hidden = !ios;
+}
+$("#tab-android").addEventListener("click", () => installTab(false));
+$("#tab-ios").addEventListener("click", () => installTab(true));
+installTab(isIos());
+if (isStandalone()) $("#install-done").hidden = false;
+let installEvent = null;
+addEventListener("beforeinstallprompt", (e) => { e.preventDefault(); installEvent = e; $("#install-btn").hidden = false; });
+$("#install-btn").addEventListener("click", async () => {
+  if (!installEvent) return;
+  installEvent.prompt();
+  const { outcome } = await installEvent.userChoice.catch(() => ({}));
+  installEvent = null;
+  $("#install-btn").hidden = true;
+  if (outcome === "accepted") { $("#install-done").textContent = "Klart! Öppna Lootninja från hemskärmen och slå på pushnotiserna där."; $("#install-done").hidden = false; }
+});
+addEventListener("appinstalled", () => { $("#install-btn").hidden = true; });
 
 $("#only-mine").addEventListener("change", renderEvents);
 document.addEventListener("click", (e) => { const a = e.target.closest("[data-goto]"); if (a) { e.preventDefault(); showTab(a.dataset.goto); } });

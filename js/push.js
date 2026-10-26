@@ -9,7 +9,7 @@ const VAPID_PUBLIC = "BHvJoQFrJA9X88GAo28EelLurqVR-ullGo6OUT2YrCXGcB43V9Y9obaS9o
 
 const key = () => Uint8Array.from(atob(VAPID_PUBLIC.replace(/-/g, "+").replace(/_/g, "/")), (c) => c.charCodeAt(0));
 export const isIos = () => /iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
-const isStandalone = () => matchMedia("(display-mode: standalone)").matches || navigator.standalone === true;
+export const isStandalone = () => matchMedia("(display-mode: standalone)").matches || navigator.standalone === true;
 const supported = () => "serviceWorker" in navigator && "PushManager" in window && "Notification" in window;
 
 // "on", "off", "denied", "unsupported" eller "ios-install" (iPhone/iPad som inte öppnat sidan från hemskärmen).

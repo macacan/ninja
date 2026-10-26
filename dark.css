@@ -220,3 +220,4 @@ input.shop-search { border-color: #0b0c12; }
   border-radius: 6px;
   background: #fff;
 }
+.install-done { background: rgba(47, 179, 68, 0.16); color: #7fe39a; }

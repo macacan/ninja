@@ -11,6 +11,9 @@
     if (link) link.media = p === "dark" ? "all" : p === "light" ? "not all" : "(prefers-color-scheme: dark)";
     document.documentElement.style.colorScheme = isDark ? "dark" : "light";
     document.documentElement.setAttribute("data-theme", isDark ? "dark" : "light");
+    // Telefonens statusfält och nedre fält (i den installerade appen även fönstrets ram) följer valt läge,
+    // inte bara systemets: alla theme-color-taggar får samma färg och gäller oavsett systemläge.
+    document.querySelectorAll('meta[name="theme-color"]').forEach((m) => { m.content = isDark ? "#1b1e28" : "#ffffff"; m.removeAttribute("media"); });
     document.querySelectorAll("[data-theme-toggle]").forEach((b) => {
       b.setAttribute("aria-pressed", isDark);
       b.querySelector("span") && (b.querySelector("span").textContent = isDark ? "Ljust läge" : "Mörkt läge");
