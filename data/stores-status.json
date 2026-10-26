@@ -1,5 +1,5 @@
 {
- "updated": 1792977315347,
+ "updated": 1792977455351,
  "stores": [
   {
    "id": "alara-games",
@@ -31,10 +31,10 @@
    "name": "Aquitaz",
    "domain": "aquitaz.se",
    "status": "ej-forbjuden",
-   "checkedAt": 1792973526690,
+   "checkedAt": 1792977449447,
    "ok": true,
-   "lastOkAt": 1792973526690,
-   "count": 1367,
+   "lastOkAt": 1792977449447,
+   "count": 1365,
    "error": null,
    "blocked": false,
    "note": null,
