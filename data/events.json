@@ -1,6 +1,20 @@
 {
- "updated": 1793003626723,
+ "updated": 1793004566751,
  "events": [
+  {
+   "at": 1793004295871,
+   "store": "maxgaming",
+   "product": "maxgaming:https://maxgaming.se/sv/pokemon/pokemon-pikachu-special-box-pokemon-center-tohoku",
+   "group": "x|collection-box|en|pc|center-pikachu-tohoku",
+   "title": "Pokémon Pikachu Special Box Pokémon Center - Tohoku",
+   "url": "https://maxgaming.se/sv/pokemon/pokemon-pikachu-special-box-pokemon-center-tohoku",
+   "price": 1649,
+   "type": "Collection Box",
+   "set": null,
+   "lang": "en",
+   "kind": "prissankt",
+   "from": 1690
+  },
   {
    "at": 1792990948345,
    "store": "skattkistan",
@@ -6573,19 +6587,6 @@
    "price": 79,
    "type": "Booster Pack",
    "set": null,
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1792363762539,
-   "store": "cardclub",
-   "product": "cardclub:15438614430019",
-   "group": "chaos-rising|blister|en||2",
-   "title": "Pokémon TCG: Zarude 2-Pack Blister – Pitch Black & Chaos Rising",
-   "url": "https://cardclub.se/products/pokemon-tcg-zarude-2-pack-blister-pitch-black-chaos-rising",
-   "price": 199,
-   "type": "Blister",
-   "set": "Chaos Rising",
    "lang": "en",
    "kind": "ny"
   }
