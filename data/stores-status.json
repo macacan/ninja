@@ -1,5 +1,5 @@
 {
- "updated": 1792984655576,
+ "updated": 1792985315600,
  "stores": [
   {
    "id": "alara-games",
@@ -31,9 +31,9 @@
    "name": "Aquitaz",
    "domain": "aquitaz.se",
    "status": "ej-forbjuden",
-   "checkedAt": 1792981384369,
+   "checkedAt": 1792985310134,
    "ok": true,
-   "lastOkAt": 1792981384369,
+   "lastOkAt": 1792985310134,
    "count": 1365,
    "error": null,
    "blocked": false,
@@ -134,7 +134,7 @@
    "name": "CardHaven",
    "domain": "cardhaven.se",
    "status": "ej-forbjuden",
-   "checkedAt": 1792980972477,
+   "checkedAt": 1792984717605,
    "ok": false,
    "lastOkAt": 1792667308640,
    "count": 47,
