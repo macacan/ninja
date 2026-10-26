@@ -1,5 +1,5 @@
 {
- "updated": 1792922941410,
+ "updated": 1793014377736,
  "sets": [
   "30th Classic Collection",
   "30th Celebration",
@@ -16,10 +16,10 @@
    "set": "Ascended Heroes",
    "localId": "276",
    "rarity": "Special illustration rare",
-   "eur": 927.01,
-   "avg7": 755.91,
-   "avg30": 958.34,
-   "change": -21.1
+   "eur": 912.25,
+   "avg7": 796.5,
+   "avg30": 955.92,
+   "change": -16.7
   },
   {
    "id": "me02.5-284",
@@ -28,10 +28,10 @@
    "set": "Ascended Heroes",
    "localId": "284",
    "rarity": "Special illustration rare",
-   "eur": 731.42,
-   "avg7": 701.87,
-   "avg30": 900.22,
-   "change": -22
+   "eur": 705.28,
+   "avg7": 692.61,
+   "avg30": 890.99,
+   "change": -22.3
   },
   {
    "id": "me02.5-290",
@@ -40,10 +40,10 @@
    "set": "Ascended Heroes",
    "localId": "290",
    "rarity": "Special illustration rare",
-   "eur": 448.63,
-   "avg7": 440.72,
-   "avg30": 411.26,
-   "change": 7.2
+   "eur": 444.53,
+   "avg7": 435.79,
+   "avg30": 408.46,
+   "change": 6.7
   },
   {
    "id": "me02.5-294",
@@ -52,10 +52,10 @@
    "set": "Ascended Heroes",
    "localId": "294",
    "rarity": "Mega Hyper Rare",
-   "eur": 258.03,
-   "avg7": 258.65,
-   "avg30": 404.22,
-   "change": -36
+   "eur": 241.24,
+   "avg7": 258.35,
+   "avg30": 405.27,
+   "change": -36.3
   },
   {
    "id": "me02.5-277",
@@ -64,10 +64,10 @@
    "set": "Ascended Heroes",
    "localId": "277",
    "rarity": "Special illustration rare",
-   "eur": 249.86,
-   "avg7": 272.57,
-   "avg30": 311.76,
-   "change": -12.6
+   "eur": 234.33,
+   "avg7": 276.85,
+   "avg30": 309.06,
+   "change": -10.4
   },
   {
    "id": "me02.5-281",
@@ -76,22 +76,10 @@
    "set": "Ascended Heroes",
    "localId": "281",
    "rarity": "Special illustration rare",
-   "eur": 211.29,
-   "avg7": 215.75,
-   "avg30": 251.77,
-   "change": -14.3
-  },
-  {
-   "id": "me05-116",
-   "name": "Mega Darkrai ex",
-   "image": "https://assets.tcgdex.net/en/me/me05/116",
-   "set": "Pitch Black",
-   "localId": "116",
-   "rarity": "Special illustration rare",
-   "eur": 165.7,
-   "avg7": 167.28,
-   "avg30": 191.85,
-   "change": -12.8
+   "eur": 202.91,
+   "avg7": 222.02,
+   "avg30": 247.19,
+   "change": -10.2
   },
   {
    "id": "me02.5-295",
@@ -100,22 +88,22 @@
    "set": "Ascended Heroes",
    "localId": "295",
    "rarity": "Mega Hyper Rare",
-   "eur": 151.74,
-   "avg7": 185.54,
-   "avg30": 219.96,
-   "change": -15.6
+   "eur": 192.28,
+   "avg7": 215.65,
+   "avg30": 235.07,
+   "change": -8.3
   },
   {
-   "id": "me04-116",
-   "name": "Mega Greninja ex",
-   "image": "https://assets.tcgdex.net/en/me/me04/116",
-   "set": "Chaos Rising",
+   "id": "me05-116",
+   "name": "Mega Darkrai ex",
+   "image": "https://assets.tcgdex.net/en/me/me05/116",
+   "set": "Pitch Black",
    "localId": "116",
    "rarity": "Special illustration rare",
-   "eur": 130.62,
-   "avg7": 123.78,
-   "avg30": 138.91,
-   "change": -10.9
+   "eur": 166.87,
+   "avg7": 164.88,
+   "avg30": 189.69,
+   "change": -13.1
   },
   {
    "id": "me05-120",
@@ -124,10 +112,22 @@
    "set": "Pitch Black",
    "localId": "120",
    "rarity": "Mega Hyper Rare",
-   "eur": 126.77,
-   "avg7": 127.76,
-   "avg30": 133.76,
-   "change": -4.5
+   "eur": 129,
+   "avg7": 132.94,
+   "avg30": 134.73,
+   "change": -1.3
+  },
+  {
+   "id": "me04-116",
+   "name": "Mega Greninja ex",
+   "image": "https://assets.tcgdex.net/en/me/me04/116",
+   "set": "Chaos Rising",
+   "localId": "116",
+   "rarity": "Special illustration rare",
+   "eur": 126.68,
+   "avg7": 114.8,
+   "avg30": 136.96,
+   "change": -16.2
   },
   {
    "id": "me04-122",
@@ -136,10 +136,10 @@
    "set": "Chaos Rising",
    "localId": "122",
    "rarity": "Mega Hyper Rare",
-   "eur": 122.7,
-   "avg7": 118.87,
-   "avg30": 119.82,
-   "change": -0.8
+   "eur": 123.15,
+   "avg7": 122,
+   "avg30": 121.2,
+   "change": 0.7
   },
   {
    "id": "me02.5-280",
@@ -160,22 +160,10 @@
    "set": "Ascended Heroes",
    "localId": "286",
    "rarity": "Special illustration rare",
-   "eur": 101.63,
-   "avg7": 109.69,
-   "avg30": 119.12,
-   "change": -7.9
-  },
-  {
-   "id": "me03-124",
-   "name": "Mega Zygarde ex",
-   "image": "https://assets.tcgdex.net/en/me/me03/124",
-   "set": "Perfect Order",
-   "localId": "124",
-   "rarity": "Mega Hyper Rare",
-   "eur": 82.77,
-   "avg7": 87.76,
-   "avg30": 93.19,
-   "change": -5.8
+   "eur": 98.32,
+   "avg7": 112.52,
+   "avg30": 119.79,
+   "change": -6.1
   },
   {
    "id": "me03-121",
@@ -184,10 +172,22 @@
    "set": "Perfect Order",
    "localId": "121",
    "rarity": "Special illustration rare",
-   "eur": 81.04,
-   "avg7": 80.97,
-   "avg30": 76.61,
-   "change": 5.7
+   "eur": 85.32,
+   "avg7": 84.85,
+   "avg30": 77.05,
+   "change": 10.1
+  },
+  {
+   "id": "me03-124",
+   "name": "Mega Zygarde ex",
+   "image": "https://assets.tcgdex.net/en/me/me03/124",
+   "set": "Perfect Order",
+   "localId": "124",
+   "rarity": "Mega Hyper Rare",
+   "eur": 84.84,
+   "avg7": 91.34,
+   "avg30": 92.09,
+   "change": -0.8
   },
   {
    "id": "me02.5-274",
@@ -196,22 +196,10 @@
    "set": "Ascended Heroes",
    "localId": "274",
    "rarity": "Special illustration rare",
-   "eur": 73.05,
-   "avg7": 81.11,
-   "avg30": 94.55,
-   "change": -14.2
-  },
-  {
-   "id": "me02.5-272",
-   "name": "Mega Meganium ex",
-   "image": "https://assets.tcgdex.net/en/me/me02.5/272",
-   "set": "Ascended Heroes",
-   "localId": "272",
-   "rarity": "Special illustration rare",
-   "eur": 61.26,
-   "avg7": 59.13,
-   "avg30": 71.65,
-   "change": -17.5
+   "eur": 74.79,
+   "avg7": 82.71,
+   "avg30": 95.58,
+   "change": -13.5
   },
   {
    "id": "me02.5-289",
@@ -220,10 +208,22 @@
    "set": "Ascended Heroes",
    "localId": "289",
    "rarity": "Special illustration rare",
-   "eur": 60.59,
-   "avg7": 64.44,
-   "avg30": 75.16,
-   "change": -14.3
+   "eur": 60.22,
+   "avg7": 63.88,
+   "avg30": 74.29,
+   "change": -14
+  },
+  {
+   "id": "me02.5-272",
+   "name": "Mega Meganium ex",
+   "image": "https://assets.tcgdex.net/en/me/me02.5/272",
+   "set": "Ascended Heroes",
+   "localId": "272",
+   "rarity": "Special illustration rare",
+   "eur": 59.02,
+   "avg7": 62.71,
+   "avg30": 71.94,
+   "change": -12.8
   },
   {
    "id": "me05-117",
@@ -232,10 +232,10 @@
    "set": "Pitch Black",
    "localId": "117",
    "rarity": "Special illustration rare",
-   "eur": 54.45,
-   "avg7": 52.86,
-   "avg30": 55.11,
-   "change": -4.1
+   "eur": 55.26,
+   "avg7": 54.2,
+   "avg30": 55.42,
+   "change": -2.2
   },
   {
    "id": "me02.5-275",
@@ -244,10 +244,10 @@
    "set": "Ascended Heroes",
    "localId": "275",
    "rarity": "Special illustration rare",
-   "eur": 52.15,
-   "avg7": 52.41,
-   "avg30": 54.83,
-   "change": -4.4
+   "eur": 52.08,
+   "avg7": 53.59,
+   "avg30": 54.97,
+   "change": -2.5
   },
   {
    "id": "me02.5-226",
@@ -256,10 +256,10 @@
    "set": "Ascended Heroes",
    "localId": "226",
    "rarity": "Illustration rare",
-   "eur": 50.54,
-   "avg7": 60.45,
-   "avg30": 59.28,
-   "change": 2
+   "eur": 49.96,
+   "avg7": 56.83,
+   "avg30": 59.19,
+   "change": -4
   },
   {
    "id": "me02.5-288",
@@ -268,10 +268,10 @@
    "set": "Ascended Heroes",
    "localId": "288",
    "rarity": "Special illustration rare",
-   "eur": 44.79,
-   "avg7": 43.67,
-   "avg30": 44.82,
-   "change": -2.6
+   "eur": 44.62,
+   "avg7": 43.13,
+   "avg30": 44.6,
+   "change": -3.3
   },
   {
    "id": "me02.5-285",
@@ -280,10 +280,10 @@
    "set": "Ascended Heroes",
    "localId": "285",
    "rarity": "Special illustration rare",
-   "eur": 43.59,
-   "avg7": 33.6,
-   "avg30": 37.47,
-   "change": -10.3
+   "eur": 42.24,
+   "avg7": 32.33,
+   "avg30": 37.3,
+   "change": -13.3
   },
   {
    "id": "me02.5-287",
@@ -292,10 +292,10 @@
    "set": "Ascended Heroes",
    "localId": "287",
    "rarity": "Special illustration rare",
-   "eur": 41.2,
-   "avg7": 42.09,
-   "avg30": 39.79,
-   "change": 5.8
+   "eur": 40.05,
+   "avg7": 40.43,
+   "avg30": 39.62,
+   "change": 2
   }
  ],
  "rising": [
@@ -306,82 +306,10 @@
    "set": "Ascended Heroes",
    "localId": "227",
    "rarity": "Illustration rare",
-   "eur": 4.61,
-   "avg7": 4.9,
+   "eur": 4.69,
+   "avg7": 4.93,
    "avg30": 4.22,
-   "change": 16.1
-  },
-  {
-   "id": "me02.5-282",
-   "name": "Mega Diancie ex",
-   "image": "https://assets.tcgdex.net/en/me/me02.5/282",
-   "set": "Ascended Heroes",
-   "localId": "282",
-   "rarity": "Special illustration rare",
-   "eur": 33.9,
-   "avg7": 35.6,
-   "avg30": 31.84,
-   "change": 11.8
-  },
-  {
-   "id": "me03-112",
-   "name": "Naveen",
-   "image": "https://assets.tcgdex.net/en/me/me03/112",
-   "set": "Perfect Order",
-   "localId": "112",
-   "rarity": "Ultra Rare",
-   "eur": 2.29,
-   "avg7": 2.58,
-   "avg30": 2.36,
-   "change": 9.3
-  },
-  {
-   "id": "me02.5-239",
-   "name": "Team Rocket's Dugtrio",
-   "image": "https://assets.tcgdex.net/en/me/me02.5/239",
-   "set": "Ascended Heroes",
-   "localId": "239",
-   "rarity": "Illustration rare",
-   "eur": 7.65,
-   "avg7": 7.74,
-   "avg30": 7.14,
-   "change": 8.4
-  },
-  {
-   "id": "me02.5-076",
-   "name": "Lillie's Clefairy ex",
-   "image": "https://assets.tcgdex.net/en/me/me02.5/076",
-   "set": "Ascended Heroes",
-   "localId": "076",
-   "rarity": "Double rare",
-   "eur": 2.15,
-   "avg7": 2.21,
-   "avg30": 2.06,
-   "change": 7.3
-  },
-  {
-   "id": "me02.5-290",
-   "name": "Mega Dragonite ex",
-   "image": "https://assets.tcgdex.net/en/me/me02.5/290",
-   "set": "Ascended Heroes",
-   "localId": "290",
-   "rarity": "Special illustration rare",
-   "eur": 448.63,
-   "avg7": 440.72,
-   "avg30": 411.26,
-   "change": 7.2
-  },
-  {
-   "id": "me02.5-287",
-   "name": "Marnie's Grimmsnarl ex",
-   "image": "https://assets.tcgdex.net/en/me/me02.5/287",
-   "set": "Ascended Heroes",
-   "localId": "287",
-   "rarity": "Special illustration rare",
-   "eur": 41.2,
-   "avg7": 42.09,
-   "avg30": 39.79,
-   "change": 5.8
+   "change": 16.8
   },
   {
    "id": "me03-121",
@@ -390,22 +318,46 @@
    "set": "Perfect Order",
    "localId": "121",
    "rarity": "Special illustration rare",
-   "eur": 81.04,
-   "avg7": 80.97,
-   "avg30": 76.61,
-   "change": 5.7
+   "eur": 85.32,
+   "avg7": 84.85,
+   "avg30": 77.05,
+   "change": 10.1
   },
   {
-   "id": "me03-093",
-   "name": "Dedenne",
-   "image": "https://assets.tcgdex.net/en/me/me03/093",
+   "id": "me03-112",
+   "name": "Naveen",
+   "image": "https://assets.tcgdex.net/en/me/me03/112",
    "set": "Perfect Order",
-   "localId": "093",
-   "rarity": "Illustration rare",
-   "eur": 5.66,
-   "avg7": 6.07,
-   "avg30": 5.78,
-   "change": 5
+   "localId": "112",
+   "rarity": "Ultra Rare",
+   "eur": 2.31,
+   "avg7": 2.6,
+   "avg30": 2.37,
+   "change": 9.7
+  },
+  {
+   "id": "me02.5-282",
+   "name": "Mega Diancie ex",
+   "image": "https://assets.tcgdex.net/en/me/me02.5/282",
+   "set": "Ascended Heroes",
+   "localId": "282",
+   "rarity": "Special illustration rare",
+   "eur": 34.07,
+   "avg7": 34.6,
+   "avg30": 31.62,
+   "change": 9.4
+  },
+  {
+   "id": "me02.5-257",
+   "name": "Canari",
+   "image": "https://assets.tcgdex.net/en/me/me02.5/257",
+   "set": "Ascended Heroes",
+   "localId": "257",
+   "rarity": "Ultra Rare",
+   "eur": 2.37,
+   "avg7": 2.4,
+   "avg30": 2.2,
+   "change": 9.1
   },
   {
    "id": "me02.5-219",
@@ -414,34 +366,46 @@
    "set": "Ascended Heroes",
    "localId": "219",
    "rarity": "Illustration rare",
-   "eur": 4.62,
-   "avg7": 5.13,
-   "avg30": 4.89,
-   "change": 4.9
+   "eur": 4.95,
+   "avg7": 5.19,
+   "avg30": 4.85,
+   "change": 7
   },
   {
-   "id": "me05-107",
-   "name": "Energy Switch",
-   "image": "https://assets.tcgdex.net/en/me/me05/107",
-   "set": "Pitch Black",
-   "localId": "107",
-   "rarity": "Ultra Rare",
-   "eur": 2.47,
-   "avg7": 2.4,
-   "avg30": 2.29,
-   "change": 4.8
-  },
-  {
-   "id": "me02.5-142",
-   "name": "Fezandipiti ex",
-   "image": "https://assets.tcgdex.net/en/me/me02.5/142",
+   "id": "me02.5-290",
+   "name": "Mega Dragonite ex",
+   "image": "https://assets.tcgdex.net/en/me/me02.5/290",
    "set": "Ascended Heroes",
-   "localId": "142",
+   "localId": "290",
+   "rarity": "Special illustration rare",
+   "eur": 444.53,
+   "avg7": 435.79,
+   "avg30": 408.46,
+   "change": 6.7
+  },
+  {
+   "id": "me03-093",
+   "name": "Dedenne",
+   "image": "https://assets.tcgdex.net/en/me/me03/093",
+   "set": "Perfect Order",
+   "localId": "093",
+   "rarity": "Illustration rare",
+   "eur": 5.62,
+   "avg7": 6.11,
+   "avg30": 5.75,
+   "change": 6.3
+  },
+  {
+   "id": "me02.5-076",
+   "name": "Lillie's Clefairy ex",
+   "image": "https://assets.tcgdex.net/en/me/me02.5/076",
+   "set": "Ascended Heroes",
+   "localId": "076",
    "rarity": "Double rare",
-   "eur": 4.71,
-   "avg7": 4.37,
-   "avg30": 4.17,
-   "change": 4.8
+   "eur": 2.13,
+   "avg7": 2.21,
+   "avg30": 2.09,
+   "change": 5.7
   },
   {
    "id": "me03-109",
@@ -451,33 +415,33 @@
    "localId": "109",
    "rarity": "Ultra Rare",
    "eur": 5.07,
-   "avg7": 4.92,
-   "avg30": 4.7,
-   "change": 4.7
+   "avg7": 5,
+   "avg30": 4.74,
+   "change": 5.5
   },
   {
-   "id": "me02.5-293",
-   "name": "Surfer",
-   "image": "https://assets.tcgdex.net/en/me/me02.5/293",
+   "id": "me02.5-057",
+   "name": "Pikachu ex",
+   "image": "https://assets.tcgdex.net/en/me/me02.5/057",
    "set": "Ascended Heroes",
-   "localId": "293",
-   "rarity": "Special illustration rare",
-   "eur": 15.38,
-   "avg7": 15.81,
-   "avg30": 15.13,
-   "change": 4.5
+   "localId": "057",
+   "rarity": "Double rare",
+   "eur": 4.4,
+   "avg7": 4.2,
+   "avg30": 3.98,
+   "change": 5.5
   },
   {
-   "id": "me04-091",
-   "name": "Xerneas",
-   "image": "https://assets.tcgdex.net/en/me/me04/091",
-   "set": "Chaos Rising",
-   "localId": "091",
+   "id": "me02.5-239",
+   "name": "Team Rocket's Dugtrio",
+   "image": "https://assets.tcgdex.net/en/me/me02.5/239",
+   "set": "Ascended Heroes",
+   "localId": "239",
    "rarity": "Illustration rare",
-   "eur": 5.97,
-   "avg7": 6.14,
-   "avg30": 5.93,
-   "change": 3.5
+   "eur": 7.46,
+   "avg7": 7.5,
+   "avg30": 7.12,
+   "change": 5.3
   },
   {
    "id": "me05-091",
@@ -486,58 +450,34 @@
    "set": "Pitch Black",
    "localId": "091",
    "rarity": "Illustration rare",
-   "eur": 2.65,
-   "avg7": 2.7,
+   "eur": 2.67,
+   "avg7": 2.74,
    "avg30": 2.61,
-   "change": 3.4
+   "change": 5
   },
   {
-   "id": "me03-116",
-   "name": "Tarragon",
-   "image": "https://assets.tcgdex.net/en/me/me03/116",
-   "set": "Perfect Order",
-   "localId": "116",
+   "id": "me05-105",
+   "name": "Crushing Hammer",
+   "image": "https://assets.tcgdex.net/en/me/me05/105",
+   "set": "Pitch Black",
+   "localId": "105",
    "rarity": "Ultra Rare",
-   "eur": 2.32,
-   "avg7": 2.39,
+   "eur": 3.51,
+   "avg7": 3.55,
+   "avg30": 3.38,
+   "change": 5
+  },
+  {
+   "id": "me05-107",
+   "name": "Energy Switch",
+   "image": "https://assets.tcgdex.net/en/me/me05/107",
+   "set": "Pitch Black",
+   "localId": "107",
+   "rarity": "Ultra Rare",
+   "eur": 2.49,
+   "avg7": 2.43,
    "avg30": 2.32,
-   "change": 3
-  },
-  {
-   "id": "me04-119",
-   "name": "Cinccino ex",
-   "image": "https://assets.tcgdex.net/en/me/me04/119",
-   "set": "Chaos Rising",
-   "localId": "119",
-   "rarity": "Special illustration rare",
-   "eur": 37.44,
-   "avg7": 36.9,
-   "avg30": 36.04,
-   "change": 2.4
-  },
-  {
-   "id": "me03-115",
-   "name": "Sacred Ash",
-   "image": "https://assets.tcgdex.net/en/me/me03/115",
-   "set": "Perfect Order",
-   "localId": "115",
-   "rarity": "Ultra Rare",
-   "eur": 2.64,
-   "avg7": 2.75,
-   "avg30": 2.69,
-   "change": 2.2
-  },
-  {
-   "id": "me03-094",
-   "name": "Clefairy",
-   "image": "https://assets.tcgdex.net/en/me/me03/094",
-   "set": "Perfect Order",
-   "localId": "094",
-   "rarity": "Illustration rare",
-   "eur": 17.04,
-   "avg7": 18.87,
-   "avg30": 18.49,
-   "change": 2.1
+   "change": 4.7
   },
   {
    "id": "me04-111",
@@ -547,33 +487,33 @@
    "localId": "111",
    "rarity": "Ultra Rare",
    "eur": 2.54,
-   "avg7": 2.54,
+   "avg7": 2.6,
    "avg30": 2.49,
-   "change": 2
+   "change": 4.4
   },
   {
-   "id": "me02.5-226",
-   "name": "Psyduck",
-   "image": "https://assets.tcgdex.net/en/me/me02.5/226",
+   "id": "me02.5-293",
+   "name": "Surfer",
+   "image": "https://assets.tcgdex.net/en/me/me02.5/293",
    "set": "Ascended Heroes",
-   "localId": "226",
-   "rarity": "Illustration rare",
-   "eur": 50.54,
-   "avg7": 60.45,
-   "avg30": 59.28,
-   "change": 2
-  },
-  {
-   "id": "me02.5-292",
-   "name": "Iris's Fighting Spirit",
-   "image": "https://assets.tcgdex.net/en/me/me02.5/292",
-   "set": "Ascended Heroes",
-   "localId": "292",
+   "localId": "293",
    "rarity": "Special illustration rare",
-   "eur": 24.68,
-   "avg7": 24.47,
-   "avg30": 23.98,
-   "change": 2
+   "eur": 14.62,
+   "avg7": 15.63,
+   "avg30": 14.98,
+   "change": 4.3
+  },
+  {
+   "id": "me02.5-256",
+   "name": "Boss's Orders",
+   "image": "https://assets.tcgdex.net/en/me/me02.5/256",
+   "set": "Ascended Heroes",
+   "localId": "256",
+   "rarity": "Ultra Rare",
+   "eur": 4.24,
+   "avg7": 4.41,
+   "avg30": 4.26,
+   "change": 3.5
   },
   {
    "id": "me02.5-271",
@@ -582,10 +522,70 @@
    "set": "Ascended Heroes",
    "localId": "271",
    "rarity": "Ultra Rare",
-   "eur": 28.31,
-   "avg7": 29.72,
-   "avg30": 29.19,
-   "change": 1.8
+   "eur": 27.57,
+   "avg7": 29.99,
+   "avg30": 29.07,
+   "change": 3.2
+  },
+  {
+   "id": "me04-119",
+   "name": "Cinccino ex",
+   "image": "https://assets.tcgdex.net/en/me/me04/119",
+   "set": "Chaos Rising",
+   "localId": "119",
+   "rarity": "Special illustration rare",
+   "eur": 37.9,
+   "avg7": 37.02,
+   "avg30": 35.91,
+   "change": 3.1
+  },
+  {
+   "id": "me02.5-230",
+   "name": "Vikavolt",
+   "image": "https://assets.tcgdex.net/en/me/me02.5/230",
+   "set": "Ascended Heroes",
+   "localId": "230",
+   "rarity": "Illustration rare",
+   "eur": 2.23,
+   "avg7": 2.34,
+   "avg30": 2.27,
+   "change": 3.1
+  },
+  {
+   "id": "me04-091",
+   "name": "Xerneas",
+   "image": "https://assets.tcgdex.net/en/me/me04/091",
+   "set": "Chaos Rising",
+   "localId": "091",
+   "rarity": "Illustration rare",
+   "eur": 5.83,
+   "avg7": 6.08,
+   "avg30": 5.91,
+   "change": 2.9
+  },
+  {
+   "id": "me04-117",
+   "name": "Mega Floette ex",
+   "image": "https://assets.tcgdex.net/en/me/me04/117",
+   "set": "Chaos Rising",
+   "localId": "117",
+   "rarity": "Special illustration rare",
+   "eur": 25.54,
+   "avg7": 25.14,
+   "avg30": 24.57,
+   "change": 2.3
+  },
+  {
+   "id": "me05-109",
+   "name": "Gwynn",
+   "image": "https://assets.tcgdex.net/en/me/me05/109",
+   "set": "Pitch Black",
+   "localId": "109",
+   "rarity": "Ultra Rare",
+   "eur": 6.62,
+   "avg7": 6.76,
+   "avg30": 6.63,
+   "change": 2
   }
  ],
  "falling": [
@@ -596,22 +596,10 @@
    "set": "Ascended Heroes",
    "localId": "294",
    "rarity": "Mega Hyper Rare",
-   "eur": 258.03,
-   "avg7": 258.65,
-   "avg30": 404.22,
-   "change": -36
-  },
-  {
-   "id": "me02.5-266",
-   "name": "Mega Eelektross ex",
-   "image": "https://assets.tcgdex.net/en/me/me02.5/266",
-   "set": "Ascended Heroes",
-   "localId": "266",
-   "rarity": "Ultra Rare",
-   "eur": 1.94,
-   "avg7": 3.07,
-   "avg30": 4.17,
-   "change": -26.4
+   "eur": 241.24,
+   "avg7": 258.35,
+   "avg30": 405.27,
+   "change": -36.3
   },
   {
    "id": "me04-103",
@@ -620,7 +608,7 @@
    "set": "Chaos Rising",
    "localId": "103",
    "rarity": "Ultra Rare",
-   "eur": 0.84,
+   "eur": 0.69,
    "avg7": 1.89,
    "avg30": 2.55,
    "change": -25.9
@@ -632,10 +620,22 @@
    "set": "Ascended Heroes",
    "localId": "283",
    "rarity": "Special illustration rare",
-   "eur": 29.4,
-   "avg7": 29.12,
-   "avg30": 38.03,
-   "change": -23.4
+   "eur": 29,
+   "avg7": 28.73,
+   "avg30": 38.25,
+   "change": -24.9
+  },
+  {
+   "id": "me02.5-266",
+   "name": "Mega Eelektross ex",
+   "image": "https://assets.tcgdex.net/en/me/me02.5/266",
+   "set": "Ascended Heroes",
+   "localId": "266",
+   "rarity": "Ultra Rare",
+   "eur": 1.84,
+   "avg7": 3.15,
+   "avg30": 4.14,
+   "change": -23.9
   },
   {
    "id": "me02.5-284",
@@ -644,34 +644,10 @@
    "set": "Ascended Heroes",
    "localId": "284",
    "rarity": "Special illustration rare",
-   "eur": 731.42,
-   "avg7": 701.87,
-   "avg30": 900.22,
-   "change": -22
-  },
-  {
-   "id": "me02.5-276",
-   "name": "Pikachu ex",
-   "image": "https://assets.tcgdex.net/en/me/me02.5/276",
-   "set": "Ascended Heroes",
-   "localId": "276",
-   "rarity": "Special illustration rare",
-   "eur": 927.01,
-   "avg7": 755.91,
-   "avg30": 958.34,
-   "change": -21.1
-  },
-  {
-   "id": "me02.5-270",
-   "name": "Mega Scrafty ex",
-   "image": "https://assets.tcgdex.net/en/me/me02.5/270",
-   "set": "Ascended Heroes",
-   "localId": "270",
-   "rarity": "Ultra Rare",
-   "eur": 2.9,
-   "avg7": 2.98,
-   "avg30": 3.75,
-   "change": -20.5
+   "eur": 705.28,
+   "avg7": 692.61,
+   "avg30": 890.99,
+   "change": -22.3
   },
   {
    "id": "me02.5-273",
@@ -680,46 +656,22 @@
    "set": "Ascended Heroes",
    "localId": "273",
    "rarity": "Special illustration rare",
-   "eur": 35.51,
-   "avg7": 38,
-   "avg30": 46.68,
-   "change": -18.6
+   "eur": 35.23,
+   "avg7": 37.39,
+   "avg30": 46.72,
+   "change": -20
   },
   {
-   "id": "me02.5-272",
-   "name": "Mega Meganium ex",
-   "image": "https://assets.tcgdex.net/en/me/me02.5/272",
+   "id": "me02.5-270",
+   "name": "Mega Scrafty ex",
+   "image": "https://assets.tcgdex.net/en/me/me02.5/270",
    "set": "Ascended Heroes",
-   "localId": "272",
-   "rarity": "Special illustration rare",
-   "eur": 61.26,
-   "avg7": 59.13,
-   "avg30": 71.65,
-   "change": -17.5
-  },
-  {
-   "id": "me02.5-279",
-   "name": "Iono's Bellibolt ex",
-   "image": "https://assets.tcgdex.net/en/me/me02.5/279",
-   "set": "Ascended Heroes",
-   "localId": "279",
-   "rarity": "Special illustration rare",
-   "eur": 32.53,
-   "avg7": 32.19,
-   "avg30": 38.41,
-   "change": -16.2
-  },
-  {
-   "id": "me02.5-295",
-   "name": "Mega Dragonite ex",
-   "image": "https://assets.tcgdex.net/en/me/me02.5/295",
-   "set": "Ascended Heroes",
-   "localId": "295",
-   "rarity": "Mega Hyper Rare",
-   "eur": 151.74,
-   "avg7": 185.54,
-   "avg30": 219.96,
-   "change": -15.6
+   "localId": "270",
+   "rarity": "Ultra Rare",
+   "eur": 2.91,
+   "avg7": 3.02,
+   "avg30": 3.76,
+   "change": -19.7
   },
   {
    "id": "me02.5-243",
@@ -728,10 +680,58 @@
    "set": "Ascended Heroes",
    "localId": "243",
    "rarity": "Illustration rare",
-   "eur": 5.44,
-   "avg7": 5.58,
-   "avg30": 6.59,
-   "change": -15.3
+   "eur": 5.27,
+   "avg7": 5.4,
+   "avg30": 6.57,
+   "change": -17.8
+  },
+  {
+   "id": "me02.5-276",
+   "name": "Pikachu ex",
+   "image": "https://assets.tcgdex.net/en/me/me02.5/276",
+   "set": "Ascended Heroes",
+   "localId": "276",
+   "rarity": "Special illustration rare",
+   "eur": 912.25,
+   "avg7": 796.5,
+   "avg30": 955.92,
+   "change": -16.7
+  },
+  {
+   "id": "me02.5-279",
+   "name": "Iono's Bellibolt ex",
+   "image": "https://assets.tcgdex.net/en/me/me02.5/279",
+   "set": "Ascended Heroes",
+   "localId": "279",
+   "rarity": "Special illustration rare",
+   "eur": 32.2,
+   "avg7": 31.98,
+   "avg30": 38.41,
+   "change": -16.7
+  },
+  {
+   "id": "me04-116",
+   "name": "Mega Greninja ex",
+   "image": "https://assets.tcgdex.net/en/me/me04/116",
+   "set": "Chaos Rising",
+   "localId": "116",
+   "rarity": "Special illustration rare",
+   "eur": 126.68,
+   "avg7": 114.8,
+   "avg30": 136.96,
+   "change": -16.2
+  },
+  {
+   "id": "me02.5-289",
+   "name": "Steven's Metagross ex",
+   "image": "https://assets.tcgdex.net/en/me/me02.5/289",
+   "set": "Ascended Heroes",
+   "localId": "289",
+   "rarity": "Special illustration rare",
+   "eur": 60.22,
+   "avg7": 63.88,
+   "avg30": 74.29,
+   "change": -14
   }
  ]
 }
