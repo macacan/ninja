@@ -1,6 +1,20 @@
 {
- "updated": 1793055366060,
+ "updated": 1793056306109,
  "events": [
+  {
+   "at": 1793056146377,
+   "store": "shinycards",
+   "product": "shinycards:https://www.shinycards.se/pokemon/mega-evolution/phantasmal-flames/pokemon-phantasmal-flames-elite-trainer-box",
+   "group": "phantasmal-flames|elite-trainer-box|en|",
+   "title": "Pokemon Mega Evolution 2: Phantasmal Flames Elite Trainer Box",
+   "url": "https://www.shinycards.se/pokemon/mega-evolution/phantasmal-flames/pokemon-phantasmal-flames-elite-trainer-box",
+   "price": 1799,
+   "type": "Elite Trainer Box",
+   "set": "Phantasmal Flames",
+   "lang": "en",
+   "kind": "prissankt",
+   "from": 1899
+  },
   {
    "at": 1793049322715,
    "store": "shinycards",
@@ -6576,19 +6590,6 @@
    "price": 799,
    "type": "Collection Box",
    "set": "Ascended Heroes",
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1792364062088,
-   "store": "rgb-kingz",
-   "product": "rgb-kingz:15654755828042",
-   "group": "perfect-order|booster-pack|en|",
-   "title": "Pokémon TCG: Mega Evolution Perfect Order Booster Pack",
-   "url": "https://rgbkingz.com/products/pokemon-tcg-mega-evolution-perfect-order-booster",
-   "price": 79,
-   "type": "Booster Pack",
-   "set": "Perfect Order",
    "lang": "en",
    "kind": "tillbaka"
   }
