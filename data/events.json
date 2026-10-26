@@ -1,6 +1,19 @@
 {
- "updated": 1793034288657,
+ "updated": 1793035188689,
  "events": [
+  {
+   "at": 1793034439102,
+   "store": "samlarhobby",
+   "product": "samlarhobby:15658579427709",
+   "group": "phantasmal-flames|booster-box|en|",
+   "title": "Pokémon, Mega Evolutions, ME02: Phantasmal Flames, Display / Booster Box",
+   "url": "https://samlarhobby.se/products/pokemon-mega-evolutions-me02-phantasmal-flames-display-booster-box-max-1-per-hushall-1",
+   "price": 4895,
+   "type": "Booster Box",
+   "set": "Phantasmal Flames",
+   "lang": "en",
+   "kind": "ny"
+  },
   {
    "at": 1793033742440,
    "store": "shinycards",
@@ -6578,19 +6591,6 @@
    "lang": "ja",
    "kind": "prissankt",
    "from": 1199
-  },
-  {
-   "at": 1792363933090,
-   "store": "miniature-metropolis",
-   "product": "miniature-metropolis:11240788001105",
-   "group": "x|blister|en||2|enhanced-gengar",
-   "title": "POKÉMON TCG: ENHANCED 2-PACK BLISTER GENGAR",
-   "url": "https://miniaturemetropolis.se/products/pokemon-tcg-enhanced-2-pack-blister-gengar",
-   "price": 219,
-   "type": "Blister",
-   "set": null,
-   "lang": "en",
-   "kind": "ny"
   }
  ]
 }
