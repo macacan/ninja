@@ -1,0 +1,21 @@
+# stats.lootninja.se (pekar på public_html/stats/). Databasen ligger bredvid public_html, men skulle en .db-fil
+# eller lib.php hamna här stoppas de ändå.
+<FilesMatch "(\.(db|sqlite|sqlite3|db-wal|db-shm|txt|ini|log)$|^lib\.php$)">
+  <IfModule mod_authz_core.c>
+    Require all denied
+  </IfModule>
+</FilesMatch>
+<Files "robots.txt">
+  <IfModule mod_authz_core.c>
+    Require all granted
+  </IfModule>
+</Files>
+
+Options -Indexes
+DirectoryIndex index.php
+
+<IfModule mod_headers.c>
+  Header always set X-Robots-Tag "noindex, nofollow"
+  # Egen policy: översikten hämtar typsnitt och ikon från lootninja.se.
+  Header always set Content-Security-Policy "default-src 'self'; style-src 'self' 'unsafe-inline' https://lootninja.se; font-src https://lootninja.se; img-src 'self' data: https://lootninja.se; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'"
+</IfModule>

@@ -29,6 +29,17 @@ RedirectMatch 403 ^/(research|scripts|\.github|\.claude)/
   RewriteRule ^ https://%1%{REQUEST_URI} [L,R=301]
   RewriteCond %{HTTPS} off
   RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+  # /index.html and /set/index.html are duplicates of / and /set/. Only when the visitor asked for them
+  # (THE_REQUEST), not when Apache serves index.html for "/" internally, which would loop.
+  RewriteCond %{THE_REQUEST} \s/(([^?\s]*/)?)index\.html[?\s]
+  RewriteRule ^ /%1 [L,R=301]
+
+  # Addresses without .html (lootninja.se/butiker, /set/151) go to the real page instead of a 404.
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{DOCUMENT_ROOT}/$1.html -f
+  RewriteRule ^([a-z0-9/_-]+?)/?$ /$1.html [L,R=301]
 </IfModule>
 
 # 4b. No directory listings (e.g. /fonts/, /data/card-history/)
@@ -76,6 +87,11 @@ Options -Indexes
   # butiker.js for weeks while the HTML was new, and the page crashed without showing any products.
   <FilesMatch "\.(css|js)$">
     Header set Cache-Control "no-cache"
+  </FilesMatch>
+
+  # The stats dashboard on stats.lootninja.se uses the same fonts
+  <FilesMatch "\.(woff2)$">
+    Header set Access-Control-Allow-Origin "https://stats.lootninja.se"
   </FilesMatch>
 
   # Images and fonts rarely change and can be cached longer

@@ -79,7 +79,16 @@ const lastWave = (p) => p.cal?.waves?.map((w) => w.date).sort().at(-1);
 const current = (p) => upcoming(p) || (lastWave(p) && lastWave(p) >= today);
 
 // ---------- HTML ----------
-const head = ({ title, desc, url, ld }) => `<!doctype html>
+// Google kortar titlar över ca 60 tecken och beskrivningar över ca 160. Långa titlar tappar " | Lootninja",
+// långa beskrivningar tappar sista meningen tills de får plats (minst en mening blir kvar).
+const fitTitle = (t) => (t.length > 60 ? t.replace(/ \| Lootninja$/, "") : t);
+function fitDesc(d) {
+  const parts = d.match(/[^.!?]+[.!?]+(\s|$)/g) || [d];
+  while (parts.length > 1 && parts.join("").trim().length > 160) parts.pop();
+  return parts.join("").trim();
+}
+const head = (o) => headHtml({ ...o, title: fitTitle(o.title), desc: fitDesc(o.desc) });
+const headHtml = ({ title, desc, url, ld }) => `<!doctype html>
 <html lang="sv">
 <head>
 <meta charset="utf-8">
@@ -229,8 +238,8 @@ function setPage(p, all) {
     : `${p.name} – kortlista och släppdatum | Lootninja`;
   const desc = release
     ? `${p.name} ${upcoming(p) || !p.date ? "släpps" : "släpptes"} ${p.date ? longDate(p.date) : "snart"}${p.cal?.preliminary ? " (preliminärt)" : ""}. Se alla produkter, släppdatum och vilka svenska butiker som har ${upcoming(p) ? "förbeställning eller lager" : "setet i lager"}.`
-    : `Alla ${p.cards.length} kort i ${p.name}${p.serie ? ` (${p.serie})` : ""}${priced ? " med priser i kronor" : ""}. Släpptes ${longDate(p.date)}.${top ? ` Dyrast just nu: ${top.name} (${kr(p.prices.get(top.id))}).` : ""} Se var setet finns i lager i Sverige.`;
-  const crumbs = [["Hem", `${SITE}/`, "index.html"], ["Kalender", `${SITE}/slapp.html`, "slapp.html"], ["Alla set", `${SITE}/set/`, "set/"], [p.name, p.url, null]];
+    : `Alla ${p.cards.length} kort i ${p.name}${p.serie && p.serie !== p.name ? ` (${p.serie})` : ""}${priced ? " med priser i kronor" : ""}. Släpptes ${longDate(p.date)}.${top ? ` Dyrast just nu: ${top.name} (${kr(p.prices.get(top.id))}).` : ""} Se var setet finns i lager i Sverige.`;
+  const crumbs = [["Hem", `${SITE}/`, "./"], ["Kalender", `${SITE}/slapp.html`, "slapp.html"], ["Alla set", `${SITE}/set/`, "set/"], [p.name, p.url, null]];
   const facts = [p.serie && `Serie: ${esc(p.serie)}`, p.date && (upcoming(p) ? `Släpps <time datetime="${p.date}">${longDate(p.date)}</time>` : `Släpptes <time datetime="${p.date}">${longDate(p.date)}</time>`),
     count(p) && `${count(p)} kort${p.cardCount?.total > count(p) ? ` (${p.cardCount.total} med hemliga)` : ""}`, p.language !== "en" && `Språk: ${LANG[p.language] || p.language}`].filter(Boolean);
   return `${head({ title, desc, url: p.url, ld: crumbsLd(crumbs.map(([n, u]) => [n, u])) })}${pageHead(crumbs.map(([n, , h]) => [n, h]))}
@@ -268,7 +277,7 @@ function indexPage(all) {
   }
   const title = "Alla Pokémon TCG-set – kortlistor, priser och släppdatum | Lootninja";
   const desc = `Alla ${all.length} Pokémon TCG-set från Base Set till de senaste, med kortlistor, priser i kronor, släppdatum och kommande set.`;
-  const crumbs = [["Hem", `${SITE}/`, "index.html"], ["Kalender", `${SITE}/slapp.html`, "slapp.html"], ["Alla set", url, null]];
+  const crumbs = [["Hem", `${SITE}/`, "./"], ["Kalender", `${SITE}/slapp.html`, "slapp.html"], ["Alla set", url, null]];
   return `${head({ title, desc, url, ld: crumbsLd(crumbs.map(([n, u]) => [n, u])) })}${pageHead(crumbs.map(([n, , h]) => [n, h]))}
 
   <div class="wrap">

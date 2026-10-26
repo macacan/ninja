@@ -3,6 +3,7 @@ import { icon, mountAllScenes } from "./pixel.js";
 import { mountBanners } from "./banners.js";
 import { mountCardAutocomplete } from "./card-autocomplete.js";
 import { langMark } from "./langmark.js";
+import "./tracker.js"; // besöksstatistik utan kakor, se js/tracker.js
 
 export const API = "https://api.tcgdex.net/v2/en";
 export const $ = (s, root = document) => root.querySelector(s);
@@ -20,7 +21,7 @@ const THEME_ICON = `<svg width="22" height="22" viewBox="0 0 24 24" aria-hidden=
 const ICONS = ["★", "✦", "♦", "●"];
 
 const NAV = [
-  ["index.html", "Hem"],
+  ["./", "Hem"],
   ["butiker.html#products", "Produkter"],
   ["priser.html", "Kortpriser"],
   ["vardering.html", "Värdering"],
@@ -29,17 +30,18 @@ const NAV = [
   ["nyheter.html", "Nyheter"],
 ];
 
-// Filnamnet för sidan man är på (artikel.html hör till Nyheter, setsidorna i set/ till Set).
+// Filnamnet för sidan man är på (artikel.html hör till Nyheter, setsidorna i set/ till Set). Startsidan heter "./",
+// så att länkarna går till lootninja.se/ och inte till dubbletten /index.html.
 const pageOf = () => (location.pathname.includes("/set/") ? "set/"
-  : { "artikel.html": "nyheter.html" }[location.pathname.split("/").pop()] || location.pathname.split("/").pop() || "index.html");
+  : { "artikel.html": "nyheter.html" }[location.pathname.split("/").pop()] || location.pathname.split("/").pop().replace(/^index\.html$/, "") || "./");
 
 function header() {
   const here = pageOf();
   // På mobilen visas sidans namn i loggan i stället för "Lootninja" (startsidan behåller namnet).
-  const mobileTitle = here === "index.html" ? "Lootninja" : NAV.find(([href]) => href.split("#")[0] === here)?.[1] || "Lootninja";
+  const mobileTitle = here === "./" ? "Lootninja" : NAV.find(([href]) => href.split("#")[0] === here)?.[1] || "Lootninja";
   return `<a class="skip" href="${esc(location.pathname)}#main">Hoppa till innehållet</a>
   <header class="site-header"><div class="wrap">
-    <a class="logo" href="index.html"><img src="logo.svg" alt=""><span><b class="brand-desk">Lootninja</b><b class="brand-mob">${esc(mobileTitle)}</b><small>Kortsläpp & priser</small></span></a>
+    <a class="logo" href="./"><img src="logo.svg" alt=""><span><b class="brand-desk">Lootninja</b><b class="brand-mob">${esc(mobileTitle)}</b><small>Kortsläpp & priser</small></span></a>
     <nav class="main-nav" aria-label="Huvudmeny"><ul>
       ${NAV.map(([href, label]) => `<li><a href="${href}"${href.split("#")[0] === here ? ' aria-current="page"' : ""}>${label}</a></li>`).join("")}
     </ul></nav>
@@ -74,7 +76,7 @@ function footer() {
     <div class="wrap">
     <div class="footer-grid">
       <div class="about">
-        <a class="logo" href="index.html"><img src="logo.svg" alt=""><span><b>Lootninja</b><small>Kortsläpp & priser</small></span></a>
+        <a class="logo" href="./"><img src="logo.svg" alt=""><span><b>Lootninja</b><small>Kortsläpp & priser</small></span></a>
         <p>Ett ideellt hobbyprojekt. Ninjan smyger fram kortsläpp, set och priser – gratis och utan konto. Priser och lager är vägledande och kan innehålla felaktigheter.</p>
       </div>
       <div><h2>Utforska</h2><ul>${NAV.map(([h, l]) => `<li><a href="${h}">${l}</a></li>`).join("")}<li><a href="set/">Alla set</a></li></ul></div>

@@ -995,6 +995,8 @@ span.rd-logo{display:grid;place-items:center;background:var(--surface);border-ra
 .ntf-chan>div{display:flex;flex-direction:column}
 .ntf-chan .btn{align-self:flex-start;margin-top:auto}
 .ntf-chan .topics{max-height:280px;overflow:auto;padding-right:4px}
+.ntf-push-btns{display:flex;flex-wrap:wrap;gap:8px;margin-top:auto}
+.ntf-push-btns .btn{margin-top:0}
 @media (max-width:760px){.ntf-channels{grid-template-columns:1fr}}
 .ntf-chan{display:flex;gap:14px;align-items:flex-start;padding:16px;background:var(--card);border:2px solid var(--line);border-radius:10px}
 .ntf-chan>div{flex:1;min-width:0}
@@ -3697,3 +3699,58 @@ button.zm-price:hover{background:#1f2132}
 /* Sök bland seten på översikten (set/). */
 .set-search{margin-top:16px}
 .set-search input[type=search]{width:100%;max-width:440px}
+
+/* ---------- Packöppnaren: global räknare och topplistan (js/restock.js) ---------- */
+.pack-counter{margin:0;display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border:1px solid rgba(242,182,50,.45);border-radius:999px;background:rgba(14,16,28,.6);font:600 .78rem/1.2 var(--pixel);color:#e1e6f5;letter-spacing:.3px}
+.pack-counter b{display:inline-block;color:var(--gold);font-size:.95rem}
+.hs-submit{width:100%;max-width:520px;display:grid;justify-items:center}
+.hs-submit .hs-form{width:100%;max-width:420px}
+.hs-form{display:grid;gap:8px;padding:12px;border-radius:10px;background:rgba(14,16,28,.6);border:1px solid rgba(242,182,50,.4)}
+.hs-form label{font:600 .9rem/1.3 var(--pixel);color:var(--gold);text-align:center}
+.hs-form-row{display:flex;gap:6px;align-items:center}
+.hs-form input{flex:1;min-width:0;font:500 .9rem var(--sans);padding:9px 10px;border:2px solid #0b0c12;border-radius:var(--r);background:#fbfcfd;color:#1b1b2f}
+.hs-form .btn{flex:none}
+.hs-msg{margin:0;min-height:1em;font-size:.8rem;color:#c9cfe0;text-align:center}
+.hs-msg:empty{display:none}
+.hs-done{margin:0;font:600 .9rem/1.4 var(--pixel);color:#e1e6f5;text-align:center}
+.hs-done b{color:var(--gold)}
+
+/* Topplistan visas i packöppnarens mörka yta, under ens inskickade pack. */
+.hs{width:100%;max-width:520px;margin-top:10px;padding:12px;border-radius:10px;background:rgba(14,16,28,.72);border:2px solid #0b0c12;box-shadow:3px 3px 0 #0b0c12;color:#e1e6f5;text-align:left}
+.hs-head{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-bottom:10px}
+.hs h3{margin:0;font:600 1.05rem/1.2 var(--pixel);color:var(--gold)}
+.hs-tabs{border:2px solid #0b0c12;border-radius:var(--r);box-shadow:3px 3px 0 #0b0c12;margin-left:0}
+.hs-tabs button{font:600 .8rem var(--pixel);min-height:34px;padding:0 10px;background:#232734;color:#c9cfe0}
+.hs-tabs button+button{border-left:2px solid #0b0c12}
+.hs-tabs button[aria-pressed=true]{background:var(--gold);color:#1b1b2f}
+.hs-list{list-style:none;margin:0;padding:0;display:grid;gap:6px;max-height:360px;overflow:auto}
+.hs-list[aria-busy=true]{opacity:.55}
+.hs-row{display:grid;grid-template-columns:34px 34px minmax(0,1fr) auto;gap:10px;align-items:center;padding:5px 10px 5px 5px;border:2px solid rgba(255,255,255,.12);border-radius:var(--r);background:rgba(255,255,255,.05)}
+.hs-row.r1{border-color:var(--gold);background:linear-gradient(90deg,rgba(242,182,50,.22),transparent 70%)}
+.hs-row.r2{border-color:#c9ced8}
+.hs-row.r3{border-color:#d8945e}
+.hs-row.is-mine{outline:3px solid var(--red);outline-offset:1px;animation:hsMine 1.2s steps(4) 2}
+@keyframes hsMine{50%{outline-color:var(--gold)}}
+.hs-rank{font:700 1.1rem/1 var(--pixel);text-align:center;color:#9aa7c2}
+/* Plats 1–3: pixliga brickor i guld, silver och brons. */
+.hs-row.r1 .hs-rank,.hs-row.r2 .hs-rank,.hs-row.r3 .hs-rank{justify-self:center;display:grid;place-items:center;width:30px;height:30px;font-size:1rem;color:#1b1b2f;border:2px solid #0b0c12;border-radius:3px;box-shadow:inset -3px -3px 0 rgba(0,0,0,.22),inset 3px 3px 0 rgba(255,255,255,.45)}
+.hs-row.r1 .hs-rank{background:var(--gold)}
+.hs-row.r2 .hs-rank{background:#c9ced8}
+.hs-row.r3 .hs-rank{background:#d8945e}
+.hs-card{width:34px;aspect-ratio:5/7;border-radius:3px;overflow:hidden;background:rgba(255,255,255,.08)}
+.hs-card img{width:100%;height:100%;object-fit:cover;display:block}
+.hs-who{min-width:0;display:grid;gap:1px}
+.hs-who b{font:600 .92rem/1.2 var(--pixel);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.hs-who small{font-size:.72rem;color:#9aa7c2;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.hs-who .hs-meta{font-size:.68rem}
+.hs-value{font:700 1.1rem/1 var(--pixel);color:var(--gold);white-space:nowrap}
+.hs-empty{padding:14px 8px;text-align:center;color:#9aa7c2;font:600 .85rem var(--pixel)}
+@media (max-width:640px){
+  .hs{padding:10px 8px}
+  .hs-tabs{width:100%}
+  .hs-tabs button{flex:1;padding:0 4px;font-size:.74rem}
+  .hs-row{grid-template-columns:28px 30px minmax(0,1fr) auto;gap:7px}
+  .hs-card{width:30px}
+  .hs-value{font-size:.95rem}
+}
+

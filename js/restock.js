@@ -3,6 +3,7 @@
 //  2. en packöppnare: välj ett pack från de senaste seten, riv upp det och dra korten ett i taget
 import { groupKey } from "./group.js";
 import { $, esc, kr, ago, latestSets, setLogo, getJSON, API, safeUrl, liveStock } from "./site.js";
+import { track } from "./tracker.js";
 
 const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -218,6 +219,108 @@ function setupMute() {
   stage.append(btn);
 }
 
+// ---------- Global räknare och topplista (api/highscore.php) ----------
+// Varje öppnat pack räknas på servern och ger en biljett. Med biljetten kan packet skickas in till topplistan en gång.
+const HS = "api/highscore.php";
+const NICK_KEY = "nl:hs-nick";
+const hsGet = (q) => fetch(`${HS}?${q}`, { cache: "no-store" }).then((r) => r.json());
+const hsPost = (action, data) => fetch(`${HS}?action=${action}`, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(data) })
+  .then((r) => r.json().catch(() => ({ ok: false })));
+const nf = (n) => Math.round(n).toLocaleString("sv-SE");
+
+function paintCounter(total) {
+  const el = $("#pack-counter");
+  if (!el || !Number.isFinite(total)) return;
+  const b = el.querySelector("b"), before = +(b.dataset.n || 0);
+  b.dataset.n = total;
+  b.textContent = nf(total);
+  el.hidden = false;
+  if (before && total > before && !reduce) b.animate([{ transform: "scale(1.35)", color: "#fff2b0" }, { transform: "none" }], { duration: 500, easing: "cubic-bezier(.2,1.4,.4,1)" });
+}
+const loadCounter = () => hsGet("action=stats").then((d) => d.ok && paintCounter(d.totalOpened)).catch(() => {});
+
+// Räknar upp packet direkt (räknaren ökar på en gång, även om servern är långsam) och ger biljetten till topplistan.
+function openTicket(setId) {
+  const b = $("#pack-counter b");
+  if (b?.dataset.n) paintCounter(+b.dataset.n + 1);
+  return hsPost("open", { set_id: setId }).then((d) => { if (Number.isFinite(d.totalOpened)) paintCounter(d.totalOpened); return d.token || null; }).catch(() => null);
+}
+
+// Topplistan visas i packöppnaren, direkt under ens eget inskickade pack. root: elementet som listan ritas i.
+const boardHTML = () => `<div class="hs">
+    <div class="hs-head">
+      <h3>Topplistan: Värdefullaste packen</h3>
+      <div class="seg2 hs-tabs" role="group" aria-label="Period">
+        <button type="button" data-period="week" aria-pressed="true">Denna vecka</button>
+        <button type="button" data-period="month" aria-pressed="false">Denna månad</button>
+        <button type="button" data-period="all" aria-pressed="false">All-time</button>
+      </div>
+    </div>
+    <ol class="hs-list" aria-live="polite"><li class="hs-empty">Laddar topplistan…</li></ol>
+  </div>`;
+
+async function renderBoard(root, period, mine) {
+  const list = root.querySelector(".hs-list");
+  root.querySelectorAll(".hs-tabs button").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.period === period)));
+  list.setAttribute("aria-busy", "true");
+  try {
+    const d = await hsGet(`action=leaderboard&period=${period}`);
+    if (!d.ok) throw new Error();
+    const empty = { week: "Ingen har skickat in ett pack den här veckan.", month: "Inga pack den här månaden än.", all: "Topplistan är tom." }[period];
+    list.innerHTML = d.entries.length ? d.entries.map((e) => `<li class="hs-row r${e.rank}${e.id === mine ? " is-mine" : ""}">
+        <span class="hs-rank" aria-label="Plats ${e.rank}">${e.rank}</span>
+        <span class="hs-card">${e.best_card_img ? `<img src="${esc(safeUrl(e.best_card_img))}" alt="" loading="lazy" decoding="async">` : ""}</span>
+        <span class="hs-who"><b>${esc(e.name)}</b><small>${esc(e.best_card_name || "")}${e.best_card_value ? ` · ${kr(e.best_card_value)}` : ""}</small><small class="hs-meta">${esc(e.set_name || "")} · ${esc(e.date)}</small></span>
+        <span class="hs-value">${kr(e.pack_value)}</span>
+      </li>`).join("") : `<li class="hs-empty">${empty}</li>`;
+  } catch {
+    list.innerHTML = '<li class="hs-empty">Topplistan kunde inte laddas just nu.</li>';
+  }
+  list.removeAttribute("aria-busy");
+  const me = list.querySelector(".is-mine");
+  if (me) list.scrollTop = me.offsetTop - list.offsetTop - 8;
+}
+
+function showBoard(box, mine) {
+  box.insertAdjacentHTML("beforeend", boardHTML());
+  const root = box.lastElementChild;
+  root.querySelector(".hs-tabs").addEventListener("click", (e) => { const b = e.target.closest("button[data-period]"); if (b) renderBoard(root, b.dataset.period, mine); });
+  renderBoard(root, "week", mine);
+  root.scrollIntoView({ block: "nearest", behavior: reduce ? "auto" : "smooth" });
+}
+
+// Formuläret under resultatet: skicka in packet med ett ninjanick. Efter inskickningen visas topplistan på samma ställe.
+function submitForm(box, entry, ticket) {
+  let nick = "";
+  try { nick = localStorage.getItem(NICK_KEY) || ""; } catch {}
+  box.innerHTML = `<form class="hs-form">
+      <label for="hs-nick">Registrera ditt pack på topplistan:</label>
+      <div class="hs-form-row">
+        <input id="hs-nick" name="nick" maxlength="20" minlength="2" required autocomplete="nickname" placeholder="Skriv ditt ninjanick (max 20 tecken)" value="${esc(nick)}">
+        <button type="submit" class="btn small gold">Skicka in</button>
+      </div>
+      <p class="hs-msg" role="status"></p>
+    </form>`;
+  box.hidden = false;
+  const form = box.querySelector("form"), msg = form.querySelector(".hs-msg"), btn = form.querySelector("button");
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const name = form.nick.value.trim();
+    if (name.length < 2) { msg.textContent = "Skriv minst 2 tecken."; return; }
+    btn.disabled = true;
+    msg.textContent = "Skickar…";
+    const token = await ticket;
+    if (!token) { msg.textContent = "Det här packet kunde inte registreras. Topplistan är inte nåbar just nu."; btn.disabled = false; return; }
+    const d = await hsPost("submit", { token, name, ...entry });
+    if (!d.ok) { msg.textContent = d.error || "Det gick inte att skicka in. Försök igen."; btn.disabled = !!d.error?.includes("Öppna ett nytt"); return; }
+    try { localStorage.setItem(NICK_KEY, name); } catch {}
+    box.innerHTML = `<p class="hs-done">Inskickat! Du ligger <b>${ordinal(d.weekRank)}</b> den här veckan.</p>`;
+    showBoard(box, d.id);
+  });
+}
+// 1:a, 2:a, 3:e, 11:e, 21:a …
+const ordinal = (n) => `${n}:${[1, 2].includes(n % 10) && ![11, 12].includes(n % 100) ? "a" : "e"}`;
+
 // ---------- Packen att välja bland ----------
 let packSets = [];
 let packPool = []; // alla set som går att öppna, tre slumpas fram åt gången
@@ -249,6 +352,7 @@ function packHTML(s, i) {
 
 async function setupPacks() {
   setupMute();
+  loadCounter();
   const row = $("#pack-row");
   if (!row) return;
   try {
@@ -269,6 +373,7 @@ async function openPack(btn) {
   if (!set) return;
   if (doneToday()) return applyLock(); // dagens pack är redan öppnat, tipset förklarar det
   busy = true;
+  const ticket = openTicket(set.id);
   const row = $("#pack-row"), hint = $("#stage-hint");
   $("#pack-stage").classList.add("is-opening"); // ljudknappen syns bara när ett pack öppnas
   row.classList.add("has-chosen");
@@ -298,7 +403,7 @@ async function openPack(btn) {
   if (!data) { hint.textContent = "Packet gick inte att öppna just nu. Försök igen."; btn.classList.remove("is-chosen", "is-torn"); row.classList.remove("has-chosen"); $("#pack-stage").classList.remove("is-opening"); busy = false; return; }
   row.hidden = true;
   hint.textContent = "Dra kortet åt sidan för att se nästa";
-  renderDeck(set, data);
+  renderDeck(set, data, ticket);
   busy = false;
 }
 
@@ -381,7 +486,7 @@ function packZoom(pick, x, fromEl) {
 // ut ur bild och nästa kort, som låg under, visas med pris direkt.
 const SHOW_ODDS = new URLSearchParams(location.search).has("odds"); // dropchans visas bara med ?odds i adressen
 
-function renderDeck(set, { model, picks, info }) {
+function renderDeck(set, { model, picks, info }, ticket) {
   const pull = $("#pull");
   const N = picks.length;
   pull.hidden = false;
@@ -400,6 +505,7 @@ function renderDeck(set, { model, picks, info }) {
       <p class="swipe-hint">Dra kortet åt sidan eller tryck på det</p>
       <div class="drawn" aria-label="Dragna kort"></div>
       <p class="pull-total" aria-live="polite"></p>
+      <div class="hs-submit" hidden></div>
       <div class="pull-actions">
         <button type="button" class="btn small" data-skip>Visa alla</button>
         <button type="button" class="btn small primary" data-again hidden>Öppna ett till</button>
@@ -482,6 +588,15 @@ function renderDeck(set, { model, picks, info }) {
     rarityEl.textContent = info[best].value ? `Bästa kortet · ca ${kr(info[best].value)}` : "";
     rarityEl.className = `deck-rarity t${info[best].tier}`;
     deck.dataset.tier = "0";
+    track("pack_open", set.name, Math.round(sum));
+    // Topplistan bara för pack värda minst 10 kr, alltså dagens riktiga pack.
+    if (!again) {
+      const b = picks[best].card;
+      submitForm(pull.querySelector(".hs-submit"), {
+        pack_value: Math.round(sum), set_id: set.id, set_name: set.name,
+        best_card_name: b.name, best_card_value: Math.round(info[best].value || 0), best_card_img: b.image ? `${b.image}/low.webp` : "",
+      }, ticket);
+    }
   };
 
   // Flyger översta kortet ur bild åt vänster (dir -1) eller höger (1). Nästa kort ligger redan under och syns direkt.

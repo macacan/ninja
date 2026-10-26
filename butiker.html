@@ -34,7 +34,7 @@
 <main id="main">
   <header class="page-head">
     <div class="wrap">
-      <nav class="crumbs" aria-label="Brödsmulor"><a href="index.html">Hem</a><span aria-hidden="true">›</span><span aria-current="page">Butiker</span></nav>
+      <nav class="crumbs" aria-label="Brödsmulor"><a href="./">Hem</a><span aria-hidden="true">›</span><span aria-current="page">Butiker</span></nav>
       <h1 class="sr-only">Pokémonkort i lager hos svenska butiker</h1>
     </div>
     <canvas class="scene" data-banner="stad" aria-hidden="true"></canvas>
@@ -156,7 +156,10 @@
               <b>Pushnotiser i mobilen och datorn</b>
               <p class="muted">Ett pling när något i ditt urval händer, även när Lootninja är stängd. Fungerar på Android och dator (Chrome, Edge, Firefox, Samsung Internet) och på iPhone och iPad från iOS 16.4.</p>
               <p class="ntf-ios" id="p-push-ios" hidden><b>På iPhone och iPad</b> fungerar notiser bara när Lootninja ligger på hemskärmen: tryck på <b>Dela</b> i Safari, välj <b>Lägg till på hemskärmen</b> och öppna Lootninja från ikonen. Slå sedan på notiserna här.</p>
-              <button class="btn small" id="p-push" type="button">Slå på pushnotiser</button>
+              <div class="ntf-push-btns">
+                <button class="btn small" id="p-push" type="button">Slå på pushnotiser</button>
+                <button type="button" class="btn small" id="p-push-test" hidden>Skicka testnotis</button>
+              </div>
               <p class="muted" id="p-push-note" role="status"></p>
             </div>
           </article>

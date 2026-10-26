@@ -28,14 +28,46 @@ const payload = (sub) => {
 };
 const subscription = async () => (await navigator.serviceWorker.getRegistration())?.pushManager.getSubscription() ?? null;
 
+// Visar en notis direkt från webbläsaren, utan att gå via servern. Kommer den fram vet besökaren att telefonen eller
+// datorn släpper igenom notiser från Lootninja (och inte blockerar dem med Stör ej eller fokusläge).
+export async function localNotice(body, tag = "lootninja-local") {
+  const reg = await navigator.serviceWorker.ready;
+  await reg.showNotification("Lootninja", { body, icon: "img/icon-192.png", badge: "img/favicon-48.png", tag, data: { url: "butiker.html#notiser" } });
+}
+
 export async function enablePush() {
   if (await Notification.requestPermission() !== "granted") return false;
   const reg = await navigator.serviceWorker.register("sw.js");
   await navigator.serviceWorker.ready;
+  // Välkomstnotisen visas innan prenumerationen sparas, så att den kommer även om servern inte svarar.
+  await localNotice("Pushnotiser är på! Ninjan säger till när nya boxar eller prissänkningar dyker upp.", "lootninja-welcome").catch(() => {});
   const sub = (await reg.pushManager.getSubscription()) || await reg.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: key() });
   await post("subscribe", payload(sub));
   savePrefs({ ...getPrefs(), push: true });
   return true;
+}
+
+export const testPush = () => localNotice("Testnotis: Pushnotiser fungerar klockrent på den här enheten!", "lootninja-test");
+
+// Var man tillåter notiser igen när de är blockerade, efter webbläsare och system.
+export function blockedHelp() {
+  const ua = navigator.userAgent;
+  const browser = /edg\//i.test(ua) ? "Edge: klicka på hänglåset till vänster om adressen → Behörigheter för den här webbplatsen → Meddelanden → Tillåt."
+    : /firefox/i.test(ua) ? "Firefox: klicka på hänglåset till vänster om adressen → Rensa behörigheter, eller Inställningar → Sekretess och säkerhet → Behörigheter → Aviseringar."
+    : /safari/i.test(ua) && !/chrome|android/i.test(ua) ? "Safari: Safari → Inställningar → Webbplatser → Notiser → lootninja.se → Tillåt."
+    : /android/i.test(ua) ? "Android: tryck på ikonen till vänster om adressen → Behörigheter → Aviseringar → Tillåt. Kolla också Inställningar → Appar → webbläsaren → Aviseringar."
+    : "Chrome: klicka på ikonen till vänster om adressen → Webbplatsinställningar → Aviseringar → Tillåt.";
+  return `Notiser är blockerade för lootninja.se. ${browser} Ladda sedan om sidan.`;
+}
+
+// Tips när notisen inte syns fast allt är påslaget: oftast stoppar systemet den.
+export function silentHelp() {
+  const ua = navigator.userAgent;
+  if (/windows/i.test(ua)) return "Syns ingen notis? Stäng av Fokusassistans/Stör ej (Windows-inställningar → System → Meddelanden) och kolla att webbläsaren får visa meddelanden där.";
+  if (/mac os x/i.test(ua) && !isIos()) return "Syns ingen notis? Stäng av Stör ej/Fokus i Kontrollcenter och tillåt notiser för webbläsaren under Systeminställningar → Notiser.";
+  if (isIos()) return "Syns ingen notis? Stäng av Fokus/Stör ej i Kontrollcenter och tillåt notiser för Lootninja under Inställningar → Notiser.";
+  if (/android/i.test(ua)) return "Syns ingen notis? Stäng av Stör ej och tillåt aviseringar för webbläsaren under Inställningar → Appar.";
+  return "Syns ingen notis? Kolla att Stör ej/fokusläge är avstängt och att webbläsaren får visa notiser i systemets inställningar.";
 }
 
 export async function disablePush() {

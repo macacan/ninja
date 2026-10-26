@@ -3,7 +3,8 @@ import { langMark } from "./langmark.js";
 import { groupKey, groupProducts, groupTitle, lowestInStock } from "./group.js";
 import { typeOf } from "./releases.js";
 import { getPrefs, savePrefs, matches, KINDS } from "./prefs.js";
-import { pushState, enablePush, disablePush, syncPush } from "./push.js";
+import { track } from "./tracker.js";
+import { pushState, enablePush, disablePush, syncPush, testPush, blockedHelp, silentHelp } from "./push.js";
 const KIND = {
   ny: { label: "Nytt", cls: "k-new" },
   tillbaka: { label: "Tillbaka i lager", cls: "k-back" },
@@ -203,7 +204,7 @@ $("#products").addEventListener("click", (e) => {
   if (e.target.closest(".bell")) {
     const p = getPrefs();
     const set = new Set(p.watch || []);
-    if (set.has(key)) set.delete(key); else set.add(key);
+    if (set.has(key)) set.delete(key); else { set.add(key); track("watch", groupTitle(groupInfo(key).all) || key); }
     p.watch = [...set];
     savePrefs(p);
     syncPush();
@@ -465,7 +466,8 @@ function updatePushButton() {
   btn.disabled = state === "unsupported" || state === "denied";
   btn.textContent = { on: "Stäng av pushnotiser", off: "Slå på pushnotiser", denied: "Notiser är blockerade i webbläsaren", unsupported: "Webbläsaren stöder inte pushnotiser" }[state] || "Slå på pushnotiser";
   btn.classList.toggle("primary", state === "off");
-  $("#p-push-note").textContent = state === "denied" ? "Tillåt notiser för lootninja.se i webbläsarens inställningar och ladda om sidan." : "";
+  $("#p-push-test").hidden = state !== "on";
+  $("#p-push-note").textContent = state === "denied" ? blockedHelp() : "";
 }
 $("#p-push").addEventListener("click", async () => {
   const btn = $("#p-push");
@@ -473,7 +475,9 @@ $("#p-push").addEventListener("click", async () => {
   let note = "";
   try {
     if (pushState() === "on") { await disablePush(); note = "Pushnotiserna är avstängda."; }
-    else if (await enablePush()) note = "Klart! Notiserna följer urvalet nedan. Spara när du ändrar något.";
+    else if (await enablePush()) note = `Klart! En välkomstnotis ska ha dykt upp nu. Notiserna följer urvalet nedan, spara när du ändrar något. ${silentHelp()}`;
+    else if (Notification.permission === "denied") note = blockedHelp();
+    else note = "Rutan stängdes utan att notiser tilläts. Tryck igen och välj Tillåt.";
   } catch {
     note = "Det gick inte att slå på notiserna just nu. Försök igen om en stund.";
   }
@@ -481,6 +485,11 @@ $("#p-push").addEventListener("click", async () => {
   updatePushButton();
   if (note) $("#p-push-note").textContent = note;
   refreshSummary();
+});
+// Testnotisen visas direkt av webbläsaren. Syns den inte är det systemet (Stör ej, fokusläge) som stoppar den.
+$("#p-push-test").addEventListener("click", async () => {
+  try { await testPush(); $("#p-push-note").textContent = `Testnotisen är skickad. ${silentHelp()}`; }
+  catch { $("#p-push-note").textContent = "Testnotisen gick inte att visa. Stäng av och slå på notiserna igen och försök på nytt."; }
 });
 syncPush();
 

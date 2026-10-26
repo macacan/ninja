@@ -93,6 +93,22 @@ Besökarna slår på pushnotiser under Butiker → Notiser. De fungerar på Andr
 - **I bevakningen:** `scripts/scraper/lib/notify.mjs` hämtar prenumerationerna, filtrerar händelserna per person och skickar krypterade notiser med `scripts/scraper/lib/webpush.mjs` (inga beroenden). Adresser som notistjänsten säger inte finns längre tas bort.
 - **Nyckeln:** VAPID-nyckelparets publika del står i `js/push.js`, `api/push.php` och `webpush.mjs`. Den hemliga delen ligger bara i repo-secret **`VAPID_PRIVATE_KEY`** (och miljövariabeln med samma namn om du kör daemon.mjs själv). Utan den skickas inga notiser, men bevakningen går ändå. Byter du nyckelpar slutar alla befintliga prenumerationer att fungera, och besökarna måste slå på notiserna igen.
 
+- **Felsökning:** när man slår på notiserna visar webbläsaren direkt en välkomstnotis, och knappen **Skicka testnotis** visar en till. Syns de inte är det enheten (Stör ej, fokusläge, blockerade notiser) som stoppar dem, inte servern. Kommer testnotisen men inga riktiga notiser: kör `node scripts/generate-vapid.mjs --check` med `VAPID_PRIVATE_KEY` satt för att se om nyckeln hör ihop med den publika. Har nyckeln kommit bort skapar `node scripts/generate-vapid.mjs` ett nytt par och skriver ut vart delarna ska.
+
+## Besöksstatistik (stats.lootninja.se)
+
+Anonym statistik utan kakor: `js/tracker.js` (laddas av `js/site.js`) skickar sidvisningar, butiksklick, sökningar, bevakningar och öppnade pack till `stats/api.php`, som sparar dem i SQLite (`lootninja-stats.db` bredvid `public_html`). IP-adressen sparas aldrig, bara en kontrollsumma med ett salt som byts varje natt. Do Not Track och Global Privacy Control respekteras, och lokalt skickas ingenting.
+
+Görs en gång på Hostinger:
+
+1. **hPanel → Domäner → Underdomäner:** skapa `stats.lootninja.se` med mappen `public_html/stats`.
+2. **Lösenord:** kör `node scripts/stats-password.mjs` och lägg raden den skriver ut i filen `lootninja-stats-pass.txt` i mappen ovanför `public_html` (Filhanteraren).
+3. Öppna `https://stats.lootninja.se/` och logga in.
+
+## Packöppnarens topplista
+
+`api/highscore.php` räknar alla öppnade pack och sparar topplistan i SQLite (`lootninja-game.db` bredvid `public_html`). Varje öppnat pack ger en engångsbiljett, och bara pack med biljett (inom två timmar, samma set, högst 25 000 kr) kan skickas in. Vill någon få ett resultat borttaget: öppna databasen och radera raden i `pack_pulls`.
+
 ## Kortskannern (värderingssidan)
 
 `js/card-scanner.js`, inga beroenden utöver Tesseract.js.
@@ -113,7 +129,9 @@ Besökarna slår på pushnotiser under Butiker → Notiser. De fungerar på Andr
 - **Favicon**: `favicon.ico` (16/32/48 px) i roten, `logo.svg`, `img/favicon-48.png`, `img/apple-touch-icon.png` och `site.webmanifest` (Android). Alla sidor länkar till samma uppsättning.
 - **`data/stock.json`** skrivs av bevakningen bredvid `products.json` och innehåller bara det som går att köpa (ca 1 MB i stället för 4 MB). Startsidan och setsidorna läser den, så att sidorna laddar snabbt, vilket Google väger in.
 - `artikel.html` är `noindex`: artiklarna är sammanfattningar av andras texter och ska inte konkurrera med originalen.
-- `.htaccess` skickar `www.` och `http://` till `https://lootninja.se` i ett enda steg, och märker JSON-filerna `noindex`.
+- `.htaccess` skickar `www.` och `http://` till `https://lootninja.se` i ett enda steg, och märker JSON-filerna `noindex`. `/index.html` och `/set/index.html` skickas med 301 till `/` och `/set/`, och adresser utan `.html` (t.ex. `/butiker`, `/set/151`) skickas till rätt sida. Länka alltid till startsidan som `./`, inte `index.html`.
+- **404:** okända adresser får `404.html` med riktig 404-status och `noindex` (`ErrorDocument` i `.htaccess`). Sidan har `<base href="/">`, så den fungerar på vilken djup adress som helst.
+- **Titlar och beskrivningar:** håll titeln under ca 60 tecken och beskrivningen mellan 70 och 160. Setsidornas mall kortar dem själv (`fitTitle`/`fitDesc` i `scripts/build-set-pages.mjs`).
 
 ### Koppla Google (görs en gång)
 

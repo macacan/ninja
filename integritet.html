@@ -34,9 +34,9 @@
 <main id="main">
   <header class="page-head">
     <div class="wrap">
-      <nav class="crumbs" aria-label="Brödsmulor"><a href="index.html">Hem</a><span aria-hidden="true">›</span><span aria-current="page">Integritet och kakor</span></nav>
+      <nav class="crumbs" aria-label="Brödsmulor"><a href="./">Hem</a><span aria-hidden="true">›</span><span aria-current="page">Integritet och kakor</span></nav>
       <h1 class="sr-only">Integritet och kakor</h1>
-      <p>Gäller från 22 oktober 2026. Kort sagt: inga konton, ingen spårning, ingen reklam och inga kakor.</p>
+      <p>Gäller från 26 oktober 2026. Kort sagt: inga konton, ingen reklam, inga kakor och bara anonym besöksstatistik.</p>
     </div>
     <canvas class="scene" data-scene="strip" aria-hidden="true"></canvas>
   </header>
@@ -54,7 +54,7 @@
     <h2 id="p2">2. Det vi inte gör</h2>
     <ul>
       <li>Vi har inga konton och ber aldrig om namn, e-post eller telefonnummer.</li>
-      <li>Sidan mäter inte besökare, följer inte vad du gör och har varken reklam eller kakor från andra företag.</li>
+      <li>Vi följer dig inte mellan besök eller till andra sidor, och har varken reklam, kakor eller statistikverktyg från andra företag. Vår egen besöksstatistik är anonym, se punkt 4.</li>
       <li>Vi säljer eller lämnar aldrig ut uppgifter om besökare.</li>
     </ul>
 
@@ -68,6 +68,7 @@
         <tr><td>Service worker (sw.js)</td><td>Tar emot pushnotiserna. Installeras bara när du slår på dem</td><td>Tills du rensar</td></tr>
         <tr><td>Senast sökta och värderade kort</td><td>Visas längst ner på Kortpriser och Gradering</td><td>Tills du rensar</td></tr>
         <tr><td>Antal öppnade pack i dag och ljud av/på</td><td>Packöppnaren på startsidan</td><td>Räknaren gäller ett dygn</td></tr>
+        <tr><td>Ditt ninjanick</td><td>Fylls i åt dig nästa gång du skickar in ett pack till topplistan</td><td>Tills du rensar</td></tr>
         <tr><td>Visningsläge i butikslistan</td><td>Kommer ihåg hur du vill se listan</td><td>Tills du rensar</td></tr>
         <tr><td>Ljust eller mörkt läge</td><td>Kommer ihåg om du har valt ljust eller mörkt utseende</td><td>Tills du rensar</td></tr>
       </tbody>
@@ -77,6 +78,8 @@
     <p><b>Serverloggar.</b> Som på alla webbplatser registrerar vår webbhotell, Hostinger, tekniska uppgifter när du besöker sidan: IP-adress, tid, vilken sida som hämtades och webbläsartyp. Det behövs för att sidan ska kunna levereras och skyddas mot missbruk. Rättslig grund: berättigat intresse. Hostinger är vårt personuppgiftsbiträde och lagrar uppgifterna inom EU.</p>
     <p><b>Dagsgräns för pack.</b> Om dagsgränsen för packöppnaren är påslagen räknar servern hur många pack som öppnats per IP-adress. IP-adressen sparas aldrig i klartext, bara som en kontrollsumma med ett slumpat salt som byts varje natt, så att den inte går att räkna tillbaka. Rättslig grund: berättigat intresse av att begränsa missbruk.</p>
     <p><b>Pushnotiser.</b> Slår du på pushnotiser under Notiser ger din webbläsare oss en adress hos sin notistjänst (Apple, Google, Mozilla eller Microsoft) och de nycklar som krävs för att kryptera notiserna. Vi sparar dem på vår server tillsammans med ditt urval (butiker, set, produkttyper, språk, maxpris och produkter du bevakar), så att bara notiser som passar dig skickas. Vi får inte veta vem du är, och adressen kan inte användas till något annat än notiser från Lootninja. Rättslig grund: samtycke, som du ger genom att slå på notiserna och tar tillbaka genom att stänga av dem.</p>
+    <p><b>Besöksstatistik.</b> För att veta vilka sidor, butiker och funktioner som används räknar vi sidvisningar, klick vidare till butikerna, sökningar, bevakade produkter och öppnade pack på vår egen server (stats.lootninja.se, hos Hostinger inom EU). Vi sparar sidan, vad som klickades eller söktes, domänen du kom från (t.ex. google.se), om det var mobil, surfplatta eller dator, och tiden. För att kunna räkna unika besökare per dag görs en kontrollsumma av IP-adressen och webbläsaren tillsammans med ett slumpat salt som byts och raderas varje natt. Varken IP-adressen eller något som kan kopplas till dig mellan dagar sparas, och inga kakor sätts. Har du slagit på <i>Do Not Track</i> eller <i>Global Privacy Control</i> i webbläsaren skickas ingenting. Rättslig grund: berättigat intresse av att förbättra sidan.</p>
+    <p><b>Topplistan i packöppnaren.</b> Skickar du in ditt pack till topplistan sparas smeknamnet du skriver, packets värde, setet, bästa kortet och tiden, och visas öppet för alla. Skriv inte ditt riktiga namn om du inte vill. Vill du få ett resultat borttaget mejlar du oss. Rättslig grund: samtycke, som du ger genom att skicka in. Servern räknar också hur många pack som öppnats totalt, utan att spara något om dig.</p>
     <p><b>Mejl till oss.</b> Skriver du till oss sparar vi mejlet så länge det behövs för att svara.</p>
 
     <h2 id="p5">5. Andra tjänster som sidan hämtar från</h2>
@@ -99,7 +102,9 @@
 
     <h2 id="p7">7. Hur länge uppgifterna sparas</h2>
     <ul>
-      <li>Räknaren för dagsgränsen nollställs varje natt.</li>
+      <li>Räknaren för dagsgränsen och saltet i besöksstatistiken byts varje natt.</li>
+      <li>Besöksstatistiken sparas i drygt ett år och raderas sedan.</li>
+      <li>Resultat på topplistan sparas tills du ber oss ta bort dem.</li>
       <li>Serverloggar sparas enligt Hostingers rutiner, normalt några veckor.</li>
       <li>Pushnotisernas adress och urval raderas när du stänger av notiserna, eller när notistjänsten meddelar att adressen inte längre gäller (till exempel om du tar bort Lootninja från hemskärmen eller nekar notiser i inställningarna).</li>
       <li>Mejl raderas när ärendet är klart.</li>

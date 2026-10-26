@@ -6,5 +6,6 @@ Disallow: /data/card-history/
 Disallow: /research/
 Disallow: /scripts/
 Disallow: /api/
+Disallow: /stats/
 
 Sitemap: https://lootninja.se/sitemap.xml

@@ -209,3 +209,4 @@ input.shop-search { border-color: #0b0c12; }
 .menu-btn[aria-expanded=true] { background: var(--surface); color: var(--ink); border-color: var(--ink); }
 :focus-visible { outline-color: #e8eaf1; }
 .header-search:focus-within { box-shadow: 0 0 0 3px rgba(232, 234, 241, 0.25); }
+
