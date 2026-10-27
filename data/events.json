@@ -1,6 +1,19 @@
 {
- "updated": 1793106223568,
+ "updated": 1793107123583,
  "events": [
+  {
+   "at": 1793106617609,
+   "store": "rgb-kingz",
+   "product": "rgb-kingz:16113454580042",
+   "group": "team-rocket|booster-pack|ko|",
+   "title": "Pokémon The Glory of Team Rocket Booster Pack (SV10) – Koreansk",
+   "url": "https://rgbkingz.com/products/pokemon-glory-of-team-rocket-sv10-booster-pack-koreansk",
+   "price": 39,
+   "type": "Booster Pack",
+   "set": "Team Rocket",
+   "lang": "ko",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793105678942,
    "store": "rgb-kingz",
@@ -6575,19 +6588,6 @@
    "set": "30th Celebration",
    "lang": "en",
    "kind": "ny"
-  },
-  {
-   "at": 1792388937503,
-   "store": "aquitaz",
-   "product": "aquitaz:10967750246746",
-   "group": "mega-evolution|booster-box|en||delta-reign",
-   "title": "Pokémon Mega Evolution: Delta Reign Booster Display (36 Pack) (ENG)",
-   "url": "https://aquitaz.se/products/pokemon-mega-evolution-delta-reign-booster-display-36-pack-eng",
-   "price": 342.95,
-   "type": "Booster Box",
-   "set": "Mega Evolution",
-   "lang": "en",
-   "kind": "tillbaka"
   }
  ]
 }
