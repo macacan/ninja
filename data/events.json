@@ -1,6 +1,20 @@
 {
- "updated": 1793104382338,
+ "updated": 1793105303551,
  "events": [
+  {
+   "at": 1793104885859,
+   "store": "cards-by-malcolm",
+   "product": "cards-by-malcolm:https://www.cardsbymalcolm.se/product/23007373/pokemon-scarlet-violet-prismatic-evolution-booster-bundle",
+   "group": "scarlet-violet|booster-bundle|en||prismatic",
+   "title": "Pokémon Scarlet & Violet: Prismatic Evolution Booster Bundle",
+   "url": "https://www.cardsbymalcolm.se/product/23007373/pokemon-scarlet-violet-prismatic-evolution-booster-bundle",
+   "price": 1199,
+   "type": "Booster Bundle",
+   "set": "Scarlet & Violet",
+   "lang": "en",
+   "kind": "prissankt",
+   "from": 1299
+  },
   {
    "at": 1793103083784,
    "store": "shinycards",
@@ -6574,20 +6588,6 @@
    "set": "Surging Sparks",
    "lang": "en",
    "kind": "tillbaka"
-  },
-  {
-   "at": 1792364244638,
-   "store": "westcoast-vault",
-   "product": "westcoast-vault:15712713081172",
-   "group": "x|booster-pack|ja||esmeralda-storm",
-   "title": "Pokémon TCG: Storm Esmeralda Booster Pack (JP)",
-   "url": "https://westcoastvault.se/products/pokemon-tcg-storm-esmeralda-booster-pack-jp",
-   "price": 69,
-   "type": "Booster Pack",
-   "set": null,
-   "lang": "ja",
-   "kind": "prissankt",
-   "from": 79
   }
  ]
 }
