@@ -134,10 +134,10 @@ async function landing() {
       $(id).innerHTML = list.map((c) => tile(c, current.indexOf(c, i))).join("");
     }
     // One Piece- och Riftbound-trenderna bygger på vår egen historik, som behöver en vecka innan den säger något.
-    // Tills dess göms de, så att "Dyraste i nya set" hamnar överst.
+    // Tills dess göms de, så att "Dyraste i de senaste seten" hamnar överst.
     $("#rising-block").hidden = !t.rising.length;
     $("#falling-block").hidden = !t.falling.length;
-    $("#top-sets").textContent = `Från ${t.sets.join(", ")}.${t.rising.length ? "" : " Trenderna visas när vi har sparat priserna i en vecka."}`;
+    $("#top-sets").textContent = `Från de ${t.sets.length} senaste seten: ${t.sets.join(", ")}.${t.rising.length ? "" : " Trenderna visas när vi har sparat priserna i en vecka."}`;
   } catch {
     if (my !== landingId) return;
     for (const id of ["#rising", "#top", "#falling"]) $(id).innerHTML = "";

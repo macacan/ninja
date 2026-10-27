@@ -1,7 +1,7 @@
 // Bygger One Piece-korten till Kortpriser (priser.html?game=op) från optcgapi.com och sparar:
 //   data/op/cards.json         alla kort i bantad form, som sidan söker i direkt i webbläsaren
 //   data/op/history/<set>.json en punkt per kort och dag i kronor: [datum, marknadspris, lägsta i lager]
-//   data/op/card-trends.json   "Trendar nu", "Dyraste i nya set" och "Sjunker"
+//   data/op/card-trends.json   "Trendar nu", "Dyraste i de senaste seten" och "Sjunker"
 // Priserna är TCGplayers (USD), omräknade med ECB:s kurs samma dag. Cardmarket går inte att använda här:
 // deras fil skiljer inte på vanlig, parallel och manga (Shanks OP01-120 finns som 15 produkter med samma namn).
 // Körs en gång per dygn (se .github/workflows/trends.yml) eller manuellt: node scripts/update-op-cards.mjs

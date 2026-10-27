@@ -885,7 +885,9 @@ span.rd-logo{display:grid;place-items:center;background:var(--surface);border-ra
 #game-seg [data-game=pokemon]{--art:url(img/games/pokemon.webp)}
 #game-seg [data-game=op]{--art:url(img/games/op.webp)}
 #game-seg [data-game=rb]{--art:url(img/games/rb.webp)}
-#game-seg button{white-space:nowrap}
+#game-seg button{white-space:nowrap;position:relative}
+/* Beta-märket ligger i knappens hörn, så att knapparna behåller sin bredd även på mobil. */
+#game-seg .beta-tag{position:absolute;top:4px;right:4px;margin:0;padding:3px 4px;font-size:.52rem;font-style:normal;text-shadow:none}
 @media (max-width:640px){#game-seg button{padding:16px 6px}}
 .card-search .btn{margin:var(--px) var(--px) var(--px) auto}
 /* Filter-knappen och de dolda filtren (språk, set, sällsynthet) som fälls ut på en egen rad. */
