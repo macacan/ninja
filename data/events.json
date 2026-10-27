@@ -1,6 +1,58 @@
 {
- "updated": 1793108043607,
+ "updated": 1793108963622,
  "events": [
+  {
+   "at": 1793108191633,
+   "store": "webhallen",
+   "product": "webhallen:401984",
+   "group": "30th-celebration|premium-collection|en||ditto",
+   "title": "Pokemon 30th Celebration Ditto Premium Collection",
+   "url": "https://www.webhallen.com/se/product/401984-Pokemon-30th-Celebration-Ditto-Premium-Collection",
+   "price": 899,
+   "type": "Premium Collection",
+   "set": "30th Celebration",
+   "lang": "en",
+   "kind": "forbestallning"
+  },
+  {
+   "at": 1793108191633,
+   "store": "webhallen",
+   "product": "webhallen:401986",
+   "group": "30th-celebration|collection-box|en||lucario-sticker-tech",
+   "title": "Pokemon 30th Celebration Lucario Tech Sticker Collection",
+   "url": "https://www.webhallen.com/se/product/401986-Pokemon-30th-Celebration-Lucario-Tech-Sticker-Collection",
+   "price": 349,
+   "type": "Collection Box",
+   "set": "30th Celebration",
+   "lang": "en",
+   "kind": "forbestallning"
+  },
+  {
+   "at": 1793108191633,
+   "store": "webhallen",
+   "product": "webhallen:401991",
+   "group": "30th-celebration|collection-box|en||alolan-exeggutor-sticker-tech",
+   "title": "Pokemon 30th Celebration Alolan Exeggutor Tech Sticker Collection",
+   "url": "https://www.webhallen.com/se/product/401991-Pokemon-30th-Celebration-Alolan-Exeggutor-Tech-Sticker-Collection",
+   "price": 349,
+   "type": "Collection Box",
+   "set": "30th Celebration",
+   "lang": "en",
+   "kind": "forbestallning"
+  },
+  {
+   "at": 1793108191633,
+   "store": "webhallen",
+   "product": "webhallen:401995",
+   "group": "30th-celebration|collection-box|en||figure",
+   "title": "Pokemon 30th Celebration Figure Collection",
+   "url": "https://www.webhallen.com/se/product/401995-Pokemon-30th-Celebration-Figure-Collection",
+   "price": 599,
+   "type": "Collection Box",
+   "set": "30th Celebration",
+   "lang": "en",
+   "kind": "forbestallning"
+  },
   {
    "at": 1793107181514,
    "store": "dragon-s-lair",
@@ -6535,58 +6587,6 @@
    "type": "Booster Box",
    "set": null,
    "lang": "ja",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1792412630050,
-   "store": "goblinen",
-   "product": "goblinen:16132101013848",
-   "group": "x|build-battle|en||delta-lordag-oktober-prerelease-reign",
-   "title": "Pokémon TCG: Delta Reign Prerelease #3 Lördag 31 Oktober",
-   "url": "https://goblinen.com/products/pokemon-tcg-delta-reign-prerelease-3-lordag-31-oktober",
-   "price": 280,
-   "type": "Build & Battle",
-   "set": null,
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1792412630050,
-   "store": "goblinen",
-   "product": "goblinen:16132100030808",
-   "group": "x|build-battle|en||delta-oktober-prerelease-reign-torsdag",
-   "title": "Pokémon TCG: Delta Reign Prerelease #2 Torsdag 29 Oktober",
-   "url": "https://goblinen.com/products/pokemon-tcg-delta-reign-prerelease-2-torsdag-29-oktober",
-   "price": 280,
-   "type": "Build & Battle",
-   "set": null,
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1792412630050,
-   "store": "goblinen",
-   "product": "goblinen:16132098785624",
-   "group": "x|build-battle|en||delta-mandag-oktober-prerelease-reign",
-   "title": "Pokémon TCG: Delta Reign Prerelease #1 Måndag 26 Oktober",
-   "url": "https://goblinen.com/products/pokemon-tcg-delta-reign-prerelease-1-mandag-26-oktober",
-   "price": 280,
-   "type": "Build & Battle",
-   "set": null,
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1792412604572,
-   "store": "dragon-s-lair",
-   "product": "dragon-s-lair:15838949409116",
-   "group": "sword-shield|booster-pack|zh||glory-shadow",
-   "title": "Pokemon Sword & Shield: Shadow of Glory (CS5.5) Booster Pack (6 Kort) (Kinesisk)",
-   "url": "https://dragonslair.se/products/pokemon-sword-shield-shadow-of-glory-cs5-5-booster-pack-6-kort-kinesisk",
-   "price": 49,
-   "type": "Booster Pack",
-   "set": "Sword & Shield",
-   "lang": "zh",
    "kind": "tillbaka"
   }
  ]
