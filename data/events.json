@@ -1,6 +1,20 @@
 {
- "updated": 1793116283785,
+ "updated": 1793117203795,
  "events": [
+  {
+   "at": 1793116550238,
+   "store": "cards-by-malcolm",
+   "product": "cards-by-malcolm:https://www.cardsbymalcolm.se/product/24471166/pokemon-tcg-30th-anniversary-booster-pack",
+   "group": "x|booster-pack|en||30th-anniversary",
+   "title": "Pokémon TCG – 30th Anniversary Booster Pack",
+   "url": "https://www.cardsbymalcolm.se/product/24471166/pokemon-tcg-30th-anniversary-booster-pack",
+   "price": 189,
+   "type": "Booster Pack",
+   "set": null,
+   "lang": "en",
+   "kind": "prissankt",
+   "from": 199
+  },
   {
    "at": 1793116277869,
    "store": "dragon-s-lair",
@@ -6574,19 +6588,6 @@
    "type": "Booster Box",
    "set": "Emerald",
    "lang": "ja",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1792435801674,
-   "store": "dragon-s-lair",
-   "product": "dragon-s-lair:15668627964252",
-   "group": "pitch-black|elite-trainer-box|en|",
-   "title": "Pokémon TCG: Mega Evolution - Pitch Black Elite Trainer Box (Max 1 per kund)",
-   "url": "https://dragonslair.se/products/pokemon-tcg-mega-evolution-pitch-black-elite-trainer-box-max-1-per-kund",
-   "price": 995,
-   "type": "Elite Trainer Box",
-   "set": "Pitch Black",
-   "lang": "en",
    "kind": "tillbaka"
   }
  ]
