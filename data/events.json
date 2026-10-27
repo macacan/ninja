@@ -1,6 +1,19 @@
 {
- "updated": 1793127978620,
+ "updated": 1793128898644,
  "events": [
+  {
+   "at": 1793128098915,
+   "store": "samlarhobby",
+   "product": "samlarhobby:16089488949629",
+   "group": "paldean-fates|premium-collection|en||great-iron-treads-tusk",
+   "title": "Pokémon, Paldean Fates Great Tusk ex & Iron Treads ex Premium Collection Box",
+   "url": "https://samlarhobby.se/products/pokemon-paldean-fates-great-tusk-ex-iron-treads-ex-premium-collection-box",
+   "price": 3795,
+   "type": "Premium Collection",
+   "set": "Paldean Fates",
+   "lang": "en",
+   "kind": "ny"
+  },
   {
    "at": 1793127902308,
    "store": "rahtech",
@@ -6576,19 +6589,6 @@
    "url": "https://bangerpack.se/pokemon/elite-trainer-special/pokemon-perfect-order-elite-trainer-box",
    "price": 995,
    "type": "Elite Trainer Box",
-   "set": "Perfect Order",
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1792467529936,
-   "store": "bangerpack",
-   "product": "bangerpack:https://bangerpack.se/pokemon/displayer-boxar/pokemon-perfect-order-booster-display",
-   "group": "perfect-order|booster-box|en|",
-   "title": "Pokémon Perfect Order – Booster Display",
-   "url": "https://bangerpack.se/pokemon/displayer-boxar/pokemon-perfect-order-booster-display",
-   "price": 2699,
-   "type": "Booster Box",
    "set": "Perfect Order",
    "lang": "en",
    "kind": "tillbaka"
