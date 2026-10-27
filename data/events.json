@@ -1,6 +1,19 @@
 {
- "updated": 1793074378488,
+ "updated": 1793074758492,
  "events": [
+  {
+   "at": 1793074421333,
+   "store": "skattkistan",
+   "product": "skattkistan:11101251895634",
+   "group": "ascended-heroes|elite-trainer-box|en|",
+   "title": "Pokémon TCG: Mega Evolution Ascended Heroes Elite Trainer Box",
+   "url": "https://skattkistan.net/products/ascended-heroes-elite-trainer-box-max-2-per-kund",
+   "price": 1999,
+   "type": "Elite Trainer Box",
+   "set": "Ascended Heroes",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793056146377,
    "store": "shinycards",
@@ -6579,19 +6592,6 @@
    "lang": "ja",
    "kind": "prissankt",
    "from": 1399
-  },
-  {
-   "at": 1792364062088,
-   "store": "rgb-kingz",
-   "product": "rgb-kingz:15699699302730",
-   "group": "ascended-heroes|collection-box|en||emboar",
-   "title": "Pokemon Ascended Heroes Mega Emboar ex Box",
-   "url": "https://rgbkingz.com/products/pokemon-ascended-heroes-mega-emboar-ex-box",
-   "price": 799,
-   "type": "Collection Box",
-   "set": "Ascended Heroes",
-   "lang": "en",
-   "kind": "tillbaka"
   }
  ]
 }
