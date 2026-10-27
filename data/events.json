@@ -1,6 +1,19 @@
 {
- "updated": 1793131287557,
+ "updated": 1793132207581,
  "events": [
+  {
+   "at": 1793131514473,
+   "store": "tcgaddan",
+   "product": "tcgaddan:15894591897932",
+   "group": "pitch-black|booster-pack|en|",
+   "title": "Pitch Black Booster Pack",
+   "url": "https://tcgaddan.se/products/pitch-black-booster-pack-moms-vmb",
+   "price": 85,
+   "type": "Booster Pack",
+   "set": "Pitch Black",
+   "lang": "en",
+   "kind": "ny"
+  },
   {
    "at": 1793128098915,
    "store": "samlarhobby",
@@ -6577,19 +6590,6 @@
    "price": 895,
    "type": "Elite Trainer Box",
    "set": "Pitch Black",
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1792467529936,
-   "store": "bangerpack",
-   "product": "bangerpack:https://bangerpack.se/pokemon/elite-trainer-special/pokemon-perfect-order-elite-trainer-box",
-   "group": "perfect-order|elite-trainer-box|en|",
-   "title": "Pokémon Perfect Order – Elite Trainer Box",
-   "url": "https://bangerpack.se/pokemon/elite-trainer-special/pokemon-perfect-order-elite-trainer-box",
-   "price": 995,
-   "type": "Elite Trainer Box",
-   "set": "Perfect Order",
    "lang": "en",
    "kind": "tillbaka"
   }
