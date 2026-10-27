@@ -130,7 +130,7 @@ function storeRows(g) {
       ${pc ? `<span class="srow-chg ${up ? "up" : "down"}"><span aria-hidden="true">${up ? "▲" : "▼"}</span> Senast ändrat pris ${when(pc.at)} · var ${kr(pc.from)}</span>` : ""}
       <span class="srow-name">${esc(storeName[m.store] || m.store)}<small class="srow-lang${m.langGuess ? " guess" : ""}">${esc(lang)}</small></span><span class="srow-price">${kr(m.price)}</span>
       <span class="rs-st ${st[0]}">${st[1]}</span>
-      ${rank(m) < 2 ? `<a class="btn small gold" href="${esc(safeUrl(m.url))}" target="_blank" rel="noopener nofollow">Köp</a>` : `<a class="srow-link" href="${esc(safeUrl(m.url))}" target="_blank" rel="noopener nofollow">Till butiken</a>`}
+      ${rank(m) < 2 ? `<a class="btn small gold" href="${esc(safeUrl(m.url))}" target="_blank" rel="noopener nofollow">Visa</a>` : `<a class="srow-link" href="${esc(safeUrl(m.url))}" target="_blank" rel="noopener nofollow">Till butiken</a>`}
       ${median && m.price < median * 0.55 ? '<span class="srow-warn">Ovanligt lågt pris – kontrollera språk och produkt hos butiken</span>' : ""}
     </li>`;
   }).join("");

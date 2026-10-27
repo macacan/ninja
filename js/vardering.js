@@ -210,7 +210,7 @@ function drawDamage() {
 // lang och en: språket på det valda kortet och, för japanska kort, Pokémonens engelska namn.
 // Om "Så räknar vi" i förbehållet är utfällt. Resultatet ritas om vid varje ändring, så valet sparas här.
 let discOpen = false;
-const state = { card: null, lang: "en", en: null, rate: null, year: null, cond: DEFAULT_COND, crit: [1, 1, 1, 1], cost: 400 };
+const state = { card: null, lang: "en", en: null, rate: null, year: null, holo: false, cond: DEFAULT_COND, crit: [1, 1, 1, 1], cost: 400 };
 const isJa = () => $("#vm-lang").value === "ja";
 // Japanska kort visas med det engelska namnet först och det japanska under.
 // Värderingen är i beta, så titeln har alltid Beta-taggen.
@@ -321,8 +321,14 @@ async function search(raw, total = null, photo = null, nameHint = null) {
 // ---------- Värdering ----------
 // Skicket ger det ograderade värdet och flyttar reglagen till ett typiskt läge för skicket.
 // Reglagen ger sedan betyget, så man kan finjustera efter att ha valt skick.
-const baseEur = (c) => { const cm = c.pricing?.cardmarket || {}; return cm.trend ?? cm.avg ?? cm["trend-holo"] ?? null; };
-const baseSek = () => { const e = baseEur(state.card); return e != null && state.rate ? e * state.rate : null; };
+// Holo (eller reverse holo) har ett eget pris på Cardmarket. Valet visas bara när kortet har både vanligt pris och holopris.
+const holoEur = (c) => { const cm = c.pricing?.cardmarket || {}; return cm["trend-holo"] ?? cm["avg-holo"] ?? null; };
+const hasHolo = (c) => { const cm = c.pricing?.cardmarket || {}; return holoEur(c) != null && (cm.trend ?? cm.avg) != null; };
+const holoLabel = (c) => (c.variants?.holo ? "Holo" : "Reverse holo");
+const baseEur = (c, holo = false) => { const cm = c.pricing?.cardmarket || {}; return holo && holoEur(c) != null ? holoEur(c) : cm.trend ?? cm.avg ?? cm["trend-holo"] ?? null; };
+const baseSek = () => { const e = baseEur(state.card, state.holo); return e != null && state.rate ? e * state.rate : null; };
+// Lägsta annonsen för den valda versionen.
+const lowEur = () => { const cm = state.card.pricing?.cardmarket || {}; return state.holo ? cm["low-holo"] : cm.low; };
 // Avrundning till närmaste 5 kr, eller 10 kr från 100 kr och uppåt.
 const round = (n) => { const step = Math.abs(n) >= 100 ? 10 : 5; return Math.round(n / step) * step; };
 // Blir priset 0 kr efter avrundningen visas "under 5 kr" i stället.
@@ -359,7 +365,7 @@ function rawSek() {
   if (base == null) return null;
   const score = exactScore();
   let v = base * curve(RAW_CURVE, score);
-  const low = state.card.pricing?.cardmarket?.low;
+  const low = lowEur();
   if (low != null && state.rate) v -= clamp01(2 - score) * Math.max(0, v - low * state.rate);
   return v;
 }
@@ -399,7 +405,7 @@ function outputHTML() {
   const tier = (label, v, on) => `<li class="vt${on ? " on" : ""}"><span>${label}</span><b>${ca(v)}</b></li>`;
   return `<div class="vo-main"><span class="vo-label">Ungefärligt värde ${condText(cname)}</span>
       <b class="vo-price">${ca(raw)}</b>
-      <small>Cardmarkets trendpris i nyskick: ${krr(base)}${state.card.pricing?.cardmarket?.low != null ? ` · lägsta annons ${krr(state.card.pricing.cardmarket.low * state.rate)}` : ""}</small></div>
+      <small>Cardmarkets trendpris${state.holo ? ` för ${holoLabel(state.card).toLowerCase()}` : ""} i nyskick: ${krr(base)}${lowEur() != null ? ` · lägsta annons ${krr(lowEur() * state.rate)}` : ""}</small></div>
     <ul class="vo-tiers" aria-label="Riktvärden per betyg">
       ${tier("Ograderat, ditt skick", raw, false)}${tier("Graderat", gv, true)}
     </ul>
@@ -433,6 +439,7 @@ function renderCard() {
       <div class="val-info">
         <h2 class="val-dh">${cardTitle(c)}</h2>
         <p class="muted val-dsub">${setLink(c.set, pages)} · #${esc(c.localId || "")}${c.rarity && c.rarity !== "None" ? ` · ${esc(c.rarity)}` : ""}</p>
+        ${hasHolo(c) ? `<div class="chips val-variant" role="radiogroup" aria-label="Version">${[["Vanlig", "Utan glansig folie"], [holoLabel(c), "Glansig folie, eget pris"]].map(([n, d], i) => `<label class="chip"><input type="radio" name="variant" value="${i}"${+state.holo === i ? " checked" : ""}><span><b>${n}</b><small>${d}</small></span></label>`).join("")}</div>` : ""}
         <details class="acc"${WIDE.matches ? " open" : ""}>
           <summary><span>2. Välj skick</span><span class="acc-val" data-acc="cond"></span></summary>
           <div class="chips" role="radiogroup" aria-label="Kortets skick">${CONDITIONS.map(([n, d], i) => `<label class="chip"><input type="radio" name="cond" value="${i}"${i === state.cond ? " checked" : ""}><span><b>${n}</b><small>${d}</small></span></label>`).join("")}</div>
@@ -525,7 +532,7 @@ async function pick(id, lang = "en", en = null) {
     // Utgivningsåret finns på setet, inte på kortet. Om det saknas räknas kortet som modernt.
     const set = await getJSON(`${apiFor(lang)}/sets/${encodeURIComponent(card.set?.id || "")}`).catch(() => null);
     const year = set?.releaseDate ? +set.releaseDate.slice(0, 4) : null;
-    Object.assign(state, { card, year, cond: DEFAULT_COND, crit: COND_PRESET[DEFAULT_COND].slice() });
+    Object.assign(state, { card, year, holo: false, cond: DEFAULT_COND, crit: COND_PRESET[DEFAULT_COND].slice() });
     // "Senast värderade" hämtar korten från den engelska databasen, så japanska kort sparas inte där.
     if (lang !== "ja") recordCard({ id: card.id, name: card.name, set: card.set?.name, localId: card.localId, total: card.set?.cardCount?.official, image: card.image, eur: baseEur(card) });
     renderCard();
@@ -749,6 +756,7 @@ $("#vr-grid").addEventListener("keydown", (e) => {
 document.addEventListener("click", (e) => { if (armed && !armed.contains(e.target)) disarm(); });
 $("#vr-more").addEventListener("click", () => { disarm(); shown += PAGE; renderResults(); });
 $("#val-card").addEventListener("change", (e) => {
+  if (e.target.name === "variant") { state.holo = e.target.value === "1"; return updateOut(); }
   if (e.target.name !== "cond") return;
   state.cond = +e.target.value;
   updateOut();

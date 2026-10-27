@@ -1,5 +1,5 @@
 import { groupKey } from "./group.js";
-import { $, esc, fmt, skeleton, upcomingReleases, daysUntil, latestSets, setCard, setLogo, setPages, news, newsItem, productCard, fillRows, liveStock } from "./site.js";
+import { $, esc, fmt, skeleton, upcomingReleases, daysUntil, latestSets, setCard, setLogo, setPages, news, newsItem, productCard, fillRows, liveStock, getJSON } from "./site.js";
 import { getPrefs } from "./prefs.js";
 import { bindSetCards } from "./setcards.js";
 import "./restock.js";
@@ -36,19 +36,42 @@ async function homeWatch() {
   } catch { el.innerHTML = '<div class="msg">Butikslagret uppdateras snart.</div>'; }
 }
 
+// De fyra senaste prissänkningarna som gör butiken billigast, med produkten från lagret så att kortet stämmer.
+async function homeDrops() {
+  const el = $("#home-drops");
+  el.innerHTML = skeleton(4);
+  try {
+    const [{ events }, [p, s]] = await Promise.all([getJSON("data/events.json"), liveStock()]);
+    const names = Object.fromEntries((s.stores || []).map((x) => [x.id, x.name]));
+    const byId = new Map((p.products || []).map((x) => [x.id, x]));
+    const seen = new Set(), list = [];
+    for (const e of events.filter((x) => x.kind === "prissankt").sort((a, b) => b.at - a.at)) {
+      const x = byId.get(e.product);
+      if (!x || seen.has(e.product) || !(x.available || x.preorder)) continue;
+      seen.add(e.product);
+      list.push(productCard(x, names[x.store], { drop: e.from }));
+      if (list.length === 4) break;
+    }
+    el.innerHTML = list.join("") || '<div class="msg">Inga prissänkningar just nu.</div>';
+  } catch { el.innerHTML = '<div class="msg">Prissänkningarna kunde inte laddas.</div>'; }
+}
+
 async function nextDrop() {
   const el = $("#next-drop");
   try {
-    const [r] = await upcomingReleases();
-    if (!r) { el.innerHTML = '<div class="msg">Inga kommande släpp inlagda just nu.</div>'; return; }
-    const d = daysUntil(r.date);
-    el.innerHTML = `<div class="next-drop px-frame">
-      <div class="countdown" aria-label="${d} dagar kvar">
-        <div><b>${String(d).padStart(2, "0")}</b><small>dagar kvar</small></div>
-      </div>
-      <div><h3>${esc(r.name)}</h3><p>${fmt(r.date)}${r.type ? ` · ${esc(r.type)}` : ""}${r.note ? ` · ${esc(r.note)}` : ""}</p></div>
-      <a class="btn primary small" href="slapp.html">Alla släpp</a>
-    </div>`;
+    // De två närmaste släppen, alltid två om det finns så många i kalendern.
+    const next = (await upcomingReleases()).sort((a, b) => new Date(a.date) - new Date(b.date)).slice(0, 2);
+    if (!next.length) { el.innerHTML = '<div class="msg">Inga kommande släpp inlagda just nu.</div>'; return; }
+    el.innerHTML = next.map((r) => {
+      const d = daysUntil(r.date);
+      return `<div class="next-drop px-frame">
+        <div class="countdown" aria-label="${d} dagar kvar">
+          <div><b>${String(d).padStart(2, "0")}</b><small>dagar kvar</small></div>
+        </div>
+        <div><h3>${esc(r.name)}</h3><p>${fmt(r.date)}${r.type ? ` · ${esc(r.type)}` : ""}${r.note ? ` · ${esc(r.note)}` : ""}</p></div>
+        <a class="btn primary small" href="slapp.html">Alla släpp</a>
+      </div>`;
+    }).join("");
   } catch { el.innerHTML = '<div class="msg">Kunde inte läsa släppkalendern.</div>'; }
 }
 
@@ -80,6 +103,7 @@ const heroUnderHeader = () => {
 };
 heroUnderHeader();
 addEventListener("resize", heroUnderHeader);
+homeDrops();
 nextDrop();
 homeWatch();
 setInterval(homeWatch, 60e3);

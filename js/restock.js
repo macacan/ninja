@@ -557,7 +557,7 @@ function renderDeck(set, { model, picks, info }, ticket) {
       <div class="pull-actions">
         <button type="button" class="btn small" data-skip>Visa alla</button>
         <button type="button" class="btn small primary" data-again hidden>Öppna ett till</button>
-        <a class="btn small" href="butiker.html#notiser" data-notis hidden>Få ett pling när nya boxar kommer in</a>
+        <a class="btn small" href="butiker.html#notiser" data-notis hidden>Få notis när nya produkter kommer in</a>
       </div>
       ${SHOW_ODDS ? `<details class="odds" open><summary>Dropchans för ${esc(set.name)}</summary>${oddsTable(model)}</details>` : ""}
     </div>`;
