@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-27T02:25:57.485Z",
+ "updated": "2026-10-27T02:41:18.074Z",
  "articles": [
   {
    "title": "Pokémon TCG cuts full art Rayquaza card from upcoming set",
@@ -324,5 +324,37 @@
    "source": "Dexerto"
   }
  ],
- "videos": []
+ "videos": [
+  {
+   "id": "pGIxhUQvezQ",
+   "title": "TCG Day 2 | 2027 Pokémon Gdańsk Regional Championships",
+   "date": "2026-10-26T23:58:59.000Z",
+   "source": "Pokémon (officiell)"
+  },
+  {
+   "id": "FlkW1YWVQF0",
+   "title": "TCG Day 1 | 2027 Pokémon Gdańsk Regional Championships",
+   "date": "2026-10-26T23:57:02.000Z",
+   "source": "Pokémon (officiell)"
+  },
+  {
+   "id": "s_dGpQQ7pXM",
+   "title": "TCG Feature Station Day 2 | 2027 Pokémon Louisville Regional Championships",
+   "date": "2026-10-26T23:00:26.000Z",
+   "source": "Play! Pokémon (officiell)"
+  },
+  {
+   "id": "OctXgLh0B_A",
+   "title": "TCG Feature Station Day 1 | 2027 Pokémon Louisville Regional Championships",
+   "date": "2026-10-26T21:00:12.000Z",
+   "source": "Play! Pokémon (officiell)"
+  },
+  {
+   "id": "mMJzv4wmJvU",
+   "title": "[UK] Pokémon TCG Pocket: Dual Fusion 🧬 | Official Trailer",
+   "date": "2026-10-20T21:12:16.000Z",
+   "source": "Pokémon (officiell)",
+   "digital": true
+  }
+ ]
 }
