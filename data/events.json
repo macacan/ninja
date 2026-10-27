@@ -1,6 +1,19 @@
 {
- "updated": 1793100722055,
+ "updated": 1793101642281,
  "events": [
+  {
+   "at": 1793100823651,
+   "store": "rahtech",
+   "product": "rahtech:15784995356998",
+   "group": "mega-evolution|booster-box|en||delta-forhandsbokning-reign",
+   "title": "Förhandsbokning: Mega Evolution Delta Reign – Booster Display (36 Pack) (ENG)",
+   "url": "https://rahtech.se/products/forhandsbokning-mega-evolution-delta-reign-booster-display-36-pack-eng",
+   "price": 2599,
+   "type": "Booster Box",
+   "set": "Mega Evolution",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793100008086,
    "store": "tsp-vault",
@@ -6576,19 +6589,6 @@
    "lang": "en",
    "kind": "prissankt",
    "from": 149
-  },
-  {
-   "at": 1792364208243,
-   "store": "tcgstore",
-   "product": "tcgstore:11320330879303",
-   "group": "journey-together|booster-bundle|en|",
-   "title": "Pokémon Scarlet & Violet 9: Journey Together Booster Bundle",
-   "url": "https://tcgstore.se/products/pokemon-scarlet-violet-9-journey-together-booster-bundle",
-   "price": 599,
-   "type": "Booster Bundle",
-   "set": "Journey Together",
-   "lang": "en",
-   "kind": "ny"
   }
  ]
 }
