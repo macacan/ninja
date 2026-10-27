@@ -1,6 +1,20 @@
 {
- "updated": 1793115383762,
+ "updated": 1793116283785,
  "events": [
+  {
+   "at": 1793116277869,
+   "store": "dragon-s-lair",
+   "product": "dragon-s-lair:15849401614684",
+   "group": "x|collection-box|zh||autumn-gift-mid",
+   "title": "Pokemon 2026 Mid Autumn Gift Box (Kinesisk)",
+   "url": "https://dragonslair.se/products/pokemon-2026-mid-autumn-gift-box-kinesisk",
+   "price": 295,
+   "type": "Collection Box",
+   "set": null,
+   "lang": "zh",
+   "kind": "prissankt",
+   "from": 395
+  },
   {
    "at": 1793114705816,
    "store": "packs-on-packs",
@@ -6574,20 +6588,6 @@
    "set": "Pitch Black",
    "lang": "en",
    "kind": "tillbaka"
-  },
-  {
-   "at": 1792412969061,
-   "store": "tcgstore",
-   "product": "tcgstore:10920244871495",
-   "group": "ascended-heroes|booster-bundle|en|",
-   "title": "Pokémon Mega Evolution: Ascended Heroes Booster Bundle",
-   "url": "https://tcgstore.se/products/pokemon-mega-evolution-ascended-heroes-booster-bundle",
-   "price": 1349,
-   "type": "Booster Bundle",
-   "set": "Ascended Heroes",
-   "lang": "en",
-   "kind": "prissankt",
-   "from": 1399
   }
  ]
 }
