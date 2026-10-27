@@ -1,6 +1,19 @@
 {
- "updated": 1793102522304,
+ "updated": 1793103462322,
  "events": [
+  {
+   "at": 1793103083784,
+   "store": "shinycards",
+   "product": "shinycards:https://www.shinycards.se/pokemon/booster-box/pokemon-mega-inferno-x-booster-box-japansk",
+   "group": "x|booster-box|ja||inferno-x",
+   "title": "Pokemon Mega: Inferno X Booster Box (Japansk)",
+   "url": "https://www.shinycards.se/pokemon/booster-box/pokemon-mega-inferno-x-booster-box-japansk",
+   "price": 1999,
+   "type": "Booster Box",
+   "set": null,
+   "lang": "ja",
+   "kind": "ny"
+  },
   {
    "at": 1793100823651,
    "store": "rahtech",
@@ -6575,20 +6588,6 @@
    "lang": "ja",
    "kind": "prissankt",
    "from": 79
-  },
-  {
-   "at": 1792364208883,
-   "store": "tsp-vault",
-   "product": "tsp-vault:16033273020797",
-   "group": "obsidian-flames|blister|en||1",
-   "title": "Pokémon TCG: Obsidian Flames Premium Checklane 1-Pack Blister",
-   "url": "https://tspvault.se/products/pokemon-tcg-obsidian-flames-premium-checklane-1-pack-blister",
-   "price": 119,
-   "type": "Blister",
-   "set": "Obsidian Flames",
-   "lang": "en",
-   "kind": "prissankt",
-   "from": 149
   }
  ]
 }
