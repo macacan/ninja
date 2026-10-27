@@ -261,7 +261,17 @@ const boardHTML = () => `<div class="hs">
       </div>
     </div>
     <ol class="hs-list" aria-live="polite"><li class="hs-empty">Laddar topplistan…</li></ol>
+    <button type="button" class="btn small hs-more" hidden>Visa fler</button>
   </div>`;
+
+// Topplistan visar fem rader åt gången. "Visa fler" lägger till fem till.
+const HS_STEP = 5;
+function paginate(root, upto) {
+  const rows = [...root.querySelectorAll(".hs-row")], more = root.querySelector(".hs-more");
+  rows.forEach((r, i) => { r.hidden = i >= upto; });
+  more.hidden = rows.length <= upto;
+  more.dataset.upto = upto;
+}
 
 async function renderBoard(root, period, mine) {
   const list = root.querySelector(".hs-list");
@@ -281,6 +291,9 @@ async function renderBoard(root, period, mine) {
     list.innerHTML = '<li class="hs-empty">Topplistan kunde inte laddas just nu.</li>';
   }
   list.removeAttribute("aria-busy");
+  // Den egna raden ska alltid synas, även om den ligger längre ner än de första fem.
+  const mineAt = [...list.querySelectorAll(".hs-row")].findIndex((r) => r.classList.contains("is-mine"));
+  paginate(root, Math.max(HS_STEP, Math.ceil((mineAt + 1) / HS_STEP) * HS_STEP));
   const me = list.querySelector(".is-mine");
   if (me) list.scrollTop = me.offsetTop - list.offsetTop - 8;
 }
@@ -323,6 +336,8 @@ function showBoard(box, mine) {
   box.insertAdjacentHTML("beforeend", boardHTML());
   const root = box.lastElementChild;
   root.querySelector(".hs-tabs").addEventListener("click", (e) => { const b = e.target.closest("button[data-period]"); if (b) renderBoard(root, b.dataset.period, mine); });
+  const more = root.querySelector(".hs-more");
+  more.addEventListener("click", () => paginate(root, +more.dataset.upto + HS_STEP));
   const list = root.querySelector(".hs-list");
   list.addEventListener("pointerover", (e) => { const t = e.target.closest(".hs-card[tabindex]"); if (t && e.pointerType === "mouse") showPeek(t); });
   list.addEventListener("pointerout", (e) => { if (e.pointerType === "mouse" && e.target.closest(".hs-card") && !e.relatedTarget?.closest?.(".hs-card")) hidePeek(); });

@@ -9,7 +9,8 @@ self.addEventListener("push", (e) => {
   e.waitUntil(self.registration.showNotification(d.title || "Lootninja", {
     body: d.body || "",
     icon: "/img/icon-192.png?v=2",
-    badge: "/img/favicon-48.png?v=2",
+    // Statusfältet på Android visar bara formen (vitt på genomskinligt), så badgen är en enfärgad ninjasiluett.
+    badge: "/img/badge-96.png",
     tag: d.tag || undefined,
     data: { url: d.url || "/butiker.html" },
   }));
