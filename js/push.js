@@ -5,7 +5,7 @@
 import { getPrefs, savePrefs } from "./prefs.js";
 
 const API = "api/push.php";
-const VAPID_PUBLIC = "BHvJoQFrJA9X88GAo28EelLurqVR-ullGo6OUT2YrCXGcB43V9Y9obaS9ox-Qq_bAuItSf_GIexVrvpF1LOYtHw";
+const VAPID_PUBLIC = "BKlh5desmb5StUSq70bmkjzTbZD0zaUed1JGYgnti2oznobTFidPAYoGisH24X3CCiUH0nv3WOyCgCVEpMiwYFo";
 
 const key = () => Uint8Array.from(atob(VAPID_PUBLIC.replace(/-/g, "+").replace(/_/g, "/")), (c) => c.charCodeAt(0));
 export const isIos = () => /iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);

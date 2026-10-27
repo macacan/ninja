@@ -2,7 +2,7 @@
 // signerar anropet med Lootninjas VAPID-nyckel (RFC 8292). Används av notify.mjs.
 import { createECDH, createPrivateKey, createCipheriv, hkdfSync, randomBytes, sign } from "node:crypto";
 
-export const VAPID_PUBLIC = "BHvJoQFrJA9X88GAo28EelLurqVR-ullGo6OUT2YrCXGcB43V9Y9obaS9ox-Qq_bAuItSf_GIexVrvpF1LOYtHw";
+export const VAPID_PUBLIC = "BKlh5desmb5StUSq70bmkjzTbZD0zaUed1JGYgnti2oznobTFidPAYoGisH24X3CCiUH0nv3WOyCgCVEpMiwYFo";
 const SUBJECT = "mailto:hej@lootninja.se";
 
 // Bara de stora webbläsarnas notistjänster. Adressen kommer från besökaren, så vi skickar aldrig någon annanstans.

@@ -10,7 +10,7 @@ header('Content-Type: application/json; charset=utf-8');
 header('Cache-Control: no-store');
 header('X-Robots-Tag: noindex');
 
-const VAPID_PUBLIC = 'BHvJoQFrJA9X88GAo28EelLurqVR-ullGo6OUT2YrCXGcB43V9Y9obaS9ox-Qq_bAuItSf_GIexVrvpF1LOYtHw';
+const VAPID_PUBLIC = 'BKlh5desmb5StUSq70bmkjzTbZD0zaUed1JGYgnti2oznobTFidPAYoGisH24X3CCiUH0nv3WOyCgCVEpMiwYFo';
 const AUDIENCE = 'https://lootninja.se/api/push.php';
 const MAX_SUBS = 20000;
 // Samma lista som PUSH_HOST i scripts/scraper/lib/webpush.mjs.
