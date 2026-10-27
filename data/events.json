@@ -1,6 +1,19 @@
 {
- "updated": 1793099802031,
+ "updated": 1793100722055,
  "events": [
+  {
+   "at": 1793100008086,
+   "store": "tsp-vault",
+   "product": "tsp-vault:16053440086397",
+   "group": "obsidian-flames|blister|en||3",
+   "title": "Pokémon Tcg Scarlet & Violet Obsidian Flames Booster Blister 3-Pack",
+   "url": "https://tspvault.se/products/pokemon-tcg-scarlet-violet-obsidian-flames-booster-blister-3-pack",
+   "price": 379,
+   "type": "Blister",
+   "set": "Obsidian Flames",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793098184811,
    "store": "webhallen",
@@ -6576,19 +6589,6 @@
    "set": "Journey Together",
    "lang": "en",
    "kind": "ny"
-  },
-  {
-   "at": 1792364208243,
-   "store": "tcgstore",
-   "product": "tcgstore:8981366833479",
-   "group": "scarlet-violet|booster-box|ja||cyber-judge",
-   "title": "Pokémon Scarlet & Violet: Cyber Judge Booster Box (JPN)",
-   "url": "https://tcgstore.se/products/pokemon-scarlet-violet-cyber-judge-booster-box-japansk",
-   "price": 999,
-   "type": "Booster Box",
-   "set": "Scarlet & Violet",
-   "lang": "ja",
-   "kind": "tillbaka"
   }
  ]
 }
