@@ -9,13 +9,14 @@ const isoDaysAgo = (n) => new Date(Date.now() - n * 864e5).toISOString().slice(0
 const MONTH_DAYS = 31;
 const cache = new Map();
 
-async function cardHistory(setId, cardId) {
+async function cardHistory(setId, cardId, dir) {
   if (!setId) return [];
-  if (!cache.has(setId)) {
-    cache.set(setId, fetch(`data/card-history/${encodeURIComponent(setId)}.json`, { cache: "no-cache" })
+  const url = `${dir}/${encodeURIComponent(setId)}.json`;
+  if (!cache.has(url)) {
+    cache.set(url, fetch(url, { cache: "no-cache" })
       .then((r) => (r.ok ? r.json() : { cards: {} })).catch(() => ({ cards: {} })));
   }
-  return ((await cache.get(setId)).cards[cardId] || []).map(([date, price, low]) => ({ date, price, low }));
+  return ((await cache.get(url)).cards[cardId] || []).map(([date, price, low]) => ({ date, price, low }));
 }
 
 function chartPoints(own, cm, eurToSek) {
@@ -88,15 +89,18 @@ function draw(box, all, days) {
   svg.addEventListener("pointerleave", () => { tip.hidden = true; cur.setAttribute("visibility", "hidden"); hot.setAttribute("visibility", "hidden"); });
 }
 
-export async function mountChart(box, card, eurToSek) {
-  const own = await cardHistory(card.set?.id, card.id);
+// opts: { dir, source } för andra spel än Pokémon, t.ex. One Piece (data/op/history, TCGplayers marknadspris).
+export async function mountChart(box, card, eurToSek, { dir = "data/card-history", source = "Cardmarkets trendpris" } = {}) {
+  const own = await cardHistory(card.set?.id, card.id, dir);
   const all = chartPoints(own, card.pricing?.cardmarket || {}, eurToSek);
   if (all.length < 2) { box.innerHTML = ""; return; }
   const since = dayLabel(all[0].date);
+  const estimated = all.some((p) => p.est);
   box.innerHTML = `<div class="pc-top"><h3>Prishistorik</h3><div class="pc-head"></div></div>
     <div class="pc-plot"></div>
-    <p class="pc-note">${own.length < 14
+    <p class="pc-note">${own.length < 14 && estimated
       ? `Prisdata finns från ${since}. Vi sparar ett pris per dag${own[0] ? ` sedan ${dayLabel(own[0].date)}` : ""}, och ihåliga punkter är Cardmarkets snittpriser tills historiken hunnit fyllas på.`
-      : "Ett pris per dag (Cardmarkets trendpris), omräknat till kronor."}</p>`;
+      : own.length < 14 ? `Vi sparar ett pris per dag sedan ${since} (${source}), omräknat till kronor.`
+      : `Ett pris per dag (${source}), omräknat till kronor.`}</p>`;
   draw(box, all, MONTH_DAYS);
 }

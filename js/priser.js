@@ -6,7 +6,53 @@ import { langMark } from "./langmark.js";
 import { apiFor, findJapanese } from "./japanese.js";
 import { track } from "./tracker.js";
 
-const isJa = () => $("#lang").value === "ja";
+// ---------- Spel ----------
+// Pokémon söks direkt mot TCGdex. One Piece och Riftbound söks i färdigbyggda filer i data/<spel>/
+// (scripts/update-op-cards.mjs, scripts/update-rb-cards.mjs) med TCGplayers priser, redan omräknade till kronor.
+// Sökningen gäller bara det valda spelet. Valet står i adressen (?game=op) och sparas i webbläsaren.
+const enc = encodeURIComponent;
+const GAMES = {
+  op: {
+    h1: "Kortpriser för One Piece-kort", placeholder: "Sök kort, t.ex. Luffy eller OP01-120",
+    rarities: { L: "Leader", C: "Common", UC: "Uncommon", R: "Rare", SR: "Super Rare", SEC: "Secret Rare", TR: "Treasure Rare", P: "Promo", PR: "Promo (PR)" },
+    // Parallel, manga, SP och alternativ bild glänser mest, Leader och Super Rare får vanlig holo.
+    finish: (c) => (c.variant || ["SEC", "TR"].includes(c.rarity) ? "rainbow" : ["L", "SR"].includes(c.rarity) ? "holo" : "plain"),
+    facts: (c) => [["Färg", c.color], ["Typ", c.type], c.type === "Leader" ? ["Liv", c.life] : ["Kostnad", c.cost], ["Power", c.power], ["Counter", c.counter || null], ["Attribut", c.attr], ["Typer", c.sub]],
+    setLabel: (s) => `${s.id} · ${s.name}`,
+    cardmarket: (c) => `https://www.cardmarket.com/en/OnePiece/Products/Search?searchString=${enc(c.no || c.name)}`,
+    tcgplayer: (c) => `https://www.tcgplayer.com/search/one-piece-card-game/product?q=${enc(`${c.name} ${c.no || ""}`.trim())}`,
+  },
+  rb: {
+    h1: "Kortpriser för Riftbound-kort", placeholder: "Sök kort, t.ex. Jinx eller Ahri",
+    rarities: {},
+    // Signature, Ultimate och alternativ bild glänser mest, Rare får vanlig holo.
+    finish: (c) => (c.variant || ["Showcase", "Epic"].includes(c.rarity) ? "rainbow" : c.rarity === "Rare" ? "holo" : "plain"),
+    facts: (c) => [["Typ", c.type], ["Domän", c.domain?.replace(/;/g, ", ")], ["Energi", c.energy], ["Power", c.power || null], ["Might", c.might || null], ["Taggar", c.tags]],
+    setLabel: (s) => s.name,
+    cardmarket: (c) => `https://www.cardmarket.com/en/Riftbound/Products/Search?searchString=${enc(c.name)}`,
+    tcgplayer: (c) => `https://www.tcgplayer.com/search/riftbound-league-of-legends-trading-card-game/product?q=${enc(c.name)}`,
+  },
+};
+const GAME_KEY = "nl:price-game";
+const known = (g) => (GAMES[g] ? g : "pokemon");
+let game = (() => {
+  const g = new URLSearchParams(location.search).get("game");
+  if (g) return known(g);
+  try { return known(localStorage.getItem(GAME_KEY)); } catch { return "pokemon"; }
+})();
+// Det valda spelets inställningar, eller null för Pokémon.
+const prebuilt = () => GAMES[game] || null;
+const isJa = () => !prebuilt() && $("#lang").value === "ja";
+
+const gameData = {};
+const gameCards = (g) => (gameData[g] ??= fetch(`data/${g}/cards.json`, { cache: "no-cache" }).then((r) => r.json()).then((d) => {
+  const names = Object.fromEntries(d.sets.map((s) => [s.id, s.name]));
+  d.cards = d.cards.map((c) => preSlim({ ...c, set: names[c.set] || c.set, setId: c.set }, g));
+  return d;
+}).catch((e) => { delete gameData[g]; throw e; }));
+// Samma form som Pokémonkorten i rutnätet: localId är kortnumret och priset ligger i kronor (sek).
+const preSlim = (c, g) => ({ ...c, game: g, localId: c.no });
+const rarityName = (c) => GAMES[c.game]?.rarities[c.rarity] || c.rarity;
 
 // ---------- Valuta ----------
 let rates = null;
@@ -20,10 +66,14 @@ async function getRates() {
 }
 // Alla priser visas i kronor. Går kursen inte att hämta visas hellre inget pris än ett i fel valuta.
 const sek = (v, cur = "EUR") => (v == null || !rates?.[cur] ? "–" : kr(v * rates[cur]));
+// Kortets pris för sortering och visning: de färdigbyggda spelen har redan kronor, Pokémonkorten euro.
+const value = (c) => (GAMES[c.game] ? c.sek : c.eur);
+const priceText = (c) => (GAMES[c.game] ? kr(c.sek) : sek(c.eur));
 
 // ---------- Holo-nivå ----------
 // Vanliga kort får bara en ljusreflex, holo får regnbågsglans och specialkort en starkare effekt.
 function finish(c) {
+  if (GAMES[c.game]) return GAMES[c.game].finish(c);
   const r = (c.rarity || "").toLowerCase();
   if (/special|illustration|secret|hyper|ultra|rainbow|gold|full art|shiny|ace spec|mega hyper|double rare|\bex\b|\bgx\b|vmax|vstar|radiant|crown/.test(r)) return "rainbow";
   if (/holo|rare/.test(r) && !/^rare$/.test(r) || c.variants?.holo && !c.variants?.normal) return "holo";
@@ -46,8 +96,9 @@ function tile(c, i) {
     </span>
     <span class="cname">${c.en ? `${esc(c.en)} <small class="cname-ja">${esc(c.name)}</small>` : esc(c.name)}</span>
     <span class="cset">${esc(c.set || "")}${c.localId ? ` · #${esc(c.localId)}` : ""}</span>
-    <span class="crow"><span class="cprice">${c.eur != null ? sek(c.eur) : "<small>Inget pris</small>"}</span>${change(c.change)}</span>
-    ${c.rarity && c.rarity !== "None" ? `<span class="crar">${esc(c.rarity)}</span>` : ""}
+    <span class="crow"><span class="cprice">${value(c) != null ? priceText(c) : "<small>Inget pris</small>"}</span>${change(c.change)}</span>
+    ${GAMES[c.game] ? `<span class="crar">${esc([rarityName(c), c.variant].filter(Boolean).join(" · "))}</span>`
+      : c.rarity && c.rarity !== "None" ? `<span class="crar">${esc(c.rarity)}</span>` : ""}
   </button>`;
 }
 
@@ -68,19 +119,30 @@ function renderGrid(el, list, offset = 0) {
 }
 
 // ---------- Startvy: trender ----------
+let landingId = 0;
 async function landing() {
+  const my = ++landingId, g = prebuilt() && game;
   for (const id of ["#rising", "#top", "#falling"]) $(id).innerHTML = skeleton(6);
   try {
-    const t = await (await fetch("data/card-trends.json", { cache: "no-cache" })).json();
+    const t = await (await fetch(g ? `data/${g}/card-trends.json` : "data/card-trends.json", { cache: "no-cache" })).json();
     await getRates();
+    if (my !== landingId) return;
+    if (g) for (const k of ["rising", "top", "falling"]) t[k] = t[k].map((c) => preSlim(c, g));
     current = [...t.rising, ...t.top, ...t.falling];
     let i = 0;
     for (const [id, list] of [["#rising", t.rising.slice(0, 12)], ["#top", t.top.slice(0, 12)], ["#falling", t.falling.slice(0, 6)]]) {
       $(id).innerHTML = list.map((c) => tile(c, current.indexOf(c, i))).join("");
     }
-    $("#top-sets").textContent = `Från ${t.sets.join(", ")}.`;
+    // One Piece- och Riftbound-trenderna bygger på vår egen historik, som behöver en vecka innan den säger något.
+    // Tills dess göms de, så att "Dyraste i nya set" hamnar överst.
+    $("#rising-block").hidden = !t.rising.length;
+    $("#falling-block").hidden = !t.falling.length;
+    $("#top-sets").textContent = `Från ${t.sets.join(", ")}.${t.rising.length ? "" : " Trenderna visas när vi har sparat priserna i en vecka."}`;
   } catch {
-    $("#landing").innerHTML = '<div class="msg">Trenderna har inte räknats fram än. Kör <code>node scripts/update-card-trends.mjs</code>.</div>';
+    if (my !== landingId) return;
+    for (const id of ["#rising", "#top", "#falling"]) $(id).innerHTML = "";
+    $("#rising-block").hidden = false;
+    $("#rising").innerHTML = `<div class="msg">Trenderna har inte räknats fram än. Kör <code>node scripts/${g ? `update-${g}-cards` : "update-card-trends"}.mjs</code>.</div>`;
   }
 }
 
@@ -100,29 +162,31 @@ function applyView() {
   const sort = $("#sort").value;
   let list = [...loaded];
   const cmp = {
-    "price-desc": (a, b) => (b.eur ?? -1) - (a.eur ?? -1),
-    "price-asc": (a, b) => (a.eur ?? Infinity) - (b.eur ?? Infinity),
+    "price-desc": (a, b) => (value(b) ?? -1) - (value(a) ?? -1),
+    "price-asc": (a, b) => (value(a) ?? Infinity) - (value(b) ?? Infinity),
     rising: (a, b) => (b.change ?? -999) - (a.change ?? -999),
     falling: (a, b) => (a.change ?? 999) - (b.change ?? 999),
     number: (a, b) => String(a.localId).localeCompare(String(b.localId), "sv", { numeric: true }),
   }[sort];
-  list = list.sort(cmp);
+  // Korten i de färdigbyggda spelen finns redan alla i minnet, så där sorteras hela träfflistan och de första visas.
+  list = prebuilt() ? [...found].sort(cmp).slice(0, next) : list.sort(cmp);
   current = list;
   renderGrid($("#prices"), list);
   $("#more").hidden = next >= found.length;
 }
 
 async function search() {
-  const ja = isJa();
+  const ja = isJa(), pre = !!prebuilt();
   // Set och sällsynthet finns bara för de engelska korten.
   $("#set").disabled = $("#rarity").disabled = ja;
   $("#lang-beta").hidden = $("#ja-note").hidden = !ja;
   const rawQ = $("#pq").value.trim(), rarity = ja ? "" : $("#rarity").value, set = ja ? "" : $("#set").value;
   const parsed = parseCardQuery(rawQ);
-  const data = await loadDataset().catch(() => null);
-  const resolvedName = parsed.textPart ? (resolvePokemonName(parsed.textPart, data) || parsed.textPart) : "";
+  const data = pre ? null : await loadDataset().catch(() => null);
+  const resolvedName = !pre && parsed.textPart ? (resolvePokemonName(parsed.textPart, data) || parsed.textPart) : "";
 
   const params = new URLSearchParams();
+  if (pre) params.set("game", game);
   if (rawQ) params.set("q", rawQ);
   if (ja) params.set("lang", "ja");
   if (rarity) params.set("rarity", rarity);
@@ -137,6 +201,7 @@ async function search() {
   if (!hasQuery) return;
 
   const my = ++searchId;
+  if (pre) return searchPrebuilt(my, rawQ, rarity, set);
   if (ja) return searchJa(my, parsed, resolvedName);
   if (parsed.numPart && resolvedName) {
     $("#res-title").textContent = `${resolvedName} #${parsed.numPart}`;
@@ -227,14 +292,41 @@ async function searchJa(my, parsed, name) {
   }
 }
 
+// One Piece och Riftbound: sök bara i det valda spelets färdigbyggda fil. Alla ord ska finnas i namn, variant,
+// set eller kortnummer, och kortnumret får skrivas utan bindestreck ("op01120" eller "op01 120").
+async function searchPrebuilt(my, q, rarity, set) {
+  $("#res-title").textContent = q ? `Kort som matchar "${q}"` : set ? $("#set").selectedOptions[0].textContent : $("#rarity").selectedOptions[0].textContent;
+  $("#prices").innerHTML = skeleton(8);
+  try {
+    const d = await gameCards(game);
+    if (my !== searchId) return;
+    const words = q.toLowerCase().split(/\s+/).filter(Boolean);
+    const compact = (s) => s.toLowerCase().replace(/[^a-z0-9]/g, "");
+    const cq = compact(q);
+    found = d.cards.filter((c) => {
+      if (set && c.setId !== set) return false;
+      if (rarity && c.rarity !== rarity) return false;
+      if (!q) return true;
+      const hay = `${c.name} ${c.variant || ""} ${c.set} ${c.no}`.toLowerCase();
+      return words.every((w) => hay.includes(w)) || (cq.length >= 4 && compact(c.no).startsWith(cq));
+    });
+    next = PAGE;
+    loaded = [];
+    applyView();
+  } catch {
+    $("#prices").innerHTML = '<div class="msg">Kunde inte läsa korten just nu. Försök igen om en stund.</div>';
+  }
+}
+
 $("#more").addEventListener("click", async () => {
+  if (prebuilt()) { next += PAGE; applyView(); return; }
   $("#more").disabled = true;
   loaded = loaded.concat(await loadDetails());
   $("#more").disabled = false;
   applyView();
 });
 $("#price-form").addEventListener("submit", (e) => { e.preventDefault(); search(); });
-$("#sort").addEventListener("change", () => (loaded.length ? applyView() : null));
+$("#sort").addEventListener("change", () => (loaded.length || (prebuilt() && found.length) ? applyView() : null));
 for (const id of ["#set", "#rarity", "#lang"]) $(id).addEventListener("change", search);
 // Filter-knappen fäller ut språk, set och sällsynthet. Öppnas automatiskt om en länk redan har valt något där.
 const advToggle = $("#adv-toggle"), adv = $("#adv");
@@ -242,6 +334,7 @@ const setAdv = (open) => { adv.hidden = !open; advToggle.setAttribute("aria-expa
 advToggle.addEventListener("click", () => setAdv(adv.hidden));
 
 mountCardAutocomplete($("#pq"), {
+  suggest: () => !prebuilt(),
   onSelect: (val) => {
     $("#pq").value = val;
     search();
@@ -270,6 +363,7 @@ async function openCard(i) {
   const body = modal.querySelector(".cm-body");
   body.innerHTML = `<div class="cm-load">Hämtar kortet…</div>`;
   if (!modal.open) modal.showModal();
+  if (GAMES[c.game]) return openPrebuiltCard(c, i, body);
   const full = c.full || (await getJSON(`${apiFor(c.lang)}/cards/${encodeURIComponent(c.id)}`).catch(() => null)) || {};
   if (shownIndex !== i) return;
   await getRates();
@@ -312,6 +406,42 @@ async function openCard(i) {
     </div>`;
   // Prishistoriken finns bara för de engelska korten.
   if (full.id && !ja) mountChart(body.querySelector(".pchart"), full, rates?.EUR).catch(() => {});
+  modal.querySelector(".prev").hidden = i <= 0;
+  modal.querySelector(".next").hidden = i >= current.length - 1;
+}
+
+// Stor vy för ett One Piece- eller Riftbound-kort. Allt finns redan i kortfilen, inget behöver hämtas.
+function openPrebuiltCard(c, i, body) {
+  const g = GAMES[c.game];
+  track("card_view", [c.name, c.variant, c.set].filter(Boolean).join(" · "), c.sek != null ? Math.round(c.sek) : null);
+  const fact = (label, v) => (v == null || v === "" ? "" : `<li><b>${label}</b>${esc(v)}</li>`);
+  const facts = [
+    fact("Set", `${c.set}${c.no ? ` · ${c.no}` : ""}`),
+    fact("Sällsynthet", rarityName(c)), fact("Variant", c.variant),
+    ...g.facts(c).map(([label, v]) => fact(label, v)),
+  ].join("");
+  const row = (label, v) => (v == null ? "" : `<tr><th>${label}</th><td>${kr(v)}</td></tr>`);
+  const title = [c.name, c.variant && `(${c.variant})`].filter(Boolean).join(" ");
+  body.innerHTML = `
+    <div class="cm-card-wrap">
+      <div class="cm-card ${finish(c)}" style="--rx:0deg;--ry:0deg;--mx:50%;--my:50%">
+        <img src="${esc(c.image || "img/kortbaksida.webp")}" alt="${esc(title)}" onload="this.parentNode.classList.add('loaded')" referrerpolicy="no-referrer" onerror="this.src='img/kortbaksida.webp';this.parentNode.classList.add('has-back');">
+        <i class="cm-holo"></i><i class="cm-glare"></i>
+      </div>
+      <ul class="cm-facts">${facts}</ul>
+    </div>
+    <div class="cm-info">
+      <h2 id="cm-name">${esc(c.name)}${c.variant ? ` <small class="cname-ja">${esc(c.variant)}</small>` : ""}</h2>
+      <div class="cm-price">${c.sek != null ? kr(c.sek) : "Inget pris ännu"} ${change(c.change)}</div>
+      <p class="muted">TCGplayers marknadspris i kronor. Vägledande, uppdateras dagligen.</p>
+      <div class="pchart"></div>
+      ${c.sek != null || c.low != null ? `<h3>TCGplayer (USA)</h3><table class="cm-table">${row("Marknadspris", c.sek)}${row("Foil", c.foil)}${row("Lägsta i lager", c.low)}</table>` : ""}
+      <div class="cm-links">
+        <a class="btn primary small" href="${esc(g.cardmarket(c))}" target="_blank" rel="noopener">Cardmarket ↗</a>
+        <a class="btn small" href="${esc(g.tcgplayer(c))}" target="_blank" rel="noopener">TCGplayer ↗</a>
+      </div>
+    </div>`;
+  mountChart(body.querySelector(".pchart"), { id: c.id, set: { id: c.setId } }, null, { dir: `data/${c.game}/history`, source: "TCGplayers marknadspris" }).catch(() => {});
   modal.querySelector(".prev").hidden = i <= 0;
   modal.querySelector(".next").hidden = i >= current.length - 1;
 }
@@ -370,9 +500,59 @@ async function fillFilters() {
   } catch {}
 }
 
+// Byter set- och sällsynhetslistan, sökrutans exempel och rubriken efter spelet. Pokémons listor sparas
+// första gången, så att de kan läggas tillbaka utan att TCGdex frågas igen.
+let pokemonFilters = null;
+async function applyGame() {
+  const g = prebuilt();
+  pokemonFilters ??= { set: $("#set").innerHTML, rarity: $("#rarity").innerHTML };
+  for (const b of document.querySelectorAll("#game-seg button")) b.setAttribute("aria-pressed", String(b.dataset.game === game));
+  $("#pq").placeholder = g ? g.placeholder : "Sök kort, t.ex. Pikachu eller Charizard ex";
+  $("#page-h1").textContent = g ? g.h1 : "Kortpriser för Pokémonkort";
+  $("#lang").closest("label").hidden = !!g;
+  // "Senast sökta" leder till värderingen, som bara finns för Pokémon.
+  $("#recent").style.display = g ? "none" : "";
+  if (g) $("#lang").value = "en";
+  $("#set").disabled = $("#rarity").disabled = false;
+  $("#lang-beta").hidden = $("#ja-note").hidden = true;
+  if (!g) {
+    $("#set").innerHTML = pokemonFilters.set;
+    $("#rarity").innerHTML = pokemonFilters.rarity;
+    return;
+  }
+  $("#set").innerHTML = '<option value="">Alla</option>';
+  $("#rarity").innerHTML = '<option value="">Alla</option>';
+  const shown = game;
+  try {
+    const d = await gameCards(shown);
+    if (game !== shown) return;
+    $("#set").insertAdjacentHTML("beforeend", d.sets.map((s) => `<option value="${esc(s.id)}">${esc(g.setLabel(s))}</option>`).join(""));
+    $("#rarity").insertAdjacentHTML("beforeend", d.rarities.map(([k, v]) => `<option value="${esc(k)}">${esc(v)}</option>`).join(""));
+  } catch {}
+}
+
+async function setGame(g) {
+  if (g === game) return;
+  game = g;
+  try { localStorage.setItem(GAME_KEY, g); } catch {}
+  searchId++;
+  $("#pq").value = "";
+  await applyGame();
+  history.replaceState(null, "", prebuilt() ? `?game=${game}` : location.pathname);
+  found = loaded = []; next = 0;
+  $("#results").hidden = true;
+  $("#landing").hidden = false;
+  landing();
+}
+document.querySelector("#game-seg").addEventListener("click", (e) => {
+  const b = e.target.closest("button[data-game]");
+  if (b) setGame(b.dataset.game);
+});
+
 mountRecent($("#recent"), { eyebrow: "Nyligen sökta", title: "Senast sökta kort", hint: "Korten du senast öppnat. Sparas bara i den här webbläsaren." });
 await fillFilters();
+await applyGame();
 const p = new URLSearchParams(location.search);
-for (const [k, id] of [["q", "#pq"], ["lang", "#lang"], ["rarity", "#rarity"], ["set", "#set"], ["sort", "#sort"]]) if (p.get(k)) $(id).value = p.get(k);
+for (const [k, id] of [["q", "#pq"], ["lang", "#lang"], ["rarity", "#rarity"], ["set", "#set"], ["sort", "#sort"]]) if (p.get(k) && !(k === "lang" && prebuilt())) $(id).value = p.get(k);
 if (p.get("lang") === "ja" || p.get("rarity") || p.get("set")) setAdv(true);
 if (p.get("q") || p.get("rarity") || p.get("set")) search(); else landing();

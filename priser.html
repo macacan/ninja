@@ -26,7 +26,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Hem","item":"https://lootninja.se/"},{"@type":"ListItem","position":2,"name":"Kortpriser","item":"https://lootninja.se/priser.html"}]}</script>
 <link href="fonts/fonts.css" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=20261027a">
+<link rel="stylesheet" href="style.css?v=20261027d">
 <link rel="stylesheet" href="dark.css?v=20261027a" id="dark-css" media="(prefers-color-scheme: dark)">
 <script src="js/theme.js?v=20261021"></script>
 </head>
@@ -35,12 +35,15 @@
   <header class="page-head">
     <div class="wrap">
       <nav class="crumbs" aria-label="Brödsmulor"><a href="./">Hem</a><span aria-hidden="true">›</span><span aria-current="page">Kortpriser</span></nav>
-      <h1 class="sr-only">Kortpriser för Pokémonkort</h1>
+      <h1 class="sr-only" id="page-h1">Kortpriser för Pokémonkort</h1>
     </div>
     <canvas class="scene" data-banner="butik" aria-hidden="true"></canvas>
   </header>
 
   <div class="wrap">
+    <div class="seg game-seg" id="game-seg" role="group" aria-label="Kortspel">
+      <button type="button" data-game="pokemon" aria-pressed="true">Pokémon</button><button type="button" data-game="op" aria-pressed="false">One Piece</button><button type="button" data-game="rb" aria-pressed="false">Riftbound</button>
+    </div>
     <form id="price-form" class="card-search" role="search">
       <input id="pq" name="q" type="search" placeholder="Sök kort, t.ex. Pikachu eller Charizard ex" aria-label="Sök kort">
       <button type="button" class="btn small" id="adv-toggle" aria-expanded="false" aria-controls="adv">Filter</button>
@@ -57,14 +60,18 @@
     </form>
 
     <section id="landing">
-      <div class="section"><h2>Trendar nu</h2></div>
-      <p class="lead-sm">Störst prisökning senaste veckan jämfört med månaden, bland korten i de senaste seten.</p>
-      <div id="rising" class="cgrid"></div>
+      <div id="rising-block">
+        <div class="section"><h2>Trendar nu</h2></div>
+        <p class="lead-sm">Störst prisökning senaste veckan jämfört med månaden, bland korten i de senaste seten.</p>
+        <div id="rising" class="cgrid"></div>
+      </div>
       <div class="section"><h2>Dyraste i nya set</h2></div>
       <p class="lead-sm" id="top-sets"></p>
       <div id="top" class="cgrid"></div>
-      <div class="section"><h2>Sjunker</h2></div>
-      <div id="falling" class="cgrid"></div>
+      <div id="falling-block">
+        <div class="section"><h2>Sjunker</h2></div>
+        <div id="falling" class="cgrid"></div>
+      </div>
     </section>
 
     <section id="results" hidden>
@@ -222,6 +229,6 @@
     <div class="cm-body"></div>
   </dialog>
 </main>
-<script type="module" src="js/priser.js?v=20261022"></script>
+<script type="module" src="js/priser.js?v=20261027c"></script>
 </body>
 </html>

@@ -745,6 +745,17 @@ export function mountCardAutocomplete(input, options = {}) {
       return;
     }
 
+    // options.suggest() === false: inga Pokémonförslag (t.ex. Kortpriser i One Piece-läget), bara live-sökningen.
+    if (options.suggest && !options.suggest()) {
+      clearGhost();
+      closeDropdown();
+      if (options.onLiveChange) {
+        clearTimeout(liveSearchTimer);
+        liveSearchTimer = setTimeout(() => options.onLiveChange(input.value.trim()), 350);
+      }
+      return;
+    }
+
     const data = await loadDataset();
     const matches = findMatches(q, data, cachedTrends);
 

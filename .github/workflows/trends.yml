@@ -18,6 +18,10 @@ jobs:
         with:
           node-version: 22
       - run: node scripts/update-card-trends.mjs
+      # One Piece-korten till Kortpriser (priser.html?game=op): kort, TCGplayer-priser och egen prishistorik.
+      - run: node scripts/update-op-cards.mjs || echo "One Piece-korten kunde inte uppdateras den här gången"
+      # Riftbound-korten (priser.html?game=rb) från TCGplayer via tcgcsv.com, med Riots bilder från Riftcodex.
+      - run: node scripts/update-rb-cards.mjs || echo "Riftbound-korten kunde inte uppdateras den här gången"
       # Nya Pokémon och populära kort till sökförslagen (pokemon-names.json).
       - run: node scripts/build-pokemon-names.mjs || echo "Pokémonnamnen kunde inte uppdateras den här gången"
       # Antal boosterpaket per produkt från Bulbapedia, för pris per booster på butikssidan.
@@ -32,5 +36,5 @@ jobs:
         run: |
           git config user.name "packninja-bot"
           git config user.email "packninja-bot@users.noreply.github.com"
-          git add data/card-trends.json data/card-history data/pokemon-names.json data/product-contents.json data/sets data/set-pages.json data/card-images.json set sitemap.xml scripts/sitemap-state.json
+          git add data/card-trends.json data/card-history data/op data/rb data/pokemon-names.json data/product-contents.json data/sets data/set-pages.json data/card-images.json set sitemap.xml scripts/sitemap-state.json
           git diff --cached --quiet || (git commit -m "Uppdatera korttrender och setsidor" && git pull --rebase -X theirs && git push)
