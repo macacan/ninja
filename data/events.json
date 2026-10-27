@@ -1,6 +1,19 @@
 {
- "updated": 1793108963622,
+ "updated": 1793109883647,
  "events": [
+  {
+   "at": 1793109213126,
+   "store": "dragon-s-lair",
+   "product": "dragon-s-lair:15936565346652",
+   "group": "x|collection-box|zh||30th-anniversary-chinese-collectible-espeon-umbreon",
+   "title": "[CHINESE] Pokémon Mega: 30th Anniversary Espeon EX & Umbreon EX Collectible Box (15 Pack)",
+   "url": "https://dragonslair.se/products/chinese-pokemon-mega-30th-anniversary-espeon-ex-umbreon-ex-collectible-box-15-pack",
+   "price": 2495,
+   "type": "Collection Box",
+   "set": null,
+   "lang": "zh",
+   "kind": "ny"
+  },
   {
    "at": 1793108191633,
    "store": "webhallen",
@@ -6574,19 +6587,6 @@
    "type": "Booster Box",
    "set": null,
    "lang": "zh",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1792412771320,
-   "store": "pokemurre",
-   "product": "pokemurre:10979290349906",
-   "group": "x|booster-box|ja||30th-anniversary-celebration",
-   "title": "Pokemon 30th Anniversary Celebration M6 MEGA Booster Box (Japansk)",
-   "url": "https://pokemurre.se/products/forbokning-pokemon-30th-anniversary-celebration-booster-box-japansk",
-   "price": 2490,
-   "type": "Booster Box",
-   "set": null,
-   "lang": "ja",
    "kind": "tillbaka"
   }
  ]
