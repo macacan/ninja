@@ -1,6 +1,32 @@
 {
- "updated": 1793114463741,
+ "updated": 1793115383762,
  "events": [
+  {
+   "at": 1793114705816,
+   "store": "packs-on-packs",
+   "product": "packs-on-packs:https://packsonpacks.se/engelska-packs/evolving-skies-booster-pack",
+   "group": "evolving-skies|booster-pack|en|",
+   "title": "Evolving Skies Booster Pack",
+   "url": "https://packsonpacks.se/engelska-packs/evolving-skies-booster-pack",
+   "price": 799,
+   "type": "Booster Pack",
+   "set": "Evolving Skies",
+   "lang": "en",
+   "kind": "ny"
+  },
+  {
+   "at": 1793114705816,
+   "store": "packs-on-packs",
+   "product": "packs-on-packs:https://packsonpacks.se/engelska-packs/silver-tempest-booster-pack",
+   "group": "silver-tempest|booster-pack|en|",
+   "title": "Silver Tempest Booster pack",
+   "url": "https://packsonpacks.se/engelska-packs/silver-tempest-booster-pack",
+   "price": 199,
+   "type": "Booster Pack",
+   "set": "Silver Tempest",
+   "lang": "en",
+   "kind": "ny"
+  },
   {
    "at": 1793112805961,
    "store": "miniature-metropolis",
@@ -6562,33 +6588,6 @@
    "lang": "en",
    "kind": "prissankt",
    "from": 1399
-  },
-  {
-   "at": 1792412969061,
-   "store": "tcgstore",
-   "product": "tcgstore:10033699029319",
-   "group": "prismatic-evolutions|booster-bundle|en|",
-   "title": "Pokémon Scarlet & Violet 8.5: Prismatic Evolutions Booster Bundle (MAX 3 PER KUND)",
-   "url": "https://tcgstore.se/products/pokemon-scarlet-violet-8-5-prismatic-evolutions-booster-bundle",
-   "price": 1349,
-   "type": "Booster Bundle",
-   "set": "Prismatic Evolutions",
-   "lang": "en",
-   "kind": "prissankt",
-   "from": 1399
-  },
-  {
-   "at": 1792412948345,
-   "store": "speltrollet",
-   "product": "speltrollet:15784146665798",
-   "group": "x|booster-box|zh||brilliant-fantasy-jumbo",
-   "title": "Pokemon Brilliant Fantasy Jumbo Booster Box (CSV8C) (Kinesisk)",
-   "url": "https://speltrollet.se/products/pokemon-brilliant-fantasy-jumbo-booster-box-csv8c-kinesisk",
-   "price": 649,
-   "type": "Booster Box",
-   "set": null,
-   "lang": "zh",
-   "kind": "tillbaka"
   }
  ]
 }
