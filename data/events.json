@@ -1,6 +1,19 @@
 {
- "updated": 1793107123583,
+ "updated": 1793108043607,
  "events": [
+  {
+   "at": 1793107181514,
+   "store": "dragon-s-lair",
+   "product": "dragon-s-lair:15936405766492",
+   "group": "30th-celebration|collection-box|zh||charizard-chinese-collectible-figure-gift",
+   "title": "[CHINESE] Pokémon TCG: 30th Celebration Charizard Collectible Figure Gift Box",
+   "url": "https://dragonslair.se/products/chinese-pokemon-tcg-30th-celebration-charizard-collectible-figure-gift-box",
+   "price": 3695,
+   "type": "Collection Box",
+   "set": "30th Celebration",
+   "lang": "zh",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793106617609,
    "store": "rgb-kingz",
@@ -6575,19 +6588,6 @@
    "set": "Sword & Shield",
    "lang": "zh",
    "kind": "tillbaka"
-  },
-  {
-   "at": 1792412496519,
-   "store": "card-mountain",
-   "product": "card-mountain:10670332477776",
-   "group": "30th-celebration|tin|en|mini|mini",
-   "title": "Pokémon 30th Celebration Mini Tin",
-   "url": "https://cardmountain.se/products/pokemon-30th-celebration-tin",
-   "price": 349,
-   "type": "Tin",
-   "set": "30th Celebration",
-   "lang": "en",
-   "kind": "ny"
   }
  ]
 }
