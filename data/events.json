@@ -1,6 +1,32 @@
 {
- "updated": 1793121558474,
+ "updated": 1793122478494,
  "events": [
+  {
+   "at": 1793121668692,
+   "store": "spelparken",
+   "product": "spelparken:15405782565239",
+   "group": "brilliant-stars|build-battle|en|",
+   "title": "Brilliant Stars – Build & Battle Stadium (12 Booster Packs)",
+   "url": "https://spelparken.se/products/brilliant-stars-build-battle-stadium-12-booster-packs",
+   "price": 2699,
+   "type": "Build & Battle",
+   "set": "Brilliant Stars",
+   "lang": "en",
+   "kind": "ny"
+  },
+  {
+   "at": 1793121668692,
+   "store": "spelparken",
+   "product": "spelparken:15221117583735",
+   "group": "brilliant-stars|booster-pack|en|",
+   "title": "Brilliant Stars Booster Pack",
+   "url": "https://spelparken.se/products/pokemon-sword-shield-brilliant-stars-booster-pack-oppnas-live",
+   "price": 209,
+   "type": "Booster Pack",
+   "set": "Brilliant Stars",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793120640402,
    "store": "cardlevels",
@@ -6563,32 +6589,6 @@
    "set": null,
    "lang": "ja",
    "kind": "tillbaka"
-  },
-  {
-   "at": 1792458576748,
-   "store": "jollyroom",
-   "product": "jollyroom:https://www.jollyroom.se/leksaker/spel-pussel/kortspel-memory/pokemon-tcg-30th-celebration-elite-trainer-box",
-   "group": "30th-celebration|elite-trainer-box|en|",
-   "title": "Pokémon TCG: 30th Celebration Elite Trainer Box",
-   "url": "https://www.jollyroom.se/leksaker/spel-pussel/kortspel-memory/pokemon-tcg-30th-celebration-elite-trainer-box",
-   "price": 2299,
-   "type": "Elite Trainer Box",
-   "set": "30th Celebration",
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1792442211805,
-   "store": "the-swedish-fish",
-   "product": "the-swedish-fish:7647",
-   "group": "destined-rivals|booster-pack|en|",
-   "title": "Pokemon Destined Rivals Booster Pack",
-   "url": "https://theswedishfish.se/product/destined-rivals-live-premiere-friday-20-00/",
-   "price": 139,
-   "type": "Booster Pack",
-   "set": "Destined Rivals",
-   "lang": "en",
-   "kind": "ny"
   }
  ]
 }
