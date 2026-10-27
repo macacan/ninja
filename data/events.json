@@ -1,6 +1,32 @@
 {
- "updated": 1793126138576,
+ "updated": 1793127058603,
  "events": [
+  {
+   "at": 1793126270795,
+   "store": "samlarhobby",
+   "product": "samlarhobby:15373758792061",
+   "group": "black-bolt|collection-box|en||binder-flare",
+   "title": "Pokémon, Scarlet & Violet 10.5: Black Bolt & White Flare - Black Bolt Binder Collection",
+   "url": "https://samlarhobby.se/products/pokemon-scarlet-violet-10-5-black-bolt-white-flare-black-bolt-binder-collection-forkop-release-18-7",
+   "price": 1295,
+   "type": "Collection Box",
+   "set": "Black Bolt",
+   "lang": "en",
+   "kind": "ny"
+  },
+  {
+   "at": 1793126270795,
+   "store": "samlarhobby",
+   "product": "samlarhobby:15840253313405",
+   "group": "ascended-heroes|collection-box|en||gardevoir-poster",
+   "title": "Pokémon, Ascended Heroes - Premium Poster Collection Gardevoir",
+   "url": "https://samlarhobby.se/products/pokemon-ascended-heroes-premium-poster-collection-gardevoir",
+   "price": 1995,
+   "type": "Collection Box",
+   "set": "Ascended Heroes",
+   "lang": "en",
+   "kind": "ny"
+  },
   {
    "at": 1793125349619,
    "store": "samlarhobby",
@@ -6559,32 +6585,6 @@
    "title": "Pokémon Mega Symphonia – Booster (JP)",
    "url": "https://bangerpack.se/pokemon/japanska-utgavor/pokemon-mega-symphonia-booster-jp",
    "price": 69,
-   "type": "Booster Pack",
-   "set": null,
-   "lang": "ja",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1792465586956,
-   "store": "bangerpack",
-   "product": "bangerpack:https://bangerpack.se/pokemon/japanska-utgavor/pokemon-battle-partners-booster-jp",
-   "group": "x|booster-pack|ja||partners",
-   "title": "Pokémon Battle Partners – Booster (JP)",
-   "url": "https://bangerpack.se/pokemon/japanska-utgavor/pokemon-battle-partners-booster-jp",
-   "price": 59,
-   "type": "Booster Pack",
-   "set": null,
-   "lang": "ja",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1792465586956,
-   "store": "bangerpack",
-   "product": "bangerpack:https://bangerpack.se/pokemon/japanska-utgavor/pokemon-night-wanderer-sv6a-booster-jp",
-   "group": "x|booster-pack|ja||night-wanderer",
-   "title": "Pokémon Night Wanderer – Booster (JP)",
-   "url": "https://bangerpack.se/pokemon/japanska-utgavor/pokemon-night-wanderer-sv6a-booster-jp",
-   "price": 59,
    "type": "Booster Pack",
    "set": null,
    "lang": "ja",
