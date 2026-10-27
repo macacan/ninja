@@ -1,6 +1,19 @@
 {
- "updated": 1793105303551,
+ "updated": 1793106223568,
  "events": [
+  {
+   "at": 1793105678942,
+   "store": "rgb-kingz",
+   "product": "rgb-kingz:15712451592522",
+   "group": "x|booster-pack|ja||abyss-eye",
+   "title": "Pokémon Mega: Abyss Eye Booster Pack (Japansk)",
+   "url": "https://rgbkingz.com/products/pokemon-mega-abyss-eye-booster-pack-japansk",
+   "price": 49,
+   "type": "Booster Pack",
+   "set": null,
+   "lang": "ja",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793104885859,
    "store": "cards-by-malcolm",
@@ -6573,19 +6586,6 @@
    "price": 342.95,
    "type": "Booster Box",
    "set": "Mega Evolution",
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1792364244638,
-   "store": "westcoast-vault",
-   "product": "westcoast-vault:15735370842452",
-   "group": "surging-sparks|booster-pack|en|",
-   "title": "Pokémon TCG: Surging Sparks Booster Pack",
-   "url": "https://westcoastvault.se/products/pokemon-tcg-surging-sparks-booster-pack",
-   "price": 119,
-   "type": "Booster Pack",
-   "set": "Surging Sparks",
    "lang": "en",
    "kind": "tillbaka"
   }
