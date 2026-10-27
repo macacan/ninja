@@ -1,6 +1,32 @@
 {
- "updated": 1793125218557,
+ "updated": 1793126138576,
  "events": [
+  {
+   "at": 1793125349619,
+   "store": "samlarhobby",
+   "product": "samlarhobby:16089467191677",
+   "group": "hidden-fates|tin|en||raichu",
+   "title": "Pokémon, Hidden Fates: Raichu GX Tin",
+   "url": "https://samlarhobby.se/products/pokemon-hidden-fates-raichu-gx-tin-2",
+   "price": 1495,
+   "type": "Tin",
+   "set": "Hidden Fates",
+   "lang": "en",
+   "kind": "ny"
+  },
+  {
+   "at": 1793125349619,
+   "store": "samlarhobby",
+   "product": "samlarhobby:15344560636285",
+   "group": "151|booster-bundle|en|",
+   "title": "Pokémon, Scarlet & Violet: 151 Booster Bundle (6 packs)",
+   "url": "https://samlarhobby.se/products/pokemon-scarlet-violet-151-booster-bundle-6-packs",
+   "price": 2495,
+   "type": "Booster Bundle",
+   "set": "151",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793123632384,
    "store": "miniature-metropolis",
@@ -6559,32 +6585,6 @@
    "title": "Pokémon Night Wanderer – Booster (JP)",
    "url": "https://bangerpack.se/pokemon/japanska-utgavor/pokemon-night-wanderer-sv6a-booster-jp",
    "price": 59,
-   "type": "Booster Pack",
-   "set": null,
-   "lang": "ja",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1792465586956,
-   "store": "bangerpack",
-   "product": "bangerpack:https://bangerpack.se/pokemon/japanska-utgavor/pokemon-cyber-judge-booster-jp",
-   "group": "x|booster-pack|ja||cyber-judge",
-   "title": "Pokémon Cyber Judge – Booster (JP)",
-   "url": "https://bangerpack.se/pokemon/japanska-utgavor/pokemon-cyber-judge-booster-jp",
-   "price": 69,
-   "type": "Booster Pack",
-   "set": null,
-   "lang": "ja",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1792465586956,
-   "store": "bangerpack",
-   "product": "bangerpack:https://bangerpack.se/pokemon/japanska-utgavor/pokemon-wild-force-booster-jp",
-   "group": "x|booster-pack|ja||force-wild",
-   "title": "Pokémon Wild Force – Booster (JP)",
-   "url": "https://bangerpack.se/pokemon/japanska-utgavor/pokemon-wild-force-booster-jp",
-   "price": 79,
    "type": "Booster Pack",
    "set": null,
    "lang": "ja",
