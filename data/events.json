@@ -1,6 +1,19 @@
 {
- "updated": 1793122478494,
+ "updated": 1793123398523,
  "events": [
+  {
+   "at": 1793122572621,
+   "store": "spelparken",
+   "product": "spelparken:15219569557879",
+   "group": "prismatic-evolutions|tin|en|mini|mini",
+   "title": "Prismatic Evolutions Mini Tin",
+   "url": "https://spelparken.se/products/pokemon-prismatic-evolutions-mini-tin-oppnas-live",
+   "price": 409,
+   "type": "Tin",
+   "set": "Prismatic Evolutions",
+   "lang": "en",
+   "kind": "ny"
+  },
   {
    "at": 1793121668692,
    "store": "spelparken",
@@ -6572,19 +6585,6 @@
    "title": "Pokémon Snow Hazard – Booster (JP)",
    "url": "https://bangerpack.se/pokemon/japanska-utgavor/pokemon-snow-hazard-booster-jp",
    "price": 59,
-   "type": "Booster Pack",
-   "set": null,
-   "lang": "ja",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1792465586956,
-   "store": "bangerpack",
-   "product": "bangerpack:https://bangerpack.se/pokemon/japanska-utgavor/pokemon-clay-burst-booster-jp",
-   "group": "x|booster-pack|ja||burst-clay",
-   "title": "Pokémon Clay Burst – Booster (JP)",
-   "url": "https://bangerpack.se/pokemon/japanska-utgavor/pokemon-clay-burst-booster-jp",
-   "price": 69,
    "type": "Booster Pack",
    "set": null,
    "lang": "ja",
