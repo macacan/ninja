@@ -490,7 +490,8 @@ $("#p-push").addEventListener("click", async () => {
 });
 // Testnotisen visas direkt av webbläsaren. Syns den inte är det systemet (Stör ej, fokusläge) som stoppar den.
 $("#p-push-test").addEventListener("click", async () => {
-  try { await testPush(); track("push", "Testnotis"); $("#p-push-note").textContent = `Testnotisen är skickad. ${silentHelp()}`; }
+  const sample = products.find((p) => p.image && p.available);
+  try { await testPush(sample, sample ? storeName[sample.store] : ""); track("push", "Testnotis"); $("#p-push-note").textContent = `Testnotisen är skickad. ${silentHelp()}`; }
   catch { $("#p-push-note").textContent = "Testnotisen gick inte att visa. Stäng av och slå på notiserna igen och försök på nytt."; }
 });
 syncPush();

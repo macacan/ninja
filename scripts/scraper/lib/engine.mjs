@@ -167,7 +167,7 @@ export async function createEngine({ statuses } = {}) {
         p.firstOrderable = o?.firstOrderable ?? (p.preorder && (o ? !o.preorder : brandNew) ? now : null);
         // Första gången vi ser en butik sparar vi bara läget, så att ingen får hundratals "nya" notiser.
         if (!firstRun) {
-          const base = { at: now, store: store.id, product: p.id, group: groupKey(p), title: p.title, url: p.url, price: p.price, type: p.type, set: p.set, lang: p.lang };
+          const base = { at: now, store: store.id, product: p.id, group: groupKey(p), title: p.title, url: p.url, image: p.image, price: p.price, type: p.type, set: p.set, lang: p.lang };
           if (!o && isNew && !quiet && (p.available || p.preorder)) found.push({ ...base, kind: p.preorder && !p.available ? "forbestallning" : "ny" });
           else if (o && !o.available && !o.preorder && p.preorder && !p.available) found.push({ ...base, kind: "forbestallning" });
           else if (o && !o.available && p.available) found.push({ ...base, kind: "tillbaka" });

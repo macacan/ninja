@@ -47,7 +47,17 @@ export async function enablePush() {
   return true;
 }
 
-export const testPush = () => localNotice("Testnotis: Pushnotiser fungerar klockrent på den här enheten!", "lootninja-test");
+// Testnotisen ser ut som en riktig (notify.mjs): produktens namn, bild, emblem och pris. Utan produkt blir den en enkel text.
+export async function testPush(p, storeName = "") {
+  if (!p) return localNotice("Testnotis: Pushnotiser fungerar klockrent på den här enheten!", "lootninja-test");
+  const reg = await navigator.serviceWorker.ready;
+  const price = `${Math.round(p.price).toLocaleString("sv-SE")} kr`;
+  await reg.showNotification(p.title, {
+    body: `🆕 NY PRODUKT · ${price}\n${storeName}${storeName ? " · " : ""}Testnotis`,
+    icon: p.image || "img/icon-192.png?v=2", image: p.image || undefined, badge: "img/badge-96.png",
+    tag: "lootninja-test", data: { url: p.url || "butiker.html#notiser" },
+  });
+}
 
 // Var man tillåter notiser igen när de är blockerade, efter webbläsare och system.
 export function blockedHelp() {

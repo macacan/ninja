@@ -13,7 +13,7 @@ import { track } from "./tracker.js";
 const enc = encodeURIComponent;
 const GAMES = {
   op: {
-    h1: "Kortpriser för One Piece-kort", placeholder: "Sök kort, t.ex. Luffy eller OP01-120",
+    h1: "Kortpriser för One Piece-kort", back: "img/kortbaksida-op.webp", placeholder: "Sök kort, t.ex. Luffy eller OP01-120",
     rarities: { L: "Leader", C: "Common", UC: "Uncommon", R: "Rare", SR: "Super Rare", SEC: "Secret Rare", TR: "Treasure Rare", P: "Promo", PR: "Promo (PR)" },
     // Parallel, manga, SP och alternativ bild glänser mest, Leader och Super Rare får vanlig holo.
     finish: (c) => (c.variant || ["SEC", "TR"].includes(c.rarity) ? "rainbow" : ["L", "SR"].includes(c.rarity) ? "holo" : "plain"),
@@ -23,7 +23,7 @@ const GAMES = {
     tcgplayer: (c) => `https://www.tcgplayer.com/search/one-piece-card-game/product?q=${enc(`${c.name} ${c.no || ""}`.trim())}`,
   },
   rb: {
-    h1: "Kortpriser för Riftbound-kort", placeholder: "Sök kort, t.ex. Jinx eller Ahri",
+    h1: "Kortpriser för Riftbound-kort", back: "img/kortbaksida-rb.png", placeholder: "Sök kort, t.ex. Jinx eller Ahri",
     rarities: {},
     // Signature, Ultimate och alternativ bild glänser mest, Rare får vanlig holo.
     finish: (c) => (c.variant || ["Showcase", "Epic"].includes(c.rarity) ? "rainbow" : c.rarity === "Rare" ? "holo" : "plain"),
@@ -52,6 +52,8 @@ const gameCards = (g) => (gameData[g] ??= fetch(`data/${g}/cards.json`, { cache:
 }).catch((e) => { delete gameData[g]; throw e; }));
 // Samma form som Pokémonkorten i rutnätet: localId är kortnumret och priset ligger i kronor (sek).
 const preSlim = (c, g) => ({ ...c, game: g, localId: c.no });
+// Spelets egen kortbaksida när kortet saknar bild (eller bilden inte går att ladda).
+const backOf = (c) => GAMES[c.game]?.back || "img/kortbaksida.webp";
 const rarityName = (c) => GAMES[c.game]?.rarities[c.rarity] || c.rarity;
 
 // ---------- Valuta ----------
@@ -86,11 +88,11 @@ let current = [];   // korten som visas just nu, för att kunna bläddra i den s
 
 function tile(c, i) {
   const src = cardImg(c, "low");
-  const img = src || "img/kortbaksida.webp";
+  const img = src || backOf(c);
   const isBack = !src;
   return `<button type="button" class="ctile ${finish(c)}" data-i="${i}" aria-label="Visa ${esc(c.name)} större">
     <span class="cimg${isBack ? " has-back" : ""}">
-      <img src="${esc(img)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.src='img/kortbaksida.webp';this.parentNode.classList.add('has-back');">
+      <img src="${esc(img)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.src='${backOf(c)}';this.parentNode.classList.add('has-back');">
       ${isBack ? `<span class="csoon">Bilder kommer snart</span>` : ""}
       <i class="glare"></i>${langMark(c.lang)}
     </span>
@@ -425,7 +427,7 @@ function openPrebuiltCard(c, i, body) {
   body.innerHTML = `
     <div class="cm-card-wrap">
       <div class="cm-card ${finish(c)}" style="--rx:0deg;--ry:0deg;--mx:50%;--my:50%">
-        <img src="${esc(c.image || "img/kortbaksida.webp")}" alt="${esc(title)}" onload="this.parentNode.classList.add('loaded')" referrerpolicy="no-referrer" onerror="this.src='img/kortbaksida.webp';this.parentNode.classList.add('has-back');">
+        <img src="${esc(c.image || backOf(c))}" alt="${esc(title)}" onload="this.parentNode.classList.add('loaded')" referrerpolicy="no-referrer" onerror="this.src='${backOf(c)}';this.parentNode.classList.add('has-back');">
         <i class="cm-holo"></i><i class="cm-glare"></i>
       </div>
       <ul class="cm-facts">${facts}</ul>

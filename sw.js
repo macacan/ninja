@@ -8,7 +8,10 @@ self.addEventListener("push", (e) => {
   try { d = e.data ? e.data.json() : {}; } catch { d = { body: e.data?.text() || "" }; }
   e.waitUntil(self.registration.showNotification(d.title || "Lootninja", {
     body: d.body || "",
-    icon: "/img/icon-192.png?v=2",
+    // Produktbilden som ikon (liten bild bredvid texten) och som stor bild när notisen fälls ut (Android, Windows).
+    // iPhone visar alltid appikonen och ignorerar bilderna.
+    icon: d.image || "/img/icon-192.png?v=2",
+    image: d.image || undefined,
     // Statusfältet på Android visar bara formen (vitt på genomskinligt), så badgen är en enfärgad ninjasiluett.
     badge: "/img/badge-96.png",
     tag: d.tag || undefined,

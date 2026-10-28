@@ -24,9 +24,12 @@ function matches(e, p) {
   return true;
 }
 
+// Produktens namn är rubriken och bilden visas i notisen (sw.js). Typen står först i texten som ett emblem.
+const BADGE = { ny: "🆕", tillbaka: "🔁", prissankt: "🔻", forbestallning: "⏳" };
 function message(e, storeName) {
-  const price = e.kind === "prissankt" ? `${kr(e.from)} → ${kr(e.price)}` : kr(e.price);
-  return { title: `${KIND[e.kind] || e.kind}: ${e.title}`, body: `${storeName[e.store] || e.store} · ${price}`, url: e.url, tag: `${e.product}-${e.kind}` };
+  const price = kr(e.price);
+  const badge = `${BADGE[e.kind] ? `${BADGE[e.kind]} ` : ""}${(KIND[e.kind] || e.kind).toUpperCase()}`;
+  return { title: e.title, body: `${badge} · ${price}\n${storeName[e.store] || e.store}`, image: e.image || undefined, url: e.url, tag: `${e.product}-${e.kind}` };
 }
 function summary(list) {
   const counts = Object.entries(list.reduce((a, e) => ((a[e.kind] = (a[e.kind] || 0) + 1), a), {}))
