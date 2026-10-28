@@ -1,6 +1,20 @@
 {
- "updated": 1793185327557,
+ "updated": 1793186382719,
  "events": [
+  {
+   "at": 1793185769919,
+   "store": "speltrollet",
+   "product": "speltrollet:15637887942982",
+   "group": "30th-celebration|collection-box|en||figure",
+   "title": "Pokemon  30th Celebration Figure Collection (Mewtwo)",
+   "url": "https://speltrollet.se/products/pokemon-30th-celebration-figure-collection-mew?variant=57715709116742",
+   "image": "https://cdn.shopify.com/s/files/1/0674/0951/0716/files/Pokemon_TCG_30th_Celebration_Figure_Collection_Mewtwo_EN-copy-scaled_9d4b86ea-9245-4e10-8ec1-65b05009bbb6.webp?v=1793094533",
+   "price": 599,
+   "type": "Collection Box",
+   "set": "30th Celebration",
+   "lang": "en",
+   "kind": "ny"
+  },
   {
    "at": 1793184026894,
    "store": "toyspace",
@@ -6578,19 +6592,6 @@
    "type": "Booster Box",
    "set": null,
    "lang": "ja",
-   "kind": "ny"
-  },
-  {
-   "at": 1792506296396,
-   "store": "maxgaming",
-   "product": "maxgaming:https://maxgaming.se/sv/pokemon/pokemon-gem-pack-vol-5-booster-box-simplified-chinese",
-   "group": "x|booster-box|zh||gem-s5-vol",
-   "title": "Pokémon Gem Pack Vol 5 Booster Box (Simplified Chinese)",
-   "url": "https://maxgaming.se/sv/pokemon/pokemon-gem-pack-vol-5-booster-box-simplified-chinese",
-   "price": 649,
-   "type": "Booster Box",
-   "set": null,
-   "lang": "zh",
    "kind": "ny"
   }
  ]
