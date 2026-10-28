@@ -1,6 +1,62 @@
 {
- "updated": 1793208186655,
+ "updated": 1793209086681,
  "events": [
+  {
+   "at": 1793208459675,
+   "store": "rgb-kingz",
+   "product": "rgb-kingz:16147031753034",
+   "group": "prismatic-evolutions|premium-collection|en||engelska-super",
+   "title": "Pokémon TCG – Prismatic Evolutions Super-Premium Collection (SPC) – Engelska",
+   "url": "https://rgbkingz.com/products/pokemon-tcg-prismatic-evolutions-super-premium-collection-spc-engelska",
+   "image": "https://cdn.shopify.com/s/files/1/0782/8088/4554/files/prismatic_evolutions_spc_kvadratisk.png?v=1793208333",
+   "price": 3599,
+   "type": "Premium Collection",
+   "set": "Prismatic Evolutions",
+   "lang": "en",
+   "kind": "ny"
+  },
+  {
+   "at": 1793208459675,
+   "store": "rgb-kingz",
+   "product": "rgb-kingz:16051468501322",
+   "group": "151|booster-box|ja|",
+   "title": "Pokémon Scarlet & Violet 151 Booster Box (SV2a) – Japansk",
+   "url": "https://rgbkingz.com/products/pokemon-scarlet-violet-151-booster-pack-sv2a-japansk-kopia",
+   "image": "https://cdn.shopify.com/s/files/1/0782/8088/4554/files/151.png?v=1789926369",
+   "price": 4890,
+   "type": "Booster Box",
+   "set": "151",
+   "lang": "ja",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1793208312054,
+   "store": "spelparken",
+   "product": "spelparken:15588211229047",
+   "group": "30th-celebration|ultra-premium-collection|en||day",
+   "title": "30th Celebration Ultra-Premium Collection – Day",
+   "url": "https://spelparken.se/products/30th-celebration-ultra-premium-collection-day",
+   "image": "https://cdn.shopify.com/s/files/1/0948/1876/3127/files/BlackBox_-_2026-07-01T003256.558.webp?v=1793191023",
+   "price": 5999,
+   "type": "Ultra-Premium Collection",
+   "set": "30th Celebration",
+   "lang": "en",
+   "kind": "ny"
+  },
+  {
+   "at": 1793208312054,
+   "store": "spelparken",
+   "product": "spelparken:15588212670839",
+   "group": "30th-celebration|ultra-premium-collection|en||night",
+   "title": "30th Celebration Ultra-Premium Collection – Night",
+   "url": "https://spelparken.se/products/30th-celebration-ultra-premium-collection-night",
+   "image": "https://cdn.shopify.com/s/files/1/0948/1876/3127/files/91SJZ2YtZhL._AC_UF894_1000_QL80.jpg?v=1793191331",
+   "price": 5999,
+   "type": "Ultra-Premium Collection",
+   "set": "30th Celebration",
+   "lang": "en",
+   "kind": "ny"
+  },
   {
    "at": 1793207608532,
    "store": "mtg-butiken",
@@ -6568,58 +6624,6 @@
    "lang": "en",
    "kind": "prissankt",
    "from": 2699
-  },
-  {
-   "at": 1792513189184,
-   "store": "maxgaming",
-   "product": "maxgaming:https://maxgaming.se/sv/pokemon/pokemon-30th-celebration-charizard-collectors-figure-gift-box-simplified-chinese",
-   "group": "30th-celebration|collection-box|zh||charizard-collectors-figure-gift",
-   "title": "Pokémon 30th Celebration Charizard Collectors Figure Gift Box (Simplified Chinese)",
-   "url": "https://maxgaming.se/sv/pokemon/pokemon-30th-celebration-charizard-collectors-figure-gift-box-simplified-chinese",
-   "price": 4290,
-   "type": "Collection Box",
-   "set": "30th Celebration",
-   "lang": "zh",
-   "kind": "ny"
-  },
-  {
-   "at": 1792513189184,
-   "store": "maxgaming",
-   "product": "maxgaming:https://maxgaming.se/sv/pokemon/pokemon-30th-celebration-booster-box-simplified-chinese",
-   "group": "30th-celebration|booster-box|zh|",
-   "title": "Pokémon 30th Celebration Booster Box (Simplified Chinese)",
-   "url": "https://maxgaming.se/sv/pokemon/pokemon-30th-celebration-booster-box-simplified-chinese",
-   "price": 1590,
-   "type": "Booster Box",
-   "set": "30th Celebration",
-   "lang": "zh",
-   "kind": "ny"
-  },
-  {
-   "at": 1792512192542,
-   "store": "maxgaming",
-   "product": "maxgaming:https://maxgaming.se/sv/pokemon/pokemon-mega-starter-set-zorua-zoroark-ex-japansk",
-   "group": "x|deck|ja||set-starter-zoroark-zorua",
-   "title": "Pokémon Mega Starter Set - Zorua & Zoroark EX (Japansk)",
-   "url": "https://maxgaming.se/sv/pokemon/pokemon-mega-starter-set-zorua-zoroark-ex-japansk",
-   "price": 549,
-   "type": "Deck",
-   "set": null,
-   "lang": "ja",
-   "kind": "ny"
-  },
-  {
-   "at": 1792512192542,
-   "store": "maxgaming",
-   "product": "maxgaming:https://maxgaming.se/sv/pokemon/pokemon-mega-starter-set-sprigatito-meowscarada-ex-japansk",
-   "group": "x|deck|ja||meowscarada-set-sprigatito-starter",
-   "title": "Pokémon Mega Starter Set - Sprigatito & Meowscarada EX (Japansk)",
-   "url": "https://maxgaming.se/sv/pokemon/pokemon-mega-starter-set-sprigatito-meowscarada-ex-japansk",
-   "price": 549,
-   "type": "Deck",
-   "set": null,
-   "lang": "ja",
-   "kind": "ny"
   }
  ]
 }
