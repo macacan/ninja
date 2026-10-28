@@ -7,7 +7,7 @@ export const KINDS = {
   prissankt: "Prissänkt",
   forbestallning: "Förbeställning öppen",
 };
-export const GAMES = { pk: "Pokémon", rb: "Riftbound" };
+export const GAMES = { pk: "Pokémon", op: "One Piece", rb: "Riftbound" };
 const DEFAULTS = { stores: [], types: [], sets: [], langs: [], games: [], kinds: Object.keys(KINDS), maxPrice: 0, push: false, watch: [] };
 // Spelen man får besked om. Till skillnad från de andra listorna betyder en tom lista bara Pokémon, så att
 // de som slog på notiser innan Riftbound fanns inte plötsligt får Riftbound-notiser. Samma regel i notify.mjs.

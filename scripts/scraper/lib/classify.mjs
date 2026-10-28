@@ -7,7 +7,7 @@ const POKEMON = /pok[eé]mon/i;
 
 // Höjs när igenkänningen ändras så att fler produkter räknas. Då sparas de nyfunna produkterna tyst
 // vid nästa kontroll av varje butik, i stället för att larmas som hundratals "nya" (se engine.mjs).
-export const CLASSIFY_VERSION = 9;
+export const CLASSIFY_VERSION = 10;
 
 // Ordningen spelar roll: mer specifika typer först.
 const TYPES = [
@@ -63,7 +63,10 @@ const SINGLE = new RegExp([
   "\\s[-–]\\s*(?:poor|played|(?:lightly|light|moderately|heavily) played|good|excellent|near mint|nm|mint|damaged|lp|mp|hp)\\s*$",
   "\\s[-–]\\s*(?:common|uncommon|(?:holo |double |ultra |illustration |special illustration |hyper |secret )?rare|classic collection)\\s*$",
   // set och kortnummer i parentes ("(LC 3)"), kortnummer med # ("#023"), "Promo Cards" sist
-  "\\((?!(?:max|vol|set|ser|nr)\\b)[a-z]{1,4} \\d{1,3}\\)", "#\\d{1,3}\\b", "\\bpromo cards\\s*$",
+  // ("(OP 16)" är ett One Piece-set, inget kort)
+  "\\((?!(?:max|vol|set|ser|nr|op|eb|st|prb)\\b)[a-z]{1,4} \\d{1,3}\\)", "#\\d{1,3}\\b", "\\bpromo cards\\s*$",
+  // One Piece-kort med kortnummer ("Brook OP15-022 L", "Yamato P-046 P", "Makino PRB01 OP02-015 UC")
+  "\\b(?:op|eb|st|prb|p)\\d{0,2}-\\d{3}\\b",
   // "Wooloo Holo - …": kortnamn följt av Holo eller Reverse och ett bindestreck
   "^[\\p{L}'. ]{2,30} (?:reverse )?holo\\s+[-–]",
 ].join("|"), "iu");
@@ -92,21 +95,56 @@ const VAGUE_SETS = new Set(["dragon", "platinum", "emerald", "sample", "jungle",
 // Set som ofta bara är en del av ett produktnamn ("Team Rocket's Mewtwo ex"). Räknas som bevis, men förlorar mot andra set i titeln.
 const LOW_PRIORITY_SETS = new Set(["team rocket"]);
 
-// Riftbound (League of Legends Trading Card Game). Lösa kort har sällan en typ i namnet ("Ahri, Inquisitive SFD 227*/221")
-// och sorteras bort av NOT_SEALED eller av att ingen typ passar. Ordningen spelar roll, som i TYPES.
-const RIFTBOUND = /riftbound|league of legends/i;
-const RB_TYPES = [
-  ["Booster Box", /booster ?(?:display|box)|sealed case/i],
-  ["Bundle", /vault|bundle/i],
-  ["Proving Grounds", /proving grounds/i],
-  ["Prerelease Kit", /pre-?rift|prerelease/i],
-  ["Deck", /\bdecks?\b/i],
-  ["Collection Box", /gift box|collection|\bbox\b/i],
-  ["Booster Pack", /booster/i],
-];
-// Huvudseten i släppordning. Nya set läggs till här (se data/rb/sets.json).
-const RB_SETS = ["Origins", "Spiritforged", "Unleashed", "Vendetta", "Radiance", "Legacy"];
-const isRiftbound = (title, hint = "") => RIFTBOUND.test(title) || (!POKEMON.test(title) && RIFTBOUND.test(hint));
+// Andra kortspel än Pokémon: Riftbound (game "rb") och One Piece (game "op"). Lösa kort har sällan en typ i namnet
+// ("Ahri, Inquisitive SFD 227*/221", "Brook OP15-022 L (ENG)") och sorteras bort av NOT_SEALED, SINGLE eller av att
+// ingen typ passar. Ordningen i types spelar roll, som i TYPES. Seten läses ur data/<spel>/sets.json, som
+// scripts/update-rb-cards.mjs och update-op-cards.mjs skriver varje dygn, så nya set kommer med av sig själva.
+const GAMES = {
+  rb: {
+    match: /riftbound|league of legends/i,
+    types: [
+      ["Booster Box", /booster ?(?:display|box)|sealed case/i],
+      ["Bundle", /vault|bundle/i],
+      ["Proving Grounds", /proving grounds/i],
+      ["Prerelease Kit", /pre-?rift|prerelease/i],
+      ["Deck", /\bdecks?\b/i],
+      ["Collection Box", /gift box|collection|\bbox\b/i],
+      ["Booster Pack", /booster/i],
+    ],
+    // Set som släppts i butik innan de har lösa kort hos TCGplayer (och därför saknas i sets.json).
+    extraSets: ["Origins", "Spiritforged", "Unleashed", "Vendetta", "Radiance", "Legacy"],
+  },
+  op: {
+    match: /one piece/i,
+    // Figurer, kläder och annat med One Piece i namnet som inte är kortspelet.
+    not: /figur|figure|statue|pvc|banpresto|grandista|dxf|dissectibles|sweater|hooded|tröj|land station|plush|keychain|poster(?! collection)|blind ?bag|nanofig|nerf|lego|light/i,
+    types: [
+      ["Double Pack", /double pack/i],
+      ["Illustration Box", /illustration box/i],
+      ["Booster Box", /booster ?(?:display|box)|display|sealed case|slim box/i],
+      ["Deck", /\bdecks?\b|\bst-?\d{2}\b/i],
+      // "Anime 25th Collection Booster Pack" är ett paket, inte en samlarbox.
+      ["Booster Pack", /booster/i],
+      ["Collection Box", /collection|gift|\bbox\b|\btin\b/i],
+    ],
+    extraSets: [],
+  },
+};
+// Jämförelseform för setnamn: utan apostrofer och inledande "The" ("Azure Sea's Seven" = "The Azure Sea’s Seven").
+const fold = (s) => s.toLowerCase().replace(/['’]/g, "").replace(/^the /, "");
+const setsCache = {};
+function gameSets(g) {
+  if (setsCache[g]) return setsCache[g];
+  let sets = [];
+  try { sets = JSON.parse(readFileSync(new URL(`../../../data/${g}/sets.json`, import.meta.url), "utf8")).sets || []; } catch {}
+  // Setkoder utan tecken ("OP-14" → OP14). Dubbla id:n som "OP14-EB04" hör till sin första kod.
+  const codes = new Map(sets.map((s) => [s.id.match(/^(OP|EB|ST|PRB)-?(\d{2})/i), s.name]).filter(([m]) => m).map(([m, name]) => [`${m[1].toUpperCase()}${m[2]}`, name]));
+  // Namn utan "Origins: ". Korta namn ("3D2Y") ger för många felträffar och kräver setkoden.
+  const names = [...new Set([...GAMES[g].extraSets, ...sets.filter((s) => s.main || g === "op").map((s) => s.name.replace(/^origins: /i, ""))])]
+    .filter((n) => n.length >= 6 || GAMES[g].extraSets.includes(n));
+  return (setsCache[g] = { codes, names });
+}
+const gameOf = (title, hint = "") => Object.keys(GAMES).find((g) => GAMES[g].match.test(title) || (!POKEMON.test(title) && GAMES[g].match.test(hint)));
 
 let MONS = null;
 function pokemonNames() {
@@ -124,7 +162,10 @@ function pokemonNames() {
 // "Team Up", "Golem", "Kabuto"). Produktsidans titel kontrolleras sedan utan strict.
 export function looksPokemonTitle(title, setNames = [], { strict = false } = {}) {
   if (!title) return false;
-  if (RIFTBOUND.test(title)) return true;
+  // Riftbound och One Piece. I stora sitemaps (strict) bara adresser som nämner en förseglad typ, så att
+  // tusentals sidor med lösa kort ("brook-op15-022-l-eng") inte hämtas i onödan.
+  const g = gameOf(title);
+  if (g) return !strict || GAMES[g].types.some(([, re]) => re.test(title));
   if (strict) return POKEMON.test(title) || (!OTHER_TCG.test(title) && (POKE_WORDS.test(title) || SET_CODE.test(title)));
   const low = title.toLowerCase();
   const hits = setNames.filter((s) => s.length > 3 ? low.includes(s.toLowerCase()) : /^\d{3}$/.test(s) && new RegExp(`\\b${s}\\b`).test(low));
@@ -145,7 +186,8 @@ const langOf = (text) => LANGS.find(([, re]) => re.test(text))?.[0] || null;
 // inte säger något. Säger ingen av dem något blir det engelska, markerat som gissat (langGuess).
 export function classify(title, setNames = [], seriesNames = [], hint = "") {
   if (!title || NOT_SEALED.test(title) || SINGLE.test(title) || GERMAN.test(title)) return null;
-  if (isRiftbound(title, hint)) return classifyRiftbound(title, hint);
+  const g = gameOf(title, hint);
+  if (g) return classifyGame(g, title, hint);
   const type = TYPES.find(([, re]) => re.test(title))?.[0];
   if (!type) return null;
   // Set som heter som sin serie ("Scarlet & Violet") står ofta med i titeln bara som serienamn,
@@ -172,12 +214,20 @@ export function classify(title, setNames = [], seriesNames = [], hint = "") {
   return lang ? { type, lang, set } : { type, lang: "en", langGuess: true, set };
 }
 
-// Setet är det som står sist i titeln ("Origins Proving Grounds" → Origins).
-function classifyRiftbound(title, hint) {
-  const type = RB_TYPES.find(([, re]) => re.test(title))?.[0];
+// Riftbound och One Piece. Setet är i första hand setkoden ("OP-14", "[OP14]", "(OP 16)", "ST29") och annars
+// setnamnet som står sist i titeln ("Origins Proving Grounds" → Origins).
+function classifyGame(g, title, hint) {
+  const game = GAMES[g];
+  if (game.not?.test(title)) return null;
+  const type = game.types.find(([, re]) => re.test(title))?.[0];
   if (!type) return null;
-  const low = title.toLowerCase();
-  const set = RB_SETS.filter((s) => low.includes(s.toLowerCase())).sort((a, b) => low.lastIndexOf(b.toLowerCase()) - low.lastIndexOf(a.toLowerCase()))[0] || null;
+  const { codes, names } = gameSets(g);
+  const low = fold(title);
+  // En kod som inte finns i sets.json än (nytt set, t.ex. "(OP 19)") blir setet under sin kod: "OP-19".
+  const found = [...title.matchAll(/\b(OP|EB|ST|PRB)[- ]?(\d{1,2})\b/gi)].map((m) => `${m[1].toUpperCase()}${m[2].padStart(2, "0")}`);
+  const code = found.map((c) => codes.get(c)).find(Boolean);
+  const named = names.filter((s) => low.includes(fold(s))).sort((a, b) => low.lastIndexOf(fold(b)) - low.lastIndexOf(fold(a)) || b.length - a.length)[0];
+  const set = code || named || found[0]?.replace(/^([A-Z]+)/, "$1-") || null;
   const lang = langOf(title) || (hint && langOf(hint));
-  return { game: "rb", type, set, ...(lang ? { lang } : { lang: "en", langGuess: true }) };
+  return { game: g, type, set, ...(lang ? { lang } : { lang: "en", langGuess: true }) };
 }

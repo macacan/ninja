@@ -41,10 +41,10 @@ function renderEvents() {
 const PRICE = { "": [0, Infinity], "0-50": [0, 50], "50-100": [50, 100], "100-200": [100, 200], "200-500": [200, 500], "500-1000": [500, 1000], "1000-": [1000, Infinity] };
 const LANG = { en: "Engelska", ja: "Japanska", ko: "Koreanska", zh: "Kinesiska", fr: "Franska" };
 const TYPE_LABEL = { "Booster Pack": "Boosterpaket", "Booster Box": "Boosterbox", "Elite Trainer Box": "Elite Trainer Box (ETB)", Blister: "Blister", Tin: "Tin" };
-let groups = new Map(), priceHist = {}, releaseDates = new Map(), rbSets = new Set();
+let groups = new Map(), priceHist = {}, releaseDates = new Map(), setGame = new Map();
 // Riftbound-produkter har game: "rb", Pokémon-produkter inget game-fält. Riftbound-set märks i setlistorna.
 const gameOf = (p) => p.game || "pk";
-const setLabel = (s) => (rbSets.has(s) ? `Riftbound: ${s}` : s);
+const setLabel = (s) => (setGame.has(s) ? `${GAMES[setGame.get(s)]}: ${s}` : s);
 const pressed = (id) => $(id).getAttribute("aria-pressed") === "true";
 
 // Produkter som klarar alla filter. Tillgänglighet styrs av snabbfiltren: inget valt betyder allt, även slut.
@@ -143,7 +143,7 @@ function groupCard(g, open) {
   const lead = g.inStock[0] || g.pre[0] || g.all[0];
   const img = g.all.find((m) => m.image)?.image;
   const watched = (getPrefs().watch || []).includes(g.key);
-  const meta = [lead.game === "rb" && "Riftbound", TYPE_LABEL[lead.type] || lead.type, lead.set, lead.lang !== "en" ? LANG[lead.lang] || lead.lang : ""].filter(Boolean).join(" · ");
+  const meta = [lead.game && GAMES[lead.game], TYPE_LABEL[lead.type] || lead.type, lead.set, lead.lang !== "en" ? LANG[lead.lang] || lead.lang : ""].filter(Boolean).join(" · ");
   const price = g.low != null ? `Från <b>${kr(g.low)}</b> i lager` : g.lowPre != null ? `Förbeställ från <b>${kr(g.lowPre)}</b>` : `Slut överallt · senast <b>${kr(Math.min(...g.all.map((m) => m.price)))}</b>`;
   const rel = releaseDates.get(`${(lead.set || "").toLowerCase()}|${lead.type}`);
   // Senaste prisändringen den här veckan. Bara en sänkning som gör butiken billigast är en prissänkning
@@ -342,7 +342,7 @@ try {
   const opts = (id, values, label = (x) => x) => $(id).insertAdjacentHTML("beforeend", values.map((x) => `<option value="${esc(x)}">${esc(label(x))}</option>`).join(""));
   opts("#f-type", [...new Set(products.map((x) => x.type))].sort());
   const perSet = products.reduce((a, x) => (x.set && (a[x.set] = (a[x.set] || 0) + 1), a), {});
-  rbSets = new Set(products.filter((x) => x.game === "rb" && x.set).map((x) => x.set));
+  setGame = new Map(products.filter((x) => x.game && x.set).map((x) => [x.set, x.game]));
   multiFill("f-set", Object.keys(perSet).sort((a, b) => setLabel(a).localeCompare(setLabel(b), "sv")).map((s) => ({ value: s, text: setLabel(s), count: perSet[s] })));
   opts("#f-lang", [...new Set(products.map((x) => x.lang))].sort(), (l) => LANG[l] || l.toUpperCase());
   // Engelska är förvalt. Välj "Alla" för att se japanska, koreanska och övriga språk också.

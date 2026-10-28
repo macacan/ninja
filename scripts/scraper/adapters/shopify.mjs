@@ -1,5 +1,5 @@
 // Shopify-butiker publicerar sin katalog som JSON på /products.json (samma data som visas i butiken).
-// Jättebutiker (över maxPages × 250 produkter) läses i stället via sina Pokémon- och Riftbound-kollektioner.
+// Jättebutiker (över maxPages × 250 produkter) läses i stället via sina Pokémon-, One Piece- och Riftbound-kollektioner.
 import { generic } from "./generic.mjs";
 
 // Butiker med Shopify Markets visar priset i besökarens valuta. GitHub Actions kör från USA och fick
@@ -55,7 +55,7 @@ async function pokemonCollections(host) {
     all.push(...collections);
     if (collections.length < 250) break;
   }
-  return all.filter((c) => /pok[eé]mon|riftbound/i.test(`${c.handle} ${c.title}`) && !SKIP_COLLECTION.test(c.handle) && c.products_count !== 0
+  return all.filter((c) => /pok[eé]mon|riftbound|one[- ]piece/i.test(`${c.handle} ${c.title}`) && !SKIP_COLLECTION.test(c.handle) && c.products_count !== 0
     && host.allowed(`/collections/${c.handle}/products.json?limit=250&page=1${SEK}`));
 }
 

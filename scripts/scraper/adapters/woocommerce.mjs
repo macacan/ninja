@@ -6,12 +6,12 @@ export async function woocommerce(host, ctx) {
   if (!host.allowed(`${API}?per_page=100&page=1`)) return generic(host, ctx);
   const items = [];
   try {
-    // Butikens Pokémon- och Riftbound-kategorier om de finns. Annars sök på "pokemon" och "riftbound", vilket
+    // Butikens Pokémon-, One Piece- och Riftbound-kategorier om de finns. Annars sök på "pokemon", "one piece" och "riftbound", vilket
     // missar t.ex. japanska produkter som bara heter "Triplet Beat (SV1a)".
-    let filters = ["&search=pokemon", "&search=riftbound"];
+    let filters = ["&search=pokemon", "&search=riftbound", "&search=one+piece"];
     try {
       const cats = await host.get(`${API}/categories?per_page=100`, { type: "json" });
-      const ids = (Array.isArray(cats) ? cats : []).filter((c) => /pok[eé]mon|riftbound/i.test(`${c.name} ${c.slug}`)).map((c) => c.id);
+      const ids = (Array.isArray(cats) ? cats : []).filter((c) => /pok[eé]mon|riftbound|one[- ]piece/i.test(`${c.name} ${c.slug}`)).map((c) => c.id);
       if (ids.length) filters = [`&category=${ids.join(",")}`];
     } catch {}
     const seen = new Set();

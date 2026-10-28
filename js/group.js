@@ -4,9 +4,26 @@
 
 // Typer där set + typ + språk (+ variant) räcker för att det ska vara samma produkt.
 const SIMPLE = new Set(["Booster Pack", "Booster Box", "Elite Trainer Box", "Booster Bundle", "Build & Battle"]);
-// Riftbound (game: "rb"): Vault och Pre-Rift Kit finns bara i en sort per set. Decken skiljs åt av championnamnen.
-const RB_SIMPLE = new Set(["Booster Pack", "Booster Box", "Bundle", "Prerelease Kit", "Proving Grounds"]);
-const RB_STOP = new Set("riftbound league legends lol tcg champion showdown set one runeterra vs max kund".split(" "));
+// Andra kortspel (game i produkten): namn, typer där set + typ + språk räcker, ord som inte skiljer produkter åt,
+// typnamn i rubriken och ord som butikerna sätter först i namnet. Riftbound: Vault och Pre-Rift Kit finns bara i
+// en sort per set, decken skiljs åt av championnamnen. One Piece: ett starterdeck är sitt eget set (ST-xx).
+const GAMES = {
+  rb: { name: "Riftbound", simple: new Set(["Booster Pack", "Booster Box", "Bundle", "Prerelease Kit", "Proving Grounds"]),
+    stop: new Set("riftbound league legends lol tcg champion showdown set one runeterra vs max kund".split(" ")),
+    label: { "Booster Box": "Booster Display", Bundle: "Vault", "Prerelease Kit": "Pre-Rift Kit" },
+    prefix: /^(?:\s*(?:riftbound|league of legends|lol|tcg|set one)\s*[:\-–]?\s*)+/i },
+  op: { name: "One Piece", simple: new Set(["Booster Pack", "Booster Box", "Deck"]),
+    stop: new Set("one piece tcg bandai extra starter max kund per exemplar person cards".split(" ")),
+    label: { Deck: "Starter Deck" },
+    prefix: /^(?:\s*(?:one piece|card game|tcg|bandai)\s*[:\-–]?\s*)+/i },
+};
+// One Piece-produkter utan set har en egen kod: "IB-07" / "Illustration Box Volume 7", "DP13", "TS-02", "AC-01".
+const opCode = (p) => {
+  const t = fold(p.title), m = t.match(/\b(ib|dp|ts|ac|df|sd|ld|gc)[- ]?0?(\d{1,2})\b/);
+  if (m) return `${m[1]}${+m[2]}`;
+  const vol = p.type === "Illustration Box" && t.match(/vol(?:ume)?\.?\s*(\d+)/);
+  return vol ? `ib${+vol[1]}` : "";
+};
 
 // Ord som inte säger något om vilken produkt det är.
 const STOP = new Set(("pokemon tcg trading card cards game the and och med for of a an i en ett av till pa kort samlarkort " +
@@ -38,7 +55,7 @@ function nameTokens(title, set, game) {
   const extra = [...t.matchAll(/(?:series|serie|vol\.?|volume|wave|del)\s*(\d+)/g)].map((m) => `s${m[1]}`)
     .concat([...t.matchAll(/\b([xyz])\b(?=\s*(?:ex|gx|\)|$|\s))/g)].map((m) => m[1]));
   const words = t.replace(/\(.*?\)/g, (m) => (/ex|gx|v\b|vmax|vstar/.test(m) ? m : " "))
-    .split(/[^a-z0-9]+/).filter((w) => w.length > 2 && !STOP.has(w) && !(game === "rb" && RB_STOP.has(w)) && !setWords.has(w) && w !== "max" && !/^\d+$/.test(w) && !/^[a-z]{1,4}\d+[a-z]?$/.test(w));
+    .split(/[^a-z0-9]+/).filter((w) => w.length > 2 && !STOP.has(w) && !GAMES[game]?.stop.has(w) && !setWords.has(w) && w !== "max" && !/^\d+$/.test(w) && !/^[a-z]{1,4}\d+[a-z]?$/.test(w));
   return [...new Set([...extra, ...words])].sort();
 }
 
@@ -47,11 +64,15 @@ function nameTokens(title, set, game) {
 const SERIES_LIKE = new Set(["mega evolution", "scarlet & violet", "sword & shield", "sun & moon", "xy", "black & white"]);
 
 export function groupKey(p) {
-  // Riftbound-nycklarna börjar med "rb|", så att de aldrig krockar med Pokémon. Pokémon-nycklarna är oförändrade.
-  if (p.game === "rb") {
+  // Nycklarna för andra spel börjar med spelet ("rb|", "op|"), så att de aldrig krockar med Pokémon.
+  // Pokémon-nycklarna är oförändrade.
+  const g = GAMES[p.game];
+  if (g) {
     const set = p.set || "", v = variants(p.title).join("+");
-    const base = `rb|${slug(set) || "x"}|${slug(p.type)}|${p.lang || "en"}|${v}`;
-    return set && RB_SIMPLE.has(p.type) ? base : `${base}|${nameTokens(p.title, set, "rb").slice(0, 4).join("-")}`;
+    const base = `${p.game}|${slug(set) || "x"}|${slug(p.type)}|${p.lang || "en"}|${v}`;
+    if (set && g.simple.has(p.type)) return base;
+    const code = p.game === "op" ? opCode(p) : "";
+    return `${base}|${code || nameTokens(p.title, set, p.game).slice(0, 4).join("-")}`;
   }
   const set = p.set || "";
   const lang = p.lang || "en";
@@ -67,13 +88,17 @@ export function groupKey(p) {
 }
 
 const LABEL = { "Build & Battle": "Build & Battle Box" };
-const RB_LABEL = { "Booster Box": "Booster Display", Bundle: "Vault", "Prerelease Kit": "Pre-Rift Kit" };
 
 // Ett läsbart namn för gruppen. Enkla typer får ett rent namn, samlarboxar får butikens kortaste namn.
 export function groupTitle(members) {
   const p = members[0];
   const v = variants(p.title);
-  if (p.game === "rb" && p.set && RB_SIMPLE.has(p.type)) return `Riftbound ${p.set} ${RB_LABEL[p.type] || p.type}` + (v.includes("case") ? " – hel kartong" : "");
+  const g = GAMES[p.game];
+  if (g && p.set && g.simple.has(p.type)) {
+    // Ett One Piece-starterdeck heter som sitt set ("Starter Deck 35: RED/BLACK Sabo").
+    const name = p.type === "Deck" && /starter deck/i.test(p.set) ? p.set : `${p.set} ${g.label[p.type] || p.type}`;
+    return `${g.name} ${name}` + (v.includes("case") ? " – hel kartong" : "");
+  }
   if (p.set && SIMPLE.has(p.type)) {
     const base = `${p.set} ${v.includes("pc") ? "Pokémon Center " : ""}${LABEL[p.type] || p.type}`;
     return base + (v.includes("sleeved") ? " (Sleeved)" : "") + (v.includes("half") ? " (Half)" : "") + (v.includes("case") ? " – hel kartong" : "");
@@ -82,7 +107,7 @@ export function groupTitle(members) {
     .replace(/\s{2,}/g, " ").trim();
   const shortest = members.map((m) => m.title).sort((a, b) => a.length - b.length)[0];
   // "Riftbound: League of Legends TCG - Set One: Origins Champion Deck - Jinx" → "Riftbound Origins Champion Deck - Jinx"
-  if (p.game === "rb") return `Riftbound ${clean(shortest.replace(/^(?:\s*(?:riftbound|league of legends|lol|tcg|set one)\s*[:\-–]?\s*)+/i, ""))}`;
+  if (g) return `${g.name} ${clean(shortest.replace(g.prefix, ""))}`;
   return clean(shortest);
 }
 

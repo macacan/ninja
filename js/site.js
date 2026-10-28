@@ -352,7 +352,7 @@ export function productCard(p, storeName, flags = {}) {
   return `<article class="pcard${p.available || p.preorder ? "" : " is-out"}">
     <div class="pimg">${p.image ? `<img src="${esc(p.image)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.remove()">` : `<span class="noimg"><b>${esc(p.type || "Förseglat")}</b>Bild finns hos butiken</span>`}${badge}${langMark(p.lang)}</div>
     <div class="pbody">
-      <span class="pstore">${esc(storeName || p.store)}${p.lang && p.lang !== "en" ? ` · ${esc(p.lang.toUpperCase())}` : ""}</span>
+      <span class="pstore">${esc(storeName || p.store)}${{ rb: " · Riftbound", op: " · One Piece" }[p.game] || ""}${p.lang && p.lang !== "en" ? ` · ${esc(p.lang.toUpperCase())}` : ""}</span>
       <h3><a class="stretch" href="${esc(safeUrl(p.url))}" target="_blank" rel="noopener nofollow">${esc(p.title)}</a></h3>
       <div class="pfoot"><span class="pprice">${kr(p.price)}${flags.drop ? ` <s>${kr(flags.drop)}</s>` : ""}</span>${p.lastChange ? `<span class="ptime" title="Senast ändrad">${ago(p.lastChange)}</span>` : ""}</div>
     </div>

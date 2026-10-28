@@ -587,9 +587,9 @@
    "domain": "webhallen.com",
    "platform": "webhallen",
    "status": "ej-forbjuden",
-   "note": "Villkoren lästa manuellt 2026-10-18, inget förbud mot automatisk insamling (köpvillkor). Bara kategorin Pokémonkort TCG (4661) bevakas, via butikens öppna kategori-API /api/productdiscovery/category/4661 (2026-10-20).",
+   "note": "Villkoren lästa manuellt 2026-10-18, inget förbud mot automatisk insamling (köpvillkor). Bara kategorierna Pokémonkort TCG (4661) och Riftbound (17003) bevakas, via butikens öppna kategori-API /api/productdiscovery/category/{id} (2026-10-20, Riftbound 2026-10-28).",
    "feed": "www.webhallen.com",
-   "category": 4661
+   "category": [4661, 17003]
   },
   {
    "id": "westcoast-vault",
