@@ -1,6 +1,20 @@
 {
- "updated": 1793201386073,
+ "updated": 1793202306097,
  "events": [
+  {
+   "at": 1793201416546,
+   "store": "tcgaddan",
+   "product": "tcgaddan:15886223769932",
+   "group": "destined-rivals|booster-pack|en|",
+   "title": "Destined Rivals Booster Pack",
+   "url": "https://tcgaddan.se/products/destined-rivals-booster-pack-1",
+   "image": "https://cdn.shopify.com/s/files/1/1037/7062/0236/files/sdsdddd-removebg-preview.png?v=1773920760",
+   "price": 139,
+   "type": "Booster Pack",
+   "set": "Destined Rivals",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793199581944,
    "store": "cardlevels",
@@ -6596,19 +6610,6 @@
    "set": "Team Up",
    "lang": "en",
    "kind": "ny"
-  },
-  {
-   "at": 1792508050738,
-   "store": "spelparken",
-   "product": "spelparken:15314570084727",
-   "group": "silver-tempest|booster-box|en|",
-   "title": "Silver Tempest Booster Box",
-   "url": "https://spelparken.se/products/silver-tempest-booster-box-oppnas-live",
-   "price": 6499,
-   "type": "Booster Box",
-   "set": "Silver Tempest",
-   "lang": "en",
-   "kind": "tillbaka"
   }
  ]
 }
