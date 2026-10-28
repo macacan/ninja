@@ -1,6 +1,63 @@
 {
- "updated": 1793210026709,
+ "updated": 1793210946732,
  "events": [
+  {
+   "at": 1793210935821,
+   "store": "majki-poke",
+   "product": "majki-poke:15231601738114",
+   "group": "phantasmal-flames|booster-pack|en|",
+   "title": "Phantasmal Flames – Booster Pack (ENG)",
+   "url": "https://majkipoke.se/products/phantasmal-flames-booster-pack-eng",
+   "image": "https://cdn.shopify.com/s/files/1/0953/4629/5170/files/Phantasmal_Flames_Booster_Pack_ENG1_39eeea4f-b3be-489b-bf99-53637e4280fe.png?v=1778182270",
+   "price": 159,
+   "type": "Booster Pack",
+   "set": "Phantasmal Flames",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1793210622317,
+   "store": "samlargrottan",
+   "product": "samlargrottan:https://www.samlargrottan.se/product-page/pokémon-30th-celebration-booster-bundle",
+   "group": "30th-celebration|booster-bundle|en|",
+   "title": "Pokémon: 30th Celebration Booster Bundle",
+   "url": "https://www.samlargrottan.se/product-page/pok%C3%A9mon-30th-celebration-booster-bundle",
+   "image": "https://static.wixstatic.com/media/d265aa_b842d3067b03417d997df29a9a4791a6~mv2.webp/v1/fit/w_500,h_500,q_90/file.webp",
+   "price": 899,
+   "type": "Booster Bundle",
+   "set": "30th Celebration",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1793210113813,
+   "store": "spelparken",
+   "product": "spelparken:15401178169719",
+   "group": "rb|spiritforged|booster-pack|en|",
+   "title": "Riftbound Spiritforged Booster Pack",
+   "url": "https://spelparken.se/products/riftbound-spiritforged-booster-pack",
+   "image": "https://cdn.shopify.com/s/files/1/0948/1876/3127/files/Pics_-_2025-08-10T091914.603.avif?v=1772209468",
+   "price": 129,
+   "type": "Booster Pack",
+   "set": "Spiritforged",
+   "lang": "en",
+   "game": "rb",
+   "kind": "ny"
+  },
+  {
+   "at": 1793210113813,
+   "store": "spelparken",
+   "product": "spelparken:15237517705591",
+   "group": "silver-tempest|booster-pack|en|",
+   "title": "Silver Tempest Booster Pack",
+   "url": "https://spelparken.se/products/pokemon-sword-shield-silver-tempest-booster-pack-oppnas-live",
+   "image": "https://cdn.shopify.com/s/files/1/0948/1876/3127/files/pokemon-tcg-silver-tempest-pok86091-main.webp?v=1762964967",
+   "price": 189,
+   "type": "Booster Pack",
+   "set": "Silver Tempest",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793209404384,
    "store": "rgb-kingz",
@@ -6571,58 +6628,6 @@
    "type": "Booster Pack",
    "set": null,
    "lang": "ja",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1792531505145,
-   "store": "pokemurre",
-   "product": "pokemurre:10222155399506",
-   "group": "x|booster-box|ja||brave",
-   "title": "Pokémon Mega Brave Booster Box Sealed M1L (Japansk)",
-   "url": "https://pokemurre.se/products/mega-brave-japansk-booster-box-sealed-ml1-scarlet-violet",
-   "price": 999,
-   "type": "Booster Box",
-   "set": null,
-   "lang": "ja",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1792526984101,
-   "store": "pokemurre",
-   "product": "pokemurre:10280840560978",
-   "group": "x|booster-box|ja||inferno-x",
-   "title": "Pokémon Mega Inferno X Booster Box (Japanese)",
-   "url": "https://pokemurre.se/products/preorder-mega-inferno-x-booster-box-japanese",
-   "price": 1929,
-   "type": "Booster Box",
-   "set": null,
-   "lang": "ja",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1792525975201,
-   "store": "collected",
-   "product": "collected:11056466952534",
-   "group": "151|booster-box|zh|",
-   "title": "Pokémon TCG: Collect 151 Surprise Booster Box (Kinesisk) - 151C",
-   "url": "https://collected.se/products/pokemon-tcg-151-surprise-booster-box-kinesisk",
-   "price": 1190,
-   "type": "Booster Box",
-   "set": "151",
-   "lang": "zh",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1792518514851,
-   "store": "dragon-s-lair",
-   "product": "dragon-s-lair:15554363064668",
-   "group": "prismatic-evolutions|premium-collection|en||super",
-   "title": "Pokemon TCG SV8.5: Prismatic Evolutions Super Premium Collection",
-   "url": "https://dragonslair.se/products/pokemon-tcg-sv85-prismatic-evolutions-super-premium-collection-pokemon",
-   "price": 3295,
-   "type": "Premium Collection",
-   "set": "Prismatic Evolutions",
-   "lang": "en",
    "kind": "tillbaka"
   }
  ]
