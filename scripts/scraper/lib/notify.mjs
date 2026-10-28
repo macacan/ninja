@@ -24,11 +24,11 @@ function matches(e, p) {
   return true;
 }
 
-// Produktens namn är rubriken och bilden visas i notisen (sw.js). Typen står först i texten som ett emblem.
-const BADGE = { ny: "🆕", tillbaka: "🔁", prissankt: "🔻", forbestallning: "⏳" };
+// Produktens namn är rubriken och bilden visas i notisen (sw.js). Typen står först i texten som ett kort emblem.
+const BADGE = { ny: "NY", tillbaka: "TILLBAKA I LAGER", prissankt: "PRISSÄNKT", forbestallning: "FÖRBESTÄLLNING" };
 function message(e, storeName) {
   const price = kr(e.price);
-  const badge = `${BADGE[e.kind] ? `${BADGE[e.kind]} ` : ""}${(KIND[e.kind] || e.kind).toUpperCase()}`;
+  const badge = BADGE[e.kind] || (KIND[e.kind] || e.kind).toUpperCase();
   return { title: e.title, body: `${badge} · ${price}\n${storeName[e.store] || e.store}`, image: e.image || undefined, url: e.url, tag: `${e.product}-${e.kind}` };
 }
 function summary(list) {

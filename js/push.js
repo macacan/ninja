@@ -53,7 +53,7 @@ export async function testPush(p, storeName = "") {
   const reg = await navigator.serviceWorker.ready;
   const price = `${Math.round(p.price).toLocaleString("sv-SE")} kr`;
   await reg.showNotification(p.title, {
-    body: `🆕 NY PRODUKT · ${price}\n${storeName}${storeName ? " · " : ""}Testnotis`,
+    body: `NY · ${price}\n${storeName}${storeName ? " · " : ""}Testnotis`,
     icon: p.image || "img/icon-192.png?v=2", image: p.image || undefined, badge: "img/badge-96.png",
     tag: "lootninja-test", data: { url: p.url || "butiker.html#notiser" },
   });
