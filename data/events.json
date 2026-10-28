@@ -1,6 +1,34 @@
 {
- "updated": 1793191042993,
+ "updated": 1793191943019,
  "events": [
+  {
+   "at": 1793191712065,
+   "store": "dragon-s-lair",
+   "product": "dragon-s-lair:15726498021724",
+   "group": "x|tin|en||gengar-summer",
+   "title": "Pokémon TCG: Summer Tin 2026 - Mega Gengar EX (max 1/kund)",
+   "url": "https://dragonslair.se/products/pokemon-tcg-summer-tin-2026-mega-gengar-ex-max-1-kund",
+   "image": "https://cdn.shopify.com/s/files/1/1015/8315/9644/files/PokemonTCGSummerTin2026-MegaGengarEX.png?v=1785929335",
+   "price": 549,
+   "type": "Tin",
+   "set": null,
+   "lang": "en",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1793191712065,
+   "store": "dragon-s-lair",
+   "product": "dragon-s-lair:15726490943836",
+   "group": "x|tin|en||clefable-summer",
+   "title": "Pokémon TCG: Summer Tin 2026 - Mega Clefable EX (max 1/kund)",
+   "url": "https://dragonslair.se/products/pokemon-tcg-summer-tin-2026-mega-clefable-ex",
+   "image": "https://cdn.shopify.com/s/files/1/1015/8315/9644/files/PokemonTCGSummerTin2026-MegaClefableEX.png?v=1785929148",
+   "price": 425,
+   "type": "Tin",
+   "set": null,
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793186616262,
    "store": "samlarhobby",
@@ -6567,32 +6595,6 @@
    "type": "Booster Box",
    "set": null,
    "lang": "zh",
-   "kind": "ny"
-  },
-  {
-   "at": 1792506296396,
-   "store": "maxgaming",
-   "product": "maxgaming:https://maxgaming.se/sv/pokemon/pokemon-grand-crystal-binder-gift-box-sylveon",
-   "group": "x|collection-box|en||binder-crystal-gift-grand-sylveon",
-   "title": "Pokémon Grand Crystal Binder Gift Box - Sylveon",
-   "url": "https://maxgaming.se/sv/pokemon/pokemon-grand-crystal-binder-gift-box-sylveon",
-   "price": 1699,
-   "type": "Collection Box",
-   "set": null,
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1792506296396,
-   "store": "maxgaming",
-   "product": "maxgaming:https://maxgaming.se/sv/pokemon/mega-brave-m1l-booster-box-japanese",
-   "group": "x|booster-box|ja||brave",
-   "title": "Pokémon Mega Brave M1L Booster Box (Japanese)",
-   "url": "https://maxgaming.se/sv/pokemon/mega-brave-m1l-booster-box-japanese",
-   "price": 1190,
-   "type": "Booster Box",
-   "set": null,
-   "lang": "ja",
    "kind": "ny"
   }
  ]
