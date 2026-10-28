@@ -1,6 +1,35 @@
 {
- "updated": 1793203226117,
+ "updated": 1793204146150,
  "events": [
+  {
+   "at": 1793204018906,
+   "store": "cards-by-malcolm",
+   "product": "cards-by-malcolm:https://www.cardsbymalcolm.se/product/23007544/pokemon-scarlet-violet-151-booster-bundle",
+   "group": "151|booster-bundle|en|",
+   "title": "Pokémon Scarlet & Violet 151 Booster Bundle",
+   "url": "https://www.cardsbymalcolm.se/product/23007544/pokemon-scarlet-violet-151-booster-bundle",
+   "image": "https://primary.jwwb.nl/public/j/t/b/temp-lbskgdtsizbkffcqieki/151-booster-bundle-high-h31fxl.png",
+   "price": 2149,
+   "type": "Booster Bundle",
+   "set": "151",
+   "lang": "en",
+   "kind": "prissankt",
+   "from": 2199
+  },
+  {
+   "at": 1793203691214,
+   "store": "rgb-kingz",
+   "product": "rgb-kingz:16146398708042",
+   "group": "phantasmal-flames|booster-pack|en|",
+   "title": "Pokémon TCG: Mega Evolution – Phantasmal Flames Booster Pack (ENG)",
+   "url": "https://rgbkingz.com/products/pokemon-tcg-mega-evolution-phantasmal-flames-booster-pack-eng",
+   "image": "https://cdn.shopify.com/s/files/1/0782/8088/4554/files/phantasmalflamesboosterpack.jpg?v=1793202774",
+   "price": 169,
+   "type": "Booster Pack",
+   "set": "Phantasmal Flames",
+   "lang": "en",
+   "kind": "ny"
+  },
   {
    "at": 1793202308296,
    "store": "tcgaddan",
@@ -6586,32 +6615,6 @@
    "type": "Collection Box",
    "set": null,
    "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1792509262609,
-   "store": "maxgaming",
-   "product": "maxgaming:https://maxgaming.se/sv/pokemon/pokemon-pikachu-special-box-pokemon-center-hiroshima",
-   "group": "x|collection-box|en|pc|center-hiroshima-pikachu",
-   "title": "Pokémon Pikachu Special Box Pokémon Center - Hiroshima",
-   "url": "https://maxgaming.se/sv/pokemon/pokemon-pikachu-special-box-pokemon-center-hiroshima",
-   "price": 1990,
-   "type": "Collection Box",
-   "set": null,
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1792509262609,
-   "store": "maxgaming",
-   "product": "maxgaming:https://maxgaming.se/sv/pokemon/pokemon-grand-crystal-mystery-box-simplified-chinese",
-   "group": "x|collection-box|zh||crystal-grand-mystery",
-   "title": "Pokémon Grand Crystal Mystery Box (Simplified Chinese)",
-   "url": "https://maxgaming.se/sv/pokemon/pokemon-grand-crystal-mystery-box-simplified-chinese",
-   "price": 379,
-   "type": "Collection Box",
-   "set": null,
-   "lang": "zh",
    "kind": "ny"
   }
  ]
