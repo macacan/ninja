@@ -1,6 +1,20 @@
 {
- "updated": 1793186382719,
+ "updated": 1793187362742,
  "events": [
+  {
+   "at": 1793186616262,
+   "store": "samlarhobby",
+   "product": "samlarhobby:16089781764477",
+   "group": "x|blister|en||2|enhanced-gengar",
+   "title": "Pokémon, Enhanced 2-Pack Blister, Gengar",
+   "url": "https://samlarhobby.se/products/pokemon-enhanced-2-pack-blister-gengar",
+   "image": "https://cdn.shopify.com/s/files/1/0905/3120/1405/files/0196214155985_1.jpg?v=1793186224",
+   "price": 229,
+   "type": "Blister",
+   "set": null,
+   "lang": "en",
+   "kind": "ny"
+  },
   {
    "at": 1793185769919,
    "store": "speltrollet",
@@ -6576,19 +6590,6 @@
    "title": "Pokémon Mega Brave M1L Booster Box (Japanese)",
    "url": "https://maxgaming.se/sv/pokemon/mega-brave-m1l-booster-box-japanese",
    "price": 1190,
-   "type": "Booster Box",
-   "set": null,
-   "lang": "ja",
-   "kind": "ny"
-  },
-  {
-   "at": 1792506296396,
-   "store": "maxgaming",
-   "product": "maxgaming:https://maxgaming.se/sv/pokemon/pokemon-ninja-spinner-booster-box-japansk",
-   "group": "x|booster-box|ja||ninja-spinner",
-   "title": "Pokémon Ninja Spinner Booster Box (Japansk)",
-   "url": "https://maxgaming.se/sv/pokemon/pokemon-ninja-spinner-booster-box-japansk",
-   "price": 1090,
    "type": "Booster Box",
    "set": null,
    "lang": "ja",
