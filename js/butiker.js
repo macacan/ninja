@@ -54,13 +54,13 @@ const fold = (s) => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
 function filtered(skip = "") {
   const q = fold($("#f-q").value.trim());
   const v = (id) => $(id).value;
-  const [lo, hi] = PRICE[v("#f-price")];
+  const [lo, hi] = PRICE[skip === "price" ? "" : v("#f-price")];
   const inS = pressed("#c-in"), pre = pressed("#c-pre"), watchOnly = pressed("#c-watch");
   const watch = new Set(getPrefs().watch || []);
   const words = q.split(/\s+/).filter(Boolean);
   const selStores = picked("f-store"), selSets = picked("f-set");
-  return products.filter((p) => (skip === "store" || !selStores.length || selStores.includes(p.store)) && (!v("#f-game") || gameOf(p) === v("#f-game")) && (!v("#f-type") || p.type === v("#f-type"))
-    && (skip === "set" || !selSets.length || selSets.includes(p.set)) && (!v("#f-lang") || p.lang === v("#f-lang"))
+  return products.filter((p) => (skip === "store" || !selStores.length || selStores.includes(p.store)) && (skip === "game" || !v("#f-game") || gameOf(p) === v("#f-game")) && (skip === "type" || !v("#f-type") || p.type === v("#f-type"))
+    && (skip === "set" || !selSets.length || selSets.includes(p.set)) && (skip === "lang" || !v("#f-lang") || p.lang === v("#f-lang"))
     && p.price >= lo && p.price < hi
     && ((!inS && !pre) || (inS && p.available) || (pre && p.preorder && !p.available))
     && (!watchOnly || watch.has(groupKey(p)))
@@ -184,6 +184,8 @@ function groupCard(g, open) {
 const openGroups = new Set();
 // Antalet vid varje butik och set följer de övriga filtren: med Riftbound valt står det hur många
 // Riftbound-produkter butiken har, 0 om den inte har några.
+// Val som inga produkter har med de andra filtren döljs, och kommer tillbaka så fort en produkt har dem.
+// Det som redan är valt syns alltid, så att det går att välja bort.
 function liveCounts() {
   for (const [id, key] of [["f-store", "store"], ["f-set", "set"]]) {
     const n = {};
@@ -191,8 +193,16 @@ function liveCounts() {
     for (const box of document.querySelectorAll(`#${id} input`)) {
       const row = box.closest(".chk");
       row.querySelector("small").textContent = n[box.value] || 0;
-      row.classList.toggle("zero", !n[box.value]);
+      // En egen klass, inte hidden, eftersom sökrutan i listan styr hidden.
+      row.classList.toggle("empty", !n[box.value] && !box.checked);
     }
+  }
+  const inPrice = (p, v) => { const [lo, hi] = PRICE[v]; return p.price >= lo && p.price < hi; };
+  for (const [id, key, has] of [["#f-game", "game", (p, v) => gameOf(p) === v], ["#f-type", "type", (p, v) => p.type === v],
+    ["#f-lang", "lang", (p, v) => p.lang === v], ["#f-price", "price", inPrice]]) {
+    const sel = $(id), list = filtered(key);
+    // Mobilens listor (iOS) bryr sig inte om hidden på option, därför även disabled.
+    for (const o of sel.options) { const off = !!o.value && o.value !== sel.value && !list.some((p) => has(p, o.value)); o.hidden = o.disabled = off; }
   }
 }
 
@@ -443,7 +453,7 @@ $("#tab-notiser").addEventListener("input", (e) => {
 $("#tab-notiser").addEventListener("click", (e) => {
   const all = e.target.closest("[data-all]"), none = e.target.closest("[data-none]");
   if (all || none) {
-    for (const b of boxes((all || none).dataset.all || (all || none).dataset.none)) if (!b.closest(".chk").hidden) b.checked = !!all;
+    for (const b of boxes((all || none).dataset.all || (all || none).dataset.none)) if (!b.closest(".chk").hidden && !b.closest(".chk").classList.contains("empty")) b.checked = !!all;
     refreshSummary();
   }
   const rm = e.target.closest("[data-unwatch]");

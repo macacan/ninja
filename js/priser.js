@@ -5,6 +5,7 @@ import { mountCardAutocomplete, parseCardQuery, resolvePokemonName, loadDataset,
 import { langMark } from "./langmark.js";
 import { apiFor, findJapanese } from "./japanese.js";
 import { track } from "./tracker.js";
+import { gameSuggestions } from "./game-guess.js";
 
 // ---------- Spel ----------
 // Pokémon söks direkt mot TCGdex. One Piece och Riftbound söks i färdigbyggda filer i data/<spel>/
@@ -353,6 +354,8 @@ const setAdv = (open) => { adv.hidden = !open; advToggle.setAttribute("aria-expa
 advToggle.addEventListener("click", () => setAdv(adv.hidden));
 
 mountCardAutocomplete($("#pq"), {
+  // One Piece och Riftbound får förslag ur spelets egna kort, Pokémon de vanliga.
+  source: (q) => (prebuilt() ? gameSuggestions(game, q) : null),
   suggest: () => !prebuilt(),
   onSelect: (val) => {
     $("#pq").value = val;

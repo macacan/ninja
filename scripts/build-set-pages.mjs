@@ -149,7 +149,7 @@ const headHtml = ({ title, desc, url, ld }) => `<!doctype html>
 <meta name="twitter:card" content="summary_large_image">
 <script type="application/ld+json">${JSON.stringify(ld).replace(/</g, "\\u003c")}</script>
 <link href="fonts/fonts.css" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=20261029d">
+<link rel="stylesheet" href="style.css?v=20261029g">
 <link rel="stylesheet" href="dark.css?v=20261029a" id="dark-css" media="(prefers-color-scheme: dark)">
 <script src="js/theme.js?v=20261021"></script>
 </head>
@@ -256,8 +256,8 @@ function relatedHtml(p, all) {
 }
 
 const fold = (s) => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
-const tile = (p) => `<li data-q="${esc(fold([p.name, p.serie, p.id].filter(Boolean).join(" ")))}"><a href="set/${p.slug}.html">${logoImg(p, "set-tile-logo")}<b>${esc(p.name)}</b><small>${p.date ? (upcoming(p) ? `Släpps ${longDate(p.date)}` : longDate(p.date)) : "Datum ej satt"}${count(p) ? ` · ${count(p)} kort` : ""}</small></a></li>`;
-const gameTile = (p) => `<li data-q="${esc(fold([p.name, p.code, p.id, GAMES.find(([g]) => g === p.game)[3]].filter(Boolean).join(" ")))}"><a href="set/${p.slug}.html">${p.logo ? `<img class="set-tile-logo" src="${esc(p.logo)}" alt="${esc(p.name)}" loading="lazy" decoding="async">` : `<span class="set-tile-logo set-word">${esc(p.name)}</span>`}<b>${esc(p.code ? `${p.code} · ${p.name}` : p.name)}</b><small>${p.date ? (p.date > today ? `Släpps ${longDate(p.date)}` : longDate(p.date)) : "Datum ej satt"}${p.cards.length ? ` · ${p.cards.length} kort` : ""}</small></a></li>`;
+const tile = (p) => `<li data-game="pk" data-q="${esc(fold([p.name, p.serie, p.id].filter(Boolean).join(" ")))}"><a href="set/${p.slug}.html">${logoImg(p, "set-tile-logo")}<b>${esc(p.name)}</b><small>${p.date ? (upcoming(p) ? `Släpps ${longDate(p.date)}` : longDate(p.date)) : "Datum ej satt"}${count(p) ? ` · ${count(p)} kort` : ""}</small></a></li>`;
+const gameTile = (p) => `<li data-game="${p.game}" data-q="${esc(fold([p.name, p.code, p.id, GAMES.find(([g]) => g === p.game)[3]].filter(Boolean).join(" ")))}"><a href="set/${p.slug}.html">${p.logo ? `<img class="set-tile-logo" src="${esc(p.logo)}" alt="${esc(p.name)}" loading="lazy" decoding="async">` : `<span class="set-tile-logo set-word">${esc(p.name)}</span>`}<b>${esc(p.code ? `${p.code} · ${p.name}` : p.name)}</b><small>${p.date ? (p.date > today ? `Släpps ${longDate(p.date)}` : longDate(p.date)) : "Datum ej satt"}${p.cards.length ? ` · ${p.cards.length} kort` : ""}</small></a></li>`;
 const anyTile = (p) => (p.game ? gameTile(p) : tile(p));
 
 // ---------- One Piece och Riftbound ----------
@@ -320,7 +320,7 @@ ${p.cards.length ? `
     <ul class="set-top set-all">${[...p.cards].sort(byNo).map((c) => gameCard(p, c)).join("")}
     </ul>` : ""}
 ${others.length ? `
-    <div class="section"><h2>Fler ${esc(game)}-set</h2><a class="more" href="set/#${gameAnchor[p.game]}">Alla set</a></div>
+    <div class="section"><h2>Fler ${esc(game)}-set</h2><a class="more" href="set/?spel=${p.game}">Alla set</a></div>
     <ul class="set-tiles">${others.map(gameTile).join("")}</ul>` : ""}
   </div>${foot}`;
 }
@@ -387,6 +387,9 @@ function indexPage(all) {
         </form>
       </div>
     </section>
+    <div class="seg game-seg" id="set-games" role="group" aria-label="Kortspel">
+      <button type="button" data-game="" aria-pressed="true">Alla</button><button type="button" data-game="pk" aria-pressed="false">Pokémon</button><button type="button" data-game="op" aria-pressed="false">One Piece</button><button type="button" data-game="rb" aria-pressed="false">Riftbound</button>
+    </div>
     <p class="lead-sm" id="set-none" hidden>Inget set matchar. Prova ett annat namn eller en serie, till exempel Scarlet.</p>
 ${soon.length ? `
     <div class="section"><h2>Aktuella och kommande set</h2><a class="more" href="slapp.html">Släppkalendern</a></div>
@@ -402,20 +405,32 @@ ${[...series].map(([name, list]) => `
 (() => {
   const q = document.getElementById("set-q"), none = document.getElementById("set-none");
   const fold = (s) => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
-  const lists = [...document.querySelectorAll(".set-tiles")];
-  q.addEventListener("input", () => {
+  const lists = [...document.querySelectorAll(".set-tiles")], seg = document.getElementById("set-games");
+  // Spelknapparna och sökrutan gäller tillsammans. Valt spel står i adressen (?spel=op), så att det går att länka.
+  let game = new URLSearchParams(location.search).get("spel") || "";
+  const apply = () => {
     const t = fold(q.value.trim());
+    for (const b of seg.querySelectorAll("button")) b.setAttribute("aria-pressed", String(b.dataset.game === game));
     let shown = 0;
     for (const ul of lists) {
       let any = false;
-      for (const li of ul.children) { const ok = !t || li.dataset.q.includes(t); li.hidden = !ok; any = any || ok; }
+      for (const li of ul.children) { const ok = (!t || li.dataset.q.includes(t)) && (!game || li.dataset.game === game); li.hidden = !ok; any = any || ok; }
       ul.hidden = !any;
       const h = ul.previousElementSibling;
       if (h && h.classList.contains("section")) h.hidden = !any;
       if (any) shown += [...ul.children].filter((li) => !li.hidden).length;
     }
     none.hidden = shown > 0;
+  };
+  q.addEventListener("input", apply);
+  seg.addEventListener("click", (e) => {
+    const b = e.target.closest("button[data-game]");
+    if (!b) return;
+    game = b.dataset.game;
+    history.replaceState(null, "", location.pathname + (game ? "?spel=" + game : ""));
+    apply();
   });
+  if (game) apply();
 })();
 </script>`;
 }

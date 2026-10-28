@@ -4,17 +4,17 @@ import { getPrefs } from "./prefs.js";
 import { bindSetCards } from "./setcards.js";
 import "./restock.js";
 import { mountCardAutocomplete } from "./card-autocomplete.js";
-import { loadGameNames, guessGame } from "./game-guess.js";
+import { loadGameNames, guessGame, gameSuggestions } from "./game-guess.js";
 
 // Sökrutan överst söker i alla tre spelen och väljer spelet efter vad man skriver (js/game-guess.js).
-// Pokémonförslagen visas bara medan sökningen ser ut att gälla Pokémon.
+// Förslagen gäller spelet som sökningen ser ut att gälla: Pokémonförslag, eller One Piece- och Riftbound-kort.
 const pbForm = $("#pb-form");
 if (pbForm) {
   const input = pbForm.querySelector("input[name=q]");
   let names = null;
   loadGameNames().then((n) => (names = n));
   const guess = () => guessGame(input.value, names);
-  mountCardAutocomplete(input, { suggest: () => guess() === "pokemon" });
+  mountCardAutocomplete(input, { source: (q) => { const g = guess(); return g === "pokemon" ? null : gameSuggestions(g, q); }, suggest: () => guess() === "pokemon" });
   pbForm.addEventListener("submit", async (e) => {
     // Hann namnen inte laddas väntar sökningen på dem, annars blir allt Pokémon.
     if (!names) {

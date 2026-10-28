@@ -26,19 +26,24 @@ const video = (v) => `<article class="video">
 let all = [], articles = [];
 const pageCount = () => Math.max(1, Math.ceil(articles.length / PER_PAGE));
 
-// Ämne och sidnummer i adressen (?amne=priser&sida=2), så att bakåtknappen och länkar fungerar.
+// Spel, ämne och sidnummer i adressen (?spel=rb&amne=priser&sida=2), så att bakåtknappen och länkar fungerar.
+// Spelet är Alla om inget är valt. Ämnena räknas inom det valda spelet.
 const params = () => new URLSearchParams(location.search);
+const GAMES = ["pk", "op", "rb"];
+const game = () => (GAMES.includes(params().get("spel")) ? params().get("spel") : "");
+const ofGame = (list) => (game() ? list.filter((a) => (a.game || "pk") === game()) : list);
 const topic = () => TOPICS.find((t) => t.id === params().get("amne")) || TOPICS[0];
 function currentPage() {
   const n = parseInt(params().get("sida"), 10);
   return Math.min(pageCount(), Math.max(1, Number.isFinite(n) ? n : 1));
 }
-const url = (t, p) => { const q = new URLSearchParams(); if (t) q.set("amne", t); if (p > 1) q.set("sida", p); const s = q.toString(); return s ? `?${s}` : location.pathname; };
+const url = (t, p, g = game()) => { const q = new URLSearchParams(); if (g) q.set("spel", g); if (t) q.set("amne", t); if (p > 1) q.set("sida", p); const s = q.toString(); return s ? `?${s}` : location.pathname; };
 
 function renderTabs() {
   const cur = topic();
+  const mine = ofGame(all);
   $("#news-tabs").innerHTML = TOPICS.map((t) => {
-    const n = t.test ? all.filter(t.test).length : all.length;
+    const n = t.test ? mine.filter(t.test).length : mine.length;
     if (t.test && !n) return ""; // tomma ämnen visas inte
     return `<a class="news-tab" href="${url(t.id, 1)}" data-topic="${t.id}"${t === cur ? ' aria-current="true"' : ""}>${esc(t.label)} <span>${n}</span></a>`;
   }).join("");
@@ -46,7 +51,8 @@ function renderTabs() {
 
 function renderArticles(scroll = false) {
   const t = topic();
-  articles = t.test ? all.filter(t.test) : all;
+  articles = t.test ? ofGame(all).filter(t.test) : ofGame(all);
+  for (const b of document.querySelectorAll("#news-games button")) b.setAttribute("aria-pressed", String(b.dataset.game === game()));
   renderTabs();
   const page = currentPage(), n = pageCount();
   const list = articles.slice((page - 1) * PER_PAGE, page * PER_PAGE);
@@ -72,6 +78,12 @@ $("#news-tabs").addEventListener("click", (e) => {
   if (!a) return;
   e.preventDefault();
   history.pushState(null, "", url(a.dataset.topic, 1));
+  renderArticles();
+});
+$("#news-games").addEventListener("click", (e) => {
+  const b = e.target.closest("button[data-game]");
+  if (!b) return;
+  history.pushState(null, "", url("", 1, b.dataset.game));
   renderArticles();
 });
 addEventListener("popstate", () => renderArticles());

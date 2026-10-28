@@ -898,16 +898,21 @@ span.rd-logo{display:grid;place-items:center;background:var(--surface);border-ra
 .game-seg{margin-top:28px}.game-seg + .card-search{margin-top:14px}
 /* Spelknapparna på Kortpriser: kortmotiv från varje spel bakom texten, mörkare när knappen inte är vald.
    Id-väljaren gör att dark.css (.seg button[aria-pressed=true]) inte tar över färgen. */
-#game-seg button{--shade:rgba(12,13,22,.5);padding:16px 34px;color:#fff;text-shadow:0 1px 2px #000,0 0 8px rgba(0,0,0,.8);background:linear-gradient(var(--shade),var(--shade)),var(--art) center/cover}
-#game-seg button:hover{--shade:rgba(12,13,22,.3)}
-#game-seg button[aria-pressed=true]{--shade:rgba(12,13,22,.12);color:var(--gold);box-shadow:inset 0 -4px 0 var(--gold)}
-#game-seg [data-game=pokemon]{--art:url(img/games/pokemon.webp)}
-#game-seg [data-game=op]{--art:url(img/games/op.webp)}
-#game-seg [data-game=rb]{--art:url(img/games/rb.webp)}
-#game-seg button{white-space:nowrap;position:relative}
+:is(#game-seg,#news-games,#set-games) button{--shade:rgba(12,13,22,.5);padding:16px 34px;color:#fff;text-shadow:0 1px 2px #000,0 0 8px rgba(0,0,0,.8);background:linear-gradient(var(--shade),var(--shade)),var(--art) center/cover}
+:is(#game-seg,#news-games,#set-games) button:hover{--shade:rgba(12,13,22,.3)}
+:is(#game-seg,#news-games,#set-games) button[aria-pressed=true]{--shade:rgba(12,13,22,.12);color:var(--gold);box-shadow:inset 0 -4px 0 var(--gold)}
+:is(#game-seg,#news-games,#set-games) [data-game=pokemon]{--art:url(img/games/pokemon.webp)}
+:is(#game-seg,#news-games,#set-games) [data-game=op]{--art:url(img/games/op.webp)}
+:is(#game-seg,#news-games,#set-games) [data-game=rb]{--art:url(img/games/rb.webp)}
+/* Nyheterna har även Alla, utan kortmotiv. */
+:is(#news-games,#set-games) [data-game=""]{--art:linear-gradient(135deg,#2c3354,#1b1e28)}
+#news-games{margin:0 0 14px}
+#set-games{margin:0 0 6px}
+#set-games [data-game=pk]{--art:url(img/games/pokemon.webp)}
+:is(#game-seg,#news-games,#set-games) button{white-space:nowrap;position:relative}
 /* Beta-märket ligger i knappens hörn, så att knapparna behåller sin bredd även på mobil. */
-#game-seg .beta-tag{position:absolute;top:4px;right:4px;margin:0;padding:3px 4px;font-size:.52rem;font-style:normal;text-shadow:none}
-@media (max-width:640px){#game-seg button{padding:16px 6px}}
+:is(#game-seg,#news-games,#set-games) .beta-tag{position:absolute;top:4px;right:4px;margin:0;padding:3px 4px;font-size:.52rem;font-style:normal;text-shadow:none}
+@media (max-width:640px){:is(#game-seg,#news-games,#set-games) button{padding:16px 6px}}
 .card-search .btn{margin:var(--px) var(--px) var(--px) auto}
 /* Filter-knappen och de dolda filtren (språk, set, sällsynthet) som fälls ut på en egen rad. */
 .card-search #adv-toggle{margin:0;flex:none}
@@ -1081,6 +1086,7 @@ span.rd-logo{display:grid;place-items:center;background:var(--surface);border-ra
 .chk span{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .chk small{font:600 .9rem var(--cond);color:var(--muted)}
 .chk.zero span,.chk.zero small{opacity:.45}
+.chk.empty{display:none}
 .price-cap{display:inline-flex;align-items:center;gap:8px}
 .price-cap input{width:140px;border:1px solid var(--line);border-radius:8px;padding:8px 10px;font:inherit;background:#fff}
 .watch-list{list-style:none;margin:10px 0 0;padding:0}

@@ -29,6 +29,42 @@ function fit(q, name) {
   return best;
 }
 
+// Förslag i sökrutan för One Piece och Riftbound: kortnamn ur data/<spel>/cards.json med grundversionens bild,
+// i samma form som Pokémonförslagen (findMatches i js/card-autocomplete.js). Filen hämtas först när den behövs.
+const LABEL = { op: "One Piece", rb: "Riftbound" };
+const cardLists = {};
+const gameCards = (g) => (cardLists[g] ??= fetch(`data/${g}/cards.json`).then((r) => r.json()).then((d) => {
+  const by = new Map();
+  for (const c of d.cards) {
+    const k = c.name.toLowerCase(), o = by.get(k);
+    if (!o) by.set(k, { name: c.name, w: words(c.name), image: c.image, variant: !!c.variant, sek: c.sek, count: 1 });
+    else {
+      o.count++;
+      // Grundversionen (utan variant) visas, med sin bild och sitt pris.
+      if ((o.variant && !c.variant && c.image) || (!o.image && c.image)) Object.assign(o, { image: c.image, variant: !!c.variant, sek: c.sek });
+    }
+  }
+  return [...by.values()];
+}).catch(() => { delete cardLists[g]; return []; }));
+
+export const approx = (sek) => `${Math.max(1, Math.round(sek)).toLocaleString("sv-SE").replace(/\u00a0/g, " ")} kr`;
+export async function gameSuggestions(g, query, max = 6) {
+  const q = words(query);
+  if (!LABEL[g] || !q.length) return null;
+  const t = fold(query).trim();
+  const hits = (await gameCards(g)).map((c) => [c, fit(q, c.w)]).filter(([, s]) => s > 0)
+    // Helt ord före början av ett ord, sedan kort med flest versioner (de mest kända), sedan kortast namn.
+    .sort(([a, x], [b, y]) => y - x || b.count - a.count || a.name.length - b.name.length)
+    .slice(0, max).map(([c]) => c);
+  if (!hits.length) return null;
+  return {
+    label: `${LABEL[g]}-kort`, cards: [], parsed: null,
+    bestMatch: hits.find((c) => fold(c.name).startsWith(t))?.name || null,
+    pokemon: hits.map((c) => ({ name: c.name, val: c.name, thumb: c.image,
+      sub: [LABEL[g], `${c.count} ${c.count === 1 ? "version" : "versioner"}`, c.sek != null && `ca ${approx(c.sek)}`].filter(Boolean).join(" · ") })),
+  };
+}
+
 // "pokemon", "op" eller "rb". names: svaret från loadGameNames(), utan dem blir det Pokémon.
 export function guessGame(query, names) {
   const t = fold(query);

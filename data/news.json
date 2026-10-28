@@ -1,6 +1,33 @@
 {
- "updated": "2026-10-28T23:49:52.015Z",
+ "updated": "2026-10-28T23:46:40.422Z",
  "articles": [
+  {
+   "title": "Budget Riftbound Decks: Build with Bulk Cards & Play for $10!",
+   "link": "https://riftbound.gg/budget-riftbound-decks-build-with-bulk-cards-play-for-10/",
+   "date": "2026-10-28T21:34:52.000Z",
+   "summary": "Curious about Riftbound but can't afford to spend $100 to get started? You've come to the right place! The post Budget Riftbound Decks: Build with Bulk Cards & Play for $10!…",
+   "image": null,
+   "source": "Riftbound.gg",
+   "game": "rb"
+  },
+  {
+   "title": "Europe Regional Championship 2026 Event Information",
+   "link": "https://riftbound.gg/europe-regional-championship-2026-event-information/",
+   "date": "2026-10-28T21:31:58.000Z",
+   "summary": "Riot Games has published the event information for the upcoming Europe Regional Championship in Stuttgart, Germany! Check out the full prize list and more! The penultimate…",
+   "image": "https://riftbound.gg/wp-content/uploads/sites/67/2026/10/image-11.webp",
+   "source": "Riftbound.gg",
+   "game": "rb"
+  },
+  {
+   "title": "The Most Expensive Riftbound Radiance Cards Right Now",
+   "link": "https://riftbound.gg/most-expensive-riftbound-radiance-cards/",
+   "date": "2026-10-28T21:23:43.000Z",
+   "summary": "Radiance just launched on October 23, and the secondary market is already moving. Every card on this list is an overnumbered variant, the same pattern as every set before it. Since…",
+   "image": null,
+   "source": "Riftbound.gg",
+   "game": "rb"
+  },
   {
    "title": "Pokémon TCG Pocket update 1.8.0 adds Dual Fusion packs and new features",
    "link": "https://pokemonblog.com/2026/10/27/pokemon-tcg-pocket-update-1-8-0-adds-dual-fusion-packs-and-new-features/",
@@ -8,15 +35,44 @@
    "summary": "Pokémon Trading Card Game Pocket’s version 1.8.0 update is available today, Oct. 28, introducing the Dual Fusion expansion with Mega Mewtwo X ex and Mega Greninja ex. The dual-type…",
    "image": "https://pokemonblog.com/wp-content/uploads/2026/10/pokemon_tcg_pocket_dual_fusion_pikachu_mega_mewtwo_x_ex.jpg",
    "source": "PokemonBlog",
+   "game": "pk",
    "digital": true
   },
   {
-   "title": "Target Black Friday Leak Reveals Big Deals for Pokémon TCG Fans",
-   "link": "https://www.polygon.com/target-black-friday-2026-pokemon-sale-30th-anniversary-product-list/",
-   "date": "2026-10-27T16:32:15.000Z",
-   "summary": "Target is expected to have a wide range of Pokémon 30th Anniversary TCG products for sale as doorbusters on Black Friday",
-   "image": "https://static0.polygonimages.com/wordpress/wp-content/uploads/2026/10/poke-mon-tcg-pocket_-dual-fusion-_-official-trailer-1-13-screenshot.jpeg",
-   "source": "Polygon"
+   "title": "Riftbound x K/DA: Couture Collection: How to Enter Draw & Complete Draw Schedule",
+   "link": "https://riftbound.gg/k-da-couture-collection-draw/",
+   "date": "2026-10-27T18:30:52.000Z",
+   "summary": "The Riftbound x K/DA: Couture Collection drawing opens on October 27. The FIRESTARTER era makes its way to the tabletop with a premium bundle featuring brand-new artwork by…",
+   "image": "https://riftbound.gg/wp-content/uploads/sites/67/2026/10/Riftbound-x-KDA-Couture-Collection-How-to-Enter-Draw-Complete-Draw-Schedule-1024x576.webp",
+   "source": "Riftbound.gg",
+   "game": "rb"
+  },
+  {
+   "title": "Best Decks for Every Legend for Early Radiance",
+   "link": "https://riftbound.gg/best-decks-for-every-legend-for-early-radiance/",
+   "date": "2026-10-26T21:37:41.000Z",
+   "summary": "Decks for almost every legend in Riftbound early in the new expasion : Radiance ! The post Best Decks for Every Legend for Early Radiance appeared first on Riftbound.gg .",
+   "image": null,
+   "source": "Riftbound.gg",
+   "game": "rb"
+  },
+  {
+   "title": "Radiance Rules FAQ and Clarifications",
+   "link": "https://riftbound.gg/radiance-rules-faq-and-clarifications/",
+   "date": "2026-10-26T20:12:44.000Z",
+   "summary": "Riot Games has released the answers for some frequent questions about Radiance interactions. You can also refer to the full, updated Rules document. Welcome to the Radiance FAQ…",
+   "image": "https://cmsassets.rgpub.io/sanity/images/dsfx7636/news_live/c031e2ceee4e0588fb63678a3fb838dba06db101-1848x1063.jpg",
+   "source": "Riftbound.gg",
+   "game": "rb"
+  },
+  {
+   "title": "Riftbound 2027 Premier Play",
+   "link": "https://riftbound.gg/riftbound-2027-premier-play/",
+   "date": "2026-10-26T20:09:02.000Z",
+   "summary": "An overview of the revamped Premier Play program for 2027. The post Riftbound 2027 Premier Play appeared first on Riftbound.gg .",
+   "image": "https://cmsassets.rgpub.io/sanity/images/dsfx7636/news_live/0e64bf2f0542f3bdd8cf4ba92a57e0f23e468093-1920x1080.jpg?accountingTag=RB&fm=jpg&q=80&w=1184",
+   "source": "Riftbound.gg",
+   "game": "rb"
   },
   {
    "title": "Pokémon TCG cuts full art Rayquaza card from upcoming set",
@@ -24,7 +80,8 @@
    "date": "2026-10-26T16:20:32.000Z",
    "summary": "The full list of cards from Delta Reign is now here and, strangely, one Mega Rayquaza is missing.",
    "image": "https://www.wargamer.com/wp-content/sites/wargamer/2026/10/pokemon-trading-card-game-mega-rayquaza-not-in-delta-reign.jpg",
-   "source": "Wargamer"
+   "source": "Wargamer",
+   "game": "pk"
   },
   {
    "title": "PSA confirms FBI investigating $1 million Pokemon & trading card heist as full stolen list revealed",
@@ -32,7 +89,26 @@
    "date": "2026-10-24T13:28:48.000Z",
    "summary": "A new update on the PSA theft has revealed over 6,400 items were stolen and the FBI are now currently investigating the robbery.",
    "image": "https://www.dexerto.com/cdn-image/wp-content/uploads/2026/07/30/PSALogo.jpg?width=480&quality=75&format=auto",
-   "source": "Dexerto"
+   "source": "Dexerto",
+   "game": "pk"
+  },
+  {
+   "title": "Kennen, Heart of the Tempest Guide – Best Decks & Cards: Radiance Update",
+   "link": "https://riftbound.gg/kennen-heart-of-the-tempest-guide/",
+   "date": "2026-10-23T13:30:36.000Z",
+   "summary": "More than just the lightning-quick enforcer of Ionian balance, Kennen is the only yordle member of the Kinkou. Despite his small, furry stature, he is eager to take on any threat…",
+   "image": null,
+   "source": "Riftbound.gg",
+   "game": "rb"
+  },
+  {
+   "title": "Riftbound x Worlds 2026 Edition Draw: Dates, Price and How to Enter",
+   "link": "https://riftbound.gg/riftbound-x-worlds-2026-edition-draw-dates/",
+   "date": "2026-10-23T08:44:50.000Z",
+   "summary": "Riot has finally shared the dates for the Riftbound x Worlds 2026 edition draw. Registration opens on November 13 and closes on November 16. If your name is picked, you get 24…",
+   "image": null,
+   "source": "Riftbound.gg",
+   "game": "rb"
   },
   {
    "title": "Forgotten Pokémon Card Collection Goes for $2 Million",
@@ -40,7 +116,8 @@
    "date": "2026-10-22T17:55:55.000Z",
    "summary": "A British retiree sold their forgotten Pokémon card collection for roughly $2 million at auction.",
    "image": "https://static0.polygonimages.com/wordpress/wp-content/uploads/2026/03/fainted-pokemon-go-pikachu-glitch.avif",
-   "source": "Polygon"
+   "source": "Polygon",
+   "game": "pk"
   },
   {
    "title": "New Official Pokemon TCG Release Confirmed for October 23",
@@ -48,7 +125,8 @@
    "date": "2026-10-22T13:00:16.000Z",
    "summary": "The Pokemon Company formally confirms a new Pokemon TCG release for October 23, expanding the trading card game's busy 2026 schedule.",
    "image": "https://static0.gamerantimages.com/wordpress/wp-content/uploads/2026/10/meowth-happy-excited-next-to-pokemon-tcg-card-composite.jpg",
-   "source": "Game Rant"
+   "source": "Game Rant",
+   "game": "pk"
   },
   {
    "title": "The Pokémon TCG's first 2027 release, Flowing Fists, is revealed",
@@ -56,7 +134,8 @@
    "date": "2026-10-21T11:10:05.000Z",
    "summary": "Pokémon has revealed the name and release date for Flowing Fists, the February Lucario Z set coming out next year.",
    "image": "https://www.wargamer.com/wp-content/sites/wargamer/2026/10/pokemon-trading-card-game-flowing-fists.jpg",
-   "source": "Wargamer"
+   "source": "Wargamer",
+   "game": "pk"
   },
   {
    "title": "Pokemon TCG Pocket Dual Fusion cards: Full set so far",
@@ -65,6 +144,7 @@
    "summary": "Pokemon TCG Pocket’s Dual Fusion expansion brings new Pokemon ex and cards to collect. Explore the full card list, featured Pokemon, and release details.",
    "image": "https://www.dexerto.com/cdn-image/wp-content/uploads/2025/07/24/pokemon-tcg-pocket-new-expansion-dual-fusion-set-c1-mega-mewtwo-x-pikachu-venusaur-charizard-blastoise-mega-dragonite-mega-greninja-mew.jpg?width=480&quality=75&format=auto",
    "source": "Dexerto",
+   "game": "pk",
    "digital": true
   },
   {
@@ -73,7 +153,8 @@
    "date": "2026-10-20T12:41:13.000Z",
    "summary": "PSA’s parent company, Collectors, has responded after close to $1 million of Pokemon and sports cards were stolen from a FedEx truck in California.",
    "image": "https://www.dexerto.com/cdn-image/wp-content/uploads/2026/10/18/fedex-ground-delivery-truck.jpg?width=480&quality=75&format=auto",
-   "source": "Dexerto"
+   "source": "Dexerto",
+   "game": "pk"
   },
   {
    "title": "TCG collector says $100K PSA card order stolen in Pokemon, MTG & Yu-Gi-Oh FedEx truck burglary",
@@ -81,7 +162,8 @@
    "date": "2026-10-18T16:03:17.000Z",
    "summary": "A collector says 104 PSA-graded cards worth over $100,000 were stolen in a FedEx truck burglary, with other customers also reporting missing orders.",
    "image": "https://www.dexerto.com/cdn-image/wp-content/uploads/2026/10/18/fedex-ground-delivery-truck.jpg?width=480&quality=75&format=auto",
-   "source": "Dexerto"
+   "source": "Dexerto",
+   "game": "pk"
   },
   {
    "title": "Pokemon’s $140 mystery TCG skateboards immediately sell out and resell for $1,000",
@@ -89,7 +171,8 @@
    "date": "2026-10-18T14:46:51.000Z",
    "summary": "The collection launched on October 17 to celebrate Pokemon’s 30th anniversary, featuring 30 different designs and three rare gold variants.",
    "image": "https://www.dexerto.com/cdn-image/wp-content/uploads/2026/10/18/santa-cruz-pokemon-boards-header.jpg?width=480&quality=75&format=auto",
-   "source": "Dexerto"
+   "source": "Dexerto",
+   "game": "pk"
   },
   {
    "title": "25-Year Pokemon TCG Player Banned for Life",
@@ -97,7 +180,8 @@
    "date": "2026-10-17T20:30:16.000Z",
    "summary": "A professional Pokemon Trading Card Game player says he has been permanently banned from official tournaments and states a potential reason for it.",
    "image": "https://static0.gamerantimages.com/wordpress/wp-content/uploads/2026/10/25-year-pokemon-tcg-player-banned-for-life.jpg",
-   "source": "Game Rant"
+   "source": "Game Rant",
+   "game": "pk"
   },
   {
    "title": "Pokemon TCG Pocket Making Big Change to Future Set Releases",
@@ -106,6 +190,7 @@
    "summary": "The developers of Pokemon TCG Pocket announce big changes coming to the mobile game, as part of an effort to improve things for players.",
    "image": "https://static0.gamerantimages.com/wordpress/wp-content/uploads/2026/10/pokemon-tcg-pocket-big-change.jpg",
    "source": "Game Rant",
+   "game": "pk",
    "digital": true
   },
   {
@@ -114,7 +199,8 @@
    "date": "2026-10-15T17:42:46.000Z",
    "summary": "Pokémon fans were hoping for the UPC from the 30th Anniversary TCG set, or maybe some more Delta Reign ETBs from TPC",
    "image": "https://static0.polygonimages.com/wordpress/wp-content/uploads/chorus/uploads/chorus_asset/file/16191800/Screen_Shot_2019_04_25_at_3.18.21_PM.png",
-   "source": "Polygon"
+   "source": "Polygon",
+   "game": "pk"
   },
   {
    "title": "Why is Lugia EX suddenly the #5 most costly Pokémon card of all time?",
@@ -122,7 +208,8 @@
    "date": "2026-10-14T15:29:14.000Z",
    "summary": "This Pokémon card is ballooning in value, with an out-of-control auction that's seen it sell for $660,000.",
    "image": "https://www.wargamer.com/wp-content/sites/wargamer/2026/10/lugia-pokemon-card-outrageous-price.jpg",
-   "source": "Wargamer"
+   "source": "Wargamer",
+   "game": "pk"
   },
   {
    "title": "Pokemon TCG Fans Have a New Way to Chase Rare Collectibles",
@@ -130,7 +217,8 @@
    "date": "2026-10-13T19:37:51.000Z",
    "summary": "The Pokemon Company reveals new collectibles connected to the Pokemon TCG, and the rarest ones will be in high demand among fans.",
    "image": "https://static0.gamerantimages.com/wordpress/wp-content/uploads/wm/2026/10/pokemon-tcg-rare-collectible.jpg",
-   "source": "Game Rant"
+   "source": "Game Rant",
+   "game": "pk"
   },
   {
    "title": "Pokemon cracks down on TCG scalpers with new resale bans",
@@ -138,7 +226,8 @@
    "date": "2026-10-13T11:15:51.000Z",
    "summary": "The measures, which came into effect on October 13, target bulk listings and certain types of Pokemon TCG products.",
    "image": "https://www.dexerto.com/cdn-image/wp-content/uploads/2026/10/13/pokemon-tcg.jpg?width=480&quality=75&format=auto",
-   "source": "Dexerto"
+   "source": "Dexerto",
+   "game": "pk"
   },
   {
    "title": "These Tag Team Pokemon cards are exploding in price - and they're not even that rare",
@@ -146,7 +235,8 @@
    "date": "2026-10-13T10:56:36.000Z",
    "summary": "Perhaps the 30th Celebration reprint of Pikachu & Zekrom has reminded collectors how gorgeous these multi-monster Pokémon cards are.",
    "image": "https://www.wargamer.com/wp-content/sites/wargamer/2026/10/pokemon-tag-team-price-rises.jpg",
-   "source": "Wargamer"
+   "source": "Wargamer",
+   "game": "pk"
   },
   {
    "title": "Pokémon TCG Drops For Its Hottest Set Are Constant Now, But There's A Catch",
@@ -154,7 +244,8 @@
    "date": "2026-10-12T18:18:24.000Z",
    "summary": "Pokémon Ascended Heroes ETBs, mini tins, and TCG bundles are actually selling for under MSRP in new retailer drops",
    "image": "https://static0.polygonimages.com/wordpress/wp-content/uploads/2026/03/21-dragonite.jpg",
-   "source": "Polygon"
+   "source": "Polygon",
+   "game": "pk"
   },
   {
    "title": "This Pikachu in a raincoat is now the second most expensive Pokémon card ever sold",
@@ -162,7 +253,8 @@
    "date": "2026-10-11T19:02:27.000Z",
    "summary": "An incredibly expensive Pokémon card sale occurred on September 28th, with a raincoat clad Pikachu selling for 8.4 million dollars.",
    "image": "https://www.wargamer.com/wp-content/sites/wargamer/2026/10/Art-Academy-Pikachu-Thumbnail.jpg",
-   "source": "Wargamer"
+   "source": "Wargamer",
+   "game": "pk"
   },
   {
    "title": "6-Year-Old Designed Pokemon Card That Sold for $156,000",
@@ -170,7 +262,8 @@
    "date": "2026-10-10T21:01:13.000Z",
    "summary": "An exceptionally rare Pokemon card that was first drawn by a 6-year-old fan fetches an astonishing $156,000 price at a recent auction.",
    "image": "https://static0.gamerantimages.com/wordpress/wp-content/uploads/wm/2026/10/6-year-old-designed-pokemon-card-that-sold-for-156-000-gamerant.jpg",
-   "source": "Game Rant"
+   "source": "Game Rant",
+   "game": "pk"
   },
   {
    "title": "Futuristic Rare Mew and Mewtwo Pokémon cards are now worth less than their full art counterparts",
@@ -178,7 +271,17 @@
    "date": "2026-10-10T14:30:01.000Z",
    "summary": "The Pokémon TCG's 30th Celebration expansion gave us a new set of 'Futuristic Rare' cards, but their value hasn't held up to expectations.",
    "image": "https://www.wargamer.com/wp-content/sites/wargamer/2026/10/Future-Rare-Mewtwo-Thumbnail.jpg",
-   "source": "Wargamer"
+   "source": "Wargamer",
+   "game": "pk"
+  },
+  {
+   "title": "Riftbound Reveals New Radiance Card [EXCLUSIVE]",
+   "link": "https://gamerant.com/riftbound-trinket-peddler-radiance/",
+   "date": "2026-10-09T08:24:01.000Z",
+   "summary": "GameRant is previewing a brand-new card being added to Riftbound with the upcoming Radiance expansion, utilizing one of the set's main mechanics.",
+   "image": "https://static0.gamerantimages.com/wordpress/wp-content/uploads/2026/10/riftbound-radiance-trinket-peddler-exclusive-reveal.jpg",
+   "source": "Game Rant",
+   "game": "rb"
   },
   {
    "title": "These Pokémon skateboards are sold like cards, with random draws and chase rares",
@@ -186,7 +289,8 @@
    "date": "2026-10-08T14:49:37.000Z",
    "summary": "This designer slapped Pokémon cards onto licensed skateboards and is selling them in randomized blind bags",
    "image": "https://www.wargamer.com/wp-content/sites/wargamer/2026/10/pokemon-tcg-skateboards.jpg",
-   "source": "Wargamer"
+   "source": "Wargamer",
+   "game": "pk"
   },
   {
    "title": "You could land 30th Celebration Pokémon packs cheap in this two-day Walmart deal",
@@ -194,7 +298,8 @@
    "date": "2026-10-07T15:06:07.000Z",
    "summary": "On October 7-8, Walmart has a lottery with tons of Pokémon TCG products going on sale at surprisingly cheap prices.",
    "image": "https://www.wargamer.com/wp-content/sites/wargamer/2026/10/pokemon-tcg-walmart-lottery-deal.jpg",
-   "source": "Wargamer"
+   "source": "Wargamer",
+   "game": "pk"
   },
   {
    "title": "Pokemon TCG Fans Can Get Free Cards, But There's a Catch",
@@ -202,7 +307,8 @@
    "date": "2026-10-04T22:30:13.000Z",
    "summary": "Fans of the Pokemon Trading Card Game can pick up an assortment of free cards, but there's a caveat with the limited-time offer.",
    "image": "https://static0.gamerantimages.com/wordpress/wp-content/uploads/2026/10/pokemon-tcg-live-30th-celebration-promo-code.jpg",
-   "source": "Game Rant"
+   "source": "Game Rant",
+   "game": "pk"
   },
   {
    "title": "New Delta Reign artwork puts a smile on the face of one of the Pokémon TCG's saddest Pokémon",
@@ -210,7 +316,8 @@
    "date": "2026-10-04T11:12:03.000Z",
    "summary": "Azurill has long been depicted as a morose looking Pokémon down on its luck, the Pokémon TCG's new Delta Reign expansion finally lets it smile.",
    "image": "https://www.wargamer.com/wp-content/sites/wargamer/2026/10/Azurill-Thumbnail-V2.jpg",
-   "source": "Wargamer"
+   "source": "Wargamer",
+   "game": "pk"
   },
   {
    "title": "The Pokémon TCG is releasing a new tool kit designed to encourage players to play competitively",
@@ -218,7 +325,8 @@
    "date": "2026-10-03T16:09:27.000Z",
    "summary": "A new Pokémon TCG Deck Crafter's Collection is due to release on October 23rd, designed to provide players with staple trainer cards.",
    "image": "https://www.wargamer.com/wp-content/sites/wargamer/2026/10/Deck-Crafters-Collection-Thumbnail.jpg",
-   "source": "Wargamer"
+   "source": "Wargamer",
+   "game": "pk"
   },
   {
    "title": "Pokemon card store gives Kanye West’s kids private shopping spree",
@@ -226,7 +334,8 @@
    "date": "2026-10-03T10:14:08.000Z",
    "summary": "Kanye West went on a shopping spree with his kids and spent thousands of dollars on Pokemon cards for them.",
    "image": "https://www.dexerto.com/cdn-image/wp-content/uploads/2026/10/03/poke-ye.jpg?width=480&quality=75&format=auto",
-   "source": "Dexerto"
+   "source": "Dexerto",
+   "game": "pk"
   },
   {
    "title": "Pokemon TCG reportedly releasing Valentine’s Day set with package that turns into mailbox",
@@ -234,7 +343,8 @@
    "date": "2026-10-02T09:51:40.000Z",
    "summary": "The Pokemon Trading Card Game is reportedly releasing its first Valentine’s Day set, complete with a special box that can be transformed into a mailbox.",
    "image": "https://www.dexerto.com/cdn-image/wp-content/uploads/2026/10/02/Pokemon-TCG-reportedly-releasing-first-ever-Valentines-Day-set.jpg?width=480&quality=75&format=auto",
-   "source": "Dexerto"
+   "source": "Dexerto",
+   "game": "pk"
   },
   {
    "title": "Winnipeg toy store owner had 20,000 Pokemon cards stolen, but she's not giving up",
@@ -242,7 +352,8 @@
    "date": "2026-09-30T16:04:58.000Z",
    "summary": "“It makes me sad that the greed of a few people has turned a kids' card game into a target for criminals.”",
    "image": "https://www.wargamer.com/wp-content/sites/wargamer/2026/09/pokemon-tcg-terris-trinkets-theft.jpg",
-   "source": "Wargamer"
+   "source": "Wargamer",
+   "game": "pk"
   },
   {
    "title": "Pikachu card sells for $8.4 million to become second most expensive Pokemon card ever",
@@ -250,7 +361,8 @@
    "date": "2026-09-29T19:52:14.000Z",
    "summary": "A Pokemon promo card that never reached stores sold for $8.4 million after 64 bids at Fanatics Collect.",
    "image": "https://www.dexerto.com/cdn-image/wp-content/uploads/2026/09/29/Pikachu-card-8-billion.jpg?width=480&quality=75&format=auto",
-   "source": "Dexerto"
+   "source": "Dexerto",
+   "game": "pk"
   },
   {
    "title": "Coinbase jumps into Pokemon TCG craze with digital packs backed by real cards",
@@ -258,7 +370,8 @@
    "date": "2026-09-29T14:29:50.000Z",
    "summary": "Coinbase is teasing a Pokemon pack-ripping feature tied to real cards, but has not revealed its price, launch date, or pull odds.",
    "image": "https://www.dexerto.com/cdn-image/wp-content/uploads/2026/09/29/coinbase-pokemon-card-packs.jpg?width=480&quality=75&format=auto",
-   "source": "Dexerto"
+   "source": "Dexerto",
+   "game": "pk"
   },
   {
    "title": "10 best Pokémon Pitch Black chase cards",
@@ -266,7 +379,8 @@
    "date": "2026-09-28T14:56:33.000Z",
    "summary": "Pokemon TCG's Pitch Black set has some gorgeous cards and a limited print run - which means we still prize these pricey chase cards.",
    "image": "https://www.wargamer.com/wp-content/sites/wargamer/2026/05/pokemon-trading-card-game-pitch-black-chase-cards.jpg",
-   "source": "Wargamer"
+   "source": "Wargamer",
+   "game": "pk"
   },
   {
    "title": "Pokémon TCG promos return to McDonald's - God help us all",
@@ -274,7 +388,8 @@
    "date": "2026-09-28T11:48:34.000Z",
    "summary": "Happy Meal Pikachu can’t hurt you, but hungry scalpers? They make no promises.",
    "image": "https://www.wargamer.com/wp-content/sites/wargamer/2026/09/pokemon-tcg-mcdonalds.jpg",
-   "source": "Wargamer"
+   "source": "Wargamer",
+   "game": "pk"
   },
   {
    "title": "The next Pokémon TCG expansion features the most hauntingly beautiful illustration of a sea urchin that I've ever seen",
@@ -282,7 +397,17 @@
    "date": "2026-09-27T11:40:35.000Z",
    "summary": "Tetsu Kayama has given us one of the eeriest, yet also most beautiful, pieces of Pokémon TCG art of their career with a new Pincurchin card.",
    "image": "https://www.wargamer.com/wp-content/sites/wargamer/2026/09/Pincurchin-Thumbnail.jpg",
-   "source": "Wargamer"
+   "source": "Wargamer",
+   "game": "pk"
+  },
+  {
+   "title": "[DeckReview] KeyLlua: Red Ace deck in Postban (No Mihawk) OP17 format.",
+   "link": "https://onepiecetopdecks.com/deckreview-keyllua-red-ace-deck-in-postban-no-mihawk-op17-format/",
+   "date": "2026-09-27T03:49:05.000Z",
+   "summary": "Hey everyone, I’m Key Also known as KeyLlua, a competitive One-Piece Card Game player from Australia. I’ve been playing OP16 Red Ace since the first release and have been…",
+   "image": "https://onepiecetopdecks.com/wp-content/uploads/2026/09/Red-Ace1-1024x551.jpg",
+   "source": "One Piece Top Decks",
+   "game": "op"
   },
   {
    "title": "Pikachu literally goes to space alongside a new selection of Pokémon TCG accessories",
@@ -290,7 +415,8 @@
    "date": "2026-09-26T11:49:43.000Z",
    "summary": "The Pokémon Company teamed up with the European Space Agency to send a plushie into space and to release a new line of Pokémon accessories.",
    "image": "https://www.wargamer.com/wp-content/sites/wargamer/2026/09/Space-Pikachu-Thumbnail.jpg",
-   "source": "Wargamer"
+   "source": "Wargamer",
+   "game": "pk"
   },
   {
    "title": "Are Pokémon scalpers actually 'crashing out' over 30th Celebration?",
@@ -298,7 +424,8 @@
    "date": "2026-09-24T16:39:27.000Z",
    "summary": "Is it REALLY true that Pokémon card resellers are tearing their hair out over 30th Celebration?",
    "image": "https://www.wargamer.com/wp-content/sites/wargamer/2026/06/pokemon-trading-card-game-30th-anniversary-celebration-set-revealed.jpg",
-   "source": "Wargamer"
+   "source": "Wargamer",
+   "game": "pk"
   },
   {
    "title": "Pokémon collector charged with using GPS to track delivery driver's car",
@@ -306,7 +433,8 @@
    "date": "2026-09-23T16:49:16.000Z",
    "summary": "The Pokémon TCG can now add ‘elaborate stalking’ to the list of crimes it has inspired.",
    "image": "https://www.wargamer.com/wp-content/sites/wargamer/2026/09/pokemon-tcg-gps-tracker.jpg",
-   "source": "Wargamer"
+   "source": "Wargamer",
+   "game": "pk"
   },
   {
    "title": "Target x Pokemon 30th Anniversary event offers custom trading cards and exclusive Mewtwo promo",
@@ -314,7 +442,8 @@
    "date": "2026-09-23T15:45:35.000Z",
    "summary": "Target’s Pokemon 30th Anniversary event will let fans draw their own TCG card, grab giveaways and potentially claim a limited Mewtwo promo.",
    "image": "https://www.dexerto.com/cdn-image/wp-content/uploads/2026/09/23/pokemon-x-target-event.jpg?width=480&quality=75&format=auto",
-   "source": "Dexerto"
+   "source": "Dexerto",
+   "game": "pk"
   },
   {
    "title": "Avery The Poke Kid’s final Pokemon pack opening shared after death",
@@ -322,7 +451,71 @@
    "date": "2026-09-22T16:21:42.000Z",
    "summary": "Avery The Poke Kid’s family has shared his final Pokemon TCG pack opening following the 12-year-old creator’s death.",
    "image": "https://www.dexerto.com/cdn-image/wp-content/uploads/2026/09/22/avery-the-pokekid-last-pulls.jpg?width=480&quality=75&format=auto",
-   "source": "Dexerto"
+   "source": "Dexerto",
+   "game": "pk"
+  },
+  {
+   "title": "Pokemon collector secretly put GPS tracker on woman’s car to find trading card restocks",
+   "link": "https://www.dexerto.com/pokemon/pokemon-collector-secretly-put-gps-tracker-on-womans-car-to-find-trading-card-restocks-3411308/",
+   "date": "2026-09-22T14:37:48.000Z",
+   "summary": "A Pokemon collector pleaded no contest after secretly attaching a GPS tracker to a woman’s car to find new trading card restocks.",
+   "image": "https://www.dexerto.com/cdn-image/wp-content/uploads/2026/09/22/pokemon-restock-tracking-woman.jpg?width=480&quality=75&format=auto",
+   "source": "Dexerto",
+   "game": "pk"
+  },
+  {
+   "title": "Yoshitaka Amano Drew One Piece Trading Card Game Art",
+   "link": "https://www.siliconera.com/yoshitaka-amano-drew-one-piece-trading-card-game-art/",
+   "date": "2026-08-24T15:00:40.000Z",
+   "summary": "The Saint Shamrock and Loki cards drawn by Amano will be available in the 18th booster pack releasing this November.",
+   "image": null,
+   "source": "Siliconera",
+   "game": "op"
+  },
+  {
+   "title": "Premium Card Collection: Live Action Edition vol.2",
+   "link": "https://onepiecetopdecks.com/premium-card-collection-live-action-edition-vol-2/",
+   "date": "2026-04-08T08:27:16.000Z",
+   "summary": "New merchandises following the One Piece Live Action Season 2 that is currently showing in Netflix. Monkey.D.Luffy P-1407 Cost / 8000 Power (Strike)Straw Hat Crew [Blocker][On…",
+   "image": "https://onepiecetopdecks.com/wp-content/uploads/2026/04/book2.jpeg",
+   "source": "One Piece Top Decks",
+   "game": "op"
+  },
+  {
+   "title": "Riftbound Unleashed League of Legends TCG New Kha'Zix Card Reveal [EXCLUSIVE]",
+   "link": "https://gamerant.com/riftbound-league-legends-unleashed-set-card-reveal-exclusive/",
+   "date": "2026-03-20T07:01:17.000Z",
+   "summary": "GameRant gets a preview of a new Riftbound: Unleashed card dedicated to LoL's Kha'Zix to be exclusively revealed before it's added to the gallery.",
+   "image": "https://static0.gamerantimages.com/wordpress/wp-content/uploads/2026/03/9lz-saja-new-1.jpeg",
+   "source": "Game Rant",
+   "game": "rb"
+  },
+  {
+   "title": "French CEO aims to build a TCG website that does everything",
+   "link": "https://www.wargamer.com/card-nexus-ambitious-plans",
+   "date": "2026-03-10T14:18:37.000Z",
+   "summary": "CardNexus is an ambitious new TCG marketplace that wants to build every tool a collector could need, from deck-builders to card scanners, in one spot.",
+   "image": "https://www.wargamer.com/wp-content/sites/wargamer/2026/03/card-nexus-ambitious-plans-h1.jpg",
+   "source": "Wargamer",
+   "game": "op"
+  },
+  {
+   "title": "I found the most expensive trading card games, according to math",
+   "link": "https://www.wargamer.com/magic-the-gathering/ranking-tcgs-by-cost",
+   "date": "2026-02-26T18:21:11.000Z",
+   "summary": "If you're wondering which trading card games are cheapest to play, and which demand the big bucks, here they are ranked by price.",
+   "image": "https://www.wargamer.com/wp-content/sites/wargamer/2026/02/magic-the-gathering-ranking-tcgs-by-cost.jpg",
+   "source": "Wargamer",
+   "game": "op"
+  },
+  {
+   "title": "The Pokémon TCG should take lessons from One Piece in combating scalpers",
+   "link": "https://www.wargamer.com/pokemon-trading-card-game/one-piece-scalper-combating",
+   "date": "2026-01-15T14:57:46.000Z",
+   "summary": "The Pokémon TCG should follow the One Piece Card Game's lead and beat scalpers by tearing the packaging off at the till.",
+   "image": "https://www.wargamer.com/wp-content/sites/wargamer/2026/01/pokemon-tcg-one-piece-scalping-measures.jpg",
+   "source": "Wargamer",
+   "game": "op"
   }
  ],
  "videos": [
@@ -337,6 +530,24 @@
    "title": "TCG Day 1 | 2027 Pokémon Gdańsk Regional Championships",
    "date": "2026-10-26T23:57:02.000Z",
    "source": "Pokémon (officiell)"
+  },
+  {
+   "id": "s_dGpQQ7pXM",
+   "title": "TCG Feature Station Day 2 | 2027 Pokémon Louisville Regional Championships",
+   "date": "2026-10-26T23:00:26.000Z",
+   "source": "Play! Pokémon (officiell)"
+  },
+  {
+   "id": "OctXgLh0B_A",
+   "title": "TCG Feature Station Day 1 | 2027 Pokémon Louisville Regional Championships",
+   "date": "2026-10-26T21:00:12.000Z",
+   "source": "Play! Pokémon (officiell)"
+  },
+  {
+   "id": "8UqVTKZZEKY",
+   "title": "The 9 Pokémon TCG cards that made Ethan Hegyi",
+   "date": "2026-10-26T19:00:33.000Z",
+   "source": "Play! Pokémon (officiell)"
   },
   {
    "id": "mMJzv4wmJvU",

@@ -497,6 +497,27 @@ function highlightMatch(text, query) {
 /**
  * Kopplar på live ghost text och smart sökförslag på ett input-element.
  */
+// Ungefärligt värde för Pokémonförslag som pekar på ett visst kort: Cardmarkets trendpris från TCGdex i kronor.
+// Hämtas efter att listan ritats och läggs till i raden när det kommit. Varje kort hämtas en gång.
+const priceOf = new Map();
+let eurSek = null;
+const cardEur = (id) => {
+  if (!priceOf.has(id)) priceOf.set(id, fetch(`${API}/cards/${encodeURIComponent(id)}`).then((r) => (r.ok ? r.json() : null))
+    .then((c) => c?.pricing?.cardmarket?.trend ?? c?.pricing?.cardmarket?.avg ?? null).catch(() => null));
+  return priceOf.get(id);
+};
+const sekRate = () => (eurSek ??= fetch("https://api.frankfurter.dev/v1/latest?from=EUR&to=SEK").then((r) => r.json()).then((d) => d.rates.SEK).catch(() => 11.2));
+function fillPrices(dropdown) {
+  for (const li of dropdown.querySelectorAll(".cad-item[data-card-id]")) {
+    Promise.all([cardEur(li.dataset.cardId), sekRate()]).then(([eur, rate]) => {
+      const sub = li.querySelector(".cad-sub");
+      if (eur == null || !sub || !li.isConnected || sub.dataset.priced) return;
+      sub.dataset.priced = "1";
+      sub.append(` · ca ${Math.max(1, Math.round(eur * rate)).toLocaleString("sv-SE").replace(/\u00a0/g, " ")} kr`);
+    });
+  }
+}
+
 export function mountCardAutocomplete(input, options = {}) {
   if (!input || input._cardAutocompleteMounted) return;
   input._cardAutocompleteMounted = true;
@@ -645,7 +666,7 @@ export function mountCardAutocomplete(input, options = {}) {
     let html = "";
 
     if (hasPokemon) {
-      const secLabel = matches.parsed?.numPart ? "Kortnummer & träffar" : "Pokémon";
+      const secLabel = matches.label || (matches.parsed?.numPart ? "Kortnummer & träffar" : "Pokémon");
       html += `<div class="cad-sec-title">${secLabel}</div><ul class="cad-list">`;
       matches.pokemon.forEach((p, idx) => {
         const val = p.val || p.name;
@@ -655,10 +676,10 @@ export function mountCardAutocomplete(input, options = {}) {
 
         // Visa kortet som en liten bild när ett matchande kort finns
         let actionHtml = "";
-        if (p.image) {
+        if (p.image || p.thumb) {
           actionHtml = `
             <div class="cad-card-thumb-wrap" title="${escapeHtml(p.name)} (klicka för att välja)">
-              <img src="${escapeHtml(p.image)}/low.webp" alt="${escapeHtml(p.name)}" class="cad-card-thumb" loading="eager" decoding="async" onerror="this.parentNode.remove()">
+              <img src="${escapeHtml(p.thumb || `${p.image}/low.webp`)}" alt="${escapeHtml(p.name)}" class="cad-card-thumb" loading="eager" decoding="async" referrerpolicy="no-referrer" onerror="this.parentNode.remove()">
               <i class="cad-card-gloss" aria-hidden="true"></i>
             </div>`;
         } else if (p.isLoadingCard) {
@@ -669,7 +690,7 @@ export function mountCardAutocomplete(input, options = {}) {
         }
 
         html += `
-          <li role="option" id="cad-opt-${idx}" class="cad-item is-pokemon${isTop ? " is-top" : ""}${p.image ? " has-card-thumb" : ""}" data-val="${escapeHtml(val)}"${p.cardId ? ` data-card-id="${escapeHtml(p.cardId)}"` : ""}>
+          <li role="option" id="cad-opt-${idx}" class="cad-item is-pokemon${isTop ? " is-top" : ""}${p.image || p.thumb ? " has-card-thumb" : ""}" data-val="${escapeHtml(val)}"${p.cardId ? ` data-card-id="${escapeHtml(p.cardId)}"` : ""}>
             <div class="cad-text">
               <span class="cad-name">${highlightMatch(p.name, matches.parsed?.textPart || query)}</span>
               <span class="cad-sub">${num ? `${num} · ` : ""}${escapeHtml(tag)}</span>
@@ -715,6 +736,7 @@ export function mountCardAutocomplete(input, options = {}) {
 
     dropdown.innerHTML = html;
     dropdown.hidden = false;
+    fillPrices(dropdown);
 
     items = Array.from(dropdown.querySelectorAll(".cad-item, .cad-footer"));
     activeIndex = -1;
@@ -741,6 +763,20 @@ export function mountCardAutocomplete(input, options = {}) {
       if (options.onLiveChange) {
         clearTimeout(liveSearchTimer);
         options.onLiveChange("");
+      }
+      return;
+    }
+
+    // options.source(q): egna förslag (One Piece- och Riftbound-kort, js/game-guess.js) i samma form som findMatches.
+    // null betyder att de vanliga Pokémonförslagen gäller.
+    const custom = options.source ? await options.source(q) : null;
+    if (input.value.trim() !== q) return; // man hann skriva mer medan förslagen hämtades
+    if (custom) {
+      if (custom.bestMatch?.toLowerCase().startsWith(q.toLowerCase())) setGhost(raw, custom.bestMatch); else clearGhost();
+      renderDropdown(custom, q);
+      if (options.onLiveChange) {
+        clearTimeout(liveSearchTimer);
+        liveSearchTimer = setTimeout(() => options.onLiveChange(input.value.trim()), 350);
       }
       return;
     }

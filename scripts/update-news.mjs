@@ -1,4 +1,4 @@
-// Hämtar nyheter och videor från öppna RSS-flöden och sparar dem i data/news.json.
+// Hämtar nyheter och videor från öppna RSS-flöden och sparar dem i data/news.json, för Pokémon, One Piece och Riftbound.
 // Körs schemalagt (se .github/workflows/news.yml) eller manuellt: node scripts/update-news.mjs
 // Vi sparar bara rubrik, datum, kort utdrag och länk, och länkar alltid till källan.
 import { writeFile, mkdir } from "node:fs/promises";
@@ -14,6 +14,10 @@ const TCG = /\b(tcg|trading cards?|booster|elite trainer|etb|card set|card expan
 const OFF_TOPIC = /\b(strongest|tier list|world record|anime|episode|pok[eé]mon go|eeveelution designs?)\b/i;
 // Listor som skrivs om och publiceras igen med nytt datum, till exempel "Top 50+ most expensive". De är guider, inte nyheter.
 const EVERGREEN = /^(the )?(top \d+|all pok[eé]mon|best pok[eé]mon)\b/i;
+// Läckta kort och bilder före det officiella avslöjandet tas aldrig med.
+const LEAK = /\bleak(s|ed)?\b/i;
+const OP_TCG = /\b(card game|tcg|trading card|booster|op-?\d{2}|eb-?\d{2}|starter deck|leader)\b/i;
+// game: pk (Pokémon), op (One Piece Card Game), rb (Riftbound). Sidan filtrerar på det.
 const ARTICLE_FEEDS = [
   { source: "Dexerto", url: "https://www.dexerto.com/feed/category/pokemon/", keep: TCG },
   { source: "Wargamer", url: "https://www.wargamer.com/pokemon-trading-card-game/feed", keep: TCG },
@@ -21,7 +25,21 @@ const ARTICLE_FEEDS = [
   { source: "Siliconera", url: "https://www.siliconera.com/tag/pokemon-tcg/feed/", keep: TCG },
   { source: "Polygon", url: "https://www.polygon.com/rss/pokemon/index.xml", keep: TCG },
   { source: "PokemonBlog", url: "https://www.pokemonblog.com/feed/", keep: /\b(tcg|trading card|pok[eé]mon cards?)\b/i },
+  // Riftbound: fansajten riftbound.gg (bara Riftbound) och Game Rants Riftbound-tagg.
+  { source: "Riftbound.gg", url: "https://riftbound.gg/feed/", game: "rb", keep: /./ },
+  { source: "Game Rant", url: "https://gamerant.com/feed/tag/riftbound/", game: "rb", keep: /riftbound/i },
+  { source: "Siliconera", url: "https://www.siliconera.com/tag/league-of-legends/feed/", game: "rb", keep: /riftbound/i },
+  // One Piece Card Game: fansajten One Piece Top Decks, och kortspelstaggarna hos Siliconera, Wargamer och Game Rant.
+  // Game Rants One Piece-tagg handlar mest om animen, därför bara artiklar som nämner kortspelet.
+  { source: "One Piece Top Decks", url: "https://www.onepiecetopdecks.com/feed/", game: "op", keep: /./ },
+  { source: "Siliconera", url: "https://www.siliconera.com/tag/one-piece-card-game/feed/", game: "op", keep: OP_TCG },
+  { source: "Wargamer", url: "https://www.wargamer.com/one-piece-card-game/feed", game: "op", keep: OP_TCG },
+  { source: "Game Rant", url: "https://gamerant.com/feed/tag/one-piece/", game: "op", keep: OP_TCG },
 ];
+// Hur många artiklar per spel som sparas, så att Pokémons många artiklar inte tränger undan de andra spelen.
+const PER_GAME = { pk: 40, op: 20, rb: 20 };
+// Äldre än ett år räknas inte som nyheter (taggflödena för de mindre spelen har artiklar från flera år tillbaka).
+const MAX_AGE = 365 * 864e5;
 // TCG Pocket är ett mobilspel. Artiklarna och videorna om det visas, men märks som digitala.
 const DIGITAL = /\btcg pocket\b/i;
 
@@ -67,8 +85,9 @@ async function articles(feed) {
     summary: excerpt(strip(tag(it, "description") || tag(it, "summary") || tag(it, "content"))),
     image: webUrl(thumb(it)),
     source: feed.source,
+    game: feed.game || "pk",
   })).filter((a) => a.title && a.link && feed.keep.test(`${a.title} ${a.summary}`)
-    && !OFF_TOPIC.test(a.title) && !EVERGREEN.test(a.title))
+    && !OFF_TOPIC.test(a.title) && !EVERGREEN.test(a.title) && !LEAK.test(a.title))
     .map((a) => (DIGITAL.test(`${a.title} ${a.summary}`) ? { ...a, digital: true } : a));
 }
 
@@ -96,7 +115,7 @@ const unique = (list, key) => { const seen = new Set(); return list.filter((x) =
 // Samma nyhet från flera sajter (den nyaste behålls). Två artiklar inom fyra dagar räknas som samma nyhet om
 // rubrikerna delar minst 60 % av orden, eller om rubrik och ingress tillsammans delar minst 45 %.
 // Ord jämförs i grundform: "cards" blir "card", och "$2M" och "$2 million" blir båda "2m".
-const STOP = new Set(["pokemon", "with", "from", "that", "this", "your", "after", "have", "about", "they", "their", "says", "will", "just", "into", "been", "more", "than"]);
+const STOP = new Set(["pokemon", "riftbound", "piece", "with", "from", "that", "this", "your", "after", "have", "about", "they", "their", "says", "will", "just", "into", "been", "more", "than"]);
 const words = (t) => new Set(t.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "")
   .replace(/\$?(\d+(?:\.\d+)?)\s*(m|million)\b/g, "$1m").replace(/\$?(\d+(?:\.\d+)?)\s*(k|thousand)\b/g, "$1k")
   .split(/[^a-z0-9]+/).map((w) => (w.length > 4 && w.endsWith("s") && !w.endsWith("ss") ? w.slice(0, -1) : w))
@@ -125,7 +144,8 @@ function dedupeStories(list) {
 }
 const data = {
   updated: new Date().toISOString(),
-  articles: dedupeStories(unique((await collect(ARTICLE_FEEDS, articles)).filter((a) => a.date).sort(byDate), (a) => a.link)).slice(0, 40),
+  articles: dedupeStories(unique((await collect(ARTICLE_FEEDS, articles)).filter((a) => a.date && Date.now() - new Date(a.date) < MAX_AGE).sort(byDate), (a) => a.link))
+    .filter((a, i, list) => list.slice(0, i).filter((x) => x.game === a.game).length < PER_GAME[a.game]),
   // "[UK] Trailer" och "Trailer" är samma video för olika länder.
   videos: unique((await collect(VIDEO_FEEDS, videos)).sort(byDate), (v) => v.title.toLowerCase().replace(/^\s*\[[^\]]*\]\s*/, "")).slice(0, 12),
 };
