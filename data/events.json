@@ -1,6 +1,48 @@
 {
- "updated": 1793194965913,
+ "updated": 1793195885933,
  "events": [
+  {
+   "at": 1793195230322,
+   "store": "rgb-kingz",
+   "product": "rgb-kingz:16127336808778",
+   "group": "prismatic-evolutions|elite-trainer-box|en|",
+   "title": "Pokémon Prismatic Evolutions Elite Trainer Box – Engelsk",
+   "url": "https://rgbkingz.com/products/pokemon-prismatic-evolutions-elite-trainer-box-engelsk-kopia",
+   "image": "https://cdn.shopify.com/s/files/1/0782/8088/4554/files/prismaticevolutionselitetrainerbox.webp?v=1791620131",
+   "price": 2499,
+   "type": "Elite Trainer Box",
+   "set": "Prismatic Evolutions",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1793195230322,
+   "store": "rgb-kingz",
+   "product": "rgb-kingz:15993156731210",
+   "group": "x|booster-box|zh||gem-s3-vol",
+   "title": "Pokémon CBB3C Gem Pack Vol. 3 Booster Box (Kinesisk)",
+   "url": "https://rgbkingz.com/products/pokemon-cbb3c-gem-pack-vol-3-booster-box-kinesisk",
+   "image": "https://cdn.shopify.com/s/files/1/0782/8088/4554/files/845908.png?v=1787650818",
+   "price": 1190,
+   "type": "Booster Box",
+   "set": null,
+   "lang": "zh",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1793195095980,
+   "store": "poketalk",
+   "product": "poketalk:9453805076822",
+   "group": "151|elite-trainer-box|en|",
+   "title": "Pokémon Scarlet & Violet: 151 Elite Trainer Box",
+   "url": "https://poketalk.se/products/pokemon-scarlet-violet-151-elite-trainer-box",
+   "image": "https://cdn.shopify.com/s/files/1/0862/7860/3094/files/POKETALK_16.png?v=1738966584",
+   "price": 5999,
+   "type": "Elite Trainer Box",
+   "set": "151",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793191712065,
    "store": "dragon-s-lair",
@@ -6557,45 +6599,6 @@
    "set": "Evolving Skies",
    "lang": "en",
    "kind": "tillbaka"
-  },
-  {
-   "at": 1792506301120,
-   "store": "alphaspel",
-   "product": "alphaspel:https://alphaspel.se/1762-pokemon-tcg/293027-pokemon-tcg-lillie-premium-tournament-collection",
-   "group": "x|collection-box|en||lillie-tournament",
-   "title": "Pokemon TCG: Lillie Premium Tournament Collection",
-   "url": "https://alphaspel.se/1762-pokemon-tcg/293027-pokemon-tcg-lillie-premium-tournament-collection",
-   "price": 699,
-   "type": "Collection Box",
-   "set": null,
-   "lang": "en",
-   "kind": "forbestallning"
-  },
-  {
-   "at": 1792506296396,
-   "store": "maxgaming",
-   "product": "maxgaming:https://maxgaming.se/sv/pokemon/pokemon-chasing-glory-together-jumbo-booster-box-simplified-chinese",
-   "group": "x|booster-box|zh||chasing-glory-jumbo-together",
-   "title": "Pokémon Chasing Glory Together Jumbo Booster Box (Simplified Chinese)",
-   "url": "https://maxgaming.se/sv/pokemon/pokemon-chasing-glory-together-jumbo-booster-box-simplified-chinese",
-   "price": 799,
-   "type": "Booster Box",
-   "set": null,
-   "lang": "zh",
-   "kind": "ny"
-  },
-  {
-   "at": 1792506296396,
-   "store": "maxgaming",
-   "product": "maxgaming:https://maxgaming.se/sv/pokemon/pokemon-gem-pack-vol-6-booster-box-simplified-chinese",
-   "group": "x|booster-box|zh||gem-s6-vol",
-   "title": "Pokémon Gem Pack Vol 6 Booster Box (Simplified Chinese)",
-   "url": "https://maxgaming.se/sv/pokemon/pokemon-gem-pack-vol-6-booster-box-simplified-chinese",
-   "price": 499,
-   "type": "Booster Box",
-   "set": null,
-   "lang": "zh",
-   "kind": "ny"
   }
  ]
 }
