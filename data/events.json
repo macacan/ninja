@@ -1,6 +1,19 @@
 {
- "updated": 1793154165674,
+ "updated": 1793154495557,
  "events": [
+  {
+   "at": 1793154442998,
+   "store": "shinycards",
+   "product": "shinycards:https://www.shinycards.se/nyheter/pokemon-collectors-chest-2025-release-512",
+   "group": "mega-evolution|tin|en||chest-collector-evolutions",
+   "title": "Pokemon Collector's Chest Tin 2025 Mega Evolutions (Gardevoir & Lucario)",
+   "url": "https://www.shinycards.se/nyheter/pokemon-collectors-chest-2025-release-512",
+   "price": 799,
+   "type": "Tin",
+   "set": "Mega Evolution",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793149997182,
    "store": "shinycards",
@@ -6578,19 +6591,6 @@
    "set": null,
    "lang": "zh",
    "kind": "forbestallning"
-  },
-  {
-   "at": 1792480497801,
-   "store": "miniature-metropolis",
-   "product": "miniature-metropolis:11260735226193",
-   "group": "30th-celebration|booster-bundle|en|",
-   "title": "POKÉMON TCG: 30TH CELEBRATION BOOSTER BUNDLE (MAX 2 PER KUND)",
-   "url": "https://miniaturemetropolis.se/products/pokemon-tcg-30th-celebration-booster-bundle-max-2-per-kund",
-   "price": 689,
-   "type": "Booster Bundle",
-   "set": "30th Celebration",
-   "lang": "en",
-   "kind": "ny"
   }
  ]
 }
