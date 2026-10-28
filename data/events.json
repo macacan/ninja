@@ -1,6 +1,34 @@
 {
- "updated": 1793199546033,
+ "updated": 1793200466056,
  "events": [
+  {
+   "at": 1793199581944,
+   "store": "cardlevels",
+   "product": "cardlevels:11038266294583",
+   "group": "celebrations|collection-box|en||classic-venusaur",
+   "title": "Venusaur 15 - Celebrations: Classic Collection - Classic Collection",
+   "url": "https://cardlevels.se/products/venusaur-15-celebrations-classic-collection-classic-collection",
+   "image": "https://cdn.shopify.com/s/files/1/0846/0458/4247/files/1792738254405-scan-1792738536136-0rzmvl-fram.jpg?v=1793198814",
+   "price": 199,
+   "type": "Collection Box",
+   "set": "Celebrations",
+   "lang": "en",
+   "kind": "ny"
+  },
+  {
+   "at": 1793199581944,
+   "store": "cardlevels",
+   "product": "cardlevels:11038266163511",
+   "group": "celebrations|collection-box|en||classic-luxray-x",
+   "title": "Luxray GL LV.X 109 - Celebrations: Classic Collection - Classic Collection",
+   "url": "https://cardlevels.se/products/luxray-gl-lv-x-109-celebrations-classic-collection-classic-collection",
+   "image": "https://cdn.shopify.com/s/files/1/0846/0458/4247/files/1792738256629-scan-1792738536152-v8inml-fram.jpg?v=1793198812",
+   "price": 49,
+   "type": "Collection Box",
+   "set": "Celebrations",
+   "lang": "en",
+   "kind": "ny"
+  },
   {
    "at": 1793199375404,
    "store": "toyspace",
@@ -6581,32 +6609,6 @@
    "set": "Silver Tempest",
    "lang": "en",
    "kind": "tillbaka"
-  },
-  {
-   "at": 1792507279957,
-   "store": "maxgaming",
-   "product": "maxgaming:https://maxgaming.se/sv/pokemon/scarlet-violet-terastal-festival-ex-sv8a-booster-box-japanese",
-   "group": "scarlet-violet|booster-box|ja||festival-terastal",
-   "title": "Pokémon Scarlet & Violet: Terastal Festival ex SV8a Booster Box (Japanese)",
-   "url": "https://maxgaming.se/sv/pokemon/scarlet-violet-terastal-festival-ex-sv8a-booster-box-japanese",
-   "price": 1990,
-   "type": "Booster Box",
-   "set": "Scarlet & Violet",
-   "lang": "ja",
-   "kind": "ny"
-  },
-  {
-   "at": 1792507279957,
-   "store": "maxgaming",
-   "product": "maxgaming:https://maxgaming.se/sv/pokemon/pokemon-151-dream-painting-water-ecology-figure-blind-collection-box-chinese",
-   "group": "151|collection-box|zh||blind-dream-ecology-figure-painting-water",
-   "title": "Pokémon 151 Dream Painting Water Ecology Figure Blind Collection Box (Kinesisk)",
-   "url": "https://maxgaming.se/sv/pokemon/pokemon-151-dream-painting-water-ecology-figure-blind-collection-box-chinese",
-   "price": 299,
-   "type": "Collection Box",
-   "set": "151",
-   "lang": "zh",
-   "kind": "ny"
   }
  ]
 }
