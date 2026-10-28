@@ -1,6 +1,45 @@
 {
- "updated": 1793178638719,
+ "updated": 1793179558748,
  "events": [
+  {
+   "at": 1793178774368,
+   "store": "poketalk",
+   "product": "poketalk:11259843346774",
+   "group": "chaos-rising|elite-trainer-box|en|pc",
+   "title": "Pokémon Mega & Evolution: Pokemon Center Chaos Rising Elite Trainer Box",
+   "url": "https://poketalk.se/products/pokemon-mega-evolution-pokemon-center-chaos-rising-elite-trainer-box-1",
+   "price": 1899,
+   "type": "Elite Trainer Box",
+   "set": "Chaos Rising",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1793178774368,
+   "store": "poketalk",
+   "product": "poketalk:11282622185814",
+   "group": "x|booster-pack|en||30th-anniversary-celebration",
+   "title": "Pokémon TCG: 30th Anniversary Celebration Booster Pack",
+   "url": "https://poketalk.se/products/pokemon-tcg-30th-anniversary-celebration-booster-pack",
+   "price": 179,
+   "type": "Booster Pack",
+   "set": null,
+   "lang": "en",
+   "kind": "ny"
+  },
+  {
+   "at": 1793178774368,
+   "store": "poketalk",
+   "product": "poketalk:11371806458198",
+   "group": "x|booster-bundle|en||30th-anniversary-celebration",
+   "title": "Pokémon TCG: 30th Anniversary Celebration Booster Bundle",
+   "url": "https://poketalk.se/products/pokemon-tcg-30th-anniversary-celebration-booster-bundle",
+   "price": 1099,
+   "type": "Booster Bundle",
+   "set": null,
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793177856776,
    "store": "poketalk",
@@ -6552,45 +6591,6 @@
    "type": "Booster Box",
    "set": "30th Celebration",
    "lang": "zh",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1792504451435,
-   "store": "tcgaddan",
-   "product": "tcgaddan:16213897118028",
-   "group": "x|booster-box|ja||abyss-eye",
-   "title": "Abyss Eye Booster Box Japanese",
-   "url": "https://tcgaddan.se/products/abyss-eye-booster-box-japanese",
-   "price": 999,
-   "type": "Booster Box",
-   "set": null,
-   "lang": "ja",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1792500145103,
-   "store": "toyspace",
-   "product": "toyspace:https://toyspace.se/pokemon-tcg-mega-evolution-blister-pok10055-101",
-   "group": "mega-evolution|booster-pack|en||boosterpaket",
-   "title": "Pokemon TCG: Mega Evolution - boosterpaket",
-   "url": "https://toyspace.se/pokemon-tcg-mega-evolution-blister-pok10055-101",
-   "price": 78,
-   "type": "Booster Pack",
-   "set": "Mega Evolution",
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1792496250186,
-   "store": "toyspace",
-   "product": "toyspace:https://toyspace.se/pokemon-tcg-30-arsjubileum-greninja-ex-lada-pok10463-101",
-   "group": "30th-celebration|collection-box|en||greninja",
-   "title": "Pokémon TCG 30th Celebration Greninja ex Box",
-   "url": "https://toyspace.se/pokemon-tcg-30-arsjubileum-greninja-ex-lada-pok10463-101",
-   "price": 758,
-   "type": "Collection Box",
-   "set": "30th Celebration",
-   "lang": "en",
    "kind": "tillbaka"
   }
  ]
