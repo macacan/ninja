@@ -1,6 +1,48 @@
 {
- "updated": 1793202306097,
+ "updated": 1793203226117,
  "events": [
+  {
+   "at": 1793202308296,
+   "store": "tcgaddan",
+   "product": "tcgaddan:15984594878796",
+   "group": "x|booster-pack|en||shiny-treasure",
+   "title": "Shiny Treasure Booster Pack",
+   "url": "https://tcgaddan.se/products/shiny-treasure-booster-pack",
+   "image": "https://cdn.shopify.com/s/files/1/1037/7062/0236/files/Pokemon-shiny-treasure-booster-pack-japans-kopen-card-binder-com.webp?v=1793131283",
+   "price": 179,
+   "type": "Booster Pack",
+   "set": null,
+   "lang": "en",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1793202308296,
+   "store": "tcgaddan",
+   "product": "tcgaddan:15984600678732",
+   "group": "astral-radiance|collection-box|en||",
+   "title": "Astral Radiance Build & Battle Box",
+   "url": "https://tcgaddan.se/products/astral-radiance-build-battle-box",
+   "image": "https://cdn.shopify.com/s/files/1/1037/7062/0236/files/P8153_181-85037_01.png?v=1786831615",
+   "price": 499,
+   "type": "Collection Box",
+   "set": "Astral Radiance",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1793202308296,
+   "store": "tcgaddan",
+   "product": "tcgaddan:15817643950412",
+   "group": "astral-radiance|booster-pack|en|",
+   "title": "Astral Radiance Booster Pack",
+   "url": "https://tcgaddan.se/products/astral-radiance-booster-pack",
+   "image": "https://cdn.shopify.com/s/files/1/1037/7062/0236/files/Astral-Radiance-Booster-Pack-5.webp?v=1793131494",
+   "price": 129,
+   "type": "Booster Pack",
+   "set": "Astral Radiance",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793201416546,
    "store": "tcgaddan",
@@ -6570,45 +6612,6 @@
    "type": "Collection Box",
    "set": null,
    "lang": "zh",
-   "kind": "ny"
-  },
-  {
-   "at": 1792508962704,
-   "store": "spelparken",
-   "product": "spelparken:15530266231159",
-   "group": "30th-celebration|elite-trainer-box|en|",
-   "title": "30th Celebration Elite Trainer Box",
-   "url": "https://spelparken.se/products/30th-celebration-elite-trainer-box",
-   "price": 1899,
-   "type": "Elite Trainer Box",
-   "set": "30th Celebration",
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1792508261650,
-   "store": "maxgaming",
-   "product": "maxgaming:https://maxgaming.se/sv/pokemon/pokemon-grand-crystal-binder-gift-box-umbreon",
-   "group": "x|collection-box|zh||binder-crystal-gift-grand-umbreon",
-   "title": "Pokémon Grand Crystal Binder Gift Box - Umbreon (Simplified Chinese)",
-   "url": "https://maxgaming.se/sv/pokemon/pokemon-grand-crystal-binder-gift-box-umbreon",
-   "price": 1690,
-   "type": "Collection Box",
-   "set": null,
-   "lang": "zh",
-   "kind": "ny"
-  },
-  {
-   "at": 1792508050738,
-   "store": "spelparken",
-   "product": "spelparken:15583460065655",
-   "group": "team-up|blister|en||3",
-   "title": "TEAM UP 3-pack Blister",
-   "url": "https://spelparken.se/products/team-up-3-pack-blister",
-   "price": 19999,
-   "type": "Blister",
-   "set": "Team Up",
-   "lang": "en",
    "kind": "ny"
   }
  ]
