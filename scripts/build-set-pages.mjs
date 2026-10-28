@@ -33,10 +33,13 @@ const calendar = (await readJSON("data/release-calendar.json", { releases: [] })
 const extraLogos = await readJSON("data/set-logos.json", {});
 const extraImages = await readJSON("data/card-images.json", {});
 const extraCards = await readJSON("data/extra-cards.json", {});
-// One Piece- och Riftbound-seten (scripts/update-op-cards.mjs, update-rb-cards.mjs). De får ingen egen sida:
-// rutan öppnar setets kort och priser i Kortpriser.
-const GAMES = [["op", "one-piece", "One Piece Card Game"], ["rb", "riftbound", "Riftbound"]];
-const gameSets = Object.fromEntries(await Promise.all(GAMES.map(async ([g]) => [g, ((await readJSON(`data/${g}/sets.json`, {})).sets || []).filter((s) => s.main)])));
+// One Piece- och Riftbound-seten (scripts/update-op-cards.mjs, update-rb-cards.mjs). Varje set får en egen sida
+// (set/one-piece-op17-….html, set/riftbound-radiance.html) med alla kort, bilder och priser ur data/<spel>/cards.json.
+// Ett kort öppnas i Kortpriser. Kommande släpp i kalendern som inte har några kort än får en släppsida.
+const GAMES = [["op", "one-piece", "One Piece Card Game", "One Piece"], ["rb", "riftbound", "Riftbound", "Riftbound"]];
+const gameData = Object.fromEntries(await Promise.all(GAMES.map(async ([g]) => [g, await readJSON(`data/${g}/cards.json`, { sets: [], cards: [] })])));
+const gameName = Object.fromEntries(GAMES.map(([g, , name]) => [g, name]));
+const gameAnchor = Object.fromEntries(GAMES.map(([g, anchor]) => [g, anchor]));
 
 const pages = sets.map((s) => {
   const cards = s.cards || [], known = new Set(cards.map((c) => c.id));
@@ -45,7 +48,8 @@ const pages = sets.map((s) => {
     logo: s.logo || extraLogos[s.id] || null, cards: [...cards, ...extra], language: "en", match: [] };
 });
 const bySetId = new Map(pages.map((p) => [p.id, p]));
-for (const r of calendar) {
+// One Piece- och Riftbound-släppen i kalendern får ingen setsida, precis som seten ovan.
+for (const r of calendar.filter((x) => !x.game)) {
   const first = r.waves?.map((w) => w.date).sort()[0] || null;
   const page = r.tcgdex && bySetId.get(r.tcgdex);
   if (page) { page.cal = r; page.match = r.match || []; continue; }
@@ -53,6 +57,28 @@ for (const r of calendar) {
   pages.push({ id: null, calId: r.id, name: r.set, serie: r.series || null, date: first, cardCount: null, logo: r.logo || extraLogos[r.id] || null, cards: [],
     language: r.language || "en", match: r.match || [r.set], cal: r, slug: r.id });
 }
+
+// One Piece och Riftbound. Adressen börjar med spelet, så att "Legacy" (Riftbound) inte krockar med ett Pokémonset.
+const gamePages = [];
+for (const [g, prefix] of GAMES) {
+  const { sets: gs, cards: gc } = gameData[g];
+  for (const s of gs) {
+    const cards = gc.filter((c) => c.set === s.id);
+    if (!cards.length) continue;
+    // Butikerna skriver setkoden på olika sätt ("OP-17", "OP17", "(OP 17)"), och bevakningen använder setets id.
+    const match = [...new Set([s.name, s.id, s.code, g === "op" && s.code?.replace(/^([A-Z]+)(\d+)$/, "$1 $2")].filter((x) => x && x.length >= 4))];
+    gamePages.push({ game: g, id: s.id, name: s.name, code: s.code, date: s.date, main: s.main, logo: s.image, cards, match,
+      slug: slugify(`${prefix} ${g === "op" && s.code ? `${s.code} ` : ""}${s.name.replace(/^riftbound\s+/i, "")}`) });
+  }
+  // Kommande släpp i kalendern (scripts/update-releases.mjs): kopplas till setet med samma namn, annars en egen släppsida.
+  for (const r of calendar.filter((x) => x.game === g)) {
+    const page = gamePages.find((p) => p.game === g && p.name.toLowerCase() === r.set.toLowerCase());
+    if (page) { page.cal = r; page.match = [...new Set([...page.match, ...(r.match || [])])]; continue; }
+    gamePages.push({ game: g, id: null, name: r.set, code: null, date: r.waves?.map((w) => w.date).sort()[0] || null, main: true, logo: r.logo || null,
+      cards: [], match: r.match || [r.set], cal: r, slug: slugify(`${prefix} ${r.set}`) });
+  }
+}
+for (const p of gamePages) p.url = `${SITE}/set/${p.slug}.html`;
 
 // Adresser: setets namn. Äldst först, så att ett nytt set med samma namn inte tar över en gammal adress.
 const used = new Set(["index"]);
@@ -123,7 +149,7 @@ const headHtml = ({ title, desc, url, ld }) => `<!doctype html>
 <meta name="twitter:card" content="summary_large_image">
 <script type="application/ld+json">${JSON.stringify(ld).replace(/</g, "\\u003c")}</script>
 <link href="fonts/fonts.css" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=20261028a">
+<link rel="stylesheet" href="style.css?v=20261028e">
 <link rel="stylesheet" href="dark.css?v=20261027a" id="dark-css" media="(prefers-color-scheme: dark)">
 <script src="js/theme.js?v=20261021"></script>
 </head>
@@ -145,7 +171,7 @@ const pageHead = (crumbs) => `
   </header>`;
 const foot = `
 </main>
-<script type="module" src="js/setpage.js?v=20261022c"></script>
+<script type="module" src="js/setpage.js?v=20261028a"></script>
 </body>
 </html>
 `;
@@ -185,7 +211,7 @@ function wavesHtml(p) {
     ${r.about ? `<p class="set-about">${esc(r.about)}</p>` : ""}
     ${pre}
     <div class="table-scroll"><table class="set-table waves"><thead><tr><th>Datum</th><th>Produkter</th></tr></thead><tbody>${rows}</tbody></table></div>
-    <p class="hint">Datumen gäller den europeiska lanseringen. Leveranserna till svenska butiker kan dröja några dagar.</p>`;
+    <p class="hint">${p.game ? "Datumen kommer från TCGplayer och gäller USA." : "Datumen gäller den europeiska lanseringen."} Leveranserna till svenska butiker kan dröja några dagar.</p>`;
 }
 
 function topHtml(p) {
@@ -231,7 +257,73 @@ function relatedHtml(p, all) {
 
 const fold = (s) => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
 const tile = (p) => `<li data-q="${esc(fold([p.name, p.serie, p.id].filter(Boolean).join(" ")))}"><a href="set/${p.slug}.html">${logoImg(p, "set-tile-logo")}<b>${esc(p.name)}</b><small>${p.date ? (upcoming(p) ? `Släpps ${longDate(p.date)}` : longDate(p.date)) : "Datum ej satt"}${count(p) ? ` · ${count(p)} kort` : ""}</small></a></li>`;
-const gameTile = (g, s) => `<li data-q="${esc(fold([s.name, s.code, s.id].filter(Boolean).join(" ")))}"><a href="priser.html?game=${g}&amp;set=${encodeURIComponent(s.id)}">${s.image ? `<img class="set-tile-logo" src="${esc(s.image)}" alt="${esc(s.name)}" loading="lazy" decoding="async">` : `<span class="set-tile-logo set-word">${esc(s.name)}</span>`}<b>${esc(s.code ? `${s.code} · ${s.name}` : s.name)}</b><small>${s.date ? (s.date > today ? `Släpps ${longDate(s.date)}` : longDate(s.date)) : "Datum ej satt"} · ${s.count} kort</small></a></li>`;
+const gameTile = (p) => `<li data-q="${esc(fold([p.name, p.code, p.id, GAMES.find(([g]) => g === p.game)[3]].filter(Boolean).join(" ")))}"><a href="set/${p.slug}.html">${p.logo ? `<img class="set-tile-logo" src="${esc(p.logo)}" alt="${esc(p.name)}" loading="lazy" decoding="async">` : `<span class="set-tile-logo set-word">${esc(p.name)}</span>`}<b>${esc(p.code ? `${p.code} · ${p.name}` : p.name)}</b><small>${p.date ? (p.date > today ? `Släpps ${longDate(p.date)}` : longDate(p.date)) : "Datum ej satt"}${p.cards.length ? ` · ${p.cards.length} kort` : ""}</small></a></li>`;
+const anyTile = (p) => (p.game ? gameTile(p) : tile(p));
+
+// ---------- One Piece och Riftbound ----------
+const BACK = { op: "img/kortbaksida-op.webp", rb: "img/kortbaksida-rb.png" };
+const OP_RARITY = { L: "Leader", C: "Common", UC: "Uncommon", R: "Rare", SR: "Super Rare", SEC: "Secret Rare", TR: "Treasure Rare", P: "Promo", PR: "Promo" };
+const rarityOf = (p, c) => (p.game === "op" ? OP_RARITY[c.rarity] || c.rarity : c.rarity !== "None" ? c.rarity : null);
+// Ett kort öppnas i Kortpriser, i samma stora vy som där (priser.html?…&card=<id>).
+const priceHref = (p, c) => `priser.html?game=${p.game}&amp;set=${encodeURIComponent(p.id)}&amp;card=${encodeURIComponent(c.id)}`;
+const gameCard = (p, c) => `<li data-no="${esc(c.no || "")}" data-price="${c.sek ?? ""}"><a href="${priceHref(p, c)}">
+        <img src="${esc(c.image || BACK[p.game])}" alt="${esc(`${c.name} ${c.no || ""}`.trim())}" loading="lazy" decoding="async" width="245" height="342" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='${BACK[p.game]}'">
+        <b>${esc(c.name)}</b><small>${esc([c.no, rarityOf(p, c), c.variant].filter(Boolean).join(" · "))}</small>
+        <span class="set-price">${c.sek != null ? kr(c.sek) : "–"}</span></a></li>`;
+const byNo = (a, b) => String(a.no || "").localeCompare(String(b.no || ""), "sv", { numeric: true });
+
+function gameIntro(p) {
+  const game = gameName[p.game], code = p.code ? ` (${p.code})` : "";
+  if (!p.cards.length) return `${p.name} är ett kommande ${game}-set som släpps ${p.date ? longDate(p.date) : "snart"}. Här ser du vilka produkter som kommer, när de släpps och vilka svenska butiker som redan har dem till förbeställning.`;
+  const when = p.date ? ` som ${p.date > today ? "släpps" : "släpptes"} ${longDate(p.date)}` : "";
+  return `${p.name} är ett set i ${game}${code}${when}. Setet har ${p.cards.length} kort. Här ser du alla kort med bilder och TCGplayers marknadspris i kronor, de dyraste korten och vilka svenska butiker som har ${p.name} i lager just nu.`;
+}
+
+function gamePage(p) {
+  const game = gameName[p.game], priced = p.cards.filter((c) => c.sek != null);
+  const top = [...priced].sort((a, b) => b.sek - a.sek);
+  const release = !p.cards.length || (p.date && p.date > today);
+  const title = release ? `${p.name} – ${game}, släppdatum och produkter | Lootninja` : `${p.name} – alla ${game}-kort och priser i kronor | Lootninja`;
+  const desc = release
+    ? `${p.name} (${game}) släpps ${p.date ? longDate(p.date) : "snart"}. Se alla produkter, släppdatum och vilka svenska butiker som har förbeställning eller lager.`
+    : `Alla ${p.cards.length} kort i ${p.name} (${game}${p.code ? ` ${p.code}` : ""}) med bilder och priser i kronor.${p.date ? ` Släpptes ${longDate(p.date)}.` : ""}${top[0] ? ` Dyrast just nu: ${top[0].name} (${kr(top[0].sek)}).` : ""} Se var setet finns i lager i Sverige.`;
+  const crumbs = [["Hem", `${SITE}/`, "./"], ["Alla set", `${SITE}/set/`, "set/"], [game, `${SITE}/set/#${gameAnchor[p.game]}`, `set/#${gameAnchor[p.game]}`], [p.name, p.url, null]];
+  const facts = [esc(game), p.code && `Kod: ${esc(p.code)}`, p.date && (p.date > today ? `Släpps <time datetime="${p.date}">${longDate(p.date)}</time>` : `Släpptes <time datetime="${p.date}">${longDate(p.date)}</time>`),
+    p.cards.length && `${p.cards.length} kort`].filter(Boolean);
+  const others = gamePages.filter((o) => o !== p && o.game === p.game).sort((a, b) => (b.main - a.main) || (b.date || "").localeCompare(a.date || "")).slice(0, 8);
+  const priceNote = `Pris = TCGplayers marknadspris för ett ograderat kort i nyskick, omräknat till kronor ${longDate(new Date(gameData[p.game].updated || Date.now()).toISOString().slice(0, 10))}. Tryck på ett kort för att se det i stort format med pris och fakta.`;
+  return `${head({ title, desc, url: p.url, ld: crumbsLd(crumbs.map(([n, u]) => [n, u])) })}${pageHead(crumbs.map(([n, , h]) => [n, h]))}
+
+  <div class="wrap">
+    <section class="set-hero">
+      ${p.logo ? `<img class="set-hero-logo set-hero-box" src="${esc(p.logo)}" alt="${esc(p.name)}" decoding="async">` : `<span class="set-hero-logo set-word">${esc(p.name)}</span>`}
+      <div>
+        <h1>${esc(p.name)}</h1>
+        <p class="set-facts">${facts.join(" · ")}</p>
+        <p>${esc(gameIntro(p))}</p>
+        <p class="set-actions">${p.cards.length ? `<a class="btn gold" href="set/${p.slug}.html#kort">Visa alla kort</a><a class="btn" href="priser.html?game=${p.game}&amp;set=${encodeURIComponent(p.id)}">Öppna i Kortpriser</a>` : ""}<a class="btn" href="set/${p.slug}.html#lager">Var finns det i lager?</a></p>
+      </div>
+    </section>
+${wavesHtml(p)}
+    <div class="section" id="lager"><h2>${esc(p.name)} i svenska butiker</h2><a class="more" href="butiker.html?q=${encodeURIComponent(p.name)}#products">Sök i butikerna</a></div>
+    <p class="lead-sm" id="set-stock-count">Butikernas lager uppdateras hela dygnet.</p>
+    <div id="set-stock" class="pgrid" data-density="small" data-game="${p.game}" data-name="${esc(p.name)}" data-lang="en" data-date="${p.date || ""}" data-match="${esc(JSON.stringify(p.match))}"></div>
+    <p class="more-row" id="set-stock-more" hidden><a class="btn" href="butiker.html?q=${encodeURIComponent(p.name)}#products">Visa alla produkter</a></p>
+${top.length ? `
+    <div class="section" id="dyrast"><h2>Dyraste korten i ${esc(p.name)}</h2></div>
+    <ul class="set-top">${top.slice(0, 12).map((c) => gameCard(p, c)).join("")}
+    </ul>` : ""}
+${p.cards.length ? `
+    <div class="section" id="kort"><h2>Alla ${p.cards.length} kort i ${esc(p.name)}</h2>
+      <div class="seg2 set-sort" role="group" aria-label="Sortera korten"><button type="button" data-sort="no" aria-pressed="true">Nummer</button><button type="button" data-sort="price" aria-pressed="false">Dyrast</button></div></div>
+    <p class="lead-sm">${priceNote}</p>
+    <ul class="set-top set-all">${[...p.cards].sort(byNo).map((c) => gameCard(p, c)).join("")}
+    </ul>` : ""}
+${others.length ? `
+    <div class="section"><h2>Fler ${esc(game)}-set</h2><a class="more" href="set/#${gameAnchor[p.game]}">Alla set</a></div>
+    <ul class="set-tiles">${others.map(gameTile).join("")}</ul>` : ""}
+  </div>${foot}`;
+}
 
 function setPage(p, all) {
   const priced = p.prices?.size > 0;
@@ -272,7 +364,7 @@ ${relatedHtml(p, all)}
 
 function indexPage(all) {
   const url = `${SITE}/set/`;
-  const soon = all.filter(current).sort((a, b) => (a.date || "9999").localeCompare(b.date || "9999"));
+  const soon = [...all, ...gamePages].filter(current).sort((a, b) => (a.date || "9999").localeCompare(b.date || "9999"));
   const rest = all.filter((p) => !current(p));
   const series = new Map();
   for (const p of rest.sort((a, b) => (b.date || "").localeCompare(a.date || ""))) {
@@ -280,28 +372,29 @@ function indexPage(all) {
     if (!series.has(k)) series.set(k, []);
     series.get(k).push(p);
   }
-  const title = "Alla Pokémon TCG-set – kortlistor, priser och släppdatum | Lootninja";
-  const desc = `Alla ${all.length} Pokémon TCG-set från Base Set till de senaste, med kortlistor, priser i kronor, släppdatum och kommande set.`;
+  const title = "Alla set – Pokémon TCG, One Piece och Riftbound";
+  const desc = `Alla ${all.length} Pokémon TCG-set från Base Set till de senaste, plus seten i One Piece Card Game och Riftbound, med kortlistor, priser i kronor, släppdatum och kommande set.`;
   const crumbs = [["Hem", `${SITE}/`, "./"], ["Kalender", `${SITE}/slapp.html`, "slapp.html"], ["Alla set", url, null]];
   return `${head({ title, desc, url, ld: crumbsLd(crumbs.map(([n, u]) => [n, u])) })}${pageHead(crumbs.map(([n, , h]) => [n, h]))}
 
   <div class="wrap">
     <section class="set-hero">
       <div>
-        <h1>Alla Pokémon TCG-set</h1>
-        <p>Varje set har en egen sida med alla kort, priser i kronor för de senaste seten, släppdatum och vilka svenska butiker som har setet i lager. Kommande set står först, sedan alla set per serie, nyast först.</p>
+        <h1>Alla set</h1>
+        <p>Varje set i Pokémon, One Piece och Riftbound har en egen sida med alla kort och bilder, priser i kronor, släppdatum och vilka svenska butiker som har setet i lager. Kommande set står först, sedan varje spel och serie, nyast först.</p>
         <form class="set-search" role="search" onsubmit="return false">
-          <input type="search" id="set-q" placeholder="Sök set, t.ex. Pikachu eller Scarlet" aria-label="Sök set" autocomplete="off">
+          <input type="search" id="set-q" placeholder="Sök set, t.ex. Scarlet, OP-12 eller Origins" aria-label="Sök set" autocomplete="off">
         </form>
       </div>
     </section>
     <p class="lead-sm" id="set-none" hidden>Inget set matchar. Prova ett annat namn eller en serie, till exempel Scarlet.</p>
 ${soon.length ? `
     <div class="section"><h2>Aktuella och kommande set</h2><a class="more" href="slapp.html">Släppkalendern</a></div>
-    <ul class="set-tiles">${soon.map(tile).join("")}</ul>` : ""}
-${GAMES.filter(([g]) => gameSets[g].length).map(([g, anchor, name]) => `
+    <ul class="set-tiles">${soon.map(anyTile).join("")}</ul>` : ""}
+${GAMES.map(([g, anchor, name]) => [g, anchor, name, gamePages.filter((p) => p.game === g && p.cards.length).sort((a, b) => (b.main - a.main) || (b.date || "").localeCompare(a.date || ""))])
+  .filter(([, , , list]) => list.length).map(([g, anchor, name, list]) => `
     <div class="section" id="${anchor}"><h2>${esc(name)}</h2><a class="more" href="priser.html?game=${g}">Kortpriser</a></div>
-    <ul class="set-tiles">${gameSets[g].map((s) => gameTile(g, s)).join("")}</ul>`).join("")}
+    <ul class="set-tiles">${list.map(gameTile).join("")}</ul>`).join("")}
 ${[...series].map(([name, list]) => `
     <div class="section"><h2>${esc(name)}</h2></div>
     <ul class="set-tiles">${list.map(tile).join("")}</ul>`).join("")}
@@ -330,6 +423,7 @@ ${[...series].map(([name, list]) => `
 // ---------- Skriv ----------
 await mkdir(OUT_DIR, { recursive: true });
 const files = new Map(pages.map((p) => [`${p.slug}.html`, setPage(p, pages)]));
+for (const p of gamePages) files.set(`${p.slug}.html`, gamePage(p));
 files.set("index.html", indexPage(pages));
 let written = 0;
 for (const [name, html] of files) {
@@ -341,7 +435,8 @@ let removed = 0;
 for (const f of await readdir(OUT_DIR)) if (f.endsWith(".html") && !files.has(f)) { await unlink(new URL(f, OUT_DIR)); removed++; }
 
 const map = { sets: Object.fromEntries(pages.filter((p) => p.id).map((p) => [p.id, `set/${p.slug}.html`])),
-  releases: Object.fromEntries(pages.filter((p) => p.cal).map((p) => [p.cal.id, `set/${p.slug}.html`])) };
+  releases: Object.fromEntries([...pages, ...gamePages].filter((p) => p.cal).map((p) => [p.cal.id, `set/${p.slug}.html`])),
+  games: Object.fromEntries(GAMES.map(([g]) => [g, Object.fromEntries(gamePages.filter((p) => p.game === g && p.id).map((p) => [p.id, `set/${p.slug}.html`]))])) };
 const mapText = JSON.stringify(map, null, 1) + "\n";
 if (await readFile(at("data/set-pages.json"), "utf8").catch(() => null) !== mapText) await writeFile(at("data/set-pages.json"), mapText);
-console.log(`${pages.length} setsidor: ${written} ändrade, ${removed} borttagna.`);
+console.log(`${pages.length + gamePages.length} setsidor (${gamePages.length} One Piece och Riftbound): ${written} ändrade, ${removed} borttagna.`);

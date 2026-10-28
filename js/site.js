@@ -90,7 +90,7 @@ function footer() {
         <li><a href="om.html#rattigheter">Rättigheter</a></li>
       </ul></div>
     </div>
-    <p class="footer-legal">Lootninja är ett ideellt hobbyprojekt och självständigt fanprojekt. Varken The Pokémon Company, Nintendo, Creatures, GAME FREAK eller någon butik står bakom sidan.
+    <p class="footer-legal">Lootninja är ett ideellt hobbyprojekt och självständigt fanprojekt. Varken The Pokémon Company, Nintendo, Creatures, GAME FREAK, Bandai, Riot Games eller någon butik står bakom sidan.
     All data, priser och lagerstatus samlas in automatiskt och ska ses som vägledande – ta inte allt för 100% sanning då felaktiga priser, fördröjningar i uppdateringar eller tekniska fel kan förekomma. Dubbelkolla alltid direkt hos butiken innan köp.
     Kortbilder, setloggor och namn tillhör respektive rättighetsinnehavare. Landskap, figurer och design är Lootninjas egna.
     © ${new Date().getFullYear()} Lootninja.</p>
@@ -279,10 +279,12 @@ export function releaseSets() {
 // Varje omgång som en egen rad, t.ex. "30th Celebration: Battle Deck" den 30 oktober.
 export async function allReleases() {
   // Ett set utan inlagda produkter ("Setet släpps") eller en fristående produkt visas med bara sitt namn.
-  const named = (r, w) => (!w.products.length || (w.products.length === 1 && w.products[0] === r.set) ? r.set : `${r.set}: ${w.products.join(" · ")}`);
+  // One Piece och Riftbound med spelets namn först ("Riftbound Legacy").
+  const alone = (r, w) => !w.products.length || (w.products.length === 1 && w.products[0] === r.set);
+  const named = (r, w) => { const set = `${{ op: "One Piece ", rb: "Riftbound " }[r.game] || ""}${r.set}`; return alone(r, w) ? set : `${set}: ${w.products.join(" · ")}`; };
   return (await releaseSets()).flatMap((r) => r.waves.map((w) => ({
-    name: named(r, w), set: r.set, id: r.id, date: w.date, language: r.language,
-    type: !w.products.length ? "Nytt set" : named(r, w) === r.set ? "Fristående produkt" : w.products.length === 1 ? w.products[0] : `${w.products.length} produkter`,
+    name: named(r, w), set: r.set, id: r.id, date: w.date, language: r.language, game: r.game || null,
+    type: !w.products.length ? "Nytt set" : alone(r, w) ? "Fristående produkt" : w.products.length === 1 ? w.products[0] : `${w.products.length} produkter`,
     note: w.preliminary || r.preliminary ? "preliminärt datum" : "", products: w.products,
   }))).sort((a, b) => a.date.localeCompare(b.date));
 }

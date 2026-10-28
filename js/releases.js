@@ -31,14 +31,16 @@ export const typeOf = (name) => TYPES.find(([, re]) => re.test(name))?.[0] || nu
 
 // ---------- Koppla omgångarnas produktnamn till butikernas produkter ----------
 const GENERIC = new Set(["pokemon", "pokémon", "tcg", "the", "and", "och", "med", "mega", "evolution", "collection", "box", "pack", "booster",
-  "mini", "tins", "tin", "deck", "premium", "ultra", "kollektion", "eng", "engelsk", "english"]);
+  "mini", "tins", "tin", "deck", "premium", "ultra", "kollektion", "eng", "engelsk", "english", "display"]);
 const words = (s) => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").match(/[a-z0-9]+/g) || [];
 // Hela kartonger (case, "12 st", "6 boxes") jämförs inte med en enskild produkt.
 const BULK = /\b(case|\d+ ?st|\d+ ?boxes)\b/i;
 
 function productsFor(r, products) {
   const terms = (r.match || [r.set]).map((t) => t.toLowerCase());
-  return products.filter((p) => (terms.some((t) => p.title.toLowerCase().includes(t)) || p.set === r.set) && (r.language !== "en" || p.lang === "en"));
+  // Samma spel: "Legacy" (Riftbound) ska inte hitta en Pokémonprodukt med samma ord.
+  return products.filter((p) => (p.game || null) === (r.game || null)
+    && (terms.some((t) => p.title.toLowerCase().includes(t)) || p.set === r.set || (r.match || []).includes(p.set)) && (r.language !== "en" || p.lang === "en"));
 }
 
 const rankOffer = (p) => (p.available ? 0 : p.preorder ? 1 : 2);

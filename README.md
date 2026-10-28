@@ -28,6 +28,7 @@ Båda skriver JSON till `data/`, som sidan läser.
 - **`data/releases.json`** – handskrivna släpp med produktomgångar, beskrivning och förrelease. Har setet ingen logga än (TCGdex lägger in set först när de släppts) kan du skriva in en bildadress i `logo`. Annars hämtas den automatiskt av `scripts/update-set-logos.mjs` så fort Pokémon TCG API har setet. Vinner alltid när något krockar. Skriv in eller rätta släpp här.
 - **Bulbapedia** – set och produkter som är annonserade men inte släppta (sidor märkta "upcoming"). Nya set kommer med automatiskt, även utan datum.
 - **TCGdex** – set som har släppts de senaste 60 dagarna.
+- **TCGplayer (tcgcsv.com)** – One Piece- och Riftbound-set, kommande och de senaste 60 dagarna, med förseglade produkter och datum. Märks med `game` (`op`, `rb`) och får ingen egen setsida.
 
 Ändra aldrig `release-calendar.json` för hand, den skrivs över.
 

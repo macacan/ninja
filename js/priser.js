@@ -304,6 +304,7 @@ async function searchJa(my, parsed, name) {
 
 // One Piece och Riftbound: sök bara i det valda spelets färdigbyggda fil. Alla ord ska finnas i namn, variant,
 // set eller kortnummer, och kortnumret får skrivas utan bindestreck ("op01120" eller "op01 120").
+let openAfter = new URLSearchParams(location.search).get("card");
 async function searchPrebuilt(my, q, rarity, set) {
   $("#res-title").textContent = q ? `Kort som matchar "${q}"` : set ? $("#set").selectedOptions[0].textContent : $("#rarity").selectedOptions[0].textContent;
   $("#prices").innerHTML = skeleton(8);
@@ -323,6 +324,14 @@ async function searchPrebuilt(my, q, rarity, set) {
     next = PAGE;
     loaded = [];
     applyView();
+    // Länk från en setsida (priser.html?game=rb&set=…&card=<id>): kortet öppnas direkt, även om det ligger längre ner i listan.
+    if (openAfter) {
+      const id = openAfter;
+      openAfter = null;
+      if (found.some((c) => c.id === id) && !current.some((c) => c.id === id)) { next = found.length; applyView(); }
+      const i = current.findIndex((c) => c.id === id);
+      if (i >= 0) openCard(i);
+    }
   } catch {
     $("#prices").innerHTML = '<div class="msg">Kunde inte läsa korten just nu. Försök igen om en stund.</div>';
   }
@@ -521,13 +530,16 @@ async function fillFilters() {
 
 // Byter set- och sällsynhetslistan, sökrutans exempel och rubriken efter spelet. Pokémons listor sparas
 // första gången, så att de kan läggas tillbaka utan att TCGdex frågas igen.
-let pokemonFilters = null;
+let pokemonFilters = null, PAGE_TITLE = null;
 async function applyGame() {
   const g = prebuilt();
   pokemonFilters ??= { set: $("#set").innerHTML, rarity: $("#rarity").innerHTML };
   for (const b of document.querySelectorAll("#game-seg button")) b.setAttribute("aria-pressed", String(b.dataset.game === game));
   $("#pq").placeholder = g ? g.placeholder : "Sök kort, t.ex. Pikachu eller Charizard ex";
   $("#page-h1").textContent = g ? g.h1 : "Kortpriser för Pokémonkort";
+  // Fliken får spelets namn, t.ex. "Kortpriser för Riftbound-kort i kronor | Lootninja". Pokémon behåller sidans titel.
+  PAGE_TITLE ??= document.title;
+  document.title = g ? `${g.h1} i kronor | Lootninja` : PAGE_TITLE;
   $("#lang").closest("label").hidden = !!g;
   // "Senast sökta" leder till värderingen, som bara finns för Pokémon.
   $("#recent").style.display = g ? "none" : "";

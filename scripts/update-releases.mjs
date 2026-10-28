@@ -195,6 +195,44 @@ try {
   sources.tcgdex = true;
 } catch (e) { console.warn(`TCGdex: ${e.message}`); }
 
+// ---------- One Piece och Riftbound ----------
+// TCGplayer (via tcgcsv.com) lägger upp nya set med förbeställningsdatum långt före släppet. Varje set blir ett släpp
+// med förseglade produkter per datum. Kartonger, eventkit och DON!!-kort tas inte med.
+const OTHER = [["op", 68, "One Piece"], ["rb", 89, "Riftbound"]];
+for (const [game, cat, series] of OTHER) {
+  try {
+    const groups = (await getJSON(`https://tcgcsv.com/tcgplayer/${cat}/groups`)).results;
+    for (const g of groups) {
+      const date = g.publishedOn?.slice(0, 10);
+      if (!date || date < daysAgo(RECENT_DAYS) || /promo|release event|championship|worlds/i.test(g.name)) continue;
+      const products = (await getJSON(`https://tcgcsv.com/tcgplayer/${cat}/${g.groupId}/products`)).results || [];
+      const sealed = products.filter((p) => !p.extendedData?.some((e) => e.name === "Number") && !/case|event kit|DON!!/i.test(p.name));
+      if (!sealed.length) continue;
+      const id = slug(`${game} ${g.name}`);
+      if (releases.some((r) => r.id === id)) continue;
+      const waves = new Map();
+      for (const p of sealed) {
+        const d = p.presaleInfo?.releasedOn?.slice(0, 10) || date;
+        // "Legacy - Booster Display" och "The Dominance of God Booster Box" heter bara produkten under setet.
+        // "Set Sail Deck Set Display" behåller hela namnet, "Display" ensamt säger inget.
+        const rest = p.name.replace(new RegExp(`^${g.name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&").replace(/\s+/g, "\\s*")}\\s*(-\\s*)?`, "i"), "");
+        const name = /^(display)?$/i.test(rest) ? p.name : rest;
+        if (!waves.has(d)) waves.set(d, []);
+        if (!waves.get(d).includes(name)) waves.get(d).push(name);
+      }
+      const box = sealed.find((p) => /booster (box|display)$/i.test(p.name)) || sealed.find((p) => /booster pack$/i.test(p.name)) || sealed[0];
+      // Butikerna skriver ofta setkoden ("OP-18", som också är bevakningens set) eller namnet utan "Extra Booster: One Piece".
+      const code = game === "op" && g.abbreviation?.replace(/^([A-Z]+)-?(\d+)$/, "$1-$2");
+      const short = g.name.replace(/^extra booster:\s*/i, "").replace(/^one piece\s+/i, "");
+      const match = [...new Set([g.name, short, code].filter(Boolean))];
+      releases.push({ id, set: g.name, game, series, language: "en", match, auto: true,
+        logo: box.imageUrl?.replace("_200w", "_400w") || null, source: `https://www.tcgplayer.com/search/${game === "op" ? "one-piece-card-game" : "riftbound-league-of-legends-trading-card-game"}/${encodeURIComponent(slug(g.name))}`,
+        waves: [...waves].map(([d, list]) => ({ date: d, products: list, auto: true })) });
+    }
+    sources[game] = true;
+  } catch (e) { console.warn(`${series}: ${e.message}`); }
+}
+
 for (const r of releases) {
   r.waves.sort((a, b) => a.date.localeCompare(b.date));
   if (r.waves.length) delete r.announced;

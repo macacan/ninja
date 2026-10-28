@@ -120,16 +120,16 @@ async function homeSets() {
 }
 
 // Nya set i One Piece och Riftbound: huvudseten ur data/<spel>/sets.json (scripts/update-op-cards.mjs och
-// update-rb-cards.mjs). Ett tryck öppnar setets kort och priser i Kortpriser.
+// update-rb-cards.mjs). Ett tryck öppnar setets egen sida i set/ (data/set-pages.json), annars Kortpriser.
 async function homeGameSets(game, label) {
   const el = $(`#home-${game}-sets`);
   el.innerHTML = skeleton(4);
   try {
-    const { sets } = await getJSON(`data/${game}/sets.json`);
+    const [{ sets }, pages] = await Promise.all([getJSON(`data/${game}/sets.json`), setPages()]);
     el.innerHTML = sets.filter((s) => s.main && s.date).slice(0, 5).map((s, i) => {
       const age = -daysUntil(s.date);
       return card(s.name, s.date, label, `${s.count} kort`, i, false, setArt({ name: s.name, serie: { name: s.code }, image: s.image }),
-        age <= 60 ? { text: "Nytt" } : null, "", `priser.html?game=${game}&set=${encodeURIComponent(s.id)}`);
+        age <= 60 ? { text: "Nytt" } : null, "", pages.games?.[game]?.[s.id] || `priser.html?game=${game}&set=${encodeURIComponent(s.id)}`);
     }).join("");
     fillRows(el, 2);
   } catch { el.innerHTML = '<div class="msg">Kunde inte läsa seten just nu.</div>'; }

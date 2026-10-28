@@ -83,4 +83,6 @@ export function mountCalendar(events, onDay) {
   $("#days").addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(e); } });
   $("#agenda").addEventListener("click", open);
   render();
+  // Släppsidans spelfilter byter händelser och ritar om samma månad.
+  return render;
 }

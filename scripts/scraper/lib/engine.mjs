@@ -242,8 +242,8 @@ export async function createEngine({ statuses } = {}) {
     // i stället för 4 MB). Butikssidan och släppkalendern behöver även slutsålt och läser products.json.
     // priceChange och första gången i lager behövs för att startsidan ska kunna skilja en prissänkning som gör
     // butiken billigast från en vanlig prisuppdatering (changedAt i js/group.js).
-    const live = all.filter((p) => p.available || p.preorder).map(({ id, store, title, url, price, available, preorder, image, type, lang, set, lastChange, priceChange, firstInStock, firstOrderable }) =>
-      ({ id, store, title, url, price, available, preorder, image, type, lang, set, lastChange, priceChange, firstInStock, firstOrderable }));
+    const live = all.filter((p) => p.available || p.preorder).map(({ id, store, title, url, price, available, preorder, image, game, type, lang, set, lastChange, priceChange, firstInStock, firstOrderable }) =>
+      ({ id, store, title, url, price, available, preorder, image, game, type, lang, set, lastChange, priceChange, firstInStock, firstOrderable }));
     await writeJSON("data/stock.json", { updated: now, products: live }, true);
     // Dagens lägsta pris i lager per grupp. Under dagen behålls det lägsta vi sett.
     const today = new Date(now).toLocaleDateString("sv-SE");

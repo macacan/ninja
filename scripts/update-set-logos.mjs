@@ -39,7 +39,8 @@ for (const s of missing) {
 }
 // Kommande släpp som TCGdex inte har än (data/release-calendar.json): loggan så fort Pokémon TCG API har ett set
 // med exakt samma namn. Sparas under släppets id. Japanska och andra språk finns inte där.
-const calendar = JSON.parse(await readFile(new URL("../data/release-calendar.json", import.meta.url), "utf8").catch(() => "{}")).releases || [];
+// One Piece- och Riftbound-släppen har boxbilden från TCGplayer (logo) och hoppas över.
+const calendar = (JSON.parse(await readFile(new URL("../data/release-calendar.json", import.meta.url), "utf8").catch(() => "{}")).releases || []).filter((r) => !r.game);
 for (const r of calendar) {
   if (r.tcgdex || r.logo || out[r.id] || (r.language || "en") !== "en") continue;
   const hit = ptcg.find((p) => p.images?.logo && tokens(p.name).join(" ") === tokens(r.set).join(" "));

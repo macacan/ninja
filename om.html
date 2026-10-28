@@ -26,7 +26,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Hem","item":"https://lootninja.se/"},{"@type":"ListItem","position":2,"name":"Om","item":"https://lootninja.se/om.html"}]}</script>
 <link href="fonts/fonts.css" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=20261028c">
+<link rel="stylesheet" href="style.css?v=20261028e">
 <link rel="stylesheet" href="dark.css?v=20261027a" id="dark-css" media="(prefers-color-scheme: dark)">
 <script src="js/theme.js?v=20261021"></script>
 </head>
@@ -52,18 +52,20 @@
       <thead><tr><th>Vad</th><th>Källa</th><th>Villkor</th></tr></thead>
       <tbody>
         <tr><td data-label="Vad">Set, kort och bilder</td><td data-label="Källa"><a href="https://tcgdex.dev">TCGdex</a></td><td data-label="Villkor">Databasen har MIT-licens. Bilderna tillhör rättighetsinnehavarna.</td></tr>
-        <tr><td data-label="Vad">Kortpriser</td><td data-label="Källa">Cardmarket via TCGdex</td><td data-label="Villkor">Vägledande, uppdateras dagligen.</td></tr>
+        <tr><td data-label="Vad">Kortpriser, Pokémon</td><td data-label="Källa">Cardmarket via TCGdex</td><td data-label="Villkor">Vägledande, uppdateras dagligen.</td></tr>
+        <tr><td data-label="Vad">One Piece-kort och priser</td><td data-label="Källa"><a href="https://optcgapi.com">OPTCG API</a> och TCGplayer via <a href="https://tcgcsv.com">tcgcsv.com</a></td><td data-label="Villkor">TCGplayers marknadspris i USD, omräknat till kronor. Vägledande, uppdateras dagligen.</td></tr>
+        <tr><td data-label="Vad">Riftbound-kort och priser</td><td data-label="Källa">TCGplayer via <a href="https://tcgcsv.com">tcgcsv.com</a>, bilder och förmågetext från Riots <a href="https://playriftbound.com/en-us/card-gallery/">kortgalleri</a> och <a href="https://riftcodex.com">Riftcodex</a></td><td data-label="Villkor">TCGplayers marknadspris i USD, omräknat till kronor. Vägledande, uppdateras dagligen.</td></tr>
         <tr><td data-label="Vad">Valutakurs</td><td data-label="Källa"><a href="https://frankfurter.dev">Frankfurter</a> (ECB)</td><td data-label="Villkor">Öppen data från Europeiska centralbanken.</td></tr>
         <tr><td data-label="Vad">Artiklar</td><td data-label="Källa"><a href="https://www.dexerto.com">Dexerto</a> (RSS)</td><td data-label="Villkor">Vi visar rubrik, datum och kort utdrag och länkar till originalet.</td></tr>
         <tr><td data-label="Vad">Videor</td><td data-label="Källa">Officiella Pokémon-kanaler på YouTube (RSS)</td><td data-label="Villkor">Bäddas in via YouTube enligt deras villkor.</td></tr>
         <tr><td data-label="Vad">Butikslager och priser</td><td data-label="Källa">Butikernas publika sidor och produktflöden</td><td data-label="Villkor">Bara butiker som inte förbjuder det. Se <a href="#bot">butiksbevakningen</a>.</td></tr>
-        <tr><td data-label="Vad">Släppkalender</td><td data-label="Källa">Egen lista</td><td data-label="Villkor">Sammanställd från officiella pressmeddelanden.</td></tr>
+        <tr><td data-label="Vad">Släppkalender</td><td data-label="Källa">Egen lista, Bulbapedia, TCGdex och TCGplayer</td><td data-label="Villkor">Pokémon sammanställt från officiella pressmeddelanden, One Piece och Riftbound från TCGplayers förbeställningar.</td></tr>
         <tr><td data-label="Vad">Landskap, figurer och design</td><td data-label="Källa">Lootninja</td><td data-label="Villkor">Egengjord pixelgrafik, ritad i kod.</td></tr>
       </tbody>
     </table></div>
 
     <h2 id="bevakning">Så fungerar bevakningen</h2>
-    <p><b>Vad ninjan håller koll på.</b> Pokémonprodukter hos svenska nätbutiker. Vi tar bara med förseglat: Elite Trainer Boxar, boosterboxar, bundles, paket, tins, blisters och samlarboxar. Lösa kort, graderade kort och tillbehör som sleeves och pärmar sorteras bort. Under <a href="butiker.html#stores">Butiker</a> ser du exakt vilka butiker som ingår och när de kollades senast.</p>
+    <p><b>Vad ninjan håller koll på.</b> Pokémon-, One Piece- och Riftbound-produkter hos svenska nätbutiker. Vi tar bara med förseglat: Elite Trainer Boxar, boosterboxar, bundles, paket, tins, blisters och samlarboxar. Lösa kort, graderade kort och tillbehör som sleeves och pärmar sorteras bort. Under <a href="butiker.html#stores">Butiker</a> ser du exakt vilka butiker som ingår och när de kollades senast.</p>
     <p><b>Hur ofta.</b> Varje butik har en egen klocka och kollas ungefär var tionde minut, och mellan klockan 01 och 07 högst en gång i timmen. Butiker som ber oss ta det lugnare, i sin robots.txt eller genom att svara att vi går för fort, kollas var tjugonde minut. Har en sida inte ändrats sedan förra besöket frågar vi bara om det, och då skickar butiken ingen data alls. Butiker med ett öppet produktflöde läses i sin helhet varje gång. Hos andra går vi igenom produktsidorna några åt gången, så att ingen butik får för många besök på en gång.</p>
     <p><b>Inget brus första gången.</b> När vi börjar bevaka en butik sparar vi bara hur det ser ut just då. Notiser kommer först när något faktiskt ändras.</p>
     <p><b>Det här får du besked om.</b> Du väljer själv bland fyra sorters händelser:</p>
@@ -86,7 +88,7 @@
     <p><b>Är du butiksägare?</b> Vill du inte vara med räcker det att lägga till <code>User-agent: PackninjaBot</code> och <code>Disallow: /</code> i din robots.txt, eller att kontakta oss på <a href="mailto:hej@lootninja.se">hej@lootninja.se</a>, så tar vi bort butiken. Vill du hellre skicka ett produktflöde direkt tar vi gärna emot det.</p>
 
     <h2 id="rattigheter">Rättigheter & ansvarsfriskrivning</h2>
-    <p>Lootninja är ett ideellt hobbyprojekt och självständigt fanprojekt. Varken The Pokémon Company, Nintendo, Creatures, GAME FREAK eller någon av butikerna står bakom sidan.
+    <p>Lootninja är ett ideellt hobbyprojekt och självständigt fanprojekt. Varken The Pokémon Company, Nintendo, Creatures, GAME FREAK, Bandai, Riot Games eller någon av butikerna står bakom sidan.
     Kortbilder, setloggor, namn och varumärken tillhör respektive rättighetsinnehavare och visas för att identifiera produkterna.
     Ninja-maskoten, pixellandskapen och sidans design är Lootninjas egna.</p>
     <p>Alla priser och lageruppgifter samlas in automatiskt och ska ses som vägledande. Vi kan inte garantera 100% korrekthet då felaktiga priser, försenade uppdateringar och ändringar hos butikerna kan förekomma.</p>

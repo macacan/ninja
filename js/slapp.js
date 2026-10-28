@@ -4,6 +4,7 @@ import { $, esc, loading, latestSets, setLogo, setPages, daysUntil } from "./sit
 import { releaseData, nextWave, detailHTML, fillDetail, bindDetail, pill, pillHTML, LANG, long, short, inDays, dateBox, waveText, meta } from "./releases.js";
 import { mountCalendar, MONTHS } from "./calendar.js";
 import { getAnatomyData, renderPullRatesModal } from "./anatomy.js";
+import { GAMES, getPrefs, gamesOf } from "./prefs.js";
 
 const RECENT_DAYS = 60; // så länge syns en omgång under "Nyligen släppta"
 const startOfToday = () => { const t = new Date(); t.setHours(0, 0, 0, 0); return t; };
@@ -46,7 +47,11 @@ document.addEventListener("click", (e) => {
 const today = startOfToday();
 const byNext = (a, b) => nextWave(a).date.localeCompare(nextWave(b).date);
 const upcoming = ctx.releases.filter((r) => nextWave(r)).sort(byNext);
-const hero = upcoming.find((r) => day(r.waves[0].date) >= today) || upcoming[0];
+// Spelet: Pokémon-släppen saknar game. Nästa stora släpp tas helst bland spelen man valt att bevaka (Pokémon om inget valts).
+const gameOf = (r) => r.game || "pk";
+const myGames = gamesOf(getPrefs());
+const isNew = (r) => day(r.waves[0].date) >= today;
+const hero = upcoming.find((r) => isNew(r) && myGames.includes(gameOf(r))) || upcoming.find(isNew) || upcoming[0];
 
 // Kalenderfil (.ics) med släppdagen och förreleasen, så att man kan lägga in den i mobilens kalender.
 function icsFor(r, w) {
@@ -92,7 +97,7 @@ renderHero();
 
 // ---------- Kommande och nyligen släppta ----------
 // En rad per omgång (och en för förreleasen), sorterat på datum. Språkfiltret gäller både listan och "Nyligen släppta".
-let lang = "";
+let lang = "", game = "";
 const rows = [];
 for (const r of ctx.releases) {
   r.waves.forEach((w, wi) => rows.push({ r, w, wi, date: w.date }));
@@ -104,7 +109,7 @@ const isRecent = (x) => !isUpcoming(x) && !x.pre && (today - day(x.date)) / 864e
 
 function rowHTML(x) {
   const { r } = x, logo = ctx.logos.get(r.id);
-  const tags = [r.language !== "en" ? LANG[r.language] : "", x.w?.preliminary || r.preliminary ? "Preliminärt" : ""].filter(Boolean);
+  const tags = [r.game ? GAMES[r.game] : "", r.language !== "en" ? LANG[r.language] : "", x.w?.preliminary || r.preliminary ? "Preliminärt" : ""].filter(Boolean);
   const what = x.pre ? `Förrelease i spelbutiker ${short(x.date)}–${short(x.to)}` : waveText(x.w, r);
   return `<li class="rel-row${x.pre ? " is-pre" : ""}">
     ${dateBox(x.date)}
@@ -120,7 +125,7 @@ function rowHTML(x) {
 }
 
 function renderLists() {
-  const mine = (r) => !lang || r.language === lang;
+  const mine = (r) => (!lang || r.language === lang) && (!game || gameOf(r) === game);
   const next = rows.filter((x) => isUpcoming(x) && mine(x.r)).sort((a, b) => a.date.localeCompare(b.date) || !!b.pre - !!a.pre);
   const months = new Map();
   for (const x of next) { const k = x.date.slice(0, 7); if (!months.has(k)) months.set(k, []); months.get(k).push(x); }
@@ -137,25 +142,31 @@ function renderLists() {
   $("#rel-recent-list").innerHTML = recent.length ? `<ul class="rel-rows">${recent.map(rowHTML).join("")}</ul>` : "";
 }
 
-// Språkfiltret visas bara när det finns släpp på mer än ett språk.
-const langs = [...new Set(ctx.releases.filter((r) => nextWave(r) || !r.waves.length).map((r) => r.language))];
-if (langs.length > 1) {
-  $("#rel-filter").innerHTML = [["", "Alla"], ...langs.map((l) => [l, LANG[l] || l])]
-    .map(([v, t]) => `<button type="button" data-lang="${esc(v)}" aria-pressed="${v === lang}">${esc(t)}</button>`).join("");
-  $("#rel-filter").addEventListener("click", (e) => {
-    const b = e.target.closest("[data-lang]");
-    if (!b) return;
-    lang = b.dataset.lang;
-    $("#rel-filter").querySelectorAll("button").forEach((x) => x.setAttribute("aria-pressed", x === b));
-    renderLists();
-  });
-}
+// Spel- och språkfiltret. Varje rad visas bara när det finns kommande släpp i mer än ett spel eller på mer än ett språk.
+// Spelfiltret gäller också kalendern.
+let refreshCalendar = () => {}; // sätts när kalendern är monterad, längre ner
+const live = ctx.releases.filter((r) => nextWave(r) || !r.waves.length);
+const games = Object.keys(GAMES).filter((g) => live.some((r) => gameOf(r) === g));
+const langs = [...new Set(live.map((r) => r.language))];
+const chips = (key, cur, list) => list.map(([v, t]) => `<button type="button" data-${key}="${esc(v)}" aria-pressed="${v === cur}">${esc(t)}</button>`).join("");
+$("#rel-filter").innerHTML = [
+  games.length > 1 ? chips("game", game, [["", "Alla spel"], ...games.map((g) => [g, GAMES[g]])]) : "",
+  langs.length > 1 ? chips("lang", lang, [["", "Alla språk"], ...langs.map((l) => [l, LANG[l] || l])]) : "",
+].filter(Boolean).join('<span class="rf-break" aria-hidden="true"></span>');
+$("#rel-filter").addEventListener("click", (e) => {
+  const b = e.target.closest("[data-game],[data-lang]");
+  if (!b) return;
+  const key = "game" in b.dataset ? "game" : "lang";
+  if (key === "game") game = b.dataset.game; else lang = b.dataset.lang;
+  $("#rel-filter").querySelectorAll(`[data-${key}]`).forEach((x) => x.setAttribute("aria-pressed", x === b));
+  renderLists();
+  if (key === "game") refreshCalendar();
+});
 renderLists();
 
 // Lista eller kalender. Valet sparas till nästa besök.
 function setView(v) {
   $("#rel-list").hidden = v === "cal";
-  $("#rel-filter").hidden = v === "cal";
   $("#kalender").hidden = v !== "cal";
   $("#rel-view").querySelectorAll("button").forEach((b) => b.setAttribute("aria-pressed", b.dataset.view === v));
   try { localStorage.setItem("nl:rel-view", v); } catch {}
@@ -171,21 +182,27 @@ if (linked) openRelease(linked);
 
 // ---------- Kalender ----------
 // Varje omgång blir en händelse. Äldre set från TCGdex läggs till, så att det går att bläddra bakåt.
+// One Piece- och Riftbound-släppen får spelets namn först, så att "Legacy" inte ser ut som ett Pokémonset.
 const events = new Map();
 const add = (k, it) => { if (!events.has(k)) events.set(k, []); events.get(k).push(it); };
-for (const r of ctx.releases) r.waves.forEach((w, wi) => {
-  add(w.date, {
-    kind: w.products.length ? "drop" : "set", release: r.id, wave: wi,
-    title: w.products.length && !(w.products.length === 1 && w.products[0] === r.set) ? `${r.set}: ${w.products.join(" · ")}` : r.set,
-    sub: [w.products.length ? (w.products.length === 1 ? "" : `${w.products.length} produkter`) : "nytt set", r.language !== "en" ? LANG[r.language] : ""].filter(Boolean).join(" · "),
-    logo: !w.products.length ? ctx.logos.get(r.id) : null, setLogo: ctx.logos.get(r.id),
-  });
-});
 const known = new Set(ctx.releases.flatMap((r) => [r.tcgdex, r.set.toLowerCase()]).filter(Boolean));
 const [sets, pages] = await Promise.all([latestSets(24).catch(() => []), setPages()]);
-for (const s of sets) if (s.releaseDate && !known.has(s.id) && !known.has(s.name.toLowerCase())) {
-  add(s.releaseDate, { kind: "set", setId: s.id, title: s.name, sub: `nytt set${s.cardCount?.official ? ` · ${s.cardCount.official} kort` : ""}`, logo: setLogo(s) });
+function buildEvents() {
+  events.clear();
+  for (const r of ctx.releases) if (!game || gameOf(r) === game) r.waves.forEach((w, wi) => {
+    const name = r.game ? `${GAMES[r.game]} ${r.set}` : r.set;
+    add(w.date, {
+      kind: w.products.length ? "drop" : "set", release: r.id, wave: wi,
+      title: w.products.length && !(w.products.length === 1 && w.products[0] === r.set) ? `${name}: ${w.products.join(" · ")}` : name,
+      sub: [w.products.length ? (w.products.length === 1 ? "" : `${w.products.length} produkter`) : "nytt set", r.language !== "en" ? LANG[r.language] : ""].filter(Boolean).join(" · "),
+      logo: !w.products.length ? ctx.logos.get(r.id) : null, setLogo: ctx.logos.get(r.id),
+    });
+  });
+  if (!game || game === "pk") for (const s of sets) if (s.releaseDate && !known.has(s.id) && !known.has(s.name.toLowerCase())) {
+    add(s.releaseDate, { kind: "set", setId: s.id, title: s.name, sub: `nytt set${s.cardCount?.official ? ` · ${s.cardCount.official} kort` : ""}`, logo: setLogo(s) });
+  }
 }
+buildEvents();
 
 // Tryck på en dag: ett släpp öppnas direkt, flera listas först.
 const dayModal = $("#day-modal");
@@ -204,7 +221,8 @@ function openDay(k) {
   dayModal.showModal();
 }
 dayModal.addEventListener("click", (e) => { if (e.target === dayModal || e.target.closest(".cm-close")) dayModal.close(); });
-mountCalendar(events, openDay);
+const redraw = mountCalendar(events, openDay);
+refreshCalendar = () => { buildEvents(); redraw(); };
 
 const anatModal = $("#anat-modal");
 if (anatModal) {

@@ -18,8 +18,12 @@ async function stock() {
     const terms = JSON.parse(grid.dataset.match || "[]").map((t) => t.toLowerCase());
     const names = Object.fromEntries((s.stores || []).map((x) => [x.id, x.name]));
     const seen = new Set();
+    // Äldre lagerfiler saknar spelet. Då räcker setets sökord.
+    const byGame = (p.products || []).some((x) => x.game);
     const mine = (p.products || [])
-      .filter((x) => (x.available || x.preorder) && (x.set === name || terms.some((t) => x.title.toLowerCase().includes(t))) && (lang !== "en" || x.lang === "en"))
+      // Samma spel som setet: Riftbound "Legacy" ska inte hitta One Piece "Legacy of the Master".
+      .filter((x) => (!byGame || (x.game || "") === (grid.dataset.game || "")) && (x.available || x.preorder)
+        && (x.set === name || terms.includes(String(x.set).toLowerCase()) || terms.some((t) => x.title.toLowerCase().includes(t))) && (lang !== "en" || x.lang === "en"))
       .sort((a, b) => (b.available - a.available) || a.price - b.price);
     const stores = new Set(mine.map((x) => x.store));
     const list = mine.filter((x) => { const k = groupKey(x); return !seen.has(k) && seen.add(k); });
@@ -40,6 +44,18 @@ async function stock() {
 }
 
 if (grid) { stock(); setInterval(stock, 60e3); }
+
+// One Piece och Riftbound: korten med bilder kan sorteras på nummer eller pris.
+const sortBox = $(".set-sort"), all = $(".set-all");
+if (sortBox && all) sortBox.addEventListener("click", (e) => {
+  const b = e.target.closest("[data-sort]");
+  if (!b) return;
+  sortBox.querySelectorAll("button").forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+  const price = (li) => (li.dataset.price === "" ? -1 : +li.dataset.price);
+  const cmp = b.dataset.sort === "price" ? (x, y) => price(y) - price(x)
+    : (x, y) => x.dataset.no.localeCompare(y.dataset.no, "sv", { numeric: true });
+  all.append(...[...all.children].sort(cmp));
+});
 
 // Kortlistan: håll musen över ett namn så visas kortet bredvid pekaren. Bara med mus, inte på pekskärm.
 const table = $(".set-table.cards");

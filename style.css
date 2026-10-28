@@ -703,6 +703,11 @@ input[type=search],select,.shop-search{background:#fff}
 .chips.rel-filter{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px;padding:0;overflow:visible}
 .rel-filter > button{flex:0 0 auto;width:auto;min-height:36px;padding:8px 14px}
 .rel-filter:empty{display:none}
+.rf-break{flex-basis:100%;height:0}
+/* Setsidor för One Piece och Riftbound: boxbilden i stället för logga, och sorteringen av korten. */
+.set-hero-logo.set-hero-box{width:170px;max-height:220px;border-radius:8px}
+@media (max-width:640px){.set-hero-logo.set-hero-box{width:130px;max-height:170px}}
+.section .set-sort{margin-left:auto;flex:none}
 .rel-list:empty{display:none}
 .rel-month{margin:24px 0 10px;font:600 .8rem var(--pixel);text-transform:uppercase;letter-spacing:.6px;color:var(--muted)}
 .rel-month:first-child{margin-top:0}
