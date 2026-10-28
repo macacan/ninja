@@ -1,6 +1,20 @@
 {
- "updated": 1793209086681,
+ "updated": 1793210026709,
  "events": [
+  {
+   "at": 1793209404384,
+   "store": "rgb-kingz",
+   "product": "rgb-kingz:16147039879498",
+   "group": "151|booster-pack|ja|",
+   "title": "Pokemon Scarlet & Violet: 151 Booster Pack",
+   "url": "https://rgbkingz.com/products/pokemon-scarlet-violet-151-booster-pack-sv2a-japansk-kopia-1",
+   "image": "https://cdn.shopify.com/s/files/1/0782/8088/4554/files/pokemon-151-booster-pack.webp?v=1793208685",
+   "price": 439,
+   "type": "Booster Pack",
+   "set": "151",
+   "lang": "ja",
+   "kind": "ny"
+  },
   {
    "at": 1793208459675,
    "store": "rgb-kingz",
@@ -6610,20 +6624,6 @@
    "set": "Prismatic Evolutions",
    "lang": "en",
    "kind": "tillbaka"
-  },
-  {
-   "at": 1792515029726,
-   "store": "bangerpack",
-   "product": "bangerpack:https://bangerpack.se/pokemon/displayer-boxar/pokemon-perfect-order-booster-display",
-   "group": "perfect-order|booster-box|en|",
-   "title": "Pokémon Perfect Order – Booster Display",
-   "url": "https://bangerpack.se/pokemon/displayer-boxar/pokemon-perfect-order-booster-display",
-   "price": 2399,
-   "type": "Booster Box",
-   "set": "Perfect Order",
-   "lang": "en",
-   "kind": "prissankt",
-   "from": 2699
   }
  ]
 }
