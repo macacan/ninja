@@ -133,6 +133,20 @@ canvas.scene{display:block;width:100%;image-rendering:pixelated;image-rendering:
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:20px}
 /* Startsidans senaste set: fem kort på en rad när det finns plats. */
 @media (min-width:961px){#home-sets,.game-sets{grid-template-columns:repeat(5,minmax(0,1fr))}}
+/* På mobilen räcker de två senaste seten per spel. */
+@media (max-width:640px){#home-sets>:nth-child(n+3),.game-sets>:nth-child(n+3){display:none}}
+/* Prissänkningarna på startsidan: tre små kort per rad på mobilen, sex totalt. */
+@media (max-width:640px){
+  #home-drops{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+  #home-drops .pimg img{inset:6px;width:calc(100% - 12px);height:calc(100% - 12px)}
+  #home-drops .pbody{padding:2px 7px 8px}
+  #home-drops .pcard h3{font-size:.75rem}
+  #home-drops .pstore{font-size:.68rem}
+  #home-drops .pbadge{top:5px;right:5px;font-size:.6rem;padding:3px 4px}
+  #home-drops .ptime{display:none}
+  #home-drops .pprice{font-size:.85rem;white-space:nowrap;display:flex;flex-direction:column;line-height:1.15}
+  #home-drops .pprice s{font-size:.7rem}
+}
 .tcard{position:relative;background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:8px;
   box-shadow:0 3px 0 var(--line);transition:transform .12s steps(2),box-shadow .12s steps(2),border-color .12s steps(2)}
 .tcard:hover{transform:translate(-2px,-3px);border-color:var(--ink);box-shadow:4px 5px 0 var(--ink)}
@@ -799,7 +813,7 @@ span.rd-logo{display:grid;place-items:center;background:var(--surface);border-ra
 .viewbar .shop-search:focus-visible{outline:none}
 .qchips{display:flex;gap:6px;flex-wrap:nowrap}
 .qc{display:inline-flex;align-items:center;gap:6px;font:600 .8rem var(--sans);padding:0 10px;min-height:36px;border:2px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);cursor:pointer;white-space:nowrap}
-.qc[aria-pressed=true]{border-color:var(--ink);background:var(--card)}
+.qc[aria-pressed=true]{border-color:var(--line);background:var(--card);color:var(--muted)}
 /* Lamporna behåller sina färger, men knapparnas ram och bakgrund är neutrala. */
 .qc[aria-pressed=false]{color:var(--muted)}
 .qc[aria-pressed=false] i{opacity:.35}

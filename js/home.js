@@ -60,23 +60,28 @@ async function homeWatch() {
   } catch { el.innerHTML = '<div class="msg">Butikslagret uppdateras snart.</div>'; }
 }
 
-// De fyra senaste prissänkningarna som gör butiken billigast, med produkten från lagret så att kortet stämmer.
+// De sex senaste prissänkningarna, med produkten från lagret så att kortet stämmer. Den senaste sänkningen i
+// varje spel (Pokémon, One Piece, Riftbound) kommer alltid med, så att Pokémon inte tränger undan de andra.
+const DROPS = 6;
 async function homeDrops() {
   const el = $("#home-drops");
-  el.innerHTML = skeleton(4);
+  el.innerHTML = skeleton(DROPS);
   try {
     const [{ events }, [p, s]] = await Promise.all([getJSON("data/events.json"), liveStock()]);
     const names = Object.fromEntries((s.stores || []).map((x) => [x.id, x.name]));
     const byId = new Map((p.products || []).map((x) => [x.id, x]));
-    const seen = new Set(), list = [];
+    const seen = new Set(), all = [];
     for (const e of events.filter((x) => x.kind === "prissankt").sort((a, b) => b.at - a.at)) {
       const x = byId.get(e.product);
       if (!x || seen.has(e.product) || !(x.available || x.preorder)) continue;
       seen.add(e.product);
-      list.push(productCard(x, names[x.store], { drop: e.from }));
-      if (list.length === 4) break;
+      all.push({ e, x });
     }
-    el.innerHTML = list.join("") || '<div class="msg">Inga prissänkningar just nu.</div>';
+    const games = new Set(), pick = [];
+    for (const d of all) if (!games.has(d.x.game || "pk")) { games.add(d.x.game || "pk"); pick.push(d); }
+    for (const d of all) if (pick.length < DROPS && !pick.includes(d)) pick.push(d);
+    el.innerHTML = pick.slice(0, DROPS).sort((a, b) => b.e.at - a.e.at).map(({ e, x }) => productCard(x, names[x.store], { drop: e.from })).join("")
+      || '<div class="msg">Inga prissänkningar just nu.</div>';
   } catch { el.innerHTML = '<div class="msg">Prissänkningarna kunde inte laddas.</div>'; }
 }
 
