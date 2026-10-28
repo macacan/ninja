@@ -225,7 +225,7 @@ export const setLogo = (s) => (s.logo ? `${s.logo}.webp` : extraLogos[s.id] || n
 
 // Setets logga. Finns ingen logga alls blir det en textlogga i samma stil, så att alla kort ser likadana ut.
 export function setArt(s) {
-  const logo = setLogo(s);
+  const logo = s.image || setLogo(s);
   const word = `<span class="wordmark"><b>${esc(s.name)}</b>${s.serie?.name ? `<small>${esc(s.serie.name)}</small>` : ""}</span>`;
   if (!logo) return `<div class="art logo">${word}</div>`;
   return `<div class="art logo"><img src="${esc(logo)}" alt="${esc(s.name)}" loading="lazy" decoding="async"

@@ -1,5 +1,5 @@
 {
- "updated": 1793189320385,
+ "updated": 1793195815457,
  "sets": [
   {
    "id": "24819",
@@ -7,6 +7,7 @@
    "code": "RAD",
    "date": "2026-10-23",
    "main": true,
+   "image": "https://tcgplayer-cdn.tcgplayer.com/product/711365_400w.jpg",
    "count": 234
   },
   {
@@ -15,6 +16,7 @@
    "code": "T12025",
    "date": "2026-08-01",
    "main": false,
+   "image": "https://tcgplayer-cdn.tcgplayer.com/product/716007_400w.jpg",
    "count": 15
   },
   {
@@ -23,6 +25,7 @@
    "code": "VEN",
    "date": "2026-07-31",
    "main": true,
+   "image": "https://tcgplayer-cdn.tcgplayer.com/product/693380_400w.jpg",
    "count": 248
   },
   {
@@ -31,6 +34,7 @@
    "code": "UNL",
    "date": "2026-05-08",
    "main": true,
+   "image": "https://tcgplayer-cdn.tcgplayer.com/product/678150_400w.jpg",
    "count": 308
   },
   {
@@ -39,6 +43,7 @@
    "code": "SFD",
    "date": "2026-02-13",
    "main": true,
+   "image": "https://tcgplayer-cdn.tcgplayer.com/product/661934_400w.jpg",
    "count": 309
   },
   {
@@ -47,6 +52,7 @@
    "code": "JDG",
    "date": "2025-12-01",
    "main": false,
+   "image": null,
    "count": 4
   },
   {
@@ -55,6 +61,7 @@
    "code": "OGN",
    "date": "2025-10-31",
    "main": true,
+   "image": "https://tcgplayer-cdn.tcgplayer.com/product/635368_400w.jpg",
    "count": 352
   },
   {
@@ -63,6 +70,7 @@
    "code": "OGS",
    "date": "2025-10-31",
    "main": false,
+   "image": "https://tcgplayer-cdn.tcgplayer.com/product/635460_400w.jpg",
    "count": 28
   },
   {
@@ -71,6 +79,7 @@
    "code": "OPP",
    "date": "2025-10-31",
    "main": false,
+   "image": null,
    "count": 265
   },
   {
@@ -79,6 +88,7 @@
    "code": "PR",
    "date": "2025-10-31",
    "main": false,
+   "image": "https://tcgplayer-cdn.tcgplayer.com/product/655495_400w.jpg",
    "count": 11
   },
   {
@@ -87,6 +97,7 @@
    "code": "RWB",
    "date": "2025-10-28",
    "main": false,
+   "image": "https://tcgplayer-cdn.tcgplayer.com/product/658333_400w.jpg",
    "count": 7
   },
   {
@@ -95,6 +106,7 @@
    "code": "SGN",
    "date": "2025-07-30",
    "main": false,
+   "image": "https://tcgplayer-cdn.tcgplayer.com/product/710238_400w.jpg",
    "count": 3
   }
  ]

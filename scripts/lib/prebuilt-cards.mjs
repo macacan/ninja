@@ -17,6 +17,14 @@ export async function getJSON(url, tries = 3) {
   return null;
 }
 
+// Setets bild till startsidan och set-sidan: boosterboxen ur TCGplayers produkter (tcgcsv.com), annars ett boosterpaket,
+// annars första förseglade produkten (starterdeck). DON!!-kort och lådor med flera boxar (Case) räknas inte.
+export function sealedImage(products) {
+  const sealed = (products || []).filter((p) => p.imageUrl && !p.extendedData?.some((e) => e.name === "Number") && !/DON!!|case|event|kit/i.test(p.name));
+  const p = sealed.find((x) => /booster (box|display)$|edition box$/i.test(x.name)) || sealed.find((x) => /booster pack$|edition pack$/i.test(x.name)) || sealed[0];
+  return p?.imageUrl.replace("_200w", "_400w") || null;
+}
+
 // dir: URL till spelets mapp. sets: [{ id, name }], nyaste först. cards: { id, name, set (set-id), image, sek, low, … }.
 // trendSets: set-id:n som trendlistorna bygger på. minPrice: kronor, billigare kort ger brus i procent.
 export async function saveGame({ dir, sets, cards, rarities, trendSets, minPrice = 20, rate }) {

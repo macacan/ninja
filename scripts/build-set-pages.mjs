@@ -231,7 +231,7 @@ function relatedHtml(p, all) {
 
 const fold = (s) => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
 const tile = (p) => `<li data-q="${esc(fold([p.name, p.serie, p.id].filter(Boolean).join(" ")))}"><a href="set/${p.slug}.html">${logoImg(p, "set-tile-logo")}<b>${esc(p.name)}</b><small>${p.date ? (upcoming(p) ? `Släpps ${longDate(p.date)}` : longDate(p.date)) : "Datum ej satt"}${count(p) ? ` · ${count(p)} kort` : ""}</small></a></li>`;
-const gameTile = (g, s) => `<li data-q="${esc(fold([s.name, s.code, s.id].filter(Boolean).join(" ")))}"><a href="priser.html?game=${g}&amp;set=${encodeURIComponent(s.id)}"><span class="set-tile-logo set-word">${esc(s.name)}</span><b>${esc(s.code ? `${s.code} · ${s.name}` : s.name)}</b><small>${s.date ? (s.date > today ? `Släpps ${longDate(s.date)}` : longDate(s.date)) : "Datum ej satt"} · ${s.count} kort</small></a></li>`;
+const gameTile = (g, s) => `<li data-q="${esc(fold([s.name, s.code, s.id].filter(Boolean).join(" ")))}"><a href="priser.html?game=${g}&amp;set=${encodeURIComponent(s.id)}">${s.image ? `<img class="set-tile-logo" src="${esc(s.image)}" alt="${esc(s.name)}" loading="lazy" decoding="async">` : `<span class="set-tile-logo set-word">${esc(s.name)}</span>`}<b>${esc(s.code ? `${s.code} · ${s.name}` : s.name)}</b><small>${s.date ? (s.date > today ? `Släpps ${longDate(s.date)}` : longDate(s.date)) : "Datum ej satt"} · ${s.count} kort</small></a></li>`;
 
 function setPage(p, all) {
   const priced = p.prices?.size > 0;

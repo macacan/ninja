@@ -5,7 +5,7 @@
 // Priserna är TCGplayers (USD), omräknade med ECB:s kurs samma dag. Cardmarket går inte att använda här:
 // deras fil skiljer inte på vanlig, parallel och manga (Shanks OP01-120 finns som 15 produkter med samma namn).
 // Körs en gång per dygn (se .github/workflows/trends.yml) eller manuellt: node scripts/update-op-cards.mjs
-import { getJSON, saveGame } from "./lib/prebuilt-cards.mjs";
+import { getJSON, saveGame, sealedImage } from "./lib/prebuilt-cards.mjs";
 
 const API = "https://optcgapi.com/api";
 const DIR = new URL("../data/op/", import.meta.url);
@@ -30,7 +30,7 @@ const groupOf = new Map(groups.map((g) => [code(g.abbreviation || ""), g]));
 const dated = (id, name) => {
   const g = groupOf.get(code(id));
   // Boosterset (OP, EB, PRB) är huvudset. Starterdeck och promo visas bara i Kortpriser.
-  return { id, name, code: g?.abbreviation || id, date: g?.publishedOn?.slice(0, 10) || null, main: /^(OP|EB|PRB)/.test(id) };
+  return { id, name, code: g?.abbreviation || id, date: g?.publishedOn?.slice(0, 10) || null, main: /^(OP|EB|PRB)/.test(id), group: g?.groupId };
 };
 
 // Boosterseten kommer i släppordning från allSets, starterdecken numreras i ordning (ST-01, ST-02 …).
@@ -39,6 +39,11 @@ const setList = [
   ...[...sets].reverse().map((s) => dated(s.set_id, s.set_name)),
   ...Object.keys(deckNames).sort((a, b) => b.localeCompare(a, "en", { numeric: true })).map((id) => dated(id, deckNames[id])),
 ];
+// Setets bild (boosterbox eller starterdeck) från samma TCGplayer-grupp.
+for (const s of setList) {
+  if (s.group) s.image = sealedImage((await getJSON(`https://tcgcsv.com/tcgplayer/68/${s.group}/products`))?.results);
+  delete s.group;
+}
 
 // "Shanks (OP01-120) (Alternate Art)" → namn "Shanks", variant "Alternate Art". Nummer i parentes ("(001)",
 // "(OP01-120)") säger inget som inte redan står i kortnumret och tas bort.

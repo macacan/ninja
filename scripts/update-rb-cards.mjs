@@ -4,7 +4,7 @@
 // och annars från Riots kortgalleri, kopplat på set och kortnummer. Sist används TCGplayers bild.
 // Priserna är TCGplayers (USD), omräknade med ECB:s kurs samma dag.
 // Körs en gång per dygn (se .github/workflows/trends.yml) eller manuellt: node scripts/update-rb-cards.mjs
-import { getJSON, saveGame } from "./lib/prebuilt-cards.mjs";
+import { getJSON, saveGame, sealedImage } from "./lib/prebuilt-cards.mjs";
 
 const TCG = "https://tcgcsv.com/tcgplayer/89";
 const DIR = new URL("../data/rb/", import.meta.url);
@@ -57,7 +57,7 @@ for (const g of [...groups.results].sort((a, b) => (b.publishedOn || "").localeC
   const singles = (products?.results || []).filter((p) => ext(p, "Number"));
   if (!singles.length) continue;
   const id = String(g.groupId);
-  sets.push({ id, name: g.name, code: g.abbreviation || null, date: g.publishedOn?.slice(0, 10) || null, main: singles.length >= MAIN_SET && !/promo/i.test(g.name) });
+  sets.push({ id, name: g.name, code: g.abbreviation || null, date: g.publishedOn?.slice(0, 10) || null, main: singles.length >= MAIN_SET && !/promo/i.test(g.name), image: sealedImage(products?.results) });
   // Ett kort kan ha pris både som vanligt och som foil. Vanligt pris visas i första hand.
   const price = {};
   for (const p of prices?.results || []) (price[p.productId] ||= {})[p.subTypeName] = p;
