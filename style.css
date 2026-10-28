@@ -973,6 +973,8 @@ span.rd-logo{display:grid;place-items:center;background:var(--surface);border-ra
 .cm-facts li{display:grid;grid-template-columns:100px 1fr;font-size:.88rem;align-items:baseline}
 .cm-facts b{color:var(--muted);font-weight:600}
 .cm-info h3{margin:16px 0 6px;font:600 .78rem var(--sans);text-transform:uppercase;letter-spacing:.6px;color:var(--muted)}
+.cm-ability p{margin:0;font-size:.92rem;line-height:1.5}
+.rb-ic{display:inline-block;padding:0 6px;border-radius:6px;background:var(--surface);border:1px solid var(--line);font-size:.78rem;font-weight:600;line-height:1.5}
 .cm-table{width:100%;border-collapse:collapse;font-size:.92rem}
 .cm-table th{text-align:left;font-weight:500;padding:6px 0;border-bottom:1px solid var(--line)}
 .cm-table td{text-align:right;padding:6px 0;border-bottom:1px solid var(--line);font-weight:700}
