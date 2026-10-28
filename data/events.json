@@ -1,6 +1,71 @@
 {
- "updated": 1793177758695,
+ "updated": 1793178638719,
  "events": [
+  {
+   "at": 1793177856776,
+   "store": "poketalk",
+   "product": "poketalk:11009156612438",
+   "group": "pitch-black|elite-trainer-box|en|",
+   "title": "Pokémon Mega & Evolution: Pitch Black Elite Trainer Box",
+   "url": "https://poketalk.se/products/pokemon-mega-evolution-pitch-black-elite-trainer-box",
+   "price": 999,
+   "type": "Elite Trainer Box",
+   "set": "Pitch Black",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1793177856776,
+   "store": "poketalk",
+   "product": "poketalk:11298832318806",
+   "group": "x|elite-trainer-box|en||30th-anniversary-celebration",
+   "title": "Pokémon TCG: 30th Anniversary Celebration Elite Trainer Box",
+   "url": "https://poketalk.se/products/pokemon-tcg-30th-anniversary-celebration-elite-trainer-box",
+   "price": 1999,
+   "type": "Elite Trainer Box",
+   "set": null,
+   "lang": "en",
+   "kind": "ny"
+  },
+  {
+   "at": 1793177856776,
+   "store": "poketalk",
+   "product": "poketalk:10136499093846",
+   "group": "151|booster-bundle|en|",
+   "title": "Pokémon Scarlet & Violet: 151 Booster Bundle",
+   "url": "https://poketalk.se/products/pokemon-scarlet-violet-151-booster-bundle-1",
+   "price": 2299,
+   "type": "Booster Bundle",
+   "set": "151",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1793177856776,
+   "store": "poketalk",
+   "product": "poketalk:10600877982038",
+   "group": "x|booster-box|ja||gem-s4-vol",
+   "title": "Pokemon TCG: Gem Pack Vol 4 Booster Box",
+   "url": "https://poketalk.se/products/pokemon-tcg-gem-pack-vol-4-booster-box",
+   "price": 599,
+   "type": "Booster Box",
+   "set": null,
+   "lang": "ja",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1793177856776,
+   "store": "poketalk",
+   "product": "poketalk:9779159368022",
+   "group": "prismatic-evolutions|premium-collection|en||super",
+   "title": "Pokémon: Prismatic Evolutions Super Premium Collection",
+   "url": "https://poketalk.se/products/pokemon-prismatic-evolutions-super-premium-collection",
+   "price": 3499,
+   "type": "Premium Collection",
+   "set": "Prismatic Evolutions",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793169378527,
    "store": "jollyroom",
@@ -6527,71 +6592,6 @@
    "set": "30th Celebration",
    "lang": "en",
    "kind": "tillbaka"
-  },
-  {
-   "at": 1792490974581,
-   "store": "aquitaz",
-   "product": "aquitaz:11044957520218",
-   "group": "x|booster-pack|ja||gym-promo-s6-vol",
-   "title": "Pokémon Mega: GYM Vol. 6 Promo Booster Pack (7 Cards) (JP)",
-   "url": "https://aquitaz.se/products/pokemon-mega-gym-vol-6-promo-booster-pack-7-cards-jp",
-   "price": 134.95,
-   "type": "Booster Pack",
-   "set": null,
-   "lang": "ja",
-   "kind": "forbestallning"
-  },
-  {
-   "at": 1792490841308,
-   "store": "tcg-card-house",
-   "product": "tcg-card-house:15560171749751",
-   "group": "30th-celebration|booster-pack|ja|",
-   "title": "Pokémon: 30th Celebration Booster pack (JPN)",
-   "url": "https://tcgcardhouse.se/products/pokemon-30th-celebration-booster-pack-jpn",
-   "price": 139,
-   "type": "Booster Pack",
-   "set": "30th Celebration",
-   "lang": "ja",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1792490841308,
-   "store": "tcg-card-house",
-   "product": "tcg-card-house:15560170963319",
-   "group": "30th-celebration|booster-box|ja|",
-   "title": "Pokémon: 30th Celebration Booster Box (JPN)",
-   "url": "https://tcgcardhouse.se/products/pokemon-30th-celebration-booster-box-jpn",
-   "price": 2499,
-   "type": "Booster Box",
-   "set": "30th Celebration",
-   "lang": "ja",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1792490038067,
-   "store": "aquitaz",
-   "product": "aquitaz:11044938940762",
-   "group": "dragon|deck|ja||dragonite-feraligatr-gengar-set",
-   "title": "Pokémon Mega: MEGA Feraligatr, Mega Dragonite & Mega Gengar ex Special Deck Set (JP)",
-   "url": "https://aquitaz.se/products/pokemon-mega-mega-feraligatr-mega-dragonite-mega-gengar-ex-special-deck-set-jp",
-   "price": 135.95,
-   "type": "Deck",
-   "set": "Dragon",
-   "lang": "ja",
-   "kind": "forbestallning"
-  },
-  {
-   "at": 1792489096332,
-   "store": "aquitaz",
-   "product": "aquitaz:11044920590682",
-   "group": "x|booster-box|zh||gem-s7-vol",
-   "title": "Pokémon: Gem Pack Vol. 7 (CBB7C) Booster Box (18 Pack) (CH)",
-   "url": "https://aquitaz.se/products/pokemon-gem-pack-vol-7-cbb7c-booster-box-18-pack-ch",
-   "price": 135.95,
-   "type": "Booster Box",
-   "set": null,
-   "lang": "zh",
-   "kind": "forbestallning"
   }
  ]
 }
