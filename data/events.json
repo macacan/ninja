@@ -1,6 +1,19 @@
 {
- "updated": 1793183467515,
+ "updated": 1793184407537,
  "events": [
+  {
+   "at": 1793184026894,
+   "store": "toyspace",
+   "product": "toyspace:https://toyspace.se/pokemon-tcg-shrouded-fable-kingambit-collection",
+   "group": "shrouded-fable|collection-box|en||boosterpaket-kingambit-konstkort",
+   "title": "Pokemon TCG: Shrouded Fable Box med Kingambit-konstkort och boosterpaket",
+   "url": "https://toyspace.se/pokemon-tcg-shrouded-fable-kingambit-collection",
+   "price": 639,
+   "type": "Collection Box",
+   "set": "Shrouded Fable",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793181082520,
    "store": "toyspace",
@@ -6576,19 +6589,6 @@
    "url": "https://maxgaming.se/sv/pokemon/pokemon-gem-pack-vol-5-booster-box-simplified-chinese",
    "price": 649,
    "type": "Booster Box",
-   "set": null,
-   "lang": "zh",
-   "kind": "ny"
-  },
-  {
-   "at": 1792506296396,
-   "store": "maxgaming",
-   "product": "maxgaming:https://maxgaming.se/sv/pokemon/pokemon-crystal-gathering-exclusive-gift-box-simplified-chinese",
-   "group": "x|collection-box|zh||crystal-exclusive-gathering-gift",
-   "title": "Pokémon Crystal Gathering Exclusive Gift Box (Simplified Chinese)",
-   "url": "https://maxgaming.se/sv/pokemon/pokemon-crystal-gathering-exclusive-gift-box-simplified-chinese",
-   "price": 4190,
-   "type": "Collection Box",
    "set": null,
    "lang": "zh",
    "kind": "ny"
