@@ -1,6 +1,20 @@
 {
- "updated": 1793212786766,
+ "updated": 1793213686786,
  "events": [
+  {
+   "at": 1793213313403,
+   "store": "cardgame",
+   "product": "cardgame:https://cardgame.se/engelska-pokmon-produkter/engelska-booster-bundle/pokmon-scarlet-violet-151-booster-bundle-ppna-med-oss",
+   "group": "151|booster-bundle|en|",
+   "title": "Pokémon Scarlet & Violet: 151 Booster Bundle",
+   "url": "https://cardgame.se/engelska-pokmon-produkter/engelska-booster-bundle/pokmon-scarlet-violet-151-booster-bundle-ppna-med-oss",
+   "image": "https://cdn.quickbutik.com/images/87588Q/products/176305377868ff2ea9261aa.png",
+   "price": 2199,
+   "type": "Booster Bundle",
+   "set": "151",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793210935821,
    "store": "majki-poke",
@@ -6614,19 +6628,6 @@
    "price": 1199,
    "type": "Booster Box",
    "set": "Emerald",
-   "lang": "ja",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1792531505145,
-   "store": "pokemurre",
-   "product": "pokemurre:10979307061586",
-   "group": "x|booster-pack|ja||30th-anniversary-celebration",
-   "title": "Pokemon 30th Anniversary Celebration M6 MEGA Booster Pack (Japansk)",
-   "url": "https://pokemurre.se/products/forbokning-pokemon-30th-anniversary-celebration-m6-mega-booster-pack-japansk",
-   "price": 129,
-   "type": "Booster Pack",
-   "set": null,
    "lang": "ja",
    "kind": "tillbaka"
   }
