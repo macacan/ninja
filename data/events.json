@@ -1,6 +1,21 @@
 {
- "updated": 1793224978133,
+ "updated": 1793225898157,
  "events": [
+  {
+   "at": 1793225822955,
+   "store": "kantovault",
+   "product": "kantovault:10148347609429",
+   "group": "op|carrying-on-his-will|booster-pack|ja|",
+   "title": "One Piece [OP-13]: Carrying on His Will Booster Pack (Japansk)",
+   "url": "https://kantovault.se/products/one-piece-op-13-carrying-on-his-will-booster-pack-japansk",
+   "image": null,
+   "price": 119,
+   "type": "Booster Pack",
+   "set": "Carrying On His Will",
+   "lang": "ja",
+   "game": "op",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793216365167,
    "store": "majki-poke",
@@ -6615,19 +6630,6 @@
    "title": "Pokemon Battle Partners Booster Box SV9 Sealed (Japansk)",
    "url": "https://pokemurre.se/products/pokemon-battle-partners-booster-box-sv9-sealed-japansk",
    "price": 1199,
-   "type": "Booster Box",
-   "set": null,
-   "lang": "ja",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1792533326017,
-   "store": "pokemurre",
-   "product": "pokemurre:10222126367058",
-   "group": "x|booster-box|ja||symphonia",
-   "title": "Pokemon Mega Symphonia M1S Booster Box Sealed (Japanese)",
-   "url": "https://pokemurre.se/products/mega-symphonia-ml1-scarlet-violet-japansk-booster-box-sealed",
-   "price": 949,
    "type": "Booster Box",
    "set": null,
    "lang": "ja",
