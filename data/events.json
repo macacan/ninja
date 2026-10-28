@@ -1,6 +1,20 @@
 {
- "updated": 1793198626008,
+ "updated": 1793199546033,
  "events": [
+  {
+   "at": 1793199375404,
+   "store": "toyspace",
+   "product": "toyspace:https://toyspace.se/pokemon-tcg-kaos-uppgang-boosterpaket-pok10407-101",
+   "group": "chaos-rising|booster-pack|en|",
+   "title": "Max 5 per kund. Pokémon TCG Mega Evolution Chaos Rising Boosterpaket",
+   "url": "https://toyspace.se/pokemon-tcg-kaos-uppgang-boosterpaket-pok10407-101",
+   "image": "https://d189539ycils2q.cloudfront.net/media/catalog/product/cache/4ffcb2823444acbc328f989dd62e5069/p/o/pok10407-101-pokemon-chaos-rising-boosterpakke.jpg",
+   "price": 89,
+   "type": "Booster Pack",
+   "set": "Chaos Rising",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793197146748,
    "store": "tcgstore",
@@ -6592,19 +6606,6 @@
    "type": "Collection Box",
    "set": "151",
    "lang": "zh",
-   "kind": "ny"
-  },
-  {
-   "at": 1792507279957,
-   "store": "maxgaming",
-   "product": "maxgaming:https://maxgaming.se/sv/pokemon/mega-symphonia-m1s-booster-box-japanese",
-   "group": "x|booster-box|ja||symphonia",
-   "title": "Pokémon Mega Symphonia M1S Booster Box (Japanese)",
-   "url": "https://maxgaming.se/sv/pokemon/mega-symphonia-m1s-booster-box-japanese",
-   "price": 1090,
-   "type": "Booster Box",
-   "set": null,
-   "lang": "ja",
    "kind": "ny"
   }
  ]
