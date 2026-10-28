@@ -1,6 +1,7 @@
 // Bygger Riftbound-korten till Kortpriser (priser.html?game=rb) och sparar dem i data/rb/ (se lib/prebuilt-cards.mjs).
 // Kort och priser kommer från TCGplayer via tcgcsv.com (kategori 89), som har alla set, även de nyaste.
-// Riots egna, skarpare kortbilder hämtas från Riftcodex (api.riftcodex.com) där kortet finns där, kopplat på TCGplayer-id.
+// Riots egna, skarpare kortbilder hämtas från Riftcodex (api.riftcodex.com) där kortet finns där, kopplat på TCGplayer-id,
+// och annars från Riots kortgalleri, kopplat på set och kortnummer. Sist används TCGplayers bild.
 // Priserna är TCGplayers (USD), omräknade med ECB:s kurs samma dag.
 // Körs en gång per dygn (se .github/workflows/trends.yml) eller manuellt: node scripts/update-rb-cards.mjs
 import { getJSON, saveGame } from "./lib/prebuilt-cards.mjs";
@@ -24,6 +25,20 @@ for (let page = 1; page < 100; page++) {
   const d = await getJSON(`https://api.riftcodex.com/cards?size=100&page=${page}`);
   for (const c of d?.items || []) if (c.tcgplayer_id && c.media?.image_url) riot.set(String(c.tcgplayer_id), c.media.image_url);
   if (!d || page >= d.pages) break;
+}
+
+// Riots officiella kortgalleri (riftbound.leagueoflegends.com/card-gallery) har nya set och Signature-kort som
+// Riftcodex ännu inte kopplat till TCGplayer. Kopplas på setets namn och kortnumret ("RAD-173*/167" → "radiance|173*/167").
+const RIOT = "https://content.publishing.riotgames.com/publishing-content/v2.0/public/channel/riftbound_website/list/riftbound_gallery_cards?locale=en_US";
+const cardKey = (set, no) => `${set.toLowerCase().replace(/^origins: /, "")}|${String(no).replace(/^0+(?=\d)/, "")}`;
+const gallery = new Map();
+for (let from = 0; from < 10000; from += 200) {
+  const d = await getJSON(`${RIOT}&from=${from}&limit=200`);
+  for (const c of d?.data || []) {
+    const no = c.publicCode?.split("-").slice(1).join("-"), url = c.cardImage?.url;
+    if (no && url && c.set?.value?.label) gallery.set(cardKey(c.set.value.label, no), url);
+  }
+  if (!d?.data?.length || !d.linkdata?.next) break;
 }
 
 const ext = (p, name) => p.extendedData?.find((e) => e.name === name)?.value ?? null;
@@ -53,7 +68,7 @@ for (const g of [...groups.results].sort((a, b) => (b.publishedOn || "").localeC
       id: String(p.productId), name, variant, set: id, no: ext(p, "Number"), rarity: ext(p, "Rarity"),
       type: ext(p, "Card Type"), domain: ext(p, "Domain"), energy: num(ext(p, "Energy Cost")), power: num(ext(p, "Power Cost")),
       might: num(ext(p, "Might")), tags: ext(p, "Tag")?.replace(/;/g, ", ") || null,
-      image: riot.get(String(p.productId)) || p.imageUrl?.replace("_200w", "_400w") || null,
+      image: riot.get(String(p.productId)) || gallery.get(cardKey(g.name, ext(p, "Number"))) || p.imageUrl?.replace("_200w", "_400w") || null,
       sek: sekOf(main.marketPrice ?? main.midPrice), low: sekOf(main.lowPrice),
       foil: main === pr.Foil ? null : sekOf(pr.Foil?.marketPrice),
     });
@@ -67,4 +82,4 @@ const data = await saveGame({
   rarities: present.map((r) => [r, r]),
   trendSets: sets.filter((s) => s.main).slice(0, TREND_SETS).map((s) => s.id),
 });
-console.log(`${cards.length} Riftbound-kort från ${sets.length} set (${riot.size} med Riots bild). Dyrast: ${data.top[0]?.name} (${data.top[0]?.sek} kr). ${data.movers ? `Stiger mest: ${data.rising[0]?.name} (+${data.rising[0]?.change} %).` : "Ingen trend än, historiken är för kort."}`);
+console.log(`${cards.length} Riftbound-kort från ${sets.length} set (${riot.size} med Riots bild via Riftcodex, ${gallery.size} i Riots galleri). Dyrast: ${data.top[0]?.name} (${data.top[0]?.sek} kr). ${data.movers ? `Stiger mest: ${data.rising[0]?.name} (+${data.rising[0]?.change} %).` : "Ingen trend än, historiken är för kort."}`);
