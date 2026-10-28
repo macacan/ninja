@@ -1,6 +1,20 @@
 {
- "updated": 1793215526834,
+ "updated": 1793216446846,
  "events": [
+  {
+   "at": 1793216365167,
+   "store": "majki-poke",
+   "product": "majki-poke:15266851029378",
+   "group": "perfect-order|booster-pack|en|",
+   "title": "Perfect Order – Booster Pack (ENG)",
+   "url": "https://majkipoke.se/products/perfect-order-booster-pack-eng",
+   "image": "https://cdn.shopify.com/s/files/1/0953/4629/5170/files/perfect-order-booster-pack-eng-1215432.png?v=1778173721",
+   "price": 99,
+   "type": "Booster Pack",
+   "set": "Perfect Order",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793213866192,
    "store": "samlarhobby",
@@ -6615,19 +6629,6 @@
    "url": "https://pokemurre.se/products/mega-symphonia-ml1-scarlet-violet-japansk-booster-box-sealed",
    "price": 949,
    "type": "Booster Box",
-   "set": null,
-   "lang": "ja",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1792532415859,
-   "store": "pokemurre",
-   "product": "pokemurre:10222167163218",
-   "group": "x|collection-box|ja||arena-heat-wave",
-   "title": "Pokemon Heat Wave Arena Sealed Box (Japansk)",
-   "url": "https://pokemurre.se/products/pokemon-heat-wave-hot-wind-arena-japansk-sealed-box-scarlet-violet",
-   "price": 1949,
-   "type": "Collection Box",
    "set": null,
    "lang": "ja",
    "kind": "tillbaka"
