@@ -22,11 +22,22 @@ if (!sets?.length || !setCards?.length || !rate) {
   process.exit(1);
 }
 
+// Släppdatum och setkod från TCGplayer via tcgcsv.com (kategori 68), kopplade på koden ("OP-17" = "OP17").
+// Saknas de blir setet utan datum, korten påverkas inte.
+const groups = (await getJSON("https://tcgcsv.com/tcgplayer/68/groups"))?.results || [];
+const code = (s) => s.toUpperCase().replace(/[^A-Z0-9]/g, "");
+const groupOf = new Map(groups.map((g) => [code(g.abbreviation || ""), g]));
+const dated = (id, name) => {
+  const g = groupOf.get(code(id));
+  // Boosterset (OP, EB, PRB) är huvudset. Starterdeck och promo visas bara i Kortpriser.
+  return { id, name, code: g?.abbreviation || id, date: g?.publishedOn?.slice(0, 10) || null, main: /^(OP|EB|PRB)/.test(id) };
+};
+
 // Boosterseten kommer i släppordning från allSets, starterdecken numreras i ordning (ST-01, ST-02 …).
 const deckNames = Object.fromEntries((decks || []).map((d) => [d.structure_deck_id, d.structure_deck_name]));
 const setList = [
-  ...[...sets].reverse().map((s) => ({ id: s.set_id, name: s.set_name })),
-  ...Object.keys(deckNames).sort((a, b) => b.localeCompare(a, "en", { numeric: true })).map((id) => ({ id, name: deckNames[id] })),
+  ...[...sets].reverse().map((s) => dated(s.set_id, s.set_name)),
+  ...Object.keys(deckNames).sort((a, b) => b.localeCompare(a, "en", { numeric: true })).map((id) => dated(id, deckNames[id])),
 ];
 
 // "Shanks (OP01-120) (Alternate Art)" → namn "Shanks", variant "Alternate Art". Nummer i parentes ("(001)",

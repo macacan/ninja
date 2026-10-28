@@ -33,6 +33,10 @@ const calendar = (await readJSON("data/release-calendar.json", { releases: [] })
 const extraLogos = await readJSON("data/set-logos.json", {});
 const extraImages = await readJSON("data/card-images.json", {});
 const extraCards = await readJSON("data/extra-cards.json", {});
+// One Piece- och Riftbound-seten (scripts/update-op-cards.mjs, update-rb-cards.mjs). De får ingen egen sida:
+// rutan öppnar setets kort och priser i Kortpriser.
+const GAMES = [["op", "one-piece", "One Piece Card Game"], ["rb", "riftbound", "Riftbound"]];
+const gameSets = Object.fromEntries(await Promise.all(GAMES.map(async ([g]) => [g, ((await readJSON(`data/${g}/sets.json`, {})).sets || []).filter((s) => s.main)])));
 
 const pages = sets.map((s) => {
   const cards = s.cards || [], known = new Set(cards.map((c) => c.id));
@@ -119,7 +123,7 @@ const headHtml = ({ title, desc, url, ld }) => `<!doctype html>
 <meta name="twitter:card" content="summary_large_image">
 <script type="application/ld+json">${JSON.stringify(ld).replace(/</g, "\\u003c")}</script>
 <link href="fonts/fonts.css" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=20261027b">
+<link rel="stylesheet" href="style.css?v=20261028a">
 <link rel="stylesheet" href="dark.css?v=20261027a" id="dark-css" media="(prefers-color-scheme: dark)">
 <script src="js/theme.js?v=20261021"></script>
 </head>
@@ -227,6 +231,7 @@ function relatedHtml(p, all) {
 
 const fold = (s) => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
 const tile = (p) => `<li data-q="${esc(fold([p.name, p.serie, p.id].filter(Boolean).join(" ")))}"><a href="set/${p.slug}.html">${logoImg(p, "set-tile-logo")}<b>${esc(p.name)}</b><small>${p.date ? (upcoming(p) ? `Släpps ${longDate(p.date)}` : longDate(p.date)) : "Datum ej satt"}${count(p) ? ` · ${count(p)} kort` : ""}</small></a></li>`;
+const gameTile = (g, s) => `<li data-q="${esc(fold([s.name, s.code, s.id].filter(Boolean).join(" ")))}"><a href="priser.html?game=${g}&amp;set=${encodeURIComponent(s.id)}"><span class="set-tile-logo set-word">${esc(s.name)}</span><b>${esc(s.code ? `${s.code} · ${s.name}` : s.name)}</b><small>${s.date ? (s.date > today ? `Släpps ${longDate(s.date)}` : longDate(s.date)) : "Datum ej satt"} · ${s.count} kort</small></a></li>`;
 
 function setPage(p, all) {
   const priced = p.prices?.size > 0;
@@ -294,6 +299,9 @@ function indexPage(all) {
 ${soon.length ? `
     <div class="section"><h2>Aktuella och kommande set</h2><a class="more" href="slapp.html">Släppkalendern</a></div>
     <ul class="set-tiles">${soon.map(tile).join("")}</ul>` : ""}
+${GAMES.filter(([g]) => gameSets[g].length).map(([g, anchor, name]) => `
+    <div class="section" id="${anchor}"><h2>${esc(name)}</h2><a class="more" href="priser.html?game=${g}">Kortpriser</a></div>
+    <ul class="set-tiles">${gameSets[g].map((s) => gameTile(g, s)).join("")}</ul>`).join("")}
 ${[...series].map(([name, list]) => `
     <div class="section"><h2>${esc(name)}</h2></div>
     <ul class="set-tiles">${list.map(tile).join("")}</ul>`).join("")}

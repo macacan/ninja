@@ -1,0 +1,461 @@
+{
+ "updated": 1793189302653,
+ "sets": [
+  {
+   "id": "OP-17",
+   "name": "The World's Strongest Warriors",
+   "code": "OP17",
+   "date": "2026-08-28",
+   "main": true,
+   "count": 169
+  },
+  {
+   "id": "ST-36",
+   "name": "Starter Deck 36: YELLOW Eustass\"Captain\"Kid",
+   "code": "ST-36",
+   "date": "2026-07-31",
+   "main": false,
+   "count": 15
+  },
+  {
+   "id": "ST-35",
+   "name": "Starter Deck 35: RED/BLACK Sabo",
+   "code": "ST-35",
+   "date": "2026-07-31",
+   "main": false,
+   "count": 15
+  },
+  {
+   "id": "ST-34",
+   "name": "Starter Deck 34: PURPLE Charlotte Katakuri",
+   "code": "ST-34",
+   "date": "2026-07-31",
+   "main": false,
+   "count": 15
+  },
+  {
+   "id": "ST-33",
+   "name": "Starter Deck 33: BLUE Kuzan",
+   "code": "ST-33",
+   "date": "2026-07-31",
+   "main": false,
+   "count": 14
+  },
+  {
+   "id": "ST-32",
+   "name": "Starter Deck 32: GREEN Roronoa Zoro",
+   "code": "ST-32",
+   "date": "2026-07-31",
+   "main": false,
+   "count": 15
+  },
+  {
+   "id": "ST-31",
+   "name": "Starter Deck 31: RED Monkey.D.Luffy",
+   "code": "ST-31",
+   "date": "2026-07-31",
+   "main": false,
+   "count": 14
+  },
+  {
+   "id": "OP-16",
+   "name": "The Time of Battle",
+   "code": "OP16",
+   "date": "2026-06-12",
+   "main": true,
+   "count": 155
+  },
+  {
+   "id": "ST-30",
+   "name": "Starter Deck EX: Luffy & Ace",
+   "code": "ST-30",
+   "date": "2026-06-12",
+   "main": false,
+   "count": 34
+  },
+  {
+   "id": "OP15-EB04",
+   "name": "Adventure on Kami's Island",
+   "code": "OP15-EB04",
+   "date": "2026-04-03",
+   "main": true,
+   "count": 201
+  },
+  {
+   "id": "EB-03",
+   "name": "Extra Booster: One Piece Heroines Edition",
+   "code": "EB03",
+   "date": "2026-02-20",
+   "main": true,
+   "count": 94
+  },
+  {
+   "id": "OP14-EB04",
+   "name": "The Azure Sea's Seven",
+   "code": "OP14-EB04",
+   "date": "2026-01-16",
+   "main": true,
+   "count": 200
+  },
+  {
+   "id": "OP-13",
+   "name": "Carrying On His Will",
+   "code": "OP13",
+   "date": "2025-11-07",
+   "main": true,
+   "count": 174
+  },
+  {
+   "id": "PRB-02",
+   "name": "Premium Booster - The Best - Vol. 2",
+   "code": "PRB-02",
+   "date": "2025-10-03",
+   "main": true,
+   "count": 314
+  },
+  {
+   "id": "ST-22",
+   "name": "Starter Deck 22: Ace & Newgate",
+   "code": "ST-22",
+   "date": "2025-09-05",
+   "main": false,
+   "count": 31
+  },
+  {
+   "id": "OP-12",
+   "name": "Legacy of the Master",
+   "code": "OP12",
+   "date": "2025-08-22",
+   "main": true,
+   "count": 155
+  },
+  {
+   "id": "OP-11",
+   "name": "A Fist of Divine Speed",
+   "code": "OP11",
+   "date": "2025-06-06",
+   "main": true,
+   "count": 156
+  },
+  {
+   "id": "ST-28",
+   "name": "Starter Deck 28: GREEN/YELLOW Yamato",
+   "code": "ST-28",
+   "date": "2025-06-06",
+   "main": false,
+   "count": 15
+  },
+  {
+   "id": "ST-27",
+   "name": "Starter Deck 27: BLACK Marshall.D.Teach",
+   "code": "ST-27",
+   "date": "2025-06-06",
+   "main": false,
+   "count": 15
+  },
+  {
+   "id": "ST-26",
+   "name": "Starter Deck 26: PURPLE/BLACK Monkey.D.Luffy",
+   "code": "ST-26",
+   "date": "2025-06-06",
+   "main": false,
+   "count": 15
+  },
+  {
+   "id": "ST-25",
+   "name": "Starter Deck 25: BLUE Buggy",
+   "code": "ST-25",
+   "date": "2025-06-06",
+   "main": false,
+   "count": 17
+  },
+  {
+   "id": "ST-24",
+   "name": "Starter Deck 24: GREEN Jewelry Bonney",
+   "code": "ST-24",
+   "date": "2025-06-06",
+   "main": false,
+   "count": 15
+  },
+  {
+   "id": "ST-23",
+   "name": "Starter Deck 23: RED Shanks",
+   "code": "ST-23",
+   "date": "2025-06-06",
+   "main": false,
+   "count": 15
+  },
+  {
+   "id": "EB-02",
+   "name": "Extra Booster: Anime 25th Collection",
+   "code": "EB02",
+   "date": "2025-05-09",
+   "main": true,
+   "count": 105
+  },
+  {
+   "id": "OP-10",
+   "name": "Royal Blood",
+   "code": "OP10",
+   "date": "2025-03-21",
+   "main": true,
+   "count": 151
+  },
+  {
+   "id": "ST-21",
+   "name": "Starter Deck EX: Gear 5",
+   "code": "ST-21",
+   "date": "2025-03-14",
+   "main": false,
+   "count": 32
+  },
+  {
+   "id": "OP-09",
+   "name": "Emperors in the New World",
+   "code": "OP09",
+   "date": "2024-12-13",
+   "main": true,
+   "count": 159
+  },
+  {
+   "id": "PRB-01",
+   "name": "Premium Booster - The Best",
+   "code": "PRB-01",
+   "date": "2024-11-08",
+   "main": true,
+   "count": 317
+  },
+  {
+   "id": "ST-20",
+   "name": "Starter Deck 20: YELLOW Charlotte Katakuri",
+   "code": "ST-20",
+   "date": "2024-10-25",
+   "main": false,
+   "count": 11
+  },
+  {
+   "id": "ST-19",
+   "name": "Starter Deck 19: BLACK Smoker",
+   "code": "ST-19",
+   "date": "2024-10-25",
+   "main": false,
+   "count": 14
+  },
+  {
+   "id": "ST-18",
+   "name": "Starter Deck 18: PURPLE Monkey.D.Luffy",
+   "code": "ST-18",
+   "date": "2024-10-25",
+   "main": false,
+   "count": 15
+  },
+  {
+   "id": "ST-17",
+   "name": "Starter Deck 17: BLUE Donquixote Doflamingo",
+   "code": "ST-17",
+   "date": "2024-10-25",
+   "main": false,
+   "count": 10
+  },
+  {
+   "id": "ST-16",
+   "name": "Starter Deck 16: GREEN Uta",
+   "code": "ST-16",
+   "date": "2024-10-25",
+   "main": false,
+   "count": 15
+  },
+  {
+   "id": "ST-15",
+   "name": "Starter Deck 15: RED Edward.Newgate",
+   "code": "ST-15",
+   "date": "2024-10-25",
+   "main": false,
+   "count": 13
+  },
+  {
+   "id": "OP-08",
+   "name": "Two Legends",
+   "code": "OP08",
+   "date": "2024-09-13",
+   "main": true,
+   "count": 151
+  },
+  {
+   "id": "ST-14",
+   "name": "Starter Deck 14: 3D2Y",
+   "code": "ST-14",
+   "date": "2024-08-16",
+   "main": false,
+   "count": 17
+  },
+  {
+   "id": "OP-07",
+   "name": "500 Years in the Future",
+   "code": "OP07",
+   "date": "2024-06-28",
+   "main": true,
+   "count": 151
+  },
+  {
+   "id": "EB-01",
+   "name": "Extra Booster: Memorial Collection",
+   "code": "EB01",
+   "date": "2024-05-03",
+   "main": true,
+   "count": 80
+  },
+  {
+   "id": "ST-13",
+   "name": "Ultra Deck: The Three Brothers",
+   "code": "ST-13",
+   "date": "2024-04-19",
+   "main": false,
+   "count": 35
+  },
+  {
+   "id": "OP-06",
+   "name": "Wings of the Captain",
+   "code": "OP06",
+   "date": "2024-03-15",
+   "main": true,
+   "count": 151
+  },
+  {
+   "id": "ST-12",
+   "name": "Starter Deck 12: Zoro and Sanji",
+   "code": "ST-12",
+   "date": "2024-03-15",
+   "main": false,
+   "count": 17
+  },
+  {
+   "id": "ST-11",
+   "name": "Starter Deck 11: Uta",
+   "code": "ST-11",
+   "date": "2024-02-02",
+   "main": false,
+   "count": 5
+  },
+  {
+   "id": "OP-05",
+   "name": "Awakening of the New Era",
+   "code": "OP05",
+   "date": "2023-12-08",
+   "main": true,
+   "count": 154
+  },
+  {
+   "id": "ST-10",
+   "name": "Ultra Deck: The Three Captains",
+   "code": "ST-10",
+   "date": "2023-11-10",
+   "main": false,
+   "count": 17
+  },
+  {
+   "id": "OP-04",
+   "name": "Kingdoms of Intrigue",
+   "code": "OP04",
+   "date": "2023-09-22",
+   "main": true,
+   "count": 155
+  },
+  {
+   "id": "ST-09",
+   "name": "Starter Deck 9: Yamato",
+   "code": "ST-09",
+   "date": "2023-08-11",
+   "main": false,
+   "count": 15
+  },
+  {
+   "id": "ST-08",
+   "name": "Starter Deck 8: Monkey.D.Luffy",
+   "code": "ST-08",
+   "date": "2023-08-11",
+   "main": false,
+   "count": 15
+  },
+  {
+   "id": "OP-03",
+   "name": "Pillars of Strength",
+   "code": "OP03",
+   "date": "2023-06-30",
+   "main": true,
+   "count": 154
+  },
+  {
+   "id": "ST-07",
+   "name": "Starter Deck 7: Big Mom Pirates",
+   "code": "ST-07",
+   "date": "2023-06-30",
+   "main": false,
+   "count": 17
+  },
+  {
+   "id": "OP-02",
+   "name": "Paramount War",
+   "code": "OP02",
+   "date": "2023-03-10",
+   "main": true,
+   "count": 154
+  },
+  {
+   "id": "ST-06",
+   "name": "Starter Deck 6: Absolute Justice",
+   "code": "ST-06",
+   "date": "2023-03-10",
+   "main": false,
+   "count": 17
+  },
+  {
+   "id": "ST-05",
+   "name": "Starter Deck 5: Film Edition",
+   "code": "ST-05",
+   "date": "2023-02-03",
+   "main": false,
+   "count": 17
+  },
+  {
+   "id": "OP-01",
+   "name": "Romance Dawn",
+   "code": "OP01",
+   "date": "2022-12-02",
+   "main": true,
+   "count": 154
+  },
+  {
+   "id": "ST-04",
+   "name": "Starter Deck 4: Animal Kingdom Pirates",
+   "code": "ST-04",
+   "date": "2022-12-02",
+   "main": false,
+   "count": 17
+  },
+  {
+   "id": "ST-03",
+   "name": "Starter Deck 3: The Seven Warlords of The Sea",
+   "code": "ST-03",
+   "date": "2022-12-02",
+   "main": false,
+   "count": 17
+  },
+  {
+   "id": "ST-02",
+   "name": "Starter Deck 2: Worst Generation",
+   "code": "ST-02",
+   "date": "2022-12-02",
+   "main": false,
+   "count": 17
+  },
+  {
+   "id": "ST-01",
+   "name": "Starter Deck 1: Straw Hat Crew",
+   "code": "ST-01",
+   "date": "2022-12-02",
+   "main": false,
+   "count": 17
+  }
+ ]
+}

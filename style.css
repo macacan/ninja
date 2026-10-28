@@ -132,7 +132,7 @@ canvas.scene{display:block;width:100%;image-rendering:pixelated;image-rendering:
 /* ---------- Butikskort ---------- */
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:20px}
 /* Startsidans senaste set: fem kort på en rad när det finns plats. */
-@media (min-width:961px){#home-sets{grid-template-columns:repeat(5,minmax(0,1fr))}}
+@media (min-width:961px){#home-sets,.game-sets{grid-template-columns:repeat(5,minmax(0,1fr))}}
 .tcard{position:relative;background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:8px;
   box-shadow:0 3px 0 var(--line);transition:transform .12s steps(2),box-shadow .12s steps(2),border-color .12s steps(2)}
 .tcard:hover{transform:translate(-2px,-3px);border-color:var(--ink);box-shadow:4px 5px 0 var(--ink)}

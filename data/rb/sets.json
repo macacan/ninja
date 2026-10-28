@@ -1,0 +1,101 @@
+{
+ "updated": 1793189320385,
+ "sets": [
+  {
+   "id": "24819",
+   "name": "Radiance",
+   "code": "RAD",
+   "date": "2026-10-23",
+   "main": true,
+   "count": 234
+  },
+  {
+   "id": "24861",
+   "name": "T1 2025 Worlds Champion Bundles",
+   "code": "T12025",
+   "date": "2026-08-01",
+   "main": false,
+   "count": 15
+  },
+  {
+   "id": "24698",
+   "name": "Vendetta",
+   "code": "VEN",
+   "date": "2026-07-31",
+   "main": true,
+   "count": 248
+  },
+  {
+   "id": "24560",
+   "name": "Unleashed",
+   "code": "UNL",
+   "date": "2026-05-08",
+   "main": true,
+   "count": 308
+  },
+  {
+   "id": "24519",
+   "name": "Spiritforged",
+   "code": "SFD",
+   "date": "2026-02-13",
+   "main": true,
+   "count": 309
+  },
+  {
+   "id": "24552",
+   "name": "Riftbound Judge Promotional Cards",
+   "code": "JDG",
+   "date": "2025-12-01",
+   "main": false,
+   "count": 4
+  },
+  {
+   "id": "24344",
+   "name": "Origins",
+   "code": "OGN",
+   "date": "2025-10-31",
+   "main": true,
+   "count": 352
+  },
+  {
+   "id": "24439",
+   "name": "Origins: Proving Grounds",
+   "code": "OGS",
+   "date": "2025-10-31",
+   "main": false,
+   "count": 28
+  },
+  {
+   "id": "24528",
+   "name": "Riftbound Organized Play Promotional Cards",
+   "code": "OPP",
+   "date": "2025-10-31",
+   "main": false,
+   "count": 265
+  },
+  {
+   "id": "24343",
+   "name": "Riftbound Promotional Cards",
+   "code": "PR",
+   "date": "2025-10-31",
+   "main": false,
+   "count": 11
+  },
+  {
+   "id": "24502",
+   "name": "Riftbound Worlds Bundle 2025",
+   "code": "RWB",
+   "date": "2025-10-28",
+   "main": false,
+   "count": 7
+  },
+  {
+   "id": "24797",
+   "name": "Secret Garden",
+   "code": "SGN",
+   "date": "2025-07-30",
+   "main": false,
+   "count": 3
+  }
+ ]
+}

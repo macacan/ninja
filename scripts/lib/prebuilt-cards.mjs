@@ -48,6 +48,12 @@ export async function saveGame({ dir, sets, cards, rarities, trendSets, minPrice
   }
 
   await writeFile(new URL("cards.json", dir), JSON.stringify({ updated: Date.now(), rate, sets, rarities, cards }) + "\n");
+  // Setlistan för startsidan och set-sidan, utan korten: datum, kod, antal kort och om det är ett huvudset.
+  const count = {};
+  for (const c of cards) count[c.set] = (count[c.set] || 0) + 1;
+  const setRows = sets.filter((s) => count[s.id]).map((s) => ({ ...s, count: count[s.id] }))
+    .sort((a, b) => (b.date || "").localeCompare(a.date || ""));
+  await writeFile(new URL("sets.json", dir), JSON.stringify({ updated: Date.now(), sets: setRows }, null, 1) + "\n");
 
   const inTrend = new Set(trendSets);
   const priced = cards.filter((c) => inTrend.has(c.set) && c.sek != null && c.image).map((c) => ({ ...c, set: setName[c.set], setId: c.set }));

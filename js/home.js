@@ -1,5 +1,5 @@
 import { groupKey } from "./group.js";
-import { $, esc, fmt, skeleton, upcomingReleases, daysUntil, latestSets, setCard, setLogo, setPages, news, newsItem, productCard, fillRows, liveStock, getJSON } from "./site.js";
+import { $, esc, fmt, skeleton, upcomingReleases, daysUntil, latestSets, setCard, setLogo, setPages, news, newsItem, productCard, fillRows, liveStock, getJSON, card, setArt } from "./site.js";
 import { getPrefs } from "./prefs.js";
 import { bindSetCards } from "./setcards.js";
 import "./restock.js";
@@ -95,6 +95,22 @@ async function homeSets() {
   } catch { el.innerHTML = '<div class="msg">Kunde inte nå TCGdex just nu.</div>'; }
 }
 
+// Nya set i One Piece och Riftbound: huvudseten ur data/<spel>/sets.json (scripts/update-op-cards.mjs och
+// update-rb-cards.mjs). Ett tryck öppnar setets kort och priser i Kortpriser.
+async function homeGameSets(game, label) {
+  const el = $(`#home-${game}-sets`);
+  el.innerHTML = skeleton(4);
+  try {
+    const { sets } = await getJSON(`data/${game}/sets.json`);
+    el.innerHTML = sets.filter((s) => s.main && s.date).slice(0, 5).map((s, i) => {
+      const age = -daysUntil(s.date);
+      return card(s.name, s.date, label, `${s.count} kort`, i, false, setArt({ name: s.name, serie: { name: s.code } }),
+        age <= 60 ? { text: "Nytt" } : null, "", `priser.html?game=${game}&set=${encodeURIComponent(s.id)}`);
+    }).join("");
+    fillRows(el, 2);
+  } catch { el.innerHTML = '<div class="msg">Kunde inte läsa seten just nu.</div>'; }
+}
+
 // Landskapet börjar under tickern och ligger bakom navbaren, så att himlen syns bakom menyn.
 // Höjden följer headern, som är olika hög på dator och mobil.
 const heroUnderHeader = () => {
@@ -108,4 +124,6 @@ nextDrop();
 homeWatch();
 setInterval(homeWatch, 60e3);
 homeSets();
+homeGameSets("op", "One Piece");
+homeGameSets("rb", "Riftbound");
 homeNews();

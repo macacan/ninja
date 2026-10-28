@@ -57,7 +57,7 @@ for (const g of [...groups.results].sort((a, b) => (b.publishedOn || "").localeC
   const singles = (products?.results || []).filter((p) => ext(p, "Number"));
   if (!singles.length) continue;
   const id = String(g.groupId);
-  sets.push({ id, name: g.name, main: singles.length >= MAIN_SET });
+  sets.push({ id, name: g.name, code: g.abbreviation || null, date: g.publishedOn?.slice(0, 10) || null, main: singles.length >= MAIN_SET && !/promo/i.test(g.name) });
   // Ett kort kan ha pris både som vanligt och som foil. Vanligt pris visas i första hand.
   const price = {};
   for (const p of prices?.results || []) (price[p.productId] ||= {})[p.subTypeName] = p;
@@ -78,7 +78,7 @@ for (const g of [...groups.results].sort((a, b) => (b.publishedOn || "").localeC
 const ORDER = ["Common", "Uncommon", "Rare", "Epic", "Showcase", "Promo"];
 const present = [...new Set(cards.map((c) => c.rarity).filter((r) => r && r !== "None"))].sort((a, b) => ((ORDER.indexOf(a) + 1) || 99) - ((ORDER.indexOf(b) + 1) || 99));
 const data = await saveGame({
-  dir: DIR, sets: sets.map(({ id, name }) => ({ id, name })), cards, rate, minPrice: MIN_PRICE,
+  dir: DIR, sets, cards, rate, minPrice: MIN_PRICE,
   rarities: present.map((r) => [r, r]),
   trendSets: sets.filter((s) => s.main).slice(0, TREND_SETS).map((s) => s.id),
 });
