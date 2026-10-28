@@ -1,6 +1,20 @@
 {
- "updated": 1793205066166,
+ "updated": 1793206286512,
  "events": [
+  {
+   "at": 1793205624700,
+   "store": "rgb-kingz",
+   "product": "rgb-kingz:15900941975882",
+   "group": "chaos-rising|booster-bundle|en|",
+   "title": "Pokémon Mega Evolution: Chaos Rising Booster Bundle (6 boosters)",
+   "url": "https://rgbkingz.com/products/pokemon-mega-evolution-chaos-rising-booster-bundle-6-boosters-kopia",
+   "image": "https://cdn.shopify.com/s/files/1/0782/8088/4554/files/BlackBox_-_2026-03-13T093432.883_ae4b94a6-1de2-4d0c-a8da-5fd98108962a.webp?v=1780395732",
+   "price": 599,
+   "type": "Booster Bundle",
+   "set": "Chaos Rising",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793204018906,
    "store": "cards-by-malcolm",
@@ -6600,19 +6614,6 @@
    "url": "https://maxgaming.se/sv/pokemon/pokemon-deck-pro-mega-charizard-y-65-st",
    "price": 89,
    "type": "Deck",
-   "set": null,
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1792510235387,
-   "store": "maxgaming",
-   "product": "maxgaming:https://maxgaming.se/sv/pokemon/pokemon-pikachu-special-box-pokemon-center-fukuoka",
-   "group": "x|collection-box|en|pc|center-fukuoka-pikachu",
-   "title": "Pokémon Pikachu Special Box Pokémon Center - Fukuoka",
-   "url": "https://maxgaming.se/sv/pokemon/pokemon-pikachu-special-box-pokemon-center-fukuoka",
-   "price": 1890,
-   "type": "Collection Box",
    "set": null,
    "lang": "en",
    "kind": "ny"
