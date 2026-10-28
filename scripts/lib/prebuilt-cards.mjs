@@ -62,6 +62,9 @@ export async function saveGame({ dir, sets, cards, rarities, trendSets, minPrice
   const setRows = sets.filter((s) => count[s.id]).map((s) => ({ ...s, count: count[s.id] }))
     .sort((a, b) => (b.date || "").localeCompare(a.date || ""));
   await writeFile(new URL("sets.json", dir), JSON.stringify({ updated: Date.now(), sets: setRows }, null, 1) + "\n");
+  // Bara kortnamnen, små nog för startsidans sökruta som avgör vilket spel en sökning gäller (js/game-guess.js).
+  const names = [...new Set(cards.map((c) => c.name.toLowerCase()))].sort();
+  await writeFile(new URL("names.json", dir), JSON.stringify(names) + "\n");
 
   const inTrend = new Set(trendSets);
   const priced = cards.filter((c) => inTrend.has(c.set) && c.sek != null && c.image).map((c) => ({ ...c, set: setName[c.set], setId: c.set }));

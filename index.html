@@ -26,7 +26,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://lootninja.se/#website","url":"https://lootninja.se/","name":"Lootninja","alternateName":"lootninja.se","inLanguage":"sv-SE","publisher":{"@id":"https://lootninja.se/#org"}},{"@type":"Organization","@id":"https://lootninja.se/#org","name":"Lootninja","url":"https://lootninja.se/","logo":"https://lootninja.se/img/logo-512.png","email":"hej@lootninja.se"}]}</script>
 <link href="fonts/fonts.css" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=20261028a">
+<link rel="stylesheet" href="style.css?v=20261028b">
 <link rel="stylesheet" href="dark.css?v=20261027a" id="dark-css" media="(prefers-color-scheme: dark)">
 <script src="js/theme.js?v=20261021"></script>
 </head>
@@ -45,8 +45,9 @@
         <!-- På mobilen fäller rubriken ut sökfältet. På större skärmar syns sökfältet alltid. -->
         <h2><button type="button" class="pb-toggle" aria-expanded="false" aria-controls="pb-form">Vad är ditt kort värt?</button></h2>
       </div>
-      <form class="search-row" id="pb-form" action="priser.html" role="search">
-        <input type="search" name="q" placeholder="t.ex. Charizard" aria-label="Kortnamn" required minlength="2">
+      <form class="search-row" id="pb-form" action="priser.html" role="search" data-games>
+        <input type="search" name="q" placeholder="t.ex. Charizard, Luffy eller Jinx" aria-label="Kortnamn: Pokémon, One Piece eller Riftbound" required minlength="2">
+        <input type="hidden" name="game" value="pokemon">
         <button class="btn gold" type="submit">Sök</button>
       </form>
     </section>
@@ -97,6 +98,6 @@
     <div id="home-news" class="news-cols"></div>
   </div>
 </main>
-<script type="module" src="js/home.js?v=20261028c"></script>
+<script type="module" src="js/home.js?v=20261028d"></script>
 </body>
 </html>

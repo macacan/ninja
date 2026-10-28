@@ -3,6 +3,30 @@ import { $, esc, fmt, skeleton, upcomingReleases, daysUntil, latestSets, setCard
 import { getPrefs } from "./prefs.js";
 import { bindSetCards } from "./setcards.js";
 import "./restock.js";
+import { mountCardAutocomplete } from "./card-autocomplete.js";
+import { loadGameNames, guessGame } from "./game-guess.js";
+
+// Sökrutan överst söker i alla tre spelen och väljer spelet efter vad man skriver (js/game-guess.js).
+// Pokémonförslagen visas bara medan sökningen ser ut att gälla Pokémon.
+const pbForm = $("#pb-form");
+if (pbForm) {
+  const input = pbForm.querySelector("input[name=q]");
+  let names = null;
+  loadGameNames().then((n) => (names = n));
+  const guess = () => guessGame(input.value, names);
+  mountCardAutocomplete(input, { suggest: () => guess() === "pokemon" });
+  pbForm.addEventListener("submit", async (e) => {
+    // Hann namnen inte laddas väntar sökningen på dem, annars blir allt Pokémon.
+    if (!names) {
+      e.preventDefault();
+      names = await loadGameNames();
+      pbForm.elements.game.value = guess();
+      pbForm.submit();
+      return;
+    }
+    pbForm.elements.game.value = guess();
+  });
+}
 
 // "Vad är ditt kort värt?": på mobilen fäller rubriken ut sökfältet och sätter markören i det.
 $(".pb-toggle")?.addEventListener("click", (e) => {

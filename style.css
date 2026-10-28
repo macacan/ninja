@@ -1059,6 +1059,7 @@ span.rd-logo{display:grid;place-items:center;background:var(--surface);border-ra
 .chk input{width:18px;height:18px;accent-color:var(--ink);flex:none;margin:0}
 .chk span{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .chk small{font:600 .9rem var(--cond);color:var(--muted)}
+.chk.zero span,.chk.zero small{opacity:.45}
 .price-cap{display:inline-flex;align-items:center;gap:8px}
 .price-cap input{width:140px;border:1px solid var(--line);border-radius:8px;padding:8px 10px;font:inherit;background:#fff}
 .watch-list{list-style:none;margin:10px 0 0;padding:0}

@@ -50,7 +50,8 @@ const pressed = (id) => $(id).getAttribute("aria-pressed") === "true";
 // Produkter som klarar alla filter. Tillgänglighet styrs av snabbfiltren: inget valt betyder allt, även slut.
 // Sökningen bryr sig inte om accenter, så att "pokemon" hittar "Pokémon".
 const fold = (s) => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
-function filtered() {
+// skip: "store" eller "set" hoppar över det filtret, för antalen i listorna (liveCounts).
+function filtered(skip = "") {
   const q = fold($("#f-q").value.trim());
   const v = (id) => $(id).value;
   const [lo, hi] = PRICE[v("#f-price")];
@@ -58,8 +59,8 @@ function filtered() {
   const watch = new Set(getPrefs().watch || []);
   const words = q.split(/\s+/).filter(Boolean);
   const selStores = picked("f-store"), selSets = picked("f-set");
-  return products.filter((p) => (!selStores.length || selStores.includes(p.store)) && (!v("#f-game") || gameOf(p) === v("#f-game")) && (!v("#f-type") || p.type === v("#f-type"))
-    && (!selSets.length || selSets.includes(p.set)) && (!v("#f-lang") || p.lang === v("#f-lang"))
+  return products.filter((p) => (skip === "store" || !selStores.length || selStores.includes(p.store)) && (!v("#f-game") || gameOf(p) === v("#f-game")) && (!v("#f-type") || p.type === v("#f-type"))
+    && (skip === "set" || !selSets.length || selSets.includes(p.set)) && (!v("#f-lang") || p.lang === v("#f-lang"))
     && p.price >= lo && p.price < hi
     && ((!inS && !pre) || (inS && p.available) || (pre && p.preorder && !p.available))
     && (!watchOnly || watch.has(groupKey(p)))
@@ -181,7 +182,22 @@ function groupCard(g, open) {
 }
 
 const openGroups = new Set();
+// Antalet vid varje butik och set följer de övriga filtren: med Riftbound valt står det hur många
+// Riftbound-produkter butiken har, 0 om den inte har några.
+function liveCounts() {
+  for (const [id, key] of [["f-store", "store"], ["f-set", "set"]]) {
+    const n = {};
+    for (const p of filtered(key)) n[p[key]] = (n[p[key]] || 0) + 1;
+    for (const box of document.querySelectorAll(`#${id} input`)) {
+      const row = box.closest(".chk");
+      row.querySelector("small").textContent = n[box.value] || 0;
+      row.classList.toggle("zero", !n[box.value]);
+    }
+  }
+}
+
 function renderProducts() {
+  liveCounts();
   const list = filtered();
   const grid = $("#products");
   grid.className = "ggrid";
@@ -232,7 +248,7 @@ for (const id of ["#c-in", "#c-pre", "#c-watch"]) {
 const picked = (id) => [...document.querySelectorAll(`#${id} input:checked`)].map((b) => b.value);
 function multiFill(id, items) {
   $(`#${id}`).innerHTML = items.map((x) => `<label class="chk"><input type="checkbox" value="${esc(x.value)}">
-    <span>${esc(x.text)}</span>${x.count ? `<small>${x.count}</small>` : ""}</label>`).join("");
+    <span>${esc(x.text)}</span><small>${x.count || 0}</small></label>`).join("");
   $(`#${id}`).addEventListener("change", () => {
     const on = picked(id), first = document.querySelector(`#${id} input:checked`)?.closest(".chk").querySelector("span").textContent;
     $(`#${id}-sum`).textContent = !on.length ? "Alla" : on.length === 1 ? first : `${on.length} valda`;

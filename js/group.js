@@ -27,10 +27,13 @@ const opCode = (p) => {
 
 // Ord som inte säger något om vilken produkt det är.
 const STOP = new Set(("pokemon tcg trading card cards game the and och med for of a an i en ett av till pa kort samlarkort " +
-  "scarlet violet sword shield sun moon mega evolution xy black white sv swsh sm me series serie " +
+  "mega evolution xy sv swsh sm me series serie " +
   "japansk japanese japan jp jpn engelsk english eng svensk ny new nytt sealed forseglad forsegl st stk pcs styck " +
   "box boxes boxar lada collection kollektion premium special pack packs paket booster boosters tin tins blister " +
-  "deck decks bundle elite trainer etb display ultra upc build battle edition version utgava").split(" "));
+  "deck decks bundle elite trainer etb display ultra upc build battle edition version utgava " +
+  // Butikernas egna tillägg: språk, "importvara", "slumpmässigt motiv", "1st", "OBS".
+  "japanska koreansk koreanska korean kinesisk kinesiska chinese simplified forenklad importvara obs " +
+  "samlarbox samlarboxar boosterpaket expansion shrink 1st blandad slumpmassigt slumpmassig motiv random assorted artwork slumpas").split(" "));
 
 export const fold = (s) => String(s || "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
 const slug = (s) => fold(s).replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
@@ -41,7 +44,8 @@ function variants(title) {
   const v = [];
   if (/pokemon center|\bpc\b/.test(t)) v.push("pc");
   if (/sleeved/.test(t)) v.push("sleeved");
-  if (/\bcase\b|\(\s*\d+\s*(boxes|boxar|st)\s*\)|hel kartong|\bkartong\b/.test(t)) v.push("case");
+  // "(6 Boxar)" och "(10 st)" är en hel kartong, men "(1 st)" är ett exemplar och "(65 st)" kort i ett deck.
+  if (/\bcase\b|\(\s*(?:[2-9]|[12]\d|30)\s*(boxes|boxar|st)\s*\)|hel kartong|\bkartong\b/.test(t)) v.push("case");
   if (/\bhalf\b|half booster|halv/.test(t)) v.push("half");
   if (/\bmini\b/.test(t)) v.push("mini");
   return v;
@@ -50,7 +54,9 @@ function variants(title) {
 // Namnord som skiljer samlarboxar åt (t.ex. "sylveon", "greninja", "poster", "binder").
 function nameTokens(title, set, game) {
   const setWords = new Set(fold(set).split(/[^a-z0-9]+/));
-  const t = fold(title).replace(/\((max|begransat|limit)[^)]*\)/g, " ");
+  // Serienamnet tas bort som helhet, så att "Scarlet ex", "Violet ex" och "Shield" fortfarande skiljs åt.
+  const t = fold(title).replace(/[([](max|begransat|limit)[^)\]]*[)\]]/g, " ")
+    .replace(/\b(?:scarlet\s*(?:&|and|och)?\s*violet|sword\s*(?:&|and|och)?\s*shield|sun\s*(?:&|and|och)?\s*moon|black\s*(?:&|and|och)\s*white)\b/g, " ");
   // Serienummer ("Series 2", "Vol. 3") och bokstavsvarianter ("Charizard X" / "Y") skiljer produkter åt.
   const extra = [...t.matchAll(/(?:series|serie|vol\.?|volume|wave|del)\s*(\d+)/g)].map((m) => `s${m[1]}`)
     .concat([...t.matchAll(/\b([xyz])\b(?=\s*(?:ex|gx|\)|$|\s))/g)].map((m) => m[1]));
@@ -63,6 +69,11 @@ function nameTokens(title, set, game) {
 // (t.ex. japanska "Mega Brave"), så då räcker inte set + typ för att det ska vara samma produkt.
 const SERIES_LIKE = new Set(["mega evolution", "scarlet & violet", "sword & shield", "sun & moon", "xy", "black & white"]);
 
+// Japanska, koreanska och kinesiska set har egna namn som vi inte känner igen. Står bara serien i titeln
+// ("Scarlet & Violet: Crimson Haze") ska produkten hamna med butikerna som skriver "Crimson Haze" utan serie,
+// alltså som utan set. Har titeln inga namnord alls får serien stå kvar, så att den ändå skiljs från andra.
+const ownSet = (p) => ((p.lang || "en") !== "en" && SERIES_LIKE.has(fold(p.set)) && nameTokens(p.title, "").length ? "" : p.set || "");
+
 export function groupKey(p) {
   // Nycklarna för andra spel börjar med spelet ("rb|", "op|"), så att de aldrig krockar med Pokémon.
   // Pokémon-nycklarna är oförändrade.
@@ -74,8 +85,8 @@ export function groupKey(p) {
     const code = p.game === "op" ? opCode(p) : "";
     return `${base}|${code || nameTokens(p.title, set, p.game).slice(0, 4).join("-")}`;
   }
-  const set = p.set || "";
   const lang = p.lang || "en";
+  const set = ownSet(p);
   const v = variants(p.title).join("+");
   const extra = SERIES_LIKE.has(fold(set)) ? nameTokens(p.title, set).slice(0, 4).join("-") : "";
   // Blister med 1, 2 eller 3 paket är olika produkter.
@@ -91,7 +102,8 @@ const LABEL = { "Build & Battle": "Build & Battle Box" };
 
 // Ett läsbart namn för gruppen. Enkla typer får ett rent namn, samlarboxar får butikens kortaste namn.
 export function groupTitle(members) {
-  const p = members[0];
+  // Samma regel som i groupKey: en japansk produkt med bara serien som set räknas som utan set.
+  const p = { ...members[0], set: ownSet(members[0]) || null };
   const v = variants(p.title);
   const g = GAMES[p.game];
   if (g && p.set && g.simple.has(p.type)) {

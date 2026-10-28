@@ -128,7 +128,8 @@ export function mountChrome() {
   if (menuInput) mountCardAutocomplete(menuInput, { formAction: searchTarget() });
   const headerInput = $("#header-search input");
   if (headerInput) mountCardAutocomplete(headerInput, { formAction: searchTarget() });
-  document.querySelectorAll(".search-row input[type=search]").forEach((inp) => {
+  // Startsidans sökruta (data-games) gäller alla spel och kopplas in av js/home.js.
+  document.querySelectorAll(".search-row:not([data-games]) input[type=search]").forEach((inp) => {
     mountCardAutocomplete(inp, { formAction: "priser.html" });
   });
 }
