@@ -1,5 +1,5 @@
 {
- "updated": 1793132655764,
+ "updated": 1793187572738,
  "sets": [
   "The World's Strongest Warriors",
   "The Time of Battle",
@@ -186,7 +186,7 @@
    "sub": "Straw Hat Crew",
    "image": "https://optcgapi.com/media/static/Card_Images/EB03-055_p2_GwiCq60.jpg",
    "sek": 14189.25,
-   "low": 11884.51,
+   "low": 11824.79,
    "setId": "EB-03"
   },
   {
@@ -286,7 +286,7 @@
    "sub": "Whitebeard Pirates",
    "image": "https://optcgapi.com/media/static/Card_Images/OP13-119_p2.jpg",
    "sek": 10944.59,
-   "low": 9827.5,
+   "low": 9825.21,
    "setId": "OP-13"
   },
   {
@@ -406,7 +406,7 @@
    "sub": "FILM",
    "image": "https://optcgapi.com/media/static/Card_Images/EB03-061_p2.jpg",
    "sek": 9303.03,
-   "low": 6260.18,
+   "low": 6211.29,
    "setId": "EB-03"
   },
   {
@@ -425,7 +425,7 @@
    "attr": "Slash",
    "sub": "Straw Hat Crew Supernovas",
    "image": "https://optcgapi.com/media/static/Card_Images/PRB02-006_p2.jpg",
-   "sek": 9139.87,
+   "sek": 9115.62,
    "low": 7452.6,
    "setId": "OP14-EB04"
   },
