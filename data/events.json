@@ -1,8 +1,60 @@
 {
- "updated": 1793179558748,
+ "updated": 1793180687440,
  "events": [
   {
-   "at": 1793178774368,
+   "at": 1793179983552,
+   "store": "samlarhobby",
+   "product": "samlarhobby:16089706824061",
+   "group": "x|collection-box|en||lycanroc",
+   "title": "Pokémon, Lycanroc-GX Box",
+   "url": "https://samlarhobby.se/products/pokemon-lycanroc-gx-box",
+   "price": 3995,
+   "type": "Collection Box",
+   "set": null,
+   "lang": "en",
+   "kind": "ny"
+  },
+  {
+   "at": 1793179983552,
+   "store": "samlarhobby",
+   "product": "samlarhobby:16089705185661",
+   "group": "x|collection-box|en||snorlax",
+   "title": "Pokémon, Snorlax-GX Box",
+   "url": "https://samlarhobby.se/products/pokemon-snorlax-gx-box",
+   "price": 4995,
+   "type": "Collection Box",
+   "set": null,
+   "lang": "en",
+   "kind": "ny"
+  },
+  {
+   "at": 1793179983552,
+   "store": "samlarhobby",
+   "product": "samlarhobby:16089703743869",
+   "group": "x|collection-box|en||break",
+   "title": "Pokémon, BREAK Evolution Box (Arcanine)",
+   "url": "https://samlarhobby.se/products/pokemon-break-evolution-box-arcanine",
+   "price": 5495,
+   "type": "Collection Box",
+   "set": null,
+   "lang": "en",
+   "kind": "ny"
+  },
+  {
+   "at": 1793179983552,
+   "store": "samlarhobby",
+   "product": "samlarhobby:16089702400381",
+   "group": "shining-legends|collection-box|en||pin",
+   "title": "Pokémon, Shining Legends Pin Collection (Pikachu)",
+   "url": "https://samlarhobby.se/products/pokemon-shining-legends-pin-collection-pikachu",
+   "price": 5695,
+   "type": "Collection Box",
+   "set": "Shining Legends",
+   "lang": "en",
+   "kind": "ny"
+  },
+  {
+   "at": 1793179963176,
    "store": "poketalk",
    "product": "poketalk:11259843346774",
    "group": "chaos-rising|elite-trainer-box|en|pc",
@@ -15,7 +67,7 @@
    "kind": "tillbaka"
   },
   {
-   "at": 1793178774368,
+   "at": 1793179963176,
    "store": "poketalk",
    "product": "poketalk:11282622185814",
    "group": "x|booster-pack|en||30th-anniversary-celebration",
@@ -28,20 +80,7 @@
    "kind": "ny"
   },
   {
-   "at": 1793178774368,
-   "store": "poketalk",
-   "product": "poketalk:11371806458198",
-   "group": "x|booster-bundle|en||30th-anniversary-celebration",
-   "title": "Pokémon TCG: 30th Anniversary Celebration Booster Bundle",
-   "url": "https://poketalk.se/products/pokemon-tcg-30th-anniversary-celebration-booster-bundle",
-   "price": 1099,
-   "type": "Booster Bundle",
-   "set": null,
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793177856776,
+   "at": 1793179963176,
    "store": "poketalk",
    "product": "poketalk:11009156612438",
    "group": "pitch-black|elite-trainer-box|en|",
@@ -54,7 +93,7 @@
    "kind": "tillbaka"
   },
   {
-   "at": 1793177856776,
+   "at": 1793179963176,
    "store": "poketalk",
    "product": "poketalk:11298832318806",
    "group": "x|elite-trainer-box|en||30th-anniversary-celebration",
@@ -67,7 +106,20 @@
    "kind": "ny"
   },
   {
-   "at": 1793177856776,
+   "at": 1793179963176,
+   "store": "poketalk",
+   "product": "poketalk:11371806458198",
+   "group": "x|booster-bundle|en||30th-anniversary-celebration",
+   "title": "Pokémon TCG: 30th Anniversary Celebration Booster Bundle",
+   "url": "https://poketalk.se/products/pokemon-tcg-30th-anniversary-celebration-booster-bundle",
+   "price": 1099,
+   "type": "Booster Bundle",
+   "set": null,
+   "lang": "en",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1793179963176,
    "store": "poketalk",
    "product": "poketalk:10136499093846",
    "group": "151|booster-bundle|en|",
@@ -80,7 +132,7 @@
    "kind": "tillbaka"
   },
   {
-   "at": 1793177856776,
+   "at": 1793179963176,
    "store": "poketalk",
    "product": "poketalk:10600877982038",
    "group": "x|booster-box|ja||gem-s4-vol",
@@ -93,7 +145,7 @@
    "kind": "tillbaka"
   },
   {
-   "at": 1793177856776,
+   "at": 1793179963176,
    "store": "poketalk",
    "product": "poketalk:9779159368022",
    "group": "prismatic-evolutions|premium-collection|en||super",
@@ -6540,58 +6592,6 @@
    "set": null,
    "lang": "en",
    "kind": "ny"
-  },
-  {
-   "at": 1792505315385,
-   "store": "alphaspel",
-   "product": "alphaspel:https://alphaspel.se/1762-pokemon-tcg/167552-pokemon-tcg-calyrex-vmax-league-battle-deck-q2-22-shadow-rider",
-   "group": "x|deck|en||calyrex-league-rider-shadow-vmax",
-   "title": "Pokemon TCG: Calyrex Vmax League Battle Deck Q2 '22 - Shadow Rider",
-   "url": "https://alphaspel.se/1762-pokemon-tcg/167552-pokemon-tcg-calyrex-vmax-league-battle-deck-q2-22-shadow-rider",
-   "price": 649,
-   "type": "Deck",
-   "set": null,
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1792504451435,
-   "store": "tcgaddan",
-   "product": "tcgaddan:16187779187020",
-   "group": "30th-celebration|booster-pack|zh|",
-   "title": "30th Celebration Booster Pack Chinese",
-   "url": "https://tcgaddan.se/products/30th-celebration-booster-pack-chinese",
-   "price": 79,
-   "type": "Booster Pack",
-   "set": "30th Celebration",
-   "lang": "zh",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1792504451435,
-   "store": "tcgaddan",
-   "product": "tcgaddan:16175537717580",
-   "group": "30th-celebration|booster-pack|ja|",
-   "title": "30th Celebration Booster Pack Japanese",
-   "url": "https://tcgaddan.se/products/30th-celebration-booster-pack-japanese",
-   "price": 139,
-   "type": "Booster Pack",
-   "set": "30th Celebration",
-   "lang": "ja",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1792504451435,
-   "store": "tcgaddan",
-   "product": "tcgaddan:16213905768780",
-   "group": "30th-celebration|booster-box|zh|",
-   "title": "30th Celebration Booster Box Chinese",
-   "url": "https://tcgaddan.se/products/30th-celebration-booster-box-chinese",
-   "price": 1399,
-   "type": "Booster Box",
-   "set": "30th Celebration",
-   "lang": "zh",
-   "kind": "tillbaka"
   }
  ]
 }
