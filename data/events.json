@@ -1,6 +1,20 @@
 {
- "updated": 1793168535982,
+ "updated": 1793169736013,
  "events": [
+  {
+   "at": 1793169378527,
+   "store": "jollyroom",
+   "product": "jollyroom:https://www.jollyroom.se/leksaker/spel-pussel/kortspel-memory/pokemon-first-partner-boosterpaket",
+   "group": "x|booster-pack|en||boosterpaket-first-partner",
+   "title": "Pokémon First Partner Boosterpaket",
+   "url": "https://www.jollyroom.se/leksaker/spel-pussel/kortspel-memory/pokemon-first-partner-boosterpaket",
+   "price": 494,
+   "type": "Booster Pack",
+   "set": null,
+   "lang": "en",
+   "kind": "prissankt",
+   "from": 499
+  },
   {
    "at": 1793154442998,
    "store": "shinycards",
@@ -6575,19 +6589,6 @@
    "url": "https://aquitaz.se/products/pokemon-gem-pack-vol-7-cbb7c-booster-box-18-pack-ch",
    "price": 135.95,
    "type": "Booster Box",
-   "set": null,
-   "lang": "zh",
-   "kind": "forbestallning"
-  },
-  {
-   "at": 1792489096332,
-   "store": "aquitaz",
-   "product": "aquitaz:11044921540954",
-   "group": "x|booster-pack|zh||gem-s7-vol",
-   "title": "Pokémon: Gem Pack Vol. 7 (CBB7C) Booster Pack (4 Kort) (CH)",
-   "url": "https://aquitaz.se/products/pokemon-gem-pack-vol-7-cbb7c-booster-pack-4-kort-ch",
-   "price": 135.95,
-   "type": "Booster Pack",
    "set": null,
    "lang": "zh",
    "kind": "forbestallning"
