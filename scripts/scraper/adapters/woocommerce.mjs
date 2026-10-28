@@ -6,18 +6,21 @@ export async function woocommerce(host, ctx) {
   if (!host.allowed(`${API}?per_page=100&page=1`)) return generic(host, ctx);
   const items = [];
   try {
-    // Butikens Pokémon-kategorier om de finns. Annars sök på "pokemon", vilket missar t.ex. japanska
-    // produkter som bara heter "Triplet Beat (SV1a)".
-    let filter = "&search=pokemon";
+    // Butikens Pokémon- och Riftbound-kategorier om de finns. Annars sök på "pokemon" och "riftbound", vilket
+    // missar t.ex. japanska produkter som bara heter "Triplet Beat (SV1a)".
+    let filters = ["&search=pokemon", "&search=riftbound"];
     try {
       const cats = await host.get(`${API}/categories?per_page=100`, { type: "json" });
-      const ids = (Array.isArray(cats) ? cats : []).filter((c) => /pok[eé]mon/i.test(`${c.name} ${c.slug}`)).map((c) => c.id);
-      if (ids.length) filter = `&category=${ids.join(",")}`;
+      const ids = (Array.isArray(cats) ? cats : []).filter((c) => /pok[eé]mon|riftbound/i.test(`${c.name} ${c.slug}`)).map((c) => c.id);
+      if (ids.length) filters = [`&category=${ids.join(",")}`];
     } catch {}
-    const path = (page) => `${API}?per_page=100&page=${page}${filter}`;
-    for (let page = 1; page <= ctx.maxPages; page++) {
-      const list = await host.get(path(page), { type: "json" });
+    const seen = new Set();
+    for (const filter of filters) for (let page = 1; page <= ctx.maxPages; page++) {
+      const path = `${API}?per_page=100&page=${page}${filter}`;
+      const list = await host.get(path, { type: "json" });
       for (const p of list) {
+        if (seen.has(p.id)) continue;
+        seen.add(p.id);
         const minor = p.prices?.currency_minor_unit ?? 2;
         items.push({
           pid: String(p.id),

@@ -24,7 +24,7 @@ const post = (action, data) => fetch(`${API}?action=${action}`, { method: "POST"
   .then((r) => { if (!r.ok) throw new Error(r.status); return r.json(); });
 const payload = (sub) => {
   const p = getPrefs();
-  return { subscription: sub.toJSON(), prefs: { stores: p.stores, types: p.types, sets: p.sets, langs: p.langs, kinds: p.kinds, maxPrice: p.maxPrice, watch: p.watch } };
+  return { subscription: sub.toJSON(), prefs: { stores: p.stores, types: p.types, sets: p.sets, langs: p.langs, games: p.games, kinds: p.kinds, maxPrice: p.maxPrice, watch: p.watch } };
 };
 const subscription = async () => (await navigator.serviceWorker.getRegistration())?.pushManager.getSubscription() ?? null;
 

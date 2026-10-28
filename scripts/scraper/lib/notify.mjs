@@ -15,6 +15,8 @@ const kr = (n) => `${Math.round(n).toLocaleString("sv-SE")} kr`;
 // Samma regler som matches() i js/prefs.js. Tom lista betyder "alla".
 function matches(e, p) {
   if (e.group && (p.watch || []).includes(e.group)) return true;
+  // Tom spellista betyder bara Pokémon (se gamesOf i js/prefs.js).
+  if (!(p.games?.length ? p.games : ["pk"]).includes(e.game || "pk")) return false;
   if (p.kinds?.length && !p.kinds.includes(e.kind)) return false;
   if (p.stores?.length && !p.stores.includes(e.store)) return false;
   if (p.types?.length && !p.types.includes(e.type)) return false;

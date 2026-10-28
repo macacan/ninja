@@ -75,6 +75,7 @@
         </div>
         <div class="shopbar-row">
           <div class="drops">
+            <label class="drop"><span>Spel</span><select id="f-game"><option value="">Alla</option><option value="pk">Pokémon</option><option value="rb">Riftbound</option></select></label>
             <label class="drop"><span>Typ</span><select id="f-type"><option value="">Alla</option></select></label>
             <label class="drop"><span>Pris</span><select id="f-price">
               <option value="">Alla</option><option value="0-50">Under 50 kr</option><option value="50-100">50–100 kr</option>
@@ -208,12 +209,13 @@
             <div class="ntf-body"><div class="checks" id="p-kinds"></div></div>
           </details>
           <details class="ntf-row">
-            <summary><span class="ntf-ic" data-icon="card" data-size="22"></span><span><b>Pokémon-set</b><small>Bara de set du samlar på</small></span><em id="sum-sets"></em></summary>
+            <summary><span class="ntf-ic" data-icon="card" data-size="22"></span><span><b>Set</b><small>Bara de set du samlar på</small></span><em id="sum-sets"></em></summary>
             <div class="ntf-body"><div class="ntf-tools"><input type="search" class="acc-find" data-for="p-sets" placeholder="Sök set…" aria-label="Sök set"><button type="button" class="link" data-all="p-sets">Alla</button><button type="button" class="link" data-none="p-sets">Inga</button></div><div class="checks" id="p-sets"></div></div>
           </details>
           <details class="ntf-row">
-            <summary><span class="ntf-ic" data-icon="search" data-size="22"></span><span><b>Fler filter</b><small>Språk, sorts produkt och högsta pris</small></span><em id="sum-more"></em></summary>
+            <summary><span class="ntf-ic" data-icon="search" data-size="22"></span><span><b>Fler filter</b><small>Spel, språk, sorts produkt och högsta pris</small></span><em id="sum-more"></em></summary>
             <div class="ntf-body">
+              <fieldset><legend>Spel</legend><div class="checks" id="p-games"></div></fieldset>
               <fieldset><legend>Språk</legend><div class="checks" id="p-langs"></div></fieldset>
               <fieldset><legend>Produkttyper</legend><div class="checks" id="p-types"></div></fieldset>
               <fieldset><legend>Maxpris</legend><label class="price-cap"><input id="p-max" type="number" min="0" step="50" inputmode="numeric" placeholder="Inget tak"> kr</label></fieldset>
@@ -308,6 +310,6 @@
     <p class="hint" style="margin-top:28px">Lootninja är ett privat hobbyprojekt. Priser och lagerstatus samlas in automatiskt och är endast vägledande – ta inte all data för 100% sanning då felaktiga priser, fördröjda uppdateringar eller tekniska fel kan förekomma. Det är alltid butikens egen sida och kassa som gäller när du köper.</p>
   </div>
 </main>
-<script type="module" src="js/butiker.js?v=20261028b"></script>
+<script type="module" src="js/butiker.js?v=20261028c"></script>
 </body>
 </html>

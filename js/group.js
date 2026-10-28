@@ -4,6 +4,9 @@
 
 // Typer där set + typ + språk (+ variant) räcker för att det ska vara samma produkt.
 const SIMPLE = new Set(["Booster Pack", "Booster Box", "Elite Trainer Box", "Booster Bundle", "Build & Battle"]);
+// Riftbound (game: "rb"): Vault och Pre-Rift Kit finns bara i en sort per set. Decken skiljs åt av championnamnen.
+const RB_SIMPLE = new Set(["Booster Pack", "Booster Box", "Bundle", "Prerelease Kit", "Proving Grounds"]);
+const RB_STOP = new Set("riftbound league legends lol tcg champion showdown set one runeterra vs max kund".split(" "));
 
 // Ord som inte säger något om vilken produkt det är.
 const STOP = new Set(("pokemon tcg trading card cards game the and och med for of a an i en ett av till pa kort samlarkort " +
@@ -28,14 +31,14 @@ function variants(title) {
 }
 
 // Namnord som skiljer samlarboxar åt (t.ex. "sylveon", "greninja", "poster", "binder").
-function nameTokens(title, set) {
+function nameTokens(title, set, game) {
   const setWords = new Set(fold(set).split(/[^a-z0-9]+/));
   const t = fold(title).replace(/\((max|begransat|limit)[^)]*\)/g, " ");
   // Serienummer ("Series 2", "Vol. 3") och bokstavsvarianter ("Charizard X" / "Y") skiljer produkter åt.
   const extra = [...t.matchAll(/(?:series|serie|vol\.?|volume|wave|del)\s*(\d+)/g)].map((m) => `s${m[1]}`)
     .concat([...t.matchAll(/\b([xyz])\b(?=\s*(?:ex|gx|\)|$|\s))/g)].map((m) => m[1]));
   const words = t.replace(/\(.*?\)/g, (m) => (/ex|gx|v\b|vmax|vstar/.test(m) ? m : " "))
-    .split(/[^a-z0-9]+/).filter((w) => w.length > 2 && !STOP.has(w) && !setWords.has(w) && w !== "max" && !/^\d+$/.test(w) && !/^[a-z]{1,4}\d+[a-z]?$/.test(w));
+    .split(/[^a-z0-9]+/).filter((w) => w.length > 2 && !STOP.has(w) && !(game === "rb" && RB_STOP.has(w)) && !setWords.has(w) && w !== "max" && !/^\d+$/.test(w) && !/^[a-z]{1,4}\d+[a-z]?$/.test(w));
   return [...new Set([...extra, ...words])].sort();
 }
 
@@ -44,6 +47,12 @@ function nameTokens(title, set) {
 const SERIES_LIKE = new Set(["mega evolution", "scarlet & violet", "sword & shield", "sun & moon", "xy", "black & white"]);
 
 export function groupKey(p) {
+  // Riftbound-nycklarna börjar med "rb|", så att de aldrig krockar med Pokémon. Pokémon-nycklarna är oförändrade.
+  if (p.game === "rb") {
+    const set = p.set || "", v = variants(p.title).join("+");
+    const base = `rb|${slug(set) || "x"}|${slug(p.type)}|${p.lang || "en"}|${v}`;
+    return set && RB_SIMPLE.has(p.type) ? base : `${base}|${nameTokens(p.title, set, "rb").slice(0, 4).join("-")}`;
+  }
   const set = p.set || "";
   const lang = p.lang || "en";
   const v = variants(p.title).join("+");
@@ -58,18 +67,23 @@ export function groupKey(p) {
 }
 
 const LABEL = { "Build & Battle": "Build & Battle Box" };
+const RB_LABEL = { "Booster Box": "Booster Display", Bundle: "Vault", "Prerelease Kit": "Pre-Rift Kit" };
 
 // Ett läsbart namn för gruppen. Enkla typer får ett rent namn, samlarboxar får butikens kortaste namn.
 export function groupTitle(members) {
   const p = members[0];
   const v = variants(p.title);
+  if (p.game === "rb" && p.set && RB_SIMPLE.has(p.type)) return `Riftbound ${p.set} ${RB_LABEL[p.type] || p.type}` + (v.includes("case") ? " – hel kartong" : "");
   if (p.set && SIMPLE.has(p.type)) {
     const base = `${p.set} ${v.includes("pc") ? "Pokémon Center " : ""}${LABEL[p.type] || p.type}`;
     return base + (v.includes("sleeved") ? " (Sleeved)" : "") + (v.includes("half") ? " (Half)" : "") + (v.includes("case") ? " – hel kartong" : "");
   }
   const clean = (t) => t.replace(/^[\s,;:–-]+/, "").replace(/^\s*pok[eé]mon(\s+tcg)?\s*[:\-–]?\s*/i, "").replace(/\((max|begränsat|limit)[^)]*\)/gi, "")
     .replace(/\s{2,}/g, " ").trim();
-  return clean(members.map((m) => m.title).sort((a, b) => a.length - b.length)[0]);
+  const shortest = members.map((m) => m.title).sort((a, b) => a.length - b.length)[0];
+  // "Riftbound: League of Legends TCG - Set One: Origins Champion Deck - Jinx" → "Riftbound Origins Champion Deck - Jinx"
+  if (p.game === "rb") return `Riftbound ${clean(shortest.replace(/^(?:\s*(?:riftbound|league of legends|lol|tcg|set one)\s*[:\-–]?\s*)+/i, ""))}`;
+  return clean(shortest);
 }
 
 export function groupProducts(products) {

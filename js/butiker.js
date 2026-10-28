@@ -2,7 +2,7 @@ import { $, esc, kr, fmt, ago, loading, liveStamp, releaseSets, safeUrl } from "
 import { langMark } from "./langmark.js";
 import { groupKey, groupProducts, groupTitle, lowestInStock, isLeadDrop, changedAt } from "./group.js";
 import { typeOf } from "./releases.js";
-import { getPrefs, savePrefs, matches, KINDS } from "./prefs.js";
+import { getPrefs, savePrefs, matches, KINDS, GAMES, gamesOf } from "./prefs.js";
 import { track } from "./tracker.js";
 import { pushState, enablePush, disablePush, syncPush, testPush, blockedHelp, silentHelp, isIos, isStandalone } from "./push.js";
 const KIND = {
@@ -41,7 +41,10 @@ function renderEvents() {
 const PRICE = { "": [0, Infinity], "0-50": [0, 50], "50-100": [50, 100], "100-200": [100, 200], "200-500": [200, 500], "500-1000": [500, 1000], "1000-": [1000, Infinity] };
 const LANG = { en: "Engelska", ja: "Japanska", ko: "Koreanska", zh: "Kinesiska", fr: "Franska" };
 const TYPE_LABEL = { "Booster Pack": "Boosterpaket", "Booster Box": "Boosterbox", "Elite Trainer Box": "Elite Trainer Box (ETB)", Blister: "Blister", Tin: "Tin" };
-let groups = new Map(), priceHist = {}, releaseDates = new Map();
+let groups = new Map(), priceHist = {}, releaseDates = new Map(), rbSets = new Set();
+// Riftbound-produkter har game: "rb", Pokémon-produkter inget game-fält. Riftbound-set märks i setlistorna.
+const gameOf = (p) => p.game || "pk";
+const setLabel = (s) => (rbSets.has(s) ? `Riftbound: ${s}` : s);
 const pressed = (id) => $(id).getAttribute("aria-pressed") === "true";
 
 // Produkter som klarar alla filter. Tillgänglighet styrs av snabbfiltren: inget valt betyder allt, även slut.
@@ -55,7 +58,7 @@ function filtered() {
   const watch = new Set(getPrefs().watch || []);
   const words = q.split(/\s+/).filter(Boolean);
   const selStores = picked("f-store"), selSets = picked("f-set");
-  return products.filter((p) => (!selStores.length || selStores.includes(p.store)) && (!v("#f-type") || p.type === v("#f-type"))
+  return products.filter((p) => (!selStores.length || selStores.includes(p.store)) && (!v("#f-game") || gameOf(p) === v("#f-game")) && (!v("#f-type") || p.type === v("#f-type"))
     && (!selSets.length || selSets.includes(p.set)) && (!v("#f-lang") || p.lang === v("#f-lang"))
     && p.price >= lo && p.price < hi
     && ((!inS && !pre) || (inS && p.available) || (pre && p.preorder && !p.available))
@@ -140,7 +143,7 @@ function groupCard(g, open) {
   const lead = g.inStock[0] || g.pre[0] || g.all[0];
   const img = g.all.find((m) => m.image)?.image;
   const watched = (getPrefs().watch || []).includes(g.key);
-  const meta = [TYPE_LABEL[lead.type] || lead.type, lead.set, lead.lang !== "en" ? LANG[lead.lang] || lead.lang : ""].filter(Boolean).join(" · ");
+  const meta = [lead.game === "rb" && "Riftbound", TYPE_LABEL[lead.type] || lead.type, lead.set, lead.lang !== "en" ? LANG[lead.lang] || lead.lang : ""].filter(Boolean).join(" · ");
   const price = g.low != null ? `Från <b>${kr(g.low)}</b> i lager` : g.lowPre != null ? `Förbeställ från <b>${kr(g.lowPre)}</b>` : `Slut överallt · senast <b>${kr(Math.min(...g.all.map((m) => m.price)))}</b>`;
   const rel = releaseDates.get(`${(lead.set || "").toLowerCase()}|${lead.type}`);
   // Senaste prisändringen den här veckan. Bara en sänkning som gör butiken billigast är en prissänkning
@@ -339,7 +342,8 @@ try {
   const opts = (id, values, label = (x) => x) => $(id).insertAdjacentHTML("beforeend", values.map((x) => `<option value="${esc(x)}">${esc(label(x))}</option>`).join(""));
   opts("#f-type", [...new Set(products.map((x) => x.type))].sort());
   const perSet = products.reduce((a, x) => (x.set && (a[x.set] = (a[x.set] || 0) + 1), a), {});
-  multiFill("f-set", Object.keys(perSet).sort((a, b) => a.localeCompare(b, "sv")).map((s) => ({ value: s, text: s, count: perSet[s] })));
+  rbSets = new Set(products.filter((x) => x.game === "rb" && x.set).map((x) => x.set));
+  multiFill("f-set", Object.keys(perSet).sort((a, b) => setLabel(a).localeCompare(setLabel(b), "sv")).map((s) => ({ value: s, text: setLabel(s), count: perSet[s] })));
   opts("#f-lang", [...new Set(products.map((x) => x.lang))].sort(), (l) => LANG[l] || l.toUpperCase());
   // Engelska är förvalt. Välj "Alla" för att se japanska, koreanska och övriga språk också.
   if ($("#f-lang").querySelector('option[value="en"]')) $("#f-lang").value = "en";
@@ -375,9 +379,9 @@ function countText(id, allWord = "Alla") { const all = boxes(id), on = all.filte
 // Utkastet av valen, direkt från formuläret (innan man sparar).
 function draftPrefs() {
   return { ...getPrefs(), kinds: checked("p-kinds"), stores: checked("p-stores"), sets: checked("p-sets"), langs: checked("p-langs"), types: checked("p-types"),
-    maxPrice: Math.max(0, Number($("#p-max").value) || 0) };
+    games: checked("p-games").length ? checked("p-games") : Object.keys(GAMES), maxPrice: Math.max(0, Number($("#p-max").value) || 0) };
 }
-function productMatches(x, p) { return (!p.stores.length || p.stores.includes(x.store)) && (!p.sets.length || p.sets.includes(x.set))
+function productMatches(x, p) { return gamesOf(p).includes(gameOf(x)) && (!p.stores.length || p.stores.includes(x.store)) && (!p.sets.length || p.sets.includes(x.set))
   && (!p.types.length || p.types.includes(x.type)) && (!p.langs?.length || p.langs.includes(x.lang)) && (!p.maxPrice || x.price <= p.maxPrice); }
 
 function refreshSummary() {
@@ -385,7 +389,8 @@ function refreshSummary() {
   $("#sum-stores").textContent = `${boxes("p-stores").filter((b) => b.checked).length} av ${boxes("p-stores").length}`;
   $("#sum-kinds").textContent = countText("p-kinds");
   $("#sum-sets").textContent = countText("p-sets");
-  const more = [countText("p-langs") !== "Alla" && `${countText("p-langs")} språk`, countText("p-types") !== "Alla" && `${countText("p-types")} typer`, p.maxPrice && `max ${kr(p.maxPrice)}`].filter(Boolean);
+  const g = gamesOf(p).filter((x) => GAMES[x]);
+  const more = [g.join() !== "pk" && (g.map((x) => GAMES[x]).join(" och ") || "Inget spel"), countText("p-langs") !== "Alla" && `${countText("p-langs")} språk`, countText("p-types") !== "Alla" && `${countText("p-types")} typer`, p.maxPrice && `max ${kr(p.maxPrice)}`].filter(Boolean);
   $("#sum-more").textContent = more.join(" · ") || "Alla";
   $("#sum-channels").textContent = pushState() === "on" ? "Pushnotiser på" : "Inget valt";
   const n = products.filter((x) => productMatches(x, p)).length;
@@ -400,7 +405,9 @@ function renderPrefs() {
   checkList("p-stores", active.map((s) => s.id), p.stores, (id) => storeName[id] || id, (id) => perStore[id] || 0);
   checkList("p-kinds", Object.keys(KINDS), p.kinds.length === Object.keys(KINDS).length ? [] : p.kinds, (k) => KINDS[k]);
   const perSet = products.reduce((a, x) => (x.set && (a[x.set] = (a[x.set] || 0) + 1), a), {});
-  checkList("p-sets", Object.keys(perSet).sort((a, b) => a.localeCompare(b, "sv")), p.sets, (s) => s, (s) => perSet[s]);
+  checkList("p-sets", Object.keys(perSet).sort((a, b) => setLabel(a).localeCompare(setLabel(b), "sv")), p.sets, setLabel, (s) => perSet[s]);
+  // Spelen kryssas alltid för var för sig: inget ikryssat är inget spel, inte alla (se gamesOf i prefs.js).
+  $("#p-games").innerHTML = Object.entries(GAMES).map(([k, name]) => `<label class="chk"><input type="checkbox" value="${k}"${gamesOf(p).includes(k) ? " checked" : ""}><span>${name}</span></label>`).join("");
   checkList("p-langs", [...new Set(products.map((x) => x.lang))].sort(), p.langs || [], (l) => LANG[l] || l.toUpperCase());
   checkList("p-types", [...new Set(products.map((x) => x.type))].sort(), p.types);
   $("#p-max").value = p.maxPrice || "";

@@ -7,7 +7,11 @@ export const KINDS = {
   prissankt: "Prissänkt",
   forbestallning: "Förbeställning öppen",
 };
-const DEFAULTS = { stores: [], types: [], sets: [], langs: [], kinds: Object.keys(KINDS), maxPrice: 0, push: false, watch: [] };
+export const GAMES = { pk: "Pokémon", rb: "Riftbound" };
+const DEFAULTS = { stores: [], types: [], sets: [], langs: [], games: [], kinds: Object.keys(KINDS), maxPrice: 0, push: false, watch: [] };
+// Spelen man får besked om. Till skillnad från de andra listorna betyder en tom lista bara Pokémon, så att
+// de som slog på notiser innan Riftbound fanns inte plötsligt får Riftbound-notiser. Samma regel i notify.mjs.
+export const gamesOf = (p) => (p.games?.length ? p.games : ["pk"]);
 
 export function getPrefs() {
   try { return { ...DEFAULTS, ...JSON.parse(localStorage.getItem(KEY)) }; } catch { return { ...DEFAULTS }; }
@@ -20,6 +24,7 @@ export function savePrefs(p) {
 export function matches(e, p = getPrefs(), product = null) {
   // Produkter man bevakar med klockan ger alltid besked, oavsett övriga val.
   if (e.group && (p.watch || []).includes(e.group)) return true;
+  if (!gamesOf(p).includes((product ?? e).game || "pk")) return false;
   if (p.kinds.length && !p.kinds.includes(e.kind)) return false;
   if (p.stores.length && !p.stores.includes(e.store)) return false;
   if (p.types.length && !p.types.includes(e.type)) return false;
@@ -30,4 +35,4 @@ export function matches(e, p = getPrefs(), product = null) {
 }
 
 export const hasFilters = (p = getPrefs()) =>
-  p.stores.length > 0 || p.types.length > 0 || p.sets.length > 0 || p.langs?.length > 0 || p.maxPrice > 0 || p.kinds.length < Object.keys(KINDS).length;
+  gamesOf(p).join() !== "pk" || p.stores.length > 0 || p.types.length > 0 || p.sets.length > 0 || p.langs?.length > 0 || p.maxPrice > 0 || p.kinds.length < Object.keys(KINDS).length;

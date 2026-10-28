@@ -54,7 +54,7 @@ function cleanPrefs($p): array {
   $p = is_array($p) ? $p : [];
   return [
     'stores' => cleanList($p['stores'] ?? [], 300), 'types' => cleanList($p['types'] ?? [], 60), 'sets' => cleanList($p['sets'] ?? [], 400),
-    'langs' => cleanList($p['langs'] ?? [], 20), 'kinds' => cleanList($p['kinds'] ?? [], 10), 'watch' => cleanList($p['watch'] ?? [], 500, 200),
+    'langs' => cleanList($p['langs'] ?? [], 20), 'games' => cleanList($p['games'] ?? [], 10), 'kinds' => cleanList($p['kinds'] ?? [], 10), 'watch' => cleanList($p['watch'] ?? [], 500, 200),
     'maxPrice' => max(0, min(1000000, (int)($p['maxPrice'] ?? 0))),
   ];
 }
