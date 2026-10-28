@@ -1,6 +1,35 @@
 {
- "updated": 1793207266536,
+ "updated": 1793208186655,
  "events": [
+  {
+   "at": 1793207608532,
+   "store": "mtg-butiken",
+   "product": "mtg-butiken:https://mtgbutiken.quickbutik.com/riftbound/riftbound-league-of-legends-tcg-proving-grounds",
+   "group": "rb|x|proving-grounds|en||grounds-proving",
+   "title": "Riftbound: League of Legends TCG - Proving Grounds",
+   "url": "https://mtgbutiken.quickbutik.com/riftbound/riftbound-league-of-legends-tcg-proving-grounds",
+   "image": "https://cdn.quickbutik.com/images/26595u/products/68becfec62522.png",
+   "price": 595,
+   "type": "Proving Grounds",
+   "set": null,
+   "lang": "en",
+   "game": "rb",
+   "kind": "ny"
+  },
+  {
+   "at": 1793207556991,
+   "store": "maxgaming",
+   "product": "maxgaming:https://maxgaming.se/sv/pokemon/pokemon-30th-celebration-booster-box-simplified-chinese",
+   "group": "30th-celebration|booster-box|zh|",
+   "title": "Pokémon 30th Celebration Booster Box (Simplified Chinese)",
+   "url": "https://maxgaming.se/sv/pokemon/pokemon-30th-celebration-booster-box-simplified-chinese",
+   "image": "https://www.maxgaming.se/bilder/artiklar/41567.jpg?m=1790598993",
+   "price": 1590,
+   "type": "Booster Box",
+   "set": "30th Celebration",
+   "lang": "zh",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793205624700,
    "store": "rgb-kingz",
@@ -6590,32 +6619,6 @@
    "type": "Deck",
    "set": null,
    "lang": "ja",
-   "kind": "ny"
-  },
-  {
-   "at": 1792511037343,
-   "store": "rgb-kingz",
-   "product": "rgb-kingz:15892301021514",
-   "group": "pitch-black|booster-pack|en|",
-   "title": "Pokémon TCG: Mega Evolution Pitch Black Booster Pack",
-   "url": "https://rgbkingz.com/products/pokemon-tcg-mega-evolution-pitch-black-booster-pack",
-   "price": 89,
-   "type": "Booster Pack",
-   "set": "Pitch Black",
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1792510235387,
-   "store": "maxgaming",
-   "product": "maxgaming:https://maxgaming.se/sv/pokemon/pokemon-deck-pro-mega-charizard-y-65-st",
-   "group": "x|deck|en|case|charizard-pro-y",
-   "title": "Pokémon Deck Pro Mega Charizard Y (65 st)",
-   "url": "https://maxgaming.se/sv/pokemon/pokemon-deck-pro-mega-charizard-y-65-st",
-   "price": 89,
-   "type": "Deck",
-   "set": null,
-   "lang": "en",
    "kind": "ny"
   }
  ]
