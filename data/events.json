@@ -1,6 +1,20 @@
 {
- "updated": 1793278168327,
+ "updated": 1793279108351,
  "events": [
+  {
+   "at": 1793278479691,
+   "store": "speltrollet",
+   "product": "speltrollet:15808229605702",
+   "group": "30th-celebration|collection-box|zh||charizard-figure-gift",
+   "title": "Pokemon 30th Celebration Charizard Figure Gift Box (Kinesisk Utgåva)",
+   "url": "https://speltrollet.se/products/pokemon-30th-celebration-charizard-figure-gift-box-kinesisk",
+   "image": "https://cdn.shopify.com/s/files/1/0674/0951/0716/files/Screenshot_2026-10-27_at_17.57.24.png?v=1793120256",
+   "price": 3990,
+   "type": "Collection Box",
+   "set": "30th Celebration",
+   "lang": "zh",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793276363130,
    "store": "collected",
@@ -6627,19 +6641,6 @@
    "group": "black-bolt|booster-box|zh|",
    "title": "Pokemon Scarlet & Violet: Black Bolt Slim Booster Box (15 Pack) (CH)",
    "url": "https://aquitaz.se/products/pokemon-scarlet-violet-black-bolt-slim-booster-box-15-pack-ch",
-   "price": 1337,
-   "type": "Booster Box",
-   "set": "Black Bolt",
-   "lang": "zh",
-   "kind": "forbestallning"
-  },
-  {
-   "at": 1792537027865,
-   "store": "aquitaz",
-   "product": "aquitaz:11045679038810",
-   "group": "black-bolt|booster-box|zh|",
-   "title": "Pokemon Scarlet & Violet: Black Bolt Jumbo Booster Box (6 Pack) (CH)",
-   "url": "https://aquitaz.se/products/pokemon-scarlet-violet-black-bolt-jumbo-booster-box-6-pack-ch",
    "price": 1337,
    "type": "Booster Box",
    "set": "Black Bolt",
