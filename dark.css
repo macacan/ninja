@@ -82,9 +82,9 @@ select option:checked{background:#3b4a6b;color:#fff}
 /* Dagar med släpp: lite ljusare blågrå ruta med en röd list upptill (samma rött som "Produkter"). */
 .day.has:not(.out){background:#2c3248;box-shadow:inset 0 3px 0 var(--red)}
 .day.today .num{box-shadow:none}
-.lg-drop,.lg-set{box-shadow:0 0 0 2px #3a4058}
+.lg{box-shadow:0 0 0 2px #3a4058}
 .ev-drop{box-shadow:none}
-.ev-set{color:#cfdcff;box-shadow:0 0 0 1px #2c4566}
+.ev-set{color:#cfdcff;box-shadow:0 0 0 1px var(--g)}
 /* Släppsidan */
 .pill,.rs-st.listed,.rs-st.out{background:#323849;color:#9aa2b6}
 .pill.in,.rs-st.in{background:#17331f;color:#7fdc95}
@@ -171,7 +171,7 @@ input.shop-search { border-color: #0b0c12; }
 /* Knapparna "Produkter och butiker" på Släpp är lika de övriga mörka knapparna i mörkt läge, i stället för orange. */
 
 /* Kalenderns produktchips är mörka med svart ram i mörkt läge, i stället för starkt orange. */
-.ev-drop { background: #2a2f3e; color: var(--ink); box-shadow: 0 0 0 2px #0b0c12; }
+.ev-drop { background: #2a2f3e; color: var(--ink); box-shadow: 0 0 0 2px #0b0c12, inset 4px 0 0 var(--g); }
 
 /* Kortsökens ram i mörkt läge: svart i stället för den ljusa textfärgen. */
 .card-search .card-suggest-wrap, .search-row .card-suggest-wrap { border-color: #0b0c12; }

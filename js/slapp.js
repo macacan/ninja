@@ -2,7 +2,7 @@
 // en länk till alla set. Allt om ett enskilt släpp (produkter, butiker, omgångar) öppnas i en dialog.
 import { $, esc, loading, latestSets, setLogo, setPages, daysUntil } from "./site.js";
 import { releaseData, nextWave, detailHTML, fillDetail, bindDetail, pill, pillHTML, LANG, long, short, inDays, dateBox, waveText, meta } from "./releases.js";
-import { mountCalendar, MONTHS } from "./calendar.js";
+import { mountCalendar, MONTHS, dot } from "./calendar.js";
 import { getAnatomyData, renderPullRatesModal } from "./anatomy.js";
 import { GAMES, getPrefs, gamesOf } from "./prefs.js";
 
@@ -186,14 +186,14 @@ function buildEvents() {
   for (const r of ctx.releases) if (!game || gameOf(r) === game) r.waves.forEach((w, wi) => {
     const name = r.game ? `${GAMES[r.game]} ${r.set}` : r.set;
     add(w.date, {
-      kind: w.products.length ? "drop" : "set", release: r.id, wave: wi,
+      kind: w.products.length ? "drop" : "set", game: gameOf(r), release: r.id, wave: wi,
       title: w.products.length && !(w.products.length === 1 && w.products[0] === r.set) ? `${name}: ${w.products.join(" · ")}` : name,
       sub: [w.products.length ? (w.products.length === 1 ? "" : `${w.products.length} produkter`) : "nytt set", r.language !== "en" ? LANG[r.language] : ""].filter(Boolean).join(" · "),
       logo: !w.products.length ? ctx.logos.get(r.id) : null, setLogo: ctx.logos.get(r.id),
     });
   });
   if (!game || game === "pk") for (const s of sets) if (s.releaseDate && !known.has(s.id) && !known.has(s.name.toLowerCase())) {
-    add(s.releaseDate, { kind: "set", setId: s.id, title: s.name, sub: `nytt set${s.cardCount?.official ? ` · ${s.cardCount.official} kort` : ""}`, logo: setLogo(s) });
+    add(s.releaseDate, { kind: "set", game: "pk", setId: s.id, title: s.name, sub: `nytt set${s.cardCount?.official ? ` · ${s.cardCount.official} kort` : ""}`, logo: setLogo(s) });
   }
 }
 buildEvents();
@@ -206,7 +206,7 @@ function openDay(k) {
   const d = day(k);
   dayModal.querySelector(".dm-body").innerHTML = `<p class="kicker">${d.getDate()} ${MONTHS[d.getMonth()]} ${d.getFullYear()}</p>
     <ul class="dm-list">${list.map((it) => `<li>
-      ${it.logo || it.setLogo ? `<img src="${esc(it.logo || it.setLogo)}" alt="" loading="lazy">` : `<span class="dm-dot">${it.kind === "set" ? '<i class="lg-set"></i>' : '<i class="lg-drop"></i>'}</span>`}
+      ${it.logo || it.setLogo ? `<img src="${esc(it.logo || it.setLogo)}" alt="" loading="lazy">` : `<span class="dm-dot">${dot(it)}</span>`}
       <span><b>${esc(it.title)}</b><small>${esc(it.sub || "")}</small></span>
       ${it.release ? `<button type="button" class="btn small primary" data-open="${esc(it.release)}" data-wave="${it.wave}">Visa</button>`
         : pages.sets?.[it.setId] ? `<a class="btn small" href="${esc(pages.sets[it.setId])}">Allt om setet</a>`
