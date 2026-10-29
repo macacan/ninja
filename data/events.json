@@ -1,6 +1,20 @@
 {
- "updated": 1793310988547,
+ "updated": 1793311908567,
  "events": [
+  {
+   "at": 1793311765140,
+   "store": "spelparken",
+   "product": "spelparken:15334488473975",
+   "group": "paldean-fates|tin|en|mini|mini",
+   "title": "Paldean Fates Mini Tin Display",
+   "url": "https://spelparken.se/products/paldean-fates-mini-tin-display",
+   "image": "https://cdn.shopify.com/s/files/1/0948/1876/3127/files/528047_in_1000x1000_14fd2415-fe93-48ce-8cb4-eb6fb747596b.jpg?v=1768665487",
+   "price": 6249,
+   "type": "Tin",
+   "set": "Paldean Fates",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793310860815,
    "store": "spelparken",
@@ -6729,19 +6743,6 @@
    "lang": "en",
    "kind": "prissankt",
    "from": 295
-  },
-  {
-   "at": 1792623338183,
-   "store": "pokemurre",
-   "product": "pokemurre:10677288304978",
-   "group": "x|booster-pack|ja||brave",
-   "title": "Pokemon Mega Brave Booster Pack Sealed M1L (Japansk)",
-   "url": "https://pokemurre.se/products/pokemon-mega-brave-booster-pack-sealed-m1l-japansk",
-   "price": 35,
-   "type": "Booster Pack",
-   "set": null,
-   "lang": "ja",
-   "kind": "tillbaka"
   }
  ]
 }
