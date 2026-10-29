@@ -1,6 +1,35 @@
 {
- "updated": 1793282769075,
+ "updated": 1793283709094,
  "events": [
+  {
+   "at": 1793283118833,
+   "store": "rgb-kingz",
+   "product": "rgb-kingz:16149940699466",
+   "group": "op|two-legends|booster-pack|zh|mini",
+   "title": "One Piece Card Game – Two Legends Mini Booster Pack (OPC-08) – Kinesisk",
+   "url": "https://rgbkingz.com/products/one-piece-card-game-two-legends-mini-booster-pack-opc-08-kinesisk",
+   "image": "https://cdn.shopify.com/s/files/1/0782/8088/4554/files/opc08boosterpack.jpg?v=1793282106",
+   "price": 59,
+   "type": "Booster Pack",
+   "set": "Two Legends",
+   "lang": "zh",
+   "game": "op",
+   "kind": "ny"
+  },
+  {
+   "at": 1793282847892,
+   "store": "tcg-card-house",
+   "product": "tcg-card-house:15588945297783",
+   "group": "x|booster-box|en||gem-s7-vol",
+   "title": "Pokémon: Gem Pack Vol. 7 Booster Box (18 Pack) (FÖRKÖP)",
+   "url": "https://tcgcardhouse.se/products/pokemon-gem-pack-vol-7-booster-box-18-pack-forkop",
+   "image": "https://cdn.shopify.com/s/files/1/0950/2815/0647/files/Gem7boosterbox.jpg?v=1793282546",
+   "price": 599,
+   "type": "Booster Box",
+   "set": null,
+   "lang": "en",
+   "kind": "ny"
+  },
   {
    "at": 1793282168737,
    "store": "rgb-kingz",
@@ -6640,33 +6669,6 @@
    "lang": "en",
    "kind": "prissankt",
    "from": 189
-  },
-  {
-   "at": 1792566911231,
-   "store": "cards-by-malcolm",
-   "product": "cards-by-malcolm:https://www.cardsbymalcolm.se/product/23074949/pokemon-tcg-destined-rivals-elite-trainer-box",
-   "group": "destined-rivals|elite-trainer-box|en|",
-   "title": "Pokémon TCG: Destined Rivals Elite Trainer Box",
-   "url": "https://www.cardsbymalcolm.se/product/23074949/pokemon-tcg-destined-rivals-elite-trainer-box",
-   "price": 1999,
-   "type": "Elite Trainer Box",
-   "set": "Destined Rivals",
-   "lang": "en",
-   "kind": "prissankt",
-   "from": 2099
-  },
-  {
-   "at": 1792559928798,
-   "store": "shinycards",
-   "product": "shinycards:https://www.shinycards.se/pokemon/booster-pack/mega-evolution-5-pitch-black-booster-pack",
-   "group": "pitch-black|booster-pack|en|",
-   "title": "Pokemon Mega Evolution 5: Pitch Black Booster Pack",
-   "url": "https://www.shinycards.se/pokemon/booster-pack/mega-evolution-5-pitch-black-booster-pack",
-   "price": 75,
-   "type": "Booster Pack",
-   "set": "Pitch Black",
-   "lang": "en",
-   "kind": "tillbaka"
   }
  ]
 }
