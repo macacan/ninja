@@ -1,6 +1,62 @@
 {
- "updated": 1793290169250,
+ "updated": 1793291089276,
  "events": [
+  {
+   "at": 1793290972800,
+   "store": "tcgaddan",
+   "product": "tcgaddan:15984597107020",
+   "group": "brilliant-stars|booster-pack|en|",
+   "title": "Brilliant Stars Booster Pack",
+   "url": "https://tcgaddan.se/products/brilliant-stars-booster-pack",
+   "image": "https://cdn.shopify.com/s/files/1/1037/7062/0236/files/Pokemon-Brilliant-Stars-Booster-Pack-1.webp?v=1786831004",
+   "price": 209,
+   "type": "Booster Pack",
+   "set": "Brilliant Stars",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1793290972800,
+   "store": "tcgaddan",
+   "product": "tcgaddan:16241177985356",
+   "group": "silver-tempest|booster-pack|en|sleeved",
+   "title": "Silver Tempest Sleeved Booster Pack",
+   "url": "https://tcgaddan.se/products/silver-tempest-sleeved-booster-pack",
+   "image": "https://cdn.shopify.com/s/files/1/1037/7062/0236/files/IMG_5431.webp?v=1793220893",
+   "price": 209,
+   "type": "Booster Pack",
+   "set": "Silver Tempest",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1793290972800,
+   "store": "tcgaddan",
+   "product": "tcgaddan:15817900425548",
+   "group": "ascended-heroes|collection-box|en||deluxe-pin",
+   "title": "Ascended Heroes Deluxe Pin Collection Box",
+   "url": "https://tcgaddan.se/products/ascended-heroes-deluxe-pin-collection-box",
+   "image": "https://cdn.shopify.com/s/files/1/1037/7062/0236/files/library-7DD5F85F-5E7A-4DB6-A341-9F2A2ED6686B-L0-001.png?v=1793221144",
+   "price": 999,
+   "type": "Collection Box",
+   "set": "Ascended Heroes",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1793290381812,
+   "store": "toyspace",
+   "product": "toyspace:https://toyspace.se/pokemon-tcg-30-arsjubileum-affischsamling-pok10467-101",
+   "group": "30th-celebration|collection-box|en||poster",
+   "title": "Pokémon TCG 30th Celebration Poster Collection",
+   "url": "https://toyspace.se/pokemon-tcg-30-arsjubileum-affischsamling-pok10467-101",
+   "image": "https://d189539ycils2q.cloudfront.net/media/catalog/product/cache/4ffcb2823444acbc328f989dd62e5069/p/o/pokemon-tcg-30th-celebration-poster-collection-pok10467-101.jpg",
+   "price": 694,
+   "type": "Collection Box",
+   "set": "30th Celebration",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793290023744,
    "store": "kantovault",
@@ -6644,58 +6700,6 @@
    "set": null,
    "lang": "ja",
    "kind": "ny"
-  },
-  {
-   "at": 1792598329531,
-   "store": "spelparken",
-   "product": "spelparken:15584123748727",
-   "group": "team-up|blister|en||1",
-   "title": "Team Up 1-Pack Blister – Mimikyu Promo",
-   "url": "https://spelparken.se/products/team-up-1-pack-blister-mimikyu-promo",
-   "price": 7499,
-   "type": "Blister",
-   "set": "Team Up",
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1792598028502,
-   "store": "rgb-kingz",
-   "product": "rgb-kingz:15888329703754",
-   "group": "ascended-heroes|booster-pack|en|",
-   "title": "Pokémon Mega Evolution: Ascended Heroes Booster Pack",
-   "url": "https://rgbkingz.com/products/pokemon-mega-evolution-ascended-heroes-booster-pack",
-   "price": 199,
-   "type": "Booster Pack",
-   "set": "Ascended Heroes",
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1792597663868,
-   "store": "aquitaz",
-   "product": "aquitaz:11047248462170",
-   "group": "mega-evolution|booster-bundle|en|case|case-fists-flowing",
-   "title": "Pokémon Mega Evolution: Flowing Fists Booster Bundle Case (25 Boxes) (ENG)",
-   "url": "https://aquitaz.se/products/pokemon-mega-evolution-flowing-fists-booster-bundle-case-25-boxes-eng",
-   "price": 1337,
-   "type": "Booster Bundle",
-   "set": "Mega Evolution",
-   "lang": "en",
-   "kind": "forbestallning"
-  },
-  {
-   "at": 1792597663868,
-   "store": "aquitaz",
-   "product": "aquitaz:11047247184218",
-   "group": "mega-evolution|booster-bundle|en|case|case-fists-flowing",
-   "title": "Pokémon Mega Evolution: Flowing Fists Booster Bundle Case (10 Boxes) (ENG)",
-   "url": "https://aquitaz.se/products/pokemon-mega-evolution-flowing-fists-booster-bundle-case-10-boxes-eng",
-   "price": 1337,
-   "type": "Booster Bundle",
-   "set": "Mega Evolution",
-   "lang": "en",
-   "kind": "forbestallning"
   }
  ]
 }
