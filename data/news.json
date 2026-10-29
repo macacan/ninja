@@ -1,16 +1,6 @@
 {
- "updated": "2026-10-29T03:34:16.261Z",
+ "updated": "2026-10-29T03:49:35.826Z",
  "articles": [
-  {
-   "title": "Pokémon TCG Pocket Dual Fusion expansion launches with Mega Mewtwo X ex and Mega Greninja ex",
-   "link": "https://pokemonblog.com/2026/10/28/pokemon-tcg-pocket-dual-fusion-expansion-launches-with-mega-mewtwo-x-ex-and-mega-greninja-ex/",
-   "date": "2026-10-29T01:00:00.000Z",
-   "summary": "Pokémon Trading Card Game Pocket’s Dual Fusion expansion launches Oct. 28 at 6 p.m. PDT, introducing dual-type Pokémon cards including Psychic- and Fighting-type Mega Mewtwo X ex…",
-   "image": "https://pokemonblog.com/wp-content/uploads/2026/10/pokemon_tcg_pocket_dual_fusion_pikachu_mega_mewtwo_x_ex.jpg",
-   "source": "PokemonBlog",
-   "game": "pk",
-   "digital": true
-  },
   {
    "title": "Budget Riftbound Decks: Build with Bulk Cards & Play for $10!",
    "link": "https://riftbound.gg/budget-riftbound-decks-build-with-bulk-cards-play-for-10/",
@@ -460,6 +450,15 @@
    "date": "2026-09-22T14:37:48.000Z",
    "summary": "A Pokemon collector pleaded no contest after secretly attaching a GPS tracker to a woman’s car to find new trading card restocks.",
    "image": "https://www.dexerto.com/cdn-image/wp-content/uploads/2026/09/22/pokemon-restock-tracking-woman.jpg?width=480&quality=75&format=auto",
+   "source": "Dexerto",
+   "game": "pk"
+  },
+  {
+   "title": "Pokemon resellers fuming as “generous” 30th anniversary rare card hits keep prices down",
+   "link": "https://www.dexerto.com/pokemon/pokemon-resellers-fuming-as-generous-30th-anniversary-rare-card-hits-keep-prices-down-3411121/",
+   "date": "2026-09-22T09:48:13.000Z",
+   "summary": "Pokemon TCG resellers have been split over the new 30th anniversary release, with some claiming it is “overprinted” and the “generous” hits are making it hard for them to rake in…",
+   "image": "https://www.dexerto.com/cdn-image/wp-content/uploads/2026/09/08/pokemon-30th-UPC.jpg?width=480&quality=75&format=auto",
    "source": "Dexerto",
    "game": "pk"
   },
