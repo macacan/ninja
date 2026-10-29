@@ -1,6 +1,21 @@
 {
- "updated": 1793281848421,
+ "updated": 1793282769075,
  "events": [
+  {
+   "at": 1793282168737,
+   "store": "rgb-kingz",
+   "product": "rgb-kingz:16149931458890",
+   "group": "op|adventure-on-kami-s-island|booster-pack|zh|mini",
+   "title": "One Piece Card Game – Adventure on Kami's Island Mini Booster Pack (OPC-15) – Kinesisk",
+   "url": "https://rgbkingz.com/products/one-piece-card-game-adventure-on-kamis-island-mini-booster-pack-opc-15-kinesisk",
+   "image": "https://cdn.shopify.com/s/files/1/0782/8088/4554/files/opc15boosterpack.jpg?v=1793281126",
+   "price": 69,
+   "type": "Booster Pack",
+   "set": "Adventure on Kami's Island",
+   "lang": "zh",
+   "game": "op",
+   "kind": "ny"
+  },
   {
    "at": 1793281219989,
    "store": "rgb-kingz",
@@ -6650,19 +6665,6 @@
    "price": 75,
    "type": "Booster Pack",
    "set": "Pitch Black",
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1792551605375,
-   "store": "shinycards",
-   "product": "shinycards:https://www.shinycards.se/pokemon/booster-pack/pokemon-scarlet-violet-45-paldean-fates-booster-pack",
-   "group": "paldean-fates|booster-pack|en|",
-   "title": "Pokemon Scarlet & Violet 4.5: Paldean Fates Booster Pack",
-   "url": "https://www.shinycards.se/pokemon/booster-pack/pokemon-scarlet-violet-45-paldean-fates-booster-pack",
-   "price": 329,
-   "type": "Booster Pack",
-   "set": "Paldean Fates",
    "lang": "en",
    "kind": "tillbaka"
   }
