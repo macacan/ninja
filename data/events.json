@@ -1,6 +1,20 @@
 {
- "updated": 1793271154795,
+ "updated": 1793272074816,
  "events": [
+  {
+   "at": 1793271690864,
+   "store": "dragon-s-lair",
+   "product": "dragon-s-lair:15867479064924",
+   "group": "x|blister|en||2|enhanced-gengar",
+   "title": "Pokémon 2-Pack Enhanced Blister Gengar",
+   "url": "https://dragonslair.se/products/pokemon-2-pack-enhanced-blister-gengar",
+   "image": "https://cdn.shopify.com/s/files/1/1015/8315/9644/files/Pokemon2-PackEnhancedBlisterGengar.avif?v=1791198836",
+   "price": 229,
+   "type": "Blister",
+   "set": null,
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793264439020,
    "store": "maxgaming",
@@ -6625,19 +6639,6 @@
    "group": "white-flare|booster-box|zh|",
    "title": "Pokemon Scarlet & Violet: White Flare Slim Booster Box (15 Pack) (CH)",
    "url": "https://aquitaz.se/products/pokemon-scarlet-violet-white-flare-slim-booster-box-15-pack-ch",
-   "price": 1337,
-   "type": "Booster Box",
-   "set": "White Flare",
-   "lang": "zh",
-   "kind": "forbestallning"
-  },
-  {
-   "at": 1792537027865,
-   "store": "aquitaz",
-   "product": "aquitaz:11045664981338",
-   "group": "white-flare|booster-box|zh|",
-   "title": "Pokemon Scarlet & Violet: White Flare Jumbo Booster Box (6 Pack) (CH)",
-   "url": "https://aquitaz.se/products/pokemon-scarlet-violet-white-flare-jumbo-booster-box-6-pack-ch",
    "price": 1337,
    "type": "Booster Box",
    "set": "White Flare",
