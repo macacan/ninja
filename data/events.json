@@ -1,6 +1,20 @@
 {
- "updated": 1793297108217,
+ "updated": 1793298108246,
  "events": [
+  {
+   "at": 1793297330879,
+   "store": "spelparken",
+   "product": "spelparken:15472262971767",
+   "group": "paldea-evolved|blister|en||1",
+   "title": "Paldea Evolved – 1-Pack Blister",
+   "url": "https://spelparken.se/products/paldea-evolved-1-pack-blister",
+   "image": "https://cdn.shopify.com/s/files/1/0948/1876/3127/files/Scarlet-and-Violet-Paldea-Evolved-1-Pack-Checklane-Blister-Growlithe.jpg?v=1777831690",
+   "price": 189,
+   "type": "Blister",
+   "set": "Paldea Evolved",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793296438369,
    "store": "spelparken",
@@ -6693,19 +6707,6 @@
    "set": "Perfect Order",
    "lang": "en",
    "kind": "ny"
-  },
-  {
-   "at": 1792601941305,
-   "store": "spelparken",
-   "product": "spelparken:15531123835255",
-   "group": "30th-celebration|collection-box|en||greninja",
-   "title": "30th Celebration Greninja ex Box",
-   "url": "https://spelparken.se/products/30th-celebration-greninja-ex-box",
-   "price": 849,
-   "type": "Collection Box",
-   "set": "30th Celebration",
-   "lang": "en",
-   "kind": "tillbaka"
   }
  ]
 }
