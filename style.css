@@ -143,8 +143,9 @@ canvas.scene{display:block;width:100%;image-rendering:pixelated;image-rendering:
   #home-drops .pcard h3{font-size:.75rem}
   #home-drops .pstore{font-size:.68rem}
   #home-drops .pbadge{top:5px;right:5px;font-size:.6rem;padding:3px 4px}
-  #home-drops .ptime{display:none}
-  #home-drops .pprice{font-size:.85rem;white-space:nowrap;display:flex;flex-direction:column;line-height:1.15}
+  #home-drops .ptime{font-size:.66rem}
+  #home-drops .pfoot{gap:4px}
+  #home-drops .pprice{font-size:.85rem;white-space:nowrap;display:flex;flex-direction:column;align-items:flex-end;line-height:1.15}
   #home-drops .pprice s{font-size:.7rem}
 }
 .tcard{position:relative;background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:8px;
@@ -664,6 +665,8 @@ input[type=search],select,.shop-search{background:#fff}
 @keyframes livepulse{0%{box-shadow:0 0 0 0 rgba(47,179,68,.5)}70%{box-shadow:0 0 0 7px rgba(47,179,68,0)}100%{box-shadow:0 0 0 0 rgba(47,179,68,0)}}
 .pfoot{margin-top:auto;padding-top:4px;display:flex;align-items:baseline;justify-content:space-between;gap:8px}
 .pfoot .pprice{margin:0;padding:0}
+.pfoot.is-drop{align-items:flex-end}
+.pfoot.is-drop .pprice{text-align:right}
 .ptime{font-size:.75rem;color:var(--muted);white-space:nowrap}
 @media (max-width:640px){.section .stamp{order:3;margin:0}.stamp{font-size:.75rem}}
 

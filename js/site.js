@@ -302,13 +302,16 @@ export function daysUntil(date) {
 }
 
 // Tar emot ISO-sträng eller millisekunder.
-export function ago(t) {
+// Minuter, timmar under ett dygn, sedan dagar. short: utan "sedan", för trånga kort.
+export function ago(t, short = false) {
   const min = Math.round((Date.now() - new Date(t)) / 60000);
+  const s = short ? "" : " sedan";
   if (min < 1) return "nyss";
-  if (min < 60) return `${min} min sedan`;
-  const h = Math.round(min / 60);
-  if (h < 48) return `${h} tim sedan`;
-  return `${Math.round(h / 24)} dagar sedan`;
+  if (min < 60) return `${min} min${s}`;
+  const h = Math.floor(min / 60);
+  if (h < 24) return `${h} tim${s}`;
+  const d = Math.floor(h / 24);
+  return `${d} ${d === 1 ? "dag" : "dagar"}${s}`;
 }
 
 let newsCache;
@@ -346,7 +349,8 @@ export const newsItem = (a) => `<article class="news">
   </div>
 </article>`;
 
-// Produktkort i butiksstil. flags: { drop: tidigare pris om priset sänkts nyligen, isNew: nytt nyligen }.
+// Produktkort i butiksstil. flags: { drop: tidigare pris om priset sänkts nyligen, at: när det sänktes, isNew: nytt nyligen }.
+// En prissänkning visar när den kom till vänster och priset till höger.
 export function productCard(p, storeName, flags = {}) {
   const badge = !p.available && !p.preorder ? '<span class="pbadge out">Slut</span>'
     : p.preorder && !p.available ? '<span class="pbadge pre">Förbeställ</span>'
@@ -357,7 +361,7 @@ export function productCard(p, storeName, flags = {}) {
     <div class="pbody">
       <span class="pstore">${esc(storeName || p.store)}${{ rb: " · Riftbound", op: " · One Piece" }[p.game] || ""}${p.lang && p.lang !== "en" ? ` · ${esc(p.lang.toUpperCase())}` : ""}</span>
       <h3><a class="stretch" href="${esc(safeUrl(p.url))}" target="_blank" rel="noopener nofollow">${esc(p.title)}</a></h3>
-      <div class="pfoot"><span class="pprice">${kr(p.price)}${flags.drop ? ` <s>${kr(flags.drop)}</s>` : ""}</span>${p.lastChange ? `<span class="ptime" title="Senast ändrad">${ago(p.lastChange)}</span>` : ""}</div>
+      <div class="pfoot${flags.at ? " is-drop" : ""}">${flags.at ? `<span class="ptime" title="Prissänkt">${ago(flags.at, true)}</span>` : ""}<span class="pprice">${kr(p.price)}${flags.drop ? ` <s>${kr(flags.drop)}</s>` : ""}</span>${p.lastChange && !flags.at ? `<span class="ptime" title="Senast ändrad">${ago(p.lastChange)}</span>` : ""}</div>
     </div>
   </article>`;
 }

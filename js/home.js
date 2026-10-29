@@ -80,7 +80,7 @@ async function homeDrops() {
     const games = new Set(), pick = [];
     for (const d of all) if (!games.has(d.x.game || "pk")) { games.add(d.x.game || "pk"); pick.push(d); }
     for (const d of all) if (pick.length < DROPS && !pick.includes(d)) pick.push(d);
-    el.innerHTML = pick.slice(0, DROPS).sort((a, b) => b.e.at - a.e.at).map(({ e, x }) => productCard(x, names[x.store], { drop: e.from })).join("")
+    el.innerHTML = pick.slice(0, DROPS).sort((a, b) => b.e.at - a.e.at).map(({ e, x }) => productCard(x, names[x.store], { drop: e.from, at: e.at })).join("")
       || '<div class="msg">Inga prissänkningar just nu.</div>';
   } catch { el.innerHTML = '<div class="msg">Prissänkningarna kunde inte laddas.</div>'; }
 }
