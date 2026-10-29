@@ -1,6 +1,20 @@
 {
- "updated": 1793313748610,
+ "updated": 1793314648630,
  "events": [
+  {
+   "at": 1793314453671,
+   "store": "spelparken",
+   "product": "spelparken:15589241160055",
+   "group": "30th-celebration|premium-collection|en||ditto",
+   "title": "30th Celebration Ditto Premium Collection",
+   "url": "https://spelparken.se/products/30th-celebration-ditto-premium-collection",
+   "image": "https://cdn.shopify.com/s/files/1/0948/1876/3127/files/Pokemon_TCG_30th_Celebration_Ditto_Premium_Collection_EN.webp?v=1793314274",
+   "price": 1699,
+   "type": "Premium Collection",
+   "set": "30th Celebration",
+   "lang": "en",
+   "kind": "ny"
+  },
   {
    "at": 1793312723278,
    "store": "speltrollet",
@@ -6727,19 +6741,6 @@
    "url": "https://poketalk.se/products/pokemon-scarlet-violet-journey-together-booster-pack",
    "price": 85,
    "type": "Booster Pack",
-   "set": "Journey Together",
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1792657330054,
-   "store": "poketalk",
-   "product": "poketalk:10163617923414",
-   "group": "journey-together|booster-box|en|",
-   "title": "Pokémon Scarlet & Violet: Journey Together Booster Box",
-   "url": "https://poketalk.se/products/pokemon-scarlet-violet-journey-together-booster-box-1",
-   "price": 2899,
-   "type": "Booster Box",
    "set": "Journey Together",
    "lang": "en",
    "kind": "tillbaka"
