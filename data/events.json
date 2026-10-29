@@ -1,6 +1,34 @@
 {
- "updated": 1793261954034,
+ "updated": 1793262874058,
  "events": [
+  {
+   "at": 1793262484238,
+   "store": "maxgaming",
+   "product": "maxgaming:https://maxgaming.se/sv/pokemon/pokemon-30th-celebration-premium-deck-set-espeon-forenklad-kinesiska",
+   "group": "30th-celebration|deck|zh||espeon-set",
+   "title": "Pokémon 30th Celebration Premium Deck Set Espeon (Förenklad kinesiska)",
+   "url": "https://maxgaming.se/sv/pokemon/pokemon-30th-celebration-premium-deck-set-espeon-forenklad-kinesiska",
+   "image": "https://www.maxgaming.se/bilder/artiklar/41569.jpg?m=1793257130",
+   "price": 449,
+   "type": "Deck",
+   "set": "30th Celebration",
+   "lang": "zh",
+   "kind": "ny"
+  },
+  {
+   "at": 1793262484238,
+   "store": "maxgaming",
+   "product": "maxgaming:https://maxgaming.se/sv/pokemon/pokemon-30th-celebration-premium-deck-set-umbreon-forenklad-kinesiska",
+   "group": "30th-celebration|deck|zh||set-umbreon",
+   "title": "Pokémon 30th Celebration Premium Deck Set Umbreon (Förenklad kinesiska)",
+   "url": "https://maxgaming.se/sv/pokemon/pokemon-30th-celebration-premium-deck-set-umbreon-forenklad-kinesiska",
+   "image": "https://www.maxgaming.se/bilder/artiklar/41570.jpg?m=1793257122",
+   "price": 449,
+   "type": "Deck",
+   "set": "30th Celebration",
+   "lang": "zh",
+   "kind": "ny"
+  },
   {
    "at": 1793257631163,
    "store": "speltrollet",
@@ -6610,32 +6638,6 @@
    "price": 1337,
    "type": "Booster Pack",
    "set": "Black Bolt",
-   "lang": "zh",
-   "kind": "forbestallning"
-  },
-  {
-   "at": 1792537027865,
-   "store": "aquitaz",
-   "product": "aquitaz:11045646008666",
-   "group": "white-flare|booster-pack|zh|",
-   "title": "Pokemon Scarlet & Violet: White Flare Slim Booster Pack (5 Kort) (CH)",
-   "url": "https://aquitaz.se/products/pokemon-scarlet-violet-white-flare-slim-booster-pack-5-kort-ch",
-   "price": 1337,
-   "type": "Booster Pack",
-   "set": "White Flare",
-   "lang": "zh",
-   "kind": "forbestallning"
-  },
-  {
-   "at": 1792537027865,
-   "store": "aquitaz",
-   "product": "aquitaz:11045643125082",
-   "group": "white-flare|booster-pack|zh|",
-   "title": "Pokemon Scarlet & Violet: White Flare Jumbo Booster Pack (20 Kort) (CH)",
-   "url": "https://aquitaz.se/products/pokemon-scarlet-violet-white-flare-jumbo-booster-pack-20-kort-ch",
-   "price": 1337,
-   "type": "Booster Pack",
-   "set": "White Flare",
    "lang": "zh",
    "kind": "forbestallning"
   }
