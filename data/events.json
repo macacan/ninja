@@ -1,6 +1,20 @@
 {
- "updated": 1793231398297,
+ "updated": 1793232318320,
  "events": [
+  {
+   "at": 1793232234870,
+   "store": "spelparken",
+   "product": "spelparken:15588212670839",
+   "group": "30th-celebration|ultra-premium-collection|en||night",
+   "title": "30th Celebration Ultra-Premium Collection – Night",
+   "url": "https://spelparken.se/products/30th-celebration-ultra-premium-collection-night",
+   "image": "https://cdn.shopify.com/s/files/1/0948/1876/3127/files/91SJZ2YtZhL._AC_UF894_1000_QL80.jpg?v=1793191331",
+   "price": 5999,
+   "type": "Ultra-Premium Collection",
+   "set": "30th Celebration",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793225822955,
    "store": "kantovault",
@@ -6617,19 +6631,6 @@
    "title": "Pokemon Ruler Of The Black Flame SV3 Sealed Booster Box (Japansk)",
    "url": "https://pokemurre.se/products/pokemon-ruler-of-the-blame-flame-sv3-sealed-booster-box-japansk",
    "price": 1879,
-   "type": "Booster Box",
-   "set": null,
-   "lang": "ja",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1792533326017,
-   "store": "pokemurre",
-   "product": "pokemurre:10567960133970",
-   "group": "x|booster-box|ja||partners",
-   "title": "Pokemon Battle Partners Booster Box SV9 Sealed (Japansk)",
-   "url": "https://pokemurre.se/products/pokemon-battle-partners-booster-box-sv9-sealed-japansk",
-   "price": 1199,
    "type": "Booster Box",
    "set": null,
    "lang": "ja",
