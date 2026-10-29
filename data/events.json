@@ -1,6 +1,20 @@
 {
- "updated": 1793256397009,
+ "updated": 1793257313130,
  "events": [
+  {
+   "at": 1793256563732,
+   "store": "miniature-metropolis",
+   "product": "miniature-metropolis:11021824491857",
+   "group": "destined-rivals|booster-box|en|",
+   "title": "POKÉMON TCG: SCARLET & VIOLET – DESTINED RIVALS BOOSTER DISPLAY",
+   "url": "https://miniaturemetropolis.se/products/pokemon-tcg-scarlet-violet-destined-rivals-booster-display",
+   "image": "https://cdn.shopify.com/s/files/1/0958/6832/2129/files/DESTINEDRIVALSDISPLAY.webp?v=1786882118",
+   "price": 4095,
+   "type": "Booster Box",
+   "set": "Destined Rivals",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793254575490,
    "store": "poketalk",
@@ -6623,19 +6637,6 @@
    "set": null,
    "lang": "zh",
    "kind": "forbestallning"
-  },
-  {
-   "at": 1792533326017,
-   "store": "pokemurre",
-   "product": "pokemurre:10760792441170",
-   "group": "x|booster-box|ja||abyss-eye",
-   "title": "Pokemon Mega Abyss Eye M5 Booster Box (Japansk)",
-   "url": "https://pokemurre.se/products/forbokning-pokemon-mega-abyss-eye-m5-booster-box-japansk",
-   "price": 1049,
-   "type": "Booster Box",
-   "set": null,
-   "lang": "ja",
-   "kind": "tillbaka"
   }
  ]
 }
