@@ -149,7 +149,7 @@ const headHtml = ({ title, desc, url, ld }) => `<!doctype html>
 <meta name="twitter:card" content="summary_large_image">
 <script type="application/ld+json">${JSON.stringify(ld).replace(/</g, "\\u003c")}</script>
 <link href="fonts/fonts.css" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=20261029l">
+<link rel="stylesheet" href="style.css?v=20261029m">
 <link rel="stylesheet" href="dark.css?v=20261029a" id="dark-css" media="(prefers-color-scheme: dark)">
 <script src="js/theme.js?v=20261021"></script>
 </head>

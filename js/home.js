@@ -86,6 +86,31 @@ async function homeDrops() {
   } catch { el.innerHTML = '<div class="msg">Prissänkningarna kunde inte laddas.</div>'; }
 }
 
+// De sex senast öppnade förbeställningarna, en per produkt (billigaste butiken). Som prissänkningarna kommer
+// den senaste i varje spel alltid med. Tiden till vänster är när förbeställningen öppnade.
+async function homePre() {
+  const el = $("#home-pre");
+  el.innerHTML = skeleton(DROPS);
+  try {
+    const [p, s] = await liveStock();
+    const names = Object.fromEntries((s.stores || []).map((x) => [x.id, x.name]));
+    const opened = (x) => x.firstOrderable || x.lastChange || 0;
+    const best = new Map();
+    for (const x of p.products || []) {
+      if (!x.preorder || x.available) continue;
+      const k = groupKey(x), cur = best.get(k);
+      if (!cur || x.price < cur.price) best.set(k, { ...x, opened: Math.max(opened(x), cur ? cur.opened : 0) });
+      else cur.opened = Math.max(cur.opened, opened(x));
+    }
+    const all = [...best.values()].sort((a, b) => b.opened - a.opened);
+    const games = new Set(), pick = [];
+    for (const x of all) if (!games.has(x.game || "pk")) { games.add(x.game || "pk"); pick.push(x); }
+    for (const x of all) if (pick.length < DROPS && !pick.includes(x)) pick.push(x);
+    el.innerHTML = pick.slice(0, DROPS).sort((a, b) => b.opened - a.opened).map((x) => productCard(x, names[x.store], { at: x.opened || null })).join("")
+      || '<div class="msg">Inga förbeställningar öppna just nu.</div>';
+  } catch { el.innerHTML = '<div class="msg">Förbeställningarna kunde inte laddas.</div>'; }
+}
+
 async function nextDrop() {
   const el = $("#next-drop");
   try {
@@ -150,6 +175,7 @@ const heroUnderHeader = () => {
 heroUnderHeader();
 addEventListener("resize", heroUnderHeader);
 homeDrops();
+homePre();
 nextDrop();
 homeWatch();
 setInterval(homeWatch, 60e3);

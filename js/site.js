@@ -362,7 +362,7 @@ export function productCard(p, storeName, flags = {}) {
     <div class="pbody">
       <span class="pstore">${esc(storeName || p.store)}${{ rb: " · Riftbound", op: " · One Piece" }[p.game] || ""}${p.lang && p.lang !== "en" ? ` · ${esc(p.lang.toUpperCase())}` : ""}</span>
       <h3><a class="stretch" href="${esc(safeUrl(p.url))}" target="_blank" rel="noopener nofollow">${esc(p.title)}</a></h3>
-      <div class="pfoot${flags.at ? " is-drop" : ""}">${flags.at ? `<span class="ptime" title="Prissänkt">${ago(flags.at, true)}</span>` : ""}<span class="pprice">${kr(p.price)}${flags.drop ? ` <s>${kr(flags.drop)}</s>` : ""}</span>${p.lastChange && !flags.at ? `<span class="ptime" title="Senast ändrad">${ago(p.lastChange)}</span>` : ""}</div>
+      <div class="pfoot${flags.at ? " is-drop" : ""}">${flags.at ? `<span class="ptime" title="${flags.drop ? "Prissänkt" : "Förbeställning öppnade"}">${ago(flags.at, true)}</span>` : ""}<span class="pprice">${kr(p.price)}${flags.drop ? ` <s>${kr(flags.drop)}</s>` : ""}</span>${p.lastChange && !flags.at ? `<span class="ptime" title="Senast ändrad">${ago(p.lastChange)}</span>` : ""}</div>
     </div>
   </article>`;
 }

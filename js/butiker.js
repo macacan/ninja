@@ -376,6 +376,8 @@ try {
   // Sökning från länk, t.ex. butiker.html?q=Delta Reign#products
   const q = new URLSearchParams(location.search).get("q");
   if (q) $("#f-q").value = q;
+  // butiker.html?visa=forbestall: bara förbeställningar (från startsidan).
+  if (new URLSearchParams(location.search).get("visa") === "forbestall") $("#c-in").setAttribute("aria-pressed", "false");
   renderEvents(); renderProducts(); renderStores(); fitAll();
   // Produkterna visas först, om inte länken pekar på en annan flik (t.ex. butiker.html#events).
   const start = location.hash.slice(1);
