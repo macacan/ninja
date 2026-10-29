@@ -97,7 +97,7 @@ renderHero();
 
 // ---------- Kommande och nyligen släppta ----------
 // En rad per omgång (och en för förreleasen), sorterat på datum. Språkfiltret gäller både listan och "Nyligen släppta".
-let lang = "", game = "";
+let game = "";
 const rows = [];
 for (const r of ctx.releases) {
   r.waves.forEach((w, wi) => rows.push({ r, w, wi, date: w.date }));
@@ -125,7 +125,7 @@ function rowHTML(x) {
 }
 
 function renderLists() {
-  const mine = (r) => (!lang || r.language === lang) && (!game || gameOf(r) === game);
+  const mine = (r) => !game || gameOf(r) === game;
   const next = rows.filter((x) => isUpcoming(x) && mine(x.r)).sort((a, b) => a.date.localeCompare(b.date) || !!b.pre - !!a.pre);
   const months = new Map();
   for (const x of next) { const k = x.date.slice(0, 7); if (!months.has(k)) months.set(k, []); months.get(k).push(x); }
@@ -142,25 +142,19 @@ function renderLists() {
   $("#rel-recent-list").innerHTML = recent.length ? `<ul class="rel-rows">${recent.map(rowHTML).join("")}</ul>` : "";
 }
 
-// Spel- och språkfiltret. Varje rad visas bara när det finns kommande släpp i mer än ett spel eller på mer än ett språk.
-// Spelfiltret gäller också kalendern.
+// Spelfiltret, när det finns kommande släpp i mer än ett spel. Gäller också kalendern. Alla språk visas alltid.
 let refreshCalendar = () => {}; // sätts när kalendern är monterad, längre ner
 const live = ctx.releases.filter((r) => nextWave(r) || !r.waves.length);
 const games = Object.keys(GAMES).filter((g) => live.some((r) => gameOf(r) === g));
-const langs = [...new Set(live.map((r) => r.language))];
 const chips = (key, cur, list) => list.map(([v, t]) => `<button type="button" data-${key}="${esc(v)}" aria-pressed="${v === cur}">${esc(t)}</button>`).join("");
-$("#rel-filter").innerHTML = [
-  games.length > 1 ? chips("game", game, [["", "Alla spel"], ...games.map((g) => [g, GAMES[g]])]) : "",
-  langs.length > 1 ? chips("lang", lang, [["", "Alla språk"], ...langs.map((l) => [l, LANG[l] || l])]) : "",
-].filter(Boolean).join('<span class="rf-break" aria-hidden="true"></span>');
+$("#rel-filter").innerHTML = games.length > 1 ? chips("game", game, [["", "Alla spel"], ...games.map((g) => [g, GAMES[g]])]) : "";
 $("#rel-filter").addEventListener("click", (e) => {
-  const b = e.target.closest("[data-game],[data-lang]");
+  const b = e.target.closest("[data-game]");
   if (!b) return;
-  const key = "game" in b.dataset ? "game" : "lang";
-  if (key === "game") game = b.dataset.game; else lang = b.dataset.lang;
-  $("#rel-filter").querySelectorAll(`[data-${key}]`).forEach((x) => x.setAttribute("aria-pressed", x === b));
+  game = b.dataset.game;
+  $("#rel-filter").querySelectorAll("[data-game]").forEach((x) => x.setAttribute("aria-pressed", x === b));
   renderLists();
-  if (key === "game") refreshCalendar();
+  refreshCalendar();
 });
 renderLists();
 
