@@ -1,6 +1,36 @@
 {
- "updated": 1793291989300,
+ "updated": 1793292909321,
  "events": [
+  {
+   "at": 1793292258157,
+   "store": "sweet-nerds",
+   "product": "sweet-nerds:https://sweetnerds.se/sv/products/one-piece-card-game-eb05-heroines-edition-vol2-booster-box-jp",
+   "group": "op|eb-05|booster-box|ja|",
+   "title": "One Piece Card Game: EB05 - Heroines Edition Vol.2 Booster Box (JP)",
+   "url": "https://sweetnerds.se/sv/products/one-piece-card-game-eb05-heroines-edition-vol2-booster-box-jp",
+   "image": "https://nycdn.nyehandel.se/store_17dfab1e-b233-4e19-a6f0-ae93160c8b85/images/1000004263-79a8be7a.png?width=400&height=400",
+   "price": 1499,
+   "type": "Booster Box",
+   "set": "EB-05",
+   "lang": "ja",
+   "game": "op",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1793292258157,
+   "store": "sweet-nerds",
+   "product": "sweet-nerds:https://sweetnerds.se/sv/products/one-piece-card-game-op18-the-dominance-of-god-booster-box-jp",
+   "group": "op|op-18|booster-box|ja|",
+   "title": "One Piece Card Game: OP18 - The Dominance of God Booster Box (JP)",
+   "url": "https://sweetnerds.se/sv/products/one-piece-card-game-op18-the-dominance-of-god-booster-box-jp",
+   "image": "https://nycdn.nyehandel.se/store_17dfab1e-b233-4e19-a6f0-ae93160c8b85/images/1000004265-cbb631ee.png?width=400&height=400",
+   "price": 1499,
+   "type": "Booster Box",
+   "set": "OP-18",
+   "lang": "ja",
+   "game": "op",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793290972800,
    "store": "tcgaddan",
@@ -6672,33 +6702,6 @@
    "type": "Booster Pack",
    "set": "Temporal Forces",
    "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1792599269629,
-   "store": "skattkistan",
-   "product": "skattkistan:11216983785810",
-   "group": "30th-celebration|tin|en|mini|mini",
-   "title": "Pokémon TCG: 30th Celebration Mini Tin",
-   "url": "https://skattkistan.net/products/pokemon-tcg-30th-celebration-mini-tin",
-   "price": 295,
-   "type": "Tin",
-   "set": "30th Celebration",
-   "lang": "en",
-   "kind": "prissankt",
-   "from": 339
-  },
-  {
-   "at": 1792598523447,
-   "store": "netgrade",
-   "product": "netgrade:https://netgrade.se/shop/pokemon-tcg-high-class-pack-mega-dream-ex-m2a-booster-pack-japansk",
-   "group": "x|booster-pack|ja||class-dream-high",
-   "title": "⭐ Pokémon TCG – High Class Pack: MEGA Dream ex M2a Booster Pack (Japansk)",
-   "url": "https://netgrade.se/shop/pokemon-tcg-high-class-pack-mega-dream-ex-m2a-booster-pack-japansk",
-   "price": 159,
-   "type": "Booster Pack",
-   "set": null,
-   "lang": "ja",
    "kind": "ny"
   }
  ]
