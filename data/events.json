@@ -1,6 +1,20 @@
 {
- "updated": 1793253917543,
+ "updated": 1793254977579,
  "events": [
+  {
+   "at": 1793254575490,
+   "store": "poketalk",
+   "product": "poketalk:9253149081942",
+   "group": "hidden-fates|booster-pack|en|",
+   "title": "Pokémon Sun & Moon: Hidden Fates Booster Pack",
+   "url": "https://poketalk.se/products/pokemon-sun-moon-hidden-fates-booster-pack",
+   "image": "https://cdn.shopify.com/s/files/1/0862/7860/3094/files/PRODUKTSERIER_2_31acdad7-e199-4a38-a190-bb6f971a86d0.png?v=1738866216",
+   "price": 499,
+   "type": "Booster Pack",
+   "set": "Hidden Fates",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793232234870,
    "store": "spelparken",
@@ -6618,19 +6632,6 @@
    "title": "Pokemon Mega Abyss Eye M5 Booster Box (Japansk)",
    "url": "https://pokemurre.se/products/forbokning-pokemon-mega-abyss-eye-m5-booster-box-japansk",
    "price": 1049,
-   "type": "Booster Box",
-   "set": null,
-   "lang": "ja",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1792533326017,
-   "store": "pokemurre",
-   "product": "pokemurre:10649643974994",
-   "group": "x|booster-box|ja||flame-ruler",
-   "title": "Pokemon Ruler Of The Black Flame SV3 Sealed Booster Box (Japansk)",
-   "url": "https://pokemurre.se/products/pokemon-ruler-of-the-blame-flame-sv3-sealed-booster-box-japansk",
-   "price": 1879,
    "type": "Booster Box",
    "set": null,
    "lang": "ja",
