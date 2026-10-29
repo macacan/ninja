@@ -1,6 +1,20 @@
 {
- "updated": 1793301788331,
+ "updated": 1793302688347,
  "events": [
+  {
+   "at": 1793301844304,
+   "store": "spelparken",
+   "product": "spelparken:15289176260983",
+   "group": "lost-origin|blister|en||1",
+   "title": "Lost Origin 1-Pack Blister",
+   "url": "https://spelparken.se/products/1-pack-blister-lost-origin",
+   "image": "https://cdn.shopify.com/s/files/1/0948/1876/3127/files/pokemon-kort-lost-origin-blister-pack.webp?v=1765984153",
+   "price": 269,
+   "type": "Blister",
+   "set": "Lost Origin",
+   "lang": "en",
+   "kind": "ny"
+  },
   {
    "at": 1793300947987,
    "store": "spelparken",
@@ -6694,19 +6708,6 @@
    "price": 499,
    "type": "Tin",
    "set": null,
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1792603797377,
-   "store": "dragon-s-lair",
-   "product": "dragon-s-lair:15554363064668",
-   "group": "prismatic-evolutions|premium-collection|en||super",
-   "title": "Pokemon TCG SV8.5: Prismatic Evolutions Super Premium Collection",
-   "url": "https://dragonslair.se/products/pokemon-tcg-sv85-prismatic-evolutions-super-premium-collection-pokemon",
-   "price": 3295,
-   "type": "Premium Collection",
-   "set": "Prismatic Evolutions",
    "lang": "en",
    "kind": "tillbaka"
   }
