@@ -1,6 +1,20 @@
 {
- "updated": 1793308228475,
+ "updated": 1793309148496,
  "events": [
+  {
+   "at": 1793308985845,
+   "store": "pokemurre",
+   "product": "pokemurre:11216201875794",
+   "group": "x|booster-pack|zh||30th-anniversary-celebration",
+   "title": "Pokemon 30th Anniversary Celebration M6 MEGA Booster Pack (Kinesisk)",
+   "url": "https://pokemurre.se/products/pokemon-30th-anniversary-celebration-m6-mega-booster-pack-kinesisk",
+   "image": null,
+   "price": 69,
+   "type": "Booster Pack",
+   "set": null,
+   "lang": "zh",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793304484713,
    "store": "dragon-s-lair",
@@ -6708,20 +6722,6 @@
    "set": null,
    "lang": "ja",
    "kind": "tillbaka"
-  },
-  {
-   "at": 1792617630576,
-   "store": "aquitaz",
-   "product": "aquitaz:10907409711450",
-   "group": "30th-celebration|booster-bundle|en|",
-   "title": "Pokémon Mega: 30th Celebration Booster Bundle (6 Pack) (ENG)",
-   "url": "https://aquitaz.se/products/pokemon-mega-30th-celebration-booster-bundle-6-pack-eng",
-   "price": 1299,
-   "type": "Booster Bundle",
-   "set": "30th Celebration",
-   "lang": "en",
-   "kind": "prissankt",
-   "from": 1599
   }
  ]
 }
