@@ -1,6 +1,20 @@
 {
- "updated": 1793311908567,
+ "updated": 1793312828592,
  "events": [
+  {
+   "at": 1793312723278,
+   "store": "speltrollet",
+   "product": "speltrollet:15754122690886",
+   "group": "30th-celebration|booster-pack|ja|",
+   "title": "Pokemon 30th Celebration Booster (Japansk)",
+   "url": "https://speltrollet.se/products/pokemon-30th-celebration-booster-japansk",
+   "image": "https://cdn.shopify.com/s/files/1/0674/0951/0716/files/4521329462417.jpg?v=1790678175",
+   "price": 149,
+   "type": "Booster Pack",
+   "set": "30th Celebration",
+   "lang": "ja",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793311765140,
    "store": "spelparken",
@@ -6729,20 +6743,6 @@
    "set": "Journey Together",
    "lang": "en",
    "kind": "tillbaka"
-  },
-  {
-   "at": 1792638182849,
-   "store": "skattkistan",
-   "product": "skattkistan:11216983785810",
-   "group": "30th-celebration|tin|en|mini|mini",
-   "title": "Pokémon TCG: 30th Celebration Mini Tin",
-   "url": "https://skattkistan.net/products/pokemon-tcg-30th-celebration-mini-tin",
-   "price": 279,
-   "type": "Tin",
-   "set": "30th Celebration",
-   "lang": "en",
-   "kind": "prissankt",
-   "from": 295
   }
  ]
 }
