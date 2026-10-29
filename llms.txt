@@ -1,0 +1,27 @@
+# Lootninja
+
+> Lootninja (lootninja.se) är en gratis svensk webbplats för samlarkortspelen Pokémon TCG, One Piece Card Game och Riftbound (League of Legends Trading Card Game). Den visar kommande släpp, vilka svenska butiker som har boxar och booster packs i lager, prissänkningar och vad enskilda kort är värda i kronor. Inget konto behövs. Lootninja är ett ideellt hobbyprojekt och inte knutet till The Pokémon Company, Nintendo, Bandai, Riot Games eller någon butik.
+
+Språk: svenska. Priser i SEK. Lager och priser hämtas automatiskt från svenska butiker dygnet runt och är vägledande. Kortpriser bygger på Cardmarket (via TCGdex) och TCGplayer (via tcgcsv), omräknade till kronor.
+
+## Huvudsidor
+
+- [Startsida](https://lootninja.se/): precis inkommet i butikerna, senaste prissänkningar, kommande släpp, senaste set och nyheter
+- [Kortpriser](https://lootninja.se/priser.html): sök vad ett kort är värt. Parametrar: `q` (kortnamn) och `game` (`pokemon`, `op` eller `rb`), t.ex. https://lootninja.se/priser.html?q=Charizard&game=pokemon
+- [Produkter och butikslager](https://lootninja.se/butiker.html): förseglade produkter (booster boxar, Elite Trainer Boxes, booster packs) i svenska butiker, med pris, lagerstatus och jämförelse mellan butiker
+- [Släppkalender](https://lootninja.se/slapp.html): kommande släpp för alla tre spelen med datum
+- [Alla set](https://lootninja.se/set/): en sida per set med kort, priser och var setets produkter finns i lager
+- [Nyheter](https://lootninja.se/nyheter.html): nyheter om Pokémon TCG, One Piece Card Game och Riftbound från flera källor
+- [Värdering](https://lootninja.se/vardering.html): fotografera eller sök ett kort och få ett ungefärligt värde
+
+## Om, kontakt och villkor
+
+- [Om Lootninja](https://lootninja.se/om.html): vad sajten är, källor och hur butiksbevakningen fungerar
+- [Kontakt](https://lootninja.se/om.html#kontakt): e-post hej@lootninja.se
+- [Användarvillkor](https://lootninja.se/villkor.html)
+- [Integritet och kakor](https://lootninja.se/integritet.html)
+
+## Optional
+
+- [Startsidan som Markdown](https://lootninja.se/index.md)
+- [Sitemap](https://lootninja.se/sitemap.xml)

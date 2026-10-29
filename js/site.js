@@ -88,6 +88,7 @@ function footer() {
         <li><a href="villkor.html">Användarvillkor</a></li>
         <li><a href="integritet.html">Integritet och kakor</a></li>
         <li><a href="om.html#rattigheter">Rättigheter</a></li>
+        <li><a href="om.html#kontakt">Kontakt</a></li>
       </ul></div>
     </div>
     <p class="footer-legal">Lootninja är ett ideellt hobbyprojekt och självständigt fanprojekt. Varken The Pokémon Company, Nintendo, Creatures, GAME FREAK, Bandai, Riot Games eller någon butik står bakom sidan.
@@ -101,6 +102,7 @@ function footer() {
 const searchTarget = () => (location.pathname.endsWith("vardering.html") ? "vardering.html" : "priser.html");
 
 export function mountChrome() {
+  document.querySelector(".static-footer")?.remove();
   document.body.insertAdjacentHTML("afterbegin", header());
   document.body.insertAdjacentHTML("beforeend", footer() + tabbar());
   document.querySelectorAll("[data-theme-toggle]").forEach((b) => b.addEventListener("click", () => window.nlTheme?.toggle()));
@@ -301,8 +303,7 @@ export function daysUntil(date) {
   return Math.round((d - t) / 864e5);
 }
 
-// Tar emot ISO-sträng eller millisekunder.
-// Minuter, timmar under ett dygn, sedan dagar. short: utan "sedan", för trånga kort.
+// Tar emot ISO-sträng eller millisekunder. Minuter, timmar under ett dygn, sedan dagar. short: utan "sedan", för trånga kort.
 export function ago(t, short = false) {
   const min = Math.round((Date.now() - new Date(t)) / 60000);
   const s = short ? "" : " sedan";

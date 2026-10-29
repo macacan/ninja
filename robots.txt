@@ -1,5 +1,7 @@
 User-agent: *
 Allow: /
+# Hur innehållet får användas (contentsignals.org): sökning och AI-svar ja, träning av AI-modeller nej.
+Content-Signal: search=yes, ai-input=yes, ai-train=no
 
 # Interna filer. data/ och js/ får INTE spärras: Google behöver dem för att kunna visa sidorna.
 Disallow: /data/card-history/

@@ -4,6 +4,7 @@ import { getPrefs } from "./prefs.js";
 import { bindSetCards } from "./setcards.js";
 import "./restock.js";
 import { mountCardAutocomplete } from "./card-autocomplete.js";
+import "./agent-tools.js";
 import { loadGameNames, guessGame, gameSuggestions } from "./game-guess.js";
 
 // Sökrutan överst söker i alla tre spelen och väljer spelet efter vad man skriver (js/game-guess.js).

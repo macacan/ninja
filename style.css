@@ -3904,3 +3904,5 @@ button.zm-price:hover{background:#1f2132}
 :is(.news-img,.acard-img)[data-game=pk]{background-image:url(img/games/pokemon.webp)}
 :is(.news-img,.acard-img)[data-game=op]{background-image:url(img/games/op.webp)}
 :is(.news-img,.acard-img)[data-game=rb]{background-image:url(img/games/rb.webp)}
+/* Sidfotslänkarna i HTML:en (index.html) syns bara tills js/site.js satt in den riktiga sidfoten. */
+.static-footer ul{display:flex;flex-wrap:wrap;gap:8px 18px;justify-content:center;list-style:none;margin:48px 0 24px;padding:0}
