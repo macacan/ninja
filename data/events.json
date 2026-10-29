@@ -1,6 +1,20 @@
 {
- "updated": 1793257313130,
+ "updated": 1793258273201,
  "events": [
+  {
+   "at": 1793257631163,
+   "store": "speltrollet",
+   "product": "speltrollet:15108607476038",
+   "group": "x|booster-pack|ja||partners",
+   "title": "Pokemon Battle Partners Booster (Japansk - sv9)",
+   "url": "https://speltrollet.se/products/pokemon-battle-partners-booster-japansk",
+   "image": "https://cdn.shopify.com/s/files/1/0674/0951/0716/files/14592126.jpg?v=1755093875",
+   "price": 49,
+   "type": "Booster Pack",
+   "set": null,
+   "lang": "ja",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793256563732,
    "store": "miniature-metropolis",
@@ -6622,19 +6636,6 @@
    "price": 1337,
    "type": "Booster Pack",
    "set": "White Flare",
-   "lang": "zh",
-   "kind": "forbestallning"
-  },
-  {
-   "at": 1792533858909,
-   "store": "aquitaz",
-   "product": "aquitaz:11045918867802",
-   "group": "x|blister|zh||3|badge-gem-s2-set",
-   "title": "Pokemon: Gem Pack Series 2 Badge Set (3 Pack) (CH)",
-   "url": "https://aquitaz.se/products/pokemon-gem-pack-series-2-badge-set-3-pack-ch",
-   "price": 1337,
-   "type": "Blister",
-   "set": null,
    "lang": "zh",
    "kind": "forbestallning"
   }
