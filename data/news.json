@@ -1,6 +1,16 @@
 {
- "updated": "2026-10-29T11:38:29.378Z",
+ "updated": "2026-10-29T11:53:49.043Z",
  "articles": [
+  {
+   "title": "Pokémon TCG Pocket update 1.8.1 adds Community Decks and Dual Fusion packs",
+   "link": "https://pokemonblog.com/2026/10/29/pokemon-tcg-pocket-update-1-8-1-adds-community-decks-and-dual-fusion-packs/",
+   "date": "2026-10-29T11:45:14.000Z",
+   "summary": "Pokémon Trading Card Game Pocket version 1.8.1 is now available on iOS and Android, with a listed download size of 791.6 MB. The update brings the Dual Fusion: Mega Mewtwo X and…",
+   "image": "https://pokemonblog.com/wp-content/uploads/2024/11/pokemon_tcg_pocket_genetic_apex_mewtwo_pikachu_charizard.jpg",
+   "source": "PokemonBlog",
+   "game": "pk",
+   "digital": true
+  },
   {
    "title": "Pokémon TCG Pocket outlines events for Dual Fusion and beyond",
    "link": "https://pokemonblog.com/2026/10/28/pokemon-tcg-pocket-outlines-events-for-dual-fusion-and-beyond/",
@@ -451,15 +461,6 @@
    "date": "2026-09-22T16:21:42.000Z",
    "summary": "Avery The Poke Kid’s family has shared his final Pokemon TCG pack opening following the 12-year-old creator’s death.",
    "image": "https://www.dexerto.com/cdn-image/wp-content/uploads/2026/09/22/avery-the-pokekid-last-pulls.jpg?width=480&quality=75&format=auto",
-   "source": "Dexerto",
-   "game": "pk"
-  },
-  {
-   "title": "Pokemon collector secretly put GPS tracker on woman’s car to find trading card restocks",
-   "link": "https://www.dexerto.com/pokemon/pokemon-collector-secretly-put-gps-tracker-on-womans-car-to-find-trading-card-restocks-3411308/",
-   "date": "2026-09-22T14:37:48.000Z",
-   "summary": "A Pokemon collector pleaded no contest after secretly attaching a GPS tracker to a woman’s car to find new trading card restocks.",
-   "image": "https://www.dexerto.com/cdn-image/wp-content/uploads/2026/09/22/pokemon-restock-tracking-woman.jpg?width=480&quality=75&format=auto",
    "source": "Dexerto",
    "game": "pk"
   },
