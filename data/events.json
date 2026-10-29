@@ -1,6 +1,20 @@
 {
- "updated": 1793296206807,
+ "updated": 1793297108217,
  "events": [
+  {
+   "at": 1793296438369,
+   "store": "spelparken",
+   "product": "spelparken:15517990158711",
+   "group": "x|collection-box|en||first-illustration-partner-s2",
+   "title": "First Partner Illustration Collection – Series 2",
+   "url": "https://spelparken.se/products/first-partner-illustration-collection-series-2",
+   "image": "https://cdn.shopify.com/s/files/1/0948/1876/3127/files/OIP_1b6750a5-a7e2-4d00-bd50-1714d317dd0d.webp?v=1784666753",
+   "price": 499,
+   "type": "Collection Box",
+   "set": null,
+   "lang": "en",
+   "kind": "ny"
+  },
   {
    "at": 1793293131372,
    "store": "swepoke",
@@ -6687,19 +6701,6 @@
    "group": "30th-celebration|collection-box|en||greninja",
    "title": "30th Celebration Greninja ex Box",
    "url": "https://spelparken.se/products/30th-celebration-greninja-ex-box",
-   "price": 849,
-   "type": "Collection Box",
-   "set": "30th Celebration",
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1792601941305,
-   "store": "spelparken",
-   "product": "spelparken:15531317330295",
-   "group": "30th-celebration|collection-box|en||sylveon",
-   "title": "30th Celebration Sylveon ex Box",
-   "url": "https://spelparken.se/products/30th-celebration-sylveon-ex-box",
    "price": 849,
    "type": "Collection Box",
    "set": "30th Celebration",
