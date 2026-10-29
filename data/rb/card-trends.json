@@ -1,5 +1,5 @@
 {
- "updated": 1793217346878,
+ "updated": 1793274436827,
  "sets": [
   "Radiance",
   "Vendetta",
@@ -22,7 +22,7 @@
    "tags": "Ahri, Ionia",
    "image": "https://cmsassets.rgpub.io/sanity/images/dsfx7636/game_data_live/608f786c30a7e80db87d3c2d45bc0c26b0840c5e-744x1039.png?accountingTag=RB",
    "sek": 33130.74,
-   "low": 54599.54,
+   "low": 53626.32,
    "foil": null,
    "setId": "24519"
   },
@@ -59,8 +59,8 @@
    "might": 12,
    "tags": "The Void",
    "image": "https://cmsassets.rgpub.io/sanity/images/dsfx7636/game_data_live/7e8d207a8057b97f9059ea6025a16e59229dc54d-744x1039.png?accountingTag=RB",
-   "sek": 18598.4,
-   "low": 17982.2,
+   "sek": 18801.39,
+   "low": 17875.44,
    "foil": null,
    "setId": "24560"
   },
@@ -116,8 +116,8 @@
    "might": null,
    "tags": "Ziggs",
    "image": "https://cmsassets.rgpub.io/sanity/images/dsfx7636/game_data_live/69899f4d5e05ff0a060b9f38894cd77f9e17d195-744x1039.png?accountingTag=RB",
-   "sek": 13808.68,
-   "low": 12691.56,
+   "sek": 13580.37,
+   "low": 9434.26,
    "foil": null,
    "setId": "24819"
   },
@@ -136,7 +136,7 @@
    "tags": "Riven",
    "image": "https://cmsassets.rgpub.io/sanity/images/dsfx7636/game_data_live/342befcaab98642a2348bd2f6fdb92c68563b6d7-744x1039.png?accountingTag=RB",
    "sek": 12766.54,
-   "low": 14896.2,
+   "low": 14399.56,
    "foil": null,
    "setId": "24819"
   },
@@ -179,25 +179,6 @@
    "setId": "24519"
   },
   {
-   "id": "709103",
-   "name": "Jayce, Defender of Tomorrow",
-   "variant": "Signature",
-   "set": "Vendetta",
-   "no": "194*/166",
-   "rarity": "Showcase",
-   "type": "Legend",
-   "domain": "Mind;Body",
-   "energy": null,
-   "power": null,
-   "might": null,
-   "tags": "Jayce",
-   "image": "https://cmsassets.rgpub.io/sanity/images/dsfx7636/game_data_live/3092eec0739ac28d36e22c3ee005feb75980d001-744x1039.png?accountingTag=RB",
-   "sek": 11847.84,
-   "low": 7944.64,
-   "foil": null,
-   "setId": "24698"
-  },
-  {
    "id": "724642",
    "name": "Evelynn, Agony's Embrace",
    "variant": "Signature",
@@ -212,7 +193,7 @@
    "tags": "Evelynn",
    "image": "https://cmsassets.rgpub.io/sanity/images/dsfx7636/game_data_live/ca217b57d0e8d2e04e7a35105deaa6be17e854f0-744x1039.png?accountingTag=RB",
    "sek": 11668.69,
-   "low": 13883.36,
+   "low": 10923.88,
    "foil": null,
    "setId": "24819"
   },
@@ -231,7 +212,26 @@
    "tags": "Kennen",
    "image": "https://cmsassets.rgpub.io/sanity/images/dsfx7636/game_data_live/853681913bcd2a2e2b42217e290b530b72518142-744x1039.png?accountingTag=RB",
    "sek": 11442.47,
-   "low": 8888.07,
+   "low": 8710.3,
+   "foil": null,
+   "setId": "24698"
+  },
+  {
+   "id": "709103",
+   "name": "Jayce, Defender of Tomorrow",
+   "variant": "Signature",
+   "set": "Vendetta",
+   "no": "194*/166",
+   "rarity": "Showcase",
+   "type": "Legend",
+   "domain": "Mind;Body",
+   "energy": null,
+   "power": null,
+   "might": null,
+   "tags": "Jayce",
+   "image": "https://cmsassets.rgpub.io/sanity/images/dsfx7636/game_data_live/3092eec0739ac28d36e22c3ee005feb75980d001-744x1039.png?accountingTag=RB",
+   "sek": 11391.12,
+   "low": 9831.49,
    "foil": null,
    "setId": "24698"
   },
@@ -250,7 +250,7 @@
    "tags": "Seraphine",
    "image": "https://cmsassets.rgpub.io/sanity/images/dsfx7636/game_data_live/399262205b15aa3b6306eb1d80a308791dcbe2ca-744x1039.png?accountingTag=RB",
    "sek": 11032.92,
-   "low": 12910.04,
+   "low": 12363.95,
    "foil": null,
    "setId": "24819"
   },
@@ -269,7 +269,7 @@
    "tags": "Mel",
    "image": "https://cmsassets.rgpub.io/sanity/images/dsfx7636/game_data_live/174a22326c894454cb5878f4ce3603d43f9e599f-744x1040.png?accountingTag=RB",
    "sek": 10987.83,
-   "low": 6402.19,
+   "low": 6302.88,
    "foil": null,
    "setId": "24698"
   },
@@ -288,7 +288,7 @@
    "tags": "Mordekaiser",
    "image": "https://cmsassets.rgpub.io/sanity/images/dsfx7636/game_data_live/90ec3319518771820909592eee963d34dab037bc-744x1039.png?accountingTag=RB",
    "sek": 9930.7,
-   "low": 7944.04,
+   "low": 6653.64,
    "foil": null,
    "setId": "24819"
   },
@@ -307,7 +307,7 @@
    "tags": "Mount Targon, Aphelios, Aphelios",
    "image": "https://cmsassets.rgpub.io/sanity/images/dsfx7636/game_data_live/d1ffd27d5777e08178ab9a9aad0943b8d72af98b-744x1039.png?accountingTag=RB",
    "sek": 9863.77,
-   "low": 7706.2,
+   "low": 7448,
    "foil": null,
    "setId": "24819"
   },
@@ -326,7 +326,7 @@
    "tags": "LeBlanc",
    "image": "https://cmsassets.rgpub.io/sanity/images/dsfx7636/game_data_live/78a3153e914b2124cdc918f3134a8087b342caf7-744x1039.png?accountingTag=RB",
    "sek": 9823.94,
-   "low": 9394.93,
+   "low": 9334.95,
    "foil": null,
    "setId": "24560"
   },
@@ -364,7 +364,7 @@
    "tags": "Bandle City, Teemo, Yordle",
    "image": "https://cmsassets.rgpub.io/sanity/images/dsfx7636/game_data_live/5e31f0ea037604aa531d84c1d56d26f255210b7c-744x1039.png?accountingTag=RB",
    "sek": 7697.76,
-   "low": 10824.47,
+   "low": 12413.4,
    "foil": null,
    "setId": "24519"
   },
@@ -383,7 +383,7 @@
    "tags": "Piltover, Ezreal, Ezreal",
    "image": "https://cmsassets.rgpub.io/sanity/images/dsfx7636/game_data_live/262da39c80211046e27a839c50d210d19592267c-744x1039.png?accountingTag=RB",
    "sek": 6877.08,
-   "low": 6494.64,
+   "low": 6400.3,
    "foil": null,
    "setId": "24819"
   },
@@ -421,7 +421,7 @@
    "tags": "Vex",
    "image": "https://cmsassets.rgpub.io/sanity/images/dsfx7636/game_data_live/748c7cb9574c8805d7fdbaba0f2471af06cceae3-744x1039.png?accountingTag=RB",
    "sek": 6520.86,
-   "low": 6951.56,
+   "low": 6520.86,
    "foil": null,
    "setId": "24560"
   },
@@ -445,23 +445,23 @@
    "setId": "24560"
   },
   {
-   "id": "724641",
-   "name": "Jarvan IV, Exemplar of Demacia",
+   "id": "685524",
+   "name": "Jhin, Virtuoso",
    "variant": "Signature",
-   "set": "Radiance",
-   "no": "179*/167",
+   "set": "Unleashed",
+   "no": "226*/219",
    "rarity": "Showcase",
    "type": "Legend",
-   "domain": "Body;Order",
-   "energy": null,
-   "power": null,
-   "might": null,
-   "tags": "Jarvan IV",
-   "image": "https://cmsassets.rgpub.io/sanity/images/dsfx7636/game_data_live/e85c005f938e44655f926bb406a47359ae51ecc1-744x1039.png?accountingTag=RB",
-   "sek": 6432.68,
-   "low": 5213.47,
+   "domain": "Fury;Mind",
+   "energy": 0,
+   "power": 0,
+   "might": 0,
+   "tags": "Jhin",
+   "image": "https://cmsassets.rgpub.io/sanity/images/dsfx7636/game_data_live/94fb0a4944da2427ce615dd2c311a2c9bc781fd2-744x1039.png?accountingTag=RB",
+   "sek": 6128.2,
+   "low": 5958.38,
    "foil": null,
-   "setId": "24819"
+   "setId": "24560"
   }
  ],
  "rising": [],
