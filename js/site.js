@@ -328,7 +328,7 @@ const articleLink = (a) => `href="${esc(safeUrl(a.link))}" target="_blank" rel="
 
 // Större artikelkort för nyhetssidans rutnät. TCG Pocket (mobilspelet) märks som digitalt.
 export const articleCard = (a) => `<article class="acard">
-  <div class="acard-img">${a.image ? `<img src="${esc(a.image)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.remove()">` : ""}<span class="acard-src">${esc(a.source)}</span></div>
+  <div class="acard-img" data-game="${a.game || "pk"}">${a.image ? `<img src="${esc(a.image)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.remove()">` : ""}<span class="acard-src">${esc(a.source)}</span></div>
   <div class="acard-body">
     <span class="src">${fmt(a.date)}${{ op: " · One Piece", rb: " · Riftbound" }[a.game] || ""}${a.digital ? ' <span class="tag-digital">Digitalt</span>' : ""}</span>
     <h3><a class="stretch" ${articleLink(a)}>${esc(a.title)}<span class="sr-only"> (öppnas hos ${esc(a.source)} i en ny flik)</span></a></h3>
@@ -338,7 +338,7 @@ export const articleCard = (a) => `<article class="acard">
 </article>`;
 
 export const newsItem = (a) => `<article class="news">
-  <div class="news-img">${a.image ? `<img src="${esc(a.image)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.remove()">` : ""}</div>
+  <div class="news-img" data-game="${a.game || "pk"}">${a.image ? `<img src="${esc(a.image)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.remove()">` : ""}</div>
   <div class="news-body">
     <span class="src">${esc(a.source)} · ${fmt(a.date)}${{ op: " · One Piece", rb: " · Riftbound" }[a.game] || ""}</span>
     <h3><a class="stretch" ${articleLink(a)}>${esc(a.title)}<span class="sr-only"> (öppnas hos ${esc(a.source)} i en ny flik)</span></a></h3>

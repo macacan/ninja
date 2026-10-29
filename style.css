@@ -3896,3 +3896,8 @@ button.zm-price:hover{background:#1f2132}
 .seo-faq details p{margin:12px 0 14px}
 /* En vanlig prisuppdatering (inte den billigaste): neutral rad i stället för grön prissänkning. */
 .gpricechg{font-size:.78rem;color:var(--muted);line-height:1.35}
+/* Nyheter utan egen bild får spelets bild, samma som spelknapparna. */
+:is(.news-img,.acard-img)[data-game]{background-size:cover;background-position:center}
+:is(.news-img,.acard-img)[data-game=pk]{background-image:url(img/games/pokemon.webp)}
+:is(.news-img,.acard-img)[data-game=op]{background-image:url(img/games/op.webp)}
+:is(.news-img,.acard-img)[data-game=rb]{background-image:url(img/games/rb.webp)}
