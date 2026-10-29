@@ -64,10 +64,10 @@ Options -Indexes
 <IfModule mod_headers.c>
   # Points agents to the site summary (RFC 8288). The homepage also links its Markdown version, picked by Accept.
   <FilesMatch "\.html$">
-    Header set Link "</llms.txt>; rel=\"describedby\"; type=\"text/plain\""
+    Header set Link '</llms.txt>; rel="describedby"; type="text/plain"'
   </FilesMatch>
   <FilesMatch "^index\.(html|md)$">
-    Header set Link "</llms.txt>; rel=\"describedby\"; type=\"text/plain\", </index.md>; rel=\"alternate\"; type=\"text/markdown\""
+    Header set Link '</llms.txt>; rel="describedby"; type="text/plain", </index.md>; rel="alternate"; type="text/markdown"'
     Header append Vary Accept
   </FilesMatch>
   # Browsers only use HTTPS for a year after the first visit. Remove "max-age" if the site ever has to go back to HTTP.
