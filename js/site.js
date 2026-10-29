@@ -65,7 +65,10 @@ function tabbar() {
         <input type="search" name="q" placeholder="Sök kort, t.ex. Pikachu" aria-label="Sök kort">
       </form>
       <ul>${NAV.map(([href, label, only]) => `<li><a href="${href}"${href.split("#")[0] === here ? ' aria-current="page"' : ""}>${label}${only ? ` <span class="nav-only">(${only})</span>` : ""}</a></li>`).join("")}</ul>
-      <button type="button" class="mm-theme" data-theme-toggle>${THEME_ICON}<span>Mörkt läge</span></button>
+      <div class="mm-foot">
+        <button type="button" class="mm-theme" data-theme-toggle>${THEME_ICON}<span>Mörkt läge</span></button>
+        <a class="mm-notis" href="butiker.html#notiser"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>Notiser</a>
+      </div>
     </div>
   </div>`;
 }

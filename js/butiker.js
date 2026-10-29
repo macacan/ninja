@@ -383,6 +383,8 @@ try {
   const start = location.hash.slice(1);
   renderPrefs();
   showTab(TABS.includes(start) ? start : "products");
+  // Länkar till en annan flik på samma sida (t.ex. Notiser i mobilmenyn).
+  addEventListener("hashchange", () => { const t = location.hash.slice(1); if (TABS.includes(t)) showTab(t); });
 } catch (err) {
   console.error(err);
   const msg = "Butiksdatan kunde inte laddas. Kör bevakningen först (se README).";
