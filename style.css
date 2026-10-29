@@ -3759,7 +3759,8 @@ button.zm-price:hover{background:#1f2132}
 
 /* ---------- Packöppnaren: global räknare och topplistan (js/restock.js) ---------- */
 .pack-counter{margin:0;display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border:1px solid rgba(242,182,50,.45);border-radius:999px;background:rgba(14,16,28,.6);font:600 .78rem/1.2 var(--pixel);color:#e1e6f5;letter-spacing:.3px}
-.pack-counter b{display:inline-block;color:var(--gold);font-size:.95rem}
+/* Siffran i vanlig fet stil: i pixeltypsnittet liknar 2 och 8 varandra. */
+.pack-counter b{display:inline-block;color:var(--gold);font:800 1rem/1 var(--sans);font-variant-numeric:tabular-nums;letter-spacing:0}
 /* Knappen "Topplistan" under packen, och topplistan den fäller ut. Döljs medan ett pack öppnas. */
 .hs-open{margin-top:2px}
 #pack-stage.is-opening .hs-open,#pack-stage.is-opening .hs-box{display:none}
