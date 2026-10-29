@@ -1,6 +1,21 @@
 {
- "updated": 1793280948402,
+ "updated": 1793281848421,
  "events": [
+  {
+   "at": 1793281219989,
+   "store": "rgb-kingz",
+   "product": "rgb-kingz:16149926052170",
+   "group": "op|the-azure-sea-s-seven|booster-pack|zh|mini",
+   "title": "One Piece Card Game – The Azure Sea's Seven Mini Booster Pack (OPC-14) – Kinesisk",
+   "url": "https://rgbkingz.com/products/one-piece-card-game-the-azure-seas-seven-mini-booster-pack-opc-14-kinesisk",
+   "image": "https://cdn.shopify.com/s/files/1/0782/8088/4554/files/opc14boosterpack.jpg?v=1793280845",
+   "price": 69,
+   "type": "Booster Pack",
+   "set": "The Azure Sea's Seven",
+   "lang": "zh",
+   "game": "op",
+   "kind": "ny"
+  },
   {
    "at": 1793280393464,
    "store": "maxgaming",
@@ -6650,19 +6665,6 @@
    "set": "Paldean Fates",
    "lang": "en",
    "kind": "tillbaka"
-  },
-  {
-   "at": 1792544176467,
-   "store": "aquitaz",
-   "product": "aquitaz:11046018023770",
-   "group": "mega-evolution|blister|en||2",
-   "title": "Pokémon Mega Evolution: Flowing Fists 2-Pack Blister (ENG)",
-   "url": "https://aquitaz.se/products/pokemon-mega-evolution-flowing-fists-2-pack-blister-eng",
-   "price": 1337,
-   "type": "Blister",
-   "set": "Mega Evolution",
-   "lang": "en",
-   "kind": "forbestallning"
   }
  ]
 }
