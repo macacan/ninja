@@ -1,6 +1,20 @@
 {
- "updated": 1793286469158,
+ "updated": 1793287389182,
  "events": [
+  {
+   "at": 1793286579281,
+   "store": "dragon-s-lair",
+   "product": "dragon-s-lair:15725194903900",
+   "group": "x|collection-box|zh||collector-frame-pikachu-union",
+   "title": "Pokemon Pikachu V-UNION Card Frame Collector Box CS0G (Kinesisk)",
+   "url": "https://dragonslair.se/products/pokemon-pikachu-v-union-card-frame-collector-box-cs0g-kinesisk",
+   "image": "https://cdn.shopify.com/s/files/1/1015/8315/9644/files/6a2ba9866acd107465590ba8_1caf0673-63c6-48cc-8ad8-29b6595db5d5.webp?v=1785844441",
+   "price": 495,
+   "type": "Collection Box",
+   "set": null,
+   "lang": "zh",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793285492672,
    "store": "pokemurre",
@@ -6660,19 +6674,6 @@
    "price": 199,
    "type": "Booster Pack",
    "set": "30th Celebration",
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1792585780758,
-   "store": "bangerpack",
-   "product": "bangerpack:https://bangerpack.se/pokemon/boosters-packs/pokemon-pitch-black-booster",
-   "group": "pitch-black|booster-pack|en|",
-   "title": "Pokémon Pitch Black – Booster",
-   "url": "https://bangerpack.se/pokemon/boosters-packs/pokemon-pitch-black-booster",
-   "price": 89,
-   "type": "Booster Pack",
-   "set": "Pitch Black",
    "lang": "en",
    "kind": "tillbaka"
   }

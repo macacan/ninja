@@ -1,6 +1,15 @@
 {
- "updated": "2026-10-29T15:07:34.198Z",
+ "updated": "2026-10-29T15:23:11.562Z",
  "articles": [
+  {
+   "title": "McDonald’s announces Pokemon Happy Meal return with 15 toys and trading cards",
+   "link": "https://www.dexerto.com/food/mcdonalds-announces-pokemon-happy-meal-return-with-15-toys-and-trading-cards-3422744/",
+   "date": "2026-10-29T15:00:40.000Z",
+   "summary": "McDonald’s has officially revealed its next Pokemon Happy Meal collaboration, bringing a new collection of toys and trading cards to restaurants across the US.",
+   "image": "https://www.dexerto.com/cdn-image/wp-content/uploads/2026/10/29/pokemonhappymeal.jpg?width=480&quality=75&format=auto",
+   "source": "Dexerto",
+   "game": "pk"
+  },
   {
    "title": "Pokémon TCG Pocket update 1.8.1 adds Community Decks and Dual Fusion packs",
    "link": "https://pokemonblog.com/2026/10/29/pokemon-tcg-pocket-update-1-8-1-adds-community-decks-and-dual-fusion-packs/",
@@ -10,6 +19,69 @@
    "source": "PokemonBlog",
    "game": "pk",
    "digital": true
+  },
+  {
+   "title": "Budget Riftbound Decks: Build with Bulk Cards & Play for $10!",
+   "link": "https://riftbound.gg/budget-riftbound-decks-build-with-bulk-cards-play-for-10/",
+   "date": "2026-10-28T21:34:52.000Z",
+   "summary": "Curious about Riftbound but can't afford to spend $100 to get started? You've come to the right place! The post Budget Riftbound Decks: Build with Bulk Cards & Play for $10!…",
+   "image": null,
+   "source": "Riftbound.gg",
+   "game": "rb"
+  },
+  {
+   "title": "Europe Regional Championship 2026 Event Information",
+   "link": "https://riftbound.gg/europe-regional-championship-2026-event-information/",
+   "date": "2026-10-28T21:31:58.000Z",
+   "summary": "Riot Games has published the event information for the upcoming Europe Regional Championship in Stuttgart, Germany! Check out the full prize list and more! The penultimate…",
+   "image": "https://riftbound.gg/wp-content/uploads/sites/67/2026/10/image-11.webp",
+   "source": "Riftbound.gg",
+   "game": "rb"
+  },
+  {
+   "title": "The Most Expensive Riftbound Radiance Cards Right Now",
+   "link": "https://riftbound.gg/most-expensive-riftbound-radiance-cards/",
+   "date": "2026-10-28T21:23:43.000Z",
+   "summary": "Radiance just launched on October 23, and the secondary market is already moving. Every card on this list is an overnumbered variant, the same pattern as every set before it. Since…",
+   "image": null,
+   "source": "Riftbound.gg",
+   "game": "rb"
+  },
+  {
+   "title": "Riftbound x K/DA: Couture Collection: How to Enter Draw & Complete Draw Schedule",
+   "link": "https://riftbound.gg/k-da-couture-collection-draw/",
+   "date": "2026-10-27T18:30:52.000Z",
+   "summary": "The Riftbound x K/DA: Couture Collection drawing opens on October 27. The FIRESTARTER era makes its way to the tabletop with a premium bundle featuring brand-new artwork by…",
+   "image": "https://riftbound.gg/wp-content/uploads/sites/67/2026/10/Riftbound-x-KDA-Couture-Collection-How-to-Enter-Draw-Complete-Draw-Schedule-1024x576.webp",
+   "source": "Riftbound.gg",
+   "game": "rb"
+  },
+  {
+   "title": "Best Decks for Every Legend for Early Radiance",
+   "link": "https://riftbound.gg/best-decks-for-every-legend-for-early-radiance/",
+   "date": "2026-10-26T21:37:41.000Z",
+   "summary": "Decks for almost every legend in Riftbound early in the new expasion : Radiance ! The post Best Decks for Every Legend for Early Radiance appeared first on Riftbound.gg .",
+   "image": null,
+   "source": "Riftbound.gg",
+   "game": "rb"
+  },
+  {
+   "title": "Radiance Rules FAQ and Clarifications",
+   "link": "https://riftbound.gg/radiance-rules-faq-and-clarifications/",
+   "date": "2026-10-26T20:12:44.000Z",
+   "summary": "Riot Games has released the answers for some frequent questions about Radiance interactions. You can also refer to the full, updated Rules document. Welcome to the Radiance FAQ…",
+   "image": "https://cmsassets.rgpub.io/sanity/images/dsfx7636/news_live/c031e2ceee4e0588fb63678a3fb838dba06db101-1848x1063.jpg",
+   "source": "Riftbound.gg",
+   "game": "rb"
+  },
+  {
+   "title": "Riftbound 2027 Premier Play",
+   "link": "https://riftbound.gg/riftbound-2027-premier-play/",
+   "date": "2026-10-26T20:09:02.000Z",
+   "summary": "An overview of the revamped Premier Play program for 2027. The post Riftbound 2027 Premier Play appeared first on Riftbound.gg .",
+   "image": "https://cmsassets.rgpub.io/sanity/images/dsfx7636/news_live/0e64bf2f0542f3bdd8cf4ba92a57e0f23e468093-1920x1080.jpg?accountingTag=RB&fm=jpg&q=80&w=1184",
+   "source": "Riftbound.gg",
+   "game": "rb"
   },
   {
    "title": "Pokémon TCG cuts full art Rayquaza card from upcoming set",
@@ -28,6 +100,24 @@
    "image": "https://www.dexerto.com/cdn-image/wp-content/uploads/2026/07/30/PSALogo.jpg?width=480&quality=75&format=auto",
    "source": "Dexerto",
    "game": "pk"
+  },
+  {
+   "title": "Kennen, Heart of the Tempest Guide – Best Decks & Cards: Radiance Update",
+   "link": "https://riftbound.gg/kennen-heart-of-the-tempest-guide/",
+   "date": "2026-10-23T13:30:36.000Z",
+   "summary": "More than just the lightning-quick enforcer of Ionian balance, Kennen is the only yordle member of the Kinkou. Despite his small, furry stature, he is eager to take on any threat…",
+   "image": null,
+   "source": "Riftbound.gg",
+   "game": "rb"
+  },
+  {
+   "title": "Riftbound x Worlds 2026 Edition Draw: Dates, Price and How to Enter",
+   "link": "https://riftbound.gg/riftbound-x-worlds-2026-edition-draw-dates/",
+   "date": "2026-10-23T08:44:50.000Z",
+   "summary": "Riot has finally shared the dates for the Riftbound x Worlds 2026 edition draw. Registration opens on November 13 and closes on November 16. If your name is picked, you get 24…",
+   "image": null,
+   "source": "Riftbound.gg",
+   "game": "rb"
   },
   {
    "title": "Forgotten Pokémon Card Collection Goes for $2 Million",
@@ -370,15 +460,6 @@
    "date": "2026-09-22T14:37:48.000Z",
    "summary": "A Pokemon collector pleaded no contest after secretly attaching a GPS tracker to a woman’s car to find new trading card restocks.",
    "image": "https://www.dexerto.com/cdn-image/wp-content/uploads/2026/09/22/pokemon-restock-tracking-woman.jpg?width=480&quality=75&format=auto",
-   "source": "Dexerto",
-   "game": "pk"
-  },
-  {
-   "title": "Pokemon resellers fuming as “generous” 30th anniversary rare card hits keep prices down",
-   "link": "https://www.dexerto.com/pokemon/pokemon-resellers-fuming-as-generous-30th-anniversary-rare-card-hits-keep-prices-down-3411121/",
-   "date": "2026-09-22T09:48:13.000Z",
-   "summary": "Pokemon TCG resellers have been split over the new 30th anniversary release, with some claiming it is “overprinted” and the “generous” hits are making it hard for them to rake in…",
-   "image": "https://www.dexerto.com/cdn-image/wp-content/uploads/2026/09/08/pokemon-30th-UPC.jpg?width=480&quality=75&format=auto",
    "source": "Dexerto",
    "game": "pk"
   },
