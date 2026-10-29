@@ -1,6 +1,35 @@
 {
- "updated": 1793263794076,
+ "updated": 1793264694092,
  "events": [
+  {
+   "at": 1793264439020,
+   "store": "maxgaming",
+   "product": "maxgaming:https://maxgaming.se/sv/pokemon/pokemon-30th-celebration-gen-1-9-collection-japanese-bundle",
+   "group": "30th-celebration|collection-box|ja||gen",
+   "title": "Pokémon 30th Celebration Gen 1-9 Collection (Japanese)",
+   "url": "https://maxgaming.se/sv/pokemon/pokemon-30th-celebration-gen-1-9-collection-japanese-bundle",
+   "image": "https://www.maxgaming.se/bilder/artiklar/S1577.jpg?m=1793262948",
+   "price": 2990,
+   "type": "Collection Box",
+   "set": "30th Celebration",
+   "lang": "ja",
+   "kind": "ny"
+  },
+  {
+   "at": 1793263947292,
+   "store": "webhallen",
+   "product": "webhallen:391289",
+   "group": "rb|spiritforged|booster-box|en|",
+   "title": "Riftbound LoL TCG Spiritforged Booster Display",
+   "url": "https://www.webhallen.com/se/product/391289-Riftbound-LoL-TCG-Spiritforged-Booster-Display",
+   "image": "https://www.webhallen.com/images/product/391289?trim",
+   "price": 1449,
+   "type": "Booster Box",
+   "set": "Spiritforged",
+   "lang": "en",
+   "game": "rb",
+   "kind": "ny"
+  },
   {
    "at": 1793262484238,
    "store": "maxgaming",
@@ -6612,32 +6641,6 @@
    "price": 1337,
    "type": "Booster Box",
    "set": "White Flare",
-   "lang": "zh",
-   "kind": "forbestallning"
-  },
-  {
-   "at": 1792537027865,
-   "store": "aquitaz",
-   "product": "aquitaz:11045702369626",
-   "group": "black-bolt|booster-pack|zh|",
-   "title": "Pokemon Scarlet & Violet: Black Bolt Jumbo Booster Pack (20 Kort) (CH)",
-   "url": "https://aquitaz.se/products/pokemon-scarlet-violet-black-bolt-jumbo-booster-pack-20-kort-ch",
-   "price": 1337,
-   "type": "Booster Pack",
-   "set": "Black Bolt",
-   "lang": "zh",
-   "kind": "forbestallning"
-  },
-  {
-   "at": 1792537027865,
-   "store": "aquitaz",
-   "product": "aquitaz:11045695029594",
-   "group": "black-bolt|booster-pack|zh|",
-   "title": "Pokemon Scarlet & Violet: Black Bolt Slim Booster Pack (5 Kort) (CH)",
-   "url": "https://aquitaz.se/products/pokemon-scarlet-violet-black-bolt-slim-booster-pack-5-kort-ch",
-   "price": 1337,
-   "type": "Booster Pack",
-   "set": "Black Bolt",
    "lang": "zh",
    "kind": "forbestallning"
   }
