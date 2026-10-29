@@ -1,6 +1,21 @@
 {
- "updated": 1793292909321,
+ "updated": 1793293829341,
  "events": [
+  {
+   "at": 1793293131372,
+   "store": "swepoke",
+   "product": "swepoke:https://www.swepoke.se/alla-produkter/riftbound-radiance-booster-box",
+   "group": "rb|radiance|booster-box|en|",
+   "title": "Riftbound Radiance Booster Box",
+   "url": "https://www.swepoke.se/alla-produkter/riftbound-radiance-booster-box",
+   "image": "https://cdn.quickbutik.com/images/41228G/products/6ae36e65d52bf.webp",
+   "price": 1799,
+   "type": "Booster Box",
+   "set": "Radiance",
+   "lang": "en",
+   "game": "rb",
+   "kind": "ny"
+  },
   {
    "at": 1793292258157,
    "store": "sweet-nerds",
@@ -6690,19 +6705,6 @@
    "set": "30th Celebration",
    "lang": "en",
    "kind": "tillbaka"
-  },
-  {
-   "at": 1792600145234,
-   "store": "spelparken",
-   "product": "spelparken:15389680271735",
-   "group": "temporal-forces|booster-pack|en|sleeved",
-   "title": "Temporal Forces – Sleeved Booster Pack",
-   "url": "https://spelparken.se/products/temporal-forces-sleeved-booster-pack",
-   "price": 109,
-   "type": "Booster Pack",
-   "set": "Temporal Forces",
-   "lang": "en",
-   "kind": "ny"
   }
  ]
 }
