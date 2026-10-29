@@ -135,6 +135,9 @@ canvas.scene{display:block;width:100%;image-rendering:pixelated;image-rendering:
 @media (min-width:961px){#home-sets,.game-sets{grid-template-columns:repeat(5,minmax(0,1fr))}}
 /* På mobilen räcker de två senaste seten per spel. */
 @media (max-width:640px){#home-sets>:nth-child(n+3),.game-sets>:nth-child(n+3){display:none}}
+/* Sex prissänkningar: alltid hela rader, sex i bredd på dator och tre annars. */
+#home-drops{grid-template-columns:repeat(3,minmax(0,1fr))}
+@media (min-width:1100px){#home-drops{grid-template-columns:repeat(6,minmax(0,1fr));gap:10px}#home-drops .pcard h3{font-size:.85rem}#home-drops .pbody{padding:2px 10px 10px}}
 /* Prissänkningarna på startsidan: tre små kort per rad på mobilen, sex totalt. */
 @media (max-width:640px){
   #home-drops{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
