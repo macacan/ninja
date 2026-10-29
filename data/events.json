@@ -1,6 +1,35 @@
 {
- "updated": 1793283709094,
+ "updated": 1793284629118,
  "events": [
+  {
+   "at": 1793284051231,
+   "store": "rgb-kingz",
+   "product": "rgb-kingz:16149968945482",
+   "group": "op|kingdoms-of-intrigue|booster-pack|zh|mini",
+   "title": "One Piece Card Game – Kingdoms of Intrigue Mini Booster Pack (OPC-04) – Kinesisk",
+   "url": "https://rgbkingz.com/products/one-piece-card-game-kingdoms-of-intrigue-mini-booster-pack-opc-04-kinesisk",
+   "image": "https://cdn.shopify.com/s/files/1/0782/8088/4554/files/opc04boosterpack.webp?v=1793283207",
+   "price": 69,
+   "type": "Booster Pack",
+   "set": "Kingdoms of Intrigue",
+   "lang": "zh",
+   "game": "op",
+   "kind": "ny"
+  },
+  {
+   "at": 1793283755168,
+   "store": "tcg-card-house",
+   "product": "tcg-card-house:15588950376823",
+   "group": "black-bolt|booster-box|en|",
+   "title": "Pokemon Scarlet & Violet: Black Bolt Booster Box (15 Pack) (FÖRKÖP)",
+   "url": "https://tcgcardhouse.se/products/pokemon-scarlet-violet-black-bolt-booster-box-15-pack-forkop",
+   "image": "https://cdn.shopify.com/s/files/1/0950/2815/0647/files/Blackboltboosterboxsimplifiedchinese.jpg?v=1793283621",
+   "price": 499,
+   "type": "Booster Box",
+   "set": "Black Bolt",
+   "lang": "en",
+   "kind": "ny"
+  },
   {
    "at": 1793283118833,
    "store": "rgb-kingz",
@@ -6641,34 +6670,6 @@
    "lang": "en",
    "kind": "prissankt",
    "from": 799
-  },
-  {
-   "at": 1792567718119,
-   "store": "tcgaddan",
-   "product": "tcgaddan:16119006069068",
-   "group": "30th-celebration|blister|en||2",
-   "title": "30th Celebration 2-Pack Blister",
-   "url": "https://tcgaddan.se/products/30th-celebration-2-pack-blister",
-   "price": 369,
-   "type": "Blister",
-   "set": "30th Celebration",
-   "lang": "en",
-   "kind": "prissankt",
-   "from": 389
-  },
-  {
-   "at": 1792567718119,
-   "store": "tcgaddan",
-   "product": "tcgaddan:16147639370060",
-   "group": "30th-celebration|booster-pack|en|",
-   "title": "30th Celebration Booster Pack",
-   "url": "https://tcgaddan.se/products/30th-celebration-booster-pack-1",
-   "price": 179,
-   "type": "Booster Pack",
-   "set": "30th Celebration",
-   "lang": "en",
-   "kind": "prissankt",
-   "from": 189
   }
  ]
 }
