@@ -1,6 +1,21 @@
 {
- "updated": 1793300868314,
+ "updated": 1793301788331,
  "events": [
+  {
+   "at": 1793300947987,
+   "store": "spelparken",
+   "product": "spelparken:15550805508471",
+   "group": "chaos-rising|blister|en||2",
+   "title": "Pitch Black & Chaos Rising 2-Pack Blister",
+   "url": "https://spelparken.se/products/pitch-black-chaos-rising-2-pack-blister-1",
+   "image": "https://cdn.shopify.com/s/files/1/0948/1876/3127/files/2104121_L_1.webp?v=1788469840",
+   "price": 179,
+   "type": "Blister",
+   "set": "Chaos Rising",
+   "lang": "en",
+   "kind": "prissankt",
+   "from": 199
+  },
   {
    "at": 1793297330879,
    "store": "spelparken",
@@ -6694,19 +6709,6 @@
    "set": "Prismatic Evolutions",
    "lang": "en",
    "kind": "tillbaka"
-  },
-  {
-   "at": 1792602765716,
-   "store": "rahtech",
-   "product": "rahtech:15795178832198",
-   "group": "perfect-order|booster-pack|en|",
-   "title": "Mega Evolution: Perfect Order – Booster Pack (ENG)",
-   "url": "https://rahtech.se/products/mega-evolution-perfect-order-booster-pack-eng",
-   "price": 79,
-   "type": "Booster Pack",
-   "set": "Perfect Order",
-   "lang": "en",
-   "kind": "ny"
   }
  ]
 }
