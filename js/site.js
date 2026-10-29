@@ -84,7 +84,7 @@ function footer() {
         <li><a href="om.html">Om Lootninja</a></li>
         <li><a href="om.html#kallor">Alla källor</a></li>
         <li><a href="om.html#bevakning">Så fungerar bevakningen</a></li>
-        <li><a href="butiker.html#notiser">Notiser <span class="footer-csoon">Kommer snart</span></a></li>
+        <li><a href="butiker.html#notiser">Notiser</a></li>
         <li><a href="villkor.html">Användarvillkor</a></li>
         <li><a href="integritet.html">Integritet och kakor</a></li>
         <li><a href="om.html#rattigheter">Rättigheter</a></li>
