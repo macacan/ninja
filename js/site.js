@@ -24,7 +24,7 @@ const NAV = [
   ["./", "Hem"],
   ["butiker.html#products", "Produkter"],
   ["priser.html", "Kortpriser"],
-  ["vardering.html", "Värdering"],
+  ["vardering.html", "Värdering", "Pokémon"], // tredje: vilket spel sidan gäller, visas i mobilmenyn och sidfoten
   ["slapp.html", "Kalender"],
   ["set/", "Set"],
   ["nyheter.html", "Nyheter"],
@@ -64,7 +64,7 @@ function tabbar() {
       <form class="mm-search" action="${searchTarget()}" role="search">
         <input type="search" name="q" placeholder="Sök kort, t.ex. Pikachu" aria-label="Sök kort">
       </form>
-      <ul>${NAV.map(([href, label]) => `<li><a href="${href}"${href.split("#")[0] === here ? ' aria-current="page"' : ""}>${label}</a></li>`).join("")}</ul>
+      <ul>${NAV.map(([href, label, only]) => `<li><a href="${href}"${href.split("#")[0] === here ? ' aria-current="page"' : ""}>${label}${only ? ` <span class="nav-only">(${only})</span>` : ""}</a></li>`).join("")}</ul>
       <button type="button" class="mm-theme" data-theme-toggle>${THEME_ICON}<span>Mörkt läge</span></button>
     </div>
   </div>`;
@@ -79,7 +79,7 @@ function footer() {
         <a class="logo" href="./"><img src="logo.svg" alt=""><span><b>Lootninja</b><small>Kortsläpp & priser</small></span></a>
         <p>Ett ideellt hobbyprojekt. Ninjan smyger fram kortsläpp, set och priser – gratis och utan konto. Priser och lager är vägledande och kan innehålla felaktigheter.</p>
       </div>
-      <div><h2>Utforska</h2><ul>${NAV.map(([h, l]) => `<li><a href="${h}">${l}</a></li>`).join("")}<li><a href="set/">Alla set</a></li></ul></div>
+      <div><h2>Utforska</h2><ul>${NAV.map(([h, l, only]) => `<li><a href="${h}">${l}${only ? ` (${only})` : ""}</a></li>`).join("")}<li><a href="set/">Alla set</a></li></ul></div>
       <div><h2>Mer</h2><ul>
         <li><a href="om.html">Om Lootninja</a></li>
         <li><a href="om.html#kallor">Alla källor</a></li>
