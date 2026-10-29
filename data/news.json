@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-29T12:18:28.926Z",
+ "updated": "2026-10-29T12:34:07.244Z",
  "articles": [
   {
    "title": "Pokémon TCG Pocket update 1.8.1 adds Community Decks and Dual Fusion packs",
@@ -7,16 +7,6 @@
    "date": "2026-10-29T11:45:14.000Z",
    "summary": "Pokémon Trading Card Game Pocket version 1.8.1 is now available on iOS and Android, with a listed download size of 791.6 MB. The update brings the Dual Fusion: Mega Mewtwo X and…",
    "image": "https://pokemonblog.com/wp-content/uploads/2024/11/pokemon_tcg_pocket_genetic_apex_mewtwo_pikachu_charizard.jpg",
-   "source": "PokemonBlog",
-   "game": "pk",
-   "digital": true
-  },
-  {
-   "title": "Pokémon TCG Pocket outlines events for Dual Fusion and beyond",
-   "link": "https://pokemonblog.com/2026/10/28/pokemon-tcg-pocket-outlines-events-for-dual-fusion-and-beyond/",
-   "date": "2026-10-29T04:00:20.000Z",
-   "summary": "Pokémon Trading Card Game Pocket has announced a slate of events running from Oct. 29, 2026, through Dec. 25, offering promo cards, booster packs, battle rewards and more. The…",
-   "image": "https://pokemonblog.com/wp-content/uploads/2026/10/pokemon_tcg_pocket_dual_fusion_pikachu_mega_mewtwo_x_ex.jpg",
    "source": "PokemonBlog",
    "game": "pk",
    "digital": true
@@ -438,15 +428,6 @@
    "game": "pk"
   },
   {
-   "title": "Pokémon collector charged with using GPS to track delivery driver's car",
-   "link": "https://www.wargamer.com/pokemon-trading-card-game/gps-tracking",
-   "date": "2026-09-23T16:49:16.000Z",
-   "summary": "The Pokémon TCG can now add ‘elaborate stalking’ to the list of crimes it has inspired.",
-   "image": "https://www.wargamer.com/wp-content/sites/wargamer/2026/09/pokemon-tcg-gps-tracker.jpg",
-   "source": "Wargamer",
-   "game": "pk"
-  },
-  {
    "title": "Target x Pokemon 30th Anniversary event offers custom trading cards and exclusive Mewtwo promo",
    "link": "https://www.dexerto.com/pokemon/target-x-pokemon-30th-anniversary-event-offers-custom-trading-cards-and-exclusive-mewtwo-promo-3411773/",
    "date": "2026-09-23T15:45:35.000Z",
@@ -461,6 +442,24 @@
    "date": "2026-09-22T16:21:42.000Z",
    "summary": "Avery The Poke Kid’s family has shared his final Pokemon TCG pack opening following the 12-year-old creator’s death.",
    "image": "https://www.dexerto.com/cdn-image/wp-content/uploads/2026/09/22/avery-the-pokekid-last-pulls.jpg?width=480&quality=75&format=auto",
+   "source": "Dexerto",
+   "game": "pk"
+  },
+  {
+   "title": "Pokemon collector secretly put GPS tracker on woman’s car to find trading card restocks",
+   "link": "https://www.dexerto.com/pokemon/pokemon-collector-secretly-put-gps-tracker-on-womans-car-to-find-trading-card-restocks-3411308/",
+   "date": "2026-09-22T14:37:48.000Z",
+   "summary": "A Pokemon collector pleaded no contest after secretly attaching a GPS tracker to a woman’s car to find new trading card restocks.",
+   "image": "https://www.dexerto.com/cdn-image/wp-content/uploads/2026/09/22/pokemon-restock-tracking-woman.jpg?width=480&quality=75&format=auto",
+   "source": "Dexerto",
+   "game": "pk"
+  },
+  {
+   "title": "Pokemon resellers fuming as “generous” 30th anniversary rare card hits keep prices down",
+   "link": "https://www.dexerto.com/pokemon/pokemon-resellers-fuming-as-generous-30th-anniversary-rare-card-hits-keep-prices-down-3411121/",
+   "date": "2026-09-22T09:48:13.000Z",
+   "summary": "Pokemon TCG resellers have been split over the new 30th anniversary release, with some claiming it is “overprinted” and the “generous” hits are making it hard for them to rake in…",
+   "image": "https://www.dexerto.com/cdn-image/wp-content/uploads/2026/09/08/pokemon-30th-UPC.jpg?width=480&quality=75&format=auto",
    "source": "Dexerto",
    "game": "pk"
   },

@@ -1,6 +1,20 @@
 {
- "updated": 1793276284629,
+ "updated": 1793277208297,
  "events": [
+  {
+   "at": 1793276363130,
+   "store": "collected",
+   "product": "collected:11425223901526",
+   "group": "x|booster-box|ja||shiny-treasure",
+   "title": "Pokémon TCG: Shiny Treasure ex Booster Box (Japansk) – SV4a",
+   "url": "https://collected.se/products/pokemon-shiny-treasure-ex-booster-box-japansk-sv4a",
+   "image": null,
+   "price": 1990,
+   "type": "Booster Box",
+   "set": null,
+   "lang": "ja",
+   "kind": "ny"
+  },
   {
    "at": 1793271690864,
    "store": "dragon-s-lair",
@@ -6629,19 +6643,6 @@
    "price": 1337,
    "type": "Booster Box",
    "set": "Black Bolt",
-   "lang": "zh",
-   "kind": "forbestallning"
-  },
-  {
-   "at": 1792537027865,
-   "store": "aquitaz",
-   "product": "aquitaz:11045668159834",
-   "group": "white-flare|booster-box|zh|",
-   "title": "Pokemon Scarlet & Violet: White Flare Slim Booster Box (15 Pack) (CH)",
-   "url": "https://aquitaz.se/products/pokemon-scarlet-violet-white-flare-slim-booster-box-15-pack-ch",
-   "price": 1337,
-   "type": "Booster Box",
-   "set": "White Flare",
    "lang": "zh",
    "kind": "forbestallning"
   }
