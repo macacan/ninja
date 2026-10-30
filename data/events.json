@@ -1,6 +1,35 @@
 {
- "updated": 1793356771459,
+ "updated": 1793357691482,
  "events": [
+  {
+   "at": 1793357074046,
+   "store": "samlargrottan",
+   "product": "samlargrottan:https://www.samlargrottan.se/product-page/pokémon-tcg-scarlet-violet-black-bolt-elite-trainer-box-en",
+   "group": "black-bolt|elite-trainer-box|en|",
+   "title": "Pokémon: Black Bolt Elite Trainer Box",
+   "url": "https://www.samlargrottan.se/product-page/pok%C3%A9mon-tcg-scarlet-violet-black-bolt-elite-trainer-box-en",
+   "image": "https://static.wixstatic.com/media/d265aa_981764e8bd8e4b9fab40d0167cffbf24~mv2.jpg/v1/fit/w_500,h_500,q_90/file.jpg",
+   "price": 1799,
+   "type": "Elite Trainer Box",
+   "set": "Black Bolt",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1793357005682,
+   "store": "dragon-s-lair",
+   "product": "dragon-s-lair:15832708448604",
+   "group": "x|booster-box|zh||brilliant",
+   "title": "Pokémon Scarlet & Violet CSV8C: Brilliant Booster Box (Kinesisk)15 st Booster",
+   "url": "https://dragonslair.se/products/pokemon-scarlet-violet-csv8c-brilliant-kinesisk15-st-booster",
+   "image": "https://cdn.shopify.com/s/files/1/1015/8315/9644/files/650705297_ce81ce18-3e10-4205-9fdd-55cc46cc2526.webp?v=1789721744",
+   "price": 395,
+   "type": "Booster Box",
+   "set": "Scarlet & Violet",
+   "lang": "zh",
+   "kind": "prissankt",
+   "from": 449
+  },
   {
    "at": 1793356156297,
    "store": "toyspace",
@@ -6745,32 +6774,6 @@
    "lang": "zh",
    "kind": "prissankt",
    "from": 799
-  },
-  {
-   "at": 1792660908232,
-   "store": "toyspace",
-   "product": "toyspace:https://toyspace.se/pokemon-tcg-30-arsfirandet-2pack-eevee-pok10666-102",
-   "group": "30th-celebration|blister|en||2",
-   "title": "Pokémon TCG 30th Celebration 2-Pack Blister - Eevee",
-   "url": "https://toyspace.se/pokemon-tcg-30-arsfirandet-2pack-eevee-pok10666-102",
-   "price": 356,
-   "type": "Blister",
-   "set": "30th Celebration",
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1792660740556,
-   "store": "kantovault",
-   "product": "kantovault:11338080256341",
-   "group": "30th-celebration|booster-box|ja|",
-   "title": "Pokémon 30th Celebration Booster Box (Japansk)",
-   "url": "https://kantovault.se/products/pokemon-30th-celebration-booster-box-japansk",
-   "price": 2690,
-   "type": "Booster Box",
-   "set": "30th Celebration",
-   "lang": "ja",
-   "kind": "tillbaka"
   }
  ]
 }
