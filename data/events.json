@@ -1,6 +1,20 @@
 {
- "updated": 1793370573535,
+ "updated": 1793371493557,
  "events": [
+  {
+   "at": 1793371298244,
+   "store": "samlarverket",
+   "product": "samlarverket:11343605727575",
+   "group": "x|booster-pack|en||delta-reign",
+   "title": "Pokémon Delta Reign Booster Pack",
+   "url": "https://samlarverket.com/produkt/pokemon-delta-reign-booster-pack",
+   "image": "https://cdn.shopify.com/s/files/1/1022/5323/2471/files/0196214144590_1.webp?v=1793370924",
+   "price": 99,
+   "type": "Booster Pack",
+   "set": null,
+   "lang": "en",
+   "kind": "ny"
+  },
   {
    "at": 1793370166598,
    "store": "dragon-s-lair",
@@ -6791,19 +6805,6 @@
    "title": "Pokémon TCG: Shiny Treasure Booster Pack (Japansk) - sv4a",
    "url": "https://goblinen.com/products/pokemon-tcg-shiny-treasure-booster-pack-japansk",
    "price": 200,
-   "type": "Booster Pack",
-   "set": null,
-   "lang": "ja",
-   "kind": "ny"
-  },
-  {
-   "at": 1792683277718,
-   "store": "goblinen",
-   "product": "goblinen:15489997472088",
-   "group": "x|booster-pack|ja||dream",
-   "title": "Pokémon TCG: Mega Dream ex Booster Pack (Japansk) - M2a",
-   "url": "https://goblinen.com/products/pokemon-tcg-mega-dream-ex-booster-pack-japansk",
-   "price": 150,
    "type": "Booster Pack",
    "set": null,
    "lang": "ja",
