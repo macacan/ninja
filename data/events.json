@@ -1,6 +1,20 @@
 {
- "updated": 1793364133366,
+ "updated": 1793365053395,
  "events": [
+  {
+   "at": 1793364861818,
+   "store": "shinycards",
+   "product": "shinycards:https://www.shinycards.se/pokemon/booster-pack/pokemon-tcg-30th-celebration-booster-pack",
+   "group": "30th-celebration|booster-pack|en|",
+   "title": "Pokemon 30th Celebration Booster Pack",
+   "url": "https://www.shinycards.se/pokemon/booster-pack/pokemon-tcg-30th-celebration-booster-pack",
+   "image": "https://cdn.quickbutik.com/images/69946c/products/6a1deadc8661f.png",
+   "price": 179,
+   "type": "Booster Pack",
+   "set": "30th Celebration",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793363833755,
    "store": "packs-on-packs",
@@ -6776,19 +6790,6 @@
    "price": 849,
    "type": "Elite Trainer Box",
    "set": "Destined Rivals",
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1792677190405,
-   "store": "shinycards",
-   "product": "shinycards:https://www.shinycards.se/pokemon/booster-pack/pokemon-sword-shield-4-vivid-voltage-booster-pack",
-   "group": "vivid-voltage|booster-pack|en|",
-   "title": "Pokemon Sword & Shield 4: Vivid Voltage Booster Pack",
-   "url": "https://www.shinycards.se/pokemon/booster-pack/pokemon-sword-shield-4-vivid-voltage-booster-pack",
-   "price": 149,
-   "type": "Booster Pack",
-   "set": "Vivid Voltage",
    "lang": "en",
    "kind": "tillbaka"
   }
