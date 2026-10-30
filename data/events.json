@@ -1,6 +1,36 @@
 {
- "updated": 1793367813464,
+ "updated": 1793368733492,
  "events": [
+  {
+   "at": 1793368074782,
+   "store": "samlargrottan",
+   "product": "samlargrottan:https://www.samlargrottan.se/product-page/riftbound-vendetta-vault",
+   "group": "rb|vendetta|bundle|en|",
+   "title": "Riftbound: Vendetta Vault",
+   "url": "https://www.samlargrottan.se/product-page/riftbound-vendetta-vault",
+   "image": "https://static.wixstatic.com/media/d265aa_d978b3fa314840169645efd3a56bc98b~mv2.png/v1/fit/w_500,h_500,q_90/file.png",
+   "price": 549,
+   "type": "Bundle",
+   "set": "Vendetta",
+   "lang": "en",
+   "game": "rb",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1793368074782,
+   "store": "samlargrottan",
+   "product": "samlargrottan:https://www.samlargrottan.se/product-page/league-of-legends-riftbound-unleashed-booster-display-24-packs",
+   "group": "rb|unleashed|booster-box|en|",
+   "title": "Riftbound: Unleashed Booster Display",
+   "url": "https://www.samlargrottan.se/product-page/league-of-legends-riftbound-unleashed-booster-display-24-packs",
+   "image": "https://static.wixstatic.com/media/d265aa_013a6b34fe68493a85ae98660920c517~mv2.webp/v1/fit/w_500,h_500,q_90/file.webp",
+   "price": 1699,
+   "type": "Booster Box",
+   "set": "Unleashed",
+   "lang": "en",
+   "game": "rb",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793367036463,
    "store": "samlargrottan",
@@ -6777,32 +6807,6 @@
    "set": "30th Celebration",
    "lang": "ja",
    "kind": "tillbaka"
-  },
-  {
-   "at": 1792682143425,
-   "store": "rgb-kingz",
-   "product": "rgb-kingz:16128139624778",
-   "group": "ascended-heroes|collection-box|en||gardevoir-poster",
-   "title": "Pokémon TCG: Mega Evolution – Ascended Heroes Premium Poster Collection – Mega Gardevoir (ENG)",
-   "url": "https://rgbkingz.com/products/pokemon-tcg-mega-evolution-ascended-heroes-premium-poster-collection-mega-gardevoir-eng",
-   "price": 2199,
-   "type": "Collection Box",
-   "set": "Ascended Heroes",
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1792680948577,
-   "store": "mystery-shack",
-   "product": "mystery-shack:https://mysteryshack.se/products/kopia-chasing-glory-together-slim-booster-box-csv10c-kinesisk",
-   "group": "x|booster-box|zh||gathering-terastal",
-   "title": "Terastal Gathering Booster Box (Kinesisk)",
-   "url": "https://mysteryshack.se/products/kopia-chasing-glory-together-slim-booster-box-csv10c-kinesisk",
-   "price": 979,
-   "type": "Booster Box",
-   "set": null,
-   "lang": "zh",
-   "kind": "ny"
   }
  ]
 }
