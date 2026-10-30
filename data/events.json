@@ -1,6 +1,20 @@
 {
- "updated": 1793385889377,
+ "updated": 1793386809397,
  "events": [
+  {
+   "at": 1793385935944,
+   "store": "samlargrottan",
+   "product": "samlargrottan:https://www.samlargrottan.se/product-page/pokémon-charizard-x-ex-ultra-premium-collection",
+   "group": "x|ultra-premium-collection|en||charizard-x",
+   "title": "Pokémon: Charizard X EX Ultra-Premium Collection",
+   "url": "https://www.samlargrottan.se/product-page/pok%C3%A9mon-charizard-x-ex-ultra-premium-collection",
+   "image": "https://static.wixstatic.com/media/d265aa_f93376c8d17948ce82326a45c7379f96~mv2.jpg/v1/fit/w_500,h_500,q_90/file.jpg",
+   "price": 2899,
+   "type": "Ultra-Premium Collection",
+   "set": null,
+   "lang": "en",
+   "kind": "ny"
+  },
   {
    "at": 1793384088639,
    "store": "spelparken",
@@ -6811,19 +6825,6 @@
    "type": "Booster Pack",
    "set": null,
    "lang": "ja",
-   "kind": "ny"
-  },
-  {
-   "at": 1792690660408,
-   "store": "the-swedish-fish",
-   "product": "the-swedish-fish:16325",
-   "group": "30th-celebration|booster-pack|en|",
-   "title": "Pokemon 30th Celebration Booster Pack Bundle",
-   "url": "https://theswedishfish.se/product/pokemon-30th-celebration-booster-pack-bundle/",
-   "price": 1899,
-   "type": "Booster Pack",
-   "set": "30th Celebration",
-   "lang": "en",
    "kind": "ny"
   }
  ]
