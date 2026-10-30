@@ -1,6 +1,34 @@
 {
- "updated": 1793353437020,
+ "updated": 1793354357047,
  "events": [
+  {
+   "at": 1793354039626,
+   "store": "dragon-s-lair",
+   "product": "dragon-s-lair:15942804767068",
+   "group": "x|collection-box|zh||coin-gathering-jolteon-terastal",
+   "title": "Pokemon Terastal Gathering CSV9.5C Coin Collection Box Jolteon(Kinesisk)",
+   "url": "https://dragonslair.se/products/pokemon-terastal-gathering-csv9-5c-coin-collection-box-jolteonkinesisk-1",
+   "image": "https://cdn.shopify.com/s/files/1/1015/8315/9644/files/6a38e8a96acd107465590d2b.webp?v=1790704507",
+   "price": 195,
+   "type": "Collection Box",
+   "set": null,
+   "lang": "zh",
+   "kind": "ny"
+  },
+  {
+   "at": 1793354039626,
+   "store": "dragon-s-lair",
+   "product": "dragon-s-lair:15942778618204",
+   "group": "x|collection-box|zh||coin-gathering-sylveon-terastal",
+   "title": "Pokemon Terastal Gathering CSV9.5C Coin Collection Box Sylveon (Kinesisk)",
+   "url": "https://dragonslair.se/products/pokemon-terastal-gathering-csv9-5c-coin-collection-box-sylveon-kinesisk-kopia",
+   "image": "https://cdn.shopify.com/s/files/1/1015/8315/9644/files/6a38e8b96acd107465590d31.webp?v=1790703161",
+   "price": 229,
+   "type": "Collection Box",
+   "set": null,
+   "lang": "zh",
+   "kind": "ny"
+  },
   {
    "at": 1793314453671,
    "store": "spelparken",
@@ -6716,32 +6744,6 @@
    "price": 2999,
    "type": "Booster Box",
    "set": "Paradox Rift",
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1792658250740,
-   "store": "poketalk",
-   "product": "poketalk:9208751096150",
-   "group": "surging-sparks|booster-box|en|",
-   "title": "Pokémon Scarlet & Violet: Surging Sparks Booster Box",
-   "url": "https://poketalk.se/products/pokemon-scarlet-violet-surging-sparks-booster-box",
-   "price": 3799,
-   "type": "Booster Box",
-   "set": "Surging Sparks",
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1792657330054,
-   "store": "poketalk",
-   "product": "poketalk:10907219231062",
-   "group": "journey-together|booster-pack|en|",
-   "title": "Pokémon Scarlet & Violet: Journey Together Booster Pack",
-   "url": "https://poketalk.se/products/pokemon-scarlet-violet-journey-together-booster-pack",
-   "price": 85,
-   "type": "Booster Pack",
-   "set": "Journey Together",
    "lang": "en",
    "kind": "tillbaka"
   }
