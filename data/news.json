@@ -1,6 +1,24 @@
 {
- "updated": "2026-10-30T23:30:18.733Z",
+ "updated": "2026-10-30T23:45:36.395Z",
  "articles": [
+  {
+   "title": "Pokémon Happy Meals bring 15 collectible toys and TCG cards to McDonald’s",
+   "link": "https://pokemonblog.com/2026/10/30/pokemon-happy-meals-bring-15-collectible-toys-and-tcg-cards-to-mcdonalds/",
+   "date": "2026-10-30T23:40:41.000Z",
+   "summary": "McDonald’s and Pokémon are launching limited-time Happy Meals featuring 15 miniature toys shaped like Happy Meal boxes and inspired by Pokémon, plus two Pokémon TCG cards in each…",
+   "image": "https://pokemonblog.com/wp-content/uploads/2026/10/pokemon_happy_meals_mcdonalds.jpg",
+   "source": "PokemonBlog",
+   "game": "pk"
+  },
+  {
+   "title": "Mega Rayquaza ex revealed for Pokémon TCG: Mega Evolution—Delta Reign",
+   "link": "https://pokemonblog.com/2026/10/30/mega-rayquaza-ex-revealed-for-pokemon-tcg-mega-evolution-delta-reign/",
+   "date": "2026-10-30T23:36:06.000Z",
+   "summary": "A special illustration rare Mega Rayquaza ex card has been revealed ahead of the Pokémon TCG: Mega Evolution—Delta Reign expansion, launching Nov. 6 with more than 135 cards.…",
+   "image": "https://pokemonblog.com/wp-content/uploads/2026/08/pokemon_tcg_mega_evolution_delta_reign_mega_rayquaza_ex.jpg",
+   "source": "PokemonBlog",
+   "game": "pk"
+  },
   {
    "title": "Pokemon TCG Officially Reveals Special New Rayquaza Release",
    "link": "https://gamerant.com/pokemon-tcg-mega-rayquaza-premium-collection/",
@@ -471,36 +489,5 @@
    "game": "op"
   }
  ],
- "videos": [
-  {
-   "id": "bQZCF3_X6KA",
-   "title": "Andrew Hedrick Vs Caleb Rogerson - Pokémon TCG Masters Finals | 2027 Puebla Regional Championships",
-   "date": "2026-10-30T20:00:21.000Z",
-   "source": "Play! Pokémon (officiell)"
-  },
-  {
-   "id": "TnNgdVVlepQ",
-   "title": "Andrew Hedrick Vs Yoshiyuki Yamaguchi - Pokémon TCG Top 4 | 2027 Puebla Regional Championships",
-   "date": "2026-10-30T18:00:19.000Z",
-   "source": "Play! Pokémon (officiell)"
-  },
-  {
-   "id": "FLwx-9hf8Ow",
-   "title": "Nathan Ginsburg Vs Caleb Rogerson - Pokémon TCG Top 4 | 2027 Puebla Regional Championships",
-   "date": "2026-10-30T16:00:29.000Z",
-   "source": "Play! Pokémon (officiell)"
-  },
-  {
-   "id": "pGIxhUQvezQ",
-   "title": "TCG Day 2 | 2027 Pokémon Gdańsk Regional Championships",
-   "date": "2026-10-26T23:58:59.000Z",
-   "source": "Pokémon (officiell)"
-  },
-  {
-   "id": "FlkW1YWVQF0",
-   "title": "TCG Day 1 | 2027 Pokémon Gdańsk Regional Championships",
-   "date": "2026-10-26T23:57:02.000Z",
-   "source": "Pokémon (officiell)"
-  }
- ]
+ "videos": []
 }

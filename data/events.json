@@ -1,6 +1,49 @@
 {
- "updated": 1793403030378,
+ "updated": 1793403950401,
  "events": [
+  {
+   "at": 1793403049225,
+   "store": "skattkistan",
+   "product": "skattkistan:11232189743442",
+   "group": "prismatic-evolutions|premium-collection|en||super",
+   "title": "Pokémon TCG: Scarlet & Violet – Prismatic Evolutions Super-Premium Collection",
+   "url": "https://skattkistan.net/products/pokemon-tcg-scarlet-violet-prismatic-evolutions-super-premium-collection",
+   "image": "https://cdn.shopify.com/s/files/1/1094/6858/2226/files/chrome_lyqZYq9zH5.png?v=1792012936",
+   "price": 2999,
+   "type": "Premium Collection",
+   "set": "Prismatic Evolutions",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1793403049225,
+   "store": "skattkistan",
+   "product": "skattkistan:11116958450002",
+   "group": "destined-rivals|booster-box|en|",
+   "title": "Pokémon TCG Scarlet & Violet Destined Rivals Booster Display",
+   "url": "https://skattkistan.net/products/destined-rivals-booster-box-max-1-per-kund",
+   "image": "https://cdn.shopify.com/s/files/1/1094/6858/2226/files/07.09.2026_16.21.56_REC.png?v=1788790930",
+   "price": 4199,
+   "type": "Booster Box",
+   "set": "Destined Rivals",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1793403049225,
+   "store": "skattkistan",
+   "product": "skattkistan:11116941345106",
+   "group": "perfect-order|elite-trainer-box|en|",
+   "title": "Pokémon TCG Mega Evolution Perfect Order Elite Trainer Box",
+   "url": "https://skattkistan.net/products/perfect-order-elite-trainer-box",
+   "image": "https://cdn.shopify.com/s/files/1/1094/6858/2226/files/07.09.2026_16.14.31_REC.png?v=1788790485",
+   "price": 899,
+   "type": "Elite Trainer Box",
+   "set": "Perfect Order",
+   "lang": "en",
+   "kind": "prissankt",
+   "from": 999
+  },
   {
    "at": 1793395929987,
    "store": "samlargrottan",
@@ -6789,46 +6832,6 @@
    "price": 6249,
    "type": "Booster Box",
    "set": "Fusion Strike",
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1792700541010,
-   "store": "spelparken",
-   "product": "spelparken:15541912240503",
-   "group": "fusion-strike|booster-box|en|",
-   "title": "Fusion Strike Booster Box",
-   "url": "https://spelparken.se/products/fusion-strike-18-pack-booster-box-kopia",
-   "price": 12499,
-   "type": "Booster Box",
-   "set": "Fusion Strike",
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1792700480001,
-   "store": "kantovault",
-   "product": "kantovault:11514512769365",
-   "group": "perfect-order|booster-bundle|en|",
-   "title": "Pokémon Mega Evolution: Perfect Order Booster Bundle",
-   "url": "https://kantovault.se/products/pokemon-mega-evolution-perfect-order-booster-bundle",
-   "price": 499,
-   "type": "Booster Bundle",
-   "set": "Perfect Order",
-   "lang": "en",
-   "kind": "prissankt",
-   "from": 549
-  },
-  {
-   "at": 1792699640606,
-   "store": "spelparken",
-   "product": "spelparken:15378914771319",
-   "group": "paldean-fates|tin|en||",
-   "title": "Paldean Fates Tin (5 Booster Packs)",
-   "url": "https://spelparken.se/products/paldea-fates-tin-5-booster-packs",
-   "price": 1499,
-   "type": "Tin",
-   "set": "Paldean Fates",
    "lang": "en",
    "kind": "ny"
   }
