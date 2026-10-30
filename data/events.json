@@ -1,6 +1,34 @@
 {
- "updated": 1793363213343,
+ "updated": 1793364133366,
  "events": [
+  {
+   "at": 1793363833755,
+   "store": "packs-on-packs",
+   "product": "packs-on-packs:https://packsonpacks.se/engelska-packs/pitch-black-booster-pack",
+   "group": "pitch-black|booster-pack|en|",
+   "title": "Pitch Black Booster Pack",
+   "url": "https://packsonpacks.se/engelska-packs/pitch-black-booster-pack",
+   "image": "https://cdn.quickbutik.com/images/92330P/products/6a566931b3d26.png",
+   "price": 85,
+   "type": "Booster Pack",
+   "set": "Pitch Black",
+   "lang": "en",
+   "kind": "ny"
+  },
+  {
+   "at": 1793363589921,
+   "store": "tcgstore",
+   "product": "tcgstore:11412193444167",
+   "group": "ascended-heroes|elite-trainer-box|en|",
+   "title": "Pokémon Mega Evolution: Ascended Heroes Elite Trainer Box",
+   "url": "https://tcgstore.se/products/pokemon-mega-evolution-ascended-heroes-elite-trainer-box",
+   "image": "https://cdn.shopify.com/s/files/1/0758/2508/6791/files/pokemon-mega-evolution-ascended-heroes-elite-trainer-box.jpg?v=1793100929",
+   "price": 2399,
+   "type": "Elite Trainer Box",
+   "set": "Ascended Heroes",
+   "lang": "en",
+   "kind": "ny"
+  },
   {
    "at": 1793362856006,
    "store": "packs-on-packs",
@@ -6763,32 +6791,6 @@
    "set": "Vivid Voltage",
    "lang": "en",
    "kind": "tillbaka"
-  },
-  {
-   "at": 1792677190405,
-   "store": "shinycards",
-   "product": "shinycards:https://www.shinycards.se/pokemon/elite-trainer-box/pokemon-sword-shield-10-astral-radiance-elite-trainer-box",
-   "group": "astral-radiance|elite-trainer-box|en|",
-   "title": "Pokemon Sword & Shield 10: Astral Radiance Elite Trainer Box",
-   "url": "https://www.shinycards.se/pokemon/elite-trainer-box/pokemon-sword-shield-10-astral-radiance-elite-trainer-box",
-   "price": 1699,
-   "type": "Elite Trainer Box",
-   "set": "Astral Radiance",
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1792676376670,
-   "store": "rgb-kingz",
-   "product": "rgb-kingz:16127802900810",
-   "group": "mega-evolution|booster-pack|en|",
-   "title": "Pokémon TCG: Mega Evolution Booster Pack (ENG)",
-   "url": "https://rgbkingz.com/products/pokemon-tcg-mega-evolution-booster-pack-eng",
-   "price": 149,
-   "type": "Booster Pack",
-   "set": "Mega Evolution",
-   "lang": "en",
-   "kind": "ny"
   }
  ]
 }
