@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-30T15:55:54.840Z",
+ "updated": "2026-10-30T16:11:29.177Z",
  "articles": [
   {
    "title": "Pokémon TCG reveals sharp new Rayquaza box with Delta Reign's missing full art",
@@ -518,6 +518,12 @@
  ],
  "videos": [
   {
+   "id": "FLwx-9hf8Ow",
+   "title": "Nathan Ginsburg Vs Caleb Rogerson - Pokémon TCG Top 4 | 2027 Puebla Regional Championships",
+   "date": "2026-10-30T16:00:29.000Z",
+   "source": "Play! Pokémon (officiell)"
+  },
+  {
    "id": "pGIxhUQvezQ",
    "title": "TCG Day 2 | 2027 Pokémon Gdańsk Regional Championships",
    "date": "2026-10-26T23:58:59.000Z",
@@ -539,12 +545,6 @@
    "id": "OctXgLh0B_A",
    "title": "TCG Feature Station Day 1 | 2027 Pokémon Louisville Regional Championships",
    "date": "2026-10-26T21:00:12.000Z",
-   "source": "Play! Pokémon (officiell)"
-  },
-  {
-   "id": "8UqVTKZZEKY",
-   "title": "The 9 Pokémon TCG cards that made Ethan Hegyi",
-   "date": "2026-10-26T19:00:33.000Z",
    "source": "Play! Pokémon (officiell)"
   }
  ]

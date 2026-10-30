@@ -1,6 +1,20 @@
 {
- "updated": 1793375731479,
+ "updated": 1793376629159,
  "events": [
+  {
+   "at": 1793375915813,
+   "store": "dragon-s-lair",
+   "product": "dragon-s-lair:15944775663964",
+   "group": "x|booster-box|zh||arts-blastoise-jumbo-primordial-torrent",
+   "title": "Pokémon Sword & Shield - Primordial Arts: Torrent (CS3bC) Jumbo Booster Display (6 st Booster) - KINESISK [BLASTOISE]",
+   "url": "https://dragonslair.se/products/pokemon-sword-shield-primordial-arts-torrent-cs3bc-jumbo-booster-display-6-st-booster-kinesisk-blastoise",
+   "image": "https://cdn.shopify.com/s/files/1/1015/8315/9644/files/IMG_3521.png?v=1793375301",
+   "price": 749,
+   "type": "Booster Box",
+   "set": "Sword & Shield",
+   "lang": "zh",
+   "kind": "ny"
+  },
   {
    "at": 1793375238275,
    "store": "dragon-s-lair",
@@ -6802,19 +6816,6 @@
    "price": 229,
    "type": "Booster Pack",
    "set": "Mega Evolution",
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1792684347835,
-   "store": "rgb-kingz",
-   "product": "rgb-kingz:16128163873098",
-   "group": "ascended-heroes|collection-box|en||lucario-poster",
-   "title": "Pokémon TCG: Mega Evolution – Ascended Heroes Premium Poster Collection – Mega Lucario (ENG)",
-   "url": "https://rgbkingz.com/products/pokemon-tcg-mega-evolution-ascended-heroes-premium-poster-collection-mega-lucario-eng",
-   "price": 2199,
-   "type": "Collection Box",
-   "set": "Ascended Heroes",
    "lang": "en",
    "kind": "tillbaka"
   }
