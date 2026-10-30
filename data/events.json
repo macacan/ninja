@@ -1,6 +1,20 @@
 {
- "updated": 1793376629159,
+ "updated": 1793377609189,
  "events": [
+  {
+   "at": 1793376897121,
+   "store": "tcgaddan",
+   "product": "tcgaddan:15817449308492",
+   "group": "ascended-heroes|booster-pack|en|",
+   "title": "Ascended Heroes Booster Pack",
+   "url": "https://tcgaddan.se/products/ascended-heroes-booster-packs",
+   "image": "https://cdn.shopify.com/s/files/1/1037/7062/0236/files/AScendedheroes_915a09f2-6585-42c6-a995-5bd199a4b83e.webp?v=1781508800",
+   "price": 189,
+   "type": "Booster Pack",
+   "set": "Ascended Heroes",
+   "lang": "en",
+   "kind": "ny"
+  },
   {
    "at": 1793375915813,
    "store": "dragon-s-lair",
@@ -6803,19 +6817,6 @@
    "price": 499,
    "type": "Collection Box",
    "set": null,
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1792684428582,
-   "store": "shinycards",
-   "product": "shinycards:https://www.shinycards.se/pokemon/booster-pack/pokemon-ascend-heroes-booster-pack",
-   "group": "mega-evolution|booster-pack|en||ascend-heroes",
-   "title": "Pokemon Mega Evolution 2.5: Ascend Heroes Booster Pack",
-   "url": "https://www.shinycards.se/pokemon/booster-pack/pokemon-ascend-heroes-booster-pack",
-   "price": 229,
-   "type": "Booster Pack",
-   "set": "Mega Evolution",
    "lang": "en",
    "kind": "tillbaka"
   }
