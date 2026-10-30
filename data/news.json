@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-30T00:23:47.985Z",
+ "updated": "2026-10-30T00:39:07.825Z",
  "articles": [
   {
    "title": "Pokémon TCG Mega Rayquaza ex Premium Tournament Collection launches Feb. 12",
@@ -516,36 +516,5 @@
    "game": "op"
   }
  ],
- "videos": [
-  {
-   "id": "L_MAV72GVyg",
-   "title": "TCG Day 2 | 2027 Pokémon Gdańsk Regional Championships",
-   "date": "2026-10-26T23:26:17.000Z",
-   "source": "Play! Pokémon (officiell)"
-  },
-  {
-   "id": "rWsK4plWGM4",
-   "title": "TCG Day 1 | 2027 Pokémon Gdańsk Regional Championships",
-   "date": "2026-10-26T23:22:12.000Z",
-   "source": "Play! Pokémon (officiell)"
-  },
-  {
-   "id": "s_dGpQQ7pXM",
-   "title": "TCG Feature Station Day 2 | 2027 Pokémon Louisville Regional Championships",
-   "date": "2026-10-26T23:00:26.000Z",
-   "source": "Play! Pokémon (officiell)"
-  },
-  {
-   "id": "OctXgLh0B_A",
-   "title": "TCG Feature Station Day 1 | 2027 Pokémon Louisville Regional Championships",
-   "date": "2026-10-26T21:00:12.000Z",
-   "source": "Play! Pokémon (officiell)"
-  },
-  {
-   "id": "8UqVTKZZEKY",
-   "title": "The 9 Pokémon TCG cards that made Ethan Hegyi",
-   "date": "2026-10-26T19:00:33.000Z",
-   "source": "Play! Pokémon (officiell)"
-  }
- ]
+ "videos": []
 }
