@@ -1,6 +1,34 @@
 {
- "updated": 1793378529208,
+ "updated": 1793379429235,
  "events": [
+  {
+   "at": 1793378783064,
+   "store": "rgb-kingz",
+   "product": "rgb-kingz:16127802900810",
+   "group": "mega-evolution|booster-pack|en|",
+   "title": "Pokémon TCG: Mega Evolution Booster Pack (ENG)",
+   "url": "https://rgbkingz.com/products/pokemon-tcg-mega-evolution-booster-pack-eng",
+   "image": "https://cdn.shopify.com/s/files/1/0782/8088/4554/files/megaevolutionboosterpack1.jpg?v=1792676479",
+   "price": 129,
+   "type": "Booster Pack",
+   "set": "Mega Evolution",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1793378783064,
+   "store": "rgb-kingz",
+   "product": "rgb-kingz:16127784386890",
+   "group": "journey-together|booster-pack|en|",
+   "title": "Pokémon TCG: Scarlet & Violet – Journey Together Booster Pack (ENG)",
+   "url": "https://rgbkingz.com/products/pokemon-tcg-scarlet-violet-journey-together-booster-pack-eng",
+   "image": "https://cdn.shopify.com/s/files/1/0782/8088/4554/files/PokemonTCG-Scarlet_Violet-JourneyTogether-BoosterPack4.webp?v=1792674345",
+   "price": 99,
+   "type": "Booster Pack",
+   "set": "Journey Together",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793376897121,
    "store": "tcgaddan",
@@ -6793,32 +6821,6 @@
    "set": "Sun & Moon",
    "lang": "ja",
    "kind": "ny"
-  },
-  {
-   "at": 1792685280661,
-   "store": "rgb-kingz",
-   "product": "rgb-kingz:16128235831626",
-   "group": "ascended-heroes|collection-box|en||charmander-sticker-tech",
-   "title": "Pokémon TCG: Mega Evolution – Ascended Heroes Tech Sticker Collection – Charmander (ENG)",
-   "url": "https://rgbkingz.com/products/pokemon-tcg-mega-evolution-ascended-heroes-tech-sticker-collection-charmander-eng",
-   "price": 629,
-   "type": "Collection Box",
-   "set": "Ascended Heroes",
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1792684428582,
-   "store": "shinycards",
-   "product": "shinycards:https://www.shinycards.se/pokemon/collection-box/pokemon-day-2026-collection-box",
-   "group": "x|collection-box|en||day",
-   "title": "Pokemon Day 2026 Collection",
-   "url": "https://www.shinycards.se/pokemon/collection-box/pokemon-day-2026-collection-box",
-   "price": 499,
-   "type": "Collection Box",
-   "set": null,
-   "lang": "en",
-   "kind": "tillbaka"
   }
  ]
 }
