@@ -1,6 +1,34 @@
 {
- "updated": 1793372393574,
+ "updated": 1793373333603,
  "events": [
+  {
+   "at": 1793373211224,
+   "store": "dragon-s-lair",
+   "product": "dragon-s-lair:15944501854556",
+   "group": "x|booster-pack|zh||arts-blastoise-jumbo-primordial-torrent",
+   "title": "Pokémon Sword & Shield - Primordial Arts: Torrent (CS3bC) Jumbo Booster (25 kort) - KINESISK [BLASTOISE]",
+   "url": "https://dragonslair.se/products/pokemon-sword-shield-primordial-arts-torrent-cs3bc-jumbo-booster-25-kort-kinesisk-blastoise",
+   "image": "https://cdn.shopify.com/s/files/1/1015/8315/9644/files/pok-cs3bc-01_grande_8f1e0fa9-21b1-4a52-80ba-3c139c70a33c.jpg?v=1793372576",
+   "price": 249,
+   "type": "Booster Pack",
+   "set": "Sword & Shield",
+   "lang": "zh",
+   "kind": "ny"
+  },
+  {
+   "at": 1793373091488,
+   "store": "samlarverket",
+   "product": "samlarverket:11343655502167",
+   "group": "x|elite-trainer-box|en||delta-reign",
+   "title": "Pokémon Delta Reign Elite Trainer Box",
+   "url": "https://samlarverket.com/produkt/pokemon-delta-reign-elite-trainer-box",
+   "image": "https://cdn.shopify.com/s/files/1/1022/5323/2471/files/0196214143906_1.webp?v=1793371075",
+   "price": 1299,
+   "type": "Elite Trainer Box",
+   "set": null,
+   "lang": "en",
+   "kind": "ny"
+  },
   {
    "at": 1793372190763,
    "store": "dragon-s-lair",
@@ -6780,32 +6808,6 @@
    "title": "Pokémon TCG: Inferno X [M2] Booster Pack (Japansk)",
    "url": "https://goblinen.com/products/pokemon-tcg-inferno-x-booster-pack-japansk",
    "price": 80,
-   "type": "Booster Pack",
-   "set": null,
-   "lang": "ja",
-   "kind": "ny"
-  },
-  {
-   "at": 1792683277718,
-   "store": "goblinen",
-   "product": "goblinen:15614587437400",
-   "group": "x|booster-pack|ja||munekis-nihil-zero",
-   "title": "Pokémon TCG: Nihil/Munekis Zero Booster Pack (Japansk) - M3",
-   "url": "https://goblinen.com/products/pokemon-tcg-munekis-zero-booster-pack-japansk",
-   "price": 45,
-   "type": "Booster Pack",
-   "set": null,
-   "lang": "ja",
-   "kind": "ny"
-  },
-  {
-   "at": 1792683277718,
-   "store": "goblinen",
-   "product": "goblinen:15788275040600",
-   "group": "x|booster-pack|ja||ninja-spinner",
-   "title": "Pokémon TCG: Ninja Spinner Booster Pack (Japansk) - M4",
-   "url": "https://goblinen.com/products/pokemon-tcg-ninja-spinner-booster-pack-japansk-m4",
-   "price": 45,
    "type": "Booster Pack",
    "set": null,
    "lang": "ja",
