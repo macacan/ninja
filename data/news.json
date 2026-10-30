@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-30T19:46:03.192Z",
+ "updated": "2026-10-30T20:01:23.401Z",
  "articles": [
   {
    "title": "Pokemon TCG Officially Reveals Special New Rayquaza Release",
@@ -518,6 +518,12 @@
  ],
  "videos": [
   {
+   "id": "bQZCF3_X6KA",
+   "title": "Andrew Hedrick Vs Caleb Rogerson - Pokémon TCG Masters Finals | 2027 Puebla Regional Championships",
+   "date": "2026-10-30T20:00:21.000Z",
+   "source": "Play! Pokémon (officiell)"
+  },
+  {
    "id": "TnNgdVVlepQ",
    "title": "Andrew Hedrick Vs Yoshiyuki Yamaguchi - Pokémon TCG Top 4 | 2027 Puebla Regional Championships",
    "date": "2026-10-30T18:00:19.000Z",
@@ -540,12 +546,6 @@
    "title": "TCG Day 1 | 2027 Pokémon Gdańsk Regional Championships",
    "date": "2026-10-26T23:57:02.000Z",
    "source": "Pokémon (officiell)"
-  },
-  {
-   "id": "s_dGpQQ7pXM",
-   "title": "TCG Feature Station Day 2 | 2027 Pokémon Louisville Regional Championships",
-   "date": "2026-10-26T23:00:26.000Z",
-   "source": "Play! Pokémon (officiell)"
   }
  ]
 }
