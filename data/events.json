@@ -1,6 +1,20 @@
 {
- "updated": 1793394169588,
+ "updated": 1793395089607,
  "events": [
+  {
+   "at": 1793394830159,
+   "store": "samlargrottan",
+   "product": "samlargrottan:https://www.samlargrottan.se/product-page/pokémon-prismatic-evolutions-elite-trainer-box",
+   "group": "prismatic-evolutions|elite-trainer-box|en|",
+   "title": "Pokémon: Prismatic Evolutions Elite Trainer Box",
+   "url": "https://www.samlargrottan.se/product-page/pok%C3%A9mon-prismatic-evolutions-elite-trainer-box",
+   "image": "https://static.wixstatic.com/media/d265aa_db9be15e72334c9c86b65a98d937285c~mv2.webp/v1/fit/w_500,h_500,q_90/file.webp",
+   "price": 2249,
+   "type": "Elite Trainer Box",
+   "set": "Prismatic Evolutions",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793393849784,
    "store": "samlargrottan",
@@ -6817,20 +6831,6 @@
    "lang": "en",
    "kind": "prissankt",
    "from": 649
-  },
-  {
-   "at": 1792699575521,
-   "store": "kantovault",
-   "product": "kantovault:11491105767765",
-   "group": "x|booster-box|zh||gem-s6-vol",
-   "title": "Pokémon Gem Pack Vol 6 Booster Box (Kinesisk)",
-   "url": "https://kantovault.se/products/pokemon-gem-pack-vol-6-booster-box-kinesisk",
-   "price": 349,
-   "type": "Booster Box",
-   "set": null,
-   "lang": "zh",
-   "kind": "prissankt",
-   "from": 399
   }
  ]
 }
