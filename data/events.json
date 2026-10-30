@@ -1,6 +1,22 @@
 {
- "updated": 1793362293320,
+ "updated": 1793363213343,
  "events": [
+  {
+   "at": 1793362856006,
+   "store": "packs-on-packs",
+   "product": "packs-on-packs:https://packsonpacks.se/one-piece/sleeved-op-17-booster-pack",
+   "group": "op|the-world-s-strongest-warriors|booster-pack|en|",
+   "title": "One Piece – The World’s Strongest Warriors OP-17 Booster Pack",
+   "url": "https://packsonpacks.se/one-piece/sleeved-op-17-booster-pack",
+   "image": "https://cdn.quickbutik.com/images/92330P/products/6aa83034a0916.png",
+   "price": 169,
+   "type": "Booster Pack",
+   "set": "The World's Strongest Warriors",
+   "lang": "en",
+   "game": "op",
+   "kind": "prissankt",
+   "from": 179
+  },
   {
    "at": 1793362070281,
    "store": "samlargrottan",
@@ -6771,19 +6787,6 @@
    "price": 149,
    "type": "Booster Pack",
    "set": "Mega Evolution",
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1792675105909,
-   "store": "rgb-kingz",
-   "product": "rgb-kingz:16127784386890",
-   "group": "journey-together|booster-pack|en|",
-   "title": "Pokémon TCG: Scarlet & Violet – Journey Together Booster Pack (ENG)",
-   "url": "https://rgbkingz.com/products/pokemon-tcg-scarlet-violet-journey-together-booster-pack-eng",
-   "price": 99,
-   "type": "Booster Pack",
-   "set": "Journey Together",
    "lang": "en",
    "kind": "ny"
   }
