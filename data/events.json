@@ -1,6 +1,20 @@
 {
- "updated": 1793390489494,
+ "updated": 1793391409517,
  "events": [
+  {
+   "at": 1793390686041,
+   "store": "spelparken",
+   "product": "spelparken:15590033326455",
+   "group": "team-up|blister|en||3",
+   "title": "Team Up 3-Pack Blister – Boxbreak",
+   "url": "https://spelparken.se/products/team-up-3-pack-blister-boxbreak",
+   "image": "https://cdn.shopify.com/s/files/1/0948/1876/3127/files/P4865PC_699-16929_01.webp?v=1793389810",
+   "price": 6666,
+   "type": "Blister",
+   "set": "Team Up",
+   "lang": "en",
+   "kind": "ny"
+  },
   {
    "at": 1793385935944,
    "store": "samlargrottan",
@@ -6809,19 +6823,6 @@
    "title": "Pokemon Shiny Star V S4A Booster Pack (Japansk)",
    "url": "https://pokemurre.se/products/pokemon-shiny-star-v-s4a-booster-pack-japansk",
    "price": 189,
-   "type": "Booster Pack",
-   "set": null,
-   "lang": "ja",
-   "kind": "ny"
-  },
-  {
-   "at": 1792693271048,
-   "store": "pokemurre",
-   "product": "pokemurre:11256453005650",
-   "group": "x|booster-pack|ja||hazard-snow",
-   "title": "Pokemon Snow Hazard SV2P Booster Pack (Japansk)",
-   "url": "https://pokemurre.se/products/pokemon-snow-hazard-sv2p-booster-pack-japansk",
-   "price": 39,
    "type": "Booster Pack",
    "set": null,
    "lang": "ja",
