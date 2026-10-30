@@ -1,6 +1,36 @@
 {
- "updated": 1793375173634,
+ "updated": 1793375731479,
  "events": [
+  {
+   "at": 1793375238275,
+   "store": "dragon-s-lair",
+   "product": "dragon-s-lair:15944501854556",
+   "group": "x|booster-pack|zh||arts-blastoise-jumbo-primordial-torrent",
+   "title": "Pokémon Sword & Shield - Primordial Arts: Torrent (CS3bC) Jumbo Booster (25 kort) - KINESISK [BLASTOISE]",
+   "url": "https://dragonslair.se/products/pokemon-sword-shield-primordial-arts-torrent-cs3bc-jumbo-booster-25-kort-kinesisk-blastoise",
+   "image": "https://cdn.shopify.com/s/files/1/1015/8315/9644/files/pok-cs3bc-01_grande_8f1e0fa9-21b1-4a52-80ba-3c139c70a33c.jpg?v=1793372576",
+   "price": 129,
+   "type": "Booster Pack",
+   "set": "Sword & Shield",
+   "lang": "zh",
+   "kind": "prissankt",
+   "from": 249
+  },
+  {
+   "at": 1793375238275,
+   "store": "dragon-s-lair",
+   "product": "dragon-s-lair:15944362754396",
+   "group": "x|booster-pack|zh||arts-jumbo-overgrow-primordial-venusaur",
+   "title": "Pokémon Sword & Shield - Primordial Arts: Overgrow (CS3aC) Jumbo Booster (25 kort) - KINESISK [VENUSAUR]",
+   "url": "https://dragonslair.se/products/pokemon-sword-shield-primordial-arts-overgrow-cs3ac-jumbo-booster-25-kort-kinesisk-venusaur",
+   "image": "https://cdn.shopify.com/s/files/1/1015/8315/9644/files/pok-cs3ac-01_grande_9d2724c7-93ee-4738-b032-92aba686aebe.jpg?v=1793371543",
+   "price": 129,
+   "type": "Booster Pack",
+   "set": "Sword & Shield",
+   "lang": "zh",
+   "kind": "prissankt",
+   "from": 249
+  },
   {
    "at": 1793373988883,
    "store": "samlarverket",
@@ -6787,33 +6817,6 @@
    "set": "Ascended Heroes",
    "lang": "en",
    "kind": "tillbaka"
-  },
-  {
-   "at": 1792684347835,
-   "store": "rgb-kingz",
-   "product": "rgb-kingz:16127802900810",
-   "group": "mega-evolution|booster-pack|en|",
-   "title": "Pokémon TCG: Mega Evolution Booster Pack (ENG)",
-   "url": "https://rgbkingz.com/products/pokemon-tcg-mega-evolution-booster-pack-eng",
-   "price": 129,
-   "type": "Booster Pack",
-   "set": "Mega Evolution",
-   "lang": "en",
-   "kind": "prissankt",
-   "from": 149
-  },
-  {
-   "at": 1792683277718,
-   "store": "goblinen",
-   "product": "goblinen:15463110836568",
-   "group": "x|booster-pack|ja||brave",
-   "title": "Pokémon TCG: Mega Brave [M1L] Booster Pack (Japansk)",
-   "url": "https://goblinen.com/products/pokemon-tcg-mega-brave-booster-pack-japansk",
-   "price": 45,
-   "type": "Booster Pack",
-   "set": null,
-   "lang": "ja",
-   "kind": "ny"
   }
  ]
 }
