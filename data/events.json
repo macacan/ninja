@@ -1,6 +1,36 @@
 {
- "updated": 1793365973421,
+ "updated": 1793366893443,
  "events": [
+  {
+   "at": 1793366412561,
+   "store": "aquitaz",
+   "product": "aquitaz:10896526803290",
+   "group": "rb|radiance|bundle|en|",
+   "title": "League of Legends: Riftbound Radiance Vault (6 Pack) (ENG)",
+   "url": "https://aquitaz.se/products/league-of-legends-riftbound-radiance-vault-6-pack-eng",
+   "image": "https://cdn.shopify.com/s/files/1/0885/4087/3050/files/BlackBox-2026-06-17T230411.666.png?v=1781708664",
+   "price": 549,
+   "type": "Bundle",
+   "set": "Radiance",
+   "lang": "en",
+   "game": "rb",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1793366052500,
+   "store": "samlargrottan",
+   "product": "samlargrottan:https://www.samlargrottan.se/product-page/riftbound-unleashed-booster-pack-1st",
+   "group": "rb|unleashed|booster-pack|en|",
+   "title": "Riftbound: Unleashed Booster Pack (1st)",
+   "url": "https://www.samlargrottan.se/product-page/riftbound-unleashed-booster-pack-1st",
+   "image": "https://static.wixstatic.com/media/d265aa_55fa942e62bd487688b5cf1f2cd6c490~mv2.png/v1/fit/w_500,h_500,q_90/file.png",
+   "price": 89,
+   "type": "Booster Pack",
+   "set": "Unleashed",
+   "lang": "en",
+   "game": "rb",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793365120932,
    "store": "dragon-s-lair",
@@ -6767,33 +6797,6 @@
    "set": null,
    "lang": "ja",
    "kind": "ny"
-  },
-  {
-   "at": 1792679574398,
-   "store": "rgb-kingz",
-   "product": "rgb-kingz:16127932006730",
-   "group": "ascended-heroes|elite-trainer-box|en|",
-   "title": "Pokémon TCG: Mega Evolution – Ascended Heroes Elite Trainer Box (ENG)",
-   "url": "https://rgbkingz.com/products/pokemon-tcg-mega-evolution-ascended-heroes-elite-trainer-box-eng",
-   "price": 2199,
-   "type": "Elite Trainer Box",
-   "set": "Ascended Heroes",
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1792678311682,
-   "store": "dragon-s-lair",
-   "product": "dragon-s-lair:15554371158364",
-   "group": "x|booster-pack|ja||raging-surf",
-   "title": "Pokémon TCG - Raging Surf Booster Japansk",
-   "url": "https://dragonslair.se/products/pokemon-tcg-raging-surf-booster-japansk-pokemon",
-   "price": 55,
-   "type": "Booster Pack",
-   "set": null,
-   "lang": "ja",
-   "kind": "prissankt",
-   "from": 89
   }
  ]
 }
