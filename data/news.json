@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-30T17:58:47.430Z",
+ "updated": "2026-10-30T18:14:06.673Z",
  "articles": [
   {
    "title": "Pokémon accidentally reveals future cards from next year's McDonalds collab",
@@ -518,6 +518,12 @@
  ],
  "videos": [
   {
+   "id": "TnNgdVVlepQ",
+   "title": "Andrew Hedrick Vs Yoshiyuki Yamaguchi - Pokémon TCG Top 4 | 2027 Puebla Regional Championships",
+   "date": "2026-10-30T18:00:19.000Z",
+   "source": "Play! Pokémon (officiell)"
+  },
+  {
    "id": "FLwx-9hf8Ow",
    "title": "Nathan Ginsburg Vs Caleb Rogerson - Pokémon TCG Top 4 | 2027 Puebla Regional Championships",
    "date": "2026-10-30T16:00:29.000Z",
@@ -539,12 +545,6 @@
    "id": "s_dGpQQ7pXM",
    "title": "TCG Feature Station Day 2 | 2027 Pokémon Louisville Regional Championships",
    "date": "2026-10-26T23:00:26.000Z",
-   "source": "Play! Pokémon (officiell)"
-  },
-  {
-   "id": "OctXgLh0B_A",
-   "title": "TCG Feature Station Day 1 | 2027 Pokémon Louisville Regional Championships",
-   "date": "2026-10-26T21:00:12.000Z",
    "source": "Play! Pokémon (officiell)"
   }
  ]

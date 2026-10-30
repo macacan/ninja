@@ -1,6 +1,49 @@
 {
- "updated": 1793383129321,
+ "updated": 1793384049341,
  "events": [
+  {
+   "at": 1793383189573,
+   "store": "spelparken",
+   "product": "spelparken:15189437514103",
+   "group": "x|ultra-premium-collection|en||charizard",
+   "title": "Pokemon Charizard UPC",
+   "url": "https://spelparken.se/products/charizard-upc",
+   "image": "https://cdn.shopify.com/s/files/1/0948/1876/3127/files/1600_3_228f4f09-616e-4b2d-96d1-44bdf2c0142c.jpg?v=1760629561",
+   "price": 6999,
+   "type": "Ultra-Premium Collection",
+   "set": null,
+   "lang": "en",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1793383189573,
+   "store": "spelparken",
+   "product": "spelparken:15590001115511",
+   "group": "rb|radiance|booster-pack|en|",
+   "title": "Riftbound Radiance Booster Pack",
+   "url": "https://spelparken.se/products/riftbound-radiance-booster-pack",
+   "image": "https://cdn.shopify.com/s/files/1/0948/1876/3127/files/OIP_63b127dc-24a5-403f-a3aa-411841337ecf.webp?v=1793382793",
+   "price": 109,
+   "type": "Booster Pack",
+   "set": "Radiance",
+   "lang": "en",
+   "game": "rb",
+   "kind": "ny"
+  },
+  {
+   "at": 1793383189573,
+   "store": "spelparken",
+   "product": "spelparken:15589994824055",
+   "group": "30th-celebration|collection-box|en||figure-mew",
+   "title": "30th Celebration Figure Collection – Mew",
+   "url": "https://spelparken.se/products/30th-celebration-figure-collection-mew",
+   "image": "https://cdn.shopify.com/s/files/1/0948/1876/3127/files/Aquitaz_44_28bdff4a-e96c-42da-9d31-fe8b3c79045c.webp?v=1793382135",
+   "price": 1249,
+   "type": "Collection Box",
+   "set": "30th Celebration",
+   "lang": "en",
+   "kind": "ny"
+  },
   {
    "at": 1793379970004,
    "store": "dragon-s-lair",
@@ -6781,47 +6824,6 @@
    "set": "Lost Origin",
    "lang": "en",
    "kind": "ny"
-  },
-  {
-   "at": 1792688777846,
-   "store": "rahtech",
-   "product": "rahtech:15796596310342",
-   "group": "30th-celebration|booster-pack|en|",
-   "title": "Mega 30th Celebration – Booster Pack (ENG)",
-   "url": "https://rahtech.se/products/mega-30th-celebration-booster-pack-eng-1",
-   "price": 149,
-   "type": "Booster Pack",
-   "set": "30th Celebration",
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1792687814223,
-   "store": "kantovault",
-   "product": "kantovault:11680475840853",
-   "group": "ascended-heroes|booster-pack|en|",
-   "title": "Pokémon Mega Evolution: Ascended Heroes Booster Pack",
-   "url": "https://kantovault.se/products/pokemon-mega-evolution-ascended-heroes-booster-pack",
-   "price": 175,
-   "type": "Booster Pack",
-   "set": "Ascended Heroes",
-   "lang": "en",
-   "kind": "prissankt",
-   "from": 185
-  },
-  {
-   "at": 1792687814223,
-   "store": "kantovault",
-   "product": "kantovault:10016556843349",
-   "group": "x|collection-box|ja|pc|center-fukuoka",
-   "title": "Pokémon Center Fukuoka Special Box",
-   "url": "https://kantovault.se/products/pokemon-center-fukuoka-special-box",
-   "price": 1649,
-   "type": "Collection Box",
-   "set": null,
-   "lang": "ja",
-   "kind": "prissankt",
-   "from": 1790
   }
  ]
 }
