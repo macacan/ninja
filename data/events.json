@@ -1,6 +1,20 @@
 {
- "updated": 1793395631212,
+ "updated": 1793396530201,
  "events": [
+  {
+   "at": 1793395929987,
+   "store": "samlargrottan",
+   "product": "samlargrottan:https://www.samlargrottan.se/product-page/pokémon-prismatic-evolutions-super-premium-collection",
+   "group": "prismatic-evolutions|premium-collection|en||super",
+   "title": "Pokémon: Prismatic Evolutions Super Premium Collection",
+   "url": "https://www.samlargrottan.se/product-page/pok%C3%A9mon-prismatic-evolutions-super-premium-collection",
+   "image": "https://static.wixstatic.com/media/d265aa_bdefd6442d884743a0a5bf1ecadd4989~mv2.webp/v1/fit/w_500,h_500,q_90/file.webp",
+   "price": 3449,
+   "type": "Premium Collection",
+   "set": "Prismatic Evolutions",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793394830159,
    "store": "samlargrottan",
@@ -6817,20 +6831,6 @@
    "set": "Paldean Fates",
    "lang": "en",
    "kind": "ny"
-  },
-  {
-   "at": 1792699575521,
-   "store": "kantovault",
-   "product": "kantovault:11537112498517",
-   "group": "journey-together|booster-bundle|en|",
-   "title": "Pokémon Scarlet & Violet: Journey Together Booster Bundle",
-   "url": "https://kantovault.se/products/pokemon-scarlet-violet-journey-together-booster-bundle",
-   "price": 595,
-   "type": "Booster Bundle",
-   "set": "Journey Together",
-   "lang": "en",
-   "kind": "prissankt",
-   "from": 649
   }
  ]
 }
