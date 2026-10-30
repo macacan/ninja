@@ -1,6 +1,20 @@
 {
- "updated": 1793391409517,
+ "updated": 1793392329537,
  "events": [
+  {
+   "at": 1793391882720,
+   "store": "spelparken",
+   "product": "spelparken:15589241160055",
+   "group": "30th-celebration|premium-collection|en||ditto",
+   "title": "30th Celebration Ditto Premium Collection",
+   "url": "https://spelparken.se/products/30th-celebration-ditto-premium-collection",
+   "image": "https://cdn.shopify.com/s/files/1/0948/1876/3127/files/Pokemon_TCG_30th_Celebration_Ditto_Premium_Collection_EN.webp?v=1793314274",
+   "price": 1699,
+   "type": "Premium Collection",
+   "set": "30th Celebration",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793390686041,
    "store": "spelparken",
@@ -6814,19 +6828,6 @@
    "set": "Emerald",
    "lang": "ja",
    "kind": "tillbaka"
-  },
-  {
-   "at": 1792693271048,
-   "store": "pokemurre",
-   "product": "pokemurre:11256462672210",
-   "group": "x|booster-pack|ja||shiny-star",
-   "title": "Pokemon Shiny Star V S4A Booster Pack (Japansk)",
-   "url": "https://pokemurre.se/products/pokemon-shiny-star-v-s4a-booster-pack-japansk",
-   "price": 189,
-   "type": "Booster Pack",
-   "set": null,
-   "lang": "ja",
-   "kind": "ny"
   }
  ]
 }
