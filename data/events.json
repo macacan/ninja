@@ -1,6 +1,49 @@
 {
- "updated": 1793357691482,
+ "updated": 1793358591775,
  "events": [
+  {
+   "at": 1793358084177,
+   "store": "samlargrottan",
+   "product": "samlargrottan:https://www.samlargrottan.se/product-page/pokémon-mega-evolution-booster-box-enhanced-version",
+   "group": "mega-evolution|booster-box|en|",
+   "title": "Pokémon: Mega Evolution Booster Box (Enhanced version)",
+   "url": "https://www.samlargrottan.se/product-page/pok%C3%A9mon-mega-evolution-booster-box-enhanced-version",
+   "image": "https://static.wixstatic.com/media/d265aa_dc5a0afe331049ceaa898cf787905f47~mv2.png/v1/fit/w_500,h_500,q_90/file.png",
+   "price": 3899,
+   "type": "Booster Box",
+   "set": "Mega Evolution",
+   "lang": "en",
+   "kind": "ny"
+  },
+  {
+   "at": 1793358084177,
+   "store": "samlargrottan",
+   "product": "samlargrottan:https://www.samlargrottan.se/product-page/pokémon-scarlet-violet-journey-together-booster-box",
+   "group": "journey-together|booster-box|en|",
+   "title": "Pokémon: Journey Together Booster Box",
+   "url": "https://www.samlargrottan.se/product-page/pok%C3%A9mon-scarlet-violet-journey-together-booster-box",
+   "image": "https://static.wixstatic.com/media/d265aa_5fba225c7fb2450ca3f138ea5ac0c8cd~mv2.png/v1/fit/w_500,h_500,q_90/file.png",
+   "price": 2899,
+   "type": "Booster Box",
+   "set": "Journey Together",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1793358024526,
+   "store": "dragon-s-lair",
+   "product": "dragon-s-lair:15832720441692",
+   "group": "x|booster-pack|zh||brilliant-illusions",
+   "title": "Pokemon TCG Scarlet & Violet - Brilliant Illusions (CSV8C) Booster (5-kort) (Kinesisk)",
+   "url": "https://dragonslair.se/products/pokemon-tcg-scarlet-violet-brilliant-illusions-csv8c-booster-5-kort-kinesisk",
+   "image": "https://cdn.shopify.com/s/files/1/1015/8315/9644/files/Pokemon_Brilliant_Illusions_Slim_Booster_Pack_Chinese.webp?v=1789722619",
+   "price": 29,
+   "type": "Booster Pack",
+   "set": "Scarlet & Violet",
+   "lang": "zh",
+   "kind": "prissankt",
+   "from": 35
+  },
   {
    "at": 1793357074046,
    "store": "samlargrottan",
@@ -6734,46 +6777,6 @@
    "set": "30th Celebration",
    "lang": "en",
    "kind": "tillbaka"
-  },
-  {
-   "at": 1792661473306,
-   "store": "webhallen",
-   "product": "webhallen:401985",
-   "group": "30th-celebration|ultra-premium-collection|en||espeon-pikachu",
-   "title": "Pokemon 30th Celebration Ultra-Premium Collection Espeon & Pikachu",
-   "url": "https://www.webhallen.com/se/product/401985-Pokemon-30th-Celebration-Ultra-Premium-Collection-Espeon-Pikachu",
-   "price": 3299,
-   "type": "Ultra-Premium Collection",
-   "set": "30th Celebration",
-   "lang": "en",
-   "kind": "forbestallning"
-  },
-  {
-   "at": 1792661473306,
-   "store": "webhallen",
-   "product": "webhallen:401987",
-   "group": "30th-celebration|ultra-premium-collection|en||pikachu-umbreon",
-   "title": "Pokemon 30th Celebration Ultra-Premium Collection Umbreon & Pikachu",
-   "url": "https://www.webhallen.com/se/product/401987-Pokemon-30th-Celebration-Ultra-Premium-Collection-Umbreon-Pikachu",
-   "price": 3299,
-   "type": "Ultra-Premium Collection",
-   "set": "30th Celebration",
-   "lang": "en",
-   "kind": "forbestallning"
-  },
-  {
-   "at": 1792661003359,
-   "store": "maxgaming",
-   "product": "maxgaming:https://maxgaming.se/sv/pokemon/pokemon-chasing-glory-together-jumbo-booster-box-simplified-chinese",
-   "group": "x|booster-box|zh||chasing-glory-jumbo-together",
-   "title": "Pokémon Chasing Glory Together Jumbo Booster Box (Simplified Chinese)",
-   "url": "https://maxgaming.se/sv/pokemon/pokemon-chasing-glory-together-jumbo-booster-box-simplified-chinese",
-   "price": 749,
-   "type": "Booster Box",
-   "set": null,
-   "lang": "zh",
-   "kind": "prissankt",
-   "from": 799
   }
  ]
 }
