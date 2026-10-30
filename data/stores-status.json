@@ -1,5 +1,5 @@
 {
- "updated": 1793336336490,
+ "updated": 1793339676589,
  "stores": [
   {
    "id": "alara-games",
@@ -92,28 +92,28 @@
    "name": "Card Mountain",
    "domain": "cardmountain.se",
    "status": "ej-forbjuden",
-   "checkedAt": 1793336022790,
+   "checkedAt": 1793339624090,
    "ok": true,
-   "lastOkAt": 1793336022790,
+   "lastOkAt": 1793339624090,
    "count": 53,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 60
+   "interval": 15
   },
   {
    "id": "cardclub",
    "name": "Cardclub",
    "domain": "cardclub.se",
    "status": "ej-forbjuden",
-   "checkedAt": 1793336037960,
+   "checkedAt": 1793339655908,
    "ok": true,
-   "lastOkAt": 1793336037960,
+   "lastOkAt": 1793339655908,
    "count": 82,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 60
+   "interval": 15
   },
   {
    "id": "cardgame",
@@ -148,14 +148,14 @@
    "name": "Cardlevels",
    "domain": "cardlevels.se",
    "status": "ej-forbjuden",
-   "checkedAt": 1793336046042,
+   "checkedAt": 1793339662893,
    "ok": true,
-   "lastOkAt": 1793336046042,
+   "lastOkAt": 1793339662893,
    "count": 27,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 60
+   "interval": 15
   },
   {
    "id": "cards-by-malcolm",
@@ -176,14 +176,14 @@
    "name": "Collected",
    "domain": "collected.se",
    "status": "ej-forbjuden",
-   "checkedAt": 1793336032197,
+   "checkedAt": 1793339634108,
    "ok": true,
-   "lastOkAt": 1793336032197,
+   "lastOkAt": 1793339634108,
    "count": 48,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 60
+   "interval": 15
   },
   {
    "id": "coolcard",
@@ -215,14 +215,14 @@
    "name": "Fantasia North",
    "domain": "fantasianorth.com",
    "status": "ej-forbjuden",
-   "checkedAt": 1793336034074,
+   "checkedAt": 1793339637782,
    "ok": false,
    "lastOkAt": 1792523214225,
    "count": 0,
    "error": "robots.txt tillåter inte https://fantasianorth.com/sitemap.xml",
    "blocked": false,
    "note": null,
-   "interval": 60
+   "interval": 10
   },
   {
    "id": "fire-games",
@@ -240,14 +240,14 @@
    "name": "Frog med Vänner",
    "domain": "frogmedvanner.se",
    "status": "ej-forbjuden",
-   "checkedAt": 1793336051520,
+   "checkedAt": 1793339674153,
    "ok": true,
-   "lastOkAt": 1793336051520,
+   "lastOkAt": 1793339674153,
    "count": 11,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 60
+   "interval": 15
   },
   {
    "id": "gameshop",
@@ -268,14 +268,14 @@
    "name": "Gimmick",
    "domain": "gimmick.se",
    "status": "inga-bilder",
-   "checkedAt": 1793336047742,
+   "checkedAt": 1793339641116,
    "ok": true,
-   "lastOkAt": 1793336047742,
+   "lastOkAt": 1793339641116,
    "count": 91,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 60
+   "interval": 15
   },
   {
    "id": "goblinen",
