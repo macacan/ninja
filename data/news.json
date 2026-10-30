@@ -1,6 +1,15 @@
 {
- "updated": "2026-10-30T12:42:15.286Z",
+ "updated": "2026-10-30T12:53:23.001Z",
  "articles": [
+  {
+   "title": "Pokémon TCG reveals sharp new Rayquaza box with Delta Reign's missing full art",
+   "link": "https://www.wargamer.com/pokemon-trading-card-game/mega-rayquaza-premium-tournament-collection",
+   "date": "2026-10-30T12:01:22.000Z",
+   "summary": "Pokémon has dropped details on an upcoming premium box featuring Mega Rayquaza.",
+   "image": "https://www.wargamer.com/wp-content/sites/wargamer/2026/10/pokemon-trading-card-game-mega-rayquaza-premium-tournament-collection.jpg",
+   "source": "Wargamer",
+   "game": "pk"
+  },
   {
    "title": "Risk vs. Reward in Riftbound: Why Smart Deckbuilding Is About More Than Luck",
    "link": "https://riftbound.gg/risk-vs-reward-in-riftbound-why-smart-deckbuilding-is-about-more-than-luck/",
@@ -90,15 +99,6 @@
    "image": "https://cmsassets.rgpub.io/sanity/images/dsfx7636/news_live/0e64bf2f0542f3bdd8cf4ba92a57e0f23e468093-1920x1080.jpg?accountingTag=RB&fm=jpg&q=80&w=1184",
    "source": "Riftbound.gg",
    "game": "rb"
-  },
-  {
-   "title": "Pokémon TCG cuts full art Rayquaza card from upcoming set",
-   "link": "https://www.wargamer.com/pokemon-trading-card-game/mega-rayquaza-not-in-delta-reign",
-   "date": "2026-10-26T16:20:32.000Z",
-   "summary": "The full list of cards from Delta Reign is now here and, strangely, one Mega Rayquaza is missing.",
-   "image": "https://www.wargamer.com/wp-content/sites/wargamer/2026/10/pokemon-trading-card-game-mega-rayquaza-not-in-delta-reign.jpg",
-   "source": "Wargamer",
-   "game": "pk"
   },
   {
    "title": "PSA confirms FBI investigating $1 million Pokemon & trading card heist as full stolen list revealed",
@@ -408,15 +408,6 @@
    "game": "pk"
   },
   {
-   "title": "Are Pokémon scalpers actually 'crashing out' over 30th Celebration?",
-   "link": "https://www.wargamer.com/pokemon-trading-card-game/scalpers-30th-celebration-raging",
-   "date": "2026-09-24T16:39:27.000Z",
-   "summary": "Is it REALLY true that Pokémon card resellers are tearing their hair out over 30th Celebration?",
-   "image": "https://www.wargamer.com/wp-content/sites/wargamer/2026/06/pokemon-trading-card-game-30th-anniversary-celebration-set-revealed.jpg",
-   "source": "Wargamer",
-   "game": "pk"
-  },
-  {
    "title": "Target x Pokemon 30th Anniversary event offers custom trading cards and exclusive Mewtwo promo",
    "link": "https://www.dexerto.com/pokemon/target-x-pokemon-30th-anniversary-event-offers-custom-trading-cards-and-exclusive-mewtwo-promo-3411773/",
    "date": "2026-09-23T15:45:35.000Z",
@@ -458,6 +449,15 @@
    "date": "2026-09-21T15:43:29.000Z",
    "summary": "Kent Police jailed Jack Young-Larter for taking Pokemon cards as drug payments after a Maidstone raid seized cash, cocaine and rare collectibles.",
    "image": "https://www.dexerto.com/cdn-image/wp-content/uploads/2026/09/21/Pikachu-jailed.jpg?width=480&quality=75&format=auto",
+   "source": "Dexerto",
+   "game": "pk"
+  },
+  {
+   "title": "Pokemon scalper reportedly arrested after assaulting man during trading card restock",
+   "link": "https://www.dexerto.com/pokemon/pokemon-scalper-reportedly-arrested-after-assaulting-man-during-trading-card-restock-3410523/",
+   "date": "2026-09-20T14:15:14.000Z",
+   "summary": "A Pokémon scalper was reportedly arrested after a Target restock turned violent, with a man punched and a 4-year-old girl hurt in the confrontation.",
+   "image": "https://www.dexerto.com/cdn-image/wp-content/uploads/2026/09/20/pokemon-scalpers-assault.jpg?width=480&quality=75&format=auto",
    "source": "Dexerto",
    "game": "pk"
   },
