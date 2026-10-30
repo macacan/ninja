@@ -1,6 +1,20 @@
 {
- "updated": 1793369653514,
+ "updated": 1793370573535,
  "events": [
+  {
+   "at": 1793370166598,
+   "store": "dragon-s-lair",
+   "product": "dragon-s-lair:15944131117404",
+   "group": "x|booster-box|zh||brilliant-jumbo",
+   "title": "Pokémon Scarlet & Violet CSV8C: Brilliant Booster Box (Kinesisk)15 st Booster Jumbo",
+   "url": "https://dragonslair.se/products/pokemon-scarlet-violet-csv8c-brilliant-booster-box-kinesisk15-st-booster-jumbo",
+   "image": "https://cdn.shopify.com/s/files/1/1015/8315/9644/files/s-l960.png?v=1793369992",
+   "price": 595,
+   "type": "Booster Box",
+   "set": "Scarlet & Violet",
+   "lang": "zh",
+   "kind": "ny"
+  },
   {
    "at": 1793368074782,
    "store": "samlargrottan",
@@ -6794,19 +6808,6 @@
    "set": null,
    "lang": "ja",
    "kind": "ny"
-  },
-  {
-   "at": 1792683040321,
-   "store": "shinycards",
-   "product": "shinycards:https://www.shinycards.se/pokemon/booster-box/pokemon-tcg-30th-celebration-booster-box-japansk",
-   "group": "30th-celebration|booster-box|ja|",
-   "title": "Pokemon 30th Celebration Booster Box (Japansk)",
-   "url": "https://www.shinycards.se/pokemon/booster-box/pokemon-tcg-30th-celebration-booster-box-japansk",
-   "price": 2699,
-   "type": "Booster Box",
-   "set": "30th Celebration",
-   "lang": "ja",
-   "kind": "tillbaka"
   }
  ]
 }
