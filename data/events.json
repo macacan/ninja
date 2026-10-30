@@ -1,6 +1,20 @@
 {
- "updated": 1793384049341,
+ "updated": 1793384969357,
  "events": [
+  {
+   "at": 1793384088639,
+   "store": "spelparken",
+   "product": "spelparken:15590006030711",
+   "group": "30th-celebration|collection-box|en||figure-mewtwo",
+   "title": "30th Celebration Figure Collection – Mewtwo",
+   "url": "https://spelparken.se/products/30th-celebration-figure-collection-mewtwo",
+   "image": "https://cdn.shopify.com/s/files/1/0948/1876/3127/files/Aquitaz_45.webp?v=1793383550",
+   "price": 1249,
+   "type": "Collection Box",
+   "set": "30th Celebration",
+   "lang": "en",
+   "kind": "ny"
+  },
   {
    "at": 1793383189573,
    "store": "spelparken",
@@ -6809,19 +6823,6 @@
    "price": 1899,
    "type": "Booster Pack",
    "set": "30th Celebration",
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1792690660408,
-   "store": "the-swedish-fish",
-   "product": "the-swedish-fish:11720",
-   "group": "lost-origin|build-battle|en|",
-   "title": "Pokemon Lost Origin Build & Battle Stadium",
-   "url": "https://theswedishfish.se/product/pokemon-lost-origin-battle-stadium/",
-   "price": 2499,
-   "type": "Build & Battle",
-   "set": "Lost Origin",
    "lang": "en",
    "kind": "ny"
   }
