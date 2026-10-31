@@ -1,6 +1,21 @@
 {
- "updated": 1793463572827,
+ "updated": 1793464492847,
  "events": [
+  {
+   "at": 1793463637240,
+   "store": "spelparken",
+   "product": "spelparken:15590346490231",
+   "group": "op|eb-05|booster-pack|ja|",
+   "title": "One Piece Heroines Edition Vol. 2 EB-05 Booster Pack (Japansk)",
+   "url": "https://spelparken.se/products/one-piece-heroines-edition-vol-2-eb-05-booster-pack-japansk",
+   "image": "https://cdn.shopify.com/s/files/1/0948/1876/3127/files/eb05_case_1792690842_9efadd61_thumbnail.jpg?v=1793462900",
+   "price": 99,
+   "type": "Booster Pack",
+   "set": "EB-05",
+   "lang": "ja",
+   "game": "op",
+   "kind": "ny"
+  },
   {
    "at": 1793452396688,
    "store": "miniature-metropolis",
@@ -6844,19 +6859,6 @@
    "lang": "ja",
    "kind": "prissankt",
    "from": 59
-  },
-  {
-   "at": 1792704185827,
-   "store": "poketalk",
-   "product": "poketalk:11392762511702",
-   "group": "darkness-ablaze|booster-pack|en|",
-   "title": "Pokémon Sword & Shield: Darkness Ablaze Booster Pack",
-   "url": "https://poketalk.se/products/pokemon-sword-shield-darkness-ablaze-booster-pack-1",
-   "price": 149,
-   "type": "Booster Pack",
-   "set": "Darkness Ablaze",
-   "lang": "en",
-   "kind": "ny"
   }
  ]
 }
