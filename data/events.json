@@ -1,6 +1,36 @@
 {
- "updated": 1793488644926,
+ "updated": 1793489544948,
  "events": [
+  {
+   "at": 1793488737950,
+   "store": "samlarverket",
+   "product": "samlarverket:11273223242071",
+   "group": "team-rocket|ultra-premium-collection|en||moltres",
+   "title": "Pokémon Team Rocket’s Moltres ex Ultra-Premium Collection",
+   "url": "https://samlarverket.com/produkt/pokemon-team-rocket-s-moltres-ex-ultra-premium-collection",
+   "image": "https://cdn.shopify.com/s/files/1/1022/5323/2471/files/team-rockets-moltres-ex-ultra-premium-collection-v0-p46d6lwnudkf1.webp?v=1791844975",
+   "price": 3499,
+   "type": "Ultra-Premium Collection",
+   "set": "Team Rocket",
+   "lang": "en",
+   "kind": "prissankt",
+   "from": 3599
+  },
+  {
+   "at": 1793488737950,
+   "store": "samlarverket",
+   "product": "samlarverket:11273212920151",
+   "group": "x|ultra-premium-collection|en||greninja",
+   "title": "Pokémon Greninja ex Ultra Premium Collection",
+   "url": "https://samlarverket.com/produkt/pokemon-greninja-ex-ultra-premium-collection",
+   "image": "https://cdn.shopify.com/s/files/1/1022/5323/2471/files/Greninja-ex-Ultra-Premium-Collection.webp?v=1791844587",
+   "price": 3399,
+   "type": "Ultra-Premium Collection",
+   "set": null,
+   "lang": "en",
+   "kind": "prissankt",
+   "from": 3499
+  },
   {
    "at": 1793487017037,
    "store": "alphaspel",
@@ -6866,32 +6896,6 @@
    "type": "Blister",
    "set": "Temporal Forces",
    "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1792762617319,
-   "store": "shinycards",
-   "product": "shinycards:https://www.shinycards.se/pokemon/blister-pack/pokemon-enhanced-2-pack-blister-2026-vileplume",
-   "group": "x|blister|en||2|enhanced-vileplume",
-   "title": "Pokemon Enhanced 2-Pack Blister - Vileplume",
-   "url": "https://www.shinycards.se/pokemon/blister-pack/pokemon-enhanced-2-pack-blister-2026-vileplume",
-   "price": 299,
-   "type": "Blister",
-   "set": null,
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1792761770958,
-   "store": "sweet-nerds",
-   "product": "sweet-nerds:https://sweetnerds.se/sv/products/pokemon-30th-celebration-booster-box-jp",
-   "group": "30th-celebration|booster-box|ja|",
-   "title": "Pokémon 30th Celebration Booster Box (JP)",
-   "url": "https://sweetnerds.se/sv/products/pokemon-30th-celebration-booster-box-jp",
-   "price": 2499,
-   "type": "Booster Box",
-   "set": "30th Celebration",
-   "lang": "ja",
    "kind": "tillbaka"
   }
  ]
