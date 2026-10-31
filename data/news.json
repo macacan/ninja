@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-31T00:31:30.403Z",
+ "updated": "2026-10-31T00:46:47.708Z",
  "articles": [
   {
    "title": "Pokémon Happy Meals bring 15 collectible toys and TCG cards to McDonald’s",
@@ -489,5 +489,18 @@
    "game": "op"
   }
  ],
- "videos": []
+ "videos": [
+  {
+   "id": "pGIxhUQvezQ",
+   "title": "TCG Day 2 | 2027 Pokémon Gdańsk Regional Championships",
+   "date": "2026-10-26T23:58:59.000Z",
+   "source": "Pokémon (officiell)"
+  },
+  {
+   "id": "FlkW1YWVQF0",
+   "title": "TCG Day 1 | 2027 Pokémon Gdańsk Regional Championships",
+   "date": "2026-10-26T23:57:02.000Z",
+   "source": "Pokémon (officiell)"
+  }
+ ]
 }
