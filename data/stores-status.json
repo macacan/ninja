@@ -1,5 +1,5 @@
 {
- "updated": 1793424830086,
+ "updated": 1793426430135,
  "stores": [
   {
    "id": "alara-games",
@@ -92,28 +92,28 @@
    "name": "Card Mountain",
    "domain": "cardmountain.se",
    "status": "ej-forbjuden",
-   "checkedAt": 1793422760731,
+   "checkedAt": 1793426358516,
    "ok": true,
-   "lastOkAt": 1793422760731,
+   "lastOkAt": 1793426358516,
    "count": 53,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 60
+   "interval": 15
   },
   {
    "id": "cardclub",
    "name": "Cardclub",
    "domain": "cardclub.se",
    "status": "ej-forbjuden",
-   "checkedAt": 1793422783603,
+   "checkedAt": 1793426395522,
    "ok": true,
-   "lastOkAt": 1793422783603,
+   "lastOkAt": 1793426395522,
    "count": 82,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 60
+   "interval": 15
   },
   {
    "id": "cardgame",
@@ -148,14 +148,14 @@
    "name": "Cardlevels",
    "domain": "cardlevels.se",
    "status": "ej-forbjuden",
-   "checkedAt": 1793422800657,
+   "checkedAt": 1793426408522,
    "ok": true,
-   "lastOkAt": 1793422800657,
+   "lastOkAt": 1793426408522,
    "count": 27,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 60
+   "interval": 15
   },
   {
    "id": "cards-by-malcolm",
@@ -176,14 +176,14 @@
    "name": "Collected",
    "domain": "collected.se",
    "status": "ej-forbjuden",
-   "checkedAt": 1793422779833,
+   "checkedAt": 1793426387643,
    "ok": true,
-   "lastOkAt": 1793422779833,
+   "lastOkAt": 1793426387643,
    "count": 48,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 60
+   "interval": 15
   },
   {
    "id": "coolcard",
@@ -215,14 +215,14 @@
    "name": "Fantasia North",
    "domain": "fantasianorth.com",
    "status": "ej-forbjuden",
-   "checkedAt": 1793422752502,
+   "checkedAt": 1793426357398,
    "ok": false,
    "lastOkAt": 1792523214225,
    "count": 0,
    "error": "robots.txt tillåter inte https://fantasianorth.com/sitemap.xml",
    "blocked": false,
    "note": null,
-   "interval": 60
+   "interval": 10
   },
   {
    "id": "fire-games",
@@ -268,14 +268,14 @@
    "name": "Gimmick",
    "domain": "gimmick.se",
    "status": "inga-bilder",
-   "checkedAt": 1793422774855,
+   "checkedAt": 1793426369710,
    "ok": true,
-   "lastOkAt": 1793422774855,
+   "lastOkAt": 1793426369710,
    "count": 91,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 60
+   "interval": 15
   },
   {
    "id": "goblinen",
@@ -371,14 +371,14 @@
    "name": "Majki Poke",
    "domain": "majkipoke.se",
    "status": "ej-forbjuden",
-   "checkedAt": 1793422820879,
+   "checkedAt": 1793426416806,
    "ok": true,
-   "lastOkAt": 1793422820879,
+   "lastOkAt": 1793426416806,
    "count": 124,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 60
+   "interval": 15
   },
   {
    "id": "mana-torsk",
@@ -569,14 +569,14 @@
    "name": "Pokemurre",
    "domain": "pokemurre.se",
    "status": "inga-bilder",
-   "checkedAt": 1793422863861,
+   "checkedAt": 1793426396636,
    "ok": true,
-   "lastOkAt": 1793422863861,
+   "lastOkAt": 1793426396636,
    "count": 137,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 59
+   "interval": 15
   },
   {
    "id": "poketalk",
@@ -608,14 +608,14 @@
    "name": "Rahtech",
    "domain": "rahtech.se",
    "status": "ej-forbjuden",
-   "checkedAt": 1793422881014,
+   "checkedAt": 1793426415718,
    "ok": true,
-   "lastOkAt": 1793422881014,
+   "lastOkAt": 1793426415718,
    "count": 81,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 59
+   "interval": 15
   },
   {
    "id": "rgb-kingz",
@@ -650,14 +650,14 @@
    "name": "Samlarhobby",
    "domain": "samlarhobby.se",
    "status": "ej-forbjuden",
-   "checkedAt": 1793422935723,
+   "checkedAt": 1793426421533,
    "ok": true,
-   "lastOkAt": 1793422935723,
+   "lastOkAt": 1793426421533,
    "count": 165,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 58
+   "interval": 15
   },
   {
    "id": "samlarverket",
@@ -759,14 +759,14 @@
    "name": "SpelMaffian",
    "domain": "spelmaffian.se",
    "status": "ej-forbjuden",
-   "checkedAt": 1793423041305,
+   "checkedAt": 1793426425632,
    "ok": true,
-   "lastOkAt": 1793423041305,
+   "lastOkAt": 1793426425632,
    "count": 78,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 56
+   "interval": 15
   },
   {
    "id": "spelparken",
@@ -885,28 +885,28 @@
    "name": "TCGäddan",
    "domain": "tcgaddan.se",
    "status": "ej-forbjuden",
-   "checkedAt": 1793422986966,
+   "checkedAt": 1793426413547,
    "ok": true,
-   "lastOkAt": 1793422986966,
+   "lastOkAt": 1793426413547,
    "count": 21,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 57
+   "interval": 15
   },
   {
    "id": "the-swedish-fish",
    "name": "The Swedish Fish",
    "domain": "theswedishfish.se",
    "status": "ej-forbjuden",
-   "checkedAt": 1793422995341,
+   "checkedAt": 1793426422932,
    "ok": true,
-   "lastOkAt": 1793422995341,
+   "lastOkAt": 1793426422932,
    "count": 31,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 57
+   "interval": 15
   },
   {
    "id": "toyspace",
@@ -927,14 +927,14 @@
    "name": "TSP Vault",
    "domain": "tspvault.se",
    "status": "ej-forbjuden",
-   "checkedAt": 1793422996278,
+   "checkedAt": 1793426413538,
    "ok": true,
-   "lastOkAt": 1793422996278,
+   "lastOkAt": 1793426413538,
    "count": 17,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 57
+   "interval": 15
   },
   {
    "id": "webhallen",
@@ -955,14 +955,14 @@
    "name": "Westcoast Vault",
    "domain": "westcoastvault.se",
    "status": "ej-forbjuden",
-   "checkedAt": 1793422990345,
+   "checkedAt": 1793426417566,
    "ok": true,
-   "lastOkAt": 1793422990345,
+   "lastOkAt": 1793426417566,
    "count": 23,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 57
+   "interval": 15
   }
  ]
 }
