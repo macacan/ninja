@@ -1,5 +1,5 @@
 {
- "updated": 1793360281343,
+ "updated": 1793445288138,
  "sets": [
   "The World's Strongest Warriors",
   "The Time of Battle",
@@ -25,8 +25,8 @@
    "attr": "Strike",
    "sub": "Straw Hat Crew The Four Emperors Egghead",
    "image": "https://optcgapi.com/media/static/Card_Images/EB04-061_p2.jpg",
-   "sek": 247027.48,
-   "low": 247027.48,
+   "sek": 245620.2,
+   "low": 245620.2,
    "setId": "OP-17"
   },
   {
@@ -45,8 +45,8 @@
    "attr": "Strike",
    "sub": "Fish-Man Island/Supernovas/Straw Hat Crew",
    "image": "https://optcgapi.com/media/static/Card_Images/OP13-118_p3.jpg",
-   "sek": 74120.25,
-   "low": 741202.5,
+   "sek": 73698,
+   "low": 736980,
    "setId": "OP-13"
   },
   {
@@ -65,8 +65,8 @@
    "attr": "Slash",
    "sub": "Rocks Pirates",
    "image": "https://optcgapi.com/media/static/Card_Images/OP17-118_p2.jpg",
-   "sek": 60284.47,
-   "low": 49413.5,
+   "sek": 59941.04,
+   "low": 49132,
    "setId": "OP-17"
   },
   {
@@ -85,8 +85,8 @@
    "attr": "Special",
    "sub": "Dressrosa/Revolutionary Army",
    "image": "https://optcgapi.com/media/static/Card_Images/OP13-120_p3.jpg",
-   "sek": 46942.63,
-   "low": 148240.5,
+   "sek": 46675.2,
+   "low": 147396,
    "setId": "OP-13"
   },
   {
@@ -105,8 +105,8 @@
    "attr": "Special",
    "sub": "Whitebeard Pirates",
    "image": "https://optcgapi.com/media/static/Card_Images/OP13-119_p3.jpg",
-   "sek": 43685.19,
-   "low": 54354.85,
+   "sek": 43436.32,
+   "low": 54045.2,
    "setId": "OP-13"
   },
   {
@@ -125,8 +125,8 @@
    "attr": "Strike",
    "sub": "Straw Hat Crew Supernovas Fish-Man Island",
    "image": "https://optcgapi.com/media/static/Card_Images/OP13-118_p2.jpg",
-   "sek": 20916.04,
-   "low": 29638.22,
+   "sek": 20796.89,
+   "low": 29469.37,
    "setId": "OP-13"
   },
   {
@@ -145,8 +145,8 @@
    "attr": "Slash",
    "sub": "The Four Emperors Cross Guild",
    "image": "https://optcgapi.com/media/static/Card_Images/OP09-051_p4.jpg",
-   "sek": 15866.28,
-   "low": 13341.65,
+   "sek": 15775.89,
+   "low": 13265.64,
    "setId": "OP14-EB04"
   },
   {
@@ -165,29 +165,9 @@
    "attr": "Slash",
    "sub": "The Four Emperors Red-Haired Pirates",
    "image": "https://optcgapi.com/media/static/Card_Images/OP17-022_p2.jpg",
-   "sek": 14692.51,
-   "low": 11859.14,
+   "sek": 14608.81,
+   "low": 11693.42,
    "setId": "OP-17"
-  },
-  {
-   "id": "EB-03/EB03-055_p2",
-   "name": "Nico Robin",
-   "variant": "SP",
-   "set": "Extra Booster: One Piece Heroines Edition",
-   "no": "EB03-055",
-   "rarity": "SR",
-   "color": "Yellow",
-   "type": "Character",
-   "cost": 7,
-   "power": 8000,
-   "counter": 0,
-   "life": null,
-   "attr": "Strike",
-   "sub": "Straw Hat Crew",
-   "image": "https://optcgapi.com/media/static/Card_Images/EB03-055_p2_GwiCq60.jpg",
-   "sek": 14112,
-   "low": 10728.56,
-   "setId": "EB-03"
   },
   {
    "id": "EB-03/EB03-026_p2",
@@ -205,8 +185,28 @@
    "attr": "Special",
    "sub": "Kuja Pirates The Seven Warlords of the Sea",
    "image": "https://optcgapi.com/media/static/Card_Images/EB03-026_p2_slw9xMj.jpg",
-   "sek": 14043.42,
-   "low": 8894.43,
+   "sek": 13963.41,
+   "low": 9531.41,
+   "setId": "EB-03"
+  },
+  {
+   "id": "EB-03/EB03-055_p2",
+   "name": "Nico Robin",
+   "variant": "SP",
+   "set": "Extra Booster: One Piece Heroines Edition",
+   "no": "EB03-055",
+   "rarity": "SR",
+   "color": "Yellow",
+   "type": "Character",
+   "cost": 7,
+   "power": 8000,
+   "counter": 0,
+   "life": null,
+   "attr": "Strike",
+   "sub": "Straw Hat Crew",
+   "image": "https://optcgapi.com/media/static/Card_Images/EB03-055_p2_GwiCq60.jpg",
+   "sek": 13844.91,
+   "low": 10667.44,
    "setId": "EB-03"
   },
   {
@@ -225,8 +225,8 @@
    "attr": "Strike",
    "sub": "Straw Hat Crew The Four Emperors Elbaph",
    "image": "https://optcgapi.com/media/static/Card_Images/OP17-079_p2.jpg",
-   "sek": 13672.02,
-   "low": 8894.43,
+   "sek": 13594.14,
+   "low": 8843.76,
    "setId": "OP-17"
   },
   {
@@ -245,8 +245,8 @@
    "attr": "Special",
    "sub": "Straw Hat Crew",
    "image": "https://optcgapi.com/media/static/Card_Images/EB03-053_p2_5xa1OeQ.jpg",
-   "sek": 12754.41,
-   "low": 4833.83,
+   "sek": 12681.76,
+   "low": 4806.29,
    "setId": "EB-03"
   },
   {
@@ -265,8 +265,8 @@
    "attr": "Special",
    "sub": "Navy Admiral",
    "image": "https://optcgapi.com/media/static/Card_Images/OP16-065_p2_5xfdpdu.jpg",
-   "sek": 10987.88,
-   "low": 7408.57,
+   "sek": 10925.29,
+   "low": 7366.36,
    "setId": "OP-16"
   },
   {
@@ -285,8 +285,8 @@
    "attr": "Special",
    "sub": "Whitebeard Pirates",
    "image": "https://optcgapi.com/media/static/Card_Images/OP13-119_p2.jpg",
-   "sek": 10885,
-   "low": 9773.99,
+   "sek": 10822.99,
+   "low": 9717.82,
    "setId": "OP-13"
   },
   {
@@ -305,8 +305,8 @@
    "attr": "Special",
    "sub": "Navy Admiral",
    "image": "https://optcgapi.com/media/static/Card_Images/OP16-063_p2_t7zoqfj.jpg",
-   "sek": 10754.16,
-   "low": 6105.53,
+   "sek": 10692.89,
+   "low": 6070.75,
    "setId": "OP-16"
   },
   {
@@ -325,8 +325,8 @@
    "attr": "Special",
    "sub": "The Four Emperors Whitebeard Pirates",
    "image": "https://optcgapi.com/media/static/Card_Images/OP17-005_p2.jpg",
-   "sek": 10642.88,
-   "low": 8980.61,
+   "sek": 10582.25,
+   "low": 8929.45,
    "setId": "OP-17"
   },
   {
@@ -345,8 +345,8 @@
    "attr": "Slash",
    "sub": "The Four Emperors Red-Haired Pirates",
    "image": "https://optcgapi.com/media/static/Card_Images/OP09-004_p6.jpg",
-   "sek": 10581.51,
-   "low": 6176.69,
+   "sek": 10521.22,
+   "low": 6141.5,
    "setId": "OP-13"
   },
   {
@@ -365,8 +365,8 @@
    "attr": "Special",
    "sub": "Navy Admiral",
    "image": "https://optcgapi.com/media/static/Card_Images/OP16-073_p2_u1nqU66.jpg",
-   "sek": 9893.77,
-   "low": 5921.62,
+   "sek": 9837.41,
+   "low": 5887.88,
    "setId": "OP-16"
   },
   {
@@ -385,8 +385,8 @@
    "attr": "Strike",
    "sub": "Animal Kingdom Pirates The Four Emperors",
    "image": "https://optcgapi.com/media/static/Card_Images/OP17-062_p2.jpg",
-   "sek": 9243.39,
-   "low": 7155.07,
+   "sek": 9190.73,
+   "low": 6878.48,
    "setId": "OP-17"
   },
   {
@@ -405,8 +405,8 @@
    "attr": "Special",
    "sub": "FILM",
    "image": "https://optcgapi.com/media/static/Card_Images/EB03-061_p2.jpg",
-   "sek": 9198.42,
-   "low": 6226.1,
+   "sek": 9146.02,
+   "low": 6190.63,
    "setId": "EB-03"
   },
   {
@@ -425,8 +425,8 @@
    "attr": "Slash",
    "sub": "Straw Hat Crew Supernovas",
    "image": "https://optcgapi.com/media/static/Card_Images/PRB02-006_p2.jpg",
-   "sek": 9045.83,
-   "low": 5881.19,
+   "sek": 8994.3,
+   "low": 5847.69,
    "setId": "OP14-EB04"
   },
   {
@@ -445,8 +445,8 @@
    "attr": "Special",
    "sub": "Sky Island",
    "image": "https://optcgapi.com/media/static/Card_Images/OP15-118_p2.jpg",
-   "sek": 8856.88,
-   "low": 4437.33,
+   "sek": 8787.45,
+   "low": 4412.05,
    "setId": "OP15-EB04"
   },
   {
@@ -465,8 +465,8 @@
    "attr": "Slash",
    "sub": "The Four Emperors Cross Guild",
    "image": "https://optcgapi.com/media/static/Card_Images/OP09-051_p5.jpg",
-   "sek": 8042.94,
-   "low": 7313.2,
+   "sek": 7997.12,
+   "low": 7279.89,
    "setId": "OP14-EB04"
   },
   {
@@ -485,8 +485,8 @@
    "attr": "Special",
    "sub": "The Four Emperors Big Mom Pirates",
    "image": "https://optcgapi.com/media/static/Card_Images/OP17-112_p2.jpg",
-   "sek": 7651.68,
-   "low": 5867.36,
+   "sek": 7608.09,
+   "low": 5797.48,
    "setId": "OP-17"
   }
  ],
