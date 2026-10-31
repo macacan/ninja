@@ -1,6 +1,21 @@
 {
- "updated": 1793440019965,
+ "updated": 1793440940025,
  "events": [
+  {
+   "at": 1793440620743,
+   "store": "samlargrottan",
+   "product": "samlargrottan:https://www.samlargrottan.se/product-page/pokémon-prismatic-evolutions-elite-trainer-box",
+   "group": "prismatic-evolutions|elite-trainer-box|en|",
+   "title": "Pokémon: Prismatic Evolutions Elite Trainer Box",
+   "url": "https://www.samlargrottan.se/product-page/pok%C3%A9mon-prismatic-evolutions-elite-trainer-box",
+   "image": "https://static.wixstatic.com/media/d265aa_db9be15e72334c9c86b65a98d937285c~mv2.webp/v1/fit/w_500,h_500,q_90/file.webp",
+   "price": 2199,
+   "type": "Elite Trainer Box",
+   "set": "Prismatic Evolutions",
+   "lang": "en",
+   "kind": "prissankt",
+   "from": 2249
+  },
   {
    "at": 1793415769147,
    "store": "the-swedish-fish",
@@ -6825,19 +6840,6 @@
    "lang": "zh",
    "kind": "prissankt",
    "from": 479
-  },
-  {
-   "at": 1792701628279,
-   "store": "poketalk",
-   "product": "poketalk:10115810623830",
-   "group": "x|ultra-premium-collection|en||charizard-x",
-   "title": "Pokémon TCG: Mega Charizard X Ultra Premium Collection",
-   "url": "https://poketalk.se/products/pokemon-tcg-mega-charizard-x-ex-ultra-premium-collection",
-   "price": 2799,
-   "type": "Ultra-Premium Collection",
-   "set": null,
-   "lang": "en",
-   "kind": "tillbaka"
   }
  ]
 }
