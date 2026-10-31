@@ -1,6 +1,34 @@
 {
- "updated": 1793446460178,
+ "updated": 1793447380199,
  "events": [
+  {
+   "at": 1793446703771,
+   "store": "dragon-s-lair",
+   "product": "dragon-s-lair:15943625638236",
+   "group": "30th-celebration|deck|en||espeon",
+   "title": "Pokémon TCG: 30th Celebration Battle Deck Espeon ex +",
+   "url": "https://dragonslair.se/products/pokemon-tcg-30th-celebration-battle-deck-espeon-ex-kopia",
+   "image": "https://cdn.shopify.com/s/files/1/1015/8315/9644/files/PokemonTCG30thCelebrationBattleDeckEspeonex.webp?v=1793363347",
+   "price": 449,
+   "type": "Deck",
+   "set": "30th Celebration",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1793446703771,
+   "store": "dragon-s-lair",
+   "product": "dragon-s-lair:15943429914972",
+   "group": "30th-celebration|deck|en||umbreon",
+   "title": "Pokémon TCG: 30th Celebration Battle Deck Umbreon ex",
+   "url": "https://dragonslair.se/products/pokemon-tcg-30th-celebration-battle-deck-umbreon-ex",
+   "image": "https://cdn.shopify.com/s/files/1/1015/8315/9644/files/PokemonTCG30thCelebrationBattleDeckUmbreonex.webp?v=1793363110",
+   "price": 449,
+   "type": "Deck",
+   "set": "30th Celebration",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793445931043,
    "store": "aquitaz",
@@ -6812,34 +6840,6 @@
    "lang": "en",
    "kind": "prissankt",
    "from": 579
-  },
-  {
-   "at": 1792703186090,
-   "store": "kantovault",
-   "product": "kantovault:11491006579029",
-   "group": "x|booster-box|zh||chasing-glory-slim-together",
-   "title": "Pokémon Chasing Glory Together Slim Booster Box (Kinesisk)",
-   "url": "https://kantovault.se/products/pokemon-chasing-glory-together-slim-booster-box-kinesisk",
-   "price": 399,
-   "type": "Booster Box",
-   "set": null,
-   "lang": "zh",
-   "kind": "prissankt",
-   "from": 449
-  },
-  {
-   "at": 1792703186090,
-   "store": "kantovault",
-   "product": "kantovault:11289532793173",
-   "group": "x|collection-box|zh||30th-anniversary-first-illustration-partner-s2",
-   "title": "Pokémon 30th Anniversary First Partner Illustration Collection Box Series 2 (Kinesisk)",
-   "url": "https://kantovault.se/products/pokemon-30th-anniversary-first-partner-illustration-collection-box-series-2-kinesisk",
-   "price": 129,
-   "type": "Collection Box",
-   "set": null,
-   "lang": "zh",
-   "kind": "prissankt",
-   "from": 149
   }
  ]
 }
