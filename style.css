@@ -259,6 +259,13 @@ input[type=search]{width:100%;max-width:360px}
 .restock-intro p{margin:0;max-width:52ch;color:#e1e6f5;font-size:.98rem;line-height:1.65;text-wrap:pretty;text-shadow:0 1px 2px rgba(0,0,0,.4)}
 .restock-facts{list-style:none;margin:4px 0 0;padding:16px 0 0;border-top:1px solid rgba(255,255,255,.14);display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
 .restock-facts li{display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;font-size:.9rem;font-weight:600;color:#e1e6f5}
+/* Mobil: introt överst med kortare text (antalet butiker står redan i faktaraden), flödet i mitten och knapparna sist. */
+@media (max-width:900px){
+  .restock-side{display:contents}
+  .restock-intro{order:-1}
+  .restock-side .restock-actions{order:1}
+  .restock-intro .ri-long{display:none}
+}
 .restock-facts b{font:800 1.6rem/1 var(--sans);color:var(--gold);letter-spacing:.5px}
 /* Rubriken är en knapp som fäller ut sökfältet på mobilen. På större skärmar ser den ut som en vanlig rubrik. */
 .pb-toggle{all:unset;font:inherit;color:inherit;display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;box-sizing:border-box}
