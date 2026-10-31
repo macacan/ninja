@@ -1,6 +1,21 @@
 {
- "updated": 1793415490181,
+ "updated": 1793415948964,
  "events": [
+  {
+   "at": 1793415769147,
+   "store": "the-swedish-fish",
+   "product": "the-swedish-fish:16740",
+   "group": "rb|radiance|booster-box|en|",
+   "title": "Riftbound TCG: Radiance Booster Box",
+   "url": "https://theswedishfish.se/product/r-r-special/",
+   "image": "https://theswedishfish.se/wp-content/uploads/2026/10/bbbb.webp",
+   "price": 1899,
+   "type": "Booster Box",
+   "set": "Radiance",
+   "lang": "en",
+   "game": "rb",
+   "kind": "ny"
+  },
   {
    "at": 1793412225079,
    "store": "samlargrottan",
@@ -6823,20 +6838,6 @@
    "set": null,
    "lang": "en",
    "kind": "tillbaka"
-  },
-  {
-   "at": 1792701386921,
-   "store": "kantovault",
-   "product": "kantovault:10254187692373",
-   "group": "x|booster-box|ja||dream",
-   "title": "Mega Dream ex Booster Box (Japansk)",
-   "url": "https://kantovault.se/products/mega-dream-ex-booster-box-japansk",
-   "price": 1190,
-   "type": "Booster Box",
-   "set": null,
-   "lang": "ja",
-   "kind": "prissankt",
-   "from": 1299
   }
  ]
 }
