@@ -1,5 +1,5 @@
 {
- "updated": 1793415948964,
+ "updated": 1793419169067,
  "stores": [
   {
    "id": "alara-games",
@@ -92,9 +92,9 @@
    "name": "Card Mountain",
    "domain": "cardmountain.se",
    "status": "ej-forbjuden",
-   "checkedAt": 1793415555380,
+   "checkedAt": 1793419155575,
    "ok": true,
-   "lastOkAt": 1793415555380,
+   "lastOkAt": 1793419155575,
    "count": 53,
    "error": null,
    "blocked": false,
@@ -215,7 +215,7 @@
    "name": "Fantasia North",
    "domain": "fantasianorth.com",
    "status": "ej-forbjuden",
-   "checkedAt": 1793415566433,
+   "checkedAt": 1793419159359,
    "ok": false,
    "lastOkAt": 1792523214225,
    "count": 0,
