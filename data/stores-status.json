@@ -1,5 +1,5 @@
 {
- "updated": 1793405751663,
+ "updated": 1793405831664,
  "stores": [
   {
    "id": "alara-games",
@@ -254,14 +254,14 @@
    "name": "GameShop",
    "domain": "gameshop.se",
    "status": "ej-forbjuden",
-   "checkedAt": 1793404785357,
+   "checkedAt": 1793405812895,
    "ok": true,
-   "lastOkAt": 1793404785357,
+   "lastOkAt": 1793405812895,
    "count": 19,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 15
+   "interval": 60
   },
   {
    "id": "gimmick",
