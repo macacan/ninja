@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-31T01:47:57.641Z",
+ "updated": "2026-10-31T02:03:14.719Z",
  "articles": [
   {
    "title": "Budget Riftbound Decks: Build with Bulk Cards & Play for $10! – Part 2",
@@ -480,5 +480,36 @@
    "game": "op"
   }
  ],
- "videos": []
+ "videos": [
+  {
+   "id": "bQZCF3_X6KA",
+   "title": "Andrew Hedrick Vs Caleb Rogerson - Pokémon TCG Masters Finals | 2027 Puebla Regional Championships",
+   "date": "2026-10-30T20:00:21.000Z",
+   "source": "Play! Pokémon (officiell)"
+  },
+  {
+   "id": "TnNgdVVlepQ",
+   "title": "Andrew Hedrick Vs Yoshiyuki Yamaguchi - Pokémon TCG Top 4 | 2027 Puebla Regional Championships",
+   "date": "2026-10-30T18:00:19.000Z",
+   "source": "Play! Pokémon (officiell)"
+  },
+  {
+   "id": "FLwx-9hf8Ow",
+   "title": "Nathan Ginsburg Vs Caleb Rogerson - Pokémon TCG Top 4 | 2027 Puebla Regional Championships",
+   "date": "2026-10-30T16:00:29.000Z",
+   "source": "Play! Pokémon (officiell)"
+  },
+  {
+   "id": "L_MAV72GVyg",
+   "title": "TCG Day 2 | 2027 Pokémon Gdańsk Regional Championships",
+   "date": "2026-10-26T23:26:17.000Z",
+   "source": "Play! Pokémon (officiell)"
+  },
+  {
+   "id": "rWsK4plWGM4",
+   "title": "TCG Day 1 | 2027 Pokémon Gdańsk Regional Championships",
+   "date": "2026-10-26T23:22:12.000Z",
+   "source": "Play! Pokémon (officiell)"
+  }
+ ]
 }
