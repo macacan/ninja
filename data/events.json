@@ -1,6 +1,35 @@
 {
- "updated": 1793403950401,
+ "updated": 1793404850414,
  "events": [
+  {
+   "at": 1793404846956,
+   "store": "skattkistan",
+   "product": "skattkistan:11277988036946",
+   "group": "emerald|booster-box|ja|",
+   "title": "Pokémon TCG – Storm Emeralda (M6) Booster Box (JP)",
+   "url": "https://skattkistan.net/products/pokemon-tcg-storm-emeralda-m6-booster-box-jp",
+   "image": "https://cdn.shopify.com/s/files/1/1094/6858/2226/files/chrome_3xYXQv7KB0.png?v=1793404735",
+   "price": 1099,
+   "type": "Booster Box",
+   "set": "Emerald",
+   "lang": "ja",
+   "kind": "ny"
+  },
+  {
+   "at": 1793404846956,
+   "store": "skattkistan",
+   "product": "skattkistan:11232188694866",
+   "group": "team-rocket|blister|en||2",
+   "title": "Pokémon TCG: Enhanced 2-Pack Blister – Gengar, Marshadow & Team Rocket’s Mimikyu",
+   "url": "https://skattkistan.net/products/pokemon-tcg-enhanced-2-pack-blister-gengar-marshadow-team-rocket-s-mimikyu",
+   "image": "https://cdn.shopify.com/s/files/1/1094/6858/2226/files/chrome_KL6gvIDBDs.jpg?v=1792012800",
+   "price": 199,
+   "type": "Blister",
+   "set": "Team Rocket",
+   "lang": "en",
+   "kind": "prissankt",
+   "from": 219
+  },
   {
    "at": 1793403049225,
    "store": "skattkistan",
@@ -6807,33 +6836,6 @@
    "set": "Phantasmal Flames",
    "lang": "en",
    "kind": "tillbaka"
-  },
-  {
-   "at": 1792700714849,
-   "store": "poketalk",
-   "product": "poketalk:9529114755414",
-   "group": "astral-radiance|booster-box|en|",
-   "title": "Pokémon Sword & Shield: Astral Radiance Booster Box",
-   "url": "https://poketalk.se/products/pokemon-sword-shield-astral-radiance-booster-box",
-   "price": 4299,
-   "type": "Booster Box",
-   "set": "Astral Radiance",
-   "lang": "en",
-   "kind": "prissankt",
-   "from": 4499
-  },
-  {
-   "at": 1792700541010,
-   "store": "spelparken",
-   "product": "spelparken:15318500049271",
-   "group": "fusion-strike|booster-box|en|",
-   "title": "Fusion Strike – 18-Pack Booster Box",
-   "url": "https://spelparken.se/products/fusion-strike-18-pack-booster-box",
-   "price": 6249,
-   "type": "Booster Box",
-   "set": "Fusion Strike",
-   "lang": "en",
-   "kind": "ny"
   }
  ]
 }
