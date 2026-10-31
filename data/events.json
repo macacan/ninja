@@ -1,6 +1,36 @@
 {
- "updated": 1793477065581,
+ "updated": 1793477985603,
  "events": [
+  {
+   "at": 1793477202458,
+   "store": "samlarverket",
+   "product": "samlarverket:11273223242071",
+   "group": "team-rocket|ultra-premium-collection|en||moltres",
+   "title": "Pokémon Team Rocket’s Moltres ex Ultra-Premium Collection",
+   "url": "https://samlarverket.com/produkt/pokemon-team-rocket-s-moltres-ex-ultra-premium-collection",
+   "image": "https://cdn.shopify.com/s/files/1/1022/5323/2471/files/team-rockets-moltres-ex-ultra-premium-collection-v0-p46d6lwnudkf1.webp?v=1791844975",
+   "price": 3599,
+   "type": "Ultra-Premium Collection",
+   "set": "Team Rocket",
+   "lang": "en",
+   "kind": "prissankt",
+   "from": 3899
+  },
+  {
+   "at": 1793477202458,
+   "store": "samlarverket",
+   "product": "samlarverket:11273212920151",
+   "group": "x|ultra-premium-collection|en||greninja",
+   "title": "Pokémon Greninja ex Ultra Premium Collection",
+   "url": "https://samlarverket.com/produkt/pokemon-greninja-ex-ultra-premium-collection",
+   "image": "https://cdn.shopify.com/s/files/1/1022/5323/2471/files/Greninja-ex-Ultra-Premium-Collection.webp?v=1791844587",
+   "price": 3499,
+   "type": "Ultra-Premium Collection",
+   "set": null,
+   "lang": "en",
+   "kind": "prissankt",
+   "from": 3799
+  },
   {
    "at": 1793472596475,
    "store": "skattkistan",
@@ -6834,32 +6864,6 @@
    "lang": "en",
    "kind": "prissankt",
    "from": 189
-  },
-  {
-   "at": 1792706017229,
-   "store": "poketalk",
-   "product": "poketalk:11392507511126",
-   "group": "astral-radiance|booster-pack|en|",
-   "title": "Pokémon Sword & Shield: Astral Radiance Booster Pack",
-   "url": "https://poketalk.se/products/pokemon-sword-shield-astral-radiance-booster-pack-1",
-   "price": 119,
-   "type": "Booster Pack",
-   "set": "Astral Radiance",
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1792705100571,
-   "store": "poketalk",
-   "product": "poketalk:11234143207766",
-   "group": "chaos-rising|booster-box|en|",
-   "title": "Pokémon Mega & Evolution: Chaos Rising Booster Box",
-   "url": "https://poketalk.se/products/pokemon-mega-evolution-chaos-rising-booster-box-1",
-   "price": 2799,
-   "type": "Booster Box",
-   "set": "Chaos Rising",
-   "lang": "en",
-   "kind": "ny"
   }
  ]
 }
