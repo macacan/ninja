@@ -1,6 +1,35 @@
 {
- "updated": 1793449221698,
+ "updated": 1793450141718,
  "events": [
+  {
+   "at": 1793449700651,
+   "store": "rgb-kingz",
+   "product": "rgb-kingz:16154630488394",
+   "group": "phantasmal-flames|booster-box|en|",
+   "title": "Pokémon TCG: Mega Evolution – Phantasmal Flames Booster Box (ENG)",
+   "url": "https://rgbkingz.com/products/pokemon-tcg-mega-evolution-phantasmal-flames-booster-box-eng",
+   "image": "https://cdn.shopify.com/s/files/1/0782/8088/4554/files/Phantasmal_Flames_Booster_Box_Kvadratisk.png?v=1793448883",
+   "price": 5890,
+   "type": "Booster Box",
+   "set": "Phantasmal Flames",
+   "lang": "en",
+   "kind": "ny"
+  },
+  {
+   "at": 1793449344710,
+   "store": "aquitaz",
+   "product": "aquitaz:11057515364698",
+   "group": "op|op-20|booster-box|ja|",
+   "title": "One Piece: (OP 20) Booster Box (24 Pack) (JP)",
+   "url": "https://aquitaz.se/products/one-piece-op-20-booster-box-24-pack-jp",
+   "image": "https://cdn.shopify.com/s/files/1/0885/4087/3050/files/BlackBox_55_15372071-5765-43a3-8500-26d087ccc479.png?v=1793447789",
+   "price": 1337,
+   "type": "Booster Box",
+   "set": "OP-20",
+   "lang": "ja",
+   "game": "op",
+   "kind": "forbestallning"
+  },
   {
    "at": 1793447707172,
    "store": "miniature-metropolis",
@@ -6814,32 +6843,6 @@
    "set": "Mega Evolution",
    "lang": "en",
    "kind": "ny"
-  },
-  {
-   "at": 1792703281822,
-   "store": "poketalk",
-   "product": "poketalk:11392603291990",
-   "group": "phantasmal-flames|booster-bundle|en|",
-   "title": "Pokémon Mega Evolution: Phantasmal Flames Booster Bundle",
-   "url": "https://poketalk.se/products/pokemon-mega-evolution-phantasmal-flames-booster-bundle-1",
-   "price": 1199,
-   "type": "Booster Bundle",
-   "set": "Phantasmal Flames",
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1792703281822,
-   "store": "poketalk",
-   "product": "poketalk:9253005787478",
-   "group": "151|booster-pack|en|",
-   "title": "Pokémon Scarlet & Violet: 151 Booster Pack",
-   "url": "https://poketalk.se/products/pokemon-scarlet-violet-151-booster-pack",
-   "price": 399,
-   "type": "Booster Pack",
-   "set": "151",
-   "lang": "en",
-   "kind": "tillbaka"
   }
  ]
 }
