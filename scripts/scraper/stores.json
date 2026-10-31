@@ -15,12 +15,24 @@
    "domain": "alphaspel.se",
    "platform": "generic",
    "status": "ej-forbjuden",
-   "note": "Inget förbud hittat i villkoren 2026-10-12. Ingen sitemap: produkterna läses från Pokémon-kategorin.",
-   "listing": {
-    "path": "/1762-pokemon-tcg/?page={n}",
-    "link": "^/1762-pokemon-tcg/\\d+-[^/?#]+$",
-    "pages": 12
-   }
+   "note": "Inget förbud hittat i villkoren 2026-10-12. Ingen sitemap: produkterna läses från kategorierna för Pokémon, Riftbound och One Piece.",
+   "listing": [
+    {
+     "path": "/1762-pokemon-tcg/?page={n}",
+     "link": "^/1762-pokemon-tcg/\\d+-[^/?#]+$",
+     "pages": 12
+    },
+    {
+     "path": "/7964-riftbound-league-of-legends-tcg/?page={n}",
+     "link": "^/7964-riftbound-league-of-legends-tcg/\\d+-[^/?#]+$",
+     "pages": 6
+    },
+    {
+     "path": "/3959-one-piece-card-game/?page={n}",
+     "link": "^/3959-one-piece-card-game/\\d+-[^/?#]+$",
+     "pages": 6
+    }
+   ]
   },
   {
    "id": "aquitaz",

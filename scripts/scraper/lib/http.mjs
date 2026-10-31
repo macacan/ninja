@@ -60,8 +60,10 @@ export class Host {
     const text = r.ok ? await readCapped(r) : "";
     const who = blockedBy(r, text);
     if (who) throw blocked(who);
-    // 401/403 på robots.txt betyder i praktiken att boten är ovälkommen. Vi tolkar det som "allt förbjudet".
-    this.robots = parseRobots(r.status === 401 || r.status === 403 ? "User-agent: *\nDisallow: /" : text);
+    // 401/403 på robots.txt betyder i praktiken att boten är ovälkommen (ofta en spärr mot serverhallarnas
+    // adresser, t.ex. GitHub Actions). Då hämtas ingenting, och felet säger varför i stället för att en enskild sida nekas.
+    if (r.status === 401 || r.status === 403) throw blocked(`Butiken (robots.txt svarade ${r.status})`);
+    this.robots = parseRobots(text);
     this.group = groupFor(this.robots, BOT);
     this.delay = Math.max(MIN_DELAY_MS, (this.group.delay || 0) * 1000);
     return this;

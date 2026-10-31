@@ -152,12 +152,25 @@ async function listingUrls(host, listing) {
   return urls;
 }
 
+// listing kan också vara en lista, en per kategori (t.ex. Pokémon, Riftbound och One Piece). En kategori som
+// inte går att läsa hoppas över, men går ingen att läsa räknas kontrollen som misslyckad.
+async function allListingUrls(host, listing) {
+  const urls = new Set();
+  let firstError = null;
+  for (const l of [].concat(listing)) {
+    try { for (const u of await listingUrls(host, l)) urls.add(u); }
+    catch (e) { if (e.blocked) throw e; firstError ||= e; }
+  }
+  if (!urls.size && firstError) throw firstError;
+  return [...urls];
+}
+
 export async function generic(host, ctx) {
   // Sitemapen ändras sällan. I bevakningsläget läses den om högst var 30:e minut (sitemapMaxAge).
   const s = ctx.state;
   const reuse = s.known && s.knownAt && Date.now() - s.knownAt < (ctx.sitemapMaxAge || 0);
   const urls = dropLocaleCopies(reuse ? s.known
-    : ctx.listing ? await listingUrls(host, ctx.listing)
+    : ctx.listing ? await allListingUrls(host, ctx.listing)
     : await sitemapUrls(host, { maxSitemapUrls: 3000, ...ctx }));
   if (!urls.length) throw new Error(ctx.listing ? "kategorisidan gav inga produkter" : "sitemapen gav inga produktsidor");
   if (!reuse) {
