@@ -1,6 +1,6 @@
 {
  "_info": "Byggs av scripts/update-releases.mjs. Ändra inte här, ändra i data/releases.json.",
- "updated": 1793432794541,
+ "updated": 1793433701583,
  "releases": [
   {
    "id": "scarlet-and-violet",
@@ -18,7 +18,8 @@
     }
    ],
    "series": "Scarlet & Violet",
-   "source": "https://bulbapedia.bulbagarden.net/wiki/Scarlet_%26_Violet_(TCG)"
+   "source": "https://bulbapedia.bulbagarden.net/wiki/Scarlet_%26_Violet_(TCG)",
+   "tcgdex": "sv01"
   },
   {
    "id": "paldea-evolved",
@@ -36,7 +37,8 @@
     }
    ],
    "series": "Scarlet & Violet",
-   "source": "https://bulbapedia.bulbagarden.net/wiki/Paldea_Evolved_(TCG)"
+   "source": "https://bulbapedia.bulbagarden.net/wiki/Paldea_Evolved_(TCG)",
+   "tcgdex": "sv02"
   },
   {
    "id": "obsidian-flames",
@@ -54,7 +56,8 @@
     }
    ],
    "series": "Scarlet & Violet",
-   "source": "https://bulbapedia.bulbagarden.net/wiki/Obsidian_Flames_(TCG)"
+   "source": "https://bulbapedia.bulbagarden.net/wiki/Obsidian_Flames_(TCG)",
+   "tcgdex": "sv03"
   },
   {
    "id": "151",
@@ -72,7 +75,8 @@
     }
    ],
    "series": "Scarlet & Violet",
-   "source": "https://bulbapedia.bulbagarden.net/wiki/151_(TCG)"
+   "source": "https://bulbapedia.bulbagarden.net/wiki/151_(TCG)",
+   "tcgdex": "sv03.5"
   },
   {
    "id": "paradox-rift",
@@ -90,7 +94,8 @@
     }
    ],
    "series": "Scarlet & Violet",
-   "source": "https://bulbapedia.bulbagarden.net/wiki/Paradox_Rift_(TCG)"
+   "source": "https://bulbapedia.bulbagarden.net/wiki/Paradox_Rift_(TCG)",
+   "tcgdex": "sv04"
   },
   {
    "id": "paldean-fates",
@@ -108,7 +113,8 @@
     }
    ],
    "series": "Scarlet & Violet",
-   "source": "https://bulbapedia.bulbagarden.net/wiki/Paldean_Fates_(TCG)"
+   "source": "https://bulbapedia.bulbagarden.net/wiki/Paldean_Fates_(TCG)",
+   "tcgdex": "sv04.5"
   },
   {
    "id": "temporal-forces",
@@ -126,7 +132,8 @@
     }
    ],
    "series": "Scarlet & Violet",
-   "source": "https://bulbapedia.bulbagarden.net/wiki/Temporal_Forces_(TCG)"
+   "source": "https://bulbapedia.bulbagarden.net/wiki/Temporal_Forces_(TCG)",
+   "tcgdex": "sv05"
   },
   {
    "id": "twilight-masquerade",
@@ -144,7 +151,8 @@
     }
    ],
    "series": "Scarlet & Violet",
-   "source": "https://bulbapedia.bulbagarden.net/wiki/Twilight_Masquerade_(TCG)"
+   "source": "https://bulbapedia.bulbagarden.net/wiki/Twilight_Masquerade_(TCG)",
+   "tcgdex": "sv06"
   },
   {
    "id": "shrouded-fable",
@@ -162,7 +170,8 @@
     }
    ],
    "series": "Scarlet & Violet",
-   "source": "https://bulbapedia.bulbagarden.net/wiki/Shrouded_Fable_(TCG)"
+   "source": "https://bulbapedia.bulbagarden.net/wiki/Shrouded_Fable_(TCG)",
+   "tcgdex": "sv06.5"
   },
   {
    "id": "stellar-crown",
@@ -180,7 +189,8 @@
     }
    ],
    "series": "Scarlet & Violet",
-   "source": "https://bulbapedia.bulbagarden.net/wiki/Stellar_Crown_(TCG)"
+   "source": "https://bulbapedia.bulbagarden.net/wiki/Stellar_Crown_(TCG)",
+   "tcgdex": "sv07"
   },
   {
    "id": "surging-sparks",
@@ -198,7 +208,8 @@
     }
    ],
    "series": "Scarlet & Violet",
-   "source": "https://bulbapedia.bulbagarden.net/wiki/Surging_Sparks_(TCG)"
+   "source": "https://bulbapedia.bulbagarden.net/wiki/Surging_Sparks_(TCG)",
+   "tcgdex": "sv08"
   },
   {
    "id": "prismatic-evolutions",
@@ -216,7 +227,8 @@
     }
    ],
    "series": "Scarlet & Violet",
-   "source": "https://bulbapedia.bulbagarden.net/wiki/Prismatic_Evolutions_(TCG)"
+   "source": "https://bulbapedia.bulbagarden.net/wiki/Prismatic_Evolutions_(TCG)",
+   "tcgdex": "sv08.5"
   },
   {
    "id": "journey-together",
@@ -234,7 +246,8 @@
     }
    ],
    "series": "Scarlet & Violet",
-   "source": "https://bulbapedia.bulbagarden.net/wiki/Journey_Together_(TCG)"
+   "source": "https://bulbapedia.bulbagarden.net/wiki/Journey_Together_(TCG)",
+   "tcgdex": "sv09"
   },
   {
    "id": "destined-rivals",
@@ -252,7 +265,8 @@
     }
    ],
    "series": "Scarlet & Violet",
-   "source": "https://bulbapedia.bulbagarden.net/wiki/Destined_Rivals_(TCG)"
+   "source": "https://bulbapedia.bulbagarden.net/wiki/Destined_Rivals_(TCG)",
+   "tcgdex": "sv10"
   },
   {
    "id": "black-bolt-and-white-flare",
@@ -288,7 +302,8 @@
     }
    ],
    "series": "Mega Evolution",
-   "source": "https://bulbapedia.bulbagarden.net/wiki/Mega_Evolution_(TCG)"
+   "source": "https://bulbapedia.bulbagarden.net/wiki/Mega_Evolution_(TCG)",
+   "tcgdex": "me01"
   },
   {
    "id": "phantasmal-flames",
@@ -306,7 +321,8 @@
     }
    ],
    "series": "Mega Evolution",
-   "source": "https://bulbapedia.bulbagarden.net/wiki/Phantasmal_Flames_(TCG)"
+   "source": "https://bulbapedia.bulbagarden.net/wiki/Phantasmal_Flames_(TCG)",
+   "tcgdex": "me02"
   },
   {
    "id": "ascended-heroes",
@@ -324,7 +340,8 @@
     }
    ],
    "series": "Mega Evolution",
-   "source": "https://bulbapedia.bulbagarden.net/wiki/Ascended_Heroes_(TCG)"
+   "source": "https://bulbapedia.bulbagarden.net/wiki/Ascended_Heroes_(TCG)",
+   "tcgdex": "me02.5"
   },
   {
    "id": "perfect-order",
@@ -342,7 +359,8 @@
     }
    ],
    "series": "Mega Evolution",
-   "source": "https://bulbapedia.bulbagarden.net/wiki/Perfect_Order_(TCG)"
+   "source": "https://bulbapedia.bulbagarden.net/wiki/Perfect_Order_(TCG)",
+   "tcgdex": "me03"
   },
   {
    "id": "chaos-rising",
@@ -360,7 +378,8 @@
     }
    ],
    "series": "Mega Evolution",
-   "source": "https://bulbapedia.bulbagarden.net/wiki/Chaos_Rising_(TCG)"
+   "source": "https://bulbapedia.bulbagarden.net/wiki/Chaos_Rising_(TCG)",
+   "tcgdex": "me04"
   },
   {
    "id": "pitch-black",
@@ -378,7 +397,8 @@
     }
    ],
    "series": "Mega Evolution",
-   "source": "https://bulbapedia.bulbagarden.net/wiki/Pitch_Black_(TCG)"
+   "source": "https://bulbapedia.bulbagarden.net/wiki/Pitch_Black_(TCG)",
+   "tcgdex": "me05"
   },
   {
    "id": "30th-celebration",
@@ -661,7 +681,7 @@
  "sources": {
   "manual": true,
   "bulbapedia": true,
-  "tcgdex": false,
+  "tcgdex": true,
   "op": true,
   "rb": true
  }
