@@ -1,6 +1,15 @@
 {
- "updated": "2026-10-31T12:04:56.014Z",
+ "updated": "2026-10-31T12:20:15.022Z",
  "articles": [
+  {
+   "title": "FBI investigates thieves using stolen credit cards to buy rare Pokemon cards",
+   "link": "https://www.dexerto.com/pokemon/fbi-investigates-thieves-using-stolen-credit-cards-to-buy-rare-pokemon-cards-3423485/",
+   "date": "2026-10-31T12:13:12.000Z",
+   "summary": "The FBI has warned trading card shops after seven New Jersey stores were targeted by thieves using stolen credit cards to steal Pokemon cards.",
+   "image": "https://www.dexerto.com/cdn-image/wp-content/uploads/2026/08/04/fbi-stock-photo.jpg?width=480&quality=75&format=auto",
+   "source": "Dexerto",
+   "game": "pk"
+  },
   {
    "title": "Logan Paul Just Proved His 'Pokémon' Haters Wrong",
    "link": "https://www.polygon.com/logan-paul-pokemon-tcg-pikachu-illustrator-money-spent-youtube/",
@@ -177,6 +186,15 @@
    "link": "https://www.dexerto.com/pokemon/psa-responds-as-1-million-of-pokemon-trading-cards-stolen-in-fedex-truck-heist-3420380/",
    "date": "2026-10-20T12:41:13.000Z",
    "summary": "PSA’s parent company, Collectors, has responded after close to $1 million of Pokemon and sports cards were stolen from a FedEx truck in California.",
+   "image": "https://www.dexerto.com/cdn-image/wp-content/uploads/2026/10/18/fedex-ground-delivery-truck.jpg?width=480&quality=75&format=auto",
+   "source": "Dexerto",
+   "game": "pk"
+  },
+  {
+   "title": "TCG collector says $100K PSA card order stolen in Pokemon, MTG & Yu-Gi-Oh FedEx truck burglary",
+   "link": "https://www.dexerto.com/pokemon/tcg-collector-says-100k-psa-card-order-stolen-in-pokemon-mtg-yu-gi-oh-fedex-truck-burglary-3419814/",
+   "date": "2026-10-18T16:03:17.000Z",
+   "summary": "A collector says 104 PSA-graded cards worth over $100,000 were stolen in a FedEx truck burglary, with other customers also reporting missing orders.",
    "image": "https://www.dexerto.com/cdn-image/wp-content/uploads/2026/10/18/fedex-ground-delivery-truck.jpg?width=480&quality=75&format=auto",
    "source": "Dexerto",
    "game": "pk"
@@ -435,15 +453,6 @@
    "game": "pk"
   },
   {
-   "title": "Drug dealer jailed after letting customers pay off debts with stolen Pokemon cards",
-   "link": "https://www.dexerto.com/pokemon/drug-dealer-jailed-after-letting-customers-pay-off-debts-with-stolen-pokemon-cards-3410874/",
-   "date": "2026-09-21T15:43:29.000Z",
-   "summary": "Kent Police jailed Jack Young-Larter for taking Pokemon cards as drug payments after a Maidstone raid seized cash, cocaine and rare collectibles.",
-   "image": "https://www.dexerto.com/cdn-image/wp-content/uploads/2026/09/21/Pikachu-jailed.jpg?width=480&quality=75&format=auto",
-   "source": "Dexerto",
-   "game": "pk"
-  },
-  {
    "title": "Yoshitaka Amano Drew One Piece Trading Card Game Art",
    "link": "https://www.siliconera.com/yoshitaka-amano-drew-one-piece-trading-card-game-art/",
    "date": "2026-08-24T15:00:40.000Z",
@@ -451,15 +460,6 @@
    "image": null,
    "source": "Siliconera",
    "game": "op"
-  },
-  {
-   "title": "Pokemon TCG 30th Celebration Expansion Only Has Foil Cards",
-   "link": "https://www.siliconera.com/pokemon-tcg-30th-celebration-expansion-only-has-foil-cards/",
-   "date": "2026-06-01T15:00:00.000Z",
-   "summary": "The Pokemon TCG 30th Celebration expansion will feature only foil trading cards for the game when it launches in 2026.",
-   "image": "https://www.siliconera.com/wp-content/uploads/2026/06/pokemon-tcg-30th-celebration-004-charizard-classic-card.png?resize=819%2C1114",
-   "source": "Siliconera",
-   "game": "pk"
   },
   {
    "title": "Premium Card Collection: Live Action Edition vol.2",
