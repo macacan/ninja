@@ -1,6 +1,6 @@
-// Sektionen "Precis inne i butikerna" på startsidan:
-//  1. ett levande flöde av de senast inkomna produkterna, som uppdateras varje minut
-//  2. en packöppnare: välj ett pack från de senaste seten, riv upp det och dra korten ett i taget
+// Två delar som var och en bara startar om sidan har platsen för den:
+//  1. ett levande flöde av de senast inkomna produkterna, som uppdateras varje minut (startsidans "Precis inne i butikerna")
+//  2. en packöppnare: välj ett pack från de senaste seten, riv upp det och dra korten ett i taget (värderingssidan)
 import { groupKey, groupProducts, changedAt } from "./group.js";
 import { $, esc, kr, ago, latestSets, setLogo, getJSON, API, safeUrl, liveStock } from "./site.js";
 import { track } from "./tracker.js";
@@ -164,10 +164,10 @@ const setImage = (img, src) => new Promise((res) => {
 const hue = (id) => [...id].reduce((h, c) => (h * 31 + c.charCodeAt(0)) % 360, 7);
 
 // ---------- Dagens pack ----------
-// Ett pack per dag. Är packet värt under 10 kr får man öppna ett nytt, tills ett pack är värt minst 10 kr.
+// Ett pack per dag, oavsett vad det är värt. Bara pack värda mer än TOP_MIN kommer med på topplistan.
 // Dagen sparas i webbläsaren och börjar om vid midnatt. Den räknas som klar så fort packet dras, inte när
 // alla kort har visats, så att man inte kan ladda om sidan och dra ett nytt.
-const DAY_MIN = 10; // kronor
+const TOP_MIN = 10; // kronor, samma gräns som i api/highscore.php
 const DAY_KEY = "nl:pack-day";
 const today = () => { const d = new Date(); return `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`; };
 const doneToday = () => { try { return localStorage.getItem(DAY_KEY) === today(); } catch { return false; } };
@@ -455,7 +455,7 @@ async function openPack(btn) {
       const rarity = d?.rarity && d.rarity !== "None" ? d.rarity : "";
       return { d, value, rarity, tier: tierOf(rarity, value) };
     }));
-    if (info.reduce((s, x) => s + (x.value || 0), 0) >= DAY_MIN) markDone();
+    markDone();
     return { model, picks, info };
   });
   await wait(450); // packet glider till mitten, utan skakning
@@ -571,7 +571,6 @@ function renderDeck(set, { model, picks, info }, ticket) {
       <div class="hs-submit" hidden></div>
       <div class="pull-actions">
         <button type="button" class="btn small" data-skip>Visa alla</button>
-        <button type="button" class="btn small primary" data-again hidden>Öppna ett till</button>
         <a class="btn small" href="butiker.html#notiser" data-notis hidden>Få notis när nya produkter kommer in</a>
       </div>
       ${SHOW_ODDS ? `<details class="odds" open><summary>Dropchans för ${esc(set.name)}</summary>${oddsTable(model)}</details>` : ""}
@@ -639,12 +638,12 @@ function renderDeck(set, { model, picks, info }, ticket) {
   const finish = () => {
     const sum = info.reduce((s, x) => s + (x.value || 0), 0);
     const best = info.reduce((b, x, i) => ((x.value || 0) > (info[b].value || 0) ? i : b), 0);
-    // Under 10 kr: man får öppna ett nytt. Annars var det dagens pack.
-    const again = sum < DAY_MIN;
+    // Topplistan bara för pack värda mer än 10 kr. Värdet avrundas som det skickas till servern.
+    const ranked = Math.round(sum) > TOP_MIN;
     total.innerHTML = `${sum > 0 ? `Packet var värt ca <b>${kr(sum)}</b>${info[best].value ? ` · bästa kort: ${esc(picks[best].card.name)} (ca ${kr(info[best].value)})` : ""}. ` : ""}`
-      + (again ? `<b class="pull-again">Under ${DAY_MIN} kr, så du får öppna ett till!</b>` : `Det var dagens pack. Nästa pack om ${untilTomorrow()}.`);
-    pull.querySelector("[data-again]").hidden = !again;
-    pull.querySelector("[data-notis]").hidden = again; // efter dagens pack: tipsa om notiser i stället
+      + `Det var dagens pack. Nästa pack om ${untilTomorrow()}.`
+      + (ranked ? "" : `<b class="pull-note">Packet behöver vara värt mer än ${TOP_MIN} kr för att komma med på topplistan.</b>`);
+    pull.querySelector("[data-notis]").hidden = false; // efter dagens pack: tipsa om notiser
     stage.hidden = true; swipeHint.hidden = true;
     count.textContent = `Alla ${N} kort dragna`;
     nameEl.textContent = info[best].value ? picks[best].card.name : "";
@@ -652,8 +651,7 @@ function renderDeck(set, { model, picks, info }, ticket) {
     rarityEl.className = `deck-rarity t${info[best].tier}`;
     deck.dataset.tier = "0";
     track("pack_open", set.name, Math.round(sum));
-    // Topplistan bara för pack värda minst 10 kr, alltså dagens riktiga pack.
-    if (!again) {
+    if (ranked) {
       const b = picks[best].card;
       submitForm(pull.querySelector(".hs-submit"), {
         pack_value: Math.round(sum), set_id: set.id, set_name: set.name,
@@ -744,7 +742,6 @@ function renderDeck(set, { model, picks, info }, ticket) {
     else if (e.key === "Enter" || e.key === " ") { e.preventDefault(); tapCard(); }
   });
   pull.querySelector("[data-skip]").addEventListener("click", skip);
-  pull.querySelector("[data-again]").addEventListener("click", reset);
 }
 
 function oddsTable(m) {
@@ -753,19 +750,11 @@ function oddsTable(m) {
     <p>Varje pack har 10 kort: 5 vanliga, 3 ovanliga, en reverse holo-plats och en sällsynt-plats. Sällsynt-platsen avgör vad du får. Reverse holo-platsen har dessutom ${pct(REVERSE_BONUS)} chans att bli ett bonuskort av en högre sort. Procenten är en förenklad uppskattning, inte officiella odds.</p>`;
 }
 
-function reset() {
-  const row = $("#pack-row"), pull = $("#pull");
-  pull.hidden = true;
-  pull.innerHTML = "";
-  row.hidden = false;
-  row.classList.remove("has-chosen");
-  $("#pack-stage").classList.remove("is-opening");
-  if (packPool.length) renderPacks(); // nya slumpade pack till nästa öppning
-  applyLock();
-}
 
 $("#pack-row")?.addEventListener("click", (e) => { const b = e.target.closest(".pack"); if (b) openPack(b); });
 
-feed();
-setInterval(feed, 60e3);
-setupPacks();
+if ($("#restock-feed")) {
+  feed();
+  setInterval(feed, 60e3);
+}
+if ($("#pack-stage")) setupPacks();

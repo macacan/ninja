@@ -251,9 +251,15 @@ input[type=search]{width:100%;max-width:360px}
 .price-band.is-top input[type=search]:placeholder-shown{text-align:right}
 .price-band.is-top input[type=search]:not(:placeholder-shown){text-align:left}
 /* Introt ovanför kortvärdet: synlig H1 och en kort mening om vad sajten gör. */
-.home-intro{margin-top:clamp(20px,3.5vw,36px);max-width:68ch}
-.home-intro h1{margin:0 0 8px;font-size:clamp(1.45rem,3.2vw,2.2rem)}
-.home-intro p{margin:0;color:var(--muted);font-size:clamp(.92rem,1.4vw,1.05rem);line-height:1.55}
+/* Högra delen av "Precis inne": introt med två korta fakta, och knapparna under, mitt i höjdled bredvid flödet. */
+.restock-side{align-self:center;display:flex;flex-direction:column;gap:18px;min-width:0}
+.restock-side .restock-actions{justify-content:center}
+.restock-intro{display:flex;flex-direction:column;gap:16px;padding:28px 30px;border-radius:12px;background:rgba(14,16,28,.5);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.12)}
+.restock-intro h1{margin:0;font:600 clamp(1.3rem,2.2vw,1.75rem)/1.25 var(--pixel);color:#fff;text-wrap:balance;text-shadow:0 2px 4px rgba(0,0,0,.45)}
+.restock-intro p{margin:0;max-width:52ch;color:#e1e6f5;font-size:.98rem;line-height:1.65;text-wrap:pretty;text-shadow:0 1px 2px rgba(0,0,0,.4)}
+.restock-facts{list-style:none;margin:4px 0 0;padding:16px 0 0;border-top:1px solid rgba(255,255,255,.14);display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.restock-facts li{display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;font-size:.9rem;font-weight:600;color:#e1e6f5}
+.restock-facts b{font:800 1.6rem/1 var(--sans);color:var(--gold);letter-spacing:.5px}
 /* Rubriken är en knapp som fäller ut sökfältet på mobilen. På större skärmar ser den ut som en vanlig rubrik. */
 .pb-toggle{all:unset;font:inherit;color:inherit;display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;box-sizing:border-box}
 @media (min-width:721px){.pb-toggle{cursor:text;pointer-events:none}}
@@ -267,6 +273,15 @@ input[type=search]{width:100%;max-width:360px}
 }
 .price-band.is-top .search-row > :first-child{flex:1 1 auto}
 .price-band.is-top .search-row > .btn{flex:0 0 auto;padding-inline:22px}
+/* På datorn är sökrutan lika bred som platshållartexten och ligger tätt intill knappen till höger. */
+@media (min-width:981px){
+  .price-band.is-top .search-row{justify-self:end}
+  .price-band.is-top .search-row > .card-suggest-wrap{flex:0 1 auto}
+  .price-band.is-top .search-row .card-suggest-wrap input[type=search]{width:calc(33ch + 28px) !important}
+  @supports (field-sizing:content){
+    .price-band.is-top .search-row .card-suggest-wrap input[type=search]{field-sizing:content;width:auto !important;min-width:12ch}
+  }
+}
 
 /* ---------- Nyheter ---------- */
 .news-list{display:grid;gap:14px}
@@ -587,6 +602,16 @@ input[type=search]{width:100%;max-width:360px}
   background-repeat:no-repeat;background-position:right center;background-size:10px}
 .drop select:focus-visible{outline:none}
 .drop:focus-within{background:var(--surface);box-shadow:0 0 0 2px var(--ink)}
+/* Listan som fälls ut ritas av sidan själv där webbläsaren klarar det, så att den följer temat i stället för systemets vita lista. */
+@supports (appearance:base-select){
+  .drop select,.drop select::picker(select){appearance:base-select}
+  .drop select::picker-icon{display:none}
+  .drop select::picker(select){margin-top:6px;padding:4px;max-height:340px;background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:8px;box-shadow:0 12px 28px -8px rgba(0,0,0,.45)}
+  .drop select option{padding:7px 12px;border-radius:5px;background:transparent;color:var(--ink);cursor:pointer}
+  .drop select option::checkmark{display:none}
+  .drop select option:hover,.drop select option:focus-visible{background:var(--surface);outline:none}
+  .drop select option:checked{background:var(--surface);color:var(--gold);font-weight:600}
+}
 /* Flervalsfilter (Set, Butik): en knapp som fäller ut en lista med kryssrutor. */
 .drop.mdrop{padding:0}
 .mdrop-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 10px;border:0;background:transparent;color:var(--ink);font:inherit;font-size:.92rem;cursor:pointer;white-space:nowrap}
@@ -948,9 +973,11 @@ span.rd-logo{display:grid;place-items:center;background:var(--surface);border-ra
 :is(#game-seg,#news-games,#set-games) .beta-tag{position:absolute;top:4px;right:4px;margin:0;padding:3px 4px;font-size:.52rem;font-style:normal;text-shadow:none}
 @media (max-width:640px){:is(#game-seg,#news-games,#set-games) button{padding:16px 6px}}
 .card-search .btn{margin:var(--px) var(--px) var(--px) auto}
-/* Filter-knappen och de dolda filtren (språk, set, sällsynthet) som fälls ut på en egen rad. */
+/* Filter-knappen och de dolda filtren (språk, set, sällsynthet) som fälls ut på en egen rad.
+   Filtren ligger direkt i formulärets rad, så att Sortera och Sök hamnar i linje med dem. */
 .card-search #adv-toggle{margin:0;flex:none}
-.card-search .adv{display:flex;gap:8px;flex-wrap:wrap;flex:1 1 100%}
+.card-search .adv{display:contents}
+.card-search .adv::before{content:"";flex:0 0 100%}
 .card-search .adv[hidden]{display:none}
 .cgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:16px}
 .ctile{all:unset;box-sizing:border-box;cursor:pointer;display:flex;flex-direction:column;gap:4px;padding:10px;background:var(--card);border:1px solid var(--line);border-radius:12px;transition:transform .15s,box-shadow .15s,border-color .15s}
@@ -3074,8 +3101,13 @@ input[type=search]::-webkit-search-results-decoration {
 .pull-actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
 .pull-total{margin:0;min-height:1.3em;font-size:.85rem;color:#c9cfe0;text-align:center}
 .pull-total b{color:var(--gold)}
-.pull-total .pull-again{display:block;margin-top:4px}
+.pull-total .pull-note{display:block;margin-top:4px}
 
+/* Värderingssidans packöppnare: packen till vänster och texten till höger på breda skärmar. På mobilen kommer texten först. */
+@media (min-width:901px){
+  .pack-section{grid-template-columns:minmax(0,1.05fr) minmax(0,1fr)}
+  .pack-section .restock-main{order:2}
+}
 @media (max-width:900px){
   .restock{grid-template-columns:minmax(0,1fr);gap:20px;padding:22px 18px}
   .restock-stage{min-height:320px}

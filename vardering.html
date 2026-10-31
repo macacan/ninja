@@ -26,7 +26,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Hem","item":"https://lootninja.se/"},{"@type":"ListItem","position":2,"name":"Värdering","item":"https://lootninja.se/vardering.html"}]}</script>
 <link href="fonts/fonts.css" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=20261031h">
+<link rel="stylesheet" href="style.css?v=20261031p">
 <link rel="stylesheet" href="dark.css?v=20261029b" id="dark-css" media="(prefers-color-scheme: dark)">
 <script src="js/theme.js?v=20261021"></script>
 </head>
@@ -94,7 +94,21 @@
       </div>
     </section>
 
-
+    <!-- Packöppnaren: ett pack per dag från de senaste seten, med värdet på korten man drar (js/restock.js). -->
+    <section class="restock pack-section px-frame" aria-labelledby="pack-title">
+      <div class="restock-main">
+        <h2 id="pack-title">Öppna dagens pack</h2>
+        <p class="restock-lead">Du river upp folien, bläddrar förbi de vanliga korten och så glimmar det till längst bak. Är det en Charizard? En Special Illustration Rare? Välj ett pack från de senaste seten, vänd korten ett i taget och se direkt vad de är värda i kronor. Ett pack per dag, och drar du för mer än 10 kr kan du hamna på topplistan.</p>
+      </div>
+      <div class="restock-stage" id="pack-stage">
+        <p class="pack-counter" id="pack-counter" hidden><b>0</b> paket öppnade av ninjor</p>
+        <p class="stage-hint" id="stage-hint">Välj ett pack och tryck för att öppna det</p>
+        <div class="pack-row" id="pack-row" role="group" aria-label="Pack att öppna"></div>
+        <button type="button" class="btn small hs-open" id="hs-open" aria-expanded="false" aria-controls="hs-box">Topplistan</button>
+        <div class="hs-box" id="hs-box" hidden></div>
+        <div class="pull" id="pull" hidden></div>
+      </div>
+    </section>
 
     <!-- ======================================================== -->
     <!-- KORTETS ANATOMI: VAR HITTAR JAG DETALJERNA?               -->
@@ -802,5 +816,6 @@
 
 <script type="module" src="js/vardering.js?v=20261027a"></script>
 <script type="module" src="js/vardering-mobile.js?v=20261021"></script>
+<script type="module" src="js/restock.js?v=20261031b"></script>
 </body>
 </html>

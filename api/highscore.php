@@ -12,6 +12,7 @@ header('X-Robots-Tag: noindex');
 date_default_timezone_set('Europe/Stockholm');
 
 const MAX_PACK_VALUE = 25000; // kronor
+const MIN_PACK_VALUE = 10;    // kronor: bara pack värda mer än så kommer med (samma gräns som TOP_MIN i js/restock.js)
 const TOKEN_TTL = 7200;       // sekunder
 const TOP = 30; // topplistan visar 6 åt gången och går att scrolla till 30
 // Namnfiltret (inbyggda ord plus de som lagts till i statistikens dashboard) delas med stats/dashboard.php.
@@ -153,7 +154,7 @@ try {
   if ($action === 'open') {
     $setId = clean($in['set_id'] ?? '', 40);
     if ($setId === '' || !preg_match('/^[A-Za-z0-9._-]+$/', $setId)) respond(400, ['ok' => false, 'error' => 'Okänt set.']);
-    // Sidan låter en besökare öppna ett pack om dagen (fler bara när packet är värt under 10 kr), så 30 i timmen räcker gott.
+    // Sidan låter en besökare öppna ett pack om dagen, så 30 i timmen räcker gott.
     if (!rateOk($db, 'open:' . $ip, 30, 3600)) respond(429, ['ok' => false, 'error' => 'Lugna ner dig, ninja. Försök igen om en stund.', 'totalOpened' => total($db)]);
     $token = bin2hex(random_bytes(16));
     $db->beginTransaction();
@@ -180,6 +181,7 @@ try {
 
   if (!nameOk($db, $name)) respond(400, ['ok' => false, 'error' => 'Välj ett annat ninjanick: 2–20 tecken, bokstäver, siffror och mellanslag.']);
   if ($value === false || $value < 1 || $value > MAX_PACK_VALUE) respond(400, ['ok' => false, 'error' => 'Packets värde ser inte rimligt ut.']);
+  if ((int)round($value) <= MIN_PACK_VALUE) respond(400, ['ok' => false, 'error' => 'Packet behöver vara värt mer än ' . MIN_PACK_VALUE . ' kr för att komma med på topplistan.']);
   if ($bestValue === false || $bestValue < 0 || $bestValue > $value + 1) respond(400, ['ok' => false, 'error' => 'Kortets värde ser inte rimligt ut.']);
   // Kortbilderna kommer alltid från TCGdex.
   if ($img !== '' && !preg_match('#^https://assets\.tcgdex\.net/[A-Za-z0-9/._-]{1,200}$#', $img)) $img = '';
