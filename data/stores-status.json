@@ -1,5 +1,5 @@
 {
- "updated": 1793423330045,
+ "updated": 1793424530078,
  "stores": [
   {
    "id": "alara-games",
@@ -201,14 +201,14 @@
    "name": "Dragon's Lair",
    "domain": "dragonslair.se",
    "status": "ej-forbjuden",
-   "checkedAt": 1793420045356,
+   "checkedAt": 1793424525909,
    "ok": true,
-   "lastOkAt": 1793420045356,
+   "lastOkAt": 1793424525909,
    "count": 687,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 60
+   "interval": 32
   },
   {
    "id": "fantasia-north",
@@ -622,14 +622,14 @@
    "name": "RGB Kingz",
    "domain": "rgbkingz.com",
    "status": "ej-forbjuden",
-   "checkedAt": 1793419992518,
+   "checkedAt": 1793424213631,
    "ok": true,
-   "lastOkAt": 1793419992518,
+   "lastOkAt": 1793424213631,
    "count": 187,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 60
+   "interval": 37
   },
   {
    "id": "samlargrottan",
