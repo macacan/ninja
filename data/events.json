@@ -1,6 +1,20 @@
 {
- "updated": 1793451061742,
+ "updated": 1793451981761,
  "events": [
+  {
+   "at": 1793451866119,
+   "store": "westcoast-vault",
+   "product": "westcoast-vault:15666760614228",
+   "group": "paldea-evolved|booster-pack|en|",
+   "title": "Pokémon TCG: Paldea Evolved Booster Pack",
+   "url": "https://westcoastvault.se/products/paldea-evolved-boosterpack",
+   "image": "https://cdn.shopify.com/s/files/1/1042/6177/9796/files/E0FEAEF4-7B3B-46C9-9AE1-427C60398901.png?v=1785931628",
+   "price": 139,
+   "type": "Booster Pack",
+   "set": "Paldea Evolved",
+   "lang": "en",
+   "kind": "ny"
+  },
   {
    "at": 1793450970764,
    "store": "westcoast-vault",
@@ -6838,20 +6852,6 @@
    "lang": "en",
    "kind": "prissankt",
    "from": 195
-  },
-  {
-   "at": 1792704088830,
-   "store": "kantovault",
-   "product": "kantovault:11526027149653",
-   "group": "rebel-clash|blister|en||3",
-   "title": "Pokémon Rebel Clash 3-Pack Blister (Duraludon)",
-   "url": "https://kantovault.se/products/pokemon-rebel-clash-3-pack-blister?variant=54721313833301",
-   "price": 499,
-   "type": "Blister",
-   "set": "Rebel Clash",
-   "lang": "en",
-   "kind": "prissankt",
-   "from": 549
   }
  ]
 }
