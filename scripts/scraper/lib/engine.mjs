@@ -50,6 +50,33 @@ export async function createEngine({ statuses } = {}) {
   let events = (await readJSON("data/events.json", { events: [] })).events;
   const status = Object.fromEntries((await readJSON("data/stores-status.json", { stores: [] })).stores.map((s) => [s.id, s]));
   const hosts = new Map();
+
+  // Butiker som pausats i statistikens dashboard (stats/dashboard.php, fliken Bevakningar). Listan hämtas från
+  // stats/paused.php. Går den inte att nå gäller den senast kända (sparad i state.json).
+  const PAUSE_URL = cfg.pauseUrl || "https://stats.lootninja.se/paused.php";
+  let paused = new Set(state.paused || []), pauseWarned = false;
+  async function refreshPaused() {
+    try {
+      const r = await fetch(PAUSE_URL, { cache: "no-store", signal: AbortSignal.timeout(10e3) });
+      if (!r.ok) throw new Error(`HTTP ${r.status}`);
+      const ids = (await r.json()).paused;
+      if (!Array.isArray(ids)) throw new Error("oväntat svar");
+      const next = new Set(ids.filter((id) => typeof id === "string"));
+      const changed = next.size !== paused.size || [...next].some((id) => !paused.has(id));
+      // En butik som startas igen läses tyst första gången, så att allt som hänt under pausen inte blir notiser.
+      for (const id of paused) if (!next.has(id) && !(state.reclassify ||= []).includes(id)) state.reclassify.push(id);
+      paused = next;
+      state.paused = [...paused];
+      pauseWarned = false;
+      return changed;
+    } catch (e) {
+      if (!pauseWarned) console.warn(`Pausade butiker kunde inte hämtas (${e.message}), använder senast kända.`);
+      pauseWarned = true;
+      return false;
+    }
+  }
+  await refreshPaused();
+
   // Ny version av igenkänningen: varje butiks nästa lyckade kontroll sparar nyfunna produkter tyst.
   if (state.classifyVersion !== CLASSIFY_VERSION) {
     state.classifyVersion = CLASSIFY_VERSION;
@@ -217,7 +244,7 @@ export async function createEngine({ statuses } = {}) {
   // Samma produkt hos andra butiker (samma produktgrupp), för att avgöra om en sänkning gör butiken billigast.
   function sameProductElsewhere(p, storeId) {
     const key = groupKey(p), out = [];
-    for (const [sid, list] of products) if (sid !== storeId) for (const x of list) if (groupKey(x) === key) out.push(x);
+    for (const [sid, list] of products) if (sid !== storeId && !paused.has(sid)) for (const x of list) if (groupKey(x) === key) out.push(x);
     return out;
   }
 
@@ -231,11 +258,13 @@ export async function createEngine({ statuses } = {}) {
 
   async function doSave() {
     const now = Date.now();
-    const all = stores.flatMap((s) => products.get(s.id) || []);
-    const statusList = stores.map((s) => status[s.id] && allowedStatuses.includes(s.status)
+    // Pausade butikers produkter visas inte på sidan, eftersom lagret inte längre hålls aktuellt.
+    const all = stores.filter((s) => !paused.has(s.id)).flatMap((s) => products.get(s.id) || []);
+    const statusList = stores.map((s) => ({ ...(status[s.id] && allowedStatuses.includes(s.status)
       ? status[s.id]
       : { id: s.id, name: s.name, domain: s.domain, status: s.status, checkedAt: status[s.id]?.checkedAt ?? null, ok: status[s.id]?.ok ?? null,
-        count: (products.get(s.id) || []).length, error: null, note: allowedStatuses.includes(s.status) ? null : s.note });
+        count: (products.get(s.id) || []).length, error: null, note: allowedStatuses.includes(s.status) ? null : s.note }),
+      ...(paused.has(s.id) ? { paused: true } : {}) }));
     await mkdir(file("data/"), { recursive: true });
     await writeJSON("data/products.json", { updated: now, products: all }, true);
     // Bara det som går att köpa, med fälten sidorna visar: startsidan och setsidorna läser den här (ca 1 MB
@@ -266,7 +295,7 @@ export async function createEngine({ statuses } = {}) {
 
   return {
     stores, cfg, allowed: stores.filter((s) => allowedStatuses.includes(s.status)),
-    scrape, apply, save, hostFor,
+    scrape, apply, save, hostFor, refreshPaused, isPaused: (id) => paused.has(id),
     notify: (list) => notify(list, storeName),
   };
 }

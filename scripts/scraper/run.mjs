@@ -9,7 +9,7 @@ const only = process.argv.find((a) => a.startsWith("--only="))?.slice(7).split("
 const CONCURRENCY = 4;
 
 const engine = await createEngine();
-const queue = engine.allowed.filter((s) => !only || only.includes(s.id));
+const queue = engine.allowed.filter((s) => (!only || only.includes(s.id)) && !engine.isPaused(s.id));
 const events = [];
 let ok = 0, total = 0;
 

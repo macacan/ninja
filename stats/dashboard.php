@@ -61,7 +61,7 @@ function page_head(string $title): string {
   return '<!doctype html><html lang="sv"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">'
     . '<meta name="color-scheme" content="light"><meta name="theme-color" content="#ffffff"><meta name="robots" content="noindex, nofollow">'
     . '<title>' . h($title) . ' — Statistik</title><link rel="icon" href="https://lootninja.se/img/favicon-48.png">' . $font
-    . '<link rel="stylesheet" href="style.css?v=1"></head><body>';
+    . '<link rel="stylesheet" href="style.css?v=2"></head><body>';
 }
 function auth_page(string $body): never {
   echo page_head('Logga in'), '<div class="app auth"><div class="brand">', LOGO, 'Statistik</div>', $body, '</div></body></html>';
@@ -79,7 +79,7 @@ if (!$authed) {
 }
 
 // ---------- Flik och period ----------
-const VIEWS = ['oversikt' => 'Översikt', 'butiker' => 'Butiker & sök', 'kort' => 'Kort', 'spelet' => 'Spelet', 'ovrigt' => 'Övrigt'];
+const VIEWS = ['oversikt' => 'Översikt', 'butiker' => 'Butiker & sök', 'kort' => 'Kort', 'spelet' => 'Spelet', 'bevakning' => 'Bevakningar', 'ovrigt' => 'Övrigt'];
 const PERIODS = ['idag' => 'Idag', '7d' => 'Senaste 7 dagarna', '30d' => 'Senaste 30 dagarna', '12m' => 'Senaste 12 månaderna'];
 $v = $_GET['view'] ?? ''; $view = is_string($v) && array_key_exists($v, VIEWS) ? $v : 'oversikt';
 $p = $_GET['p'] ?? ''; $pid = is_string($p) && array_key_exists($p, PERIODS) ? $p : 'idag';
@@ -169,6 +169,38 @@ if (in_array($action, ['delete_pull', 'edit_pull', 'add_word', 'remove_word'], t
   } catch (Throwable $e) { $error = 'Ändringen gick inte att spara: ' . $e->getMessage(); }
   if ($done) { header('Location: ' . $url(['view' => 'spelet', 'klart' => $done])); exit; }
   $view = 'spelet';
+}
+
+// ---------- Pausa eller starta bevakningen av en butik ----------
+// Butikerna och deras senaste läge kommer från data/stores-status.json på huvudsidan (skrivs av skraparen).
+// Bara butiker som får bevakas (inte "forbjuden" eller "okand") kan startas och pausas.
+const WATCHABLE = ['tillstand', 'ej-forbjuden', 'inga-bilder'];
+function storeStatus(): array {
+  $j = json_decode((string)@file_get_contents(dirname(__DIR__) . '/data/stores-status.json'), true);
+  return is_array($j['stores'] ?? null) ? $j : ['updated' => 0, 'stores' => []];
+}
+if ($action === 'toggle_store') {
+  $id = (string)($_POST['id'] ?? '');
+  $store = null;
+  foreach (storeStatus()['stores'] as $s) if (($s['id'] ?? null) === $id) $store = $s;
+  if (!$csrfOk()) $error = 'Sidan hade gått ut. Ladda om och försök igen.';
+  elseif (!$store || !in_array($store['status'] ?? '', WATCHABLE, true)) $error = 'Den butiken går inte att starta härifrån.';
+  else {
+    try {
+      $list = statsPaused();
+      $pause = !in_array($id, $list, true);
+      statsSetPaused($pause ? array_merge($list, [$id]) : array_diff($list, [$id]));
+      header('Location: ' . $url(['view' => 'bevakning', 'klart' => $pause ? 'pausad' : 'startad', 'butik' => $id])); exit;
+    } catch (Throwable $e) { $error = 'Ändringen gick inte att spara: ' . $e->getMessage(); }
+  }
+  $view = 'bevakning';
+}
+if (in_array($_GET['klart'] ?? null, ['pausad', 'startad'], true)) {
+  $name = (string)($_GET['butik'] ?? '');
+  foreach (storeStatus()['stores'] as $s) if (($s['id'] ?? null) === $name) $name = $s['name'];
+  $notice = $_GET['klart'] === 'pausad'
+    ? "$name är pausad. Skraparen slutar hämta butiken inom en minut, och produkterna försvinner från sidan vid nästa uppdatering."
+    : "$name bevakas igen. Skraparen hämtar butiken inom en minut. Första hämtningen ger inga notiser.";
 }
 if (is_string($_GET['klart'] ?? null) && array_key_exists($_GET['klart'], DONE)) $notice = DONE[$_GET['klart']];
 
@@ -331,6 +363,69 @@ if ($view === 'oversikt') {
   </section>
   <?php endif ?>
   <?php $extra = ob_get_clean();
+} elseif ($view === 'bevakning') {
+  // Alla butiker: de som får bevakas (med av/på) och de som inte får det (med anledningen).
+  $st = storeStatus();
+  $pausedIds = statsPaused();
+  $watch = $blocked = [];
+  foreach ($st['stores'] as $s) {
+    if (in_array($s['status'] ?? '', WATCHABLE, true)) $watch[] = $s + ['isPaused' => in_array($s['id'], $pausedIds, true)];
+    else $blocked[] = $s;
+  }
+  // Pausade först, sedan de som inte gick att läsa senast, sedan resten i bokstavsordning.
+  usort($watch, fn($a, $b) => [!$a['isPaused'], ($a['ok'] ?? true) !== false, mb_strtolower($a['name'])] <=> [!$b['isPaused'], ($b['ok'] ?? true) !== false, mb_strtolower($b['name'])]);
+  usort($blocked, fn($a, $b) => strcasecmp($a['name'], $b['name']));
+  $active = array_filter($watch, fn($s) => !$s['isPaused']);
+  $cards = [
+    ['Bevakas', count($active), null],
+    ['Pausade', count($watch) - count($active), null],
+    ['Bevakas inte', count($blocked), null],
+    ['Produkter', array_sum(array_map(fn($s) => (int)($s['count'] ?? 0), $active)), null],
+    ['Fel senast', count(array_filter($active, fn($s) => ($s['ok'] ?? null) === false)), null],
+    ['Butiker totalt', count($st['stores']), null],
+  ];
+  $ago = function ($ms) {
+    if (!$ms) return 'inte kollad än';
+    $m = (int)round((time() - $ms / 1000) / 60);
+    return $m < 1 ? 'nyss' : ($m < 60 ? "för $m min sedan" : ($m < 1440 ? 'för ' . round($m / 60) . ' h sedan' : 'för ' . round($m / 1440) . ' d sedan'));
+  };
+  $label = ['tillstand' => 'Tillstånd', 'ej-forbjuden' => 'Inget förbud', 'inga-bilder' => 'Utan bilder', 'okand' => 'Ej kontrollerad', 'forbjuden' => 'Förbjuden'];
+  ob_start(); ?>
+  <section class="watch">
+    <div class="thead"><span>Butiker som bevakas <small><?= count($watch) ?></small></span><span></span></div>
+    <p class="hint">Pausa en butik för att sluta hämta den. Skraparen läser av listan varje minut, och den pausade butikens produkter försvinner från sidan vid nästa uppdatering (inom en kvart). När du startar en butik igen ger första hämtningen inga notiser.<?= $st['updated'] ? ' Läget nedan är från ' . h(date('j', (int)($st['updated'] / 1000)) . ' ' . MON[(int)date('n', (int)($st['updated'] / 1000)) - 1] . ' ' . date('H:i', (int)($st['updated'] / 1000))) . '.' : '' ?></p>
+    <?php if (!$watch): ?><p class="empty">Hittade ingen data/stores-status.json på huvudsidan.</p><?php else: ?>
+    <ul class="rows wrows">
+      <?php foreach ($watch as $s): $err = ($s['ok'] ?? null) === false; ?>
+      <li class="<?= $s['isPaused'] ? 'paused' : ($err ? 'flag' : '') ?>">
+        <span class="dot <?= $s['isPaused'] ? 'off' : ($err ? 'bad' : 'on') ?>" aria-hidden="true"></span>
+        <span class="name"><span><b><?= h($s['name']) ?></b> <small><?= h($s['domain'] ?? '') ?> · <?= h($label[$s['status']] ?? $s['status']) ?></small>
+          <small class="line"><?= $s['isPaused'] ? 'Pausad' : h('Kollad ' . $ago($s['checkedAt'] ?? null)) ?><?= $err && !$s['isPaused'] ? ' · ' . h(($s['error'] ?? '') ?: 'kunde inte läsas') : '' ?><?= !empty($s['note']) && !$s['isPaused'] ? ' · ' . h($s['note']) : '' ?></small></span></span>
+        <span class="n"><?= num($s['count'] ?? 0) ?> <small>produkter</small></span>
+        <form method="post"><input type="hidden" name="action" value="toggle_store"><input type="hidden" name="id" value="<?= h($s['id']) ?>"><?= $csrfField() ?>
+          <button class="switch <?= $s['isPaused'] ? '' : 'on' ?>" role="switch" aria-checked="<?= $s['isPaused'] ? 'false' : 'true' ?>" title="<?= $s['isPaused'] ? 'Starta bevakningen' : 'Pausa bevakningen' ?>" aria-label="Bevaka <?= h($s['name']) ?>"><i></i></button></form>
+      </li>
+      <?php endforeach ?>
+    </ul>
+    <?php endif ?>
+  </section>
+  <section class="watch">
+    <div class="thead"><span>Bevakas inte <small><?= count($blocked) ?></small></span><span></span></div>
+    <p class="hint">Butiker vars villkor eller robots.txt förbjuder automatisk insamling, eller som inte är kontrollerade än. De kan inte startas här. Ändra <code>status</code> i <code>scripts/scraper/stores.json</code> om en butik ger tillstånd.</p>
+    <?php if (!$blocked): ?><p class="empty">Inga.</p><?php else: ?>
+    <ul class="rows wrows">
+      <?php foreach ($blocked as $s): ?>
+      <li class="paused">
+        <span class="dot off" aria-hidden="true"></span>
+        <span class="name"><span><b><?= h($s['name']) ?></b> <small><?= h($s['domain'] ?? '') ?> · <?= h($label[$s['status']] ?? $s['status']) ?></small>
+          <small class="line"><?= h(($s['note'] ?? '') ?: '—') ?></small></span></span>
+        <span class="n"></span><span></span>
+      </li>
+      <?php endforeach ?>
+    </ul>
+    <?php endif ?>
+  </section>
+  <?php $extra = ob_get_clean();
 } else {
   $cards = [
     ['Push påslagna', $count('push', $P, 'Påslagna'), $count('push', $prev, 'Påslagna')],
@@ -442,6 +537,7 @@ echo page_head(VIEWS[$view]);
       <div class="metric"><span class="lbl"><?= h($lbl) ?></span><span class="val"><?= fmt_short($now) ?></span><?= badge($now, $before) ?></div>
       <?php endforeach ?>
     </div>
+    <?php if ($view !== 'bevakning'): // bevakningarna är ett läge just nu, ingen period ?>
     <div>
       <div class="controls">
         <details class="dd">
@@ -456,6 +552,7 @@ echo page_head(VIEWS[$view]);
       </div>
       <div class="range"><?= h($P['label']) ?></div>
     </div>
+    <?php endif ?>
   </div>
 
   <?= $chart ? chart($P['buckets'], $series, $chart) : '' ?>

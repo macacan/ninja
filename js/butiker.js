@@ -281,18 +281,19 @@ document.querySelectorAll(".mdrop-btn").forEach((btn) => btn.addEventListener("c
 document.addEventListener("click", (e) => { if (!e.target.closest(".mdrop")) closeMulti(); });
 document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeMulti(); });
 // ---------- Butiker ----------
-const STATUS = { tillstand: "Tillstånd", "ej-forbjuden": "Bevakas", "inga-bilder": "Bevakas, utan bilder", okand: "Ej kontrollerad", forbjuden: "Bevakas inte" };
+// Bara butiker som bevakas visas. Butiker som inte får eller inte ska bevakas, och de som är pausade, listas i
+// statistikens dashboard (stats/dashboard.php, fliken Bevakningar) i stället.
+const STATUS = { tillstand: "Tillstånd", "ej-forbjuden": "Bevakas", "inga-bilder": "Bevakas, utan bilder" };
 function renderStores() {
-  const order = { tillstand: 0, "ej-forbjuden": 1, "inga-bilder": 1, okand: 2, forbjuden: 3 };
-  $("#stores").innerHTML = [...stores].sort((a, b) => order[a.status] - order[b.status] || a.name.localeCompare(b.name, "sv")).map((s) => {
-    const active = ["tillstand", "ej-forbjuden", "inga-bilder"].includes(s.status);
-    const state = !active ? (s.note || "") : s.ok === false ? `Kunde inte läsas senast` : s.checkedAt ? `Kollad ${ago(new Date(s.checkedAt).toISOString())}` : "Inte kollad än";
+  const order = { tillstand: 0, "ej-forbjuden": 1, "inga-bilder": 1 };
+  $("#stores").innerHTML = stores.filter((s) => s.status in STATUS && !s.paused).sort((a, b) => order[a.status] - order[b.status] || a.name.localeCompare(b.name, "sv")).map((s) => {
+    const state = s.ok === false ? `Kunde inte läsas senast` : s.checkedAt ? `Kollad ${ago(new Date(s.checkedAt).toISOString())}` : "Inte kollad än";
     // Butikens egen ikon (se scripts/update-store-logos.mjs), annars första bokstaven.
     const logo = storeLogos[s.id];
-    return `<li class="store ${active ? "" : "off"}">
+    return `<li class="store">
       <span class="slogo">${logo ? `<img src="${esc(logo)}" alt="" loading="lazy" decoding="async" onerror="this.replaceWith(Object.assign(document.createElement('b'),{textContent:this.dataset.l}))" data-l="${esc(s.name[0])}">` : `<b>${esc(s.name[0])}</b>`}</span>
-      <div><b class="sdom" title="${esc(s.name)}">${esc(s.domain)}</b>${active ? `<span class="muted">${s.count} produkter</span>` : ""}</div>
-      <span class="st ${active ? "on" : s.status === "forbjuden" ? "no" : ""}">${STATUS[s.status]}</span>
+      <div><b class="sdom" title="${esc(s.name)}">${esc(s.domain)}</b><span class="muted">${s.count} produkter</span></div>
+      <span class="st on">${STATUS[s.status]}</span>
       <span class="muted when">${esc(state)}</span>
     </li>`;
   }).join("");

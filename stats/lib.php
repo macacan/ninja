@@ -66,6 +66,24 @@ function statsDb(): PDO {
   return $db;
 }
 
+// ---------- Pausade butiker ----------
+// Butiker som stängts av i dashboarden (fliken Bevakningar). Filen ligger bredvid public_html och läses av
+// skraparen via paused.php. Formatet: { "updated": unix-tid, "paused": ["butiks-id", ...] }
+const STATS_PAUSE_FILE = 'lootninja-store-pause.json';
+
+function statsPaused(): array {
+  $j = json_decode((string)@file_get_contents(statsDir() . '/' . STATS_PAUSE_FILE), true);
+  return is_array($j['paused'] ?? null) ? array_values(array_filter($j['paused'], fn($id) => is_string($id) && preg_match('/^[a-z0-9-]{1,60}$/', $id))) : [];
+}
+
+function statsSetPaused(array $ids): void {
+  $ids = array_values(array_unique($ids));
+  sort($ids);
+  if (file_put_contents(statsDir() . '/' . STATS_PAUSE_FILE, json_encode(['updated' => time(), 'paused' => $ids]), LOCK_EX) === false) {
+    throw new RuntimeException('filen kunde inte skrivas');
+  }
+}
+
 // Dagens salt. Gårdagens och äldre raderas, så summorna kan inte räknas tillbaka.
 function statsSalt(PDO $db): string {
   $day = date('Y-m-d');

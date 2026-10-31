@@ -61,7 +61,7 @@ async function check(store) {
 function tick() {
   if (stopping) return;
   const now = Date.now();
-  const due = stores.filter((s) => !running.has(s.id) && next.get(s.id) <= now).sort((a, b) => next.get(a.id) - next.get(b.id));
+  const due = stores.filter((s) => !running.has(s.id) && !engine.isPaused(s.id) && next.get(s.id) <= now).sort((a, b) => next.get(a.id) - next.get(b.id));
   for (const s of due.slice(0, Math.max(0, CONCURRENCY - running.size))) check(s);
 }
 
@@ -85,9 +85,12 @@ async function stop() {
 process.on("SIGINT", stop);
 process.on("SIGTERM", stop);
 
-console.log(`${clock()} Bevakar ${stores.length} butiker. Var ${BASE / MIN}:e minut som standard, var ${CALM / MIN}:e minut för butiker som vill ta det lugnare, högst en gång per ${NIGHT.interval / MIN} min kl. ${NIGHT.from}–${NIGHT.to}. Ctrl+C avslutar.`);
+console.log(`${clock()} Bevakar ${stores.filter((s) => !engine.isPaused(s.id)).length} butiker. Var ${BASE / MIN}:e minut som standard, var ${CALM / MIN}:e minut för butiker som vill ta det lugnare, högst en gång per ${NIGHT.interval / MIN} min kl. ${NIGHT.from}–${NIGHT.to}. Ctrl+C avslutar.`);
 setInterval(tick, 1000);
 setInterval(flush, SAVE_EVERY);
+// Pausade butiker (statistikens dashboard) läses om varje minut. En ändring sparas direkt, så att en pausad
+// butiks produkter försvinner från sidan vid nästa sparning.
+setInterval(async () => { if (await engine.refreshPaused()) dirty = true; }, MIN);
 const LIMIT = Number(process.env.DAEMON_MINUTES) || 0;
 if (LIMIT > 0) setTimeout(stop, LIMIT * MIN);
 tick();
