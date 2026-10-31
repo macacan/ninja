@@ -1,5 +1,5 @@
 {
- "updated": 1793420049088,
+ "updated": 1793420249093,
  "stores": [
   {
    "id": "alara-games",
@@ -31,11 +31,11 @@
    "name": "Aquitaz",
    "domain": "aquitaz.se",
    "status": "ej-forbjuden",
-   "checkedAt": 1793415638128,
-   "ok": false,
-   "lastOkAt": 1793412758439,
+   "checkedAt": 1793420244674,
+   "ok": true,
+   "lastOkAt": 1793420244674,
    "count": 1691,
-   "error": "https://aquitaz.se/collections/pokemon-collection-boxes/products.json?limit=250&page=1&currency=SEK&country=SE → 503, vänta 132 s",
+   "error": null,
    "blocked": false,
    "note": null,
    "interval": 60
