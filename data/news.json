@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-31T19:07:37.206Z",
+ "updated": "2026-10-31T19:22:54.466Z",
  "articles": [
   {
    "title": "Pokemon TCG Live Is Getting a Brand-New Update for November 2026",
@@ -491,6 +491,12 @@
  ],
  "videos": [
   {
+   "id": "FlkW1YWVQF0",
+   "title": "TCG Day 1 | 2027 Pokémon Gdańsk Regional Championships",
+   "date": "2026-10-31T19:18:36.000Z",
+   "source": "Pokémon (officiell)"
+  },
+  {
    "id": "bQZCF3_X6KA",
    "title": "Andrew Hedrick Vs Caleb Rogerson - Pokémon TCG Masters Finals | 2027 Puebla Regional Championships",
    "date": "2026-10-30T20:00:21.000Z",
@@ -512,12 +518,6 @@
    "id": "pGIxhUQvezQ",
    "title": "TCG Day 2 | 2027 Pokémon Gdańsk Regional Championships",
    "date": "2026-10-26T23:58:59.000Z",
-   "source": "Pokémon (officiell)"
-  },
-  {
-   "id": "FlkW1YWVQF0",
-   "title": "TCG Day 1 | 2027 Pokémon Gdańsk Regional Championships",
-   "date": "2026-10-26T23:57:02.000Z",
    "source": "Pokémon (officiell)"
   }
  ]
