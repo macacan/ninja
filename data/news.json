@@ -1,6 +1,15 @@
 {
- "updated": "2026-10-31T22:46:46.699Z",
+ "updated": "2026-10-31T23:02:05.885Z",
  "articles": [
+  {
+   "title": "FBI Investigating Pokemon TCG Scam",
+   "link": "https://gamerant.com/pokemon-tcg-theft-scam-fbi/",
+   "date": "2026-10-31T23:00:14.000Z",
+   "summary": "Following numerous instances of scammers successfully stealing thousands of dollars of Pokemon cards, the FBI announces it's investigating.",
+   "image": "https://static0.gamerantimages.com/wordpress/wp-content/uploads/2026/10/pokemon-investigator-badge.jpg",
+   "source": "Game Rant",
+   "game": "pk"
+  },
   {
    "title": "Pokemon TCG Live Is Getting a Brand-New Update for November 2026",
    "link": "https://gamerant.com/pokemon-tcg-live-november-2026-update-patch-notes/",
@@ -282,12 +291,12 @@
    "game": "pk"
   },
   {
-   "title": "6-Year-Old Designed Pokemon Card That Sold for $156,000",
-   "link": "https://gamerant.com/pokemon-card-6-year-old-design-auction/",
-   "date": "2026-10-10T21:01:13.000Z",
-   "summary": "An exceptionally rare Pokemon card that was first drawn by a 6-year-old fan fetches an astonishing $156,000 price at a recent auction.",
-   "image": "https://static0.gamerantimages.com/wordpress/wp-content/uploads/wm/2026/10/6-year-old-designed-pokemon-card-that-sold-for-156-000-gamerant.jpg",
-   "source": "Game Rant",
+   "title": "Pokemon card designed by a six-year-old just sold for $156,000",
+   "link": "https://www.dexerto.com/pokemon/pokemon-card-designed-by-a-six-year-old-just-sold-for-156000-3417798/",
+   "date": "2026-10-10T16:09:29.000Z",
+   "summary": "A Pokemon card designed by a six-year-old in 2010 has sold for $156,000 at auction, thanks to its tiny print run and rare contest history.",
+   "image": "https://www.dexerto.com/cdn-image/wp-content/uploads/2026/10/10/zorua-kindergarten-card-design-contest.jpg?width=480&quality=75&format=auto",
+   "source": "Dexerto",
    "game": "pk"
   },
   {
@@ -440,15 +449,6 @@
    "date": "2026-09-22T16:21:42.000Z",
    "summary": "Avery The Poke Kid’s family has shared his final Pokemon TCG pack opening following the 12-year-old creator’s death.",
    "image": "https://www.dexerto.com/cdn-image/wp-content/uploads/2026/09/22/avery-the-pokekid-last-pulls.jpg?width=480&quality=75&format=auto",
-   "source": "Dexerto",
-   "game": "pk"
-  },
-  {
-   "title": "Pokemon collector secretly put GPS tracker on woman’s car to find trading card restocks",
-   "link": "https://www.dexerto.com/pokemon/pokemon-collector-secretly-put-gps-tracker-on-womans-car-to-find-trading-card-restocks-3411308/",
-   "date": "2026-09-22T14:37:48.000Z",
-   "summary": "A Pokemon collector pleaded no contest after secretly attaching a GPS tracker to a woman’s car to find new trading card restocks.",
-   "image": "https://www.dexerto.com/cdn-image/wp-content/uploads/2026/09/22/pokemon-restock-tracking-woman.jpg?width=480&quality=75&format=auto",
    "source": "Dexerto",
    "game": "pk"
   },
