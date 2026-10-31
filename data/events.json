@@ -1,6 +1,34 @@
 {
- "updated": 1793445540156,
+ "updated": 1793446460178,
  "events": [
+  {
+   "at": 1793445931043,
+   "store": "aquitaz",
+   "product": "aquitaz:11057487151450",
+   "group": "x|collection-box|en||valentine",
+   "title": "Pokemon: Valentine’s Box (20 Pack) (ENG)",
+   "url": "https://aquitaz.se/products/pokemon-valentine-s-box-20-pack-eng",
+   "image": "https://cdn.shopify.com/s/files/1/0885/4087/3050/files/PuellaMagiMadokaMagica_UE29BT_Boosterpack_ENG_-2026-10-31T120859.257.png?v=1793444955",
+   "price": 1337,
+   "type": "Collection Box",
+   "set": null,
+   "lang": "en",
+   "kind": "forbestallning"
+  },
+  {
+   "at": 1793445931043,
+   "store": "aquitaz",
+   "product": "aquitaz:11057482793306",
+   "group": "mega-evolution|collection-box|en||rayquaza-tournament",
+   "title": "Pokemon Mega Evolution: Mega Rayquaza ex Premium Tournament Box (8 Pack) (ENG)",
+   "url": "https://aquitaz.se/products/pokemon-mega-evolution-mega-rayquaza-ex-premium-tournament-box-8-pack-eng",
+   "image": "https://cdn.shopify.com/s/files/1/0885/4087/3050/files/PuellaMagiMadokaMagica_UE29BT_Boosterpack_ENG_-2026-10-31T120116.336.png?v=1793444550",
+   "price": 1337,
+   "type": "Collection Box",
+   "set": "Mega Evolution",
+   "lang": "en",
+   "kind": "forbestallning"
+  },
   {
    "at": 1793440620743,
    "store": "samlargrottan",
@@ -6812,34 +6840,6 @@
    "lang": "zh",
    "kind": "prissankt",
    "from": 149
-  },
-  {
-   "at": 1792702290090,
-   "store": "kantovault",
-   "product": "kantovault:11681745174869",
-   "group": "x|booster-box|en||gathering-terastal",
-   "title": "Pokémon Terastal Gathering (CSV9.5C) Booster Box",
-   "url": "https://kantovault.se/products/pokemon-terastal-gathering-csv9-5c-booster-box",
-   "price": 849,
-   "type": "Booster Box",
-   "set": null,
-   "lang": "en",
-   "kind": "prissankt",
-   "from": 999
-  },
-  {
-   "at": 1792702290090,
-   "store": "kantovault",
-   "product": "kantovault:11228426633557",
-   "group": "x|booster-box|zh||gem-s4-vol",
-   "title": "Pokémon Gem Pack Vol 4 Booster Box (Kinesisk)",
-   "url": "https://kantovault.se/products/pokemon-gem-pack-vol-4-booster-box-kinesisk",
-   "price": 399,
-   "type": "Booster Box",
-   "set": null,
-   "lang": "zh",
-   "kind": "prissankt",
-   "from": 479
   }
  ]
 }
