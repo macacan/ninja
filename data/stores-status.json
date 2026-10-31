@@ -1,5 +1,5 @@
 {
- "updated": 1793413071866,
+ "updated": 1793413251872,
  "stores": [
   {
    "id": "alara-games",
@@ -254,9 +254,9 @@
    "name": "GameShop",
    "domain": "gameshop.se",
    "status": "ej-forbjuden",
-   "checkedAt": 1793409532831,
+   "checkedAt": 1793413250466,
    "ok": true,
-   "lastOkAt": 1793409532831,
+   "lastOkAt": 1793413250466,
    "count": 19,
    "error": null,
    "blocked": false,
@@ -801,9 +801,9 @@
    "name": "Sweet Nerds",
    "domain": "sweetnerds.se",
    "status": "ej-forbjuden",
-   "checkedAt": 1793409423169,
+   "checkedAt": 1793413111946,
    "ok": true,
-   "lastOkAt": 1793409423169,
+   "lastOkAt": 1793413111946,
    "count": 265,
    "error": null,
    "blocked": false,
