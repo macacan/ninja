@@ -4,11 +4,14 @@
   if (typeof module === 'object' && module.exports) module.exports = factory(); else root.Fingerprint = factory();
 })(typeof self !== 'undefined' ? self : this, function (){
   const CW = 126, CH = 176;                         // kortet skalas till denna storlek före beskrivningen
-  const AX0 = .07, AX1 = .93, AY0 = .11, AY1 = .56; // konstverkets ruta i kortet
+  /* Konstverkets ruta i kortet [x0, x1, y0, y1] per spel. Riftbound: under kostnadscirkeln och ovanför typbandet. */
+  const BOX = { pokemon: [.07, .93, .11, .56], rb: [.07, .93, .13, .51] };
   const GC = 16, GR = 12, KC = 4, KR = 4, LEN = GC * GR + KC * KR * 3;
-  /* data = pixlar (RGB eller RGBA), w x h = kortets bild. dx, dy = litet förskjutet utsnitt (andel av kortet). */
-  function describe(data, w, h, stride, dx, dy){
+  /* data = pixlar (RGB eller RGBA), w x h = kortets bild. dx, dy = litet förskjutet utsnitt (andel av kortet).
+     box = konstverkets ruta (BOX.pokemon om den inte anges). */
+  function describe(data, w, h, stride, dx, dy, box){
     dx = dx || 0; dy = dy || 0;
+    const [AX0, AX1, AY0, AY1] = box || BOX.pokemon;
     const x0 = (AX0 + dx) * w, x1 = (AX1 + dx) * w, y0 = (AY0 + dy) * h, y1 = (AY1 + dy) * h;
     const out = new Uint8Array(LEN);
     const cell = (cols, rows, fn) => {
@@ -49,5 +52,5 @@
     }
     return top;
   }
-  return { CW, CH, LEN, describe, vector, match };
+  return { CW, CH, LEN, BOX, describe, vector, match };
 });

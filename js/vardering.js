@@ -12,7 +12,7 @@ import { track } from "./tracker.js";
 import { recordCard, mountRecent } from "./recent.js";
 import { mountCardAutocomplete } from "./card-autocomplete.js";
 import { CONDITIONS, DEFAULT_COND, gradeMult, isVintage } from "./valuation.js";
-import { openScanner, narrowByTotal, rankByLook } from "./card-scanner.js";
+import { openScanner, narrowByTotal, rankByLook } from "./card-scanner.js?v=20261031";
 import { showReveal } from "./card-reveal.js";
 import { getAnatomyData, renderPullRatesModal } from "./anatomy.js";
 
@@ -692,7 +692,15 @@ $("#val-hero-form")?.addEventListener("submit", (e) => {
   vmInput.focus();
 });
 // Kortskannern räknas i steg: öppnad, säker träff, läst text som söks, eller bara delvis läst.
-const startScan = () => { track("scan", "Öppnad"); openScanner(({ name, number, total, canvas, cardId }) => {
+const startScan = () => { track("scan", "Öppnad"); openScanner(({ game, name, number, total, canvas, cardId }) => {
+  // Ett Riftbound-kort: värderingen gäller bara Pokémon, så kortet öppnas i kortpriserna i stället.
+  if (game === "rb") {
+    track("scan", cardId ? "Säker träff" : "Läst, söker");
+    // Siffrorna fylls ut som på kortet ("57a" blir "057a"), så att sökningen hittar "057a/221"
+    const q = cardId ? name || "" : total ? `${String(number).replace(/^\d+/, (d) => d.padStart(total.length, "0"))}/${total}` : number || "";
+    location.href = `priser.html?game=rb&q=${encodeURIComponent(q)}${cardId ? `&card=${encodeURIComponent(cardId)}` : ""}`;
+    return;
+  }
   if (cardId) {
     track("scan", "Säker träff");
     reveal(cardId);

@@ -374,6 +374,21 @@ mountCardAutocomplete($("#pq"), {
   },
 });
 
+// ---------- Kortskanner för Riftbound ----------
+// Ett säkert kort öppnas direkt. Annars söks det lästa numret (t.ex. "001/167"), så att man kan välja bland träffarna.
+// Skannern (js/card-scanner.js) är stor och laddas först när knappen trycks.
+$("#rb-scan").addEventListener("click", async () => {
+  track("scan", "Öppnad");
+  const { openScanner } = await import("./card-scanner.js?v=20261031");
+  openScanner(({ cardId, name, number, total }) => {
+    track("scan", cardId ? "Säker träff" : "Läst, söker");
+    if (cardId) { openAfter = cardId; $("#pq").value = name || ""; }
+    // Siffrorna fylls ut som på kortet ("57a" blir "057a"), så att sökningen hittar "057a/221"
+    else $("#pq").value = total ? `${String(number).replace(/^\d+/, (d) => d.padStart(total.length, "0"))}/${total}` : number || "";
+    search();
+  }, null, { game: "rb" });
+});
+
 // ---------- Stor vy med holo-effekt ----------
 const modal = $("#card-modal");
 let shownIndex = -1;
@@ -544,6 +559,8 @@ async function applyGame() {
   PAGE_TITLE ??= document.title;
   document.title = g ? `${g.h1} i kronor | Lootninja` : PAGE_TITLE;
   $("#lang").closest("label").hidden = !!g;
+  // Kortskannern finns för Riftbound här. Pokémonkort skannas i värderingen.
+  $("#rb-scan").hidden = game !== "rb";
   // "Senast sökta" leder till värderingen, som bara finns för Pokémon.
   $("#recent").style.display = g ? "none" : "";
   if (g) $("#lang").value = "en";

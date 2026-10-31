@@ -1,6 +1,7 @@
 name: Bygg kortindex
 
-# Bildindexet som kortskannern jämför med (data/hashes.*): ett avtryck per kort från TCGdex-bilderna.
+# Bildindexen som kortskannern jämför med: Pokémon (data/hashes.*, från TCGdex-bilderna) och Riftbound
+# (data/rb/hashes.*, från bilderna i data/rb/cards.json). Ett avtryck per kort.
 # Körs första dagen varje månad (nya set) och för hand under Actions > Bygg kortindex > Run workflow.
 on:
   schedule:
@@ -21,9 +22,10 @@ jobs:
           node-version: 22
       - run: npm i --no-save --no-audit --no-fund sharp
       - run: node scripts/build-card-index.mjs
+      - run: node scripts/build-rb-card-index.mjs
       - name: Spara om något ändrats
         run: |
           git config user.name "packninja-bot"
           git config user.email "packninja-bot@users.noreply.github.com"
-          git add data/hashes.bin data/hashes.json
+          git add data/hashes.bin data/hashes.json data/rb/hashes.bin data/rb/hashes.json
           git diff --cached --quiet || (git commit -m "Uppdatera kortskannerns bildindex" && git pull --rebase && git push)
