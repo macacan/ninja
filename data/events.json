@@ -1,6 +1,20 @@
 {
- "updated": 1793471833083,
+ "updated": 1793472733102,
  "events": [
+  {
+   "at": 1793472596475,
+   "store": "skattkistan",
+   "product": "skattkistan:11116925452626",
+   "group": "chaos-rising|elite-trainer-box|en|",
+   "title": "Pokémon TCG Mega Evolution Chaos Rising Elite Trainer Box",
+   "url": "https://skattkistan.net/products/chaos-rising-elite-trainer-box",
+   "image": "https://cdn.shopify.com/s/files/1/1094/6858/2226/files/07.09.2026_16.04.12_REC.png?v=1788790064",
+   "price": 899,
+   "type": "Elite Trainer Box",
+   "set": "Chaos Rising",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793469230440,
    "store": "samlarhobby",
@@ -6844,19 +6858,6 @@
    "price": 2799,
    "type": "Booster Box",
    "set": "Chaos Rising",
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1792705100571,
-   "store": "poketalk",
-   "product": "poketalk:11392782434646",
-   "group": "vivid-voltage|booster-pack|en|",
-   "title": "Pokémon Sword & Shield: Vivid Voltage Booster Pack",
-   "url": "https://poketalk.se/products/pokemon-sword-shield-vivid-voltage-booster-pack-1",
-   "price": 135,
-   "type": "Booster Pack",
-   "set": "Vivid Voltage",
    "lang": "en",
    "kind": "ny"
   }
