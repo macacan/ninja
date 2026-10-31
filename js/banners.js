@@ -409,7 +409,8 @@ const THEMES = {
         box(g, sx, 0, bw, 7, "#1b1b2f", tone);
         text(g, lbl, sx + 2, 1, tone);
       }
-      R(g, st.scanX + 2 + (f % 10), 9, 1, 10, "rgba(228,87,46,.85)");
+      // Lasern syns bara när ett kort står still vid scannern. När bandet rör sig är den av.
+      if (st.hold > 0) R(g, st.scanX + 2 + (f % 10), 9, 1, 10, "rgba(228,87,46,.85)");
       R(g, st.scanX + 5, 7, 4, 1, st.hold > 0 ? "#6cc06a" : f % 8 < 4 ? "#6cc06a" : "#2f6b2f");
       // Ljuskon från mikroskopets lins ner mot kortet
       const glow = f % 6 < 3 ? "rgba(255,200,120,.6)" : "rgba(255,200,120,.35)";

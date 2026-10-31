@@ -43,18 +43,28 @@ canvas.scene{display:block;width:100%;image-rendering:pixelated;image-rendering:
 .main-nav a:hover{background:var(--card);color:var(--ink)}
 .main-nav a[aria-current=page]{background:var(--card);color:var(--ink);box-shadow:0 1px 2px rgba(27,27,47,.12),0 0 0 1px var(--line)}
 .main-nav a[aria-current=page]::after{content:"";position:absolute;left:50%;bottom:-3px;width:18px;height:3px;margin-left:-9px;border-radius:2px;background:var(--red)}
-.header-search{margin-left:auto;display:flex;align-items:center;gap:6px;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:4px 5px 4px 16px;box-shadow:inset 0 1px 2px rgba(27,27,47,.06)}
-.header-search:focus-within{border-color:var(--ink);box-shadow:0 0 0 3px rgba(242,182,50,.35)}
-.header-search input{border:0;background:transparent;font:inherit;font-size:.92rem;width:190px;outline:none;color:var(--ink);padding:6px 0}
-.header-search button{all:unset;cursor:pointer;display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--ink-solid)}
-.header-search button .px-icon{filter:invert(1) brightness(2)}
-@media (max-width:1100px){.site-header .wrap{gap:14px}.main-nav a .px-icon{display:none}.header-search input{width:130px}}
+@media (max-width:1100px){.site-header .wrap{gap:14px}.main-nav a .px-icon{display:none}}
 @media (max-width:980px){.main-nav a{padding:9px 10px}.logo small{display:none}}
 
 /* ---------- Mobilmeny: hamburger i headern ---------- */
 .menu-btn,.mobile-menu,.mm-theme{display:none}
 .theme-btn{display:grid;place-items:center;flex:none;width:38px;height:38px;padding:0;border:1px solid var(--line);border-radius:50%;background:var(--card);color:var(--ink);cursor:pointer}
 .theme-btn:hover{border-color:var(--ink)}
+/* Notisknappen i headern på datorn. På mobilen finns den i menyn i stället. */
+.notis-btn{display:flex;align-items:center;gap:7px;flex:none;height:38px;padding:0 14px;border:1px solid var(--line);border-radius:999px;background:var(--card);color:var(--ink);text-decoration:none;font:600 .92rem/1 var(--pixel);white-space:nowrap}
+.notis-btn:hover{border-color:var(--ink)}
+.notis-btn svg{flex:none}
+@media (max-width:860px){.notis-btn{display:none}}
+/* Headerns mitt: menyn centreras i rutnätet, och verktygen (notis, tema) ligger till höger. Mobilen behåller sin layout. */
+.header-tools{display:contents}
+@media (min-width:861px){
+  .site-header .wrap{display:grid;grid-template-columns:1fr auto 1fr}
+  .site-header .logo{justify-self:start}
+  .main-nav{grid-column:2}
+  .header-tools{display:flex;align-items:center;gap:14px;grid-column:3;justify-self:end}
+}
+@media (min-width:861px) and (max-width:1100px){.main-nav a{padding:9px 6px}}
+@media (min-width:861px) and (max-width:1000px){.notis-btn{padding:0 11px}.notis-btn span{display:none}.site-header .logo .brand-desk{font-size:20px}}
 @media (max-width:860px){
   /* Headern följer med sidan i stället för att ligga kvar överst. */
   .site-header{position:static;backdrop-filter:none;z-index:auto}
@@ -62,7 +72,7 @@ canvas.scene{display:block;width:100%;image-rendering:pixelated;image-rendering:
   .logo img{width:40px;height:40px}
   .logo .brand-desk{display:none}
   .logo .brand-mob{display:inline}
-  .main-nav,.header-search{display:none}
+  .main-nav{display:none}
   /* Sidrubriken och det blå bandet under headern visas inte på mobilen (rubriken finns kvar för skärmläsare). */
   .page-head{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
   .site-header .wrap{padding-right:78px}
@@ -226,15 +236,24 @@ input[type=search]{width:100%;max-width:360px}
 .price-band p{margin:6px 0 0;opacity:.85}
 .price-band input[type=search]{border-color:#fff;max-width:none;flex:1;min-width:0}
 .price-band form{flex-wrap:nowrap}
-.price-band .coins{position:static;display:flex;gap:4px}
-.price-band .coins .px-icon{animation:spin 2.8s steps(4) infinite}
-.price-band .coins .px-icon:nth-child(2){animation-delay:.7s}
-.price-band .coins .px-icon:nth-child(3){animation-delay:1.4s}
 @keyframes spin{25%{transform:scaleX(.5)}50%{transform:scaleX(.1)}75%{transform:scaleX(.5)}}
 @media (max-width:980px){.price-band{grid-template-columns:auto 1fr}.price-band form{grid-column:1/-1}}
-@media (max-width:720px){.price-band{grid-template-columns:1fr}.price-band .coins{display:none}}
+@media (max-width:720px){.price-band{grid-template-columns:1fr}}
 /* Kortvärdet överst på startsidan, direkt under bannern. */
 .price-band.is-top{margin-top:clamp(16px,3vw,28px)}
+/* Startsidans kortvärde: Pokémon, One Piece och Riftbound i tre kolumner bakom texten. */
+.price-band.is-top > :not(.pb-art){position:relative;z-index:1}
+.price-band .pb-art{position:absolute;inset:0;display:grid;grid-template-columns:repeat(3,1fr);z-index:0}
+.price-band .pb-art span{background:center/cover no-repeat}
+.price-band .pb-art::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(20,24,40,.66),rgba(20,24,40,.46))}
+/* Platshållartexten i sökrutan ligger till höger, det man skriver själv börjar till vänster. */
+@media (min-width:981px){.price-band.is-top .search-row{grid-column:3}}
+.price-band.is-top input[type=search]:placeholder-shown{text-align:right}
+.price-band.is-top input[type=search]:not(:placeholder-shown){text-align:left}
+/* Introt ovanför kortvärdet: synlig H1 och en kort mening om vad sajten gör. */
+.home-intro{margin-top:clamp(20px,3.5vw,36px);max-width:68ch}
+.home-intro h1{margin:0 0 8px;font-size:clamp(1.45rem,3.2vw,2.2rem)}
+.home-intro p{margin:0;color:var(--muted);font-size:clamp(.92rem,1.4vw,1.05rem);line-height:1.55}
 /* Rubriken är en knapp som fäller ut sökfältet på mobilen. På större skärmar ser den ut som en vanlig rubrik. */
 .pb-toggle{all:unset;font:inherit;color:inherit;display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;box-sizing:border-box}
 @media (min-width:721px){.pb-toggle{cursor:text;pointer-events:none}}
@@ -1658,6 +1677,9 @@ input[type=search]::-webkit-search-results-decoration {
 /* ---------- Kortpriser: värderingsguide ---------- */
 .guide{margin-top:12px}
 .guide-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.guide-grid.cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+/* Kortpriser hänvisar till guiden på Värdering. */
+.guide-link{margin:40px 0 0}
 .gcard-info{position:relative;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 18px 16px}
 .gcard-info h3{margin:6px 0 8px;font:700 1.15rem var(--cond);text-transform:uppercase;letter-spacing:.3px}
 .gcard-info p{margin:0 0 8px;font-size:.92rem;color:var(--muted)}
@@ -1700,8 +1722,8 @@ input[type=search]::-webkit-search-results-decoration {
 .grade-slab-perks li strong{color:var(--ink)}
 .guide-tips{margin-top:18px;background:#fff8e6;border:1px solid #f0dca8;border-radius:12px;padding:20px 24px}
 .guide-tips ul{margin:0 0 10px;padding-left:20px;display:grid;gap:6px}
-@media (max-width:1000px){.guide-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.grade-box{grid-template-columns:1fr}}
-@media (max-width:600px){.guide-grid,.grade-parts{grid-template-columns:1fr}.grade-box,.guide-tips{padding:16px}}
+@media (max-width:1000px){.guide-grid,.guide-grid.cols-3{grid-template-columns:repeat(2,minmax(0,1fr))}.grade-box{grid-template-columns:1fr}}
+@media (max-width:600px){.guide-grid,.guide-grid.cols-3,.grade-parts{grid-template-columns:1fr}.grade-box,.guide-tips{padding:16px}}
 
 /* ---------- Värdering (vardering.html) ---------- */
 .val-steps{list-style:none;display:flex;gap:10px;flex-wrap:wrap;margin:26px 0 0;padding:0}

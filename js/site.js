@@ -45,13 +45,13 @@ function header() {
     <nav class="main-nav" aria-label="Huvudmeny"><ul>
       ${NAV.map(([href, label]) => `<li><a href="${href}"${href.split("#")[0] === here ? ' aria-current="page"' : ""}>${label}</a></li>`).join("")}
     </ul></nav>
-    <form id="header-search" class="header-search" action="${searchTarget()}" role="search">
-      <input type="search" name="q" placeholder="Sök kort, t.ex. Pikachu" aria-label="Sök kort">
-    </form>
-    <button type="button" class="theme-btn" data-theme-toggle aria-label="Växla mellan ljust och mörkt läge" title="Ljust/mörkt läge">${THEME_ICON}</button>
-    <button type="button" class="menu-btn" aria-expanded="false" aria-controls="mobile-menu" aria-label="Meny">
-      <svg class="burger" width="28" height="28" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"/></svg>
-    </button>
+    <div class="header-tools">
+      <a class="notis-btn" href="butiker.html#notiser" title="Få notis när nya produkter kommer in"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg><span>Notiser</span></a>
+      <button type="button" class="theme-btn" data-theme-toggle aria-label="Växla mellan ljust och mörkt läge" title="Ljust/mörkt läge">${THEME_ICON}</button>
+      <button type="button" class="menu-btn" aria-expanded="false" aria-controls="mobile-menu" aria-label="Meny">
+        <svg class="burger" width="28" height="28" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"/></svg>
+      </button>
+    </div>
   </div></header>`;
 }
 
@@ -131,8 +131,6 @@ export function mountChrome() {
   mountBanners();
   const menuInput = $(".mm-search input");
   if (menuInput) mountCardAutocomplete(menuInput, { formAction: searchTarget() });
-  const headerInput = $("#header-search input");
-  if (headerInput) mountCardAutocomplete(headerInput, { formAction: searchTarget() });
   // Startsidans sökruta (data-games) gäller alla spel och kopplas in av js/home.js.
   document.querySelectorAll(".search-row:not([data-games]) input[type=search]").forEach((inp) => {
     mountCardAutocomplete(inp, { formAction: "priser.html" });

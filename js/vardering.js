@@ -670,9 +670,9 @@ cardModal.addEventListener("scroll", (e) => {
 cardModal.addEventListener("close", () => history.replaceState(null, "", modal.open && vmInput.value.trim() ? `?q=${encodeURIComponent(vmInput.value.trim())}${isJa() ? "&lang=ja" : ""}` : location.pathname));
 
 // ---------- Händelser ----------
-// Sökningen sker i headerns sökfält, som på den här sidan söker kort att värdera.
+// Headerns sökfält finns inte på datorn längre. Sökningen sker då i hero-rutan nedan.
 const input = $("#header-search input");
-$("#header-search").addEventListener("submit", (e) => {
+$("#header-search")?.addEventListener("submit", (e) => {
   e.preventDefault();
   const cardId = $("#header-search input[name='cardId']")?.value;
   if (cardId) {
