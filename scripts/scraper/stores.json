@@ -55,6 +55,14 @@
    "note": "Inget förbud hittat i villkoren 2026-10-12"
   },
   {
+   "id": "beam-card-shop",
+   "name": "Beam Card Shop",
+   "domain": "beamcardshop.com",
+   "platform": "shopify",
+   "status": "forbjuden",
+   "note": "Villkoren förbjuder spider, crawl och scrape (2026-10-31). Säljer i euro."
+  },
+  {
    "id": "blindbox",
    "name": "Blindbox",
    "domain": "blindbox.se",
@@ -109,6 +117,14 @@
    "platform": "generic",
    "status": "ej-forbjuden",
    "note": "Villkoren lästa manuellt 2026-10-18, inget förbud mot automatisk insamling"
+  },
+  {
+   "id": "cardvalley",
+   "name": "CardValley",
+   "domain": "cardvalley.se",
+   "platform": "shopify",
+   "status": "ej-forbjuden",
+   "note": "Inget förbud hittat i villkoren eller robots.txt 2026-10-31"
   },
   {
    "id": "collected",
@@ -476,6 +492,14 @@
    "note": "Inget förbud hittat i villkoren 2026-10-12"
   },
   {
+   "id": "spelkortsbutiken",
+   "name": "Spelkortsbutiken",
+   "domain": "spelkortsbutiken.se",
+   "platform": "generic",
+   "status": "okand",
+   "note": "Ecwid-butik: produkterna finns inte i sitemapen och villkoren hittades inte (2026-10-31). Läs villkoren manuellt."
+  },
+  {
    "id": "spelmaffian",
    "name": "SpelMaffian",
    "domain": "spelmaffian.se",
@@ -550,6 +574,14 @@
    "note": "Inget förbud hittat i villkoren 2026-10-12"
   },
   {
+   "id": "tcgvault",
+   "name": "TCGVAULT",
+   "domain": "tcgvault.se",
+   "platform": "shopify",
+   "status": "ej-forbjuden",
+   "note": "Inget förbud hittat i villkoren eller robots.txt 2026-10-31"
+  },
+  {
    "id": "tcgaddan",
    "name": "TCGäddan",
    "domain": "tcgaddan.se",
@@ -564,6 +596,14 @@
    "platform": "woocommerce",
    "status": "ej-forbjuden",
    "note": "Inget förbud hittat i villkoren 2026-10-12"
+  },
+  {
+   "id": "tinymisters",
+   "name": "TinyMisters",
+   "domain": "tinymisters.com",
+   "platform": "shopify",
+   "status": "forbjuden",
+   "note": "Villkoren förbjuder robotar, spindlar och skrapning (2026-10-31)"
   },
   {
    "id": "toyspace",
