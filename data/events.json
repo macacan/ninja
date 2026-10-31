@@ -1,6 +1,20 @@
 {
- "updated": 1793412171848,
+ "updated": 1793413071866,
  "events": [
+  {
+   "at": 1793412225079,
+   "store": "samlargrottan",
+   "product": "samlargrottan:https://www.samlargrottan.se/product-page/pokémon-prismatic-evolutions-elite-trainer-box",
+   "group": "prismatic-evolutions|elite-trainer-box|en|",
+   "title": "Pokémon: Prismatic Evolutions Elite Trainer Box",
+   "url": "https://www.samlargrottan.se/product-page/pok%C3%A9mon-prismatic-evolutions-elite-trainer-box",
+   "image": "https://static.wixstatic.com/media/d265aa_db9be15e72334c9c86b65a98d937285c~mv2.webp/v1/fit/w_500,h_500,q_90/file.webp",
+   "price": 2249,
+   "type": "Elite Trainer Box",
+   "set": "Prismatic Evolutions",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793404846956,
    "store": "skattkistan",
@@ -6823,19 +6837,6 @@
    "lang": "ja",
    "kind": "prissankt",
    "from": 1299
-  },
-  {
-   "at": 1792700714849,
-   "store": "poketalk",
-   "product": "poketalk:10036564459862",
-   "group": "phantasmal-flames|elite-trainer-box|en|pc",
-   "title": "Pokémon Mega Evolution: Phantasmal Flames Pokemon Center Elite Trainer Box",
-   "url": "https://poketalk.se/products/pokemon-mega-evolution-phantasmal-flames-elite-trainer-box-pokemon-center",
-   "price": 3999,
-   "type": "Elite Trainer Box",
-   "set": "Phantasmal Flames",
-   "lang": "en",
-   "kind": "tillbaka"
   }
  ]
 }
