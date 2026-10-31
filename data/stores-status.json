@@ -1,5 +1,5 @@
 {
- "updated": 1793409431768,
+ "updated": 1793409551771,
  "stores": [
   {
    "id": "alara-games",
@@ -254,9 +254,9 @@
    "name": "GameShop",
    "domain": "gameshop.se",
    "status": "ej-forbjuden",
-   "checkedAt": 1793405812895,
+   "checkedAt": 1793409532831,
    "ok": true,
-   "lastOkAt": 1793405812895,
+   "lastOkAt": 1793409532831,
    "count": 19,
    "error": null,
    "blocked": false,
