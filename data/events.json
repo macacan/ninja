@@ -1,6 +1,48 @@
 {
- "updated": 1793535273955,
+ "updated": 1793536193972,
  "events": [
+  {
+   "at": 1793535584839,
+   "store": "dragon-s-lair",
+   "product": "dragon-s-lair:15943625638236",
+   "group": "30th-celebration|deck|en||espeon",
+   "title": "Pokémon TCG: 30th Celebration Battle Deck Espeon ex +",
+   "url": "https://dragonslair.se/products/pokemon-tcg-30th-celebration-battle-deck-espeon-ex-kopia",
+   "image": "https://cdn.shopify.com/s/files/1/1015/8315/9644/files/PokemonTCG30thCelebrationBattleDeckEspeonex.webp?v=1793363347",
+   "price": 449,
+   "type": "Deck",
+   "set": "30th Celebration",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1793535584839,
+   "store": "dragon-s-lair",
+   "product": "dragon-s-lair:15943429914972",
+   "group": "30th-celebration|deck|en||umbreon",
+   "title": "Pokémon TCG: 30th Celebration Battle Deck Umbreon ex",
+   "url": "https://dragonslair.se/products/pokemon-tcg-30th-celebration-battle-deck-umbreon-ex",
+   "image": "https://cdn.shopify.com/s/files/1/1015/8315/9644/files/PokemonTCG30thCelebrationBattleDeckUmbreonex.webp?v=1793363110",
+   "price": 449,
+   "type": "Deck",
+   "set": "30th Celebration",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1793535376191,
+   "store": "rahtech",
+   "product": "rahtech:15784995356998",
+   "group": "mega-evolution|booster-box|en||delta-forhandsbokning-reign",
+   "title": "Förhandsbokning: Mega Evolution Delta Reign – Booster Display (36 Pack) (ENG)",
+   "url": "https://rahtech.se/products/forhandsbokning-mega-evolution-delta-reign-booster-display-36-pack-eng",
+   "image": "https://cdn.shopify.com/s/files/1/0994/8882/5670/files/BlackBox-2026-08-21T000531_783_png.webp?v=1792174338",
+   "price": 2599,
+   "type": "Booster Box",
+   "set": "Mega Evolution",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793529821148,
    "store": "westcoast-vault",
@@ -6866,45 +6908,6 @@
    "set": "White Flare",
    "lang": "en",
    "kind": "tillbaka"
-  },
-  {
-   "at": 1792766654286,
-   "store": "webhallen",
-   "product": "webhallen:399539",
-   "group": "x|tin|en||gengar-summer",
-   "title": "Pokemon Tin Summer EX Mega Gengar",
-   "url": "https://www.webhallen.com/se/product/399539-Pokemon-Tin-Summer-EX-Mega-Gengar",
-   "price": 399,
-   "type": "Tin",
-   "set": null,
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1792765015818,
-   "store": "toyspace",
-   "product": "toyspace:https://toyspace.se/pokemon-tcg-shrouded-fable-kingambit-collection",
-   "group": "shrouded-fable|collection-box|en||boosterpaket-kingambit-konstkort",
-   "title": "Pokemon TCG: Shrouded Fable Box med Kingambit-konstkort och boosterpaket",
-   "url": "https://toyspace.se/pokemon-tcg-shrouded-fable-kingambit-collection",
-   "price": 639,
-   "type": "Collection Box",
-   "set": "Shrouded Fable",
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1792763926939,
-   "store": "rgb-kingz",
-   "product": "rgb-kingz:16130397274442",
-   "group": "evolving-skies|booster-pack|en|",
-   "title": "Pokémon TCG: Sword & Shield – Evolving Skies Booster Pack (ENG)",
-   "url": "https://rgbkingz.com/products/pokemon-tcg-sword-shield-evolving-skies-booster-pack-eng",
-   "price": 799,
-   "type": "Booster Pack",
-   "set": "Evolving Skies",
-   "lang": "en",
-   "kind": "ny"
   }
  ]
 }
