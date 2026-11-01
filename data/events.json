@@ -1,6 +1,21 @@
 {
- "updated": 1793539874138,
+ "updated": 1793540794153,
  "events": [
+  {
+   "at": 1793540611254,
+   "store": "samlargrottan",
+   "product": "samlargrottan:https://www.samlargrottan.se/product-page/pokémon-tcg-scarlet-violet-white-flare-elite-trainer-box-en",
+   "group": "white-flare|elite-trainer-box|en|",
+   "title": "Pokémon: White Flare Elite Trainer Box",
+   "url": "https://www.samlargrottan.se/product-page/pok%C3%A9mon-tcg-scarlet-violet-white-flare-elite-trainer-box-en",
+   "image": "https://static.wixstatic.com/media/d265aa_a46e0525393847528f878d33578cbe91~mv2.jpg/v1/fit/w_500,h_500,q_90/file.jpg",
+   "price": 1649,
+   "type": "Elite Trainer Box",
+   "set": "White Flare",
+   "lang": "en",
+   "kind": "prissankt",
+   "from": 1699
+  },
   {
    "at": 1793535584839,
    "store": "dragon-s-lair",
@@ -6893,19 +6908,6 @@
    "price": 379,
    "type": "Booster Pack",
    "set": "Crown Zenith",
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1792766934638,
-   "store": "shinycards",
-   "product": "shinycards:https://www.shinycards.se/pokemon/scarlet-violet/black-white/pokemon-scarlet-violet-105-black-bolt-white-flare-poster-collection",
-   "group": "white-flare|collection-box|en||bolt-poster",
-   "title": "Pokemon Scarlet & Violet 10.5: Black Bolt & White Flare Poster Collection",
-   "url": "https://www.shinycards.se/pokemon/scarlet-violet/black-white/pokemon-scarlet-violet-105-black-bolt-white-flare-poster-collection",
-   "price": 699,
-   "type": "Collection Box",
-   "set": "White Flare",
    "lang": "en",
    "kind": "tillbaka"
   }
