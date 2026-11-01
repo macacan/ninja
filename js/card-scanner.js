@@ -1097,10 +1097,11 @@ function ui() {
       <div class="scan-hud-status">
         <p class="scan-status" role="status" aria-live="polite">Startar kameran…</p>
       </div>
-      <button class="scan-torch" type="button" aria-label="Tänd ficklampa" hidden>
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M18 6l-6 12-2-6-6-2 14-4z"/>
+      <button class="scan-torch" type="button" aria-label="Blixt" aria-pressed="false" hidden>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M13 2L4 14h7l-1 8 9-12h-7l1-8z"/>
         </svg>
+        <span>Av</span>
       </button>
       <p class="scan-tip">Håll kortet i ramen. Glänser det? Luta det lätt.</p>
       <div class="scan-freeze" aria-hidden="true" hidden>
@@ -1133,10 +1134,12 @@ function ui() {
     const track = stream.getVideoTracks()[0];
     if (!track) return;
     try {
-      torchActive = !torchActive;
-      await track.applyConstraints({ advanced: [{ torch: torchActive }] });
-      torchBtn.classList.toggle("active", torchActive);
-    } catch {}
+      await track.applyConstraints({ advanced: [{ torch: !torchActive }] });
+      setTorch(!torchActive);
+    } catch {
+      // Kameran sa att den har lampa men vägrade tända den
+      if (!torchActive) torchBtn.hidden = true;
+    }
   });
 
   // Välj foto från fil
@@ -1578,8 +1581,7 @@ function stop() {
   animFrame = null;
   smoothedCorners = null;
   hasPrevMotion = false;
-  torchActive = false;
-  dialog?.querySelector(".scan-torch")?.classList.remove("active");
+  setTorch(false);
   stream?.getTracks().forEach((t) => t.stop());
   stream = null;
 }
@@ -1600,6 +1602,24 @@ async function tuneCamera(track, caps, d) {
   torchSupported = !!caps.torch;
   const torchBtn = d.querySelector(".scan-torch");
   if (torchBtn) torchBtn.hidden = !torchSupported;
+
+  // Vissa Android-kameror rapporterar lampan först en stund efter start
+  if (!torchSupported && track.getCapabilities) {
+    setTimeout(() => {
+      if (stream?.getVideoTracks()[0] !== track) return;
+      torchSupported = !!track.getCapabilities().torch;
+      if (torchBtn) torchBtn.hidden = !torchSupported;
+    }, 800);
+  }
+}
+
+function setTorch(on) {
+  torchActive = on;
+  const btn = dialog?.querySelector(".scan-torch");
+  if (!btn) return;
+  btn.classList.toggle("active", on);
+  btn.setAttribute("aria-pressed", String(on));
+  btn.querySelector("span").textContent = on ? "På" : "Av";
 }
 
 // callback får ett komplett kort (namn + nummer + bild). partialCallback får en delläsning

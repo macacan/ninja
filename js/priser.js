@@ -51,14 +51,10 @@ const gameCards = (g) => (gameData[g] ??= fetch(`data/${g}/cards.json`, { cache:
   d.cards = d.cards.map((c) => preSlim({ ...c, set: names[c.set] || c.set, setId: c.set }, g));
   return d;
 }).catch((e) => { delete gameData[g]; throw e; }));
-// Förmågetext och illustratör (data/rb/details.json, från Riots kortgalleri). Hämtas först när man öppnar ett kort.
+// Illustratör (data/rb/details.json, från Riots kortgalleri). Hämtas först när man öppnar ett kort.
 const gameDetails = {};
 const detailsOf = (g) => (gameDetails[g] ??= fetch(`data/${g}/details.json`, { cache: "no-cache" }).then((r) => r.json())
   .catch(() => { delete gameDetails[g]; return {}; }));
-// Riots symboler i texten (":rb_might:") blir små etiketter, nyckelord ("[Reaction]") fetstil.
-const RB_ICON = { might: "Might", exhaust: "Exhaust", rune_rainbow: "Valfri rune", rune_fury: "Fury", rune_calm: "Calm", rune_mind: "Mind", rune_body: "Body", rune_chaos: "Chaos", rune_order: "Order" };
-const abilityHtml = (t) => esc(t).replace(/:rb_([a-z_]+):/g, (m, k) => `<span class="rb-ic">${RB_ICON[k] || k}</span>`)
-  .replace(/\[([^\]]+)\]/g, "<b>$1</b>").replace(/\n/g, "<br>");
 // Samma form som Pokémonkorten i rutnätet: localId är kortnumret och priset ligger i kronor (sek).
 const preSlim = (c, g) => ({ ...c, game: g, localId: c.no });
 // Spelets egen kortbaksida när kortet saknar bild (eller bilden inte går att ladda).
@@ -377,9 +373,9 @@ mountCardAutocomplete($("#pq"), {
 // ---------- Kortskanner för Riftbound ----------
 // Ett säkert kort öppnas direkt. Annars söks det lästa numret (t.ex. "001/167"), så att man kan välja bland träffarna.
 // Skannern (js/card-scanner.js) är stor och laddas först när knappen trycks.
-$("#rb-scan").addEventListener("click", async () => {
+async function scanRb() {
   track("scan", "Öppnad");
-  const { openScanner } = await import("./card-scanner.js?v=20261031");
+  const { openScanner } = await import("./card-scanner.js?v=20261101");
   openScanner(({ cardId, name, number, total }) => {
     track("scan", cardId ? "Säker träff" : "Läst, söker");
     if (cardId) { openAfter = cardId; $("#pq").value = name || ""; }
@@ -387,7 +383,8 @@ $("#rb-scan").addEventListener("click", async () => {
     else $("#pq").value = total ? `${String(number).replace(/^\d+/, (d) => d.padStart(total.length, "0"))}/${total}` : number || "";
     search();
   }, null, { game: "rb" });
-});
+}
+$("#rb-scan").addEventListener("click", scanRb);
 
 // ---------- Stor vy med holo-effekt ----------
 const modal = $("#card-modal");
@@ -471,7 +468,7 @@ function openPrebuiltCard(c, i, body) {
       <h2 id="cm-name">${esc(c.name)}${c.variant ? ` <small class="cname-ja">${esc(c.variant)}</small>` : ""}</h2>
       <div class="cm-price">${c.sek != null ? kr(c.sek) : "Inget pris ännu"} ${change(c.change)}</div>
       <p class="muted">TCGplayers marknadspris i kronor. Vägledande, uppdateras dagligen.</p>
-      <div class="cm-ability" hidden></div>
+      ${c.game === "rb" ? `<button type="button" class="btn small cm-scan">Skanna nytt kort <span class="beta-tag">Beta</span></button>` : ""}
       <div class="pchart"></div>
       ${c.sek != null || c.low != null ? `<h3>TCGplayer (USA)</h3><table class="cm-table">${row("Marknadspris", c.sek)}${row("Foil", c.foil)}${row("Lägsta i lager", c.low)}</table>` : ""}
       <div class="cm-links">
@@ -481,11 +478,9 @@ function openPrebuiltCard(c, i, body) {
     </div>`;
   mountChart(body.querySelector(".pchart"), { id: c.id, set: { id: c.setId } }, null, { dir: `data/${c.game}/history`, source: "TCGplayers marknadspris" }).catch(() => {});
   if (g.details) detailsOf(c.game).then((d) => {
-    const x = d[c.id], box = body.querySelector(".cm-ability");
-    // Hann man bläddra vidare till ett annat kort finns rutan inte längre.
-    if (!x || !box?.isConnected) return;
-    box.innerHTML = (x.text ? `<h3>Förmåga</h3><p>${abilityHtml(x.text)}</p>` : "") + (x.effect ? `<h3>Effekt</h3><p>${abilityHtml(x.effect)}</p>` : "");
-    box.hidden = !box.innerHTML;
+    const x = d[c.id];
+    // Hann man bläddra vidare till ett annat kort hör listan till ett annat kort.
+    if (!x || shownIndex !== i) return;
     if (x.artist) body.querySelector(".cm-facts").insertAdjacentHTML("beforeend", `<li><b>Illustratör</b>${esc(x.artist)}</li>`);
   });
   modal.querySelector(".prev").hidden = i <= 0;
@@ -524,6 +519,7 @@ modal.addEventListener("pointerleave", () => {
 });
 modal.addEventListener("click", (e) => {
   if (e.target === modal || e.target.closest(".cm-close")) modal.close();
+  if (e.target.closest(".cm-scan")) { modal.close(); scanRb(); }
   if (e.target.closest(".prev")) openCard(shownIndex - 1);
   if (e.target.closest(".next")) openCard(shownIndex + 1);
 });
