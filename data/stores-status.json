@@ -1,5 +1,5 @@
 {
- "updated": 1793499545553,
+ "updated": 1793500585580,
  "stores": [
   {
    "id": "alara-games",
@@ -31,11 +31,11 @@
    "name": "Aquitaz",
    "domain": "aquitaz.se",
    "status": "ej-forbjuden",
-   "checkedAt": 1793494946607,
-   "ok": true,
+   "checkedAt": 1793500581739,
+   "ok": false,
    "lastOkAt": 1793494946607,
    "count": 1697,
-   "error": null,
+   "error": "https://aquitaz.se/collections/pokemon-kort-boxes-display-boxes-booster-packs/products.json?limit=250&page=1&currency=SEK&country=SE → 503, vänta 138 s",
    "blocked": false,
    "note": null,
    "interval": 60
