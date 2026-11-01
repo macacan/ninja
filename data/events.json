@@ -1,6 +1,20 @@
 {
- "updated": 1793495085431,
+ "updated": 1793495845447,
  "events": [
+  {
+   "at": 1793495143452,
+   "store": "the-swedish-fish",
+   "product": "the-swedish-fish:14386",
+   "group": "astral-radiance|blister|en||",
+   "title": "Pokemon Evolving Skies/Astral Radiance Blister: Eevee",
+   "url": "https://theswedishfish.se/product/pokemon-evolving-skies-astral-radiance-blister-eevee/",
+   "image": "https://theswedishfish.se/wp-content/uploads/2026/06/eeveee-1.webp",
+   "price": 999,
+   "type": "Blister",
+   "set": "Astral Radiance",
+   "lang": "en",
+   "kind": "ny"
+  },
   {
    "at": 1793491436549,
    "store": "pokemurre",
@@ -6886,19 +6900,6 @@
    "price": 2899,
    "type": "Booster Box",
    "set": "Chaos Rising",
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1792762644235,
-   "store": "toyspace",
-   "product": "toyspace:https://toyspace.se/pokemon-tcg-zarude-2-pack-blister-pok10412-101",
-   "group": "x|blister|en||2|mynt-promokort-zarude",
-   "title": "Pokémon TCG Zarude 2-Pack Blister med promokort och mynt",
-   "url": "https://toyspace.se/pokemon-tcg-zarude-2-pack-blister-pok10412-101",
-   "price": 188,
-   "type": "Blister",
-   "set": null,
    "lang": "en",
    "kind": "tillbaka"
   }
