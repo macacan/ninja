@@ -1,6 +1,21 @@
 {
- "updated": 1793491404999,
+ "updated": 1793492185346,
  "events": [
+  {
+   "at": 1793491436549,
+   "store": "pokemurre",
+   "product": "pokemurre:11281794990418",
+   "group": "op|eb-05|booster-pack|ja|",
+   "title": "One Piece EB05 Heroines Edition Vol.2 Booster Pack Bandai (Japansk)",
+   "url": "https://pokemurre.se/products/one-piece-eb05-heroines-edition-vol-2-booster-pack-bandai-japansk",
+   "image": null,
+   "price": 65,
+   "type": "Booster Pack",
+   "set": "EB-05",
+   "lang": "ja",
+   "game": "op",
+   "kind": "ny"
+  },
   {
    "at": 1793490543192,
    "store": "pokemurre",
@@ -6884,19 +6899,6 @@
    "price": 188,
    "type": "Blister",
    "set": null,
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1792762617319,
-   "store": "shinycards",
-   "product": "shinycards:https://www.shinycards.se/pokemon/scarlet-violet/temporal-forces/pokemon-scarlet-violet-5-temporal-forces-3-pack-blister-cleffa",
-   "group": "temporal-forces|blister|en||3",
-   "title": "Pokemon Scarlet & Violet 5: Temporal Forces 3-Pack Blister Cleffa",
-   "url": "https://www.shinycards.se/pokemon/scarlet-violet/temporal-forces/pokemon-scarlet-violet-5-temporal-forces-3-pack-blister-cleffa",
-   "price": 349,
-   "type": "Blister",
-   "set": "Temporal Forces",
    "lang": "en",
    "kind": "tillbaka"
   }
