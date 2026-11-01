@@ -1,6 +1,20 @@
 {
- "updated": 1793561639675,
+ "updated": 1793562559689,
  "events": [
+  {
+   "at": 1793562190219,
+   "store": "bangerpack",
+   "product": "bangerpack:https://bangerpack.se/pokemon/japanska-utgavor/pokemon-abyss-eye-booster-jp",
+   "group": "x|booster-pack|ja||abyss-eye",
+   "title": "Pokémon Abyss Eye – Booster (JP)",
+   "url": "https://bangerpack.se/pokemon/japanska-utgavor/pokemon-abyss-eye-booster-jp",
+   "image": "https://cdn.quickbutik.com/images/99246J/products/6ae78ffa80e3e.png",
+   "price": 39,
+   "type": "Booster Pack",
+   "set": null,
+   "lang": "ja",
+   "kind": "ny"
+  },
   {
    "at": 1793558059356,
    "store": "spelparken",
@@ -6900,19 +6914,6 @@
    "title": "Pokemon Heat Wave Arena Booster (Japansk)",
    "url": "https://speltrollet.se/products/pokemon-heat-wave-arena-booster-japansk",
    "price": 59,
-   "type": "Booster Pack",
-   "set": null,
-   "lang": "ja",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1792783456106,
-   "store": "speltrollet",
-   "product": "speltrollet:15108607476038",
-   "group": "x|booster-pack|ja||partners",
-   "title": "Pokemon Battle Partners Booster (Japansk - sv9)",
-   "url": "https://speltrollet.se/products/pokemon-battle-partners-booster-japansk",
-   "price": 49,
    "type": "Booster Pack",
    "set": null,
    "lang": "ja",
