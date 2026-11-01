@@ -1,6 +1,20 @@
 {
- "updated": 1793563479713,
+ "updated": 1793564399726,
  "events": [
+  {
+   "at": 1793564203589,
+   "store": "collected",
+   "product": "collected:11433950839126",
+   "group": "x|booster-box|zh||forhandsbokning-gem-s7-vol",
+   "title": "[Förhandsbokning] - Pokémon TCG: Gem Pack Vol. 7 Booster Box (Kinesisk) – CBB7C",
+   "url": "https://collected.se/products/forhandsbokning-pokemon-tcg-gem-pack-vol-7-booster-box-kinesisk-cbb7c",
+   "image": "https://cdn.shopify.com/s/files/1/0965/6788/6166/files/1840ACF2-3B0B-4205-8627-4D4532A5A0E2.png?v=1793563271",
+   "price": 699,
+   "type": "Booster Box",
+   "set": null,
+   "lang": "zh",
+   "kind": "ny"
+  },
   {
    "at": 1793562563353,
    "store": "spelparken",
@@ -6904,19 +6918,6 @@
    "price": 79,
    "type": "Booster Pack",
    "set": "White Flare",
-   "lang": "ja",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1792783456106,
-   "store": "speltrollet",
-   "product": "speltrollet:15108619534662",
-   "group": "black-bolt|booster-pack|ja|",
-   "title": "Pokemon Black Bolt Booster (Japansk)",
-   "url": "https://speltrollet.se/products/pokemon-black-bolt-booster-japansk",
-   "price": 99,
-   "type": "Booster Pack",
-   "set": "Black Bolt",
    "lang": "ja",
    "kind": "tillbaka"
   }
