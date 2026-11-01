@@ -1,6 +1,20 @@
 {
- "updated": 1793567159784,
+ "updated": 1793568079804,
  "events": [
+  {
+   "at": 1793567949101,
+   "store": "spelparken",
+   "product": "spelparken:15149816283511",
+   "group": "paldea-evolved|booster-pack|en|",
+   "title": "Paldea Evolved Booster Pack",
+   "url": "https://spelparken.se/products/paldea-evolved-oppnas-live",
+   "image": "https://cdn.shopify.com/s/files/1/0948/1876/3127/files/Paldea_Evolved_BP_-_1_1.webp?v=1759071631",
+   "price": 169,
+   "type": "Booster Pack",
+   "set": "Paldea Evolved",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793564203589,
    "store": "collected",
@@ -6905,19 +6919,6 @@
    "price": 39,
    "type": "Booster Pack",
    "set": null,
-   "lang": "ja",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1792783456106,
-   "store": "speltrollet",
-   "product": "speltrollet:15108628250950",
-   "group": "white-flare|booster-pack|ja|",
-   "title": "Pokemon White Flare Booster (Japansk)",
-   "url": "https://speltrollet.se/products/pokemon-white-flare-booster-japansk",
-   "price": 79,
-   "type": "Booster Pack",
-   "set": "White Flare",
    "lang": "ja",
    "kind": "tillbaka"
   }
