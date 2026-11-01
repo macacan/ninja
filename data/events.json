@@ -1,6 +1,20 @@
 {
- "updated": 1793548154369,
+ "updated": 1793549074390,
  "events": [
+  {
+   "at": 1793548998269,
+   "store": "tcgaddan",
+   "product": "tcgaddan:15817643950412",
+   "group": "astral-radiance|booster-pack|en|",
+   "title": "Astral Radiance Booster Pack",
+   "url": "https://tcgaddan.se/products/astral-radiance-booster-pack",
+   "image": "https://cdn.shopify.com/s/files/1/1037/7062/0236/files/Astral-Radiance-Booster-Pack-5.webp?v=1793131494",
+   "price": 129,
+   "type": "Booster Pack",
+   "set": "Astral Radiance",
+   "lang": "en",
+   "kind": "ny"
+  },
   {
    "at": 1793543591916,
    "store": "samlargrottan",
@@ -6901,19 +6915,6 @@
    "set": "30th Celebration",
    "lang": "ja",
    "kind": "ny"
-  },
-  {
-   "at": 1792769565103,
-   "store": "sweet-nerds",
-   "product": "sweet-nerds:https://sweetnerds.se/sv/products/pokemon-30th-celebration-booster-pack-jp",
-   "group": "30th-celebration|booster-pack|ja|",
-   "title": "Pokémon 30th Celebration Booster Pack (JP)",
-   "url": "https://sweetnerds.se/sv/products/pokemon-30th-celebration-booster-pack-jp",
-   "price": 139,
-   "type": "Booster Pack",
-   "set": "30th Celebration",
-   "lang": "ja",
-   "kind": "tillbaka"
   }
  ]
 }
