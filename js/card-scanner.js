@@ -719,10 +719,30 @@ const rbResult = (rb, id, r = {}) => ({ game: "rb", name: rb.byId.get(id)?.name 
 // stället för kortets ytterkant, och då hamnar numret (som står i den svarta kanten) utanför bilden. Kortets riktiga
 // hörn räknas då ut från ramens: ramen sitter ungefär 6 % in från sidorna, 4,5 % från toppen och 9 % från botten.
 const RB_FRAME = { u0: -0.06, u1: 1.06, v0: -0.045, v1: 1.09 };
-function outsideFrame(c) {
+// Hörnen för en del av fyrhörningen c, i andelar av den (u åt sidan, v nedåt). Andelar utanför 0..1 ger en större.
+function subQuad(c, { u0, u1, v0, v1 }) {
   const at = (u, v) => [0, 1].map((k) => (1 - u) * (1 - v) * c[0][k] + u * (1 - v) * c[1][k] + u * v * c[2][k] + (1 - u) * v * c[3][k]);
-  const { u0, u1, v0, v1 } = RB_FRAME;
   return [at(u0, v0), at(u1, v0), at(u1, v1), at(u0, v1)];
+}
+const outsideFrame = (c) => subQuad(c, RB_FRAME);
+// Kort i plastficka eller toploader: kantsökningen hittar fickans kant, och då blir kortet beskuret för stort.
+// Kortets troliga läge inuti: penny sleeve (66×91 mm), toploader (76×101 mm) med kortet nere och i mitten.
+const SLEEVES = [
+  { u0: 0.023, u1: 0.977, v0: 0.017, v1: 0.983 },
+  { u0: 0.087, u1: 0.913, v0: 0.134, v1: 1 },
+  { u0: 0.087, u1: 0.913, v0: 0.067, v1: 0.933 },
+];
+// Den rätning (som hörnen hittades, eller kortet inuti en ficka) vars bild liknar ett kort i indexet mest. En ficka
+// väljs bara när bilden då blir en tydlig träff, så att ett blänk inte får en felaktig beskärning att vinna.
+async function sleeveBest(canvas, source, art) {
+  if (!source?.corners || (art[0]?.s ?? 0) >= 0.9) return { canvas, art };
+  let best = { canvas, art };
+  for (const s of SLEEVES) {
+    const alt = copyCanvas(unwarpCard(source.src, subQuad(source.corners, s)));
+    const altArt = await artMatch(alt).catch(() => []);
+    if ((altArt[0]?.s ?? -1) >= 0.85 && altArt[0].s > (best.art[0]?.s ?? -1) + 0.03) best = { canvas: alt, art: altArt };
+  }
+  return best;
 }
 const copyCanvas = (src) => {
   const c = Object.assign(document.createElement("canvas"), { width: src.width, height: src.height });
@@ -787,17 +807,19 @@ let scanGame = "pokemon";
 
 // Hittar kortet i ett rätat canvas: först bilden, sedan text. Returnerar avläsningen plus cardId om kortet är säkert.
 // source = { src, corners } (bilden och hörnen kortet rätades från) gör att ett Riftbound-kort kan rätas om, se rbBestCanvas.
-async function identify(canvas, { full = false, source } = {}) {
+export async function identify(canvas, { full = false, source } = {}) {
   // Den rätade bilden kan vara GPU-rätningens delade canvas, som en omrätning skriver över
   if (source) canvas = copyCanvas(canvas);
   if (scanGame === "rb") {
     const rb = await rbBestCanvas(canvas, source);
     return identifyRb(rb.canvas, { full, art: rb.art });
   }
-  const [art, rb] = await Promise.all([artMatch(canvas).catch(() => []), rbBestCanvas(canvas, source)]);
+  let [art, rb] = await Promise.all([artMatch(canvas).catch(() => []), rbBestCanvas(canvas, source)]);
   // Ett Riftbound-kort i Pokémonskannern: bara när bilden tydligt liknar ett Riftbound-kort mer än något Pokémonkort
   const rbQuick = byLook(rb.art, 0.88, 0.12);
   if (rbQuick && rb.art[0].s > (art[0]?.s ?? 0) + 0.05) return identifyRb(rb.canvas, { full, art: rb.art });
+  // Kortet kan ligga i en plastficka: då läses både bild och nummer från den rätning som liknar ett kort mest
+  ({ canvas, art } = await sleeveBest(canvas, source, art));
   // Så tydlig bildträff att textläsningen inte behövs
   const quick = byLook(art, 0.9, 0.12);
   if (quick) return { name: null, number: localOf(quick), total: null, numberSure: true, cardId: quick, art };
