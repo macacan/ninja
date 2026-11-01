@@ -1,5 +1,5 @@
 {
- "updated": 1793509004331,
+ "updated": 1793512244422,
  "stores": [
   {
    "id": "alara-games",
@@ -103,28 +103,28 @@
    "name": "Card Mountain",
    "domain": "cardmountain.se",
    "status": "ej-forbjuden",
-   "checkedAt": 1793508511619,
+   "checkedAt": 1793512108543,
    "ok": true,
-   "lastOkAt": 1793508511619,
+   "lastOkAt": 1793512108543,
    "count": 53,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 60
+   "interval": 15
   },
   {
    "id": "cardclub",
    "name": "Cardclub",
    "domain": "cardclub.se",
    "status": "ej-forbjuden",
-   "checkedAt": 1793508551212,
+   "checkedAt": 1793512157967,
    "ok": true,
-   "lastOkAt": 1793508551212,
+   "lastOkAt": 1793512157967,
    "count": 82,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 60
+   "interval": 15
   },
   {
    "id": "cardgame",
@@ -159,14 +159,14 @@
    "name": "Cardlevels",
    "domain": "cardlevels.se",
    "status": "ej-forbjuden",
-   "checkedAt": 1793508540156,
+   "checkedAt": 1793512161919,
    "ok": true,
-   "lastOkAt": 1793508540156,
+   "lastOkAt": 1793512161919,
    "count": 27,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 60
+   "interval": 15
   },
   {
    "id": "cards-by-malcolm",
@@ -187,28 +187,28 @@
    "name": "CardValley",
    "domain": "cardvalley.se",
    "status": "ej-forbjuden",
-   "checkedAt": 1793508510532,
+   "checkedAt": 1793512106257,
    "ok": true,
-   "lastOkAt": 1793508510532,
+   "lastOkAt": 1793512106257,
    "count": 122,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 60
+   "interval": 15
   },
   {
    "id": "collected",
    "name": "Collected",
    "domain": "collected.se",
    "status": "ej-forbjuden",
-   "checkedAt": 1793508517391,
+   "checkedAt": 1793512117153,
    "ok": true,
-   "lastOkAt": 1793508517391,
+   "lastOkAt": 1793512117153,
    "count": 48,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 60
+   "interval": 15
   },
   {
    "id": "coolcard",
@@ -265,14 +265,14 @@
    "name": "Frog med Vänner",
    "domain": "frogmedvanner.se",
    "status": "ej-forbjuden",
-   "checkedAt": 1793508567608,
-   "ok": true,
+   "checkedAt": 1793512181004,
+   "ok": false,
    "lastOkAt": 1793508567608,
    "count": 11,
-   "error": null,
+   "error": "sitemapen gav inga produktsidor",
    "blocked": false,
    "note": null,
-   "interval": 60
+   "interval": 11
   },
   {
    "id": "gameshop",
@@ -293,28 +293,28 @@
    "name": "Gimmick",
    "domain": "gimmick.se",
    "status": "inga-bilder",
-   "checkedAt": 1793508535426,
+   "checkedAt": 1793512144165,
    "ok": true,
-   "lastOkAt": 1793508535426,
+   "lastOkAt": 1793512144165,
    "count": 91,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 60
+   "interval": 15
   },
   {
    "id": "goblinen",
    "name": "Goblinen",
    "domain": "goblinen.com",
    "status": "ej-forbjuden",
-   "checkedAt": 1793508587210,
+   "checkedAt": 1793512205984,
    "ok": true,
-   "lastOkAt": 1793508587210,
+   "lastOkAt": 1793512205984,
    "count": 17,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 60
+   "interval": 15
   },
   {
    "id": "hobbykort",
@@ -346,14 +346,14 @@
    "name": "Kantovault",
    "domain": "kantovault.se",
    "status": "inga-bilder",
-   "checkedAt": 1793508574178,
+   "checkedAt": 1793512185954,
    "ok": true,
-   "lastOkAt": 1793508574178,
+   "lastOkAt": 1793512185954,
    "count": 200,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 60
+   "interval": 15
   },
   {
    "id": "kortarkivet",
@@ -371,14 +371,14 @@
    "name": "Kortbutiken",
    "domain": "kortbutiken-shop.se",
    "status": "ej-forbjuden",
-   "checkedAt": 1793508573186,
+   "checkedAt": 1793512178962,
    "ok": true,
-   "lastOkAt": 1793508573186,
+   "lastOkAt": 1793512178962,
    "count": 76,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 60
+   "interval": 15
   },
   {
    "id": "kortgrossisten",
@@ -396,14 +396,14 @@
    "name": "Majki Poke",
    "domain": "majkipoke.se",
    "status": "ej-forbjuden",
-   "checkedAt": 1793508576598,
+   "checkedAt": 1793512171167,
    "ok": true,
-   "lastOkAt": 1793508576598,
+   "lastOkAt": 1793512171167,
    "count": 124,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 60
+   "interval": 15
   },
   {
    "id": "mana-torsk",
@@ -594,14 +594,14 @@
    "name": "Pokemurre",
    "domain": "pokemurre.se",
    "status": "inga-bilder",
-   "checkedAt": 1793508640331,
+   "checkedAt": 1793512243119,
    "ok": true,
-   "lastOkAt": 1793508640331,
+   "lastOkAt": 1793512243119,
    "count": 139,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 60
+   "interval": 15
   },
   {
    "id": "poketalk",
@@ -633,14 +633,14 @@
    "name": "Rahtech",
    "domain": "rahtech.se",
    "status": "ej-forbjuden",
-   "checkedAt": 1793508635404,
+   "checkedAt": 1793512239201,
    "ok": true,
-   "lastOkAt": 1793508635404,
+   "lastOkAt": 1793512239201,
    "count": 81,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 60
+   "interval": 15
   },
   {
    "id": "rgb-kingz",
