@@ -1,6 +1,21 @@
 {
- "updated": 1793543554220,
+ "updated": 1793544474239,
  "events": [
+  {
+   "at": 1793543591916,
+   "store": "samlargrottan",
+   "product": "samlargrottan:https://www.samlargrottan.se/product-page/pokémon-tcg-scarlet-violet-black-bolt-elite-trainer-box-en",
+   "group": "black-bolt|elite-trainer-box|en|",
+   "title": "Pokémon: Black Bolt Elite Trainer Box",
+   "url": "https://www.samlargrottan.se/product-page/pok%C3%A9mon-tcg-scarlet-violet-black-bolt-elite-trainer-box-en",
+   "image": "https://static.wixstatic.com/media/d265aa_981764e8bd8e4b9fab40d0167cffbf24~mv2.jpg/v1/fit/w_500,h_500,q_90/file.jpg",
+   "price": 1749,
+   "type": "Elite Trainer Box",
+   "set": "Black Bolt",
+   "lang": "en",
+   "kind": "prissankt",
+   "from": 1799
+  },
   {
    "at": 1793541034768,
    "store": "miniature-metropolis",
@@ -6898,19 +6913,6 @@
    "type": "Booster Pack",
    "set": "30th Celebration",
    "lang": "ja",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1792768519741,
-   "store": "tcgaddan",
-   "product": "tcgaddan:16071743340876",
-   "group": "x|tin|en||galarian-zapdos",
-   "title": "Galarian Zapdos Tin",
-   "url": "https://tcgaddan.se/products/galarian-articuno-tin",
-   "price": 1599,
-   "type": "Tin",
-   "set": null,
-   "lang": "en",
    "kind": "tillbaka"
   }
  ]
