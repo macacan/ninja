@@ -1,6 +1,20 @@
 {
- "updated": 1793562559689,
+ "updated": 1793563479713,
  "events": [
+  {
+   "at": 1793562563353,
+   "store": "spelparken",
+   "product": "spelparken:15149816283511",
+   "group": "paldea-evolved|booster-pack|en|",
+   "title": "Paldea Evolved Booster Pack",
+   "url": "https://spelparken.se/products/paldea-evolved-oppnas-live",
+   "image": "https://cdn.shopify.com/s/files/1/0948/1876/3127/files/Paldea_Evolved_BP_-_1_1.webp?v=1759071631",
+   "price": 169,
+   "type": "Booster Pack",
+   "set": "Paldea Evolved",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793562190219,
    "store": "bangerpack",
@@ -6903,19 +6917,6 @@
    "price": 99,
    "type": "Booster Pack",
    "set": "Black Bolt",
-   "lang": "ja",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1792783456106,
-   "store": "speltrollet",
-   "product": "speltrollet:15108614553926",
-   "group": "x|booster-pack|ja||arena-heat-wave",
-   "title": "Pokemon Heat Wave Arena Booster (Japansk)",
-   "url": "https://speltrollet.se/products/pokemon-heat-wave-arena-booster-japansk",
-   "price": 59,
-   "type": "Booster Pack",
-   "set": null,
    "lang": "ja",
    "kind": "tillbaka"
   }
