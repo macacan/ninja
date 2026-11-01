@@ -167,6 +167,16 @@ canvas.scene{display:block;width:100%;image-rendering:pixelated;image-rendering:
   :is(#home-drops,#home-pre) .pfoot{gap:4px}
   :is(#home-drops,#home-pre) .pprice{font-size:.85rem;white-space:nowrap;display:flex;flex-direction:column;align-items:flex-end;line-height:1.15}
   :is(#home-drops,#home-pre) .pprice s{font-size:.7rem}
+  /* Senaste set på mobilen: kompaktare kort, så att två ryms bredvid varandra med mindre höjd. */
+  :is(#home-sets,.game-sets){gap:10px}
+  :is(#home-sets,.game-sets) .tcard{padding:0;gap:4px}
+  :is(#home-sets,.game-sets) .tcard .art{height:76px}
+  :is(#home-sets,.game-sets) .tcard .art.logo{padding:8px 10px}
+  :is(#home-sets,.game-sets) .tcard > :not(.art):not(.badge){margin-left:8px;margin-right:8px}
+  :is(#home-sets,.game-sets) .tcard > :last-child{margin-bottom:8px}
+  :is(#home-sets,.game-sets) .tcard h3{font-size:.82rem;line-height:1.2}
+  :is(#home-sets,.game-sets) .tcard .meta{flex-direction:row;justify-content:space-between;gap:6px;font-size:.74rem}
+  :is(#home-sets,.game-sets) .tcard .tag,:is(#home-sets,.game-sets) .tcard .muted{font-size:.66rem}
 }
 .tcard{position:relative;background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:8px;
   box-shadow:0 3px 0 var(--line);transition:transform .12s steps(2),box-shadow .12s steps(2),border-color .12s steps(2)}
@@ -222,7 +232,10 @@ input[type=search]{width:100%;max-width:360px}
 
 /* ---------- Nästa släpp ---------- */
 .next-drop{display:grid;grid-template-columns:auto 1fr auto;gap:22px;align-items:center;background:var(--card);padding:18px 22px;margin:var(--px)}
-@media (max-width:640px){.next-drop{grid-template-columns:1fr}}
+@media (max-width:640px){
+  .next-drop{grid-template-columns:auto minmax(0,1fr);gap:10px 12px;padding:12px}
+  .next-drop .countdown div{flex:none;min-width:0;padding:6px 8px}
+}
 .countdown{display:flex;gap:6px}
 .countdown div{background:var(--ink-solid);color:#fff;text-align:center;padding:8px 10px;min-width:62px;border-radius:4px}
 .countdown b{display:block;font:700 2rem/1 var(--cond);color:var(--gold);font-variant-numeric:tabular-nums}
@@ -265,6 +278,15 @@ input[type=search]{width:100%;max-width:360px}
   .restock-intro{order:-1}
   .restock-side .restock-actions{order:1}
   .restock-intro .ri-long{display:none}
+  .restock-intro{padding:16px 18px;gap:10px}
+  .restock-intro h1{font:600 1.05rem/1.25 var(--pixel)}
+  .restock-intro p{font-size:.88rem;line-height:1.5}
+  .restock-facts{padding-top:10px;gap:8px}
+  .restock-intro .restock-facts b{font:800 1.05rem/1 var(--sans)}
+  .restock-intro .restock-facts li{font-size:.74rem;gap:3px}
+  .restock-side{gap:12px}
+  .restock-side .restock-actions{flex-wrap:nowrap}
+  .restock-actions .btn.small{flex:1 1 0;min-width:0;padding-inline:8px;white-space:normal;text-align:center}
 }
 .restock-facts b{font:800 1.6rem/1 var(--sans);color:var(--gold);letter-spacing:.5px}
 /* Rubriken är en knapp som fäller ut sökfältet på mobilen. På större skärmar ser den ut som en vanlig rubrik. */
@@ -436,6 +458,8 @@ input[type=search]{width:100%;max-width:360px}
 .event a:hover{text-decoration:underline}
 .ev-price{font:700 1.1rem var(--sans);white-space:nowrap}
 .ev-price s{color:var(--muted);font:500 .85rem var(--sans)}
+.ev-pct{display:inline-block;margin-left:4px;padding:2px 6px;border-radius:5px;background:rgba(31,138,53,.14);color:#1f8a35;font:700 .78rem var(--sans);vertical-align:2px}
+:root:not([data-theme="light"]) .ev-pct{background:rgba(95,211,138,.16);color:#5fd38a}
 .kind{font:700 .75rem/1 var(--pixel);text-transform:uppercase;letter-spacing:.4px;padding:7px 8px;border-radius:4px;text-align:center;box-shadow:0 0 0 2px var(--ink);color:#1b1b2f}
 .k-new{background:var(--gold)}
 .k-back{background:#7fd48a}
@@ -629,7 +653,7 @@ input[type=search]{width:100%;max-width:360px}
 .mpanel{position:absolute;top:calc(100% + 4px);left:0;z-index:30;width:260px;max-width:calc(100vw - 28px);max-height:320px;overflow-y:auto;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 12px 30px rgba(0,0,0,.2);padding:6px}
 .count{font-size:.9rem;color:var(--muted);padding:0 6px}
 .viewtoggle{display:flex;gap:2px;margin-left:4px}
-.viewtoggle button{min-height:38px;padding:0 12px;border:0;border-radius:6px;background:transparent;cursor:pointer;font:700 .85rem var(--sans);color:#9aa0b0}
+.viewtoggle button{display:inline-grid;place-items:center;min-height:38px;min-width:38px;padding:0 9px;border:0;border-radius:6px;background:transparent;cursor:pointer;font:700 .85rem var(--sans);color:#9aa0b0}
 .viewtoggle button[aria-pressed=true]{background:var(--surface);color:var(--ink)}
 
 /* Set- och priskort i samma rena stil */
@@ -677,7 +701,8 @@ input[type=search]{width:100%;max-width:360px}
   .drop{flex:none;min-height:44px}
   .shopbar-right{justify-content:space-between;flex-wrap:nowrap;gap:0;min-width:0}
   .shopbar-right .drop span{display:none}
-  .shopbar-right .drop select{max-width:120px}
+  .shopbar-right .drop select{max-width:120px;font-size:.85rem!important}
+  .shopbar-right .drop{order:-1}
   .count{padding:0;font-size:.85rem}
   .tcard .art{height:90px}
   .tcard > :not(.art):not(.badge){margin-left:10px;margin-right:10px}
@@ -912,6 +937,10 @@ span.rd-logo{display:grid;place-items:center;background:var(--surface);border-ra
 .gtoggle{all:unset;cursor:pointer;margin-top:4px;padding:10px 0 2px;border-top:1px solid var(--line);font:700 .9rem var(--sans);color:var(--red)}
 .gtoggle:focus-visible{outline:3px solid var(--red)}
 .gdetail{display:grid;gap:8px;margin-top:4px}
+/* Märkena och jämför-knappen på samma rad, med en avdelningslinje ovanför. */
+.gfoot{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px 10px;margin-top:4px;padding-top:8px;border-top:1px solid var(--line)}
+.gfoot .gtoggle{margin:0;padding:0;border-top:0;min-height:36px;white-space:nowrap}
+.gfoot .gchips{flex:0 1 auto;width:auto}
 /* Pilen i en rund knapp, så att det syns att man kan fälla ut och stänga jämförelsen. */
 .garrow{display:inline-grid;place-items:center;width:24px;height:24px;margin-left:8px;border-radius:50%;background:var(--surface);border:1px solid var(--line);font-size:.65rem;line-height:1;vertical-align:middle}
 .gtoggle[aria-expanded=true] .garrow{background:var(--red);border-color:var(--red);color:#fff}
@@ -3487,6 +3516,44 @@ button.zm-price:hover{background:#1f2132}
   .val-cond td:nth-child(2) { grid-column: 1 / -1; font-size: .85rem; line-height: 1.4; color: var(--muted); }
   .val-psa-scale li { min-width: 0; }
   .val-grid-2col, .val-table-card { min-width: 0; }
+
+  /* Värderingssidan på mobilen: tätare mellan sektionerna och kompaktare tabeller. */
+  .val-section-title { margin: 32px 0 10px; }
+  .val-section-desc { margin: -2px 0 14px; font-size: .88rem; line-height: 1.5; }
+  .val-anatomy-box { margin-bottom: 20px; }
+  .val-anatomy-visual { max-width: 250px; }
+  .val-how-grid { margin-bottom: 16px; }
+  .val-full-table-card, .val-grid-2col { margin-bottom: 18px; }
+  .val-full-table-card h3, .val-table-card h3 { font-size: 1.1rem; }
+  .val-full-table-card p.table-sub { margin-bottom: 8px; font-size: .82rem; line-height: 1.45; }
+  .val-data-table tr { padding: 8px 2px; }
+  .val-data-table td { font-size: .85rem; }
+  .val-full-table-card td:nth-child(1) { font-size: .92rem; }
+  .val-full-table-card td:nth-child(2), .val-cond td:nth-child(2) { font-size: .8rem; line-height: 1.35; }
+  .grade-box, .guide-tips { margin-top: 12px; padding: 14px; }
+  .val-bench-grid { margin-bottom: 18px; }
+  .val-faq-list { margin-bottom: 20px; }
+  .recent { margin-top: 28px; }
+  /* Baksidan: mindre kort och siffran mitt på kortet, så att den inte hamnar över texten bredvid. */
+  .val-anatomy-backrow { gap: 14px; margin-top: 12px; }
+  .val-card-back { width: 72px; }
+  .val-card-back .val-pin { left: 50%; top: 50%; }
+  /* Symboltabellen: symbol, namn och värde på en rad i stället för en bred symbolkolumn. */
+  .val-rarity tr { grid-template-columns: 64px minmax(0, 1fr) auto; }
+  .val-rarity td:first-child { grid-row: 1; }
+  .val-rarity td:nth-child(3) { grid-column: 3; grid-row: 1; white-space: nowrap; text-align: right; }
+  .val-rarity td:nth-child(2) { font-size: .8rem; line-height: 1.35; }
+  .val-rarity-notes { font-size: .78rem; }
+  /* "Så värderar du": siffran bredvid rubriken i stället för ovanför. */
+  .val-how-card { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; }
+  .val-how-card .val-how-num { margin-left: 14px; }
+  .val-how-card h3 { min-height: 48px; padding: 12px 40px 12px 10px; font-size: 1rem; }
+  .val-how-card p, .val-how-card .val-how-tip { grid-column: 1 / -1; }
+  .gcard-info { padding: 14px; }
+  .gcard-info p { font-size: .85rem; line-height: 1.45; }
+  .grade-parts li { font-size: .85rem; line-height: 1.45; }
+  .val-bench-card { gap: 6px; padding: 10px; }
+  .val-bench-img { height: 150px; }
 }
 
 /* ---------- Värdering: tryck på ett kort, sedan "Värdera detta kort" ---------- */
@@ -3790,6 +3857,7 @@ button.zm-price:hover{background:#1f2132}
   .ggrid[data-view=list] .gbody{padding:8px 10px;gap:3px}
   .ggrid[data-view=list] .gcard h3{font-size:.95rem}
   .ggrid[data-view=list] .gtoggle{min-height:36px;padding:8px 0 0;margin-top:2px}
+  .ggrid[data-view=list] .gfoot .gtoggle{padding:0;margin:0}
   .gupdated{font-size:.72rem}
 
   /* Filtren: rullistan fyller hela knappen, så att man inte måste träffa själva texten. */
@@ -3918,7 +3986,9 @@ button.zm-price:hover{background:#1f2132}
   .drops > .drop,.drops > .mdrop{flex:0 0 auto;min-height:0;height:34px;border:1px solid var(--line);border-radius:999px;background:var(--card);box-shadow:0 1px 2px rgba(27,27,47,.05)}
   .drops > .drop{padding:0 8px 0 12px;gap:4px}
   .drops > .drop > span,.drops .mdrop-btn > span{font-size:.74rem;font-weight:600;color:var(--muted)}
-  .drops .drop select{min-height:0;height:100%;font-size:.8rem;font-weight:600;color:var(--ink);padding:0 16px 0 0;max-width:96px;background-position:right 2px center}
+  .drops .drop select{min-height:0;height:100%;font-size:.8rem!important;font-weight:600;color:var(--ink);padding:0 16px 0 0;max-width:96px;background-position:right 2px center}
+  .drops .mdrop-btn b{font-size:.8rem}
+  .drops .drop select{height:auto;line-height:20px}
   .drops .mdrop-btn{height:34px;padding:0 10px 0 12px;gap:4px;font-size:.8rem}
   .drops .mdrop-btn b{font-size:.8rem;font-weight:600;color:var(--ink);max-width:86px}
   .drops .mdrop-btn::after{width:5px;height:5px;margin-left:0}

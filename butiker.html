@@ -55,7 +55,8 @@
         <button data-kind="" aria-pressed="true">Alla</button>
         <button data-kind="ny" aria-pressed="false">Nytt</button>
         <button data-kind="tillbaka" aria-pressed="false">Tillbaka i lager</button>
-        <button data-kind="prissankt" aria-pressed="false">Prissänkt</button>
+        <button data-kind="prissankt" aria-pressed="false">Senast prissänkt</button>
+        <button data-kind="mest" aria-pressed="false">Mest prissänkt</button>
         <button data-kind="forbestallning" aria-pressed="false">Förbeställning</button>
       </div>
       <label class="check mine"><input id="only-mine" type="checkbox"> Bara mitt urval <a href="#notiser" data-goto="notiser">Ändra urval</a></label>
@@ -97,8 +98,8 @@
               <option value="recent">Senast ändrad</option><option value="stores">Flest butiker</option><option value="price-asc">Lägst pris</option>
               <option value="price-desc">Högst pris</option><option value="name">Namn</option></select></label>
             <div class="viewtoggle" id="view" role="group" aria-label="Visning">
-              <button type="button" data-v="list" aria-pressed="false">Lista</button>
-              <button type="button" data-v="grid" aria-pressed="true">Kort</button>
+              <button type="button" data-v="list" aria-pressed="false" aria-label="Lista" title="Lista"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M8 6h13M8 12h13M8 18h13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="3.5" cy="6" r="1.5" fill="currentColor"/><circle cx="3.5" cy="12" r="1.5" fill="currentColor"/><circle cx="3.5" cy="18" r="1.5" fill="currentColor"/></svg></button>
+              <button type="button" data-v="grid" aria-pressed="true" aria-label="Rutnät" title="Rutnät"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><rect x="3" y="3" width="7.5" height="7.5" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"/></svg></button>
             </div>
           </div>
         </div>

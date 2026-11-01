@@ -17,10 +17,16 @@ let products = [], events = [], stores = [], storeName = {}, storeLogos = {}, sh
 const load = (p) => fetch(p, { cache: "no-cache" }).then((r) => (r.ok ? r.json() : Promise.reject(r.status)));
 
 // ---------- Händelser ----------
+// Prissänkningen i procent, avrundad. 0 när det inte finns något tidigare pris att jämföra med.
+const dropPct = (e) => (e.kind === "prissankt" && e.from > e.price ? Math.round((1 - e.price / e.from) * 100) : 0);
 function renderEvents() {
   const mine = $("#only-mine").checked, prefs = getPrefs();
   const byId = new Map(products.map((p) => [p.id, p]));
-  const list = events.filter((e) => (!eventKind || e.kind === eventKind) && (!mine || matches(e, prefs, byId.get(e.product)))).slice(0, 120);
+  // "Mest prissänkt" visar prissänkningarna med störst sänkning i procent först.
+  const most = eventKind === "mest";
+  let list = events.filter((e) => (most ? dropPct(e) > 0 : !eventKind || e.kind === eventKind) && (!mine || matches(e, prefs, byId.get(e.product))));
+  if (most) list = list.sort((a, b) => dropPct(b) - dropPct(a));
+  list = list.slice(0, 120);
   $("#events").innerHTML = list.length ? list.map((e) => {
     const k = KIND[e.kind] || { label: e.kind, cls: "" };
     // Produktens bild med händelsen som etikett ovanpå. Produkter som försvunnit ur butiken saknar bild.
@@ -32,7 +38,7 @@ function renderEvents() {
         <a href="${esc(safeUrl(e.url))}" target="_blank" rel="noopener nofollow">${esc(e.title)}</a>
         <span class="muted">${esc(storeName[e.store] || e.store)} · ${ago(new Date(e.at).toISOString())}</span>
       </div>
-      <span class="ev-price">${e.kind === "prissankt" ? `<s>${kr(e.from)}</s> ` : ""}<b>${kr(e.price)}</b></span>
+      <span class="ev-price">${e.kind === "prissankt" ? `<s>${kr(e.from)}</s> ` : ""}<b>${kr(e.price)}</b>${dropPct(e) ? ` <span class="ev-pct">−${dropPct(e)} %</span>` : ""}</span>
     </li>`;
   }).join("") : '<li class="msg">Inga händelser ännu. De dyker upp när bevakningen ser något nytt, något som kommer tillbaka i lager eller ett sänkt pris.</li>';
 }
@@ -168,13 +174,15 @@ function groupCard(g, open) {
       ${g.last ? `<span class="gupdated">Senast uppdaterad ${ago(new Date(g.last).toISOString())}</span>` : ""}
       ${drop ? `<span class="gdrop"><span aria-hidden="true">▼</span> Prissänkt hos <b>${esc(storeName[drop.store] || drop.store)}</b> · ${when(drop.priceChange.at)} · var ${kr(drop.priceChange.from)}</span>` : ""}
       ${update ? `<span class="gpricechg">Prisuppdatering hos ${esc(storeName[update.store] || update.store)} · ${when(update.priceChange.at)} · ${kr(update.priceChange.from)} → ${kr(update.price)}</span>` : ""}
-      <div class="gchips">
-        ${g.inStock.length ? `<span class="c in">I lager ${new Set(g.inStock.map((m) => m.store)).size}</span>` : ""}
-        ${g.pre.length ? `<span class="c pre">Förbeställ ${new Set(g.pre.map((m) => m.store)).size}</span>` : ""}
-        ${g.out.length ? `<span class="c out">Slut ${new Set(g.out.map((m) => m.store)).size}</span>` : ""}
-        ${rel ? `<span class="c rel">Släpps ${rel}</span>` : ""}
+      <div class="gfoot">
+        <div class="gchips">
+          ${g.inStock.length ? `<span class="c in">I lager ${new Set(g.inStock.map((m) => m.store)).size}</span>` : ""}
+          ${g.pre.length ? `<span class="c pre">Förbeställ ${new Set(g.pre.map((m) => m.store)).size}</span>` : ""}
+          ${g.out.length ? `<span class="c out">Slut ${new Set(g.out.map((m) => m.store)).size}</span>` : ""}
+          ${rel ? `<span class="c rel">Släpps ${rel}</span>` : ""}
+        </div>
+        <button type="button" class="gtoggle" aria-expanded="${!!open}">${open ? "Stäng jämförelsen" : `${g.stores} ${g.stores === 1 ? "butik" : "butiker"}`}<span class="garrow" aria-hidden="true">${open ? "▲" : "▼"}</span></button>
       </div>
-      <button type="button" class="gtoggle" aria-expanded="${!!open}">${open ? "Stäng jämförelsen" : `Jämför ${g.stores} ${g.stores === 1 ? "butik" : "butiker"}`}<span class="garrow" aria-hidden="true">${open ? "▲" : "▼"}</span></button>
       <div class="gdetail"${open ? "" : " hidden"}>${open ? `${historyBox(g)}<ul class="srows">${storeRows(g)}</ul>
         <button type="button" class="gtoggle gclose" aria-expanded="true"><span class="garrow" aria-hidden="true">▲</span>Stäng jämförelsen</button>` : ""}</div>
     </div>

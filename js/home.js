@@ -124,7 +124,6 @@ async function nextDrop() {
           <div><b>${String(d).padStart(2, "0")}</b><small>dagar kvar</small></div>
         </div>
         <div><h3>${esc(r.name)}</h3><p>${fmt(r.date)}${r.type ? ` · ${esc(r.type)}` : ""}${r.note ? ` · ${esc(r.note)}` : ""}</p></div>
-        <a class="btn primary small" href="slapp.html">Alla släpp</a>
       </div>`;
     }).join("");
   } catch { el.innerHTML = '<div class="msg">Kunde inte läsa släppkalendern.</div>'; }
