@@ -1,6 +1,20 @@
 {
- "updated": 1793557959576,
+ "updated": 1793558879605,
  "events": [
+  {
+   "at": 1793558059356,
+   "store": "spelparken",
+   "product": "spelparken:15590690193783",
+   "group": "unbroken-bonds|booster-box|en|",
+   "title": "Unbroken Bonds Booster Pack (Från Booster Box)",
+   "url": "https://spelparken.se/products/unbroken-bonds-booster-pack-fran-booster-box",
+   "image": "https://cdn.shopify.com/s/files/1/0948/1876/3127/files/OIP_50b66e2e-80b2-46be-a746-608abc7597f9.webp?v=1793557715",
+   "price": 1199,
+   "type": "Booster Box",
+   "set": "Unbroken Bonds",
+   "lang": "en",
+   "kind": "ny"
+  },
   {
    "at": 1793557167201,
    "store": "spelparken",
@@ -6902,19 +6916,6 @@
    "type": "Booster Pack",
    "set": null,
    "lang": "ja",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1792776693492,
-   "store": "spelparken",
-   "product": "spelparken:15149815660919",
-   "group": "151|booster-pack|en|",
-   "title": "151 Booster Pack",
-   "url": "https://spelparken.se/products/engelska-151-oppnas-live",
-   "price": 389,
-   "type": "Booster Pack",
-   "set": "151",
-   "lang": "en",
    "kind": "tillbaka"
   }
  ]
