@@ -1,6 +1,20 @@
 {
- "updated": 1793529707208,
+ "updated": 1793530627226,
  "events": [
+  {
+   "at": 1793529821148,
+   "store": "westcoast-vault",
+   "product": "westcoast-vault:15932207923540",
+   "group": "paldea-evolved|booster-pack|en|",
+   "title": "Pokémon TCG: Paldea Evolved Booster Pack",
+   "url": "https://westcoastvault.se/products/pokemon-tcg-paldea-evolved-booster-pack-kopia-1",
+   "image": "https://cdn.shopify.com/s/files/1/1042/6177/9796/files/E0FEAEF4-7B3B-46C9-9AE1-427C60398901.png?v=1785931628",
+   "price": 139,
+   "type": "Booster Pack",
+   "set": "Paldea Evolved",
+   "lang": "en",
+   "kind": "ny"
+  },
   {
    "at": 1793526495644,
    "store": "samlargrottan",
@@ -6891,19 +6905,6 @@
    "set": "Evolving Skies",
    "lang": "en",
    "kind": "ny"
-  },
-  {
-   "at": 1792763081293,
-   "store": "toyspace",
-   "product": "toyspace:https://toyspace.se/pokemon-tcg-30-arsfirande-bundle-pok10451-101",
-   "group": "30th-celebration|booster-bundle|en|",
-   "title": "Pokémon TCG 30th Celebration Booster Bundle",
-   "url": "https://toyspace.se/pokemon-tcg-30-arsfirande-bundle-pok10451-101",
-   "price": 920,
-   "type": "Booster Bundle",
-   "set": "30th Celebration",
-   "lang": "en",
-   "kind": "tillbaka"
   }
  ]
 }
