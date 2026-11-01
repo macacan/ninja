@@ -1,6 +1,20 @@
 {
- "updated": 1793568999829,
+ "updated": 1793569919850,
  "events": [
+  {
+   "at": 1793569743656,
+   "store": "pokemurre",
+   "product": "pokemurre:11284026917202",
+   "group": "x|booster-box|zh||exclusive-forbokning-gem-s7-vol",
+   "title": "FÖRBOKNING! Pokemon Exclusive Gem Pack Vol 7 CBB7C Sealed Booster Box (Kinesisk)",
+   "url": "https://pokemurre.se/products/forbokning-pokemon-exclusive-gem-pack-vol-7-cbb7c-sealed-booster-box-kinesisk",
+   "image": null,
+   "price": 579,
+   "type": "Booster Box",
+   "set": null,
+   "lang": "zh",
+   "kind": "ny"
+  },
   {
    "at": 1793567949101,
    "store": "spelparken",
@@ -6904,19 +6918,6 @@
    "title": "Pokemon Mega: Inferno X Booster (Japansk)",
    "url": "https://speltrollet.se/products/pokemon-pokemon-mega-inferno-x-booster-japansk",
    "price": 79,
-   "type": "Booster Pack",
-   "set": null,
-   "lang": "ja",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1792783456106,
-   "store": "speltrollet",
-   "product": "speltrollet:15122660524358",
-   "group": "x|booster-pack|ja||flash-future",
-   "title": "Pokemon Future Flash Booster (sv4M)(Japansk)",
-   "url": "https://speltrollet.se/products/pokemon-scarlet-violet-future-flash-booster-japansk-sv4m",
-   "price": 39,
    "type": "Booster Pack",
    "set": null,
    "lang": "ja",
