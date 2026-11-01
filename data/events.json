@@ -1,6 +1,21 @@
 {
- "updated": 1793540794153,
+ "updated": 1793541714173,
  "events": [
+  {
+   "at": 1793541034768,
+   "store": "miniature-metropolis",
+   "product": "miniature-metropolis:10447962145105",
+   "group": "rb|origins|booster-box|en|",
+   "title": "RIFTBOUND: ORIGINS BOOSTER DISPLAY",
+   "url": "https://miniaturemetropolis.se/products/riftbound-origins-booster-display",
+   "image": "https://cdn.shopify.com/s/files/1/0958/6832/2129/files/rbd.png?v=1761894537",
+   "price": 2299,
+   "type": "Booster Box",
+   "set": "Origins",
+   "lang": "en",
+   "game": "rb",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793540611254,
    "store": "samlargrottan",
@@ -6895,19 +6910,6 @@
    "price": 1599,
    "type": "Tin",
    "set": null,
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1792768519741,
-   "store": "tcgaddan",
-   "product": "tcgaddan:16057925763404",
-   "group": "crown-zenith|booster-pack|en|",
-   "title": "Crown Zenith Booster Pack",
-   "url": "https://tcgaddan.se/products/crown-zenith-booster-pack",
-   "price": 379,
-   "type": "Booster Pack",
-   "set": "Crown Zenith",
    "lang": "en",
    "kind": "tillbaka"
   }
