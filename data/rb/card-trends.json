@@ -1,5 +1,5 @@
 {
- "updated": 1793445370433,
+ "updated": 1793534759218,
  "sets": [
   "Radiance",
   "Vendetta",
@@ -59,7 +59,7 @@
    "might": 12,
    "tags": "The Void",
    "image": "https://cmsassets.rgpub.io/sanity/images/dsfx7636/game_data_live/7e8d207a8057b97f9059ea6025a16e59229dc54d-744x1039.png?accountingTag=RB",
-   "sek": 18603.73,
+   "sek": 18878.09,
    "low": 17687.32,
    "foil": null,
    "setId": "24560"
@@ -117,7 +117,7 @@
    "tags": "Ziggs",
    "image": "https://cmsassets.rgpub.io/sanity/images/dsfx7636/game_data_live/69899f4d5e05ff0a060b9f38894cd77f9e17d195-744x1039.png?accountingTag=RB",
    "sek": 13015.07,
-   "low": 8548.87,
+   "low": 7369.8,
    "foil": null,
    "setId": "24819"
   },
@@ -135,8 +135,8 @@
    "might": null,
    "tags": "Riven",
    "image": "https://cmsassets.rgpub.io/sanity/images/dsfx7636/game_data_live/342befcaab98642a2348bd2f6fdb92c68563b6d7-744x1039.png?accountingTag=RB",
-   "sek": 12656.01,
-   "low": 13756.96,
+   "sek": 12602.65,
+   "low": 12283,
    "foil": null,
    "setId": "24819"
   },
@@ -174,7 +174,7 @@
    "tags": "Demacia, Vayne",
    "image": "https://cmsassets.rgpub.io/sanity/images/dsfx7636/game_data_live/75f9eac062e43105ee602b6050fe230fb8d2dce5-744x1039.png?accountingTag=RB",
    "sek": 12338.62,
-   "low": 14985.26,
+   "low": 14985.06,
    "foil": null,
    "setId": "24519"
   },
@@ -193,7 +193,7 @@
    "tags": "Kennen",
    "image": "https://cmsassets.rgpub.io/sanity/images/dsfx7636/game_data_live/853681913bcd2a2e2b42217e290b530b72518142-744x1039.png?accountingTag=RB",
    "sek": 11322.17,
-   "low": 8609.2,
+   "low": 7959.38,
    "foil": null,
    "setId": "24698"
   },
@@ -212,7 +212,7 @@
    "tags": "Jayce",
    "image": "https://cmsassets.rgpub.io/sanity/images/dsfx7636/game_data_live/3092eec0739ac28d36e22c3ee005feb75980d001-744x1039.png?accountingTag=RB",
    "sek": 11271.37,
-   "low": 9728.14,
+   "low": 7861.12,
    "foil": null,
    "setId": "24698"
   },
@@ -231,7 +231,7 @@
    "tags": "Seraphine",
    "image": "https://cmsassets.rgpub.io/sanity/images/dsfx7636/game_data_live/399262205b15aa3b6306eb1d80a308791dcbe2ca-744x1039.png?accountingTag=RB",
    "sek": 10916.93,
-   "low": 9806.85,
+   "low": 9335.08,
    "foil": null,
    "setId": "24819"
   },
@@ -249,8 +249,8 @@
    "might": null,
    "tags": "Mel",
    "image": "https://cmsassets.rgpub.io/sanity/images/dsfx7636/game_data_live/174a22326c894454cb5878f4ce3603d43f9e599f-744x1040.png?accountingTag=RB",
-   "sek": 10872.32,
-   "low": 5902.62,
+   "sek": 10719.62,
+   "low": 5659.91,
    "foil": null,
    "setId": "24698"
   },
@@ -269,7 +269,7 @@
    "tags": "Mount Targon, Aphelios, Aphelios",
    "image": "https://cmsassets.rgpub.io/sanity/images/dsfx7636/game_data_live/d1ffd27d5777e08178ab9a9aad0943b8d72af98b-744x1039.png?accountingTag=RB",
    "sek": 9760.07,
-   "low": 6063.09,
+   "low": 6028.5,
    "foil": null,
    "setId": "24819"
   },
@@ -288,7 +288,7 @@
    "tags": "LeBlanc",
    "image": "https://cmsassets.rgpub.io/sanity/images/dsfx7636/game_data_live/78a3153e914b2124cdc918f3134a8087b342caf7-744x1039.png?accountingTag=RB",
    "sek": 9720.67,
-   "low": 9089.42,
+   "low": 9084.51,
    "foil": null,
    "setId": "24560"
   },
@@ -307,7 +307,7 @@
    "tags": "Mount Targon, Soraka",
    "image": "https://cmsassets.rgpub.io/sanity/images/dsfx7636/game_data_live/956c7e0ae3d68327c5e822321841c5bf3c96269a-744x1039.png?accountingTag=RB",
    "sek": 8819.49,
-   "low": 8598,
+   "low": 8352.44,
    "foil": null,
    "setId": "24519"
   },
@@ -326,7 +326,7 @@
    "tags": "Mordekaiser",
    "image": "https://cmsassets.rgpub.io/sanity/images/dsfx7636/game_data_live/90ec3319518771820909592eee963d34dab037bc-744x1039.png?accountingTag=RB",
    "sek": 8205.04,
-   "low": 6239.76,
+   "low": 6229.94,
    "foil": null,
    "setId": "24819"
   },
@@ -344,8 +344,8 @@
    "might": null,
    "tags": "Evelynn",
    "image": "https://cmsassets.rgpub.io/sanity/images/dsfx7636/game_data_live/ca217b57d0e8d2e04e7a35105deaa6be17e854f0-744x1039.png?accountingTag=RB",
-   "sek": 7762.86,
-   "low": 10809.04,
+   "sek": 7654.77,
+   "low": 10536.85,
    "foil": null,
    "setId": "24819"
   },
@@ -364,7 +364,7 @@
    "tags": "Bandle City, Teemo, Yordle",
    "image": "https://cmsassets.rgpub.io/sanity/images/dsfx7636/game_data_live/5e31f0ea037604aa531d84c1d56d26f255210b7c-744x1039.png?accountingTag=RB",
    "sek": 7616.84,
-   "low": 10710.68,
+   "low": 9334.98,
    "foil": null,
    "setId": "24519"
   },
@@ -459,7 +459,7 @@
    "tags": "Jhin",
    "image": "https://cmsassets.rgpub.io/sanity/images/dsfx7636/game_data_live/94fb0a4944da2427ce615dd2c311a2c9bc781fd2-744x1039.png?accountingTag=RB",
    "sek": 6063.77,
-   "low": 5895.74,
+   "low": 5404.42,
    "foil": null,
    "setId": "24560"
   }

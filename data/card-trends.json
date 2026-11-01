@@ -1,5 +1,5 @@
 {
- "updated": 1793445275437,
+ "updated": 1793534526321,
  "sets": [
   "30th Classic Collection",
   "30th Celebration",
@@ -40,34 +40,10 @@
    "set": "Ascended Heroes",
    "localId": "290",
    "rarity": "Special illustration rare",
-   "eur": 464.47,
+   "eur": 468.48,
    "avg7": 441.83,
    "avg30": 414.73,
    "change": 6.5
-  },
-  {
-   "id": "me02.5-294",
-   "name": "Mega Charizard Y ex",
-   "image": "https://assets.tcgdex.net/en/me/me02.5/294",
-   "set": "Ascended Heroes",
-   "localId": "294",
-   "rarity": "Mega Hyper Rare",
-   "eur": 201.19,
-   "avg7": 258.35,
-   "avg30": 405.27,
-   "change": -36.3
-  },
-  {
-   "id": "me02.5-281",
-   "name": "Team Rocket's Mewtwo ex",
-   "image": "https://assets.tcgdex.net/en/me/me02.5/281",
-   "set": "Ascended Heroes",
-   "localId": "281",
-   "rarity": "Special illustration rare",
-   "eur": 200.23,
-   "avg7": 226.9,
-   "avg30": 240.57,
-   "change": -5.7
   },
   {
    "id": "me02.5-277",
@@ -76,10 +52,34 @@
    "set": "Ascended Heroes",
    "localId": "277",
    "rarity": "Special illustration rare",
-   "eur": 188.81,
+   "eur": 233.48,
    "avg7": 258.99,
    "avg30": 309.11,
    "change": -16.2
+  },
+  {
+   "id": "me02.5-281",
+   "name": "Team Rocket's Mewtwo ex",
+   "image": "https://assets.tcgdex.net/en/me/me02.5/281",
+   "set": "Ascended Heroes",
+   "localId": "281",
+   "rarity": "Special illustration rare",
+   "eur": 208.09,
+   "avg7": 226.9,
+   "avg30": 240.57,
+   "change": -5.7
+  },
+  {
+   "id": "me02.5-294",
+   "name": "Mega Charizard Y ex",
+   "image": "https://assets.tcgdex.net/en/me/me02.5/294",
+   "set": "Ascended Heroes",
+   "localId": "294",
+   "rarity": "Mega Hyper Rare",
+   "eur": 186.51,
+   "avg7": 258.35,
+   "avg30": 405.27,
+   "change": -36.3
   },
   {
    "id": "me05-116",
@@ -88,7 +88,7 @@
    "set": "Pitch Black",
    "localId": "116",
    "rarity": "Special illustration rare",
-   "eur": 173.07,
+   "eur": 171.74,
    "avg7": 176.69,
    "avg30": 189.53,
    "change": -6.8
@@ -100,7 +100,7 @@
    "set": "Ascended Heroes",
    "localId": "295",
    "rarity": "Mega Hyper Rare",
-   "eur": 154.98,
+   "eur": 141.22,
    "avg7": 215.65,
    "avg30": 236.05,
    "change": -8.6
@@ -112,7 +112,7 @@
    "set": "Pitch Black",
    "localId": "120",
    "rarity": "Mega Hyper Rare",
-   "eur": 129.16,
+   "eur": 129.4,
    "avg7": 133.58,
    "avg30": 133.15,
    "change": 0.3
@@ -124,7 +124,7 @@
    "set": "Chaos Rising",
    "localId": "122",
    "rarity": "Mega Hyper Rare",
-   "eur": 119.13,
+   "eur": 119.16,
    "avg7": 122.38,
    "avg30": 121.52,
    "change": 0.7
@@ -136,7 +136,7 @@
    "set": "Chaos Rising",
    "localId": "116",
    "rarity": "Special illustration rare",
-   "eur": 116,
+   "eur": 117.78,
    "avg7": 117.26,
    "avg30": 135.85,
    "change": -13.7
@@ -148,7 +148,7 @@
    "set": "Ascended Heroes",
    "localId": "280",
    "rarity": "Special illustration rare",
-   "eur": 101.42,
+   "eur": 106.46,
    "avg7": 128.42,
    "avg30": 137.64,
    "change": -6.7
@@ -160,7 +160,7 @@
    "set": "Ascended Heroes",
    "localId": "286",
    "rarity": "Special illustration rare",
-   "eur": 94.23,
+   "eur": 92.37,
    "avg7": 107.01,
    "avg30": 118.77,
    "change": -9.9
@@ -172,7 +172,7 @@
    "set": "Perfect Order",
    "localId": "121",
    "rarity": "Special illustration rare",
-   "eur": 88.79,
+   "eur": 86.4,
    "avg7": 88,
    "avg30": 77.92,
    "change": 12.9
@@ -184,7 +184,7 @@
    "set": "Perfect Order",
    "localId": "124",
    "rarity": "Mega Hyper Rare",
-   "eur": 84.51,
+   "eur": 85.11,
    "avg7": 88.11,
    "avg30": 91.64,
    "change": -3.9
@@ -196,7 +196,7 @@
    "set": "Ascended Heroes",
    "localId": "274",
    "rarity": "Special illustration rare",
-   "eur": 61.55,
+   "eur": 74.24,
    "avg7": 85.13,
    "avg30": 95.57,
    "change": -10.9
@@ -208,10 +208,22 @@
    "set": "Ascended Heroes",
    "localId": "289",
    "rarity": "Special illustration rare",
-   "eur": 59.88,
+   "eur": 58.33,
    "avg7": 64.43,
    "avg30": 75.67,
    "change": -14.9
+  },
+  {
+   "id": "me02.5-226",
+   "name": "Psyduck",
+   "image": "https://assets.tcgdex.net/en/me/me02.5/226",
+   "set": "Ascended Heroes",
+   "localId": "226",
+   "rarity": "Illustration rare",
+   "eur": 54.15,
+   "avg7": 57.09,
+   "avg30": 59.27,
+   "change": -3.7
   },
   {
    "id": "me05-117",
@@ -220,7 +232,7 @@
    "set": "Pitch Black",
    "localId": "117",
    "rarity": "Special illustration rare",
-   "eur": 51.65,
+   "eur": 50.1,
    "avg7": 53.39,
    "avg30": 55.08,
    "change": -3.1
@@ -232,7 +244,7 @@
    "set": "Ascended Heroes",
    "localId": "272",
    "rarity": "Special illustration rare",
-   "eur": 50.92,
+   "eur": 49.91,
    "avg7": 60.94,
    "avg30": 71.27,
    "change": -14.5
@@ -244,22 +256,10 @@
    "set": "Ascended Heroes",
    "localId": "288",
    "rarity": "Special illustration rare",
-   "eur": 46.84,
+   "eur": 45.79,
    "avg7": 44.16,
    "avg30": 44.9,
    "change": -1.6
-  },
-  {
-   "id": "me02.5-275",
-   "name": "Mega Froslass ex",
-   "image": "https://assets.tcgdex.net/en/me/me02.5/275",
-   "set": "Ascended Heroes",
-   "localId": "275",
-   "rarity": "Special illustration rare",
-   "eur": 45.5,
-   "avg7": 52.93,
-   "avg30": 54.72,
-   "change": -3.3
   },
   {
    "id": "me02.5-287",
@@ -268,34 +268,34 @@
    "set": "Ascended Heroes",
    "localId": "287",
    "rarity": "Special illustration rare",
-   "eur": 45.46,
+   "eur": 44.32,
    "avg7": 46.27,
    "avg30": 40.79,
    "change": 13.4
   },
   {
-   "id": "me02.5-226",
-   "name": "Psyduck",
-   "image": "https://assets.tcgdex.net/en/me/me02.5/226",
+   "id": "me02.5-275",
+   "name": "Mega Froslass ex",
+   "image": "https://assets.tcgdex.net/en/me/me02.5/275",
    "set": "Ascended Heroes",
-   "localId": "226",
-   "rarity": "Illustration rare",
-   "eur": 42.88,
-   "avg7": 57.09,
-   "avg30": 59.27,
-   "change": -3.7
+   "localId": "275",
+   "rarity": "Special illustration rare",
+   "eur": 42.74,
+   "avg7": 52.93,
+   "avg30": 54.72,
+   "change": -3.3
   },
   {
-   "id": "me02.5-273",
-   "name": "Mega Emboar ex",
-   "image": "https://assets.tcgdex.net/en/me/me02.5/273",
-   "set": "Ascended Heroes",
-   "localId": "273",
+   "id": "me05-114",
+   "name": "Mega Zeraora ex",
+   "image": "https://assets.tcgdex.net/en/me/me05/114",
+   "set": "Pitch Black",
+   "localId": "114",
    "rarity": "Special illustration rare",
-   "eur": 38.29,
-   "avg7": 40.27,
-   "avg30": 47.36,
-   "change": -15
+   "eur": 39.91,
+   "avg7": 35.93,
+   "avg30": 42.24,
+   "change": -14.9
   }
  ],
  "rising": [
@@ -306,7 +306,7 @@
    "set": "Ascended Heroes",
    "localId": "227",
    "rarity": "Illustration rare",
-   "eur": 4.42,
+   "eur": 4.33,
    "avg7": 4.89,
    "avg30": 4.23,
    "change": 15.6
@@ -318,7 +318,7 @@
    "set": "Ascended Heroes",
    "localId": "287",
    "rarity": "Special illustration rare",
-   "eur": 45.46,
+   "eur": 44.32,
    "avg7": 46.27,
    "avg30": 40.79,
    "change": 13.4
@@ -330,7 +330,7 @@
    "set": "Perfect Order",
    "localId": "121",
    "rarity": "Special illustration rare",
-   "eur": 88.79,
+   "eur": 86.4,
    "avg7": 88,
    "avg30": 77.92,
    "change": 12.9
@@ -342,7 +342,7 @@
    "set": "Ascended Heroes",
    "localId": "219",
    "rarity": "Illustration rare",
-   "eur": 4.94,
+   "eur": 4.97,
    "avg7": 5.47,
    "avg30": 4.9,
    "change": 11.6
@@ -354,7 +354,7 @@
    "set": "Pitch Black",
    "localId": "105",
    "rarity": "Ultra Rare",
-   "eur": 3.96,
+   "eur": 3.95,
    "avg7": 3.73,
    "avg30": 3.42,
    "change": 9.1
@@ -366,7 +366,7 @@
    "set": "Pitch Black",
    "localId": "091",
    "rarity": "Illustration rare",
-   "eur": 2.79,
+   "eur": 2.8,
    "avg7": 2.86,
    "avg30": 2.64,
    "change": 8.3
@@ -378,7 +378,7 @@
    "set": "Ascended Heroes",
    "localId": "230",
    "rarity": "Illustration rare",
-   "eur": 2.38,
+   "eur": 2.4,
    "avg7": 2.5,
    "avg30": 2.31,
    "change": 8.2
@@ -390,7 +390,7 @@
    "set": "Perfect Order",
    "localId": "109",
    "rarity": "Ultra Rare",
-   "eur": 5.4,
+   "eur": 5.39,
    "avg7": 5.19,
    "avg30": 4.82,
    "change": 7.7
@@ -402,7 +402,7 @@
    "set": "Ascended Heroes",
    "localId": "290",
    "rarity": "Special illustration rare",
-   "eur": 464.47,
+   "eur": 468.48,
    "avg7": 441.83,
    "avg30": 414.73,
    "change": 6.5
@@ -414,7 +414,7 @@
    "set": "Perfect Order",
    "localId": "093",
    "rarity": "Illustration rare",
-   "eur": 5.51,
+   "eur": 5.4,
    "avg7": 6.06,
    "avg30": 5.75,
    "change": 5.4
@@ -426,7 +426,7 @@
    "set": "Chaos Rising",
    "localId": "091",
    "rarity": "Illustration rare",
-   "eur": 5.87,
+   "eur": 5.72,
    "avg7": 6.24,
    "avg30": 5.93,
    "change": 5.2
@@ -438,7 +438,7 @@
    "set": "Ascended Heroes",
    "localId": "245",
    "rarity": "Illustration rare",
-   "eur": 2.68,
+   "eur": 2.66,
    "avg7": 2.68,
    "avg30": 2.55,
    "change": 5.1
@@ -450,7 +450,7 @@
    "set": "Ascended Heroes",
    "localId": "257",
    "rarity": "Ultra Rare",
-   "eur": 2.38,
+   "eur": 2.34,
    "avg7": 2.32,
    "avg30": 2.21,
    "change": 5
@@ -462,7 +462,7 @@
    "set": "Ascended Heroes",
    "localId": "244",
    "rarity": "Illustration rare",
-   "eur": 6.21,
+   "eur": 6.44,
    "avg7": 6.76,
    "avg30": 6.45,
    "change": 4.8
@@ -474,7 +474,7 @@
    "set": "Chaos Rising",
    "localId": "109",
    "rarity": "Ultra Rare",
-   "eur": 2.13,
+   "eur": 2.16,
    "avg7": 2.38,
    "avg30": 2.28,
    "change": 4.4
@@ -486,7 +486,7 @@
    "set": "Ascended Heroes",
    "localId": "223",
    "rarity": "Illustration rare",
-   "eur": 3.96,
+   "eur": 3.84,
    "avg7": 4.1,
    "avg30": 3.93,
    "change": 4.3
@@ -498,7 +498,7 @@
    "set": "Perfect Order",
    "localId": "100",
    "rarity": "Ultra Rare",
-   "eur": 2.15,
+   "eur": 2.09,
    "avg7": 2.1,
    "avg30": 2.02,
    "change": 4
@@ -510,7 +510,7 @@
    "set": "Ascended Heroes",
    "localId": "293",
    "rarity": "Special illustration rare",
-   "eur": 15.47,
+   "eur": 14.4,
    "avg7": 15.39,
    "avg30": 14.8,
    "change": 4
@@ -522,7 +522,7 @@
    "set": "Ascended Heroes",
    "localId": "264",
    "rarity": "Ultra Rare",
-   "eur": 4.59,
+   "eur": 4.62,
    "avg7": 4.5,
    "avg30": 4.33,
    "change": 3.9
@@ -534,7 +534,7 @@
    "set": "Ascended Heroes",
    "localId": "236",
    "rarity": "Illustration rare",
-   "eur": 3.42,
+   "eur": 3.41,
    "avg7": 3.53,
    "avg30": 3.4,
    "change": 3.8
@@ -546,7 +546,7 @@
    "set": "Ascended Heroes",
    "localId": "057",
    "rarity": "Double rare",
-   "eur": 4.23,
+   "eur": 4.17,
    "avg7": 4.18,
    "avg30": 4.03,
    "change": 3.7
@@ -558,7 +558,7 @@
    "set": "Ascended Heroes",
    "localId": "256",
    "rarity": "Ultra Rare",
-   "eur": 4.32,
+   "eur": 4.29,
    "avg7": 4.4,
    "avg30": 4.25,
    "change": 3.5
@@ -570,7 +570,7 @@
    "set": "Pitch Black",
    "localId": "097",
    "rarity": "Ultra Rare",
-   "eur": 2.91,
+   "eur": 2.82,
    "avg7": 3.13,
    "avg30": 3.03,
    "change": 3.3
@@ -582,7 +582,7 @@
    "set": "Chaos Rising",
    "localId": "119",
    "rarity": "Special illustration rare",
-   "eur": 34.99,
+   "eur": 34.46,
    "avg7": 36.89,
    "avg30": 35.7,
    "change": 3.3
@@ -596,7 +596,7 @@
    "set": "Ascended Heroes",
    "localId": "294",
    "rarity": "Mega Hyper Rare",
-   "eur": 201.19,
+   "eur": 186.51,
    "avg7": 258.35,
    "avg30": 405.27,
    "change": -36.3
@@ -632,7 +632,7 @@
    "set": "Ascended Heroes",
    "localId": "283",
    "rarity": "Special illustration rare",
-   "eur": 23.5,
+   "eur": 22.88,
    "avg7": 30.97,
    "avg30": 38.23,
    "change": -19
@@ -644,7 +644,7 @@
    "set": "Pitch Black",
    "localId": "115",
    "rarity": "Special illustration rare",
-   "eur": 23.68,
+   "eur": 23.3,
    "avg7": 21.95,
    "avg30": 26.92,
    "change": -18.5
@@ -656,7 +656,7 @@
    "set": "Ascended Heroes",
    "localId": "277",
    "rarity": "Special illustration rare",
-   "eur": 188.81,
+   "eur": 233.48,
    "avg7": 258.99,
    "avg30": 309.11,
    "change": -16.2
@@ -668,7 +668,7 @@
    "set": "Ascended Heroes",
    "localId": "243",
    "rarity": "Illustration rare",
-   "eur": 4.68,
+   "eur": 5.33,
    "avg7": 5.52,
    "avg30": 6.56,
    "change": -15.9
@@ -680,7 +680,7 @@
    "set": "Ascended Heroes",
    "localId": "273",
    "rarity": "Special illustration rare",
-   "eur": 38.29,
+   "eur": 38.64,
    "avg7": 40.27,
    "avg30": 47.36,
    "change": -15
@@ -692,7 +692,7 @@
    "set": "Pitch Black",
    "localId": "114",
    "rarity": "Special illustration rare",
-   "eur": 36.01,
+   "eur": 39.91,
    "avg7": 35.93,
    "avg30": 42.24,
    "change": -14.9
@@ -704,7 +704,7 @@
    "set": "Ascended Heroes",
    "localId": "289",
    "rarity": "Special illustration rare",
-   "eur": 59.88,
+   "eur": 58.33,
    "avg7": 64.43,
    "avg30": 75.67,
    "change": -14.9
@@ -716,7 +716,7 @@
    "set": "Ascended Heroes",
    "localId": "272",
    "rarity": "Special illustration rare",
-   "eur": 50.92,
+   "eur": 49.91,
    "avg7": 60.94,
    "avg30": 71.27,
    "change": -14.5
@@ -728,7 +728,7 @@
    "set": "Ascended Heroes",
    "localId": "125",
    "rarity": "Double rare",
-   "eur": 2.04,
+   "eur": 2.25,
    "avg7": 2.1,
    "avg30": 2.45,
    "change": -14.3

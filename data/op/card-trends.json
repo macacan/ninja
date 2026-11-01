@@ -1,5 +1,5 @@
 {
- "updated": 1793445288138,
+ "updated": 1793534531555,
  "sets": [
   "The World's Strongest Warriors",
   "The Time of Battle",
@@ -250,26 +250,6 @@
    "setId": "EB-03"
   },
   {
-   "id": "OP-16/OP16-065_p2",
-   "name": "Sakazuki",
-   "variant": "Manga",
-   "set": "The Time of Battle",
-   "no": "OP16-065",
-   "rarity": "SR",
-   "color": "Purple",
-   "type": "Character",
-   "cost": 7,
-   "power": 8000,
-   "counter": 0,
-   "life": null,
-   "attr": "Special",
-   "sub": "Navy Admiral",
-   "image": "https://optcgapi.com/media/static/Card_Images/OP16-065_p2_5xfdpdu.jpg",
-   "sek": 10925.29,
-   "low": 7366.36,
-   "setId": "OP-16"
-  },
-  {
    "id": "OP-13/OP13-119_p2",
    "name": "Portgas.D.Ace",
    "variant": "Super Alternate Art",
@@ -290,12 +270,12 @@
    "setId": "OP-13"
   },
   {
-   "id": "OP-16/OP16-063_p2",
-   "name": "Kuzan",
+   "id": "OP-16/OP16-065_p2",
+   "name": "Sakazuki",
    "variant": "Manga",
    "set": "The Time of Battle",
-   "no": "OP16-063",
-   "rarity": "R",
+   "no": "OP16-065",
+   "rarity": "SR",
    "color": "Purple",
    "type": "Character",
    "cost": 7,
@@ -304,9 +284,9 @@
    "life": null,
    "attr": "Special",
    "sub": "Navy Admiral",
-   "image": "https://optcgapi.com/media/static/Card_Images/OP16-063_p2_t7zoqfj.jpg",
-   "sek": 10692.89,
-   "low": 6070.75,
+   "image": "https://optcgapi.com/media/static/Card_Images/OP16-065_p2_5xfdpdu.jpg",
+   "sek": 10709.01,
+   "low": 7366.36,
    "setId": "OP-16"
   },
   {
@@ -328,6 +308,26 @@
    "sek": 10582.25,
    "low": 8929.45,
    "setId": "OP-17"
+  },
+  {
+   "id": "OP-16/OP16-063_p2",
+   "name": "Kuzan",
+   "variant": "Manga",
+   "set": "The Time of Battle",
+   "no": "OP16-063",
+   "rarity": "R",
+   "color": "Purple",
+   "type": "Character",
+   "cost": 7,
+   "power": 8000,
+   "counter": 0,
+   "life": null,
+   "attr": "Special",
+   "sub": "Navy Admiral",
+   "image": "https://optcgapi.com/media/static/Card_Images/OP16-063_p2_t7zoqfj.jpg",
+   "sek": 10547.56,
+   "low": 6070.75,
+   "setId": "OP-16"
   },
   {
    "id": "OP-13/OP09-004_p6",
