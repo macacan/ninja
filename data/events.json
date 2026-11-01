@@ -1,6 +1,20 @@
 {
- "updated": 1793557039554,
+ "updated": 1793557959576,
  "events": [
+  {
+   "at": 1793557167201,
+   "store": "spelparken",
+   "product": "spelparken:15590033326455",
+   "group": "team-up|blister|en||3",
+   "title": "Team Up 3-Pack Blister – Boxbreak",
+   "url": "https://spelparken.se/products/team-up-3-pack-blister-boxbreak",
+   "image": "https://cdn.shopify.com/s/files/1/0948/1876/3127/files/P4865PC_699-16929_01.webp?v=1793389810",
+   "price": 6666,
+   "type": "Blister",
+   "set": "Team Up",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793548998269,
    "store": "tcgaddan",
@@ -6902,19 +6916,6 @@
    "set": "151",
    "lang": "en",
    "kind": "tillbaka"
-  },
-  {
-   "at": 1792772502155,
-   "store": "sweet-nerds",
-   "product": "sweet-nerds:https://sweetnerds.se/sv/products/pokemon-tcg-mega-30th-celebration-card-set-3-promo-cards-2-booster-packs-jp",
-   "group": "30th-celebration|booster-pack|ja|",
-   "title": "Pokémon TCG MEGA 30th Celebration Card Set - 3 Promo Cards + 2 Booster Packs (JP)",
-   "url": "https://sweetnerds.se/sv/products/pokemon-tcg-mega-30th-celebration-card-set-3-promo-cards-2-booster-packs-jp",
-   "price": 349,
-   "type": "Booster Pack",
-   "set": "30th Celebration",
-   "lang": "ja",
-   "kind": "ny"
   }
  ]
 }
