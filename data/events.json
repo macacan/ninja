@@ -1,6 +1,21 @@
 {
- "updated": 1793490444970,
+ "updated": 1793491404999,
  "events": [
+  {
+   "at": 1793490543192,
+   "store": "pokemurre",
+   "product": "pokemurre:11281790239058",
+   "group": "op|eb-05|booster-box|ja|",
+   "title": "One Piece EB05 Heroines Edition Vol.2 Booster Box Bandai (Japansk)",
+   "url": "https://pokemurre.se/products/one-piece-eb05-heroines-edition-vol-2-booster-box-bandai-japansk",
+   "image": null,
+   "price": 1449,
+   "type": "Booster Box",
+   "set": "EB-05",
+   "lang": "ja",
+   "game": "op",
+   "kind": "ny"
+  },
   {
    "at": 1793488737950,
    "store": "samlarverket",
@@ -6879,19 +6894,6 @@
    "group": "temporal-forces|blister|en||3",
    "title": "Pokemon Scarlet & Violet 5: Temporal Forces 3-Pack Blister Cleffa",
    "url": "https://www.shinycards.se/pokemon/scarlet-violet/temporal-forces/pokemon-scarlet-violet-5-temporal-forces-3-pack-blister-cleffa",
-   "price": 349,
-   "type": "Blister",
-   "set": "Temporal Forces",
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1792762617319,
-   "store": "shinycards",
-   "product": "shinycards:https://www.shinycards.se/pokemon/scarlet-violet/temporal-forces/pokemon-scarlet-violet-5-temporal-forces-3-pack-blister-cyclizar",
-   "group": "temporal-forces|blister|en||3",
-   "title": "Pokemon Scarlet & Violet 5: Temporal Forces 3-Pack Blister Cyclizar",
-   "url": "https://www.shinycards.se/pokemon/scarlet-violet/temporal-forces/pokemon-scarlet-violet-5-temporal-forces-3-pack-blister-cyclizar",
    "price": 349,
    "type": "Blister",
    "set": "Temporal Forces",
