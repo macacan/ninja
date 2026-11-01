@@ -1635,6 +1635,50 @@ async function tuneCamera(track, caps, d) {
   }
 }
 
+// Bakre kameran, helst en med blixt. Telefoner med flera bakre kameror (vidvinkel, ultravidvinkel, tele) ger ofta
+// en utan lampa när man bara ber om "environment", och då syns ingen blixtknapp. Saknar den valda kameran lampa
+// provas de andra bakre kamerorna en i taget. Kameran med lampa sparas. Att ingen har lampa sparas bara för
+// besöket, så att en kamera som var långsam att visa lampan får en ny chans nästa gång.
+const TORCH_CAM = "nl-torch-cam";
+const camera = (deviceId) => navigator.mediaDevices.getUserMedia({
+  video: { ...(deviceId ? { deviceId: { exact: deviceId } } : { facingMode: "environment" }), width: { ideal: 1920 }, height: { ideal: 1080 } },
+  audio: false,
+});
+// Vissa kameror visar lampan först en stund efter start, så frågan ställs om efter en kort paus
+const hasTorch = async (s) => {
+  const t = s.getVideoTracks()[0];
+  if (!t?.getCapabilities) return false;
+  if (t.getCapabilities().torch) return true;
+  await new Promise((r) => setTimeout(r, 300));
+  return !!t.getCapabilities().torch;
+};
+const remember = (v) => { try { v === "-" ? sessionStorage.setItem(TORCH_CAM, v) : localStorage.setItem(TORCH_CAM, v); } catch {} };
+async function openCamera() {
+  let saved = null;
+  try { saved = localStorage.getItem(TORCH_CAM) || sessionStorage.getItem(TORCH_CAM); } catch {}
+  if (saved && saved !== "-") {
+    try { return await camera(saved); } catch { remember(""); }
+  }
+  const first = await camera();
+  const track = first.getVideoTracks()[0];
+  if (saved === "-" || !track?.getCapabilities || (await hasTorch(first)) || track.getSettings().facingMode === "user") return first;
+  const firstId = track.getSettings().deviceId;
+  const others = (await navigator.mediaDevices.enumerateDevices().catch(() => []))
+    .filter((c) => c.kind === "videoinput" && c.deviceId && c.deviceId !== firstId && !/front|user|fram/i.test(c.label));
+  if (!others.length) { remember("-"); return first; }
+  // Många telefoner kan inte ha två kameror öppna samtidigt
+  first.getTracks().forEach((t) => t.stop());
+  for (const c of others) {
+    try {
+      const s = await camera(c.deviceId);
+      if ((await hasTorch(s)) && s.getVideoTracks()[0].getSettings().facingMode !== "user") { remember(c.deviceId); return s; }
+      s.getTracks().forEach((t) => t.stop());
+    } catch {}
+  }
+  remember("-");
+  return camera(firstId);
+}
+
 function setTorch(on) {
   torchActive = on;
   const btn = dialog?.querySelector(".scan-torch");
@@ -1679,14 +1723,9 @@ export async function openScanner(callback, partialCallback, { game = "pokemon" 
   loadArtIndex("rb").catch(() => {});
 
   try {
-    stream = await navigator.mediaDevices.getUserMedia({
-      video: {
-        facingMode: "environment",
-        width: { ideal: 1920 },
-        height: { ideal: 1080 },
-      },
-      audio: false,
-    });
+    stream = await openCamera();
+    // Stängdes skannern medan kameran letades fram ska den inte lysa kvar
+    if (!d.open) { stream.getTracks().forEach((t) => t.stop()); stream = null; return; }
 
     const video = d.querySelector("video");
     video.srcObject = stream;

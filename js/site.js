@@ -2,6 +2,7 @@
 import { icon, mountAllScenes } from "./pixel.js";
 import { mountBanners } from "./banners.js";
 import { mountCardAutocomplete } from "./card-autocomplete.js";
+import { loadGameNames, guessGame, gameSuggestions } from "./game-guess.js";
 import { langMark } from "./langmark.js";
 import "./tracker.js"; // besöksstatistik utan kakor, se js/tracker.js
 
@@ -62,7 +63,8 @@ function tabbar() {
     <div class="mm-sheet" role="dialog" aria-label="Meny">
       <button type="button" class="mm-close" aria-label="Stäng menyn">✕</button>
       <form class="mm-search" action="${searchTarget()}" role="search">
-        <input type="search" name="q" placeholder="Sök kort, t.ex. Pikachu" aria-label="Sök kort">
+        <input type="search" name="q" placeholder="Sök kort, t.ex. Pikachu, Luffy eller Jinx" aria-label="Sök kort: Pokémon, One Piece eller Riftbound">
+        <input type="hidden" name="game" value="pokemon">
       </form>
       <ul>${NAV.map(([href, label, only]) => `<li><a href="${href}"${href.split("#")[0] === here ? ' aria-current="page"' : ""}>${label}${only ? ` <span class="nav-only">(${only})</span>` : ""}</a></li>`).join("")}</ul>
       <div class="mm-foot">
@@ -129,8 +131,36 @@ export function mountChrome() {
   document.querySelectorAll("[data-icon]").forEach((el) => el.insertAdjacentHTML("afterbegin", icon(el.dataset.icon, +el.dataset.size || 28)));
   mountAllScenes();
   mountBanners();
-  const menuInput = $(".mm-search input");
-  if (menuInput) mountCardAutocomplete(menuInput, { formAction: searchTarget() });
+  // Menyns sökfält söker i alla tre spelen, som startsidans (js/game-guess.js). One Piece och Riftbound går alltid
+  // till Kortpriser, även från Värdering. Kortnamnen hämtas först när man börjar söka.
+  const menuForm = $(".mm-search"), menuInput = menuForm?.querySelector("input[name=q]");
+  if (menuInput) {
+    let names = null;
+    // Hann man skriva innan namnen kom visas förslagen om, nu för rätt spel.
+    const loadNames = () => loadGameNames().then((n) => {
+      if (!names && menuInput.value.trim()) setTimeout(() => menuInput.dispatchEvent(new Event("input", { bubbles: true })));
+      names = n;
+    });
+    for (const ev of ["focus", "input"]) menuInput.addEventListener(ev, () => names || loadNames(), { once: true });
+    const guess = () => guessGame(menuInput.value, names);
+    mountCardAutocomplete(menuInput, { source: (q) => { const g = guess(); return g === "pokemon" ? null : gameSuggestions(g, q); }, suggest: () => guess() === "pokemon" });
+    const target = () => {
+      const g = guess();
+      menuForm.elements.game.value = g;
+      menuForm.action = g === "pokemon" ? searchTarget() : "priser.html";
+    };
+    menuForm.addEventListener("submit", async (e) => {
+      // Hann namnen inte laddas väntar sökningen på dem, annars blir allt Pokémon.
+      if (!names) {
+        e.preventDefault();
+        await loadNames();
+        target();
+        menuForm.submit();
+        return;
+      }
+      target();
+    });
+  }
   // Startsidans sökruta (data-games) gäller alla spel och kopplas in av js/home.js.
   document.querySelectorAll(".search-row:not([data-games]) input[type=search]").forEach((inp) => {
     mountCardAutocomplete(inp, { formAction: "priser.html" });
