@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-01T19:18:40.459Z",
+ "updated": "2026-11-01T19:33:59.647Z",
  "articles": [
   {
    "title": "Pokemon TCG Reveals New Promo Cards A Year Before Release",
@@ -509,6 +509,12 @@
  ],
  "videos": [
   {
+   "id": "pGIxhUQvezQ",
+   "title": "TCG Day 2 | 2027 Pokémon Gdańsk Regional Championships",
+   "date": "2026-11-01T19:24:07.000Z",
+   "source": "Pokémon (officiell)"
+  },
+  {
    "id": "rWsK4plWGM4",
    "title": "TCG Day 1 | 2027 Pokémon Gdańsk Regional Championships",
    "date": "2026-10-31T19:26:17.000Z",
@@ -531,12 +537,6 @@
    "title": "Nathan Ginsburg Vs Caleb Rogerson - Pokémon TCG Top 4 | 2027 Puebla Regional Championships",
    "date": "2026-10-30T16:00:29.000Z",
    "source": "Play! Pokémon (officiell)"
-  },
-  {
-   "id": "pGIxhUQvezQ",
-   "title": "TCG Day 2 | 2027 Pokémon Gdańsk Regional Championships",
-   "date": "2026-10-26T23:58:59.000Z",
-   "source": "Pokémon (officiell)"
   }
  ]
 }
