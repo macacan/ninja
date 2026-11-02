@@ -1,6 +1,20 @@
 {
- "updated": 1793625589919,
+ "updated": 1793626509940,
  "events": [
+  {
+   "at": 1793626395547,
+   "store": "tcgaddan",
+   "product": "tcgaddan:15817449308492",
+   "group": "ascended-heroes|booster-pack|en|",
+   "title": "Ascended Heroes Booster Pack",
+   "url": "https://tcgaddan.se/products/ascended-heroes-booster-packs",
+   "image": "https://cdn.shopify.com/s/files/1/1037/7062/0236/files/AScendedheroes_915a09f2-6585-42c6-a995-5bd199a4b83e.webp?v=1781508800",
+   "price": 189,
+   "type": "Booster Pack",
+   "set": "Ascended Heroes",
+   "lang": "en",
+   "kind": "ny"
+  },
   {
    "at": 1793623739828,
    "store": "maxgaming",
@@ -6931,20 +6945,6 @@
    "set": "30th Celebration",
    "lang": "en",
    "kind": "tillbaka"
-  },
-  {
-   "at": 1792929481479,
-   "store": "samlarverket",
-   "product": "samlarverket:11177353183575",
-   "group": "ascended-heroes|booster-pack|en|",
-   "title": "Pokémon Ascended Heroes Booster Pack",
-   "url": "https://samlarverket.com/produkt/ascended-heroes-booster-pack",
-   "price": 159,
-   "type": "Booster Pack",
-   "set": "Ascended Heroes",
-   "lang": "en",
-   "kind": "prissankt",
-   "from": 169
   }
  ]
 }
