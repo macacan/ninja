@@ -1,6 +1,21 @@
 {
- "updated": 1793639971113,
+ "updated": 1793640891124,
  "events": [
+  {
+   "at": 1793640139049,
+   "store": "aquitaz",
+   "product": "aquitaz:10661714854234",
+   "group": "op|the-time-of-battle|booster-box|ja|",
+   "title": "One Piece: (OP 16) The Moment of Decisive Battle Booster Box (24 Pack) (JP)",
+   "url": "https://aquitaz.se/products/one-piece-op-16-the-moment-of-decisive-battle-booster-box-24-pack-jp",
+   "image": "https://cdn.shopify.com/s/files/1/0885/4087/3050/files/BlackBox_-_2026-03-18T180630.848.png?v=1773828411",
+   "price": 1399,
+   "type": "Booster Box",
+   "set": "The Time of Battle",
+   "lang": "ja",
+   "game": "op",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793639454364,
    "store": "rgb-kingz",
@@ -6943,19 +6958,6 @@
    "group": "x|premium-collection|ja|pc|center-hiroshim",
    "title": "Pokemon Center Hiroshim Special Collection Box (Japansk)",
    "url": "https://www.shinycards.se/pokemon/collection-box/pokemon-center-hiroshim-special-collection-box-japansk",
-   "price": 1599,
-   "type": "Premium Collection",
-   "set": null,
-   "lang": "ja",
-   "kind": "ny"
-  },
-  {
-   "at": 1793012876541,
-   "store": "shinycards",
-   "product": "shinycards:https://www.shinycards.se/pokemon/collection-box/pokemon-center-tohoku-special-collection-box-japansk",
-   "group": "x|premium-collection|ja|pc|center-tohoku",
-   "title": "Pokemon Center Tohoku Special Collection Box (Japansk)",
-   "url": "https://www.shinycards.se/pokemon/collection-box/pokemon-center-tohoku-special-collection-box-japansk",
    "price": 1599,
    "type": "Premium Collection",
    "set": null,
