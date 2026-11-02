@@ -1,6 +1,34 @@
 {
- "updated": 1793652523819,
+ "updated": 1793653443845,
  "events": [
+  {
+   "at": 1793652863323,
+   "store": "dragon-s-lair",
+   "product": "dragon-s-lair:15940312367452",
+   "group": "mega-evolution|blister|en||cl",
+   "title": "Pokémon TCG: Mega Evolution - Delta Reign Checklane Blister",
+   "url": "https://dragonslair.se/products/pokemon-tcg-mega-evolution-delta-reign-checklane-blister",
+   "image": "https://cdn.shopify.com/s/files/1/1015/8315/9644/files/Checklane.png?v=1793237136",
+   "price": 89,
+   "type": "Blister",
+   "set": "Mega Evolution",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1793652863323,
+   "store": "dragon-s-lair",
+   "product": "dragon-s-lair:15940303618396",
+   "group": "mega-evolution|blister|en||3",
+   "title": "Pokémon TCG: Mega Evolution - Delta Reign 3-pack Booster Blister",
+   "url": "https://dragonslair.se/products/pokemon-tcg-mega-evolution-delta-reign-3-pack-booster-blister",
+   "image": "https://cdn.shopify.com/s/files/1/1015/8315/9644/files/PokemonTCGMegaEvolution-DeltaReign3-packBoosterBlister.png?v=1793236574",
+   "price": 269,
+   "type": "Blister",
+   "set": "Mega Evolution",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793648260153,
    "store": "the-swedish-fish",
@@ -6998,32 +7026,6 @@
    "type": "Booster Pack",
    "set": null,
    "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1793096154126,
-   "store": "tcg-picks",
-   "product": "tcg-picks:16191448252741",
-   "group": "fusion-strike|booster-pack|en|",
-   "title": "Fusion Strike Booster Pack (Skicka hem)",
-   "url": "https://tcgpicks.com/produkt/fusion-strike-booster-pack?variant=59413792162117",
-   "price": 289,
-   "type": "Booster Pack",
-   "set": "Fusion Strike",
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1793096154126,
-   "store": "tcg-picks",
-   "product": "tcg-picks:16191447990597",
-   "group": "x|booster-pack|ja||dream",
-   "title": "Mega Dream ex Booster Pack (Skicka hem)",
-   "url": "https://tcgpicks.com/produkt/mega-dream-ex-booster-pack?variant=59413791736133",
-   "price": 129,
-   "type": "Booster Pack",
-   "set": null,
-   "lang": "ja",
    "kind": "ny"
   }
  ]
