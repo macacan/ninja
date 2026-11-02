@@ -1,6 +1,35 @@
 {
- "updated": 1793636291026,
+ "updated": 1793637211048,
  "events": [
+  {
+   "at": 1793636880928,
+   "store": "shinycards",
+   "product": "shinycards:https://www.shinycards.se/pokemon/booster-pack/pokemon-scarlet-violet-105-black-bolt-booster-pack-release-date-07182025-ej-i-lager-an",
+   "group": "black-bolt|booster-pack|en|",
+   "title": "Pokemon Scarlet & Violet 10.5: Black Bolt Booster Pack",
+   "url": "https://www.shinycards.se/pokemon/booster-pack/pokemon-scarlet-violet-105-black-bolt-booster-pack-release-date-07182025-ej-i-lager-an",
+   "image": "https://cdn.quickbutik.com/images/69946c/products/6821c70ab40de.png",
+   "price": 229,
+   "type": "Booster Pack",
+   "set": "Black Bolt",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1793636781221,
+   "store": "alphaspel",
+   "product": "alphaspel:https://alphaspel.se/3959-one-piece-card-game/351735-one-piece-card-game-st33-kuzan-blue-starter-deck",
+   "group": "op|starter-deck-33-blue-kuzan|deck|en|",
+   "title": "One Piece Card Game: ST33 Kuzan Blue Starter Deck",
+   "url": "https://alphaspel.se/3959-one-piece-card-game/351735-one-piece-card-game-st33-kuzan-blue-starter-deck",
+   "image": "https://alphaspel.se/media/products/84b8331f-ec72-44c6-ba05-ce1a514255df",
+   "price": 169,
+   "type": "Deck",
+   "set": "Starter Deck 33: BLUE Kuzan",
+   "lang": "en",
+   "game": "op",
+   "kind": "ny"
+  },
   {
    "at": 1793635900538,
    "store": "shinycards",
@@ -6929,33 +6958,6 @@
    "lang": "en",
    "kind": "prissankt",
    "from": 1990
-  },
-  {
-   "at": 1793006253007,
-   "store": "maxgaming",
-   "product": "maxgaming:https://maxgaming.se/sv/pokemon/pokemon-pikachu-special-box-pokemon-center-fukuoka",
-   "group": "x|collection-box|en|pc|center-fukuoka-pikachu",
-   "title": "Pokémon Pikachu Special Box Pokémon Center - Fukuoka",
-   "url": "https://maxgaming.se/sv/pokemon/pokemon-pikachu-special-box-pokemon-center-fukuoka",
-   "price": 1790,
-   "type": "Collection Box",
-   "set": null,
-   "lang": "en",
-   "kind": "prissankt",
-   "from": 1890
-  },
-  {
-   "at": 1793006216744,
-   "store": "webhallen",
-   "product": "webhallen:398048",
-   "group": "x|collection-box|en||zygarde",
-   "title": "Pokemon Mega Zygarde Premium EX Collection",
-   "url": "https://www.webhallen.com/se/product/398048-Pokemon-Mega-Zygarde-Premium-EX-Collection",
-   "price": 749,
-   "type": "Collection Box",
-   "set": null,
-   "lang": "en",
-   "kind": "ny"
   }
  ]
 }
