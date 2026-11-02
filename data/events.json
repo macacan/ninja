@@ -1,6 +1,20 @@
 {
- "updated": 1793627429956,
+ "updated": 1793628349982,
  "events": [
+  {
+   "at": 1793628027769,
+   "store": "rgb-kingz",
+   "product": "rgb-kingz:15888329703754",
+   "group": "ascended-heroes|booster-pack|en|",
+   "title": "Pokémon Mega Evolution: Ascended Heroes Booster Pack",
+   "url": "https://rgbkingz.com/products/pokemon-mega-evolution-ascended-heroes-booster-pack",
+   "image": "https://cdn.shopify.com/s/files/1/0782/8088/4554/files/pokemon-mega-evolution-ascended-heroes-booster-pack.webp?v=1783791048",
+   "price": 199,
+   "type": "Booster Pack",
+   "set": "Ascended Heroes",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793626395547,
    "store": "tcgaddan",
@@ -6932,19 +6946,6 @@
    "set": "Gym Challenge",
    "lang": "en",
    "kind": "ny"
-  },
-  {
-   "at": 1792933242419,
-   "store": "westcoast-vault",
-   "product": "westcoast-vault:15838405951828",
-   "group": "30th-celebration|booster-pack|en|",
-   "title": "Pokémon TCG: 30th celebration Booster Pack",
-   "url": "https://westcoastvault.se/products/pokemon-tcg-30th-celebration-booster-pack",
-   "price": 169,
-   "type": "Booster Pack",
-   "set": "30th Celebration",
-   "lang": "en",
-   "kind": "tillbaka"
   }
  ]
 }
