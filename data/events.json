@@ -1,6 +1,21 @@
 {
- "updated": 1793620989815,
+ "updated": 1793621909838,
  "events": [
+  {
+   "at": 1793621786739,
+   "store": "shinycards",
+   "product": "shinycards:https://www.shinycards.se/pokemon/collection-box/pokemon-center-fukuoka-special-collection-box-japansk",
+   "group": "x|premium-collection|ja|pc|center-fukuoka",
+   "title": "Pokemon Center Fukuoka Special Collection Box (Japansk)",
+   "url": "https://www.shinycards.se/pokemon/collection-box/pokemon-center-fukuoka-special-collection-box-japansk",
+   "image": "https://cdn.quickbutik.com/images/69946c/products/6adf2d395d41c.webp",
+   "price": 1399,
+   "type": "Premium Collection",
+   "set": null,
+   "lang": "ja",
+   "kind": "prissankt",
+   "from": 1499
+  },
   {
    "at": 1793620946452,
    "store": "spelparken",
@@ -6927,19 +6942,6 @@
    "set": "30th Celebration",
    "lang": "en",
    "kind": "tillbaka"
-  },
-  {
-   "at": 1792859040139,
-   "store": "pokemastersvault",
-   "product": "pokemastersvault:32941",
-   "group": "30th-celebration|deck|ja||espeon-set-umbreon",
-   "title": "Pokémon Mega 30th Celebration Premium Deck Set: Espeon & Umbreon Japanese",
-   "url": "https://pokemastersvault.com/product/pokemon-mega-30th-celebration-premium-deck-set-espeon-umbreon-japanese/",
-   "price": 2199,
-   "type": "Deck",
-   "set": "30th Celebration",
-   "lang": "ja",
-   "kind": "ny"
   }
  ]
 }
