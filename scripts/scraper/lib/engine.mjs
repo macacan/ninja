@@ -34,6 +34,9 @@ const MAX_EVENTS = 500;
 const GONE_DAYS = 14;
 // Samma produkt ger högst en prissänkningsnotis per vecka, om priset inte går under den förra sänkningen.
 const DROP_COOLDOWN = 7 * 864e5;
+// Butiker som skriver förbeställningen i produktnamnet ("Förhandsbokning: …", "… Förköp") och säljer den som en
+// vanlig vara. Köpbar är den en förbeställning, inte en vara i lager; slutsåld är den slut, vad namnet än säger.
+const PREORDER_TITLE = /f[öo]rbest[äa]ll|f[öo]rhandsbok|f[öo]rbokning|f[öo]rk[öo]p|pre-?order/i;
 
 export async function createEngine({ statuses } = {}) {
   // Butiker med status "forbjuden" eller "okand" hämtas aldrig, oavsett inställning.
@@ -140,8 +143,9 @@ export async function createEngine({ statuses } = {}) {
         const image = store.status === "inga-bilder" ? null : webUrl(r.image);
         const url = webUrl(r.url);
         if (!url) continue;
+        const preorder = !!r.preorder || (!!r.available && PREORDER_TITLE.test(r.title));
         list.push({ id: `${store.id}:${r.pid}`, store: store.id, title: r.title.trim(), url, price: Math.round(r.price * 100) / 100,
-          currency: r.currency, available: r.available, preorder: !!r.preorder, image, ...c, isNew: r.isNew });
+          currency: r.currency, available: !!r.available && !preorder, preorder, image, ...c, isNew: r.isNew });
       }
       // Butiken visade bara andra valutor (t.ex. efter var anropet kom ifrån): ett fel, inte en tom butik.
       if (!list.length && foreign.size) throw new Error(`butiken visade priser i ${[...foreign].join(", ")}, inte SEK`);

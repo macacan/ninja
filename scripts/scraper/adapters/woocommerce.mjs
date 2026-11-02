@@ -30,7 +30,8 @@ export async function woocommerce(host, ctx) {
           price: Number(p.prices?.price) / 10 ** minor,
           currency: p.prices?.currency_code || "SEK",
           available: !!p.is_in_stock,
-          preorder: !!p.is_on_backorder || /förbeställ|pre-?order/i.test(p.name || ""),
+          // Förbeställning i namnet sköter engine.mjs.
+          preorder: !!p.is_on_backorder,
           image: p.images?.[0]?.src || null,
           // Språket står ofta bara i kategorier, taggar eller adress.
           hint: [p.slug, ...(p.categories || []).map((c) => `${c.name} ${c.slug}`), ...(p.tags || []).map((t) => `${t.name} ${t.slug}`)].filter(Boolean).join(" | "),

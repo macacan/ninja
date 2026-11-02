@@ -3,6 +3,7 @@
 // som robots.txt tillåter. Det ger namn, pris, lager och släppdatum för 24 produkter per anrop.
 // Bara de kategorierna bevakas: gosedjur, spel och tillbehör i resten av butiken kommer aldrig med.
 const PER_PAGE = 24;
+const CLOSED = [9, 10, 12];
 
 // Webhallens egen adressform: /se/product/{id}-{namn med bindestreck}. Butiken hittar produkten på id:t.
 const slug = (s) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^A-Za-z0-9]+/g, "-").replace(/^-|-$/g, "");
@@ -44,6 +45,13 @@ export async function webhallen(host, ctx) {
     read.add(category);
   }
   if (!items.length) throw new Error("kategorin gav inga produkter");
+  // Kategorilistan säger inte om förbeställningen är öppen. Produktens statusCodes gör det, med samma koder
+  // som butikens egen köpknapp: 9 tillfälligt fullbokad, 10 inte tillgänglig än, 12 bara i butik.
+  for (const it of items) {
+    if (!it.preorder) continue;
+    const { product } = await host.get(`/api/product/${it.pid}`, { type: "json" });
+    if ((product?.statusCodes || []).some((c) => CLOSED.includes(c))) it.preorder = false;
+  }
   // Minnet från den gamla sitemap-läsningen behövs inte längre.
   delete s.known; delete s.knownAt; delete s.pages; delete s.fresh;
   s.catalog = true;

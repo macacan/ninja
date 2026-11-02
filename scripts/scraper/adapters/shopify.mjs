@@ -18,14 +18,17 @@ function toItem(host, p, ctx) {
   const title = multi ? `${p.title} (${pick.title})` : p.title;
   const baseUrl = ctx.productUrl ? ctx.productUrl(p.handle) : `${host.origin}/products/${p.handle}`;
   const url = variants.length > 1 && pick.id ? `${baseUrl}${baseUrl.includes("?") ? "&" : "?"}variant=${pick.id}` : baseUrl;
+  // Taggen "preorder" gäller bara så länge det går att beställa: en slutsåld förbeställning är slut (Aquitaz
+  // behåller taggen). Förbeställning i namnet sköter engine.mjs.
+  const preorder = avail.length > 0 && /förbeställ|pre-?order/i.test((p.tags || []).join(" "));
   return {
     pid: String(p.id),
     title,
     url,
     price: +pick.price,
     currency: "SEK",
-    available: avail.length > 0,
-    preorder: /förbeställ|pre-?order|preorder/i.test(`${title} ${(p.tags || []).join(" ")}`),
+    available: avail.length > 0 && !preorder,
+    preorder,
     image: pick.featured_image?.src || p.images?.[0]?.src || null,
     // Språket står ofta bara i taggar, produkttyp eller adress ("japanese", "pokemon-kinesiska").
     hint: [p.handle, p.product_type, ...[].concat(p.tags || [])].filter(Boolean).join(" | "),

@@ -87,7 +87,20 @@ function* walk(node) {
   for (const k of ["@graph", "mainEntity", "itemListElement", "item"]) if (node[k]) yield* walk(node[k]);
 }
 
+// Butiker som märker varan PreOrder fast köpknappen är avstängd och sidan säger "Fullbokad" (Alphaspel).
+const FULLY_BOOKED = />\s*(?:tillfälligt\s+)?fullbokad\s*</i;
+// Och tvärtom: InStock i datan men köpknappen heter "Förbeställ nu" (Sweet Nerds). Bara en knapp vars hela text
+// är det räknas, inte menylänkar som "Förbeställ" eller "Förbeställningar".
+const PREORDER_BUTTON = /<button\b[^>]*>(?:\s|<(?!\/button)[^>]+>)*förbeställ(?:\s+nu)?(?:\s|<[^>]+>)*<\/button>|<(?:button|input|buy-form-component)\b[^>]*\b(?:name|value)=["']förbeställ(?:\s+nu)?["']/i;
+
 export function parseProductPage(html, url) {
+  const p = parsePage(html, url);
+  if (p?.preorder && FULLY_BOOKED.test(html)) p.preorder = false;
+  if (p?.available && PREORDER_BUTTON.test(html)) { p.available = false; p.preorder = true; }
+  return p;
+}
+
+function parsePage(html, url) {
   for (const m of html.matchAll(/<script[^>]+application\/ld\+json[^>]*>([\s\S]*?)<\/script>/gi)) {
     let data;
     try { data = JSON.parse(m[1].trim()); } catch { continue; }
