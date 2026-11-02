@@ -1,6 +1,20 @@
 {
- "updated": 1793608422048,
+ "updated": 1793609342064,
  "events": [
+  {
+   "at": 1793609166539,
+   "store": "kantovault",
+   "product": "kantovault:11638407692629",
+   "group": "30th-celebration|booster-box|zh|",
+   "title": "Pokémon 30th Celebration Booster Box (Kinesisk)",
+   "url": "https://kantovault.se/products/pokemon-30th-celebration-booster-box-kinesisk",
+   "image": null,
+   "price": 1399,
+   "type": "Booster Box",
+   "set": "30th Celebration",
+   "lang": "zh",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793573056231,
    "store": "pokemurre",
@@ -6906,19 +6920,6 @@
    "title": "Pokémon Full Metal Wall (SM9b) Booster Box (JP)",
    "url": "https://sweetnerds.se/sv/products/pokemon-full-metal-wall-sm9b-booster-box-jp",
    "price": 4099,
-   "type": "Booster Box",
-   "set": null,
-   "lang": "ja",
-   "kind": "ny"
-  },
-  {
-   "at": 1792786236038,
-   "store": "sweet-nerds",
-   "product": "sweet-nerds:https://sweetnerds.se/sv/products/pokemon-alter-genesis-sm12-booster-box-jp",
-   "group": "x|booster-box|ja||alter-genesis",
-   "title": "Pokémon Alter Genesis (SM12) Booster Box (JP)",
-   "url": "https://sweetnerds.se/sv/products/pokemon-alter-genesis-sm12-booster-box-jp",
-   "price": 5999,
    "type": "Booster Box",
    "set": null,
    "lang": "ja",
