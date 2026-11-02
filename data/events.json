@@ -1,6 +1,34 @@
 {
- "updated": 1793620069796,
+ "updated": 1793620989815,
  "events": [
+  {
+   "at": 1793620946452,
+   "store": "spelparken",
+   "product": "spelparken:15456503923063",
+   "group": "base-set|booster-box|en|",
+   "title": "Scarlet & Violet Booster Box (Base Set)",
+   "url": "https://spelparken.se/products/scarlet-violet-booster-box-base-set",
+   "image": "https://cdn.shopify.com/s/files/1/0948/1876/3127/files/pokemon-scarlet-and-violet-base-set-booster-box.jpg?v=1776272284",
+   "price": 3599,
+   "type": "Booster Box",
+   "set": "Base Set",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1793620946452,
+   "store": "spelparken",
+   "product": "spelparken:15314570084727",
+   "group": "silver-tempest|booster-box|en|",
+   "title": "Silver Tempest Booster Box",
+   "url": "https://spelparken.se/products/silver-tempest-booster-box-oppnas-live",
+   "image": "https://cdn.shopify.com/s/files/1/0948/1876/3127/files/Silvertempestbb1_600x600_0fc13a6e-c403-444d-ad30-84dc9d0cdbce.webp?v=1767884757",
+   "price": 6499,
+   "type": "Booster Box",
+   "set": "Silver Tempest",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793618719180,
    "store": "speltrollet",
@@ -6912,33 +6940,6 @@
    "set": "30th Celebration",
    "lang": "ja",
    "kind": "ny"
-  },
-  {
-   "at": 1792859040139,
-   "store": "pokemastersvault",
-   "product": "pokemastersvault:32937",
-   "group": "30th-celebration|booster-box|ja|",
-   "title": "Pokémon Mega 30th Celebration Booster Box (M6a) Japanese",
-   "url": "https://pokemastersvault.com/product/pokemon-mega-30th-celebration-booster-box-m6a-japanese/",
-   "price": 2679,
-   "type": "Booster Box",
-   "set": "30th Celebration",
-   "lang": "ja",
-   "kind": "ny"
-  },
-  {
-   "at": 1792859040139,
-   "store": "pokemastersvault",
-   "product": "pokemastersvault:32748",
-   "group": "emerald|booster-box|ja|",
-   "title": "Pokémon Mega Storm Emeralda Booster Box (M6) Japanese",
-   "url": "https://pokemastersvault.com/product/pokemon-mega-storm-emeralda-booster-box-m6-japanese/",
-   "price": 1479,
-   "type": "Booster Box",
-   "set": "Emerald",
-   "lang": "ja",
-   "kind": "prissankt",
-   "from": 1699
   }
  ]
 }
