@@ -1,6 +1,21 @@
 {
- "updated": 1793648251422,
+ "updated": 1793649172534,
  "events": [
+  {
+   "at": 1793648260153,
+   "store": "the-swedish-fish",
+   "product": "the-swedish-fish:16745",
+   "group": "rb|radiance|booster-pack|en|",
+   "title": "Riftbound TCG: Radiance Booster Pack",
+   "url": "https://theswedishfish.se/product/riftbound-tcg-radiance-booster-pack/",
+   "image": "https://theswedishfish.se/wp-content/uploads/2026/10/packkii.webp",
+   "price": 89,
+   "type": "Booster Pack",
+   "set": "Radiance",
+   "lang": "en",
+   "game": "rb",
+   "kind": "ny"
+  },
   {
    "at": 1793648045941,
    "store": "kantovault",
@@ -7009,19 +7024,6 @@
    "type": "Booster Pack",
    "set": null,
    "lang": "ja",
-   "kind": "ny"
-  },
-  {
-   "at": 1793096154126,
-   "store": "tcg-picks",
-   "product": "tcg-picks:16100077273413",
-   "group": "paldea-evolved|booster-pack|en|",
-   "title": "Paldea Evolved Booster Pack (Skicka hem)",
-   "url": "https://tcgpicks.com/produkt/paldea-evolved-booster-pack?variant=58889230713157",
-   "price": 159,
-   "type": "Booster Pack",
-   "set": "Paldea Evolved",
-   "lang": "en",
    "kind": "ny"
   }
  ]
