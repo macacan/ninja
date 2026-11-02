@@ -1,5 +1,5 @@
 {
- "updated": 1793578448407,
+ "updated": 1793578728415,
  "stores": [
   {
    "id": "alara-games",
@@ -159,14 +159,14 @@
    "name": "Cardlevels",
    "domain": "cardlevels.se",
    "status": "ej-forbjuden",
-   "checkedAt": 1793577562718,
+   "checkedAt": 1793578483284,
    "ok": true,
-   "lastOkAt": 1793577562718,
+   "lastOkAt": 1793578483284,
    "count": 27,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 15
+   "interval": 60
   },
   {
    "id": "cards-by-malcolm",
@@ -265,14 +265,14 @@
    "name": "Frog med Vänner",
    "domain": "frogmedvanner.se",
    "status": "ej-forbjuden",
-   "checkedAt": 1793577598141,
+   "checkedAt": 1793578525715,
    "ok": true,
-   "lastOkAt": 1793577598141,
+   "lastOkAt": 1793578525715,
    "count": 10,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 15
+   "interval": 60
   },
   {
    "id": "gameshop",
@@ -435,14 +435,14 @@
    "name": "Miniature Metropolis",
    "domain": "miniaturemetropolis.se",
    "status": "ej-forbjuden",
-   "checkedAt": 1793577377521,
+   "checkedAt": 1793578645393,
    "ok": true,
-   "lastOkAt": 1793577377521,
+   "lastOkAt": 1793578645393,
    "count": 32,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 20
+   "interval": 60
   },
   {
    "id": "mix-max",
@@ -594,14 +594,14 @@
    "name": "Pokemurre",
    "domain": "pokemurre.se",
    "status": "inga-bilder",
-   "checkedAt": 1793577547620,
+   "checkedAt": 1793578460204,
    "ok": true,
-   "lastOkAt": 1793577547620,
+   "lastOkAt": 1793578460204,
    "count": 141,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 15
+   "interval": 60
   },
   {
    "id": "poketalk",
@@ -633,28 +633,28 @@
    "name": "Rahtech",
    "domain": "rahtech.se",
    "status": "ej-forbjuden",
-   "checkedAt": 1793577560766,
+   "checkedAt": 1793578461530,
    "ok": true,
-   "lastOkAt": 1793577560766,
+   "lastOkAt": 1793578461530,
    "count": 81,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 15
+   "interval": 60
   },
   {
    "id": "rgb-kingz",
    "name": "RGB Kingz",
    "domain": "rgbkingz.com",
    "status": "ej-forbjuden",
-   "checkedAt": 1793577426561,
+   "checkedAt": 1793578710441,
    "ok": true,
-   "lastOkAt": 1793577426561,
+   "lastOkAt": 1793578710441,
    "count": 188,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 20
+   "interval": 60
   },
   {
    "id": "samlargrottan",
@@ -795,42 +795,42 @@
    "name": "SpelMaffian",
    "domain": "spelmaffian.se",
    "status": "ej-forbjuden",
-   "checkedAt": 1793577390713,
+   "checkedAt": 1793578636822,
    "ok": true,
-   "lastOkAt": 1793577390713,
+   "lastOkAt": 1793578636822,
    "count": 78,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 20
+   "interval": 60
   },
   {
    "id": "spelparken",
    "name": "Spelparken",
    "domain": "spelparken.se",
    "status": "ej-forbjuden",
-   "checkedAt": 1793577593571,
+   "checkedAt": 1793578502679,
    "ok": true,
-   "lastOkAt": 1793577593571,
+   "lastOkAt": 1793578502679,
    "count": 192,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 15
+   "interval": 60
   },
   {
    "id": "speltrollet",
    "name": "Speltrollet",
    "domain": "speltrollet.se",
    "status": "ej-forbjuden",
-   "checkedAt": 1793577180650,
+   "checkedAt": 1793578486587,
    "ok": true,
-   "lastOkAt": 1793577180650,
+   "lastOkAt": 1793578486587,
    "count": 614,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 20
+   "interval": 60
   },
   {
    "id": "sweet-nerds",
