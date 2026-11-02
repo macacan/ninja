@@ -1,6 +1,20 @@
 {
- "updated": 1793631690921,
+ "updated": 1793632610943,
  "events": [
+  {
+   "at": 1793631976092,
+   "store": "speltrollet",
+   "product": "speltrollet:14765059801414",
+   "group": "prismatic-evolutions|elite-trainer-box|en|",
+   "title": "Pokemon Scarlet & Violet 8.5: Prismatic Evolutions - Elite Trainer",
+   "url": "https://speltrollet.se/products/pokemon-scarlet-violet-8-5-prismatic-evolutions-elite-trainer",
+   "image": "https://cdn.shopify.com/s/files/1/0674/0951/0716/files/pokemon-sv085-prismatic-evolutions-elite-trainer-box-en.jpg?v=1730733536",
+   "price": 2490,
+   "type": "Elite Trainer Box",
+   "set": "Prismatic Evolutions",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793629223170,
    "store": "speltrollet",
@@ -6940,20 +6954,6 @@
    "lang": "en",
    "kind": "prissankt",
    "from": 3399
-  },
-  {
-   "at": 1792990947470,
-   "store": "rahtech",
-   "product": "rahtech:15775348162886",
-   "group": "30th-celebration|booster-box|zh|",
-   "title": "30th Celebration Booster Box (20 boosters) (CN)",
-   "url": "https://rahtech.se/products/30th-celebration-booster-box-20-boosters-cn",
-   "price": 1399,
-   "type": "Booster Box",
-   "set": "30th Celebration",
-   "lang": "zh",
-   "kind": "prissankt",
-   "from": 1449
   }
  ]
 }
