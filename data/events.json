@@ -1,6 +1,34 @@
 {
- "updated": 1793635331003,
+ "updated": 1793636291026,
  "events": [
+  {
+   "at": 1793635900538,
+   "store": "shinycards",
+   "product": "shinycards:https://www.shinycards.se/pokemon/booster-pack/pokemon-phantasmal-flames-booster-pack-1411",
+   "group": "phantasmal-flames|booster-pack|en|",
+   "title": "Pokemon Mega Evolution 2: Phantasmal Flames Booster Pack",
+   "url": "https://www.shinycards.se/pokemon/booster-pack/pokemon-phantasmal-flames-booster-pack-1411",
+   "image": "https://cdn.quickbutik.com/images/69946c/products/68dfacbf15b38.png",
+   "price": 159,
+   "type": "Booster Pack",
+   "set": "Phantasmal Flames",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1793635473937,
+   "store": "spelparken",
+   "product": "spelparken:15223827956087",
+   "group": "vivid-voltage|booster-pack|en|",
+   "title": "Vivid Voltage Booster Pack",
+   "url": "https://spelparken.se/products/pokemon-sword-shield-vivid-voltage-booster-pack",
+   "image": "https://cdn.shopify.com/s/files/1/0948/1876/3127/files/pokemon-vivid-voltage-pikachu-vmax-booster-pack.jpg?v=1762105980",
+   "price": 139,
+   "type": "Booster Pack",
+   "set": "Vivid Voltage",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793634814530,
    "store": "alphaspel",
@@ -6928,33 +6956,6 @@
    "set": null,
    "lang": "en",
    "kind": "ny"
-  },
-  {
-   "at": 1793005379316,
-   "store": "kantovault",
-   "product": "kantovault:11526049136981",
-   "group": "destined-rivals|booster-pack|en|",
-   "title": "Pokémon Scarlet & Violet: Destined Rivals Booster Pack",
-   "url": "https://kantovault.se/products/pokemon-scarlet-violet-destined-rivals-booster-pack",
-   "price": 129,
-   "type": "Booster Pack",
-   "set": "Destined Rivals",
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793004295871,
-   "store": "maxgaming",
-   "product": "maxgaming:https://maxgaming.se/sv/pokemon/pokemon-pikachu-special-box-pokemon-center-tohoku",
-   "group": "x|collection-box|en|pc|center-pikachu-tohoku",
-   "title": "Pokémon Pikachu Special Box Pokémon Center - Tohoku",
-   "url": "https://maxgaming.se/sv/pokemon/pokemon-pikachu-special-box-pokemon-center-tohoku",
-   "price": 1649,
-   "type": "Collection Box",
-   "set": null,
-   "lang": "en",
-   "kind": "prissankt",
-   "from": 1690
   }
  ]
 }
