@@ -1,6 +1,20 @@
 {
- "updated": 1793657123910,
+ "updated": 1793658043932,
  "events": [
+  {
+   "at": 1793657259044,
+   "store": "samlarhobby",
+   "product": "samlarhobby:16095507841405",
+   "group": "celebrations|collection-box|en||25th-anniversary-prime",
+   "title": "Pokémon: 25th Anniversary Celebrations Prime Collection",
+   "url": "https://samlarhobby.se/products/pokemon-25th-anniversary-celebrations-prime-collection",
+   "image": "https://cdn.shopify.com/s/files/1/0905/3120/1405/files/61oAjOgwOmL._AC_UF1000_1000_QL80__1_e5ecf268-8816-46c1-99a5-b69f251db8e6.jpg?v=1793656515",
+   "price": 5695,
+   "type": "Collection Box",
+   "set": "Celebrations",
+   "lang": "en",
+   "kind": "ny"
+  },
   {
    "at": 1793656340962,
    "store": "samlarhobby",
@@ -7039,19 +7053,6 @@
    "set": "Obsidian Flames",
    "lang": "en",
    "kind": "tillbaka"
-  },
-  {
-   "at": 1793098184811,
-   "store": "webhallen",
-   "product": "webhallen:402567",
-   "group": "x|blister|en||cl|checklane-delta-reign",
-   "title": "Pokemon ME06 Delta Reign Premium Checklane Blister",
-   "url": "https://www.webhallen.com/se/product/402567-Pokemon-ME06-Delta-Reign-Premium-Checklane-Blister",
-   "price": 119,
-   "type": "Blister",
-   "set": null,
-   "lang": "en",
-   "kind": "forbestallning"
   }
  ]
 }
