@@ -1,6 +1,21 @@
 {
- "updated": 1793634450988,
+ "updated": 1793635331003,
  "events": [
+  {
+   "at": 1793634814530,
+   "store": "alphaspel",
+   "product": "alphaspel:https://alphaspel.se/3959-one-piece-card-game/351737-one-piece-card-game-st35-red-black-sabo-starter-deck",
+   "group": "op|starter-deck-35-red-black-sabo|deck|en|",
+   "title": "One Piece Card Game: ST35 Red Black Sabo Starter Deck",
+   "url": "https://alphaspel.se/3959-one-piece-card-game/351737-one-piece-card-game-st35-red-black-sabo-starter-deck",
+   "image": "https://alphaspel.se/media/products/986bc4a5-2235-4f32-8dde-411750816858",
+   "price": 169,
+   "type": "Deck",
+   "set": "Starter Deck 35: RED/BLACK Sabo",
+   "lang": "en",
+   "game": "op",
+   "kind": "ny"
+  },
   {
    "at": 1793631976092,
    "store": "speltrollet",
@@ -6940,20 +6955,6 @@
    "lang": "en",
    "kind": "prissankt",
    "from": 1690
-  },
-  {
-   "at": 1792990948345,
-   "store": "skattkistan",
-   "product": "skattkistan:11232189743442",
-   "group": "prismatic-evolutions|premium-collection|en||super",
-   "title": "Pokémon TCG: Scarlet & Violet – Prismatic Evolutions Super-Premium Collection",
-   "url": "https://skattkistan.net/products/pokemon-tcg-scarlet-violet-prismatic-evolutions-super-premium-collection",
-   "price": 2999,
-   "type": "Premium Collection",
-   "set": "Prismatic Evolutions",
-   "lang": "en",
-   "kind": "prissankt",
-   "from": 3399
   }
  ]
 }
