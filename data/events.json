@@ -1,6 +1,34 @@
 {
- "updated": 1793647331406,
+ "updated": 1793648251422,
  "events": [
+  {
+   "at": 1793648045941,
+   "store": "kantovault",
+   "product": "kantovault:11769191039317",
+   "group": "30th-celebration|booster-pack|en|",
+   "title": "Pokémon 30th Celebration Booster Pack",
+   "url": "https://kantovault.se/products/pokemon-30th-celebration-booster-pack",
+   "image": null,
+   "price": 179,
+   "type": "Booster Pack",
+   "set": "30th Celebration",
+   "lang": "en",
+   "kind": "ny"
+  },
+  {
+   "at": 1793647680702,
+   "store": "sweet-nerds",
+   "product": "sweet-nerds:https://sweetnerds.se/sv/products/pokemon-aura-seeker-booster-box-jp",
+   "group": "x|booster-box|ja||aura-seeker",
+   "title": "Pokémon Aura Seeker Booster Box (JP)",
+   "url": "https://sweetnerds.se/sv/products/pokemon-aura-seeker-booster-box-jp",
+   "image": "https://nycdn.nyehandel.se/store_17dfab1e-b233-4e19-a6f0-ae93160c8b85/images/1000004291-9bbba991.png?width=400&height=400",
+   "price": 1399,
+   "type": "Booster Box",
+   "set": null,
+   "lang": "ja",
+   "kind": "ny"
+  },
   {
    "at": 1793646435288,
    "store": "cardlevels",
@@ -6993,32 +7021,6 @@
    "price": 159,
    "type": "Booster Pack",
    "set": "Paldea Evolved",
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1793096154126,
-   "store": "tcg-picks",
-   "product": "tcg-picks:16100079042885",
-   "group": "evolving-skies|booster-pack|en|",
-   "title": "Evolving Skies Booster Pack (Skicka hem)",
-   "url": "https://tcgpicks.com/produkt/evolving-skies-booster-pack?variant=58889233957189",
-   "price": 799,
-   "type": "Booster Pack",
-   "set": "Evolving Skies",
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1793096154126,
-   "store": "tcg-picks",
-   "product": "tcg-picks:16278828482885",
-   "group": "lost-origin|elite-trainer-box|en|",
-   "title": "Lost Origin Elite Trainer Box (Skicka hem)",
-   "url": "https://tcgpicks.com/produkt/lost-origin-elite-trainer-box-1?variant=59807058198853",
-   "price": 2499,
-   "type": "Elite Trainer Box",
-   "set": "Lost Origin",
    "lang": "en",
    "kind": "ny"
   }
