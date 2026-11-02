@@ -1,6 +1,48 @@
 {
- "updated": 1793614549656,
+ "updated": 1793615469678,
  "events": [
+  {
+   "at": 1793614981676,
+   "store": "shinycards",
+   "product": "shinycards:https://www.shinycards.se/pokemon/collection-box/48-pokemon-scarlet-violet-prismatic-evolutions-super-premium-collection",
+   "group": "prismatic-evolutions|premium-collection|en||super",
+   "title": "Pokemon Scarlet & Violet: Prismatic Evolutions Super Premium Collection",
+   "url": "https://www.shinycards.se/pokemon/collection-box/48-pokemon-scarlet-violet-prismatic-evolutions-super-premium-collection",
+   "image": "https://cdn.quickbutik.com/images/69946c/products/17936133070c277fd46811f0a8edf3f.png",
+   "price": 3799,
+   "type": "Premium Collection",
+   "set": "Prismatic Evolutions",
+   "lang": "en",
+   "kind": "ny"
+  },
+  {
+   "at": 1793614981676,
+   "store": "shinycards",
+   "product": "shinycards:https://www.shinycards.se/pokemon/collection-box/pokemon-ascend-heroes-delux-pin-collection",
+   "group": "x|collection-box|en||ascend-delux-first-heroes-partner-pin",
+   "title": "Pokemon Ascend Heroes First Partner Delux Pin Collection",
+   "url": "https://www.shinycards.se/pokemon/collection-box/pokemon-ascend-heroes-delux-pin-collection",
+   "image": "https://cdn.quickbutik.com/images/69946c/products/69dcd7afe624a.png",
+   "price": 1099,
+   "type": "Collection Box",
+   "set": null,
+   "lang": "en",
+   "kind": "ny"
+  },
+  {
+   "at": 1793614554396,
+   "store": "kantovault",
+   "product": "kantovault:11526052544853",
+   "group": "prismatic-evolutions|booster-pack|en|",
+   "title": "Pokémon Scarlet & Violet: Prismatic Evolutions Booster Pack",
+   "url": "https://kantovault.se/products/pokemon-scarlet-violet-prismatic-evolutions-booster-pack",
+   "image": null,
+   "price": 199,
+   "type": "Booster Pack",
+   "set": "Prismatic Evolutions",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793613392691,
    "store": "aquitaz",
@@ -6887,46 +6929,6 @@
    "set": null,
    "lang": "ja",
    "kind": "ny"
-  },
-  {
-   "at": 1792792880724,
-   "store": "pokemurre",
-   "product": "pokemurre:10256557637970",
-   "group": "x|booster-pack|ja||universe-vstar",
-   "title": "Pokémon VSTAR Universe Booster Pack S12a (Japanese)",
-   "url": "https://pokemurre.se/products/vstar-universe-booster-pack-s12a-japanese",
-   "price": 249,
-   "type": "Booster Pack",
-   "set": null,
-   "lang": "ja",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1792792080757,
-   "store": "tcgaddan",
-   "product": "tcgaddan:16131210281292",
-   "group": "x|booster-pack|zh||chinese-gathering-terastal",
-   "title": "Terastal Gathering Booster Pack Chinese",
-   "url": "https://tcgaddan.se/products/terastal-gathering-booster-pack",
-   "price": 79,
-   "type": "Booster Pack",
-   "set": null,
-   "lang": "zh",
-   "kind": "prissankt",
-   "from": 99
-  },
-  {
-   "at": 1792790202951,
-   "store": "poketalk",
-   "product": "poketalk:10373501845846",
-   "group": "white-flare|booster-pack|en|",
-   "title": "Pokémon Scarlet & Violet: White Flare Booster Pack",
-   "url": "https://poketalk.se/products/pokemon-scarlet-violet-white-flare-booster-pack-1",
-   "price": 169,
-   "type": "Booster Pack",
-   "set": "White Flare",
-   "lang": "en",
-   "kind": "tillbaka"
   }
  ]
 }
