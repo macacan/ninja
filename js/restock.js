@@ -1,5 +1,5 @@
 // Två delar som var och en bara startar om sidan har platsen för den:
-//  1. ett levande flöde av de senast inkomna produkterna, som uppdateras varje minut (startsidans "Precis inne i butikerna")
+//  1. ett levande flöde av de senast inkomna produkterna, som uppdateras varje minut (startsidans "Senast inkommet")
 //  2. en packöppnare: välj ett pack från de senaste seten, riv upp det och dra korten ett i taget (värderingssidan)
 import { groupKey, groupProducts, changedAt } from "./group.js";
 import { $, esc, kr, ago, latestSets, setLogo, getJSON, API, safeUrl, liveStock } from "./site.js";
@@ -26,7 +26,7 @@ async function feed() {
     const groups = groupProducts(p.products);
     const at = new Map(inStock.map((x) => [x, changedAt(x, groups.get(groupKey(x)) || [])]));
     const list = inStock.filter((x) => x.image).sort((a, b) => at.get(b) - at.get(a))
-      .filter((x) => { const k = groupKey(x); return !used.has(k) && used.add(k); }).slice(0, 4);
+      .filter((x) => { const k = groupKey(x); return !used.has(k) && used.add(k); }).slice(0, 5);
     const meta = (x) => `${esc(names[x.store] || x.store)} · ${kr(x.price)}${at.get(x) ? ` · ${ago(at.get(x))}` : ""}`;
     const first = seen === null;
     if (!first && list.length && list.length === seen.length && list.every((x, i) => x.url === seen[i])) {
@@ -571,7 +571,7 @@ function renderDeck(set, { model, picks, info }, ticket) {
       <div class="hs-submit" hidden></div>
       <div class="pull-actions">
         <button type="button" class="btn small" data-skip>Visa alla</button>
-        <a class="btn small" href="butiker.html#notiser" data-notis hidden>Få notis när nya produkter kommer in</a>
+        <a class="btn small" href="butiker.html#notiser" data-notis hidden>Få notis när produkter kommer in</a>
       </div>
       ${SHOW_ODDS ? `<details class="odds" open><summary>Dropchans för ${esc(set.name)}</summary>${oddsTable(model)}</details>` : ""}
     </div>`;
