@@ -35,7 +35,7 @@ export function mountCalendar(events, onDay) {
       const cls = ["day", d.getMonth() === m ? "" : "out", k === todayKey ? "today" : "", items.length ? "has" : "", i % 7 > 4 ? "weekend" : ""].filter(Boolean).join(" ");
       const today = k === todayKey;
       html += `<div class="${cls}" role="gridcell"${items.length ? ` tabindex="0" data-day="${k}"` : ""} aria-label="${d.getDate()} ${MONTHS[d.getMonth()]}${today ? ", i dag" : ""}${items.length ? `, ${items.length} släpp` : ""}">
-        <span class="num">${d.getDate()}</span>${today ? '<img class="today-ninja" src="logo.svg" alt="" aria-hidden="true">' : ""}
+        <span class="num">${d.getDate()}</span>
         ${items.length ? `<ul class="evs">${items.map(chip).join("")}</ul><span class="dots" aria-hidden="true">${items.map(dot).join("")}</span>` : ""}
       </div>`;
     }

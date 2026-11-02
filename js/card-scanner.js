@@ -21,7 +21,8 @@ const TESSERACT = "https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/tesserac
 // Byts versionen ovan måste hashen räknas om (openssl dgst -sha384 -binary fil | base64).
 const TESSERACT_SRI = "sha384-GJqSu7vueQ9qN0E9yLPb3Wtpd7OrgK8KmYzC8T1IysG1bcvxvIO4qtYR/D3A991F";
 const SCAN_INTERVAL = 250; // ms minst mellan två OCR-försök under aktiv kameraström
-const MOTION_TICK = 150; // ms mellan två stabilitetskontroller
+const BLIND_INTERVAL = 2500; // ms mellan två försök när ramen inte ser något kort
+const MOTION_TICK = 100; // ms mellan två stabilitetskontroller
 const MOTION_LIMIT = 10; // medelskillnad (0–255 per pixel) under vilken kameran räknas som stilla
 const STILL_TICKS = 2; // antal stilla kontroller i rad innan OCR startar
 // 63:88 mm. Så stort att kortnumret (ca 1,5 % av kortets höjd) behåller kamerans skärpa. Rätningen sker på GPU:n
@@ -34,6 +35,8 @@ const ZONES = {
   name: { x: 0.03, y: 0.02, w: 0.72, h: 0.11 }, // Namnraden, utan HP-rutan. Gamla kort har "Evolves from" ovanför.
   numLeft: { x: 0.02, y: 0.925, w: 0.4, h: 0.055 }, // "013/132" på kort från 2020 och framåt
   numRight: { x: 0.62, y: 0.945, w: 0.37, h: 0.05 }, // "4/102" på äldre kort
+  // Riftbound: "OGN • 135/298" i den svarta kanten, som kan hamna ända nere vid kortets kant när hörnen är ungefärliga
+  numRb: { x: 0.02, y: 0.925, w: 0.45, h: 0.075 },
 };
 
 // ---------- Textigenkänning (Tesseract) ----------
@@ -42,6 +45,9 @@ const OCR_PARAMS = {
   name: { tessedit_pageseg_mode: "11" },
   number: { tessedit_pageseg_mode: "11", tessedit_char_whitelist: "0123456789/" },
 };
+// En andra nummerläsare, så att flera varianter av nummerraden kan läsas samtidigt (Riftbound)
+OCR_PARAMS.number2 = OCR_PARAMS.number;
+const numberWorker = (i) => getWorker(i % 2 ? "number2" : "number");
 let scriptPromise = null;
 const workers = {};
 function loadScript(src, integrity) {
@@ -448,6 +454,8 @@ function fitLine(pts) {
   return { a, b, inliers: use.length };
 }
 
+// band kan vara en lista: varje bredd provas i tur och ordning på samma gråskalebild, och den första som ger ett kort
+// vinner. Ett kort i toploader eller plastficka sticker ut utanför ramen, och fångas då av det bredare bandet.
 export function detectCardCorners(videoOrImg, guide, band = 0.12) {
   const sw = videoOrImg.videoWidth || videoOrImg.width;
   const sh = videoOrImg.videoHeight || videoOrImg.height;
@@ -468,54 +476,60 @@ export function detectCardCorners(videoOrImg, guide, band = 0.12) {
   const xs = guide.map(([x]) => x * k), ys = guide.map(([, y]) => y * k);
   const gx0 = Math.min(...xs), gx1 = Math.max(...xs), gy0 = Math.min(...ys), gy1 = Math.max(...ys);
   const gw = gx1 - gx0, gh = gy1 - gy0;
-  const reach = Math.max(4, Math.round(band * Math.min(gw, gh)));
+  for (const b of [].concat(band)) {
+    const found = cornersInBand(Math.max(4, Math.round(b * Math.min(gw, gh))));
+    if (found.confident) return found;
+  }
+  return { corners: guide, confident: false };
 
-  // En kant: horizontal = topp/botten (söker i y), outward = -1 när utsidan ligger mot lägre koordinater
-  const side = (horizontal, edge, outward) => {
-    const pts = [];
-    const [t0, t1] = horizontal ? [gx0 + gw * 0.15, gx1 - gw * 0.15] : [gy0 + gh * 0.15, gy1 - gh * 0.15];
-    const lim = horizontal ? ah : AW;
-    for (let s = 0; s < SIDE_SAMPLES; s++) {
-      const t = Math.round(t0 + ((t1 - t0) * s) / (SIDE_SAMPLES - 1));
-      const from = Math.round(edge + outward * reach), to = Math.round(edge - outward * reach);
-      const grad = [];
-      let max = 0;
-      for (let p = from; p !== to; p -= outward) {
-        if (p < 2 || p >= lim - 2 || t < 1 || t >= (horizontal ? AW : ah) - 1) { grad.push(0); continue; }
-        let gsum = 0;
-        for (let q = -1; q <= 1; q++) {
-          gsum += horizontal ? at(t + q, p + 1) - at(t + q, p - 1) : at(p + 1, t + q) - at(p - 1, t + q);
+  function cornersInBand(reach) {
+    // En kant: horizontal = topp/botten (söker i y), outward = -1 när utsidan ligger mot lägre koordinater
+    const side = (horizontal, edge, outward) => {
+      const pts = [];
+      const [t0, t1] = horizontal ? [gx0 + gw * 0.15, gx1 - gw * 0.15] : [gy0 + gh * 0.15, gy1 - gh * 0.15];
+      const lim = horizontal ? ah : AW;
+      for (let s = 0; s < SIDE_SAMPLES; s++) {
+        const t = Math.round(t0 + ((t1 - t0) * s) / (SIDE_SAMPLES - 1));
+        const from = Math.round(edge + outward * reach), to = Math.round(edge - outward * reach);
+        const grad = [];
+        let max = 0;
+        for (let p = from; p !== to; p -= outward) {
+          if (p < 2 || p >= lim - 2 || t < 1 || t >= (horizontal ? AW : ah) - 1) { grad.push(0); continue; }
+          let gsum = 0;
+          for (let q = -1; q <= 1; q++) {
+            gsum += horizontal ? at(t + q, p + 1) - at(t + q, p - 1) : at(p + 1, t + q) - at(p - 1, t + q);
+          }
+          const v = Math.abs(gsum);
+          grad.push(v);
+          if (v > max) max = v;
         }
-        const v = Math.abs(gsum);
-        grad.push(v);
-        if (v > max) max = v;
+        if (max < MIN_EDGE) continue;
+        // Yttersta övergången som är nästan lika tydlig som den starkaste
+        const idx = grad.findIndex((v) => v >= max * 0.6);
+        pts.push([t, from - outward * idx]);
       }
-      if (max < MIN_EDGE) continue;
-      // Yttersta övergången som är nästan lika tydlig som den starkaste
-      const idx = grad.findIndex((v) => v >= max * 0.6);
-      pts.push([t, from - outward * idx]);
-    }
-    const line = fitLine(pts);
-    return line && line.inliers >= SIDE_SAMPLES * 0.5 ? line : null;
-  };
+      const line = fitLine(pts);
+      return line && line.inliers >= SIDE_SAMPLES * 0.5 ? line : null;
+    };
 
-  const top = side(true, gy0, -1), bottom = side(true, gy1, 1);
-  const left = side(false, gx0, -1), right = side(false, gx1, 1);
-  if (!top || !bottom || !left || !right) return { corners: guide, confident: false };
+    const top = side(true, gy0, -1), bottom = side(true, gy1, 1);
+    const left = side(false, gx0, -1), right = side(false, gx1, 1);
+    if (!top || !bottom || !left || !right) return { corners: guide, confident: false };
 
-  // Skärning mellan y = a + b·x (topp/botten) och x = c + d·y (vänster/höger)
-  const cross = (h, v) => {
-    const x = (v.a + v.b * h.a) / (1 - v.b * h.b);
-    return [x / k, (h.a + h.b * x) / k];
-  };
-  const corners = [cross(top, left), cross(top, right), cross(bottom, right), cross(bottom, left)];
+    // Skärning mellan y = a + b·x (topp/botten) och x = c + d·y (vänster/höger)
+    const cross = (h, v) => {
+      const x = (v.a + v.b * h.a) / (1 - v.b * h.b);
+      return [x / k, (h.a + h.b * x) / k];
+    };
+    const corners = [cross(top, left), cross(top, right), cross(bottom, right), cross(bottom, left)];
 
-  const dist = (p, q) => Math.hypot(p[0] - q[0], p[1] - q[1]);
-  const avgW = (dist(corners[0], corners[1]) + dist(corners[3], corners[2])) / 2;
-  const avgH = (dist(corners[0], corners[3]) + dist(corners[1], corners[2])) / 2;
-  const ratio = avgW / (avgH || 1);
-  const confident = ratio > 0.62 && ratio < 0.82 && corners.every(([x, y]) => x > -sw * 0.05 && x < sw * 1.05 && y > -sh * 0.05 && y < sh * 1.05);
-  return { corners: confident ? corners : guide, confident };
+    const dist = (p, q) => Math.hypot(p[0] - q[0], p[1] - q[1]);
+    const avgW = (dist(corners[0], corners[1]) + dist(corners[3], corners[2])) / 2;
+    const avgH = (dist(corners[0], corners[3]) + dist(corners[1], corners[2])) / 2;
+    const ratio = avgW / (avgH || 1);
+    const confident = ratio > 0.62 && ratio < 0.82 && corners.every(([x, y]) => x > -sw * 0.05 && x < sw * 1.05 && y > -sh * 0.05 && y < sh * 1.05);
+    return { corners: confident ? corners : guide, confident };
+  }
 }
 
 // ---------- 4b. Kortets hörn i hela bilden ----------
@@ -713,7 +727,11 @@ function rbData() {
   }).catch((e) => { rbPromise = null; throw e; });
   return rbPromise;
 }
-const rbResult = (rb, id, r = {}) => ({ game: "rb", name: rb.byId.get(id)?.name || null, number: r.number ?? null, total: r.total ?? null, numberSure: !!r.numberSure, cardId: id });
+// Numret kommer från kortet när det inte lästes (kortet hittades på bilden), så att det syns i snabbskanningens lista
+const rbResult = (rb, id, r = {}) => {
+  const c = rb.byId.get(id), [n, t] = id ? String(c?.no || "").split("/") : [];
+  return { game: "rb", name: c?.name || null, number: r.number ?? n ?? null, total: r.total ?? t ?? null, numberSure: !!r.numberSure, cardId: id };
+};
 
 // Riftbound-kort har en svart kant utanför den färgade ramen. Mot en mörk bakgrund hittar kantsökningen ofta ramen i
 // stället för kortets ytterkant, och då hamnar numret (som står i den svarta kanten) utanför bilden. Kortets riktiga
@@ -749,20 +767,31 @@ const copyCanvas = (src) => {
   c.getContext("2d").drawImage(src, 0, 0);
   return c;
 };
-// Den av de två rätningarna (som hörnen hittades, eller utanför ramen) vars bild liknar ett Riftbound-kort mest.
-// source = { src, corners }: bilden kortet rätades från, så att den kan rätas om. Utan den används canvas som den är.
+// Den rätning (som hörnen hittades, utanför ramen eller kortet inuti en ficka) vars bild liknar ett Riftbound-kort mest.
+// alt är tvåan av de två första, så att numret kan läsas där om det hamnade utanför den bästa (numret sitter i den
+// svarta kanten, som ramrätningen skär bort). source = { src, corners }: bilden kortet rätades från, så att den kan
+// rätas om. Utan den används canvas som den är.
 async function rbBestCanvas(canvas, source) {
   const art = await artMatch(canvas, 30, "rb").catch(() => []);
-  // Liknar bilden inget Riftbound-kort alls (t.ex. ett Pokémonkort) är det ingen idé att räta om
-  if (!source?.corners || (art[0]?.s ?? 0) >= 0.9 || (art[0]?.s ?? 0) < 0.5) return { canvas, art };
+  // Liknar bilden inget Riftbound-kort alls (t.ex. ett Pokémonkort i Pokémonskannern) är det ingen idé att räta om.
+  // I Riftbound-skannern provas omrätningarna ändå, eftersom en ficka kan göra den första bilden oigenkännlig.
+  if (!source?.corners || (art[0]?.s ?? 0) >= 0.9 || (art[0]?.s ?? 0) < (scanGame === "rb" ? 0.3 : 0.5)) return { canvas, art };
   const alt = copyCanvas(unwarpCard(source.src, outsideFrame(source.corners)));
   const altArt = await artMatch(alt, 30, "rb").catch(() => []);
-  return (altArt[0]?.s ?? -1) > (art[0]?.s ?? -1) ? { canvas: alt, art: altArt } : { canvas, art };
+  let best = (altArt[0]?.s ?? -1) > (art[0]?.s ?? -1) ? { canvas: alt, art: altArt, alt: canvas } : { canvas, art, alt };
+  if ((best.art[0]?.s ?? 0) < 0.85) {
+    for (const s of SLEEVES) {
+      const c = copyCanvas(unwarpCard(source.src, subQuad(source.corners, s)));
+      const a = await artMatch(c, 30, "rb").catch(() => []);
+      if ((a[0]?.s ?? -1) >= 0.8 && a[0].s > (best.art[0]?.s ?? -1) + 0.03) best = { canvas: c, art: a, alt: best.canvas };
+    }
+  }
+  return best;
 }
 
 // Riftbound: bilden först, sedan numret. Samma trösklar som för Pokémon.
-async function identifyRb(canvas, { full = false, art } = {}) {
-  const [rb, worker] = await Promise.all([rbData(), getWorker("number")]);
+async function identifyRb(canvas, { full = false, art, alt } = {}) {
+  const rb = await rbData();
   art ||= await artMatch(canvas, 30, "rb").catch(() => []);
   const quick = byLook(art, 0.9, 0.12);
   if (quick) return { ...rbResult(rb, quick), art };
@@ -777,16 +806,23 @@ async function identifyRb(canvas, { full = false, art } = {}) {
     return hits.length === 1 || (hits.length > 1 && hits[0].s - hits[1].s >= 0.08) ? hits[0].id : null;
   };
   let num = null, cardId = null;
-  const zones = [[ZONES.numLeft, 1.4], ...EXTRA_NUM_ZONES.slice(0, full ? undefined : 3)];
-  for (const [zone, scale] of zones) {
-    for (const map of scale ? zoneMaps(canvas, zone, scale) : [plainZone(canvas, zone)]) {
-      // Signaturkort har en stjärna i numret ("191*/166"). Den tas bort, så att numret läses som 191/166.
-      const n = findNumber((await worker.recognize(map)).data.text.replace(/[*✱★]/g, ""), rb.sizes);
+  // Varje zon ger några bilder (mörk och ljus text), och de läses samtidigt av två läsare. Första zonen läses även i
+  // den andra rätningen, där numret finns kvar om den bästa rätningen skar bort kortets svarta kant.
+  const zones = [[ZONES.numRb, 1.4], ...EXTRA_NUM_ZONES.slice(0, full ? undefined : 3)];
+  for (const [i, [zone, scale]] of zones.entries()) {
+    const maps = (i === 0 && alt ? [canvas, alt] : [canvas]).flatMap((cv) => (scale ? zoneMaps(cv, zone, scale) : [plainZone(cv, zone)]));
+    // Signaturkort har en stjärna i numret ("191*/166"). Den tas bort, så att numret läses som 191/166.
+    const texts = await Promise.all(maps.map(async (map, j) => (await (await numberWorker(j)).recognize(map)).data.text.replace(/[*✱★]/g, "")));
+    for (const text of texts) {
+      const n = findNumber(text, rb.sizes);
       if (!n) continue;
       num ||= n;
       if ((cardId = byNum(n))) { num = n; break; }
     }
     if (cardId) break;
+    // Automatisk skanning: gick numret inte att läsa första gången men bilden är tydlig nog att räcka på egen
+    // hand, väljs bildträffen direkt i stället för att prova fler varianter (som annars tar flera sekunder)
+    if (!full && !num && (byLook(art, 0.85, 0.08) || byLook(art, 0.72, 0.15))) break;
   }
   // Nummer och setstorlek lästa men bilden pekar inte ut kortet: jämför bilden med just korten som har det numret
   if (!cardId && num?.total) {
@@ -812,12 +848,12 @@ export async function identify(canvas, { full = false, source } = {}) {
   if (source) canvas = copyCanvas(canvas);
   if (scanGame === "rb") {
     const rb = await rbBestCanvas(canvas, source);
-    return identifyRb(rb.canvas, { full, art: rb.art });
+    return identifyRb(rb.canvas, { full, art: rb.art, alt: rb.alt });
   }
   let [art, rb] = await Promise.all([artMatch(canvas).catch(() => []), rbBestCanvas(canvas, source)]);
   // Ett Riftbound-kort i Pokémonskannern: bara när bilden tydligt liknar ett Riftbound-kort mer än något Pokémonkort
   const rbQuick = byLook(rb.art, 0.88, 0.12);
-  if (rbQuick && rb.art[0].s > (art[0]?.s ?? 0) + 0.05) return identifyRb(rb.canvas, { full, art: rb.art });
+  if (rbQuick && rb.art[0].s > (art[0]?.s ?? 0) + 0.05) return identifyRb(rb.canvas, { full, art: rb.art, alt: rb.alt });
   // Kortet kan ligga i en plastficka: då läses både bild och nummer från den rätning som liknar ett kort mest
   ({ canvas, art } = await sleeveBest(canvas, source, art));
   // Så tydlig bildträff att textläsningen inte behövs
@@ -827,7 +863,9 @@ export async function identify(canvas, { full = false, source } = {}) {
   let cardId = await byNumber(art, r);
   // Numret saknas eller stämmer inte med något kort som liknar bilden (t.ex. 109 läst som 105): läs nummerraden igen
   // Saknas numret helt sparas första säkra läsningen, så att sökningen på nummer fungerar även om bilden inte känns igen.
-  if (!cardId && (!r.number || (art.length && art[0].s >= 0.55))) {
+  // Automatisk skanning med en bildträff som räcker på egen hand: ingen omläsning, den tar flera sekunder
+  const lookEnough = !full && (byLook(art, 0.85, 0.08) || byLook(art, 0.72, 0.15));
+  if (!cardId && !lookEnough && (!r.number || (art.length && art[0].s >= 0.55))) {
     let firstSure = null;
     // Automatisk skanning (flera gånger i sekunden): bara de tre bästa varianterna, så att nästa bild inte får vänta
     const num = await rereadNumber(canvas, async (n) => {
@@ -947,6 +985,11 @@ function findNumber(text, sizes) {
   const result = (a, b, sure) => ({ number: a.replace(/^[A-Z]+/, "").replace(/^0+(?=\d)/, ""), total: b, sure });
 
   for (const m of fixed.matchAll(/(?<![A-Z\d])([A-Z]{0,4}\d{1,3}[a-z]?)\s*\/\s*[A-Z]{0,4}(\d{2,3})(?!\d)/g)) {
+    if (plausible(m[1].replace(/\D/g, ""), m[2])) return result(m[1], m[2], true);
+  }
+  // Punkten före numret läses ibland som en siffra ("OGN • 135/298" blir "0135/298"). Fyra siffror före ett
+  // tresiffrigt total är inget kortnummer, så den första stryks.
+  for (const m of fixed.matchAll(/(?<![A-Z\d])\d(\d{3}[a-z]?)\s*\/\s*(\d{3})(?!\d)/g)) {
     if (plausible(m[1].replace(/\D/g, ""), m[2])) return result(m[1], m[2], true);
   }
 
@@ -1097,7 +1140,6 @@ export async function rankByLook(canvas, list, limit = 150) {
 // ---------- 8. Kamerafönster & Interaktiv HUD ----------
 let dialog = null, stream = null, timer = null, animFrame = null, busy = false;
 let onFound = null, onPartial = null;
-let smoothedCorners = null;
 let torchSupported = false, torchActive = false;
 let stillTicks = 0, lastScanAt = 0;
 let pauseUntil = 0, openedAt = 0; // pauseUntil: auto-skanningen väntar så att ett felmeddelande hinner läsas
@@ -1125,6 +1167,13 @@ function ui() {
         </svg>
         <span>Av</span>
       </button>
+      <button class="scan-multi" type="button" aria-pressed="false" title="Skanna flera kort i rad">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true">
+          <rect x="7" y="3" width="12" height="16" rx="2"/><path d="M5 7v12a2 2 0 0 0 2 2h9"/>
+        </svg>
+        <span>Flera kort</span>
+      </button>
+      <button class="scan-tray" type="button" hidden aria-label="Visa skannade kort"><span class="scan-tray-stack"></span><b>0</b></button>
       <p class="scan-tip">Håll kortet i ramen. Glänser det? Luta det lätt.</p>
       <div class="scan-freeze" aria-hidden="true" hidden>
         <canvas></canvas>
@@ -1138,16 +1187,53 @@ function ui() {
       <button class="scan-ghost scan-live" type="button" data-close>Stäng</button>
       <button class="scan-ghost scan-frozen-btn" type="button" data-cancel>Avbryt</button>
       <button class="scan-now scan-frozen-btn" type="button" data-retry>Försök igen</button>
+    </div>
+    <div class="scan-list" hidden>
+      <div class="scan-list-head">
+        <h2>Skannade kort <span></span></h2>
+        <button class="scan-ghost" type="button" data-clear>Rensa</button>
+      </div>
+      <ul></ul>
+      <p class="scan-list-empty">Inga kort skannade än.</p>
+      <div class="scan-actions">
+        <button class="scan-ghost" type="button" data-more>Skanna fler</button>
+        <button class="scan-now" type="button" data-done>Klar</button>
+      </div>
     </div>`;
 
   document.body.append(dialog);
   dialog.addEventListener("close", stop);
-  dialog.querySelector("[data-close]").addEventListener("click", () => dialog.close());
+  dialog.querySelector("[data-close]").addEventListener("click", requestClose);
+  // Esc och telefonens bakåtknapp: med skannade kort visas listan först, nästa gång stängs skannern
+  dialog.addEventListener("cancel", (e) => {
+    if (!wantsList()) return;
+    e.preventDefault();
+    showList();
+  });
 
   // Skanna nu: bilden fryses och söks igenom noggrant tills kortet hittas, eller tills man trycker Avbryt / Försök igen
   dialog.querySelector(".scan-now").addEventListener("click", () => runScan(true));
-  dialog.querySelector("[data-cancel]").addEventListener("click", () => dialog.close());
+  // Avbryt stänger, men i snabbskanningen går den tillbaka till kameran så att man kan fortsätta med nästa kort
+  dialog.querySelector("[data-cancel]").addEventListener("click", () => (multi ? unfreeze() : dialog.close()));
   dialog.querySelector("[data-retry]").addEventListener("click", unfreeze);
+
+  // Snabbskanning
+  dialog.querySelector(".scan-multi").addEventListener("click", () => setMulti(!multi));
+  dialog.querySelector(".scan-tray").addEventListener("click", showList);
+  dialog.querySelector("[data-more]").addEventListener("click", hideList);
+  dialog.querySelector("[data-done]").addEventListener("click", () => dialog.close());
+  dialog.querySelector("[data-clear]").addEventListener("click", () => {
+    scanned = [];
+    saveList();
+    renderList();
+    renderTray();
+  });
+  dialog.querySelector(".scan-list ul").addEventListener("click", (e) => {
+    const item = scanned[e.target.closest("[data-i]")?.dataset.i];
+    if (!item) return;
+    dialog.close();
+    onFound?.({ game: item.game, name: item.name, number: item.number, total: item.total, cardId: item.cardId });
+  });
 
   // Ficklampa
   const torchBtn = dialog.querySelector(".scan-torch");
@@ -1211,8 +1297,10 @@ function getDefaultFrameCorners() {
   ];
 }
 
-// Ritar den levande HUD-ramen som visar när ett kort detekteras
-function renderHud(corners, confident) {
+// Ritar den levande ramen kring kortet. glow (0–1) tonar från sökande (streckad, vit) till låst (grön).
+// Ingen shadowBlur: den kostar mycket per bildruta på telefoner. Glöden är en bredare, genomskinlig linje under.
+let hudCtx = null;
+function renderHud(corners, glow) {
   const video = dialog.querySelector("video");
   const hud = dialog.querySelector(".scan-hud");
   if (!video || !hud || !video.videoWidth) return;
@@ -1221,92 +1309,100 @@ function renderHud(corners, confident) {
     hud.width = video.clientWidth;
     hud.height = video.clientHeight;
   }
-
-  const ctx = hud.getContext("2d");
+  const ctx = (hudCtx ||= hud.getContext("2d"));
   ctx.clearRect(0, 0, hud.width, hud.height);
-
   if (!corners || !corners.length) return;
 
-  const vr = video.getBoundingClientRect();
-  const k = Math.max(vr.width / video.videoWidth, vr.height / video.videoHeight);
-  const ox = (vr.width - video.videoWidth * k) / 2;
-  const oy = (vr.height - video.videoHeight * k) / 2;
-
-  // Transformera videokoordinater till HUD-skärmkoordinater
+  // Videokoordinater till skärmkoordinater (videon visas med object-fit: cover)
+  const vw = video.clientWidth, vh = video.clientHeight;
+  const k = Math.max(vw / video.videoWidth, vh / video.videoHeight);
+  const ox = (vw - video.videoWidth * k) / 2, oy = (vh - video.videoHeight * k) / 2;
   const pts = corners.map(([x, y]) => [x * k + ox, y * k + oy]);
-
-  // Rita dynamisk polygon
-  ctx.save();
-  ctx.beginPath();
-  ctx.moveTo(pts[0][0], pts[0][1]);
-  ctx.lineTo(pts[1][0], pts[1][1]);
-  ctx.lineTo(pts[2][0], pts[2][1]);
-  ctx.lineTo(pts[3][0], pts[3][1]);
-  ctx.closePath();
-
-  if (confident) {
-    // Låst kort: svagt ifylld yta med cyan–violett kontur och glöd
-    const grad = ctx.createLinearGradient(pts[0][0], pts[0][1], pts[2][0], pts[2][1]);
-    grad.addColorStop(0, "#22d3ee");
-    grad.addColorStop(1, "#a855f7");
-    ctx.fillStyle = "rgba(34, 211, 238, 0.07)";
-    ctx.fill();
-    ctx.strokeStyle = grad;
-    ctx.lineWidth = 1.5;
-    ctx.shadowColor = "rgba(139, 92, 246, 0.8)";
-    ctx.shadowBlur = 14;
-    ctx.stroke();
-
-    // Hörnvinklar längs kortets kanter
-    ctx.lineWidth = 4;
-    ctx.lineCap = "round";
-    pts.forEach(([px, py], i) => {
-      ctx.beginPath();
-      for (const [nx, ny] of [pts[(i + 1) % 4], pts[(i + 3) % 4]]) {
-        const len = Math.hypot(nx - px, ny - py) || 1;
-        const t = Math.min(22, len * 0.18) / len;
-        ctx.moveTo(px, py);
-        ctx.lineTo(px + (nx - px) * t, py + (ny - py) * t);
-      }
-      ctx.stroke();
-    });
-  } else {
-    ctx.setLineDash([4, 6]);
-    ctx.strokeStyle = "rgba(255, 255, 255, 0.18)"; // Diskret när den söker
-    ctx.lineWidth = 1;
-    ctx.stroke();
-  }
-  ctx.restore();
-}
-
-// HUD-illustrationsloop
-function startHudLoop() {
-  const video = dialog.querySelector("video");
-  const defaultCorners = getDefaultFrameCorners() || [[0, 0], [420, 0], [420, 587], [0, 587]];
-
-  const loop = () => {
-    if (!dialog.open || !video || !video.videoWidth || frozen) {
-      animFrame = requestAnimationFrame(loop);
-      return;
-    }
-
-    const { corners, confident } = detectCardCorners(video, defaultCorners);
-
-    // Glättad interpolering (Exponential Moving Average) för att förhindra flimmer
-    if (!smoothedCorners) {
-      smoothedCorners = corners;
-    } else {
-      const alpha = 0.35;
-      smoothedCorners = smoothedCorners.map((pt, i) => [
-        pt[0] * (1 - alpha) + corners[i][0] * alpha,
-        pt[1] * (1 - alpha) + corners[i][1] * alpha,
-      ]);
-    }
-
-    renderHud(smoothedCorners, confident);
-    animFrame = requestAnimationFrame(loop);
+  const path = () => {
+    ctx.beginPath();
+    ctx.moveTo(pts[0][0], pts[0][1]);
+    for (let i = 1; i < 4; i++) ctx.lineTo(pts[i][0], pts[i][1]);
+    ctx.closePath();
   };
 
+  path();
+  if (glow < 0.04) {
+    ctx.setLineDash([4, 6]);
+    ctx.strokeStyle = "rgba(255, 255, 255, 0.22)";
+    ctx.lineWidth = 1;
+    ctx.stroke();
+    ctx.setLineDash([]);
+    return;
+  }
+  ctx.setLineDash([]);
+  ctx.lineJoin = "round";
+  ctx.fillStyle = `rgba(74, 222, 128, ${0.1 * glow})`;
+  ctx.fill();
+  ctx.strokeStyle = `rgba(74, 222, 128, ${0.28 * glow})`;
+  ctx.lineWidth = 8;
+  ctx.stroke();
+  ctx.strokeStyle = `rgba(134, 239, 172, ${glow})`;
+  ctx.lineWidth = 2;
+  ctx.stroke();
+
+  // Hörnvinklar längs kortets kanter
+  ctx.lineWidth = 4;
+  ctx.lineCap = "round";
+  ctx.strokeStyle = `rgba(74, 222, 128, ${glow})`;
+  ctx.beginPath();
+  pts.forEach(([px, py], i) => {
+    for (const [nx, ny] of [pts[(i + 1) % 4], pts[(i + 3) % 4]]) {
+      const len = Math.hypot(nx - px, ny - py) || 1;
+      const t = Math.min(24, len * 0.18) / len;
+      ctx.moveTo(px, py);
+      ctx.lineTo(px + (nx - px) * t, py + (ny - py) * t);
+    }
+  });
+  ctx.stroke();
+}
+
+// Kantsökningen körs några gånger i sekunden, ritningen varje bildruta. Ramen glider mjukt mot senaste läget,
+// blir grön efter LOCK_ON träffar i rad och släpper efter LOCK_OFF missar i rad, så att den inte blinkar av och på.
+// Bredare sökband som andra försök fångar kort i toploader och plastficka, som sticker ut utanför ramen.
+const DETECT_EVERY = 70; // ms mellan två kantsökningar
+const LOCK_ON = 2, LOCK_OFF = 4;
+const LIVE_BANDS = [0.12, 0.22];
+let lock = null; // { on, hits, misses, target, shown, glow }
+let lastSeen = null; // senaste säkra hörn { corners, at }, som skanningen använder i stället för att söka igen
+
+function startHudLoop() {
+  const video = dialog.querySelector("video");
+  const guide = getDefaultFrameCorners() || [[0, 0], [420, 0], [420, 587], [0, 587]];
+  lock = { on: false, hits: 0, misses: 0, target: guide, shown: null, glow: 0 };
+  let lastDetect = 0, lastFrame = performance.now();
+
+  const loop = (now) => {
+    animFrame = requestAnimationFrame(loop);
+    const dt = Math.min(100, now - lastFrame);
+    lastFrame = now;
+    if (!dialog.open || !video.videoWidth || frozen) return;
+
+    if (now - lastDetect >= DETECT_EVERY) {
+      lastDetect = now;
+      const { corners, confident } = detectCardCorners(video, guide, LIVE_BANDS);
+      if (confident) {
+        lock.hits++;
+        lock.misses = 0;
+        lastSeen = { corners, at: Date.now() };
+        if (lock.hits >= LOCK_ON) { lock.on = true; lock.target = corners; }
+      } else {
+        lock.hits = 0;
+        // Kortet har lämnat ramen: i snabbskanningen får samma kort räknas igen
+        if (++lock.misses >= LOCK_OFF && lock.on) { lock.on = false; lock.target = guide; skipKey = null; }
+      }
+    }
+
+    // Mjuk rörelse som inte beror på bildfrekvensen: ungefär 60 ms att komma två tredjedelar av vägen
+    const a = 1 - Math.exp(-dt / 60);
+    lock.shown = lock.shown ? lock.shown.map((p, i) => [p[0] + (lock.target[i][0] - p[0]) * a, p[1] + (lock.target[i][1] - p[1]) * a]) : lock.target;
+    lock.glow += ((lock.on ? 1 : 0) - lock.glow) * (1 - Math.exp(-dt / 90));
+    renderHud(lock.shown, lock.glow);
+  };
   animFrame = requestAnimationFrame(loop);
 }
 
@@ -1318,9 +1414,10 @@ function grabUnwarpedFrame() {
   const defaultCorners = getDefaultFrameCorners();
   if (!defaultCorners) return null;
 
-  // Kortet nära ramen först (snabbt), annars kortets hörn var som helst i bilden
-  const near = detectCardCorners(video, defaultCorners);
-  const corners = near.confident ? near.corners : findCardQuad(video) || near.corners;
+  // Ramens senaste säkra hörn om de är färska, annars kortet nära ramen och sist kortets hörn var som helst i bilden
+  const fresh = lastSeen && Date.now() - lastSeen.at < 250 && lastSeen.corners;
+  const near = fresh ? null : detectCardCorners(video, defaultCorners, LIVE_BANDS);
+  const corners = fresh || (near.confident ? near.corners : findCardQuad(video) || near.corners);
   lastGrab = { src: video, corners };
   return unwarpCard(video, corners, CARD_W, CARD_H);
 }
@@ -1373,7 +1470,10 @@ function motionTick() {
     return;
   }
   frameEl()?.classList.remove("is-moving");
-  if (Date.now() - lastScanAt >= SCAN_INTERVAL) runScan(false);
+  // Läs bara när ramen ser ett kort, så att en tom ram inte håller läsarna upptagna när nästa kort kommer.
+  // Kort vars kanter inte syns (t.ex. mot en likfärgad bakgrund) får ändå ett försök med jämna mellanrum.
+  const seen = lastSeen && Date.now() - lastSeen.at < 400;
+  if (Date.now() - lastScanAt >= (seen ? SCAN_INTERVAL : BLIND_INTERVAL)) runScan(false);
 }
 
 // Startar en skanning av aktuell bild.
@@ -1489,8 +1589,8 @@ async function frozenScan(snap, { fromFile }) {
     }
     // Inget säkert kort, men ett läst nummer: sök på det som förut (en stillbild kan inte läsas två gånger)
     if (best.r.number) return done(best.r);
-    // Bara ett namn: fyll i sökrutan i stället för att påstå att kortet är hittat
-    if (best.r.name && onPartial) {
+    // Bara ett namn: fyll i sökrutan i stället för att påstå att kortet är hittat (inte i snabbskanningen, som fortsätter)
+    if (best.r.name && onPartial && !multi) {
       stop();
       dialog.close();
       onPartial({ name: best.r.name, number: null, total: null });
@@ -1517,6 +1617,12 @@ async function frozenScan(snap, { fromFile }) {
     // Låt "hittad"-blixten synas en kort stund innan resultatet öppnas
     setTimeout(() => {
       if (!alive()) return;
+      // Snabbskanning: kortet läggs i högen och kameran fortsätter
+      if (multi) {
+        unfreeze();
+        if (keyOf(r) !== skipKey) addScanned({ game: "pokemon", ...r }, r.canvas);
+        return;
+      }
       stop();
       dialog.close();
       if (r.cardId || r.number || r.name) onFound?.({ game: r.game || "pokemon", name: r.name, number: r.number, total: r.total, cardId: r.cardId, canvas: r.canvas, dhash: r.dhash });
@@ -1535,6 +1641,12 @@ async function attempt(canvas, { fromFile = false, manual = false, source } = {}
     // 1. Bilden mot alla kort, sedan texten. Pekar de ut samma kort (eller är bildträffen mycket tydlig) är vi klara.
     const r = await identify(canvas, { full: manual || fromFile, source });
     if (!dialog.open) return;
+    // Snabbskanning: kortet läggs i högen och skannern fortsätter. Samma kort igen räknas inte förrän det bytts.
+    if (multi && r.cardId) {
+      if (keyOf(r) === skipKey) return status("Byt till nästa kort…");
+      addScanned({ game: "pokemon", ...r }, canvas);
+      return;
+    }
     if (r.cardId) {
       status(`Hittade <b>${esc(r.name || "kortet")}</b>!`);
       dialog.querySelector(".scan-hud-status")?.classList.add("success");
@@ -1557,14 +1669,17 @@ async function attempt(canvas, { fromFile = false, manual = false, source } = {}
     last = r.name;
     lastNum = numKey;
 
-    if (sure) {
+    if (sure && multi) {
+      if (keyOf(r) === skipKey) status("Byt till nästa kort…");
+      else addScanned({ game: "pokemon", ...r }, canvas);
+    } else if (sure) {
       status(`Hittade <b>${esc(seen)}</b>!`);
       dialog.querySelector(".scan-hud-status")?.classList.add("success");
       if ("vibrate" in navigator) navigator.vibrate(45);
       stop();
       dialog.close();
       onFound?.({ game: "pokemon", ...r, canvas });
-    } else if ((manual || fromFile) && (r.name || r.number) && onPartial) {
+    } else if ((manual || fromFile) && (r.name || r.number) && onPartial && !multi) {
       // Halv läsning: stäng och fyll i det som gick att läsa, så användaren slipper skriva från noll
       stop();
       dialog.close();
@@ -1601,7 +1716,7 @@ function stop() {
   timer = null;
   cancelAnimationFrame(animFrame);
   animFrame = null;
-  smoothedCorners = null;
+  lastSeen = null;
   hasPrevMotion = false;
   setTorch(false);
   stream?.getTracks().forEach((t) => t.stop());
@@ -1688,6 +1803,146 @@ function setTorch(on) {
   btn.querySelector("span").textContent = on ? "På" : "Av";
 }
 
+// ---------- 10. Snabbskanning: flera kort i rad ----------
+// Med "Flera kort" påslaget stängs skannern inte vid en träff. Kortet visas en kort stund och krymper ner i högen
+// nere till vänster, och skanningen fortsätter med nästa kort. Stänger man skannern (eller trycker på högen) visas
+// alla skannade kort i en lista. Listan sparas i sessionStorage: den finns kvar om sidan laddas om eller man går
+// tillbaka, men försvinner när fliken stängs. Den lämnar aldrig webbläsaren och behövs bara för funktionen man själv
+// slagit på, så den kräver inget samtycke (samma sak gäller läget, som också sparas för besöket).
+const MULTI_KEY = "nl-scan-multi", LIST_KEY = "nl-scanned", LIST_MAX = 60;
+let multi = false, listOpen = false, scanned = [];
+let skipKey = null; // senast tillagda kortet, som inte räknas igen förrän det lämnat ramen
+const GAME_LABEL = { pokemon: "Pokémon", rb: "Riftbound" };
+
+const loadList = () => { try { return JSON.parse(sessionStorage.getItem(LIST_KEY)) || []; } catch { return []; } };
+// Blir lagringen full (stora bilder) sparas så många kort som får plats, de nyaste först
+function saveList() {
+  for (let n = Math.min(scanned.length, LIST_MAX); n >= 0; n = n ? Math.floor(n / 2) : -1) {
+    try { return sessionStorage.setItem(LIST_KEY, JSON.stringify(scanned.slice(0, n))); } catch {}
+  }
+}
+const keyOf = (r) => r.cardId || `${r.name || ""}|${r.number || ""}/${r.total || ""}`;
+const numberOf = (x) => (x.number ? (x.total ? `${x.number}/${x.total}` : x.number) : "");
+const labelOf = (x) => x.name || (x.number ? `Nr ${numberOf(x)}` : "Okänt kort");
+
+// Liten bild av kortet som kameran såg det, för högen och listan
+function thumbOf(canvas) {
+  if (!canvas?.width) return null;
+  const t = Object.assign(document.createElement("canvas"), { width: 126, height: 176 });
+  t.getContext("2d").drawImage(canvas, 0, 0, t.width, t.height);
+  return t.toDataURL("image/jpeg", 0.7);
+}
+
+function addScanned(r, canvas) {
+  const item = { game: r.game || "pokemon", cardId: r.cardId || null, name: r.name || null, number: r.number || null, total: r.total || null, thumb: thumbOf(canvas) };
+  skipKey = keyOf(r);
+  last = lastNum = null;
+  pauseUntil = Date.now() + 600; // låt kortet synas innan nästa läsning tar kraft från animationen
+  scanned.unshift(item);
+  scanned.length = Math.min(scanned.length, LIST_MAX);
+  saveList();
+  status(`<b>${esc(labelOf(item))}</b> sparat. Nästa kort!`);
+  if ("vibrate" in navigator) navigator.vibrate(40);
+  // Kort som hittades på bilden har inget namn än: det hämtas i bakgrunden
+  if (!item.name && item.cardId && item.game === "pokemon") {
+    getJSON(`${API}/cards/${encodeURIComponent(item.cardId)}`).then((c) => {
+      if (!c?.name) return;
+      item.name = c.name;
+      saveList();
+      if (listOpen) renderList();
+    }).catch(() => {});
+  }
+  // En läsning som blev klar efter att listan öppnats hamnar direkt i listan
+  if (listOpen) return renderList();
+  renderTray();
+  popCard(item);
+}
+
+// Kortet poppar upp mitt i bilden, stannar en stund och flyger ner i högen
+function popCard(item) {
+  const view = dialog.querySelector(".scan-view"), tray = dialog.querySelector(".scan-tray");
+  const pop = document.createElement("div");
+  pop.className = "scan-pop";
+  pop.setAttribute("aria-hidden", "true");
+  pop.innerHTML = `<div>${item.thumb ? `<img src="${item.thumb}" alt="">` : "<i></i>"}<span>${esc(labelOf(item))}</span></div>`;
+  view.append(pop);
+  tray.hidden = false;
+  const card = pop.firstElementChild, p = card.getBoundingClientRect(), t = tray.getBoundingClientRect();
+  const dx = t.left + t.width / 2 - (p.left + p.width / 2), dy = t.top + t.height / 2 - (p.top + p.height / 2);
+  const s = Math.max(0.12, t.height / p.height);
+  const quick = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const anim = card.animate([
+    { transform: "scale(.55)", opacity: 0 },
+    { transform: "scale(1.05)", opacity: 1, offset: 0.18 },
+    { transform: "scale(1)", opacity: 1, offset: 0.3 },
+    { transform: "scale(1)", opacity: 1, offset: 0.62 },
+    { transform: `translate(${dx}px, ${dy}px) scale(${s}) rotate(-8deg)`, opacity: 0.6 },
+  ], { duration: quick ? 400 : 1300, easing: "cubic-bezier(.45,0,.2,1)" });
+  const end = () => { pop.remove(); renderTray(true); };
+  anim.finished.then(end, end);
+}
+
+// Högen nere till vänster: de tre senaste korten lite huller om buller och antalet
+function renderTray(bump = false) {
+  const tray = dialog?.querySelector(".scan-tray");
+  if (!tray) return;
+  tray.hidden = !multi || !scanned.length;
+  tray.querySelector("b").textContent = scanned.length;
+  tray.querySelector(".scan-tray-stack").innerHTML = scanned.slice(0, 3).reverse()
+    .map((x) => (x.thumb ? `<img src="${x.thumb}" alt="">` : "<i></i>")).join("");
+  if (bump) {
+    tray.classList.remove("bump");
+    void tray.offsetWidth;
+    tray.classList.add("bump");
+  }
+}
+
+function setMulti(on) {
+  multi = on;
+  try { sessionStorage.setItem(MULTI_KEY, on ? "1" : "0"); } catch {}
+  const btn = dialog.querySelector(".scan-multi");
+  btn.classList.toggle("active", on);
+  btn.setAttribute("aria-pressed", String(on));
+  dialog.classList.toggle("multi", on);
+  skipKey = null;
+  renderTray();
+  if (on && stream && !frozen) status(scanned.length ? `${scanned.length} kort skannade. Håll nästa kort i ramen…` : "Flera kort: håll korten i ramen ett i taget…");
+}
+
+const wantsList = () => multi && scanned.length > 0 && !listOpen;
+function requestClose() {
+  if (wantsList()) showList();
+  else dialog.close();
+}
+
+function renderList() {
+  const list = dialog.querySelector(".scan-list");
+  list.querySelector("h2 span").textContent = scanned.length ? `(${scanned.length})` : "";
+  list.querySelector("[data-clear]").hidden = !scanned.length;
+  list.querySelector(".scan-list-empty").hidden = scanned.length > 0;
+  list.querySelector("ul").innerHTML = scanned.map((x, i) => `<li><button type="button" data-i="${i}">
+      ${x.thumb ? `<img src="${x.thumb}" alt="" loading="lazy">` : "<i></i>"}
+      <span><b>${esc(labelOf(x))}</b><small>${esc([numberOf(x), GAME_LABEL[x.game]].filter(Boolean).join(" · "))}</small></span>
+    </button></li>`).join("");
+}
+
+// Listan ersätter kameran, som stängs av så länge listan visas
+function showList() {
+  listOpen = true;
+  stop();
+  renderList();
+  dialog.classList.add("listing");
+  dialog.querySelector(".scan-list").hidden = false;
+  dialog.querySelector(".scan-list [data-done]").focus();
+}
+
+function hideList(restart = true) {
+  listOpen = false;
+  dialog.classList.remove("listing");
+  dialog.querySelector(".scan-list").hidden = true;
+  if (restart) startCamera();
+}
+
 // callback får ett komplett kort (namn + nummer + bild). partialCallback får en delläsning
 // (bara namn eller bara nummer) när användaren tryckt "Skanna nu" eller valt ett foto.
 // game: "pokemon" (känner också igen tydliga Riftbound-kort) eller "rb". Svaret säger vilket spel kortet är (game).
@@ -1695,37 +1950,53 @@ export async function openScanner(callback, partialCallback, { game = "pokemon" 
   scanGame = game;
   onFound = callback;
   onPartial = partialCallback || null;
-  last = null;
-  lastNum = null;
-  smoothedCorners = null;
-  hasPrevMotion = false;
-  stillTicks = 0;
-  pauseUntil = 0;
-  openedAt = Date.now();
   const d = ui();
-  // Återställ allt från förra gången, t.ex. om kameran inte gick att starta då
-  d.querySelector(".scan-view").classList.remove("nocam");
-  d.querySelector(".scan-frame i").classList.remove("is-moving", "is-reading");
-  d.querySelector(".scan-now").classList.remove("nudge");
   d.querySelector(".scan-tip").textContent = game === "rb"
     ? "Håll kortet i ramen. Battlefields hålls på högkant."
     : "Håll kortet i ramen. Glänser det? Luta det lätt.";
+  // Snabbskanningens läge och kort från tidigare i besöket
+  scanned = loadList();
+  let on = false;
+  try { on = sessionStorage.getItem(MULTI_KEY) === "1"; } catch {}
+  setMulti(on);
+  hideList(false);
   d.showModal();
-  status("Startar kameran…");
-  d.querySelector(".scan-hud-status")?.classList.remove("success");
   // Värm upp textläsarna, setstorlekarna och bildindexen medan kameran startar
   if (game === "pokemon") {
     getWorker("name").catch(() => {});
     setSizes().catch(() => {});
     loadArtIndex().catch(() => {});
-  } else rbData().catch(() => {});
+  } else {
+    rbData().catch(() => {});
+    getWorker("number2").catch(() => {});
+  }
   getWorker("number").catch(() => {});
   loadArtIndex("rb").catch(() => {});
+  await startCamera();
+}
+
+// Startar kameran och skanningen. Används när skannern öppnas och när man går från listan tillbaka till kameran.
+async function startCamera() {
+  const d = dialog;
+  last = null;
+  lastNum = null;
+  // Ligger senast sparade kortet kvar i ramen när kameran startar om räknas det inte en gång till
+  skipKey = scanned[0] ? keyOf(scanned[0]) : null;
+  hasPrevMotion = false;
+  stillTicks = 0;
+  pauseUntil = 0;
+  openedAt = Date.now();
+  // Återställ allt från förra gången, t.ex. om kameran inte gick att starta då
+  d.querySelector(".scan-view").classList.remove("nocam");
+  d.querySelector(".scan-frame i").classList.remove("is-moving", "is-reading");
+  d.querySelector(".scan-now").classList.remove("nudge");
+  d.querySelector(".scan-hud-status")?.classList.remove("success");
+  status("Startar kameran…");
 
   try {
     stream = await openCamera();
-    // Stängdes skannern medan kameran letades fram ska den inte lysa kvar
-    if (!d.open) { stream.getTracks().forEach((t) => t.stop()); stream = null; return; }
+    // Stängdes skannern (eller öppnades listan) medan kameran letades fram ska den inte lysa kvar
+    if (!d.open || listOpen) { stream.getTracks().forEach((t) => t.stop()); stream = null; return; }
 
     const video = d.querySelector("video");
     video.srcObject = stream;

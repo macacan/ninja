@@ -10,7 +10,7 @@ self.addEventListener("push", (e) => {
     body: d.body || "",
     // Produktbilden som ikon (liten bild bredvid texten) och som stor bild när notisen fälls ut (Android, Windows).
     // iPhone visar alltid appikonen och ignorerar bilderna.
-    icon: d.image || "/img/icon-192.png?v=2",
+    icon: d.image || "/img/icon-192.png?v=3",
     image: d.image || undefined,
     // Statusfältet på Android visar bara formen (vitt på genomskinligt), så badgen är en enfärgad ninjasiluett.
     badge: "/img/badge-96.png",

@@ -53,7 +53,7 @@ if ($action === 'login') {
 $authed = !empty($_SESSION['ok']);
 
 // ---------- Sidans skal ----------
-const LOGO = '<img src="https://lootninja.se/logo.svg" alt="" width="20" height="20">';
+const LOGO = '<img src="https://lootninja.se/img/favicon-48.png?v=3" alt="" width="20" height="20">';
 function page_head(string $title): string {
   // Inter bäddas in från huvudsidans fonts/-mapp: Hostingers CDN skickar inte CORS-huvudet som typsnitt behöver.
   $inter = @file_get_contents(dirname(__DIR__) . '/fonts/inter-latin-7.woff2');

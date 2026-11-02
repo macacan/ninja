@@ -36,13 +36,16 @@ const NAV = [
 const pageOf = () => (location.pathname.includes("/set/") ? "set/"
   : { "artikel.html": "nyheter.html" }[location.pathname.split("/").pop()] || location.pathname.split("/").pop().replace(/^index\.html$/, "") || "./");
 
+// Ordloggan "LOOT NINJA": den mörka versionen som standard, den ljusa i ljust läge (style.css väljer vilken som syns)
+const LOGO = `<img class="logo-mark" src="img/logo.png?v=1" alt="Lootninja" width="97" height="50"><img class="logo-mark logo-mark-light" src="img/logo-light.png?v=1" alt="" aria-hidden="true" width="97" height="50">`;
+
 function header() {
   const here = pageOf();
-  // På mobilen visas sidans namn i loggan i stället för "Lootninja" (startsidan behåller namnet).
-  const mobileTitle = here === "./" ? "Lootninja" : NAV.find(([href]) => href.split("#")[0] === here)?.[1] || "Lootninja";
+  // På mobilen visas sidans namn bredvid loggan (inte på startsidan, där loggan räcker).
+  const mobileTitle = here === "./" ? "" : NAV.find(([href]) => href.split("#")[0] === here)?.[1] || "";
   return `<a class="skip" href="${esc(location.pathname)}#main">Hoppa till innehållet</a>
   <header class="site-header"><div class="wrap">
-    <a class="logo" href="./"><img src="logo.svg" alt=""><span><b class="brand-desk">Lootninja</b><b class="brand-mob">${esc(mobileTitle)}</b><small>Kortsläpp & priser</small></span></a>
+    <a class="logo" href="./">${LOGO}${mobileTitle ? `<span><b class="brand-mob">${esc(mobileTitle)}</b></span>` : ""}</a>
     <nav class="main-nav" aria-label="Huvudmeny"><ul>
       ${NAV.map(([href, label]) => `<li><a href="${href}"${href.split("#")[0] === here ? ' aria-current="page"' : ""}>${label}</a></li>`).join("")}
     </ul></nav>
@@ -57,6 +60,28 @@ function header() {
 }
 
 // Mobilen: hamburgerknappen sitter i headern och öppnar menyn med alla sidor och sökfältet.
+// Påminnelse när pushnotiserna inte är på: en röd prick på Notiser (och på menyknappen på mobilen, där Notiser
+// ligger i menyn), och knapparna skakar till efter 20 sekunder och sedan en gång i minuten. Inte på Produkter-sidan,
+// där notiserna slås på, och inte i webbläsare som inte kan ta emot notiser (iPhone räknas, där läggs sidan på hemskärmen).
+function notisReminder() {
+  let on = false;
+  try { on = !!JSON.parse(localStorage.getItem("nl:prefs"))?.push && Notification.permission === "granted"; } catch {}
+  const possible = "Notification" in window || /iphone|ipad|ipod/i.test(navigator.userAgent);
+  if (on || !possible || pageOf() === "butiker.html") return;
+  const els = document.querySelectorAll(".notis-btn, .mm-notis, .menu-btn");
+  els.forEach((el) => el.classList.add("notis-off"));
+  document.querySelectorAll(".notis-btn, .mm-notis").forEach((el) => {
+    el.title = "Notiserna är inte på. Tryck för att slå på dem.";
+    el.setAttribute("aria-label", "Notiser (inte påslagna)");
+  });
+  const shake = () => els.forEach((el) => {
+    el.classList.remove("notis-shake");
+    void el.offsetWidth; // startar om animationen
+    el.classList.add("notis-shake");
+  });
+  setTimeout(() => { shake(); setInterval(shake, 60e3); }, 20e3);
+}
+
 function tabbar() {
   const here = pageOf();
   return `<div class="mobile-menu" id="mobile-menu" hidden>
@@ -81,7 +106,7 @@ function footer() {
     <div class="wrap">
     <div class="footer-grid">
       <div class="about">
-        <a class="logo" href="./"><img src="logo.svg" alt=""><span><b>Lootninja</b><small>Kortsläpp & priser</small></span></a>
+        <a class="logo" href="./">${LOGO}</a>
         <p>Ett ideellt hobbyprojekt. Ninjan smyger fram kortsläpp, set och priser – gratis och utan konto. Priser och lager är vägledande och kan innehålla felaktigheter.</p>
       </div>
       <div><h2>Utforska</h2><ul>${NAV.map(([h, l, only]) => `<li><a href="${h}">${l}${only ? ` (${only})` : ""}</a></li>`).join("")}<li><a href="set/">Alla set</a></li></ul></div>
@@ -131,6 +156,10 @@ export function mountChrome() {
   document.querySelectorAll("[data-icon]").forEach((el) => el.insertAdjacentHTML("afterbegin", icon(el.dataset.icon, +el.dataset.size || 28)));
   mountAllScenes();
   mountBanners();
+  // Har besökaren slagit på pushnotiser kollas prenumerationen på varje sida, och tecknas om den har försvunnit
+  // (js/push.js). Notismodulen laddas bara för dem som har notiserna på.
+  try { if (JSON.parse(localStorage.getItem("nl:prefs"))?.push) import("./push.js").then((m) => m.syncPush()).catch(() => {}); } catch {}
+  notisReminder();
   // Menyns sökfält söker i alla tre spelen, som startsidans (js/game-guess.js). One Piece och Riftbound går alltid
   // till Kortpriser, även från Värdering. Kortnamnen hämtas först när man börjar söka.
   const menuForm = $(".mm-search"), menuInput = menuForm?.querySelector("input[name=q]");

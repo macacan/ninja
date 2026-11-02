@@ -375,7 +375,7 @@ mountCardAutocomplete($("#pq"), {
 // Skannern (js/card-scanner.js) är stor och laddas först när knappen trycks.
 async function scanRb() {
   track("scan", "Öppnad");
-  const { openScanner } = await import("./card-scanner.js?v=20261101c");
+  const { openScanner } = await import("./card-scanner.js?v=20261102a");
   openScanner(({ cardId, name, number, total }) => {
     track("scan", cardId ? "Säker träff" : "Läst, söker");
     if (cardId) { openAfter = cardId; $("#pq").value = name || ""; }

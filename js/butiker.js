@@ -431,7 +431,7 @@ function refreshSummary() {
   const g = gamesOf(p).filter((x) => GAMES[x]);
   const more = [g.join() !== "pk" && (g.map((x) => GAMES[x]).join(" och ") || "Inget spel"), countText("p-langs") !== "Alla" && `${countText("p-langs")} språk`, countText("p-types") !== "Alla" && `${countText("p-types")} typer`, p.maxPrice && `max ${kr(p.maxPrice)}`].filter(Boolean);
   $("#sum-more").textContent = more.join(" · ") || "Alla";
-  $("#sum-channels").textContent = pushState() === "on" ? "Pushnotiser på" : "Inget valt";
+  $("#sum-channels").textContent = pushState() === "on" ? "På" : "Av";
   const n = products.filter((x) => productMatches(x, p)).length;
   $("#p-match").innerHTML = `<b>${n.toLocaleString("sv-SE")}</b> av ${products.length.toLocaleString("sv-SE")} förseglade produkter matchar dina val.`;
   renderWatchList();
@@ -507,16 +507,33 @@ $("#p-reset").addEventListener("click", () => {
   renderEvents();
 });
 
+// Rutan högst upp: rubrik, text, knapp och färg efter notisernas läge
 function updatePushButton() {
+  const PUSH_TEXT = {
+    off: ["Få ett pling när boxar kommer i lager", "Slå på notiser så säger ninjan till direkt när något du vill ha dyker upp. Gratis och utan konto."],
+    on: ["Notiserna är på", "Du får ett pling när något i dina val nedan händer, även när Lootninja är stängd."],
+    denied: ["Notiserna är blockerade", "Webbläsaren stoppar notiser från Lootninja. Så här tillåter du dem:"],
+    unsupported: ["Notiser fungerar inte här", "Den här webbläsaren kan inte ta emot notiser. Prova Chrome, Edge, Firefox eller Samsung Internet."],
+    "ios-install": ["Lägg Lootninja på hemskärmen först", "På iPhone och iPad kommer notiser bara fram när Lootninja öppnas från hemskärmen."],
+  };
   const btn = $("#p-push"), state = pushState();
+  $("#ntf-hero").dataset.state = state;
+  [$("#p-push-title").textContent, $("#p-push-lead").textContent] = PUSH_TEXT[state] || PUSH_TEXT.off;
   $("#p-push-ios").hidden = state !== "ios-install";
-  btn.hidden = state === "ios-install";
-  btn.disabled = state === "unsupported" || state === "denied";
-  btn.textContent = { on: "Stäng av pushnotiser", off: "Slå på pushnotiser", denied: "Notiser är blockerade i webbläsaren", unsupported: "Webbläsaren stöder inte pushnotiser" }[state] || "Slå på pushnotiser";
+  btn.hidden = state === "ios-install" || state === "unsupported" || state === "denied";
+  btn.textContent = state === "on" ? "Stäng av notiser" : "Slå på notiser";
   btn.classList.toggle("primary", state === "off");
+  btn.classList.toggle("small", state === "on");
   $("#p-push-test").hidden = state !== "on";
   $("#p-push-note").textContent = state === "denied" ? blockedHelp() : "";
+  // På iPhone utan hemskärmsikon är installationen det första steget, så den visas öppen
+  if (state === "ios-install") $("#installera").open = true;
 }
+// Länken "Installera som app" i rutan överst fäller ut avsnittet innan sidan hoppar dit
+$("#tab-notiser").addEventListener("click", (e) => {
+  const link = e.target.closest("[data-open]");
+  if (link) $(`#${link.dataset.open}`).open = true;
+});
 $("#p-push").addEventListener("click", async () => {
   const btn = $("#p-push");
   btn.disabled = true;

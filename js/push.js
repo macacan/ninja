@@ -32,7 +32,7 @@ const subscription = async () => (await navigator.serviceWorker.getRegistration(
 // datorn släpper igenom notiser från Lootninja (och inte blockerar dem med Stör ej eller fokusläge).
 export async function localNotice(body, tag = "lootninja-local") {
   const reg = await navigator.serviceWorker.ready;
-  await reg.showNotification("Lootninja", { body, icon: "img/icon-192.png?v=2", badge: "img/badge-96.png", tag, data: { url: "butiker.html#notiser" } });
+  await reg.showNotification("Lootninja", { body, icon: "img/icon-192.png?v=3", badge: "img/badge-96.png", tag, data: { url: "butiker.html#notiser" } });
 }
 
 export async function enablePush() {
@@ -54,7 +54,7 @@ export async function testPush(p, storeName = "") {
   const price = `${Math.round(p.price).toLocaleString("sv-SE")} kr`;
   await reg.showNotification(p.title, {
     body: `NY · ${price}\n${storeName}${storeName ? " · " : ""}Testnotis`,
-    icon: p.image || "img/icon-192.png?v=2", image: p.image || undefined, badge: "img/badge-96.png",
+    icon: p.image || "img/icon-192.png?v=3", image: p.image || undefined, badge: "img/badge-96.png",
     tag: "lootninja-test", data: { url: p.url || "butiker.html#notiser" },
   });
 }
@@ -89,17 +89,29 @@ export async function disablePush() {
   savePrefs({ ...getPrefs(), push: false });
 }
 
-// Skickar det sparade urvalet till servern, efter "Spara mina val", en ny bevakning med klockan och när sidan laddas
-// (då kommer servern ikapp om webbläsaren bytt adress).
+// Prenumerationen, och en ny om webbläsaren har tappat den. Behörigheten finns kvar, så det går utan att fråga igen.
+// Det händer t.ex. när sajten publiceras om: kan sw.js inte hämtas en kort stund kan webbläsaren slänga service
+// workern och prenumerationen med den. Utan det här fick besökaren slå på notiserna igen efter varje uppdatering.
+async function ensureSubscription() {
+  const reg = (await navigator.serviceWorker.getRegistration()) || await navigator.serviceWorker.register("sw.js");
+  await navigator.serviceWorker.ready;
+  return (await reg.pushManager.getSubscription()) || reg.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: key() });
+}
+
+// Skickar det sparade urvalet till servern, efter "Spara mina val", en ny bevakning med klockan och när någon sida
+// laddas (site.js). Då kommer servern ikapp om webbläsaren bytt adress eller tecknat en ny prenumeration.
 let timer;
 export function syncPush() {
   if (!getPrefs().push || !supported()) return;
   clearTimeout(timer);
   timer = setTimeout(async () => {
+    // Bara om besökaren själv tagit bort behörigheten stängs notiserna av här
+    if (Notification.permission !== "granted") return savePrefs({ ...getPrefs(), push: false });
     try {
-      const sub = await subscription();
-      if (sub) await post("subscribe", payload(sub));
-      else savePrefs({ ...getPrefs(), push: false }); // prenumerationen är borta, t.ex. om man nekat notiser i inställningarna
-    } catch {}
+      await post("subscribe", payload(await ensureSubscription()));
+    } catch {
+      // Gick det inte att teckna en ny (t.ex. ingen kontakt med notistjänsten) får besökaren slå på dem igen
+      if (!(await subscription().catch(() => null))) savePrefs({ ...getPrefs(), push: false });
+    }
   }, 600);
 }

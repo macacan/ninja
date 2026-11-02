@@ -583,7 +583,7 @@ export function icon(name, size = 22) {
 export function mountAllScenes() {
   const presets = {
     // Startsidans landskap: hela scenen i dubbel skala, så att den blir hälften så hög som förut.
-    hero: { height: 112, smallHeight: 58, scale: 2, ground: 26, seed: 7, shop: true, sign: "LOOTNINJA" },
+    hero: { height: 112, smallHeight: 58, scale: 2, ground: 26, seed: 7, shop: true },
     // Remsan under sidrubrikerna: lägre och i mindre skala, så att sidhuvudet inte tar halva skärmen.
     strip: { height: 30, smallHeight: 24, ground: 9, scale: 2, mountains: false, pond: false, path: false, ninja: false, seed: 21 },
     footer: { height: 52, ground: 22, mountains: false, pond: true, ninjaDir: -1, seed: 3 },

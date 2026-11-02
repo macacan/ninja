@@ -33,8 +33,16 @@ canvas.scene{display:block;width:100%;image-rendering:pixelated;image-rendering:
 .site-header{position:sticky;top:0;z-index:30;background:rgba(251,252,253,.92);backdrop-filter:saturate(1.4) blur(10px);border-bottom:1px solid var(--line);box-shadow:0 6px 18px -12px rgba(27,27,47,.25)}
 .site-header .wrap{display:flex;align-items:center;gap:22px;min-height:72px}
 .logo{display:flex;align-items:center;gap:10px;text-decoration:none;flex:none}
-.logo img{width:44px;height:44px;transition:transform .2s steps(2)}
-.logo:hover img{transform:rotate(-8deg) translateY(-2px)}
+.logo .logo-mark{display:block;width:auto;height:40px;transition:transform .2s steps(2)}
+.logo:hover .logo-mark{transform:translateY(-2px)}
+/* Den mörka ordloggan är standard. I headern byts den mot den ljusa i ljust läge (sidfoten är alltid mörk). */
+.logo .logo-mark-light{display:none}
+:root[data-theme="light"] .site-header .logo-mark{display:none}
+:root[data-theme="light"] .site-header .logo-mark-light{display:block}
+@media (prefers-color-scheme:light){
+  :root:not([data-theme="dark"]) .site-header .logo-mark{display:none}
+  :root:not([data-theme="dark"]) .site-header .logo-mark-light{display:block}
+}
 .logo b{font:700 1.5rem/1 var(--pixel)}
 .logo small{display:block;font:500 .7rem/1 var(--sans);color:var(--muted);letter-spacing:.5px;text-transform:uppercase;margin-top:3px}
 .logo .brand-mob{display:none}
@@ -54,6 +62,14 @@ canvas.scene{display:block;width:100%;image-rendering:pixelated;image-rendering:
 .notis-btn{display:flex;align-items:center;gap:7px;flex:none;height:38px;padding:0 14px;border:1px solid var(--line);border-radius:999px;background:var(--card);color:var(--ink);text-decoration:none;font:600 .92rem/1 var(--pixel);white-space:nowrap}
 .notis-btn:hover{border-color:var(--ink)}
 .notis-btn svg{flex:none}
+/* Notiserna är inte på (site.js): röd prick på Notiser och menyknappen, och en skakning då och då */
+.notis-btn.notis-off,.mm-notis.notis-off{position:relative}
+.notis-off::after{content:"";position:absolute;top:-2px;right:-2px;width:11px;height:11px;border-radius:50%;background:var(--red);box-shadow:0 0 0 2px var(--card);pointer-events:none}
+.notis-shake{animation:notisShake .9s ease-in-out}
+.notis-shake svg{animation:notisRing .9s ease-in-out}
+@keyframes notisShake{10%,50%{translate:-3px 0}30%,70%{translate:3px 0}90%{translate:-1px 0}}
+@keyframes notisRing{10%{rotate:-18deg}30%{rotate:16deg}50%{rotate:-12deg}70%{rotate:8deg}90%{rotate:-3deg}}
+@media (prefers-reduced-motion:reduce){.notis-shake,.notis-shake svg{animation:none}}
 @media (max-width:860px){.notis-btn{display:none}}
 /* Headerns mitt: menyn centreras i rutnätet, och verktygen (notis, tema) ligger till höger. Mobilen behåller sin layout. */
 .header-tools{display:contents}
@@ -64,13 +80,12 @@ canvas.scene{display:block;width:100%;image-rendering:pixelated;image-rendering:
   .header-tools{display:flex;align-items:center;gap:14px;grid-column:3;justify-self:end}
 }
 @media (min-width:861px) and (max-width:1100px){.main-nav a{padding:9px 6px}}
-@media (min-width:861px) and (max-width:1000px){.notis-btn{padding:0 11px}.notis-btn span{display:none}.site-header .logo .brand-desk{font-size:20px}}
+@media (min-width:861px) and (max-width:1000px){.notis-btn{padding:0 11px}.notis-btn span{display:none}}
 @media (max-width:860px){
   /* Headern följer med sidan i stället för att ligga kvar överst. */
   .site-header{position:static;backdrop-filter:none;z-index:auto}
   .site-header .wrap{min-height:62px}
-  .logo img{width:40px;height:40px}
-  .logo .brand-desk{display:none}
+  .logo .logo-mark{height:36px}
   .logo .brand-mob{display:inline}
   .main-nav{display:none}
   /* Sidrubriken och det blå bandet under headern visas inte på mobilen (rubriken finns kvar för skärmläsare). */
@@ -219,7 +234,7 @@ canvas.scene{display:block;width:100%;image-rendering:pixelated;image-rendering:
 /* ---------- Laddning och meddelanden ---------- */
 /* Tomma lägen och fel visas med en liten ninja, så att de känns som en del av sidan. */
 .msg{grid-column:1/-1;display:flex;align-items:center;gap:14px;background:var(--surface);border:2px dashed #d3d8e4;border-radius:12px;padding:16px 18px;color:var(--muted)}
-.msg::before{content:"";flex:none;width:42px;height:42px;background:url(logo.svg) center/contain no-repeat}
+.msg::before{content:"";flex:none;width:58px;height:42px;background:url(img/logo.png?v=1) center/contain no-repeat}
 .loading{grid-column:1/-1;display:flex;align-items:center;gap:14px;font:600 1rem var(--pixel);color:var(--muted);padding:18px 0}
 .loading .bar{width:120px;height:14px;box-shadow:0 0 0 2px var(--ink);background:repeating-linear-gradient(90deg,var(--red) 0 10px,transparent 10px 14px);background-size:14px 100%;animation:load 2s steps(8) infinite;clip-path:inset(0 100% 0 0)}
 @keyframes load{to{clip-path:inset(0 0 0 0)}}
@@ -357,7 +372,7 @@ input[type=search]{width:100%;max-width:360px}
 .site-footer a{text-decoration:none;color:#e9eaf2}
 .site-footer a:hover{color:#fff;text-decoration:underline}
 .site-footer .about p{margin:10px 0 0;opacity:.8;font-size:.92rem;max-width:340px}
-.site-footer .logo img{background:var(--card);border-radius:50%;padding:3px}
+.site-footer .logo .logo-mark{height:48px}
 .site-footer .logo small{color:#a9adc2}
 .footer-legal{margin-top:30px;padding-top:16px;border-top:1px solid rgba(255,255,255,.15);font-size:.8rem;opacity:.7}
 
@@ -530,13 +545,8 @@ input[type=search]{width:100%;max-width:360px}
 .day .num{font:700 1rem/1 var(--sans);width:28px;height:28px;display:grid;place-items:center;border-radius:4px}
 .day.today .num{background:var(--red);color:#fff;box-shadow:0 0 0 2px var(--ink)}
 .day.has:not(.out){background:#fffbef}
-/* Ninjan står på dagens datum och gungar lite. */
 .day.today{position:relative}
-.today-ninja{position:absolute;inset:0;margin:auto;width:72px;height:72px;pointer-events:none;animation:ninjaBob 2.4s ease-in-out infinite}
 /* Har dagen släpp får chippen platsen, och ninjan flyttar upp i hörnet. */
-.day.today.has .today-ninja{inset:6px 6px auto auto;margin:0;width:34px;height:34px}
-@keyframes ninjaBob{50%{transform:translateY(-3px) rotate(-4deg)}}
-@media (prefers-reduced-motion:reduce){.today-ninja{animation:none}}
 .evs{list-style:none;margin:0;padding:0;display:grid;gap:5px}
 .ev{display:flex;flex-direction:column;align-items:flex-start;gap:3px;font:600 .74rem/1.2 var(--sans);padding:5px 6px;border-radius:4px;min-width:0}
 .ev span{overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
@@ -564,8 +574,6 @@ input[type=search]{width:100%;max-width:360px}
   .dots i{width:7px;height:7px}
   .cal-dow span{font-size:.7rem}
   .agenda{display:grid}
-  .today-ninja{inset:auto 0 3px;width:26px;height:26px}
-  .day.today.has .today-ninja{inset:2px 2px auto auto;width:20px;height:20px}
 }
 @media (max-width:640px){
   .tcard .art{height:76px}
@@ -680,7 +688,7 @@ input[type=search]{width:100%;max-width:360px}
 
 /* Artiklar med miniatyrbild */
 .news{display:grid;grid-template-columns:200px 1fr;gap:18px;align-items:center;padding:14px}
-.news-img{aspect-ratio:16/10;border-radius:8px;overflow:hidden;background:var(--surface) url(logo.svg) center/40px no-repeat}
+.news-img{aspect-ratio:16/10;border-radius:8px;overflow:hidden;background:var(--surface) url(img/logo.png?v=1) center/72px auto no-repeat}
 .news-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .25s}
 .news:hover .news-img img{transform:scale(1.05)}
 .news-body{display:grid;gap:6px;min-width:0}
@@ -776,7 +784,7 @@ input[type=search],select,.shop-search{background:#fff}
 .stats-optout p{margin:0 0 10px}
 .stats-optout p.muted{margin:8px 0 0;font-size:.88rem}
 .stats-optout .btn{margin-left:var(--px)}
-.noimg{display:grid;place-items:center;gap:6px;text-align:center;width:100%;height:100%;border-radius:6px;background:var(--surface) url(logo.svg) center 28%/56px no-repeat;padding:58% 10px 10px;font-size:.78rem;color:var(--muted)}
+.noimg{display:grid;place-items:center;gap:6px;text-align:center;width:100%;height:100%;border-radius:6px;background:var(--surface) url(img/logo.png?v=1) center 28%/80px auto no-repeat;padding:58% 10px 10px;font-size:.78rem;color:var(--muted)}
 .noimg b{font:700 .95rem/1.1 var(--cond);text-transform:uppercase;color:var(--ink)}
 
 /* ---------- Släppsidan ---------- */
@@ -1153,27 +1161,28 @@ span.rd-logo{display:grid;place-items:center;background:var(--surface);border-ra
 .footer-csoon{display:inline-block;margin-left:6px;padding:1px 6px;border-radius:999px;background:rgba(255,255,255,.12);color:#a9adc2;font:600 .65rem/1.3 var(--sans);letter-spacing:.3px;vertical-align:1px}
 
 .ntf{max-width:860px}
-.ntf-intro{display:flex;align-items:center;justify-content:space-between;gap:16px 18px;flex-wrap:wrap;margin:4px 0 0;padding:16px 18px;background:var(--surface);border:2px solid var(--ink);border-radius:10px;box-shadow:4px 4px 0 var(--ink)}
-.ntf-intro p{margin:0;flex:1 1 320px;line-height:1.5}
-.ntf-status{display:flex;gap:10px}
+/* Rutan högst upp: notisernas läge och knappen som slår på dem. Färgen följer läget (data-state, js/butiker.js). */
+.ntf-hero{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:16px 18px;align-items:start;margin:4px 0 0;padding:20px 22px;background:var(--card);border:2px solid var(--ink);border-left:8px solid var(--red);border-radius:10px;box-shadow:4px 4px 0 var(--ink)}
+.ntf-hero[data-state=on]{border-left-color:#2fb344}
+.ntf-hero[data-state=denied],.ntf-hero[data-state=unsupported]{border-left-color:var(--muted)}
+.ntf-hero-ic{display:grid;place-items:center;width:56px;height:56px;border-radius:12px;background:var(--surface);color:var(--red)}
+.ntf-hero[data-state=on] .ntf-hero-ic{background:rgba(47,179,68,.14);color:#2fb344}
+.ntf-hero h3{margin:2px 0 6px;font:700 1.3rem/1.2 var(--pixel)}
+.ntf-hero-text>p{margin:0 0 14px;line-height:1.5}
+.ntf-hero .ntf-push-btns{margin:0}
+.ntf-hero #p-push.primary{font-size:1.05rem;padding:13px 26px}
+.ntf-note{margin:12px 0 0;font-size:.9rem;line-height:1.5}
+.ntf-note:empty{display:none}
+.ntf-lead{margin:-4px 0 12px;font-size:.92rem;line-height:1.5}
+.ntf-status{display:flex;flex-direction:column;gap:8px}
 .ntf-status span{display:grid;gap:3px;min-width:100px;padding:8px 12px;background:var(--card);border:2px solid var(--line);border-radius:8px}
 .ntf-status small{font:600 .7rem var(--sans);text-transform:uppercase;letter-spacing:.5px;color:var(--muted)}
 .ntf-status em{font:700 .82rem/1.2 var(--pixel);font-style:normal;color:var(--ink)}
 .ntf-step{display:flex;align-items:center;gap:10px;margin:30px 0 12px;font:700 1.05rem var(--pixel)}
 .ntf-step i{display:grid;place-items:center;flex:none;width:28px;height:28px;font:700 .9rem/1 var(--pixel);font-style:normal;color:#1b1b2f;background:var(--gold);border:2px solid var(--ink);border-radius:6px}
 .ntf-ic{display:grid;place-items:center;flex:none;width:44px;height:44px;background:var(--surface);border-radius:8px}
-.ntf-channels{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;align-items:stretch}
-.ntf-chan{display:flex}
-.ntf-chan>div{display:flex;flex-direction:column}
-.ntf-chan .btn{align-self:flex-start;margin-top:auto}
-.ntf-chan .topics{max-height:280px;overflow:auto;padding-right:4px}
 .ntf-push-btns{display:flex;flex-wrap:wrap;gap:8px;margin-top:auto}
 .ntf-push-btns .btn{margin-top:0}
-@media (max-width:760px){.ntf-channels{grid-template-columns:1fr}}
-.ntf-chan{display:flex;gap:14px;align-items:flex-start;padding:16px;background:var(--card);border:2px solid var(--line);border-radius:10px}
-.ntf-chan>div{flex:1;min-width:0}
-.ntf-chan b{font:700 1.05rem var(--cond);text-transform:uppercase;letter-spacing:.3px}
-.ntf-chan p{margin:4px 0 12px;font-size:.92rem;line-height:1.45}
 .ntf-list{display:grid;gap:8px}
 .ntf-row{background:var(--card);border:2px solid var(--line);border-radius:10px;overflow:hidden;transition:border-color .15s}
 .ntf-row[open]{border-color:var(--ink)}
@@ -1220,8 +1229,11 @@ span.rd-logo{display:grid;place-items:center;background:var(--surface);border-ra
 .watch-list li>span{display:grid;min-width:0}
 .watch-list small{color:var(--muted)}
 @media (max-width:600px){
-  .ntf-intro{padding:14px}
-  .ntf-status{width:100%}
+  .ntf-hero{grid-template-columns:minmax(0,1fr);padding:16px 16px 16px 14px;gap:12px}
+  .ntf-hero-ic{display:none}
+  .ntf-hero h3{font-size:1.1rem}
+  .ntf-hero #p-push.primary{width:100%}
+  .ntf-status{flex-direction:row}
   .ntf-status span{flex:1;min-width:0}
   .ntf-row>summary{gap:10px;padding:10px 12px}
   .ntf-row>summary .ntf-ic{width:32px;height:32px}
@@ -1318,7 +1330,7 @@ span.rd-logo{display:grid;place-items:center;background:var(--surface);border-ra
 .agrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
 .acard{position:relative;display:flex;flex-direction:column;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;box-shadow:0 1px 2px rgba(27,27,47,.06);transition:transform .18s,box-shadow .18s}
 .acard:hover{transform:translateY(-3px);box-shadow:0 14px 28px -16px rgba(27,27,47,.4)}
-.acard-img{position:relative;aspect-ratio:16/9;background:var(--surface) url(logo.svg) center/48px no-repeat;overflow:hidden}
+.acard-img{position:relative;aspect-ratio:16/9;background:var(--surface) url(img/logo.png?v=1) center/88px auto no-repeat;overflow:hidden}
 .acard-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .3s}
 .acard:hover .acard-img img{transform:scale(1.05)}
 .acard-src{position:absolute;left:12px;bottom:12px;background:var(--ink-solid);color:#fff;font:600 .72rem/1 var(--sans);text-transform:uppercase;letter-spacing:.5px;padding:6px 9px;border-radius:5px}
@@ -2947,6 +2959,43 @@ input[type=search]::-webkit-search-results-decoration {
 .scan-torch:hover{background:rgba(30,34,64,.75)}
 .scan-torch.active{background:var(--ai-grad);border-color:transparent;box-shadow:0 0 18px rgba(139,92,246,.8)}
 .scan-tip{position:absolute;left:0;right:0;bottom:12px;margin:0;padding:0 14px;text-align:center;color:rgba(232,234,246,.75);font-size:.78rem;text-shadow:0 1px 4px rgba(0,0,0,.9);z-index:4}
+/* Snabbskanning: knappen "Flera kort", högen nere till vänster, kortet som poppar upp och listan över skannade kort */
+.scan-multi{position:absolute;bottom:40px;right:12px;z-index:10;height:36px;padding:0 12px 0 10px;border-radius:18px;color:#fff;display:flex;align-items:center;gap:6px;font:inherit;font-size:12px;font-weight:700;cursor:pointer;background:rgba(12,14,30,.55);backdrop-filter:blur(14px) saturate(1.4);-webkit-backdrop-filter:blur(14px) saturate(1.4);border:1px solid rgba(255,255,255,.12);transition:background .2s,box-shadow .2s}
+.scan-multi:hover{background:rgba(30,34,64,.75)}
+.scan-multi.active{background:#16a34a;border-color:transparent;box-shadow:0 0 16px rgba(74,222,128,.55)}
+.scan.frozen .scan-multi,.scan.frozen .scan-tray{display:none}
+.scan-tray{position:absolute;left:12px;bottom:40px;z-index:6;width:64px;height:78px;padding:0;border:0;background:none;cursor:pointer}
+.scan-tray[hidden]{display:none}
+.scan-tray-stack{position:absolute;inset:0}
+.scan-tray-stack>*{position:absolute;left:8px;top:6px;width:48px;height:67px;border-radius:5px;object-fit:cover;background:#1b1e33;border:2px solid #fff;box-shadow:0 4px 12px rgba(0,0,0,.55)}
+.scan-tray-stack>:nth-last-child(2){transform:rotate(-8deg) translate(-3px,1px)}
+.scan-tray-stack>:nth-last-child(3){transform:rotate(7deg) translate(4px,2px)}
+.scan-tray b{position:absolute;top:-2px;right:0;min-width:22px;height:22px;padding:0 6px;border-radius:11px;background:#16a34a;color:#fff;font:800 .75rem/22px var(--sans);text-align:center;box-shadow:0 2px 6px rgba(0,0,0,.4)}
+.scan-tray:focus-visible{outline:2px solid #4ade80;outline-offset:2px;border-radius:8px}
+.scan-tray.bump .scan-tray-stack{animation:trayBump .35s ease-out}
+@keyframes trayBump{40%{transform:scale(1.14)}}
+.scan-pop{position:absolute;inset:0;z-index:7;display:grid;place-items:center;pointer-events:none}
+.scan-pop>div{display:flex;flex-direction:column;align-items:center;gap:8px;will-change:transform,opacity}
+.scan-pop img,.scan-pop i{width:150px;height:209px;border-radius:9px;object-fit:cover;background:#1b1e33;border:3px solid #4ade80;box-shadow:0 0 28px rgba(74,222,128,.55),0 14px 36px rgba(0,0,0,.6)}
+.scan-pop span{max-width:240px;padding:5px 12px;border-radius:999px;background:rgba(12,14,30,.85);color:#fff;font-size:.82rem;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.scan.listing .scan-view,.scan.listing>.scan-actions{display:none}
+.scan-list{padding:18px 14px 0}
+.scan-list[hidden],.scan-list-empty[hidden]{display:none}
+.scan-list-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}
+.scan-list-head h2{margin:0;font-size:1.05rem;color:#fff}
+.scan-list-head h2 span{color:#9aa7c2;font-weight:600}
+.scan-list-head .scan-ghost{font:inherit;font-size:.8rem;font-weight:600;border-radius:999px;padding:7px 14px;cursor:pointer}
+.scan-list ul{list-style:none;margin:0;padding:0;display:grid;gap:8px;max-height:min(60dvh,520px);overflow:auto}
+.scan-list li button{width:100%;display:flex;align-items:center;gap:12px;padding:6px 12px 6px 6px;border-radius:12px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:inherit;font:inherit;text-align:left;cursor:pointer;transition:border-color .15s,background .15s}
+.scan-list li button:hover{border-color:#4ade80;background:rgba(74,222,128,.08)}
+.scan-list li button:focus-visible{outline:2px solid #4ade80;outline-offset:1px}
+.scan-list li img,.scan-list li i{flex:none;width:44px;height:61px;border-radius:5px;object-fit:cover;background:#1b1e33}
+.scan-list li span{min-width:0;display:grid;gap:2px}
+.scan-list li b{font-size:.92rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.scan-list li small{color:#9aa7c2;font-size:.76rem}
+.scan-list-empty{color:#9aa7c2;font-size:.88rem;margin:6px 0 0}
+.scan-list .scan-actions{padding:14px 0}
+@media (prefers-reduced-motion:reduce){.scan-tray.bump .scan-tray-stack{animation:none}}
 .scan-actions{display:flex;gap:8px;align-items:center;padding:14px}
 .scan-actions>*{font:inherit;font-size:.85rem;font-weight:600;border-radius:999px;padding:11px 16px;cursor:pointer;text-align:center;transition:background .2s,transform .15s,box-shadow .2s}
 .scan-actions>*:active{transform:scale(.97)}
@@ -3866,8 +3915,7 @@ button.zm-price:hover{background:#1f2132}
 /* Notiser: instruktionen för iPhone och iPad (visas bara där, se js/push.js). */
 .ntf-ios{margin:8px 0 12px;padding:10px 12px;border-radius:8px;background:var(--surface);font-size:.92rem;line-height:1.5}
 .ntf-ios b{font:inherit;font-weight:700;text-transform:none;letter-spacing:0}
-.ntf-guide{margin:16px 0 0}
-.ntf-howto{margin:0;padding-left:22px;line-height:1.55}
+.ntf-howto{margin:14px 0 0;padding-left:22px;line-height:1.55}
 .ntf-howto>li{margin:0 0 10px}
 .ntf-howto ul{margin:6px 0 0;padding-left:18px}
 .ntf-howto ul li{margin:4px 0}
@@ -4037,11 +4085,9 @@ button.zm-price:hover{background:#1f2132}
 }
 
 /* Notiser: "Installera Lootninja som app" med steg för Android och iPhone (js/butiker.js). */
-.ntf-install{display:grid;gap:12px;margin:14px 0 4px;padding:16px 18px;background:var(--card);border:2px solid var(--line);border-radius:10px}
-.ntf-install-head{display:flex;gap:14px;align-items:flex-start}
-.ntf-install-head img{flex:none;width:52px;height:52px;border-radius:12px}
-.ntf-install h3{margin:0 0 4px;font:600 1.15rem/1.2 var(--pixel)}
-.ntf-install-head p{margin:0;font-size:.92rem;line-height:1.5}
+.ntf-install .ntf-body{display:grid;gap:12px;padding-top:14px}
+.ntf-install .ntf-body>p{margin:0;font-size:.92rem;line-height:1.5}
+.ntf-install .ntf-ic img{border-radius:6px}
 .install-done{margin:0;padding:10px 12px;border-radius:8px;background:#e6f6ea;color:#1f6b33;font-weight:600;font-size:.92rem}
 #install-btn{justify-self:start}
 .install-tabs{margin-left:0;justify-self:start}
@@ -4049,7 +4095,6 @@ button.zm-price:hover{background:#1f2132}
 .install-steps{margin:0;padding-left:22px;display:grid;gap:8px;font-size:.95rem;line-height:1.5}
 .install-steps li::marker{font:700 .95rem var(--pixel);color:var(--red)}
 @media (max-width:640px){
-  .ntf-install{padding:14px}
   .install-tabs{justify-self:stretch}
 }
 
