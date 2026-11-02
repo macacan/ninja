@@ -269,6 +269,7 @@ input[type=search]{width:100%;max-width:360px}
 .restock-side .restock-actions{justify-content:center}
 .restock-intro{display:flex;flex-direction:column;gap:16px;padding:28px 30px;border-radius:12px;background:rgba(14,16,28,.5);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.12)}
 .restock-intro h1{margin:0;text-align:center;font:600 clamp(1.3rem,2.2vw,1.75rem)/1.25 var(--pixel);color:#fff;text-wrap:balance;text-shadow:0 2px 4px rgba(0,0,0,.45)}
+.restock-intro .ri-games{margin-top:-8px;max-width:none;text-align:center;font:700 .85rem/1.3 var(--sans);color:#c9d3ec;letter-spacing:.3px}
 .restock-intro p{margin:0;max-width:52ch;color:#e1e6f5;font-size:.98rem;line-height:1.65;text-wrap:pretty;text-shadow:0 1px 2px rgba(0,0,0,.4)}
 .restock-facts{list-style:none;margin:4px 0 0;padding:16px 0 0;border-top:1px solid rgba(255,255,255,.14);display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
 .restock-facts li{display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;font-size:.9rem;font-weight:600;color:#e1e6f5}
@@ -3178,6 +3179,9 @@ input[type=search]::-webkit-search-results-decoration {
 @media (max-width:640px){
   .restock{margin-top:18px;padding:18px 14px}
   .restock h2{font-size:1.3rem}
+  /* Startsidan: flödet närmare introt ovanför. */
+  #restock{row-gap:12px}
+  #restock h2{margin-top:0}
   .restock-lead{font-size:.88rem}
   .pack{--w:92px}
   .pack-row{gap:10px}
