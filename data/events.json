@@ -1,6 +1,62 @@
 {
- "updated": 1793656203899,
+ "updated": 1793657123910,
  "events": [
+  {
+   "at": 1793656340962,
+   "store": "samlarhobby",
+   "product": "samlarhobby:16095507087741",
+   "group": "crown-zenith|elite-trainer-box|en|",
+   "title": "Pokémon, Sword & Shield 12.5: Crown Zenith, Elite Trainer Box",
+   "url": "https://samlarhobby.se/products/pokemon-sword-shield-12-5-crown-zenith-elite-trainer-box",
+   "image": "https://cdn.shopify.com/s/files/1/0905/3120/1405/files/6374dc8871b6a.jpg?v=1793656134",
+   "price": 4395,
+   "type": "Elite Trainer Box",
+   "set": "Crown Zenith",
+   "lang": "en",
+   "kind": "ny"
+  },
+  {
+   "at": 1793656340962,
+   "store": "samlarhobby",
+   "product": "samlarhobby:16095506923901",
+   "group": "sword-shield|elite-trainer-box|en||champions-path",
+   "title": "Pokémon, Sword & Shield 3.5: Champions Path, Elite Trainer Box",
+   "url": "https://samlarhobby.se/products/pokemon-sword-shield-3-5-champions-path-elite-trainer-box",
+   "image": "https://cdn.shopify.com/s/files/1/0905/3120/1405/files/637552673_fdbd9065-09a0-489b-aa72-34db51b9c495.jpg?v=1793656036",
+   "price": 2395,
+   "type": "Elite Trainer Box",
+   "set": "Sword & Shield",
+   "lang": "en",
+   "kind": "ny"
+  },
+  {
+   "at": 1793656340962,
+   "store": "samlarhobby",
+   "product": "samlarhobby:16095506497917",
+   "group": "battle-styles|booster-box|en|",
+   "title": "Pokémon, Sword & Shield: Battle Styles, Display / Booster Box",
+   "url": "https://samlarhobby.se/products/pokemon-sword-shield-battle-styles-display-booster-box",
+   "image": "https://cdn.shopify.com/s/files/1/0905/3120/1405/files/Skarmbild2026-03-02134158.jpg?v=1793655876",
+   "price": 4195,
+   "type": "Booster Box",
+   "set": "Battle Styles",
+   "lang": "en",
+   "kind": "ny"
+  },
+  {
+   "at": 1793656340962,
+   "store": "samlarhobby",
+   "product": "samlarhobby:16095499026813",
+   "group": "burning-shadows|blister|en||3",
+   "title": "Pokémon, Sun & Moon: Burning Shadows, 3-Pack Blister: Alolan Meowth",
+   "url": "https://samlarhobby.se/products/pokemon-sun-moon-burning-shadows-3-pack-blister-alolan-meowth",
+   "image": "https://cdn.shopify.com/s/files/1/0905/3120/1405/files/meowth.jpg?v=1793653541",
+   "price": 1495,
+   "type": "Blister",
+   "set": "Burning Shadows",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793655429546,
    "store": "samlarhobby",
@@ -6996,58 +7052,6 @@
    "set": null,
    "lang": "en",
    "kind": "forbestallning"
-  },
-  {
-   "at": 1793096978557,
-   "store": "toyspace",
-   "product": "toyspace:https://toyspace.se/pokemon-tcg-mega-greninja-ex-premium-collection-pok10413-101",
-   "group": "x|premium-collection|en||greninja-samlingspaket",
-   "title": "Pokémon TCG Mega Greninja ex Premium Collection - samlingspaket",
-   "url": "https://toyspace.se/pokemon-tcg-mega-greninja-ex-premium-collection-pok10413-101",
-   "price": 787,
-   "type": "Premium Collection",
-   "set": null,
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793096978557,
-   "store": "toyspace",
-   "product": "toyspace:https://toyspace.se/pokemon-tcg-poke-ball-burk-pok10273-104",
-   "group": "x|tin|en||ball-boosterpaket-poke",
-   "title": "Pokémon TCG Poké Ball Tin med 3 boosterpaket",
-   "url": "https://toyspace.se/pokemon-tcg-poke-ball-burk-pok10273-104",
-   "price": 344,
-   "type": "Tin",
-   "set": null,
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793096978557,
-   "store": "toyspace",
-   "product": "toyspace:https://toyspace.se/pokemon-tcg-forsta-partner-illustrationssamling-serie-3",
-   "group": "x|collection-box|en||first-illustration-partner-s3",
-   "title": "Pokémon TCG First Partner Illustration Collection Series 3",
-   "url": "https://toyspace.se/pokemon-tcg-forsta-partner-illustrationssamling-serie-3",
-   "price": 494,
-   "type": "Collection Box",
-   "set": null,
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793096978557,
-   "store": "toyspace",
-   "product": "toyspace:https://toyspace.se/pokemon-tcg-zarude-2-pack-blister-pok10412-101",
-   "group": "x|blister|en||2|mynt-promokort-zarude",
-   "title": "Pokémon TCG Zarude 2-Pack Blister med promokort och mynt",
-   "url": "https://toyspace.se/pokemon-tcg-zarude-2-pack-blister-pok10412-101",
-   "price": 188,
-   "type": "Blister",
-   "set": null,
-   "lang": "en",
-   "kind": "tillbaka"
   }
  ]
 }
