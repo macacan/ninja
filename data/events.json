@@ -1,6 +1,21 @@
 {
- "updated": 1793622829855,
+ "updated": 1793623749874,
  "events": [
+  {
+   "at": 1793623739828,
+   "store": "maxgaming",
+   "product": "maxgaming:https://maxgaming.se/sv/pokemon/pokemon-151c-gathering-booster-box-forenklad-kinesiska",
+   "group": "x|booster-box|zh||151c-gathering",
+   "title": "Pokémon 151C Gathering Booster Box (Simplified Chinese)",
+   "url": "https://maxgaming.se/sv/pokemon/pokemon-151c-gathering-booster-box-forenklad-kinesiska",
+   "image": "https://www.maxgaming.se/bilder/artiklar/37037.jpg?m=1761224456",
+   "price": 999,
+   "type": "Booster Box",
+   "set": null,
+   "lang": "zh",
+   "kind": "prissankt",
+   "from": 1199
+  },
   {
    "at": 1793622759221,
    "store": "shinycards",
@@ -6930,20 +6945,6 @@
    "lang": "en",
    "kind": "prissankt",
    "from": 169
-  },
-  {
-   "at": 1792920459911,
-   "store": "samlarverket",
-   "product": "samlarverket:11183011889495",
-   "group": "30th-celebration|collection-box|en||sylveon",
-   "title": "Pokémon 30th Celebration Sylveon Ex Box",
-   "url": "https://samlarverket.com/produkt/30th-celebration-sylveon-ex-box",
-   "price": 629,
-   "type": "Collection Box",
-   "set": "30th Celebration",
-   "lang": "en",
-   "kind": "prissankt",
-   "from": 679
   }
  ]
 }
