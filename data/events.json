@@ -1,6 +1,35 @@
 {
- "updated": 1793621909838,
+ "updated": 1793622829855,
  "events": [
+  {
+   "at": 1793622759221,
+   "store": "shinycards",
+   "product": "shinycards:https://www.shinycards.se/pokemon/booster-box/pokemon-black-crystal-blazing-slim-booster-box-kinesisk",
+   "group": "x|booster-box|zh||black-blazing-crystal-slim",
+   "title": "Pokemon Black Crystal Blazing Slim Booster Box (Kinesisk)",
+   "url": "https://www.shinycards.se/pokemon/booster-box/pokemon-black-crystal-blazing-slim-booster-box-kinesisk",
+   "image": "https://cdn.quickbutik.com/images/69946c/products/6a7d6450a69c4.png",
+   "price": 449,
+   "type": "Booster Box",
+   "set": null,
+   "lang": "zh",
+   "kind": "prissankt",
+   "from": 499
+  },
+  {
+   "at": 1793622008390,
+   "store": "goblinen",
+   "product": "goblinen:15839876579672",
+   "group": "pitch-black|elite-trainer-box|en|",
+   "title": "Pokémon TCG: Mega Evolution 5 Pitch Black - Elite Trainer Box (Max 1/kund!)",
+   "url": "https://goblinen.com/products/pokemon-tcg-mega-evolution-5-pitch-black-elite-trainer-box-max-1-kund",
+   "image": "https://cdn.shopify.com/s/files/1/0267/3236/3950/files/Pokemon_TCG_Mega_Evolution_Pitch_Black_Elite_Trainer_Box-scaled.png?v=1782852122",
+   "price": 799,
+   "type": "Elite Trainer Box",
+   "set": "Pitch Black",
+   "lang": "en",
+   "kind": "ny"
+  },
   {
    "at": 1793621786739,
    "store": "shinycards",
@@ -6915,33 +6944,6 @@
    "lang": "en",
    "kind": "prissankt",
    "from": 679
-  },
-  {
-   "at": 1792920459911,
-   "store": "samlarverket",
-   "product": "samlarverket:11183011496279",
-   "group": "30th-celebration|collection-box|en||greninja",
-   "title": "Pokémon 30th Celebration Greninja Ex Box",
-   "url": "https://samlarverket.com/produkt/30th-celebration-greninja-ex-box",
-   "price": 629,
-   "type": "Collection Box",
-   "set": "30th Celebration",
-   "lang": "en",
-   "kind": "prissankt",
-   "from": 679
-  },
-  {
-   "at": 1792880715737,
-   "store": "skattkistan",
-   "product": "skattkistan:11224049287506",
-   "group": "30th-celebration|booster-bundle|en|",
-   "title": "Pokémon TCG: 30th Celebration Booster Bundle – 6 boosters",
-   "url": "https://skattkistan.net/products/pokemon-tcg-30th-celebration-booster-bundle-6-boosters",
-   "price": 889,
-   "type": "Booster Bundle",
-   "set": "30th Celebration",
-   "lang": "en",
-   "kind": "tillbaka"
   }
  ]
 }
