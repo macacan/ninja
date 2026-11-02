@@ -429,7 +429,7 @@ function refreshSummary() {
   $("#sum-kinds").textContent = countText("p-kinds");
   $("#sum-sets").textContent = countText("p-sets");
   const g = gamesOf(p).filter((x) => GAMES[x]);
-  const more = [g.join() !== "pk" && (g.map((x) => GAMES[x]).join(" och ") || "Inget spel"), countText("p-langs") !== "Alla" && `${countText("p-langs")} språk`, countText("p-types") !== "Alla" && `${countText("p-types")} typer`, p.maxPrice && `max ${kr(p.maxPrice)}`].filter(Boolean);
+  const more = [g.length !== Object.keys(GAMES).length && (g.map((x) => GAMES[x]).join(" och ") || "Inget spel"), countText("p-langs") !== "Alla" && `${countText("p-langs")} språk`, countText("p-types") !== "Alla" && `${countText("p-types")} typer`, p.maxPrice && `max ${kr(p.maxPrice)}`].filter(Boolean);
   $("#sum-more").textContent = more.join(" · ") || "Alla";
   $("#sum-channels").textContent = pushState() === "on" ? "På" : "Av";
   const n = products.filter((x) => productMatches(x, p)).length;
@@ -500,7 +500,7 @@ $("#p-save").addEventListener("click", () => {
 });
 $("#p-reset").addEventListener("click", () => {
   const p = getPrefs();
-  Object.assign(p, { kinds: Object.keys(KINDS), types: [], stores: [], sets: [], langs: [], maxPrice: 0 });
+  Object.assign(p, { kinds: Object.keys(KINDS), games: Object.keys(GAMES), types: [], stores: [], sets: [], langs: [], maxPrice: 0 });
   savePrefs(p);
   syncPush();
   renderPrefs();

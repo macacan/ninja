@@ -13,8 +13,12 @@ const DEFAULTS = { stores: [], types: [], sets: [], langs: [], games: [], kinds:
 // de som slog på notiser innan Riftbound fanns inte plötsligt får Riftbound-notiser. Samma regel i notify.mjs.
 export const gamesOf = (p) => (p.games?.length ? p.games : ["pk"]);
 
+// Nya besökare (inga sparade val) får alla spel. Den tomma listan som betyder bara Pokémon gäller bara sparade val
+// från innan One Piece och Riftbound fanns.
 export function getPrefs() {
-  try { return { ...DEFAULTS, ...JSON.parse(localStorage.getItem(KEY)) }; } catch { return { ...DEFAULTS }; }
+  let saved = null;
+  try { saved = JSON.parse(localStorage.getItem(KEY)); } catch {}
+  return saved ? { ...DEFAULTS, ...saved } : { ...DEFAULTS, games: Object.keys(GAMES) };
 }
 export function savePrefs(p) {
   try { localStorage.setItem(KEY, JSON.stringify(p)); } catch {}
@@ -35,4 +39,4 @@ export function matches(e, p = getPrefs(), product = null) {
 }
 
 export const hasFilters = (p = getPrefs()) =>
-  gamesOf(p).join() !== "pk" || p.stores.length > 0 || p.types.length > 0 || p.sets.length > 0 || p.langs?.length > 0 || p.maxPrice > 0 || p.kinds.length < Object.keys(KINDS).length;
+  gamesOf(p).length !== Object.keys(GAMES).length || p.stores.length > 0 || p.types.length > 0 || p.sets.length > 0 || p.langs?.length > 0 || p.maxPrice > 0 || p.kinds.length < Object.keys(KINDS).length;

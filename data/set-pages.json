@@ -206,15 +206,17 @@
   "30th-celebration": "set/30th-celebration.html",
   "delta-reign": "set/delta-reign.html",
   "aura-seeker": "set/aura-seeker.html",
+  "op-the-dominance-of-god": "set/one-piece-op18-the-dominance-of-god.html",
+  "op-extra-booster-one-piece-heroines-edition-vol-2": "set/one-piece-eb05-extra-booster-one-piece-heroines-edition-vol-2.html",
   "op-set-sail-deck-set": "set/one-piece-set-sail-deck-set.html",
-  "op-extra-booster-one-piece-heroines-edition-vol-2": "set/one-piece-extra-booster-one-piece-heroines-edition-vol-2.html",
-  "op-the-dominance-of-god": "set/one-piece-the-dominance-of-god.html",
   "rb-radiance": "set/riftbound-radiance.html",
   "rb-gift-of-the-rift-bundle": "set/riftbound-gift-of-the-rift-bundle.html",
   "rb-legacy": "set/riftbound-legacy.html"
  },
  "games": {
   "op": {
+   "OP-18": "set/one-piece-op18-the-dominance-of-god.html",
+   "EB-05": "set/one-piece-eb05-extra-booster-one-piece-heroines-edition-vol-2.html",
    "OP-17": "set/one-piece-op17-the-worlds-strongest-warriors.html",
    "OP-16": "set/one-piece-op16-the-time-of-battle.html",
    "OP15-EB04": "set/one-piece-op15-eb04-adventure-on-kamis-island.html",

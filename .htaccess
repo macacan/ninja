@@ -50,6 +50,10 @@ RedirectMatch 403 ^/(research|scripts|\.github|\.claude)/
   RewriteCond %{THE_REQUEST} \s/(([^?\s]*/)?)index\.html[?\s]
   RewriteRule ^ /%1 [L,R=301]
 
+  # Set pages that got the set code in their address once the set had one (scripts/build-set-pages.mjs).
+  RewriteRule ^set/one-piece-the-dominance-of-god(\.html)?$ /set/one-piece-op18-the-dominance-of-god.html [L,R=301]
+  RewriteRule ^set/one-piece-extra-booster-one-piece-heroines-edition-vol-2(\.html)?$ /set/one-piece-eb05-extra-booster-one-piece-heroines-edition-vol-2.html [L,R=301]
+
   # Addresses without .html (lootninja.se/butiker, /set/151) go to the real page instead of a 404.
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d

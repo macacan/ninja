@@ -643,6 +643,21 @@ input[type=search]{width:100%;max-width:360px}
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%231b1b2f' stroke-width='1.5'/%3E%3C/svg%3E");
   background-repeat:no-repeat;background-position:right center;background-size:10px}
 .drop select:focus-visible{outline:none}
+/* Valet står alltid på en rad. Är texten för lång (t.ex. setnamn i Kortpriser) klipps den före pilen och tonas ut
+   där (is-clipped sätts av site.js). text-overflow fungerar inte i valrutor, därav tonen. */
+.drop select{white-space:nowrap;overflow:hidden}
+.drop select.is-clipped{overflow:clip;overflow-clip-margin:content-box;-webkit-mask-image:linear-gradient(to right,#000 calc(100% - 44px),transparent calc(100% - 18px),#000 calc(100% - 16px));mask-image:linear-gradient(to right,#000 calc(100% - 44px),transparent calc(100% - 18px),#000 calc(100% - 16px))}
+.card-search .drop #set{max-width:260px}
+/* Sortera vid resultatrubriken i Kortpriser, till höger om rubriken */
+.section .res-sort{margin-left:auto;font-size:.9rem}
+/* Mobil: Sortera flyttas in i sökrutan efter filtren (js/priser.js) och står till höger om Sällsynthet */
+@media (max-width:640px){
+  .card-search > .res-sort{order:6}
+  /* Sällsynthet och Sortera delar på raden, och krymper (med tonad text) om de inte får plats */
+  .card-search .drop:is(:has(#rarity),.res-sort){flex:1 1 0;min-width:0;gap:4px;font-size:.85rem;padding:8px 6px}
+  .card-search .drop:has(#rarity){flex:0 1 auto}
+  .card-search .drop:is(:has(#rarity),.res-sort) select{flex:1 1 auto;min-width:0}
+}
 .drop:focus-within{background:var(--surface);box-shadow:0 0 0 2px var(--ink)}
 /* Listan som fälls ut ritas av sidan själv där webbläsaren klarar det, så att den följer temat i stället för systemets vita lista. */
 @supports (appearance:base-select){
@@ -1133,16 +1148,18 @@ span.rd-logo{display:grid;place-items:center;background:var(--surface);border-ra
   .pc-note{font-size:.72rem}
   .cm-nav{top:auto;bottom:8px;margin:0;height:44px}
   .cgrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
-  /* Mobil: sökrutan och Sök på en rad, Filter och Sortera på nästa, Skanna (Riftbound) under */
+  /* Mobil: sökrutan och Sök på en rad, Filter på nästa, Skanna (Riftbound) under. Filtren tar hela bredden,
+     så att ett långt setnamn klipps före pilen i stället för att gå utanför rutan. */
   .card-search{gap:6px;padding:8px}
   #price-form .card-suggest-wrap,#price-form > input[type=search]{flex:1 1 0;min-width:0;order:0}
   .card-search .btn{margin-left:var(--px)}
   .card-search button[type=submit]{order:1;flex:none;padding:12px 16px}
   .card-search::after{content:"";flex:0 0 100%;order:2;margin-top:-6px}
   .card-search #adv-toggle{order:3}
-  .card-search > .drop{order:4;margin-left:auto}
   .card-search #rb-scan{order:5;flex:1 1 100%}
   .card-search .adv::before,.card-search .adv > *{order:6}
+  .card-search .adv > .drop:has(#set){flex:1 1 100%;min-width:0}
+  .card-search .drop #set{flex:1 1 0;min-width:0;max-width:none;field-sizing:fixed}
 }
 @media (prefers-reduced-motion:reduce){.cm-card{animation:none}}
 /* Holo-lagret syns bara när kortbilden har laddat; annars visas en platshållare. */

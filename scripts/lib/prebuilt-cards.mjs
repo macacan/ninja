@@ -59,7 +59,8 @@ export async function saveGame({ dir, sets, cards, rarities, trendSets, minPrice
   // Setlistan för startsidan och set-sidan, utan korten: datum, kod, antal kort och om det är ett huvudset.
   const count = {};
   for (const c of cards) count[c.set] = (count[c.set] || 0) + 1;
-  const setRows = sets.filter((s) => count[s.id]).map((s) => ({ ...s, count: count[s.id] }))
+  // Set utan kort tas bara med när de väntar på sin kortlista (pending, se update-op-cards.mjs)
+  const setRows = sets.filter((s) => count[s.id] || s.pending).map((s) => ({ ...s, count: count[s.id] || 0 }))
     .sort((a, b) => (b.date || "").localeCompare(a.date || ""));
   await writeFile(new URL("sets.json", dir), JSON.stringify({ updated: Date.now(), sets: setRows }, null, 1) + "\n");
   // Bara kortnamnen, små nog för startsidans sökruta som avgör vilket spel en sökning gäller (js/game-guess.js).

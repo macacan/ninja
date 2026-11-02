@@ -64,10 +64,11 @@ for (const [g, prefix] of GAMES) {
   const { sets: gs, cards: gc } = gameData[g];
   for (const s of gs) {
     const cards = gc.filter((c) => c.set === s.id);
-    if (!cards.length) continue;
+    // Set utan kort hoppas över, utom de som väntar på sin kortlista (pending, scripts/update-op-cards.mjs)
+    if (!cards.length && !s.pending) continue;
     // Butikerna skriver setkoden på olika sätt ("OP-17", "OP17", "(OP 17)"), och bevakningen använder setets id.
     const match = [...new Set([s.name, s.id, s.code, g === "op" && s.code?.replace(/^([A-Z]+)(\d+)$/, "$1 $2")].filter((x) => x && x.length >= 4))];
-    gamePages.push({ game: g, id: s.id, name: s.name, code: s.code, date: s.date, main: s.main, logo: s.image, cards, match,
+    gamePages.push({ game: g, id: s.id, name: s.name, code: s.code, date: s.date, main: s.main, logo: s.image, cards, match, pending: !!s.pending,
       slug: slugify(`${prefix} ${g === "op" && s.code ? `${s.code} ` : ""}${s.name.replace(/^riftbound\s+/i, "")}`) });
   }
   // Kommande släpp i kalendern (scripts/update-releases.mjs): kopplas till setet med samma namn, annars en egen släppsida.
@@ -257,7 +258,7 @@ function relatedHtml(p, all) {
 
 const fold = (s) => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
 const tile = (p) => `<li data-game="pk" data-q="${esc(fold([p.name, p.serie, p.id].filter(Boolean).join(" ")))}"><a href="set/${p.slug}.html">${logoImg(p, "set-tile-logo")}<b>${esc(p.name)}</b><small>${p.date ? (upcoming(p) ? `Släpps ${longDate(p.date)}` : longDate(p.date)) : "Datum ej satt"}${count(p) ? ` · ${count(p)} kort` : ""}</small></a></li>`;
-const gameTile = (p) => `<li data-game="${p.game}" data-q="${esc(fold([p.name, p.code, p.id, GAMES.find(([g]) => g === p.game)[3]].filter(Boolean).join(" ")))}"><a href="set/${p.slug}.html">${p.logo ? `<img class="set-tile-logo" src="${esc(p.logo)}" alt="${esc(p.name)}" loading="lazy" decoding="async">` : `<span class="set-tile-logo set-word">${esc(p.name)}</span>`}<b>${esc(p.code ? `${p.code} · ${p.name}` : p.name)}</b><small>${p.date ? (p.date > today ? `Släpps ${longDate(p.date)}` : longDate(p.date)) : "Datum ej satt"}${p.cards.length ? ` · ${p.cards.length} kort` : ""}</small></a></li>`;
+const gameTile = (p) => `<li data-game="${p.game}" data-q="${esc(fold([p.name, p.code, p.id, GAMES.find(([g]) => g === p.game)[3]].filter(Boolean).join(" ")))}"><a href="set/${p.slug}.html">${p.logo ? `<img class="set-tile-logo" src="${esc(p.logo)}" alt="${esc(p.name)}" loading="lazy" decoding="async">` : `<span class="set-tile-logo set-word">${esc(p.name)}</span>`}<b>${esc(p.code ? `${p.code} · ${p.name}` : p.name)}</b><small>${p.date ? (p.date > today ? `Släpps ${longDate(p.date)}` : longDate(p.date)) : "Datum ej satt"}${p.cards.length ? ` · ${p.cards.length} kort` : p.pending ? " · Mer info kommer snart" : ""}</small></a></li>`;
 const anyTile = (p) => (p.game ? gameTile(p) : tile(p));
 
 // ---------- One Piece och Riftbound ----------
@@ -274,6 +275,8 @@ const byNo = (a, b) => String(a.no || "").localeCompare(String(b.no || ""), "sv"
 
 function gameIntro(p) {
   const game = gameName[p.game], code = p.code ? ` (${p.code})` : "";
+  // Setet finns hos TCGplayer men kortlistan har inte kommit än
+  if (!p.cards.length && p.pending) return `${p.name} är ett ${p.date && p.date <= today ? "nytt" : "kommande"} ${game}-set${code} som ${p.date ? `${p.date > today ? "släpps" : "släpptes"} ${longDate(p.date)}` : "släpps snart"}. Mer info kommer snart: kortlistan och priserna läggs in så fort de finns. Redan nu ser du vilka svenska butiker som har setet i lager eller till förbeställning.`;
   if (!p.cards.length) return `${p.name} är ett kommande ${game}-set som släpps ${p.date ? longDate(p.date) : "snart"}. Här ser du vilka produkter som kommer, när de släpps och vilka svenska butiker som redan har dem till förbeställning.`;
   const when = p.date ? ` som ${p.date > today ? "släpps" : "släpptes"} ${longDate(p.date)}` : "";
   return `${p.name} är ett set i ${game}${code}${when}. Setet har ${p.cards.length} kort. Här ser du alla kort med bilder och TCGplayers marknadspris i kronor, de dyraste korten och vilka svenska butiker som har ${p.name} i lager just nu.`;

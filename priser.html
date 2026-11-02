@@ -54,9 +54,6 @@
         <label class="drop"><span>Set</span><select id="set" name="set"><option value="">Alla</option></select></label>
         <label class="drop"><span>Sällsynthet</span><select id="rarity" name="rarity"><option value="">Alla</option></select></label>
       </div>
-      <label class="drop"><span>Sortera</span><select id="sort" name="sort">
-        <option value="price-desc">Dyrast först</option><option value="price-asc">Billigast först</option>
-        <option value="rising">Stiger mest</option><option value="falling">Sjunker mest</option><option value="number">Kortnummer</option></select></label>
       <button class="btn primary" type="submit">Sök</button>
     </form>
 
@@ -76,7 +73,10 @@
     </section>
 
     <section id="results" hidden>
-      <div class="section"><h2 id="res-title">Sökresultat</h2></div>
+      <!-- Sortera står vid resultatrubriken. Den ligger utanför formuläret men läses som förut med #sort (js/priser.js). -->
+      <div class="section"><h2 id="res-title">Sökresultat</h2><label class="drop res-sort"><span>Sortera</span><select id="sort" name="sort" form="price-form">
+        <option value="price-desc">Dyrast först</option><option value="price-asc">Billigast först</option>
+        <option value="rising">Stiger mest</option><option value="falling">Sjunker mest</option><option value="number">Kortnummer</option></select></label></div>
       <p class="hint" id="ja-note" hidden><span class="beta-tag">Beta</span> Japanska kort är inte kompletta än. Sök på Pokémonens engelska namn, t.ex. Pikachu. Tränar- och energikort ingår inte. Priserna kommer från Cardmarket.</p>
       <div id="prices" class="cgrid"></div>
       <div class="more-row"><button id="more" class="btn" type="button" hidden>Visa fler</button></div>
@@ -96,6 +96,6 @@
     <div class="cm-body"></div>
   </dialog>
 </main>
-<script type="module" src="js/priser.js?v=20261102a"></script>
+<script type="module" src="js/priser.js?v=20261102b"></script>
 </body>
 </html>

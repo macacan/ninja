@@ -158,7 +158,7 @@ async function homeGameSets(game, label) {
     const [{ sets }, pages] = await Promise.all([getJSON(`data/${game}/sets.json`), setPages()]);
     el.innerHTML = sets.filter((s) => s.main && s.date).slice(0, 5).map((s, i) => {
       const age = -daysUntil(s.date);
-      return card(s.name, s.date, label, `${s.count} kort`, i, false, setArt({ name: s.name, serie: { name: s.code }, image: s.image }),
+      return card(s.name, s.date, label, s.count ? `${s.count} kort` : "Mer info kommer snart", i, false, setArt({ name: s.name, serie: { name: s.code }, image: s.image }),
         age <= 60 ? { text: "Nytt" } : null, "", pages.games?.[game]?.[s.id] || `priser.html?game=${game}&set=${encodeURIComponent(s.id)}`);
     }).join("");
     fillRows(el, 2);

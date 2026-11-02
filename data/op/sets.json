@@ -1,6 +1,25 @@
 {
- "updated": 1793627445147,
+ "updated": 1793650825275,
  "sets": [
+  {
+   "id": "OP-18",
+   "name": "The Dominance of God",
+   "code": "OP18",
+   "date": "2026-11-20",
+   "main": true,
+   "pending": true,
+   "image": "https://tcgplayer-cdn.tcgplayer.com/product/712901_400w.jpg",
+   "count": 0
+  },
+  {
+   "id": "EB-05",
+   "name": "Extra Booster: One Piece Heroines Edition Vol. 2",
+   "code": "EB05",
+   "date": "2026-10-30",
+   "main": true,
+   "image": "https://tcgplayer-cdn.tcgplayer.com/product/711385_400w.jpg",
+   "count": 96
+  },
   {
    "id": "OP-17",
    "name": "The World's Strongest Warriors",

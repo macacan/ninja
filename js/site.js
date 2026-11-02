@@ -160,6 +160,12 @@ export function mountChrome() {
   // (js/push.js). Notismodulen laddas bara för dem som har notiserna på.
   try { if (JSON.parse(localStorage.getItem("nl:prefs"))?.push) import("./push.js").then((m) => m.syncPush()).catch(() => {}); } catch {}
   notisReminder();
+  // Valrutor (.drop select) vars text inte får plats tonas ut före pilen (style.css, is-clipped). Kollas när valet
+  // ändras och när rutans storlek ändras, t.ex. när ett val sätts från adressen.
+  const clipCheck = (sel) => sel.classList.toggle("is-clipped", sel.scrollWidth > sel.clientWidth + 1);
+  document.addEventListener("change", (e) => { if (e.target.matches?.(".drop select")) clipCheck(e.target); });
+  const clipObserver = new ResizeObserver((entries) => entries.forEach((en) => clipCheck(en.target)));
+  document.querySelectorAll(".drop select").forEach((sel) => clipObserver.observe(sel));
   // Menyns sökfält söker i alla tre spelen, som startsidans (js/game-guess.js). One Piece och Riftbound går alltid
   // till Kortpriser, även från Värdering. Kortnamnen hämtas först när man börjar söka.
   const menuForm = $(".mm-search"), menuInput = menuForm?.querySelector("input[name=q]");

@@ -343,6 +343,11 @@ $("#more").addEventListener("click", async () => {
 });
 $("#price-form").addEventListener("submit", (e) => { e.preventDefault(); search(); });
 $("#sort").addEventListener("change", () => (loaded.length || (prebuilt() && found.length) ? applyView() : null));
+// Sortera står vid resultatrubriken, men på mobilen i filterraden bredvid Sällsynthet, där det finns plats
+const sortLabel = $("#sort").closest(".drop"), sortHome = sortLabel.parentElement, narrow = matchMedia("(max-width:640px)");
+const placeSort = () => (narrow.matches ? $("#adv").after(sortLabel) : sortHome.append(sortLabel));
+narrow.addEventListener("change", placeSort);
+placeSort();
 for (const id of ["#set", "#rarity", "#lang"]) $(id).addEventListener("change", search);
 // Filter-knappen fäller ut språk, set och sällsynthet. Öppnas automatiskt om en länk redan har valt något där.
 const advToggle = $("#adv-toggle"), adv = $("#adv");
@@ -573,7 +578,8 @@ async function applyGame() {
   try {
     const d = await gameCards(shown);
     if (game !== shown) return;
-    $("#set").insertAdjacentHTML("beforeend", d.sets.map((s) => `<option value="${esc(s.id)}">${esc(g.setLabel(s))}</option>`).join(""));
+    // Set som väntar på sin kortlista (pending) har inga kort att visa än
+    $("#set").insertAdjacentHTML("beforeend", d.sets.filter((s) => !s.pending).map((s) => `<option value="${esc(s.id)}">${esc(g.setLabel(s))}</option>`).join(""));
     $("#rarity").insertAdjacentHTML("beforeend", d.rarities.map(([k, v]) => `<option value="${esc(k)}">${esc(v)}</option>`).join(""));
   } catch {}
 }
