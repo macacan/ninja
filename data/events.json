@@ -1,6 +1,48 @@
 {
- "updated": 1793643651181,
+ "updated": 1793644571203,
  "events": [
+  {
+   "at": 1793644459873,
+   "store": "rahtech",
+   "product": "rahtech:15801220497734",
+   "group": "phantasmal-flames|booster-pack|en|",
+   "title": "Mega Evolution: Phantasmal Flames – Booster Pack (ENG)",
+   "url": "https://rahtech.se/products/mega-evolution-phantasmal-flames-booster-pack-eng",
+   "image": "https://cdn.shopify.com/s/files/1/0994/8882/5670/files/2025-Pokemon-Mega-Evolution-Phantasmal-Flames-Mega-Charizard-X-Booster-Pack.avif?v=1792967304",
+   "price": 129,
+   "type": "Booster Pack",
+   "set": "Phantasmal Flames",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1793644345569,
+   "store": "collected",
+   "product": "collected:11056474161494",
+   "group": "x|booster-pack|zh||gem-s5-vol",
+   "title": "Pokémon TCG: Gem Pack Vol. 5 Booster Pack (Kinesisk) – CBB5C",
+   "url": "https://collected.se/products/pokemon-tcg-gem-pack-vol-5-booster-pack-kinesisk",
+   "image": "https://cdn.shopify.com/s/files/1/0965/6788/6166/files/pokemon-tcg-gem-pack-vol-5-booster-pack-kinesisk-cbb5c.webp?v=1784469805",
+   "price": 55,
+   "type": "Booster Pack",
+   "set": null,
+   "lang": "zh",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1793643728892,
+   "store": "samlarhobby",
+   "product": "samlarhobby:16095417991549",
+   "group": "scarlet-violet|blister|en||3",
+   "title": "Pokémon, Scarlet & Violet, 3-Pack Blister: Dondozo",
+   "url": "https://samlarhobby.se/products/pokemon-scarlet-violet-3-pack-blister-dondozo",
+   "image": "https://cdn.shopify.com/s/files/1/0905/3120/1405/files/3dondozo.jpg?v=1793643606",
+   "price": 349,
+   "type": "Blister",
+   "set": "Scarlet & Violet",
+   "lang": "en",
+   "kind": "ny"
+  },
   {
    "at": 1793643588489,
    "store": "skattkistan",
@@ -6963,45 +7005,6 @@
    "set": "Lost Origin",
    "lang": "en",
    "kind": "ny"
-  },
-  {
-   "at": 1793095032663,
-   "store": "toyspace",
-   "product": "toyspace:https://toyspace.se/pokemon-tcg-kaos-uppgang-boosterpaket-pok10407-101",
-   "group": "chaos-rising|booster-pack|en|",
-   "title": "Max 5 per kund. Pokémon TCG Mega Evolution Chaos Rising Boosterpaket",
-   "url": "https://toyspace.se/pokemon-tcg-kaos-uppgang-boosterpaket-pok10407-101",
-   "price": 89,
-   "type": "Booster Pack",
-   "set": "Chaos Rising",
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793092104121,
-   "store": "toyspace",
-   "product": "toyspace:https://toyspace.se/pokemon-super-premium-collection-eevee-ex-sv8-5-pok10106",
-   "group": "prismatic-evolutions|premium-collection|en||eevee-super",
-   "title": "Pokemon TCG: Prismatic Evolutions Super Premium Collection – Eevee ex (SV8.5)",
-   "url": "https://toyspace.se/pokemon-super-premium-collection-eevee-ex-sv8-5-pok10106",
-   "price": 3365,
-   "type": "Premium Collection",
-   "set": "Prismatic Evolutions",
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793074421333,
-   "store": "skattkistan",
-   "product": "skattkistan:11101251895634",
-   "group": "ascended-heroes|elite-trainer-box|en|",
-   "title": "Pokémon TCG: Mega Evolution Ascended Heroes Elite Trainer Box",
-   "url": "https://skattkistan.net/products/ascended-heroes-elite-trainer-box-max-2-per-kund",
-   "price": 1999,
-   "type": "Elite Trainer Box",
-   "set": "Ascended Heroes",
-   "lang": "en",
-   "kind": "tillbaka"
   }
  ]
 }
