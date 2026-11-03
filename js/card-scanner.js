@@ -46,6 +46,8 @@ const ZONES = {
 const OCR_PARAMS = {
   name: { tessedit_pageseg_mode: "11" },
   number: { tessedit_pageseg_mode: "11", tessedit_char_whitelist: "0123456789/" },
+  // One Piece-nummer, t.ex. "EB05-014", "OP14-047", "P-061"
+  opnum: { tessedit_pageseg_mode: "11", tessedit_char_whitelist: "ABEOPRST0123456789-" },
 };
 // En andra nummerläsare, så att flera varianter av nummerraden kan läsas samtidigt (Riftbound)
 OCR_PARAMS.number2 = OCR_PARAMS.number;
@@ -1052,24 +1054,36 @@ async function nameList(game) {
   })().catch((e) => { nameLists[game] = null; throw e; });
   return nameLists[game];
 }
-// Raderna i namnzonen, [{ text, h, conf }]. Samma bild läses bara en gång, så att båda spelen kan leta i samma läsning.
+// Raderna i namnzonen, [{ text, h, conf, box }] (box i canvasens koordinater). Samma bild läses bara en gång, så att
+// båda spelen kan leta i samma läsning.
 let lastNames = null;
 async function nameLines(canvas) {
   if (lastNames?.canvas !== canvas) {
     const worker = await getWorker("name");
-    const res = await worker.recognize(stack(zoneMaps(canvas, NAME_ZONE, 0.6)));
-    const lines = (res.data.lines || []).map((l) => ({ text: l.text.trim(), h: l.bbox.y1 - l.bbox.y0, conf: l.confidence })).filter((l) => /[a-z]{3}/i.test(l.text));
+    const maps = zoneMaps(canvas, NAME_ZONE, 0.6), mh = maps[0].height, k = 0.6;
+    const res = await worker.recognize(stack(maps));
+    // Radens ruta i canvasens koordinater: stack() lägger bilderna under varandra med 24 px marginal
+    const box = ({ x0, y0, x1, y1 }) => {
+      const off = y0 >= mh + 48 ? mh + 48 : 24;
+      return { x0: (x0 - 24) / k + canvas.width * NAME_ZONE.x, x1: (x1 - 24) / k + canvas.width * NAME_ZONE.x,
+        y0: (y0 - off) / k + canvas.height * NAME_ZONE.y, y1: (y1 - off) / k + canvas.height * NAME_ZONE.y };
+    };
+    const lines = (res.data.lines || []).map((l) => ({ text: l.text.trim(), h: l.bbox.y1 - l.bbox.y0, conf: l.confidence, box: box(l.bbox) }))
+      .filter((l) => /[a-z]{3}/i.test(l.text));
     lastNames = { canvas, lines };
   }
   return lastNames.lines;
 }
-// Kortnamnet i OCR-raderna. Orden jämförs med varje namn med lika många ord, och små läsfel tillåts i långa namn.
-// Ett avhugget namn ("3anner of Cong" när blänket tar resten) räknas om början stämmer, men bara på en säker rad.
-// Namnet är den största texten, så höga rader går före effekttexten, som kan nämna andra kort.
+// Kortnamnet i OCR-raderna: { p, line } eller null. Orden jämförs med varje namn med lika många ord, och små läsfel
+// tillåts i långa namn. Ett avhugget namn ("3anner of Cong" när blänket tar resten) räknas om början stämmer, men bara
+// på en säker rad. Namnet är den största texten: rader som är klart lägre än de högsta (effekttexten, som kan nämna
+// andra kort, t.ex. "[Megalo]") räknas inte.
 function matchName(lines, list) {
-  const maxH = Math.max(1, ...lines.map((l) => l.h));
+  const hs = lines.map((l) => l.h).sort((a, b) => b - a), ref = hs[Math.min(2, hs.length - 1)] || 1, maxH = hs[0] || 1;
   let best = null;
-  for (const { text, h, conf } of lines) {
+  for (const line of lines) {
+    const { text, h, conf } = line;
+    if (h < ref * 0.6) continue;
     const words = text.split(/\s+/).filter(Boolean);
     for (const p of list) {
       const tol = p.key.length >= 10 ? 2 : p.key.length >= 6 ? 1 : 0;
@@ -1084,28 +1098,78 @@ function matchName(lines, list) {
         }
         if (dist > tol) continue;
         const score = dist + (partial ? 1 : 0) - p.key.length * 0.05 - (1.5 * h) / maxH;
-        if (!best || score < best.score) best = { p, score };
+        if (!best || score < best.score) best = { p, line, score };
       }
     }
   }
-  return best?.p || null;
+  return best;
 }
-// Kort-id utifrån namnet och bilden, eller null
+// One Piece-numret ("EB05-014") står nere till höger, ungefär i höjd med raden under namnet. Ett band över hela
+// bredden under namnet läses (så att det fungerar även när kortet är rätat lite fel och numret inte står där det
+// borde), på några sätt tills ett nummer är tydligt. nos: numren som kortet kan ha (korten med namnet). Läsfel som
+// S/5 och O/0 tål jämförelsen, eftersom den bara väljer bland de numren. Numret, eller null.
+const opKey = (s) => s.toUpperCase().replace(/[^A-Z0-9]/g, "").replace(/O/g, "0").replace(/S/g, "5").replace(/[IL]/g, "1");
+const OP_NUM_BANDS = [[-0.5, 2.2, 1.6, true], [-0.5, 2.2, 1.6, false], [-0.3, 1.6, 2, true], [-0.3, 1.6, 2, false]];
+async function opNumberNear(canvas, line, nos) {
+  const nh = Math.max(4, line.box.y1 - line.box.y0), worker = await getWorker("opnum"), keys = [...new Set(nos)].map((no) => [no, opKey(no)]);
+  const texts = [];
+  // Närmaste numret i läsningarna hittills (kortaste avståndet mot en ungefär lika lång bit av texten)
+  const pick = () => {
+    const ranked = keys.map(([no, k]) => {
+      let d = Infinity;
+      for (const t of texts) for (let n = k.length - 1; n <= k.length + 1; n++) for (let i = 0; i + n <= t.length; i++) d = Math.min(d, editDist(k, t.slice(i, i + n)));
+      return { no, d };
+    }).sort((a, b) => a.d - b.d);
+    return ranked[0] && ranked[0].d <= 2 && (ranked[1]?.d ?? 99) >= ranked[0].d + 2 ? ranked[0].no : null;
+  };
+  for (const [a, b, scale, plain] of OP_NUM_BANDS) {
+    const y0 = Math.max(0, line.box.y1 + a * nh), y1 = Math.min(canvas.height, line.box.y1 + b * nh);
+    if (y1 - y0 < 4) return null;
+    const zone = { x: 0, y: y0 / canvas.height, w: 1, h: (y1 - y0) / canvas.height };
+    for (const map of plain ? [plainZone(canvas, zone, Math.round((y1 - y0) * scale))] : zoneMaps(canvas, zone, scale)) {
+      texts.push(...(await worker.recognize(map)).data.text.split(/\s*\n\s*|\s{2,}/).map(opKey).filter(Boolean));
+    }
+    const no = pick();
+    if (no) return no;
+  }
+  return null;
+}
+// Kort-id utifrån namnet och bilden, eller null. Bilden måste peka ut kortet bland korten med namnet (det finns t.ex.
+// ett tjugotal Shirahoshi), annars blir det inget kort hellre än fel kort. One Piece: numret läses först och väljer ut
+// korten med det numret, och bilden väljer sedan variant.
 async function byName(game, canvas) {
   const [list, lines] = await Promise.all([nameList(game), nameLines(canvas)]);
-  const p = matchName(lines, list);
-  if (!p) return null;
+  const hit = matchName(lines, list);
+  if (!hit) return null;
   // Riftbound: indexet har ett av korten som delar bild, så likheten hämtas för alla och kortet får den bästa
   const rb = game === "rb" ? await rbData() : null, op = rb ? null : await opData();
+  const card = (id) => (rb ? rb.byId.get(id) : op.get(id));
+  let ids = hit.p.ids;
+  if (op && new Set(ids.map((id) => card(id)?.no)).size > 1) {
+    const no = await opNumberNear(canvas, hit.line, ids.map((id) => card(id)?.no).filter(Boolean)).catch(() => null);
+    if (no) ids = ids.filter((id) => card(id)?.no === no);
+  }
   // One Piece: kortet kan ligga i bildindexet under sitt gamla id (se opData)
   const group = (id) => (rb ? rb.siblings(id).map((c) => c.id) : [id, tcgOld(op.get(id))].filter(Boolean));
-  const sims = await artSims(canvas, [...new Set(p.ids.flatMap(group))], game);
-  const ranked = p.ids.map((id) => ({ id, s: Math.max(-1, ...group(id).map((g) => sims[g] ?? -1)) })).sort((a, b) => b.s - a.s);
-  // Bilden ska likna kortet något, så att en felläsning inte ger ett helt annat kort. Är flera utgåvor nästan lika
-  // lika blir det den vanliga.
+  const sims = await artSims(canvas, [...new Set(ids.flatMap(group))], game);
+  const ranked = ids.map((id) => ({ id, s: Math.max(-1, ...group(id).map((g) => sims[g] ?? -1)) })).sort((a, b) => b.s - a.s);
   if (!ranked[0] || ranked[0].s < 0.2) return null;
-  const near = ranked.filter((x) => x.s >= ranked[0].s - 0.04).map((x) => x.id);
-  return near.find((id) => !(rb ? rb.byId.get(id) : op.get(id))?.variant) || near[0];
+  const top = ranked[0], no = card(top.id)?.no, others = ranked.filter((x) => card(x.id)?.no !== no);
+  const near = ranked.filter((x) => x.s >= top.s - 0.04 && card(x.id)?.no === no).map((x) => x.id);
+  // Alla kvar har samma nummer (omtryck, eller varianter som bilden väljer bland): den bästa, eller den vanliga om
+  // flera är lika lika (Riftbound: omtryck med samma bild)
+  if (!others.length) return rb ? near.find((id) => !card(id)?.variant) || top.id : top.id;
+  // Annars måste bilden vara tydlig och klart före kort med andra nummer
+  if (top.s >= 0.5 && top.s - others[0].s >= 0.06) return top.id;
+  // Riftbounds runor: alla utgåvor av en runa är i praktiken samma kort, så namnet räcker
+  if (rb && ids.every((id) => card(id)?.type === "Rune")) return ids.find((id) => !card(id)?.variant) || top.id;
+  // Riftbound: samma kort finns ofta med samma bild under olika nummer (runorna, omtryck), och då skiljer bilden dem
+  // inte åt. Liknar bilden kortet tydligt blir det den vanliga utgåvan bland de nästan lika lika.
+  if (rb && top.s >= 0.45) {
+    const same = ranked.filter((x) => x.s >= top.s - 0.06).map((x) => x.id);
+    return same.find((id) => !card(id)?.variant) || top.id;
+  }
+  return null;
 }
 
 // Vilket spel skannern letar efter: "pokemon" (värderingen, som också känner igen tydliga Riftbound- och One Piece-kort),

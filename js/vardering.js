@@ -12,7 +12,7 @@ import { track } from "./tracker.js";
 import { recordCard, mountRecent } from "./recent.js";
 import { mountCardAutocomplete } from "./card-autocomplete.js";
 import { CONDITIONS, DEFAULT_COND, gradeMult, isVintage } from "./valuation.js";
-import { openScanner, narrowByTotal, rankByLook } from "./card-scanner.js?v=20261103j";
+import { openScanner, narrowByTotal, rankByLook } from "./card-scanner.js?v=20261103k";
 import { showReveal } from "./card-reveal.js";
 import { getAnatomyData, renderPullRatesModal } from "./anatomy.js";
 

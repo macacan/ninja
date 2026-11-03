@@ -461,7 +461,7 @@ const hitKey = (r) => `${r.game}:${r.cardId || `${r.number}/${r.total}`}`;
 // manual: skannern öppnas direkt med sökrutan (Sök och lägg till i valvet)
 async function scanCards(g = VAULT_PAGE ? "vault" : game, { manual = false } = {}) {
   track("scan", "Öppnad");
-  const { openScanner } = await import("./card-scanner.js?v=20261103j");
+  const { openScanner } = await import("./card-scanner.js?v=20261103k");
   const added = new Map(); // valvet: träffarna som lagts in, för att kunna öppna rätt kort
   openScanner(async (r) => {
     const { cardId, name, number, total } = r;
