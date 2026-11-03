@@ -1,6 +1,48 @@
 {
- "updated": 1793720515417,
+ "updated": 1793721475432,
  "events": [
+  {
+   "at": 1793720911169,
+   "store": "toyspace",
+   "product": "toyspace:https://toyspace.se/pokemon-tcg-mega-greninja-ex-premium-collection-pok10413-101",
+   "group": "x|premium-collection|en||greninja-samlingspaket",
+   "title": "Pokémon TCG Mega Greninja ex Premium Collection - samlingspaket",
+   "url": "https://toyspace.se/pokemon-tcg-mega-greninja-ex-premium-collection-pok10413-101",
+   "image": "https://d189539ycils2q.cloudfront.net/media/catalog/product/cache/4ffcb2823444acbc328f989dd62e5069/p/o/pokemon-tcg-mega-greninja-ex-premium-collection-pok10413-101.jpg",
+   "price": 787,
+   "type": "Premium Collection",
+   "set": null,
+   "lang": "en",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1793720911169,
+   "store": "toyspace",
+   "product": "toyspace:https://toyspace.se/pokemon-tcg-forsta-partner-illustrationssamling-serie-3",
+   "group": "x|collection-box|en||first-illustration-partner-s3",
+   "title": "Pokémon TCG First Partner Illustration Collection Series 3",
+   "url": "https://toyspace.se/pokemon-tcg-forsta-partner-illustrationssamling-serie-3",
+   "image": "https://d189539ycils2q.cloudfront.net/media/catalog/product/cache/4ffcb2823444acbc328f989dd62e5069/p/o/pokemon-tcg-first-partner-illustration-collection-series-3.jpg",
+   "price": 494,
+   "type": "Collection Box",
+   "set": null,
+   "lang": "en",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1793720814239,
+   "store": "dragon-s-lair",
+   "product": "dragon-s-lair:15952430137692",
+   "group": "x|booster-pack|ja||birth-star",
+   "title": "Pokemon Sword & Shield: Star Birth Booster (Japansk)(s9)",
+   "url": "https://dragonslair.se/products/pokemon-sword-shield-star-birth-booster-japansks9",
+   "image": "https://cdn.shopify.com/s/files/1/1015/8315/9644/files/starbirthpack.webp?v=1793720470",
+   "price": 69,
+   "type": "Booster Pack",
+   "set": "Sword & Shield",
+   "lang": "ja",
+   "kind": "ny"
+  },
   {
    "at": 1793719784027,
    "store": "dragon-s-lair",
@@ -7067,45 +7109,6 @@
    "set": "30th Celebration",
    "lang": "en",
    "kind": "tillbaka"
-  },
-  {
-   "at": 1793180900550,
-   "store": "samlarhobby",
-   "product": "samlarhobby:16089719374205",
-   "group": "pitch-black|elite-trainer-box|en|pc",
-   "title": "Pokémon, Mega Evolution 5: Pitch Black Pokémon Center, Elite Trainer Box",
-   "url": "https://samlarhobby.se/products/pokemon-mega-evolution-5-pitch-black-pokemon-center-elite-trainer-box",
-   "price": 2295,
-   "type": "Elite Trainer Box",
-   "set": "Pitch Black",
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1793180900550,
-   "store": "samlarhobby",
-   "product": "samlarhobby:16089716359549",
-   "group": "prismatic-evolutions|collection-box|en||binder",
-   "title": "Pokémon, Scarlet & Violet-Prismatic Evolutions Binder Collection",
-   "url": "https://samlarhobby.se/products/pokemon-scarlet-violet-prismatic-evolutions-binder-collection",
-   "price": 1295,
-   "type": "Collection Box",
-   "set": "Prismatic Evolutions",
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1793180900550,
-   "store": "samlarhobby",
-   "product": "samlarhobby:16089708659069",
-   "group": "151|ultra-premium-collection|en||",
-   "title": "Pokémon, Scarlet & Violet-151 Ultra-Premium Collection (Read info)",
-   "url": "https://samlarhobby.se/products/pokemon-scarlet-violet-151-ultra-premium-collection-read-info",
-   "price": 10995,
-   "type": "Ultra-Premium Collection",
-   "set": "151",
-   "lang": "en",
-   "kind": "ny"
   }
  ]
 }
