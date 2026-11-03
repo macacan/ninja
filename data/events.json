@@ -1,6 +1,35 @@
 {
- "updated": 1793739515510,
+ "updated": 1793740440430,
  "events": [
+  {
+   "at": 1793739774901,
+   "store": "spelparken",
+   "product": "spelparken:15149816283511",
+   "group": "paldea-evolved|booster-pack|en|",
+   "title": "Paldea Evolved Booster Pack",
+   "url": "https://spelparken.se/products/paldea-evolved-oppnas-live",
+   "image": "https://cdn.shopify.com/s/files/1/0948/1876/3127/files/Paldea_Evolved_BP_-_1_1.webp?v=1759071631",
+   "price": 169,
+   "type": "Booster Pack",
+   "set": "Paldea Evolved",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1793739729158,
+   "store": "dragon-s-lair",
+   "product": "dragon-s-lair:15679002575196",
+   "group": "x|booster-box|zh||gem-s2-vol",
+   "title": "Pokemon TCG Gem Pack Vol. 2 Booster Box (Kinesisk)(15 st Boosters)",
+   "url": "https://dragonslair.se/products/pokemon-tcg-gem-pack-vol-2-booster-box-kinesisk",
+   "image": "https://cdn.shopify.com/s/files/1/1015/8315/9644/files/pokemon-gem-pack-vol-2_1024x1024_a136cbc0-4679-4c59-9e95-c43e7bcb65ce.webp?v=1784209130",
+   "price": 1095,
+   "type": "Booster Box",
+   "set": null,
+   "lang": "zh",
+   "kind": "prissankt",
+   "from": 1249
+  },
   {
    "at": 1793738764469,
    "store": "skattkistan",
@@ -7096,34 +7125,6 @@
    "set": "Phantasmal Flames",
    "lang": "en",
    "kind": "ny"
-  },
-  {
-   "at": 1793202308296,
-   "store": "tcgaddan",
-   "product": "tcgaddan:15984594878796",
-   "group": "x|booster-pack|en||shiny-treasure",
-   "title": "Shiny Treasure Booster Pack",
-   "url": "https://tcgaddan.se/products/shiny-treasure-booster-pack",
-   "image": "https://cdn.shopify.com/s/files/1/1037/7062/0236/files/Pokemon-shiny-treasure-booster-pack-japans-kopen-card-binder-com.webp?v=1793131283",
-   "price": 179,
-   "type": "Booster Pack",
-   "set": null,
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793202308296,
-   "store": "tcgaddan",
-   "product": "tcgaddan:15984600678732",
-   "group": "astral-radiance|collection-box|en||",
-   "title": "Astral Radiance Build & Battle Box",
-   "url": "https://tcgaddan.se/products/astral-radiance-build-battle-box",
-   "image": "https://cdn.shopify.com/s/files/1/1037/7062/0236/files/P8153_181-85037_01.png?v=1786831615",
-   "price": 499,
-   "type": "Collection Box",
-   "set": "Astral Radiance",
-   "lang": "en",
-   "kind": "tillbaka"
   }
  ]
 }
