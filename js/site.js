@@ -191,10 +191,7 @@ export function mountChrome() {
       target();
     });
   }
-  // Startsidans sökruta (data-games) gäller alla spel och kopplas in av js/home.js.
-  document.querySelectorAll(".search-row:not([data-games]) input[type=search]").forEach((inp) => {
-    mountCardAutocomplete(inp, { formAction: "priser.html" });
-  });
+  // Startsidans sökruta gäller alla spel och kopplas in av js/home.js.
 }
 
 // Våra egna datafiler, alltid färska. Delar av sidan som ber om samma fil samtidigt (startsidans listor och
@@ -203,6 +200,15 @@ const inflight = new Map();
 export function liveJSON(url) {
   if (!inflight.has(url)) inflight.set(url, fetch(url, { cache: "no-cache" }).then((r) => r.json()).finally(() => inflight.delete(url)));
   return inflight.get(url);
+}
+
+// Kör fn var ms:e millisekund medan sidan syns. En dold flik hämtar ingenting, och när den visas igen körs fn
+// direkt om det gått längre än ms sedan sist, så att lagret inte står gammalt.
+export function whileVisible(fn, ms) {
+  let last = Date.now();
+  const run = () => { last = Date.now(); fn(); };
+  setInterval(() => { if (!document.hidden) run(); }, ms);
+  document.addEventListener("visibilitychange", () => { if (!document.hidden && Date.now() - last >= ms) run(); });
 }
 
 // Adresserna till setsidorna i set/ (scripts/build-set-pages.mjs): { sets: { <tcgdex-id>: url }, releases: { <släpp-id>: url } }.
@@ -232,21 +238,30 @@ export async function getJSON(url, ttl = TTL) {
   const r = await fetch(url);
   if (!r.ok) throw new Error(r.status);
   const d = await r.json();
-  try { localStorage.setItem(key, JSON.stringify({ t: Date.now(), d })); }
-  catch {
-    // Fullt lagringsutrymme: rensa våra gamla svar och strunta i att cacha just detta. Bara cachade svar ({ t, d }),
-    // inte valvet, inställningarna eller annat som sparas under nl:.
-    try {
-      for (const k of Object.keys(localStorage)) {
-        if (!k.startsWith("nl:")) continue;
-        let v = null;
-        try { v = JSON.parse(localStorage.getItem(k)); } catch {}
-        if (v && typeof v === "object" && !Array.isArray(v) && "t" in v && "d" in v) localStorage.removeItem(k);
-      }
-    } catch {}
-  }
+  // Fullt lagringsutrymme: rensa våra sparade svar och strunta i att cacha just detta
+  try { localStorage.setItem(key, JSON.stringify({ t: Date.now(), d })); } catch { clearCache(); }
   return d;
 }
+
+// Tar bort sparade svar ({ t, d }) som är äldre än maxAge ms (0: alla). Valvet, inställningarna och annat som
+// sparas under nl: rörs inte. Utgångna svar rensas en gång om dagen, annars fyller de lagringen tills valvet inte
+// längre får plats.
+export function clearCache(maxAge = 0) {
+  try {
+    for (const k of Object.keys(localStorage)) {
+      if (!k.startsWith("nl:")) continue;
+      let v = null;
+      try { v = JSON.parse(localStorage.getItem(k)); } catch {}
+      if (v && typeof v === "object" && !Array.isArray(v) && "t" in v && "d" in v && Date.now() - v.t >= maxAge) localStorage.removeItem(k);
+    }
+  } catch {}
+}
+try {
+  if (Date.now() - (+localStorage.getItem("nl-cache-pruned") || 0) > 864e5) {
+    (window.requestIdleCallback || setTimeout)(() => clearCache(TTL));
+    localStorage.setItem("nl-cache-pruned", String(Date.now()));
+  }
+} catch {}
 
 // Kortlistor: 404 betyder inga träffar, men andra fel (t.ex. att TCGdex är nere) ska nå anroparen
 // så att sidan kan säga det i stället för "hittade inga kort".

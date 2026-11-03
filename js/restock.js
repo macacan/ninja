@@ -2,7 +2,7 @@
 //  1. ett levande flöde av de senast inkomna produkterna, som uppdateras varje minut (startsidans "Senast inkommet")
 //  2. en packöppnare: välj ett pack från de senaste seten, riv upp det och dra korten ett i taget (värderingssidan)
 import { groupKey, groupProducts, changedAt } from "./group.js";
-import { $, esc, kr, ago, latestSets, setLogo, getJSON, API, safeUrl, liveStock } from "./site.js";
+import { $, esc, kr, ago, latestSets, setLogo, getJSON, API, safeUrl, liveStock, whileVisible } from "./site.js";
 import { track } from "./tracker.js";
 
 const wait = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -755,6 +755,6 @@ $("#pack-row")?.addEventListener("click", (e) => { const b = e.target.closest(".
 
 if ($("#restock-feed")) {
   feed();
-  setInterval(feed, 60e3);
+  whileVisible(feed, 60e3);
 }
 if ($("#pack-stage")) setupPacks();

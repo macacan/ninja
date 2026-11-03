@@ -30,6 +30,22 @@ export function reverseEur(card) {
 // Namnet på kortets vanliga version: Holo för kort som bara trycktes som holo, annars Vanlig
 export const baseLabel = (card) => (card?.variants?.holo && !card.variants.normal ? "Holo" : "Vanlig");
 
+// Pristabellerna för ett Pokémonkort i Kortprisers stora vy och setsidornas prisruta. sek(belopp, valuta) ger
+// beloppet i kronor. Tom text när källan saknar priser.
+const priceRow = (sek, label, v, cur) => (v == null ? "" : `<tr><th>${label}</th><td>${sek(v, cur)}</td></tr>`);
+export function cardmarketTable(card, sek) {
+  const cm = card?.pricing?.cardmarket || {};
+  if (cm.trend == null && cm.avg == null) return "";
+  const r = (label, v) => priceRow(sek, label, v, "EUR");
+  return `<h3>Cardmarket (Europa)</h3><table class="cm-table">${r("Trend", cm.trend)}${r("Snitt", cm.avg)}${r("Lägsta", cm.low)}${r("Snitt 1 dag", cm.avg1)}${r("Snitt 7 dagar", cm.avg7)}${r("Snitt 30 dagar", cm.avg30)}${r("Reverse holo", reverseEur(card))}</table>`;
+}
+const TP_LABEL = { normal: "Vanlig", holofoil: "Holo", reverseHolofoil: "Reverse holo", "reverse-holofoil": "Reverse holo", "1stEditionHolofoil": "1st edition holo" };
+export function tcgplayerTable(card, sek) {
+  const rows = Object.entries(card?.pricing?.tcgplayer || {}).filter(([, v]) => v && typeof v === "object" && v.marketPrice != null)
+    .map(([k, v]) => priceRow(sek, TP_LABEL[k] || k, v.marketPrice, "USD")).join("");
+  return rows ? `<h3>TCGplayer (USA)</h3><table class="cm-table">${rows}</table>` : "";
+}
+
 // Versionerna kortet trycktes i, t.ex. "Finns bara som holo" (ex-kort) eller "Finns som vanlig och reverse holo".
 // Reverse holo räknas också när Cardmarket säljer kortet så (reverseEur). null när TCGdex saknar uppgiften.
 export function versionNote(card) {

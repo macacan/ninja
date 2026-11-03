@@ -610,8 +610,6 @@ export function mountCardAutocomplete(input, options = {}) {
         } else {
           form.submit();
         }
-      } else if (options.formAction) {
-        location.href = `${options.formAction}?q=${encodeURIComponent(val)}${cardId ? `&id=${encodeURIComponent(cardId)}` : ""}`;
       }
     }
   }

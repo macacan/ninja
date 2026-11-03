@@ -12,9 +12,13 @@ import { track } from "./tracker.js";
 import { recordCard, mountRecent } from "./recent.js";
 import { mountCardAutocomplete } from "./card-autocomplete.js";
 import { CONDITIONS, DEFAULT_COND, gradeMult, isVintage } from "./valuation.js";
-import { openScanner, narrowByTotal, rankByLook } from "./card-scanner.js?v=20261104c";
-import { showReveal } from "./card-reveal.js?v=20261104b";
-import { reverseEur, baseLabel, versionNote } from "./cmholo.js?v=20261104a";
+// Skannern är stor och behövs bara när man skannar eller söker på ett foto: den hämtas när sidan är klar och laddas
+// först när den används, så att den inte bromsar sidans första visning.
+const scanner = () => import("./card-scanner.js?v=20261104c");
+const warmScanner = () => (window.requestIdleCallback || setTimeout)(() => scanner().catch(() => {}), { timeout: 4000 });
+if (document.readyState === "complete") warmScanner(); else addEventListener("load", warmScanner, { once: true });
+import { showReveal } from "./card-reveal.js?v=20261104c";
+import { reverseEur, baseLabel, versionNote } from "./cmholo.js?v=20261104b";
 import { getAnatomyData, renderPullRatesModal } from "./anatomy.js";
 
 // Fyra kriterier, som graderingsbolagen: centrering, hörn, kanter och yta. Smuts ingår i ytan.
@@ -306,7 +310,8 @@ async function search(raw, total = null, photo = null, nameHint = null) {
       else { ({ list: all, title } = await findCards(`${nameHint} ${parseCardQuery(q).numPart || ""}`)); total = null; }
     }
     // Skannat kort: filtrera på setets storlek och sortera efter hur lika bilderna är fotot.
-    const { list, sure } = photo ? await rankByLook(photo, await narrowByTotal(all, total)) : { list: all, sure: false };
+    const s = photo && (await scanner());
+    const { list, sure } = photo ? await s.rankByLook(photo, await s.narrowByTotal(all, total)) : { list: all, sure: false };
     if (my !== searchId) return;
     // Säker träff från kameran visas som ett förhandsvisat kort med värde. Annars öppnas ett enda kort direkt.
     found = list; shown = PAGE;
@@ -677,18 +682,6 @@ cardModal.addEventListener("scroll", (e) => {
 cardModal.addEventListener("close", () => history.replaceState(null, "", modal.open && vmInput.value.trim() ? `?q=${encodeURIComponent(vmInput.value.trim())}${isJa() ? "&lang=ja" : ""}` : location.pathname));
 
 // ---------- Händelser ----------
-// Headerns sökfält finns inte på datorn längre. Sökningen sker då i hero-rutan nedan.
-const input = $("#header-search input");
-$("#header-search")?.addEventListener("submit", (e) => {
-  e.preventDefault();
-  const cardId = $("#header-search input[name='cardId']")?.value;
-  if (cardId) {
-    $("#header-search input[name='cardId']").remove();
-    pick(cardId);
-    return;
-  }
-  search(input.value);
-});
 // Sökrutan i hero-delen söker direkt. Tom ruta öppnar värderingsfönstret med sökrutan i fokus.
 const heroInput = $("#val-hero-q");
 if (heroInput) mountCardAutocomplete(heroInput, { onSelect: (val, cardId) => (cardId && !isJa() ? pick(cardId) : search(val)) });
@@ -699,7 +692,7 @@ $("#val-hero-form")?.addEventListener("submit", (e) => {
   vmInput.focus();
 });
 // Kortskannern räknas i steg: öppnad, säker träff, läst text som söks, eller bara delvis läst.
-const startScan = () => { track("scan", "Öppnad"); openScanner(({ game, name, number, total, canvas, cardId }) => {
+const startScan = async () => { track("scan", "Öppnad"); const { openScanner } = await scanner(); openScanner(({ game, name, number, total, canvas, cardId }) => {
   // Ett Riftbound-kort: värderingen gäller bara Pokémon, så kortet öppnas i kortpriserna i stället.
   if (game === "rb") {
     track("scan", cardId ? "Säker träff" : "Läst, söker");
@@ -722,14 +715,12 @@ const startScan = () => { track("scan", "Öppnad"); openScanner(({ game, name, n
   }
   // Nummer och setstorlek pekar ut kortet bäst. Namnet följer med som ledtråd.
   const q = number && total ? `${number}/${total}` : [name, number].filter(Boolean).join(" ");
-  if (input) input.value = [name, number && total ? `${number}/${total}` : number].filter(Boolean).join(" ");
   track("scan", "Läst, söker");
   search(q, total, canvas, number && total ? name : null);
 }, ({ name, number }) => {
   track("scan", "Delvis läst");
   // Halv läsning: fyll i det som gick att läsa, så användaren kan komplettera i stället för att skriva från noll.
   const q = [name, number].filter(Boolean).join(" ");
-  if (input) input.value = q; // sökrutan i sidhuvudet kan saknas
   vmInput.value = q;
   openModal();
   fromScan = true;
@@ -830,7 +821,7 @@ loadBench();
 const params = new URLSearchParams(location.search);
 if (params.get("lang") === "ja") $("#vm-lang").value = "ja";
 if (params.get("id")) pick(params.get("id"), params.get("lang") === "ja" ? "ja" : "en", params.get("en"));
-else if (params.get("q")) { input.value = params.get("q"); search(params.get("q")); }
+else if (params.get("q")) search(params.get("q"));
 
 
 // Hero-bannern visar tre slumpade dyra kort varje gång sidan laddas (utan priser, de värderas när man klickar).

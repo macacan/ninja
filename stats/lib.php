@@ -10,34 +10,9 @@ date_default_timezone_set('Europe/Stockholm');
 const STATS_KEEP_DAYS = 395; // drygt ett år, sedan raderas händelserna
 const STATS_TYPES = ['pageview', 'store_click', 'outbound', 'search', 'watch', 'card_view', 'valuation', 'scan', 'pack_open', 'pack_submit', 'push', 'not_found'];
 
-// Cloudflares egna adresser (samma lista som api/pack-limit.php). Bara då går det att lita på CF-Connecting-IP.
-const STATS_CLOUDFLARE = [
-  '173.245.48.0/20', '103.21.244.0/22', '103.22.200.0/22', '103.31.4.0/22', '141.101.64.0/18', '108.162.192.0/18',
-  '190.93.240.0/20', '188.114.96.0/20', '197.234.240.0/22', '198.41.128.0/17', '162.158.0.0/15', '104.16.0.0/13',
-  '104.24.0.0/14', '172.64.0.0/13', '131.0.72.0/22',
-  '2400:cb00::/32', '2606:4700::/32', '2803:f800::/32', '2405:b500::/32', '2405:8100::/32', '2a06:98c0::/29', '2c0f:f248::/32',
-];
-
-function statsInRange(string $ip, string $cidr): bool {
-  [$net, $bits] = explode('/', $cidr);
-  $a = @inet_pton($ip); $b = @inet_pton($net);
-  if ($a === false || $b === false || strlen($a) !== strlen($b)) return false;
-  $bits = (int)$bits;
-  $bytes = intdiv($bits, 8); $rest = $bits % 8;
-  if (substr($a, 0, $bytes) !== substr($b, 0, $bytes)) return false;
-  if ($rest === 0) return true;
-  $mask = chr((0xff << (8 - $rest)) & 0xff);
-  return ($a[$bytes] & $mask) === ($b[$bytes] & $mask);
-}
-
-function statsIp(): string {
-  $remote = $_SERVER['REMOTE_ADDR'] ?? '0.0.0.0';
-  $cf = $_SERVER['HTTP_CF_CONNECTING_IP'] ?? '';
-  if ($cf !== '' && filter_var($cf, FILTER_VALIDATE_IP)) {
-    foreach (STATS_CLOUDFLARE as $range) if (statsInRange($remote, $range)) return $cf;
-  }
-  return $remote;
-}
+// Besökarens IP-adress bakom Cloudflare, delad med huvudsidans api-filer.
+require_once __DIR__ . '/../api/client-ip.php';
+function statsIp(): string { return clientIp(); }
 
 // Databasen ligger bredvid public_html (kan inte laddas ner), som packräknaren och pushnotiserna.
 function statsDir(): string {

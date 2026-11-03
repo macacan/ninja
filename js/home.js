@@ -1,5 +1,5 @@
 import { groupKey } from "./group.js";
-import { $, esc, fmt, skeleton, upcomingReleases, daysUntil, latestSets, setCard, setLogo, setPages, news, newsItem, productCard, fillRows, liveStock, getJSON, card, setArt } from "./site.js";
+import { $, esc, fmt, skeleton, upcomingReleases, daysUntil, latestSets, setCard, setLogo, setPages, news, newsItem, productCard, fillRows, liveStock, getJSON, card, setArt, whileVisible } from "./site.js";
 import { getPrefs } from "./prefs.js";
 import { bindSetCards } from "./setcards.js";
 import "./restock.js";
@@ -177,7 +177,7 @@ homeDrops();
 homePre();
 nextDrop();
 homeWatch();
-setInterval(homeWatch, 60e3);
+whileVisible(homeWatch, 60e3);
 homeSets();
 homeGameSets("op", "One Piece");
 homeGameSets("rb", "Riftbound");

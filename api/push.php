@@ -9,10 +9,12 @@
 header('Content-Type: application/json; charset=utf-8');
 header('Cache-Control: no-store');
 header('X-Robots-Tag: noindex');
+require __DIR__ . '/client-ip.php';
 
 const VAPID_PUBLIC = 'BKlh5desmb5StUSq70bmkjzTbZD0zaUed1JGYgnti2oznobTFidPAYoGisH24X3CCiUH0nv3WOyCgCVEpMiwYFo';
 const AUDIENCE = 'https://lootninja.se/api/push.php';
 const MAX_SUBS = 20000;
+const SUBS_PER_HOUR = 20; // spamskydd: prenumerationer (nya eller ändrade urval) per besökare och timme
 // Samma lista som PUSH_HOST i scripts/scraper/lib/webpush.mjs.
 const PUSH_HOST = '/^(fcm\.googleapis\.com|android\.googleapis\.com|updates\.push\.services\.mozilla\.com|web\.push\.apple\.com|[a-z0-9-]+\.push\.apple\.com|[a-z0-9-]+\.notify\.windows\.com)$/';
 
@@ -81,8 +83,15 @@ $fh = @fopen($dir . '/lootninja-push.json', 'c+');
 if (!$fh || !flock($fh, $action === 'list' ? LOCK_SH : LOCK_EX)) respond(503, ['ok' => false, 'error' => 'Försök igen om en stund.']);
 $data = json_decode(stream_get_contents($fh) ?: '{}', true);
 $subs = is_array($data['subs'] ?? null) ? $data['subs'] : [];
+// Spamräknaren: { day, salt, n: { kontrollsumma: [timme, antal] } }. Saltet och räknaren byts varje dygn, så att
+// kontrollsummorna inte går att räkna tillbaka till IP-adresser.
+$day = gmdate('Y-m-d');
+$rate = is_array($data['rate'] ?? null) && ($data['rate']['day'] ?? '') === $day ? $data['rate'] : ['day' => $day, 'salt' => bin2hex(random_bytes(16)), 'n' => []];
 
-function save($fh, array $subs): void { ftruncate($fh, 0); rewind($fh); fwrite($fh, json_encode(['subs' => $subs], JSON_UNESCAPED_SLASHES)); fflush($fh); }
+function save($fh, array $subs): void {
+  global $rate;
+  ftruncate($fh, 0); rewind($fh); fwrite($fh, json_encode(['subs' => $subs, 'rate' => $rate], JSON_UNESCAPED_SLASHES)); fflush($fh);
+}
 
 if ($action === 'list') {
   flock($fh, LOCK_UN); fclose($fh);
@@ -104,6 +113,11 @@ $id = hash('sha256', $endpoint);
 if ($action === 'unsubscribe') {
   unset($subs[$id]);
 } else {
+  $who = substr(hash('sha256', $rate['salt'] . '|' . clientIp()), 0, 24);
+  $hour = intdiv(time(), 3600);
+  [$h, $n] = $rate['n'][$who] ?? [0, 0];
+  if ($h === $hour && $n >= SUBS_PER_HOUR) { flock($fh, LOCK_UN); respond(429, ['ok' => false, 'error' => 'För många försök. Vänta en stund och försök igen.']); }
+  $rate['n'][$who] = [$hour, $h === $hour ? $n + 1 : 1];
   $p256dh = $in['subscription']['keys']['p256dh'] ?? '';
   $auth = $in['subscription']['keys']['auth'] ?? '';
   $k1 = is_string($p256dh) ? b64u($p256dh) : false; $k2 = is_string($auth) ? b64u($auth) : false;

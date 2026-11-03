@@ -1,6 +1,6 @@
 // Setsidorna i set/ (byggs av scripts/build-set-pages.mjs). Allt om setet står redan i HTML:en, här läggs bara
 // det levande till: butikernas lager för setet (uppdateras varje minut) och knappen som visar alla kort med bilder.
-import { $, esc, liveStock, productCard, skeleton } from "./site.js";
+import { $, esc, liveStock, productCard, skeleton, whileVisible } from "./site.js";
 import { groupKey } from "./group.js";
 import { bindSetCards } from "./setcards.js";
 
@@ -43,7 +43,7 @@ async function stock() {
   }
 }
 
-if (grid) { stock(); setInterval(stock, 60e3); }
+if (grid) { stock(); whileVisible(stock, 60e3); }
 
 // One Piece och Riftbound: korten med bilder kan sorteras på nummer eller pris.
 const sortBox = $(".set-sort"), all = $(".set-all");

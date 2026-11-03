@@ -1,6 +1,6 @@
 // Visar ett säkert identifierat kort med marknadsvärde. Ju mer kortet är värt, desto finare animation.
 import { esc, kr, cardImg } from "./site.js";
-import { versionNote } from "./cmholo.js?v=20261104a";
+import { versionNote } from "./cmholo.js?v=20261104b";
 
 // Nivåerna börjar vid det lägsta beloppet. Under 100 kr visas kortet utan pengaeffekter.
 const TIERS = [

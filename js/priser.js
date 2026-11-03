@@ -1,4 +1,4 @@
-import { API, $, esc, kr, getJSON, getList, skeleton, liveStamp, cardImg, setPages, setLink } from "./site.js";
+import { API, $, esc, kr, getJSON, getList, skeleton, liveStamp, cardImg, setPages, setLink, clearCache } from "./site.js";
 import { mountChart, mountSeries } from "./pricechart.js?v=20261103a";
 import { recordCard, mountRecent } from "./recent.js";
 import { mountCardAutocomplete, parseCardQuery, resolvePokemonName, loadDataset, sameNumber, filterByNumber, apiNumber } from "./card-autocomplete.js";
@@ -6,7 +6,7 @@ import { langMark } from "./langmark.js";
 import { apiFor, findJapanese } from "./japanese.js";
 import { track } from "./tracker.js";
 import { gameSuggestions } from "./game-guess.js";
-import { reverseEur, baseLabel } from "./cmholo.js?v=20261104a";
+import { reverseEur, baseLabel, cardmarketTable, tcgplayerTable } from "./cmholo.js?v=20261104b";
 
 // ---------- Spel ----------
 // Pokémon söks direkt mot TCGdex. One Piece och Riftbound söks i färdigbyggda filer i data/<spel>/
@@ -440,7 +440,14 @@ const VAULT_KEY = "nl:vault";
 let vaultDirty = false;
 const loadVault = () => { try { return JSON.parse(localStorage.getItem(VAULT_KEY)) || []; } catch { return []; } };
 function saveVault(v) {
-  try { localStorage.setItem(VAULT_KEY, JSON.stringify(v)); } catch {}
+  const json = JSON.stringify(v);
+  try { localStorage.setItem(VAULT_KEY, json); }
+  catch {
+    // Full lagring: sparade TCGdex-svar får ge plats åt valvet. Går det ändå inte ska det inte försvinna i tysthet.
+    clearCache();
+    try { localStorage.setItem(VAULT_KEY, json); }
+    catch { alert("Valvet kunde inte sparas: webbläsarens lagring är full. Rensa webbplatsdata för andra sidor och försök igen."); }
+  }
   // Be webbläsaren behålla sidans lagring, så att den inte rensas när telefonen får ont om plats
   navigator.storage?.persist?.().catch(() => {});
   vaultButton();
@@ -808,14 +815,11 @@ async function openCard(i) {
   await getRates();
   if (full.id) (c.orig || c).full ||= full; // foilpriset till valvets knappar
   const ja = c.lang === "ja";
-  const cm = full.pricing?.cardmarket || {}, tp = full.pricing?.tcgplayer || {};
+  const cm = full.pricing?.cardmarket || {};
   // "Senast sökta" hämtar korten från den engelska databasen, så japanska kort sparas inte där.
   if (!ja) recordCard({ id: c.id, name: c.name, set: full.set?.name, localId: full.localId || c.localId, total: full.set?.cardCount?.official, image: c.image || full.image, eur: cm.trend ?? cm.avg ?? null });
   track("card_view", [full.name || c.name, full.set?.name].filter(Boolean).join(" · "), c.eur != null && rates?.EUR ? Math.round(c.eur * rates.EUR) : null);
   const fin = finish({ ...c, variants: full.variants });
-  const row = (label, v, cur) => (v == null ? "" : `<tr><th>${label}</th><td>${sek(v, cur)}</td></tr>`);
-  const tpRows = Object.entries(tp).filter(([, v]) => v && typeof v === "object" && v.marketPrice != null)
-    .map(([k, v]) => row({ normal: "Vanlig", holofoil: "Holo", reverseHolofoil: "Reverse holo", "1stEditionHolofoil": "1st edition holo" }[k] || k, v.marketPrice, "USD")).join("");
   const pages = ja ? null : await setPages();
   const facts = [
     full.set?.name && `<li><b>Set</b>${setLink(full.set, pages)}${full.localId ? ` · #${esc(full.localId)}` : ""}</li>`,
@@ -837,8 +841,8 @@ async function openCard(i) {
       <div class="cm-price">${c.holo ? (c.sek != null ? `${kr(c.sek)} <small class="cname-ja">${esc(foilLabel(c))}</small>` : "Inget pris ännu") : c.eur != null ? sek(c.eur) : "Inget pris ännu"} ${change(c.change)}</div>
       <p class="muted">Cardmarkets trendpris i kronor. Vägledande, uppdateras dagligen.</p>
       <div class="pchart"></div>
-      ${cm.trend != null || cm.avg != null ? `<h3>Cardmarket (Europa)</h3><table class="cm-table">${row("Trend", cm.trend, "EUR")}${row("Snitt", cm.avg, "EUR")}${row("Lägsta", cm.low, "EUR")}${row("Snitt 1 dag", cm.avg1, "EUR")}${row("Snitt 7 dagar", cm.avg7, "EUR")}${row("Snitt 30 dagar", cm.avg30, "EUR")}${row("Reverse holo", reverseEur(full), "EUR")}</table>` : ""}
-      ${tpRows ? `<h3>TCGplayer (USA)</h3><table class="cm-table">${tpRows}</table>` : ""}
+      ${cardmarketTable(full, sek)}
+      ${tcgplayerTable(full, sek)}
       <div class="cm-links">
         ${ja ? "" : vaultActions(c.orig || c, c)}
         <a class="btn${ja ? " primary" : ""} small" href="https://www.cardmarket.com/en/Pokemon/Products/Search?searchString=${encodeURIComponent(ja ? c.en || full.name : full.name || c.name)}" target="_blank" rel="noopener">Cardmarket ↗</a>
