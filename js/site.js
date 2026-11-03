@@ -240,8 +240,16 @@ export async function getJSON(url, ttl = TTL) {
   const d = await r.json();
   try { localStorage.setItem(key, JSON.stringify({ t: Date.now(), d })); }
   catch {
-    // Fullt lagringsutrymme: rensa våra gamla svar och strunta i att cacha just detta.
-    try { Object.keys(localStorage).filter((k) => k.startsWith("nl:")).forEach((k) => localStorage.removeItem(k)); } catch {}
+    // Fullt lagringsutrymme: rensa våra gamla svar och strunta i att cacha just detta. Bara cachade svar ({ t, d }),
+    // inte valvet, inställningarna eller annat som sparas under nl:.
+    try {
+      for (const k of Object.keys(localStorage)) {
+        if (!k.startsWith("nl:")) continue;
+        let v = null;
+        try { v = JSON.parse(localStorage.getItem(k)); } catch {}
+        if (v && typeof v === "object" && !Array.isArray(v) && "t" in v && "d" in v) localStorage.removeItem(k);
+      }
+    } catch {}
   }
   return d;
 }

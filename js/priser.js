@@ -351,7 +351,8 @@ $("#more").addEventListener("click", async () => {
   applyView();
 });
 $("#price-form").addEventListener("submit", (e) => { e.preventDefault(); search(); });
-$("#sort").addEventListener("change", () => (loaded.length || (prebuilt() && found.length) ? applyView() : null));
+// Valvet har alla sina kort i found, oavsett vilket spel som senast valdes på Kortpriser
+$("#sort").addEventListener("change", () => (loaded.length || ((prebuilt() || VAULT_PAGE) && found.length) ? applyView() : null));
 // Sortera står vid resultatrubriken, men på mobilen i filterraden bredvid Sällsynthet, där det finns plats
 const sortLabel = $("#sort").closest(".drop"), sortHome = sortLabel.parentElement, narrow = matchMedia("(max-width:640px)");
 const placeSort = () => (narrow.matches ? $("#adv").after(sortLabel) : sortHome.append(sortLabel));
@@ -395,6 +396,8 @@ let vaultDirty = false;
 const loadVault = () => { try { return JSON.parse(localStorage.getItem(VAULT_KEY)) || []; } catch { return []; } };
 function saveVault(v) {
   try { localStorage.setItem(VAULT_KEY, JSON.stringify(v)); } catch {}
+  // Be webbläsaren behålla sidans lagring, så att den inte rensas när telefonen får ont om plats
+  navigator.storage?.persist?.().catch(() => {});
   vaultButton();
 }
 const vaultQty = (c) => loadVault().find((x) => x.game === c.game && x.id === c.id)?.qty || 0;
@@ -446,7 +449,7 @@ async function addScanned(list) {
 const hitKey = (r) => `${r.game}:${r.cardId || `${r.number}/${r.total}`}`;
 async function scanCards(g = VAULT_PAGE ? "vault" : game) {
   track("scan", "Öppnad");
-  const { openScanner } = await import("./card-scanner.js?v=20261103f");
+  const { openScanner } = await import("./card-scanner.js?v=20261103g");
   const added = new Map(); // valvet: träffarna som lagts in, för att kunna öppna rätt kort
   openScanner(async (r) => {
     const { cardId, name, number, total } = r;
