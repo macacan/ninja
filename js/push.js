@@ -32,7 +32,7 @@ const subscription = async () => (await navigator.serviceWorker.getRegistration(
 // datorn släpper igenom notiser från Lootninja (och inte blockerar dem med Stör ej eller fokusläge).
 export async function localNotice(body, tag = "lootninja-local") {
   const reg = await navigator.serviceWorker.ready;
-  await reg.showNotification("Lootninja", { body, icon: "img/icon-192.png?v=3", badge: "img/badge-96.png", tag, data: { url: "butiker.html#notiser" } });
+  await reg.showNotification("Lootninja", { body, icon: "img/icon-192.png?v=4", badge: "img/badge-96.png", tag, data: { url: "butiker.html#notiser" } });
 }
 
 export async function enablePush() {
@@ -54,7 +54,7 @@ export async function testPush(p, storeName = "") {
   const price = `${Math.round(p.price).toLocaleString("sv-SE")} kr`;
   await reg.showNotification(p.title, {
     body: `NY · ${price}\n${storeName}${storeName ? " · " : ""}Testnotis`,
-    icon: p.image || "img/icon-192.png?v=3", image: p.image || undefined, badge: "img/badge-96.png",
+    icon: p.image || "img/icon-192.png?v=4", image: p.image || undefined, badge: "img/badge-96.png",
     tag: "lootninja-test", data: { url: p.url || "butiker.html#notiser" },
   });
 }

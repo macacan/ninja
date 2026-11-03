@@ -53,14 +53,14 @@ if ($action === 'login') {
 $authed = !empty($_SESSION['ok']);
 
 // ---------- Sidans skal ----------
-const LOGO = '<img src="https://lootninja.se/img/favicon-48.png?v=3" alt="" width="20" height="20">';
+const LOGO = '<img src="https://lootninja.se/img/favicon-48.png?v=4" alt="" width="20" height="20">';
 function page_head(string $title): string {
   // Inter bäddas in från huvudsidans fonts/-mapp: Hostingers CDN skickar inte CORS-huvudet som typsnitt behöver.
   $inter = @file_get_contents(dirname(__DIR__) . '/fonts/inter-latin-7.woff2');
   $font = $inter === false ? '' : '<style>@font-face{font-family:Inter;font-weight:100 900;font-display:swap;src:url(data:font/woff2;base64,' . base64_encode($inter) . ') format("woff2")}</style>';
   return '<!doctype html><html lang="sv"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">'
     . '<meta name="color-scheme" content="light"><meta name="theme-color" content="#ffffff"><meta name="robots" content="noindex, nofollow">'
-    . '<title>' . h($title) . ' — Statistik</title><link rel="icon" href="https://lootninja.se/img/favicon-48.png">' . $font
+    . '<title>' . h($title) . ' — Statistik</title><link rel="icon" href="https://lootninja.se/img/favicon-48.png?v=4">' . $font
     . '<link rel="stylesheet" href="style.css?v=2"></head><body>';
 }
 function auth_page(string $body): never {
@@ -525,7 +525,7 @@ echo page_head(VIEWS[$view]);
   </header>
 
   <div class="siterow">
-    <h1><img src="https://lootninja.se/img/favicon-48.png" alt="">lootninja.se</h1>
+    <h1><img src="https://lootninja.se/img/favicon-48.png?v=4" alt="">lootninja.se</h1>
     <span class="live"><i></i><?= $live ?> besökare just nu</span>
     <nav class="sites" aria-label="Delar"><?php foreach (VIEWS as $k => $label): ?><a href="<?= h($url(['view' => $k, 'mer' => null])) ?>" class="<?= $k === $view ? 'on' : '' ?>"><?= h($label) ?></a><?php endforeach ?></nav>
   </div>

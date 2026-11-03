@@ -133,9 +133,9 @@ const headHtml = ({ title, desc, url, ld }) => `<!doctype html>
 <link rel="preconnect" href="https://assets.tcgdex.net">
 <meta name="theme-color" content="#ffffff">
 <meta name="theme-color" content="#1b1e28" media="(prefers-color-scheme: dark)">
-<link rel="icon" href="img/icon-192.png" sizes="192x192" type="image/png">
-<link rel="icon" href="img/favicon-48.png?v=3" sizes="48x48" type="image/png">
-<link rel="apple-touch-icon" href="img/apple-touch-icon.png?v=3">
+<link rel="icon" href="img/icon-192.png?v=4" sizes="192x192" type="image/png">
+<link rel="icon" href="img/favicon-48.png?v=4" sizes="48x48" type="image/png">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png?v=4">
 <link rel="manifest" href="site.webmanifest">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Lootninja">
