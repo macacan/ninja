@@ -1,6 +1,15 @@
 {
- "updated": "2026-11-03T02:58:04.517Z",
+ "updated": "2026-11-03T03:13:23.528Z",
  "articles": [
+  {
+   "title": "Pokémon TCG November 2026 lineup includes Delta Reign and 30th Celebration",
+   "link": "https://pokemonblog.com/2026/11/02/pokemon-tcg-november-2026-lineup-includes-delta-reign-and-30th-celebration/",
+   "date": "2026-11-03T03:02:19.000Z",
+   "summary": "The Pokémon Trading Card Game’s November releases begin Nov. 6 with Mega Evolution—Delta Reign and three 30th Celebration collections, including an Ultra-Premium Collection with 30…",
+   "image": "https://pokemonblog.com/wp-content/uploads/2026/07/pokemon_tcg_30th_celebration_ultra_premium_collections_day_and_night.jpg",
+   "source": "PokemonBlog",
+   "game": "pk"
+  },
   {
    "title": "Target's Pokemon TCG Lottery and Drawing System, Explained",
    "link": "https://gamerant.com/target-pokemon-tcg-lottery-drawing-system-explained/",
@@ -452,15 +461,6 @@
    "game": "pk"
   },
   {
-   "title": "Pokemon collector secretly put GPS tracker on woman’s car to find trading card restocks",
-   "link": "https://www.dexerto.com/pokemon/pokemon-collector-secretly-put-gps-tracker-on-womans-car-to-find-trading-card-restocks-3411308/",
-   "date": "2026-09-22T14:37:48.000Z",
-   "summary": "A Pokemon collector pleaded no contest after secretly attaching a GPS tracker to a woman’s car to find new trading card restocks.",
-   "image": "https://www.dexerto.com/cdn-image/wp-content/uploads/2026/09/22/pokemon-restock-tracking-woman.jpg?width=480&quality=75&format=auto",
-   "source": "Dexerto",
-   "game": "pk"
-  },
-  {
    "title": "Yoshitaka Amano Drew One Piece Trading Card Game Art",
    "link": "https://www.siliconera.com/yoshitaka-amano-drew-one-piece-trading-card-game-art/",
    "date": "2026-08-24T15:00:40.000Z",
@@ -515,18 +515,5 @@
    "game": "op"
   }
  ],
- "videos": [
-  {
-   "id": "pGIxhUQvezQ",
-   "title": "TCG Day 2 | 2027 Pokémon Gdańsk Regional Championships",
-   "date": "2026-11-01T19:24:07.000Z",
-   "source": "Pokémon (officiell)"
-  },
-  {
-   "id": "FlkW1YWVQF0",
-   "title": "TCG Day 1 | 2027 Pokémon Gdańsk Regional Championships",
-   "date": "2026-10-31T19:18:36.000Z",
-   "source": "Pokémon (officiell)"
-  }
- ]
+ "videos": []
 }
