@@ -2179,6 +2179,19 @@ input[type=search]::-webkit-search-results-decoration {
   font-size: 0.98rem;
 }
 
+/* Värderingen gäller bara Pokémon: hänvisning till Kortpriser och valvet för de andra spelen */
+.val-hero-note {
+  margin: -4px 0 0;
+  max-width: 580px;
+  font-size: 0.86rem;
+  line-height: 1.45;
+  color: rgba(255, 255, 255, 0.78);
+}
+.val-hero-note a {
+  color: var(--gold);
+  font-weight: 700;
+}
+
 /* Snabbval / chips i hero */
 .val-hero-quick {
   display: flex;

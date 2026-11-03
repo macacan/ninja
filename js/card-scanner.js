@@ -2537,9 +2537,14 @@ export async function openScanner(callback, partialCallback, { game = "pokemon",
   onFinish = finish;
   onPartial = partialCallback || null;
   const d = ui();
+  const title = { pokemon: "Skanna Pokémonkort", rb: "Skanna Riftbound-kort", op: "Skanna One Piece-kort" }[game] || "Skanna kort";
+  d.querySelector(".scan-top b").textContent = title;
+  d.setAttribute("aria-label", title);
   d.querySelector(".scan-tip").textContent = game === "rb" || game === "vault"
     ? "Håll kortet i ramen. Battlefields hålls på högkant."
-    : "Håll kortet i ramen. Glänser det? Luta det lätt.";
+    : game === "pokemon"
+      ? "Endast Pokémonkort. One Piece och Riftbound skannar du i Mitt valv."
+      : "Håll kortet i ramen. Glänser det? Luta det lätt.";
   if (game !== "rb") {
     loadArtIndex("op").catch(() => {});
     opData().catch(() => {});
