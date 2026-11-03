@@ -1,6 +1,34 @@
 {
- "updated": 1793706155585,
+ "updated": 1793707075608,
  "events": [
+  {
+   "at": 1793707058869,
+   "store": "cardlevels",
+   "product": "cardlevels:10089970336055",
+   "group": "prismatic-evolutions|booster-pack|en|",
+   "title": "Pokémon Prismatic Evolutions Scarlet & Violet 8.5: Booster Pack",
+   "url": "https://cardlevels.se/products/pokemon-tcg-scarlet-violet-prismatic-evolutions-booster",
+   "image": "https://cdn.shopify.com/s/files/1/0846/0458/4247/files/Prismatic_Evolutions_Booster_Packs_600x600_579b0396-7c98-4061-a242-994b0c5c6b20.webp?v=1741636427",
+   "price": 209,
+   "type": "Booster Pack",
+   "set": "Prismatic Evolutions",
+   "lang": "en",
+   "kind": "ny"
+  },
+  {
+   "at": 1793706845607,
+   "store": "aquitaz",
+   "product": "aquitaz:9919775932762",
+   "group": "white-flare|booster-pack|ja|",
+   "title": "Pokémon Scarlet & Violet: White Flare Booster Pack (7 Kort) (JP)",
+   "url": "https://aquitaz.se/products/pokemon-scarlet-violet-white-flare-booster-pack-jp",
+   "image": "https://cdn.shopify.com/s/files/1/0885/4087/3050/files/Pics_23_f9e5e35b-55d6-42bd-b90b-832dd8bea7c8.png?v=1746294259",
+   "price": 99,
+   "type": "Booster Pack",
+   "set": "White Flare",
+   "lang": "ja",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793705849004,
    "store": "toyspace",
@@ -7053,32 +7081,6 @@
    "price": 2495,
    "type": "Booster Bundle",
    "set": "151",
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793123632384,
-   "store": "miniature-metropolis",
-   "product": "miniature-metropolis:11260735291729",
-   "group": "30th-celebration|tin|en|mini|mini",
-   "title": "POKÉMON TCG: 30TH CELEBRATION MINI TIN (MAX 4 PER KUND)",
-   "url": "https://miniaturemetropolis.se/products/pokemon-tcg-30th-celebration-mini-tin-max-2-per-kund",
-   "price": 269,
-   "type": "Tin",
-   "set": "30th Celebration",
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1793123403063,
-   "store": "aquitaz",
-   "product": "aquitaz:9806973239642",
-   "group": "astral-radiance|booster-pack|en|",
-   "title": "Pokémon Sword & Shield: Astral Radiance Booster Pack (10 Kort) (ENG)",
-   "url": "https://aquitaz.se/products/pokemon-sword-shield-astral-radiance-booster-pack",
-   "price": 149,
-   "type": "Booster Pack",
-   "set": "Astral Radiance",
    "lang": "en",
    "kind": "tillbaka"
   }
