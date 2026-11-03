@@ -1,6 +1,48 @@
 {
- "updated": 1793709835672,
+ "updated": 1793710755693,
  "events": [
+  {
+   "at": 1793710566899,
+   "store": "cardvalley",
+   "product": "cardvalley:10992999924050",
+   "group": "x|collection-box|en||first-illustration-partner-s3",
+   "title": "Pokémon: First Partner Illustration Collection Series 3",
+   "url": "https://cardvalley.se/products/pokemon-first-partner-illustration-collection-series-3",
+   "image": "https://cdn.shopify.com/s/files/1/0934/7946/9394/files/4ee8a37f-9a71-4e0c-bb95-8b9c84481247.png?v=1785512150",
+   "price": 499,
+   "type": "Collection Box",
+   "set": null,
+   "lang": "en",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1793710566899,
+   "store": "cardvalley",
+   "product": "cardvalley:10324307542354",
+   "group": "mega-evolution|booster-pack|en|",
+   "title": "Mega Evolution Booster pack",
+   "url": "https://cardvalley.se/products/mega-evolution-booster-pack-oppnas-live",
+   "image": "https://cdn.shopify.com/s/files/1/0934/7946/9394/files/E9E22AF6-5CC3-4B77-AE00-C4346F29B93C.png?v=1760466148",
+   "price": 109,
+   "type": "Booster Pack",
+   "set": "Mega Evolution",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1793709966206,
+   "store": "dragon-s-lair",
+   "product": "dragon-s-lair:15940307911004",
+   "group": "mega-evolution|blister|en||cl",
+   "title": "Pokémon TCG: Mega Evolution - Delta Reign Premium Checklane Blister",
+   "url": "https://dragonslair.se/products/pokemon-tcg-mega-evolution-delta-reign-premium-checklane-blister",
+   "image": "https://cdn.shopify.com/s/files/1/1015/8315/9644/files/Premium.png?v=1793236928",
+   "price": 119,
+   "type": "Blister",
+   "set": "Mega Evolution",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793709801044,
    "store": "cardlevels",
@@ -7047,47 +7089,6 @@
    "set": "Pitch Black",
    "lang": "en",
    "kind": "ny"
-  },
-  {
-   "at": 1793128098915,
-   "store": "samlarhobby",
-   "product": "samlarhobby:16089488949629",
-   "group": "paldean-fates|premium-collection|en||great-iron-treads-tusk",
-   "title": "Pokémon, Paldean Fates Great Tusk ex & Iron Treads ex Premium Collection Box",
-   "url": "https://samlarhobby.se/products/pokemon-paldean-fates-great-tusk-ex-iron-treads-ex-premium-collection-box",
-   "price": 3795,
-   "type": "Premium Collection",
-   "set": "Paldean Fates",
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1793127902308,
-   "store": "rahtech",
-   "product": "rahtech:15755294867782",
-   "group": "30th-celebration|collection-box|en||poster",
-   "title": "30th Celebration Poster Collection",
-   "url": "https://rahtech.se/products/30th-celebration-poster-collection",
-   "price": 449,
-   "type": "Collection Box",
-   "set": "30th Celebration",
-   "lang": "en",
-   "kind": "prissankt",
-   "from": 499
-  },
-  {
-   "at": 1793127902308,
-   "store": "rahtech",
-   "product": "rahtech:15749938282822",
-   "group": "30th-celebration|collection-box|en||sylveon",
-   "title": "30th celebration collection EX box (Sylveon EX)",
-   "url": "https://rahtech.se/products/30th-celebration-collection-ex-box?variant=57456369008966",
-   "price": 599,
-   "type": "Collection Box",
-   "set": "30th Celebration",
-   "lang": "en",
-   "kind": "prissankt",
-   "from": 679
   }
  ]
 }
