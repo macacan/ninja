@@ -1,6 +1,21 @@
 {
- "updated": 1793725175528,
+ "updated": 1793726095543,
  "events": [
+  {
+   "at": 1793725587626,
+   "store": "cardgame",
+   "product": "cardgame:https://cardgame.se/one-piece/one-piece-card-game-eb05-heroines-edition-booster-box",
+   "group": "op|extra-booster-one-piece-heroines-edition-vol-2|booster-box|en|",
+   "title": "One Piece Card Game - EB05 Heroines Edition Booster box",
+   "url": "https://cardgame.se/one-piece/one-piece-card-game-eb05-heroines-edition-booster-box",
+   "image": "https://cdn.quickbutik.com/images/87588Q/products/6aea117c3dd0c.avif",
+   "price": 2999,
+   "type": "Booster Box",
+   "set": "Extra Booster: One Piece Heroines Edition Vol. 2",
+   "lang": "en",
+   "game": "op",
+   "kind": "ny"
+  },
   {
    "at": 1793724832330,
    "store": "dragon-s-lair",
@@ -7106,19 +7121,6 @@
    "set": "30th Celebration",
    "lang": "en",
    "kind": "ny"
-  },
-  {
-   "at": 1793184026894,
-   "store": "toyspace",
-   "product": "toyspace:https://toyspace.se/pokemon-tcg-shrouded-fable-kingambit-collection",
-   "group": "shrouded-fable|collection-box|en||boosterpaket-kingambit-konstkort",
-   "title": "Pokemon TCG: Shrouded Fable Box med Kingambit-konstkort och boosterpaket",
-   "url": "https://toyspace.se/pokemon-tcg-shrouded-fable-kingambit-collection",
-   "price": 639,
-   "type": "Collection Box",
-   "set": "Shrouded Fable",
-   "lang": "en",
-   "kind": "tillbaka"
   }
  ]
 }
