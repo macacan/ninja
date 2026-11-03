@@ -3113,12 +3113,11 @@ input[type=search]::-webkit-search-results-decoration {
 .scan-peek span{font:700 .68rem/1.15 var(--sans);text-align:center;max-width:100%;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
 .scan-peek.pop{animation:peekPop .35s ease-out}
 @keyframes peekPop{from{transform:scale(.6);opacity:0}}
-.scan.frozen .scan-peek,.scan.multi .scan-peek,.scan.frozen .scan-view > .scan-foil,.scan.multi .scan-view > .scan-foil{display:none}
+.scan.frozen .scan-peek,.scan.multi .scan-peek{display:none}
 /* Vanlig eller foil: under förhandsvisningen och i listan över skannade kort */
 .scan-foil{border-radius:999px;border:1px solid rgba(255,255,255,.3);background:rgba(12,14,30,.6);color:#e8eaf6;font:700 .7rem/1.2 var(--sans);padding:5px 10px;cursor:pointer;white-space:nowrap}
 .scan-foil[hidden]{display:none}
 .scan-foil.on{background:linear-gradient(120deg,#f0abfc,#93c5fd,#86efac,#fde68a);color:#111;border-color:transparent}
-.scan-view > .scan-foil{position:absolute;top:calc(12px + var(--peek-h,150px));right:12px;z-index:10;width:76px;padding:5px 4px;overflow:hidden;text-overflow:ellipsis;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
 .scan-list li{display:flex;align-items:center;gap:8px}
 .scan-list li > button[data-i]{flex:1;min-width:0}
 .scan-list li button.scan-foil{width:auto;flex:none;display:block;padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.3)}

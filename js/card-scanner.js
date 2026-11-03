@@ -1575,7 +1575,6 @@ function ui() {
       </button>
       <button class="scan-tray" type="button" hidden aria-label="Visa skannade kort"><span class="scan-tray-stack"></span><b>0</b></button>
       <button class="scan-peek" type="button" hidden><img alt=""><em class="scan-price" hidden></em><span></span></button>
-      <button class="scan-foil" type="button" aria-pressed="false" hidden></button>
       <p class="scan-tip">Håll kortet i ramen. Glänser det? Luta det lätt.</p>
       <div class="scan-freeze" aria-hidden="true" hidden>
         <canvas></canvas>
@@ -1641,16 +1640,6 @@ function ui() {
   dialog.querySelector(".scan-multi").addEventListener("click", () => setMulti(!multi));
   dialog.querySelector(".scan-tray").addEventListener("click", showList);
   dialog.querySelector(".scan-peek").addEventListener("click", openPeek);
-  dialog.querySelector(".scan-foil").addEventListener("click", () => {
-    if (!peek) return;
-    toggleFoil(peek);
-    paintFoil(dialog.querySelector(".scan-foil"), peek);
-    // Priset på förhandsvisningen följer valet
-    if (peek.basePrice === undefined) peek.basePrice = peek.price;
-    const price = dialog.querySelector(".scan-peek .scan-price"), p = peek.foil ? peek.foilPrice : peek.basePrice;
-    price.textContent = p != null ? kr(p) : "";
-    price.hidden = p == null;
-  });
   dialog.querySelector("[data-more]").addEventListener("click", hideList);
   // Klar: har sidan ett valv (onDone) lämnas korten över dit och högen töms, så att de inte läggs in två gånger
   dialog.querySelector("[data-done]").addEventListener("click", () => {
@@ -1865,7 +1854,8 @@ function grabUnwarpedFrame() {
   const fresh = lastSeen && Date.now() - lastSeen.at < 250 && lastSeen.corners;
   const near = fresh ? null : detectCardCorners(video, defaultCorners, LIVE_BANDS);
   const corners = fresh || (near.confident ? near.corners : findCardQuad(video) || near.corners);
-  lastGrab = { src: video, corners };
+  // framed: kortets kanter syns i ramen (annars kan det vara bakgrunden som läses)
+  lastGrab = { src: video, corners, framed: !!fresh || near.confident };
   return unwarpCard(video, corners, CARD_W, CARD_H);
 }
 
@@ -1912,6 +1902,7 @@ function motionTick() {
   stillTicks = level < MOTION_LIMIT ? stillTicks + 1 : 0;
 
   if (stillTicks < STILL_TICKS) {
+    cand = null; // läsningar som ska bekräfta varandra måste komma medan kameran står still
     frameEl()?.classList.add("is-moving");
     status("Håll kortet i ramen…");
     return;
@@ -2081,6 +2072,17 @@ async function frozenScan(snap, { fromFile }) {
 }
 
 let last = null, lastNum = null;
+// Automatisk skanning: ett kort godkänns först när samma kort lästs CONFIRM_FRAMED gånger i rad medan kameran stått
+// still, eller CONFIRM_BLIND gånger när ramen inte såg kortets kanter. Annars kan en suddig bakgrund i en snabb
+// kamerarörelse likna något kort. cand: kortet som väntar på att bekräftas, och hur många gånger det lästs.
+const CONFIRM_FRAMED = 2, CONFIRM_BLIND = 3;
+let cand = null;
+function confirmed(id, framed) {
+  if (cand?.id !== id) cand = { id, n: 0 };
+  if (++cand.n < (framed ? CONFIRM_FRAMED : CONFIRM_BLIND)) return false;
+  cand = null;
+  return true;
+}
 async function attempt(canvas, { fromFile = false, manual = false, source } = {}) {
   if (busy) return;
   busy = true;
@@ -2091,6 +2093,8 @@ async function attempt(canvas, { fromFile = false, manual = false, source } = {}
     // 1. Bilden mot alla kort, sedan texten. Pekar de ut samma kort (eller är bildträffen mycket tydlig) är vi klara.
     const r = await identify(canvas, { full: manual || fromFile, source });
     if (!dialog.open) return;
+    if (!r.cardId) cand = null;
+    else if (!manual && !fromFile && !confirmed(r.cardId, !!source?.framed)) return status("Håll kortet stilla i ramen…");
     // Snabbskanning: kortet läggs i högen och skannern fortsätter. Samma kort igen räknas inte förrän det bytts.
     if (multi && r.cardId) {
       if (keyOf(r) === skipKey) return status("Byt till nästa kort…");
@@ -2327,13 +2331,10 @@ async function setPeek(r, canvas) {
     : `Hittade <b>${esc(labelOf(item))}</b>! Tryck på kortet för att öppna det, eller håll nästa i ramen.`);
   onHit?.(item);
   item.thumb = thumbOf(canvas) || r.image || null; // ett manuellt valt kort har kortets bild
-  dialog.querySelector(".scan-foil").hidden = true;
-  // Valet vanlig/foil syns bara i valvet: på Kortpriser öppnar förhandsvisningen kortet, där priserna står
-  [item.price] = await Promise.all([priceOf(item), onHit ? askFoil(item) : null]);
+  // Vanlig eller foil väljs inte under förhandsvisningen: i valvet markeras kortet i den stora vyn, och i
+  // snabbskanningens lista
+  item.price = await priceOf(item);
   if (peek !== item) return; // ett nytt kort hann hittas
-  const chip = dialog.querySelector(".scan-foil");
-  chip.hidden = !item.foilLabel;
-  paintFoil(chip, item);
   const btn = dialog.querySelector(".scan-peek"), price = btn.querySelector(".scan-price");
   btn.querySelector("img").src = item.thumb || "";
   btn.querySelector("img").hidden = !item.thumb;
@@ -2433,7 +2434,7 @@ function pickManual(i) {
 
 function clearPeek() {
   peek = null;
-  if (dialog) dialog.querySelector(".scan-peek").hidden = dialog.querySelector(".scan-foil").hidden = true;
+  if (dialog) dialog.querySelector(".scan-peek").hidden = true;
 }
 
 // ---------- Vanlig eller foil ----------
@@ -2579,6 +2580,7 @@ export async function openScanner(callback, partialCallback, { game = "pokemon",
   tipTimer = null;
   misses = 0;
   tipAgainAt = 0;
+  cand = null;
   if (game !== "rb") {
     loadArtIndex("op").catch(() => {});
     opData().catch(() => {});
