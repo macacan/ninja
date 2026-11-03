@@ -25,7 +25,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Hem","item":"https://lootninja.se/"},{"@type":"ListItem","position":2,"name":"Mitt valv","item":"https://lootninja.se/valv.html"}]}</script>
 <link href="fonts/fonts.css" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=20261103i">
+<link rel="stylesheet" href="style.css?v=20261103k">
 <link rel="stylesheet" href="dark.css?v=20261103b" id="dark-css" media="(prefers-color-scheme: dark)">
 <script src="js/theme.js?v=20261021"></script>
 </head>
@@ -44,25 +44,46 @@
     <div class="seg game-seg" id="game-seg" role="group" aria-label="Visa spel">
       <button type="button" data-game="pokemon" aria-pressed="true">Pokémon</button><button type="button" data-game="op" aria-pressed="true">One Piece<em class="beta-tag">Beta</em></button><button type="button" data-game="rb" aria-pressed="true">Riftbound<em class="beta-tag">Beta</em></button>
     </div>
-    <form id="price-form" class="card-search" role="search">
-      <input id="pq" name="q" type="search" placeholder="Sök i ditt valv" aria-label="Sök i ditt valv">
-      <button type="button" class="btn small" id="rb-scan" aria-label="Skanna kort med kameran (beta)">Skanna <span class="beta-tag">Beta</span></button>
-      <!-- Filtren används inte i valvet, men skriptet delas med Kortpriser -->
+    <!-- Formuläret behövs av skriptet (delas med Kortpriser) men syns inte i valvet: sökrutan står i verktygsraden -->
+    <form id="price-form" class="card-search" role="search" hidden>
+      <button type="button" class="btn small" id="rb-scan" hidden>Skanna</button>
       <div class="adv" id="adv" hidden>
         <select id="lang" name="lang" hidden><option value="en">Engelska</option></select>
         <select id="set" name="set" hidden><option value="">Alla</option></select>
         <select id="rarity" name="rarity" hidden><option value="">Alla</option></select>
       </div>
-      <button class="btn primary" type="submit">Sök</button>
     </form>
 
     <section id="results">
-      <div class="section"><h2 id="res-title">Mitt valv <span class="beta-tag">Beta</span></h2><label class="drop res-sort"><span>Sortera</span><select id="sort" name="sort" form="price-form">
-        <option value="added">Nyaste först</option><option value="price-desc">Dyrast först</option><option value="price-asc">Billigast först</option>
-        <option value="gain">Ökat mest</option><option value="rising">Stiger mest</option><option value="falling">Sjunker mest</option>
-        <option value="number">Kortnummer</option></select></label></div>
+      <div class="section vault-head">
+        <h2 id="res-title">Mitt valv <span class="beta-tag">Beta</span></h2>
+        <!-- Lägg till: skanna med kameran eller sök fram kortet -->
+        <div class="vault-add">
+          <button type="button" class="btn primary" id="vault-add" aria-haspopup="menu" aria-expanded="false" aria-controls="vault-add-menu">
+            <span aria-hidden="true">+</span> Lägg till i valvet <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+          <div class="vault-add-menu" id="vault-add-menu" role="menu" hidden>
+            <button type="button" role="menuitem" data-add="scan">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2"/><rect x="8" y="7" width="8" height="10" rx="1"/></svg>
+              <span><b>Skanna kort <em class="beta-tag">Beta</em></b><small>Håll upp kortet framför kameran</small></span>
+            </button>
+            <button type="button" role="menuitem" data-add="manual">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+              <span><b>Sök och lägg till</b><small>Skriv kortets namn eller nummer</small></span>
+            </button>
+          </div>
+        </div>
+      </div>
       <!-- Portföljen: värde, antal och utveckling för korten som visas -->
       <div class="vault-stats" id="vault-stats" aria-live="polite"></div>
+      <!-- Verktygsrad direkt ovanför korten: sök bland valvets kort och sortera -->
+      <div class="vault-tools" id="vault-tools" hidden>
+        <input id="pq" name="q" type="search" form="price-form" placeholder="Sök i ditt valv" aria-label="Sök i ditt valv" enterkeyhint="search">
+        <label class="drop res-sort"><span>Sortera</span><select id="sort" name="sort" form="price-form">
+          <option value="added">Nyaste först</option><option value="price-desc">Dyrast först</option><option value="price-asc">Billigast först</option>
+          <option value="gain">Ökat mest</option><option value="rising">Stiger mest</option><option value="falling">Sjunker mest</option>
+          <option value="number">Kortnummer</option></select></label>
+      </div>
       <div id="prices" class="cgrid"></div>
       <div class="more-row"><button id="more" class="btn" type="button" hidden>Visa fler</button></div>
       <div class="vault-bar"><button type="button" class="btn small" id="vault-clear" hidden>Töm valvet</button></div>
@@ -73,7 +94,7 @@
       <div class="vg-grid">
         <div>
           <h3>Lägg till kort</h3>
-          <p>Tryck på <b>Skanna</b> och håll upp kortet. Skannern känner igen både One Piece och Riftbound. Med <b>Flera kort</b> skannar du en hel hög i rad.</p>
+          <p>Tryck på <b>Lägg till i valvet</b>. <b>Skanna kort</b> känner igen både One Piece och Riftbound, och med <b>Flera kort</b> skannar du en hel hög i rad. Går ett kort inte att skanna väljer du <b>Sök och lägg till</b> och skriver namnet.</p>
         </div>
         <div>
           <h3>Värdet</h3>
@@ -117,6 +138,6 @@
     <div class="cm-body"></div>
   </dialog>
 </main>
-<script type="module" src="js/priser.js?v=20261103m"></script>
+<script type="module" src="js/priser.js?v=20261103p"></script>
 </body>
 </html>

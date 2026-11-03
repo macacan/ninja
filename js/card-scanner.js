@@ -987,10 +987,24 @@ async function identifyRb(canvas, { full = false, art, alt } = {}) {
 
 // ---------- One Piece ----------
 // Kortet känns igen på bilden. Varianterna (parallel, manga, alternativ bild) har egna bilder i indexet.
+// Ett nytt kort har först TCGplayers id ("EB-05/tcg723376") och byter id när optcgapi lägger in det, men bildindexet
+// byggs bara en gång i månaden. Kartan har därför även det gamla id:t (från TCGplayers produkt-id, c.tcg eller numret
+// i bildlänken) för samma kort. cards: varje kort en gång.
 let opPromise = null;
+const tcgOld = (c) => {
+  const p = c?.tcg || c?.image?.match(/tcgplayer-cdn\.tcgplayer\.com\/product\/(\d+)_/)?.[1];
+  return p ? `${c.set}/tcg${p}` : null;
+};
 function opData() {
-  opPromise ||= fetch("data/op/cards.json").then((r) => r.json()).then(({ cards }) => new Map(cards.map((c) => [c.id, c])))
-    .catch((e) => { opPromise = null; throw e; });
+  opPromise ||= fetch("data/op/cards.json").then((r) => r.json()).then(({ cards }) => {
+    const map = new Map(cards.map((c) => [c.id, c]));
+    for (const c of cards) {
+      const old = tcgOld(c);
+      if (old && !map.has(old)) map.set(old, c);
+    }
+    map.cards = cards;
+    return map;
+  }).catch((e) => { opPromise = null; throw e; });
   return opPromise;
 }
 // Den rätning (som hörnen hittades, eller kortet inuti en ficka) vars bild liknar ett One Piece-kort mest
@@ -1006,7 +1020,7 @@ async function opBestCanvas(canvas, source) {
 }
 const opResult = (cards, id, art) => {
   const c = id && cards.get(id);
-  return { game: "op", name: c?.name || null, number: c?.no || null, total: null, numberSure: !!c, cardId: id || null, art };
+  return { game: "op", name: c?.name || null, number: c?.no || null, total: null, numberSure: !!c, cardId: c?.id || id || null, art };
 };
 // canvas: den rätade bilden, så att namnet kan läsas när bilden inte räcker
 async function identifyOp(art, canvas) {
@@ -1031,7 +1045,7 @@ const NAME_ZONE = { x: 0, y: 0.4, w: 1, h: 0.6 };
 const nameLists = {};
 async function nameList(game) {
   nameLists[game] ||= (async () => {
-    const cards = game === "rb" ? (await rbData()).cards : [...(await opData()).values()];
+    const cards = game === "rb" ? (await rbData()).cards : (await opData()).cards;
     const byName = new Map();
     for (const c of cards) if (c.name && c.type !== "Battlefield") (byName.get(c.name) || byName.set(c.name, []).get(c.name)).push(c.id);
     return [...byName].map(([name, ids]) => ({ name, ids, key: norm(name), wc: name.split(/\s+/).length })).filter((p) => p.key.length >= 4);
@@ -1083,7 +1097,8 @@ async function byName(game, canvas) {
   if (!p) return null;
   // Riftbound: indexet har ett av korten som delar bild, så likheten hämtas för alla och kortet får den bästa
   const rb = game === "rb" ? await rbData() : null, op = rb ? null : await opData();
-  const group = (id) => (rb ? rb.siblings(id).map((c) => c.id) : [id]);
+  // One Piece: kortet kan ligga i bildindexet under sitt gamla id (se opData)
+  const group = (id) => (rb ? rb.siblings(id).map((c) => c.id) : [id, tcgOld(op.get(id))].filter(Boolean));
   const sims = await artSims(canvas, [...new Set(p.ids.flatMap(group))], game);
   const ranked = p.ids.map((id) => ({ id, s: Math.max(-1, ...group(id).map((g) => sims[g] ?? -1)) })).sort((a, b) => b.s - a.s);
   // Bilden ska likna kortet något, så att en felläsning inte ger ett helt annat kort. Är flera utgåvor nästan lika
@@ -1425,7 +1440,7 @@ let onFound = null, onPartial = null, onDone = null, onHit = null;
 let torchSupported = false, torchActive = false;
 let stillTicks = 0, lastScanAt = 0;
 let pauseUntil = 0, openedAt = 0; // pauseUntil: auto-skanningen väntar så att ett felmeddelande hinner läsas
-const NUDGE_AFTER = 2000; // ms utan träff innan "Skanna nu" lyfts fram
+const NUDGE_AFTER = 2000; // ms utan träff innan "Värdera manuellt" lyfts fram
 const PAUSE_AFTER_MISS = 3500; // ms paus efter en misslyckad manuell skanning eller ett foto
 
 const frameEl = () => dialog?.querySelector(".scan-frame i");
@@ -1466,10 +1481,18 @@ function ui() {
         <i class="holo-sheen"></i><i class="holo-grid"></i><i class="holo-beam"></i>
         <svg class="holo-quad" preserveAspectRatio="none"><polygon /></svg>
       </div>
+      <form class="scan-manual" hidden>
+        <div class="scan-manual-row">
+          <input type="search" placeholder="Skriv kortets namn eller nummer" aria-label="Kortets namn eller nummer" autocomplete="off" enterkeyhint="search">
+          <button class="scan-ghost" type="button" data-manual-close aria-label="Tillbaka till kameran">✕</button>
+        </div>
+        <ul class="scan-manual-list"></ul>
+        <p class="scan-manual-hint"></p>
+      </form>
     </div>
     <div class="scan-actions">
       <label class="scan-ghost scan-live">Välj foto<input type="file" accept="image/*" hidden></label>
-      <button class="scan-now scan-live" type="button">Skanna nu</button>
+      <button class="scan-now scan-live" type="button" data-manual>Värdera manuellt</button>
       <button class="scan-ghost scan-live" type="button" data-close>Stäng</button>
       <button class="scan-ghost scan-frozen-btn" type="button" data-cancel>Avbryt</button>
       <button class="scan-now scan-frozen-btn" type="button" data-retry>Försök igen</button>
@@ -1488,17 +1511,27 @@ function ui() {
     </div>`;
 
   document.body.append(dialog);
-  dialog.addEventListener("close", stop);
+  dialog.addEventListener("close", () => { stop(); closeManual(); });
   dialog.querySelector("[data-close]").addEventListener("click", requestClose);
   // Esc och telefonens bakåtknapp: med skannade kort visas listan först, nästa gång stängs skannern
   dialog.addEventListener("cancel", (e) => {
+    // Esc stänger först sökrutan för manuell värdering
+    if (manualOpen) { e.preventDefault(); closeManual(); return; }
     if (!wantsList()) return;
     e.preventDefault();
     showList();
   });
 
-  // Skanna nu: bilden fryses och söks igenom noggrant tills kortet hittas, eller tills man trycker Avbryt / Försök igen
-  dialog.querySelector(".scan-now").addEventListener("click", () => runScan(true));
+  // Värdera manuellt: skriv in kortet i stället för att skanna det
+  dialog.querySelector("[data-manual]").addEventListener("click", openManual);
+  dialog.querySelector("[data-manual-close]").addEventListener("click", closeManual);
+  const manual = dialog.querySelector(".scan-manual");
+  manual.querySelector("input").addEventListener("input", renderManual);
+  manual.addEventListener("submit", (e) => { e.preventDefault(); pickManual(0); });
+  manual.querySelector(".scan-manual-list").addEventListener("click", (e) => {
+    const li = e.target.closest("[data-i]");
+    if (li) pickManual(+li.dataset.i);
+  });
   // Avbryt stänger, men i snabbskanningen går den tillbaka till kameran så att man kan fortsätta med nästa kort
   dialog.querySelector("[data-cancel]").addEventListener("click", () => (multi ? unfreeze() : dialog.close()));
   dialog.querySelector("[data-retry]").addEventListener("click", unfreeze);
@@ -1753,9 +1786,9 @@ function motionLevel(video) {
 // Körs var MOTION_TICK ms. OCR startar först när kameran varit stilla en stund och ingen skanning pågår.
 function motionTick() {
   const video = dialog?.querySelector("video");
-  if (!dialog?.open || !video?.videoWidth || busy || frozen || Date.now() < pauseUntil) return;
+  if (!dialog?.open || !video?.videoWidth || busy || frozen || manualOpen || Date.now() < pauseUntil) return;
 
-  // Ingen träff efter en stund: lyft fram "Skanna nu"
+  // Ingen träff efter en stund: lyft fram "Värdera manuellt"
   if (Date.now() - openedAt > NUDGE_AFTER) dialog.querySelector(".scan-now")?.classList.add("nudge");
 
   const level = motionLevel(video);
@@ -2119,7 +2152,7 @@ function thumbOf(canvas) {
 }
 
 function addScanned(r, canvas) {
-  const item = { game: r.game || "pokemon", cardId: r.cardId || null, name: r.name || null, number: r.number || null, total: r.total || null, thumb: thumbOf(canvas) };
+  const item = { game: r.game || "pokemon", cardId: r.cardId || null, name: r.name || null, number: r.number || null, total: r.total || null, thumb: thumbOf(canvas) || r.image || null };
   skipKey = keyOf(r);
   last = lastNum = null;
   pauseUntil = Date.now() + 600; // låt kortet synas innan nästa läsning tar kraft från animationen
@@ -2170,7 +2203,7 @@ async function setPeek(r, canvas) {
     ? `<b>${esc(labelOf(item))}</b> lagt i valvet! Håll nästa kort i ramen.`
     : `Hittade <b>${esc(labelOf(item))}</b>! Tryck på kortet för att öppna det, eller håll nästa i ramen.`);
   onHit?.(item);
-  item.thumb = thumbOf(canvas);
+  item.thumb = thumbOf(canvas) || r.image || null; // ett manuellt valt kort har kortets bild
   item.price = await priceOf(item);
   if (peek !== item) return; // ett nytt kort hann hittas
   const btn = dialog.querySelector(".scan-peek"), price = btn.querySelector(".scan-price");
@@ -2191,6 +2224,82 @@ async function setPeek(r, canvas) {
     btn.classList.add("pop");
   });
 }
+// ---------- Värdera manuellt ----------
+// Pokémon på värderingssidan: skannern stängs och sidans egen manuella värdering öppnas (onPartial, utan text).
+// Annars skrivs kortet in i skannern: One Piece och Riftbound (valvet har båda) får förslag ur korten, och ett valt
+// kort blir en träff precis som ett skannat (läggs i valvet, i högen eller öppnas). Pokémon utan egen värdering:
+// det skrivna söks på sidan.
+let manualOpen = false, manualHits = [];
+function openManual() {
+  if (scanGame === "pokemon" && onPartial) {
+    stop();
+    dialog.close();
+    onPartial({ name: null, number: null });
+    return;
+  }
+  manualOpen = true;
+  const form = dialog.querySelector(".scan-manual"), input = form.querySelector("input");
+  form.hidden = false;
+  input.value = "";
+  renderManual();
+  input.focus();
+}
+function closeManual() {
+  manualOpen = false;
+  dialog.querySelector(".scan-manual").hidden = true;
+  stillTicks = 0;
+  // Öppnades skannern direkt med sökrutan är kameran inte igång än
+  if (dialog.open && !stream && !listOpen) startCamera();
+}
+async function renderManual() {
+  const form = dialog.querySelector(".scan-manual"), input = form.querySelector("input");
+  const list = form.querySelector(".scan-manual-list"), hint = form.querySelector(".scan-manual-hint");
+  const q = input.value.trim().toLowerCase();
+  manualHits = [];
+  if (scanGame === "pokemon") {
+    list.innerHTML = "";
+    hint.textContent = q ? "Tryck på Enter för att söka på kortet." : "Skriv kortets namn, t.ex. Charizard ex.";
+    return;
+  }
+  if (q.length < 2) {
+    list.innerHTML = "";
+    hint.textContent = "Skriv minst två bokstäver av namnet, eller kortnumret.";
+    return;
+  }
+  const [rb, op] = await Promise.all([scanGame !== "op" ? rbData() : null, scanGame !== "rb" ? opData() : null]);
+  if (input.value.trim().toLowerCase() !== q) return; // ny text hann skrivas
+  const all = [...(rb?.cards || []).map((c) => ({ game: "rb", c })), ...(op?.cards || []).map((c) => ({ game: "op", c }))];
+  const words = q.split(/\s+/), hay = ({ c }) => `${c.name} ${c.no || ""} ${c.variant || ""}`.toLowerCase();
+  // Namn som börjar med det skrivna först, sedan dyraste
+  manualHits = all.filter((x) => words.every((w) => hay(x).includes(w)))
+    .sort((a, b) => b.c.name.toLowerCase().startsWith(q) - a.c.name.toLowerCase().startsWith(q) || (b.c.sek ?? -1) - (a.c.sek ?? -1))
+    .slice(0, 8);
+  list.innerHTML = manualHits.map(({ game, c }, i) => `<li><button type="button" data-i="${i}">
+    ${c.image ? `<img src="${esc(c.image)}" alt="" loading="lazy">` : "<i></i>"}
+    <span><b>${esc(c.name)}</b><small>${esc([c.no, c.variant, scanGame === "vault" && GAME_LABEL[game]].filter(Boolean).join(" · "))}</small></span>
+    ${c.sek != null ? `<em>${esc(kr(c.sek))}</em>` : ""}</button></li>`).join("");
+  hint.textContent = manualHits.length ? "" : "Hittade inget kort med det namnet.";
+}
+function pickManual(i) {
+  const q = dialog.querySelector(".scan-manual input").value.trim();
+  if (scanGame === "pokemon") {
+    if (!q) return;
+    closeManual();
+    stop();
+    dialog.close();
+    onFound?.({ game: "pokemon", name: q, number: null, total: null, cardId: null });
+    return;
+  }
+  const x = manualHits[i];
+  if (!x) return;
+  closeManual();
+  // Samma kort som nyss skannades ska gå att lägga in igen när man väljer det själv
+  skipKey = null;
+  const r = { game: x.game, cardId: x.c.id, name: x.c.name, number: x.c.no || null, total: null, image: x.c.image || null };
+  if (multi) addScanned(r, null);
+  else setPeek(r, null);
+}
+
 function clearPeek() {
   peek = null;
   if (dialog) dialog.querySelector(".scan-peek").hidden = true;
@@ -2296,7 +2405,8 @@ function hideList(restart = true) {
 // spel kortet är (game).
 // done: får alla skannade kort ({ game, cardId, name, number, total }) när man trycker Klar i listan.
 // hit: får varje kort så fort det är hittat, även i snabbskanningen (Mitt valv lägger in kortet direkt).
-export async function openScanner(callback, partialCallback, { game = "pokemon", done = null, hit = null } = {}) {
+// manual: sökrutan (Värdera manuellt) öppnas direkt, och kameran startar först om man går tillbaka till den
+export async function openScanner(callback, partialCallback, { game = "pokemon", done = null, hit = null, manual = false } = {}) {
   scanGame = game;
   onFound = callback;
   onDone = done;
@@ -2329,6 +2439,7 @@ export async function openScanner(callback, partialCallback, { game = "pokemon",
   }
   getWorker("number").catch(() => {});
   loadArtIndex("rb").catch(() => {});
+  if (manual) return openManual();
   await startCamera();
 }
 

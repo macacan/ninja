@@ -49,12 +49,22 @@ const gameData = {};
 const gameCards = (g) => (gameData[g] ??= fetch(`data/${g}/cards.json`, { cache: "no-cache" }).then((r) => r.json()).then((d) => {
   const names = Object.fromEntries(d.sets.map((s) => [s.id, s.name]));
   d.cards = d.cards.map((c) => preSlim({ ...c, set: names[c.set] || c.set, setId: c.set }, g));
+  // Gamla id för samma kort (se tcgAlias), så att valvet och skannern hittar kort som bytt id
+  d.alias = new Map();
+  for (const c of d.cards) { const a = tcgAlias(c.setId, c); if (a && a !== c.id) d.alias.set(a, c); }
   return d;
 }).catch((e) => { delete gameData[g]; throw e; }));
 // Illustratör (data/rb/details.json, från Riots kortgalleri). Hämtas först när man öppnar ett kort.
 const gameDetails = {};
 const detailsOf = (g) => (gameDetails[g] ??= fetch(`data/${g}/details.json`, { cache: "no-cache" }).then((r) => r.json())
   .catch(() => { delete gameDetails[g]; return {}; }));
+// Ett nytt One Piece-kort får först TCGplayers id ("EB-05/tcg723376") och byter till optcgapis när de lägger in kortet
+// (se scripts/update-op-cards.mjs). Det gamla id:t går att räkna fram ur TCGplayers produkt-id (c.tcg, eller numret
+// i bildlänken så länge bilden är TCGplayers).
+const tcgAlias = (set, c) => {
+  const p = c.tcg || c.image?.match(/tcgplayer-cdn\.tcgplayer\.com\/product\/(\d+)_/)?.[1];
+  return p ? `${set}/tcg${p}` : null;
+};
 // Samma form som Pokémonkorten i rutnätet: localId är kortnumret och priset ligger i kronor (sek).
 const preSlim = (c, g) => ({ ...c, game: g, localId: c.no });
 // Spelets egen kortbaksida när kortet saknar bild (eller bilden inte går att ladda).
@@ -355,7 +365,8 @@ $("#price-form").addEventListener("submit", (e) => { e.preventDefault(); search(
 $("#sort").addEventListener("change", () => (loaded.length || ((prebuilt() || VAULT_PAGE) && found.length) ? applyView() : null));
 // Sortera står vid resultatrubriken, men på mobilen i filterraden bredvid Sällsynthet, där det finns plats
 const sortLabel = $("#sort").closest(".drop"), sortHome = sortLabel.parentElement, narrow = matchMedia("(max-width:640px)");
-const placeSort = () => (narrow.matches ? $("#adv").after(sortLabel) : sortHome.append(sortLabel));
+// Valvet: Sortera står alltid i verktygsraden ovanför korten
+const placeSort = () => (document.body.dataset.page === "valv" ? null : narrow.matches ? $("#adv").after(sortLabel) : sortHome.append(sortLabel));
 narrow.addEventListener("change", placeSort);
 placeSort();
 for (const id of ["#set", "#rarity", "#lang"]) $(id).addEventListener("change", search);
@@ -427,8 +438,8 @@ async function addScanned(list) {
   const added = [];
   for (const s of list) {
     if (!GAMES[s.game]) continue;
-    const cards = (await gameCards(s.game).catch(() => null))?.cards || [];
-    let c = s.cardId && cards.find((x) => x.id === s.cardId);
+    const d = await gameCards(s.game).catch(() => null), cards = d?.cards || [];
+    let c = s.cardId && (cards.find((x) => x.id === s.cardId) || d.alias.get(s.cardId));
     if (!c && s.number && s.total) {
       const no = `${String(s.number).replace(/^\d+/, (d) => d.padStart(String(s.total).length, "0"))}/${s.total}`;
       c = cards.find((x) => x.no === no && !x.variant);
@@ -447,9 +458,10 @@ async function addScanned(list) {
 // (i valvet ligger de redan där).
 // Skannern (js/card-scanner.js) är stor och laddas först när knappen trycks.
 const hitKey = (r) => `${r.game}:${r.cardId || `${r.number}/${r.total}`}`;
-async function scanCards(g = VAULT_PAGE ? "vault" : game) {
+// manual: skannern öppnas direkt med sökrutan (Sök och lägg till i valvet)
+async function scanCards(g = VAULT_PAGE ? "vault" : game, { manual = false } = {}) {
   track("scan", "Öppnad");
-  const { openScanner } = await import("./card-scanner.js?v=20261103g");
+  const { openScanner } = await import("./card-scanner.js?v=20261103j");
   const added = new Map(); // valvet: träffarna som lagts in, för att kunna öppna rätt kort
   openScanner(async (r) => {
     const { cardId, name, number, total } = r;
@@ -463,10 +475,11 @@ async function scanCards(g = VAULT_PAGE ? "vault" : game) {
     }
     if (cardId) { openAfter = cardId; $("#pq").value = name || ""; }
     // Siffrorna fylls ut som på kortet ("57a" blir "057a"), så att sökningen hittar "057a/221"
-    else $("#pq").value = total ? `${String(number).replace(/^\d+/, (d) => d.padStart(total.length, "0"))}/${total}` : number || "";
+    else $("#pq").value = total ? `${String(number).replace(/^\d+/, (d) => d.padStart(total.length, "0"))}/${total}` : number || name || "";
     search();
   }, null, {
     game: g,
+    manual,
     hit: VAULT_PAGE ? (r) => {
       // Kortet läggs i valvet så fort det hittats, och valvet bakom skannern ritas om
       const p = addScanned([r]).then(([c]) => { if (c) track("scan", "Till valvet: 1 kort"); showVault(); return c; });
@@ -547,9 +560,25 @@ async function showVault() {
   const v = loadVault();
   try {
     const games = [...new Set(v.map((x) => x.game))].filter((g) => GAMES[g]);
-    const byId = {};
-    for (const [g, d] of await Promise.all(games.map(async (g) => [g, await gameCards(g)]))) for (const c of d.cards) byId[`${g}:${c.id}`] = c;
+    const byId = {}, alias = {};
+    for (const [g, d] of await Promise.all(games.map(async (g) => [g, await gameCards(g)]))) {
+      for (const c of d.cards) byId[`${g}:${c.id}`] = c;
+      for (const [a, c] of d.alias) alias[`${g}:${a}`] = c;
+    }
     if (my !== searchId) return;
+    // Kort som bytt id sedan de lades in (se tcgAlias) flyttas till sitt nya id, och slås ihop om kortet redan finns
+    const moved = v.filter((x) => !byId[`${x.game}:${x.id}`] && alias[`${x.game}:${x.id}`]);
+    for (const x of moved) {
+      const id = alias[`${x.game}:${x.id}`].id, same = v.find((y) => y !== x && y.game === x.game && y.id === id);
+      if (same) { same.qty += x.qty; same.at = Math.min(same.at ?? x.at, x.at ?? same.at); x.qty = 0; }
+      else x.id = id;
+    }
+    if (moved.length) {
+      const keep = v.filter((x) => x.qty > 0);
+      v.length = 0;
+      v.push(...keep);
+      saveVault(v);
+    }
     found = v.map((x) => byId[`${x.game}:${x.id}`] && { ...byId[`${x.game}:${x.id}`], qty: x.qty, at: x.at, p: x.p ?? null }).filter(Boolean);
   } catch {
     $("#prices").innerHTML = '<div class="msg">Kunde inte läsa korten just nu. Försök igen om en stund.</div>';
@@ -580,12 +609,13 @@ async function showVault() {
     <div><small>Mot månadssnitt</small><b>${diff(nowA, thenA)}</b></div>` : "";
   if (n) drawValue(found, worth, my);
   $("#vault-clear").hidden = !all;
+  $("#vault-tools").hidden = !all;
   if (!n) {
     current = [];
     $("#prices").innerHTML = all
       ? '<div class="msg">Inga kort i valvet matchar.</div>'
       // Texten i ett eget element: rutan är flex, och annars blir varje fetstilt ord en egen kolumn
-      : '<div class="msg"><span>Valvet är tomt. Tryck på <b>Skanna</b> för att lägga till kort.</span></div>';
+      : '<div class="msg"><span>Valvet är tomt. Tryck på <b>Lägg till i valvet</b> för att skanna eller söka fram dina kort.</span></div>';
     return;
   }
   applyView();
@@ -594,6 +624,32 @@ async function showVault() {
 $("#rb-scan").addEventListener("click", () => scanCards());
 if (VAULT_PAGE) {
   $("#pq").placeholder = "Sök i ditt valv";
+  // Sökrutan står utanför formuläret, i verktygsraden ovanför korten: valvet filtreras medan man skriver
+  let typing = 0;
+  $("#pq").addEventListener("input", () => { clearTimeout(typing); typing = setTimeout(showVault, 200); });
+  $("#pq").addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); clearTimeout(typing); showVault(); } });
+  // Lägg till i valvet: en meny med Skanna kort och Sök och lägg till
+  const addBtn = $("#vault-add"), addMenu = $("#vault-add-menu");
+  const showMenu = (on) => { addMenu.hidden = !on; addBtn.setAttribute("aria-expanded", String(on)); };
+  addBtn.addEventListener("click", () => {
+    showMenu(addMenu.hidden);
+    if (!addMenu.hidden) addMenu.querySelector("button").focus();
+  });
+  addMenu.addEventListener("click", (e) => {
+    const b = e.target.closest("[data-add]");
+    if (!b) return;
+    showMenu(false);
+    scanCards("vault", { manual: b.dataset.add === "manual" });
+  });
+  document.addEventListener("click", (e) => { if (!addMenu.hidden && !e.target.closest(".vault-add")) showMenu(false); });
+  addMenu.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") { showMenu(false); addBtn.focus(); }
+    if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+      e.preventDefault();
+      const items = [...addMenu.querySelectorAll("button")], i = items.indexOf(document.activeElement);
+      items[(i + (e.key === "ArrowDown" ? 1 : items.length - 1)) % items.length].focus();
+    }
+  });
   const vaultConfirm = $("#vault-confirm");
   $("#vault-clear").addEventListener("click", () => {
     vaultConfirm.returnValue = "";

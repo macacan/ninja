@@ -12,7 +12,7 @@ import { track } from "./tracker.js";
 import { recordCard, mountRecent } from "./recent.js";
 import { mountCardAutocomplete } from "./card-autocomplete.js";
 import { CONDITIONS, DEFAULT_COND, gradeMult, isVintage } from "./valuation.js";
-import { openScanner, narrowByTotal, rankByLook } from "./card-scanner.js?v=20261103g";
+import { openScanner, narrowByTotal, rankByLook } from "./card-scanner.js?v=20261103j";
 import { showReveal } from "./card-reveal.js";
 import { getAnatomyData, renderPullRatesModal } from "./anatomy.js";
 
@@ -715,14 +715,14 @@ const startScan = () => { track("scan", "Öppnad"); openScanner(({ game, name, n
   }
   // Nummer och setstorlek pekar ut kortet bäst. Namnet följer med som ledtråd.
   const q = number && total ? `${number}/${total}` : [name, number].filter(Boolean).join(" ");
-  input.value = [name, number && total ? `${number}/${total}` : number].filter(Boolean).join(" ");
+  if (input) input.value = [name, number && total ? `${number}/${total}` : number].filter(Boolean).join(" ");
   track("scan", "Läst, söker");
   search(q, total, canvas, number && total ? name : null);
 }, ({ name, number }) => {
   track("scan", "Delvis läst");
   // Halv läsning: fyll i det som gick att läsa, så användaren kan komplettera i stället för att skriva från noll.
   const q = [name, number].filter(Boolean).join(" ");
-  input.value = q;
+  if (input) input.value = q; // sökrutan i sidhuvudet kan saknas
   vmInput.value = q;
   openModal();
   vmInput.focus();

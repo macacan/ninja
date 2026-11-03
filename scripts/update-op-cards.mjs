@@ -93,7 +93,9 @@ for (const set of new Set(allCards.filter((c) => !c.card_image).map((c) => c.set
 const seen = new Set();
 const cards = allCards.map((c) => {
   const { name, variant } = splitName(c.card_name || "");
-  const tcg = c.card_image ? null : tcgCards.get(tcgKey(c.set_id, c.card_set_id, c.card_name));
+  // TCGplayers produkt sparas även när optcgapi har bilden (tcg), så att sidan känner igen kortets gamla id
+  // "SET/tcg123" från tiden innan optcgapi hade kortet (valvet och bildindexet kan ha det sparat)
+  const tcgHit = tcgCards.get(tcgKey(c.set_id, c.card_set_id, c.card_name)), tcg = c.card_image ? null : tcgHit;
   // Samma bild-id kan återkomma i flera set (återtryck) och ibland två gånger i samma set med olika namn.
   let id = `${c.set_id}/${c.card_image_id ?? tcg?.id ?? null}`;
   if (seen.has(id)) id += `~${(c.card_name || "").toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
@@ -104,6 +106,7 @@ const cards = allCards.map((c) => {
     color: c.card_color || null, type: c.card_type || null, cost: num(c.card_cost), power: num(c.card_power),
     counter: num(c.counter_amount), life: num(c.life), attr: c.attribute || null, sub: c.sub_types || null,
     image: c.card_image || tcg?.image || null, sek: sekOf(c.market_price ?? c.inventory_price), low: sekOf(c.inventory_price),
+    tcg: tcgHit ? tcgHit.id.slice(3) : null,
   };
 }).filter(Boolean);
 
@@ -119,6 +122,7 @@ for (const t of tcgOnly) {
     color: t.ex.Color?.replace(/;/g, " ") || null, type: t.ex.CardType || null, cost: num(t.ex.Cost), power: num(t.ex.Power),
     counter: num(t.ex.Counterplus), life: num(t.ex.Life), attr: t.ex.Attribute || null, sub: t.ex.Subtypes || null,
     image: t.image, sek: sekOf(t.price?.marketPrice ?? t.price?.lowPrice), low: sekOf(t.price?.lowPrice),
+    tcg: String(t.p.productId),
   });
 }
 
