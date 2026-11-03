@@ -1,6 +1,48 @@
 {
- "updated": 1793683941836,
+ "updated": 1793685921883,
  "events": [
+  {
+   "at": 1793685859957,
+   "store": "speltrollet",
+   "product": "speltrollet:15809801322822",
+   "group": "x|tin|en||forces-zeraora",
+   "title": "Pokemon TCG: Mega Forces Tin (Mega Zeraora Ex)",
+   "url": "https://speltrollet.se/products/pokemon-tcg-mega-forces-tin?variant=57725791863110",
+   "image": "https://cdn.shopify.com/s/files/1/0674/0951/0716/files/BlackBox-2026-06-12T232923.569.webp?v=1793178856",
+   "price": 379,
+   "type": "Tin",
+   "set": null,
+   "lang": "en",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1793685742853,
+   "store": "cardlevels",
+   "product": "cardlevels:11055673639223",
+   "group": "chaos-rising|booster-pack|en|",
+   "title": "Pokémon Chaos Rising Mega Evolution 4: Booster Pack",
+   "url": "https://cardlevels.se/products/pokemon-chaos-rising-mega-evolution-4-booster-pack",
+   "image": "https://cdn.shopify.com/s/files/1/0846/0458/4247/files/chaos-rising-booster-pack.jpg?v=1793683715",
+   "price": 79,
+   "type": "Booster Pack",
+   "set": "Chaos Rising",
+   "lang": "en",
+   "kind": "ny"
+  },
+  {
+   "at": 1793685742853,
+   "store": "cardlevels",
+   "product": "cardlevels:11055666594103",
+   "group": "chaos-rising|booster-box|en|",
+   "title": "Pokémon Chaos Rising Mega Evolution 4: Booster Box",
+   "url": "https://cardlevels.se/products/pokemon-chaos-rising-booster-box",
+   "image": "https://cdn.shopify.com/s/files/1/0846/0458/4247/files/pokemon-mega-evolution-chaos-rising-booster-box_2c8fd04b-9901-4e10-b874-9adc5f467ef4.webp?v=1793681928",
+   "price": 2699,
+   "type": "Booster Box",
+   "set": "Chaos Rising",
+   "lang": "en",
+   "kind": "ny"
+  },
   {
    "at": 1793683475772,
    "store": "cardlevels",
@@ -7021,45 +7063,6 @@
    "set": "30th Celebration",
    "lang": "en",
    "kind": "forbestallning"
-  },
-  {
-   "at": 1793108191633,
-   "store": "webhallen",
-   "product": "webhallen:401991",
-   "group": "30th-celebration|collection-box|en||alolan-exeggutor-sticker-tech",
-   "title": "Pokemon 30th Celebration Alolan Exeggutor Tech Sticker Collection",
-   "url": "https://www.webhallen.com/se/product/401991-Pokemon-30th-Celebration-Alolan-Exeggutor-Tech-Sticker-Collection",
-   "price": 349,
-   "type": "Collection Box",
-   "set": "30th Celebration",
-   "lang": "en",
-   "kind": "forbestallning"
-  },
-  {
-   "at": 1793108191633,
-   "store": "webhallen",
-   "product": "webhallen:401995",
-   "group": "30th-celebration|collection-box|en||figure",
-   "title": "Pokemon 30th Celebration Figure Collection",
-   "url": "https://www.webhallen.com/se/product/401995-Pokemon-30th-Celebration-Figure-Collection",
-   "price": 599,
-   "type": "Collection Box",
-   "set": "30th Celebration",
-   "lang": "en",
-   "kind": "forbestallning"
-  },
-  {
-   "at": 1793107181514,
-   "store": "dragon-s-lair",
-   "product": "dragon-s-lair:15936405766492",
-   "group": "30th-celebration|collection-box|zh||charizard-chinese-collectible-figure-gift",
-   "title": "[CHINESE] Pokémon TCG: 30th Celebration Charizard Collectible Figure Gift Box",
-   "url": "https://dragonslair.se/products/chinese-pokemon-tcg-30th-celebration-charizard-collectible-figure-gift-box",
-   "price": 3695,
-   "type": "Collection Box",
-   "set": "30th Celebration",
-   "lang": "zh",
-   "kind": "tillbaka"
   }
  ]
 }
