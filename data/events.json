@@ -1,6 +1,20 @@
 {
- "updated": 1793716275807,
+ "updated": 1793717195820,
  "events": [
+  {
+   "at": 1793716318814,
+   "store": "webhallen",
+   "product": "webhallen:402937",
+   "group": "x|booster-bundle|en||delta-reign",
+   "title": "Pokemon ME6 Delta Reign Booster Bundle",
+   "url": "https://www.webhallen.com/se/product/402937-Pokemon-ME6-Delta-Reign-Booster-Bundle",
+   "image": "https://www.webhallen.com/images-ext/images.eu.ctfassets.net/n0e6ajgmrw5w/2GhO5nseDy1GpjSyUic1AN/1972d7f406ce824fee5c5b7fd1f5891e/Delta_Reign_Booster_Bundle_1.png?fit=pad",
+   "price": 499,
+   "type": "Booster Bundle",
+   "set": null,
+   "lang": "en",
+   "kind": "forbestallning"
+  },
   {
    "at": 1793715692168,
    "store": "aquitaz",
@@ -7083,19 +7097,6 @@
    "set": null,
    "lang": "en",
    "kind": "ny"
-  },
-  {
-   "at": 1793179963176,
-   "store": "poketalk",
-   "product": "poketalk:11371806458198",
-   "group": "x|booster-bundle|en||30th-anniversary-celebration",
-   "title": "Pokémon TCG: 30th Anniversary Celebration Booster Bundle",
-   "url": "https://poketalk.se/products/pokemon-tcg-30th-anniversary-celebration-booster-bundle",
-   "price": 1099,
-   "type": "Booster Bundle",
-   "set": null,
-   "lang": "en",
-   "kind": "tillbaka"
   }
  ]
 }
