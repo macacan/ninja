@@ -1135,6 +1135,12 @@ span.rd-logo{display:grid;place-items:center;background:var(--surface);border-ra
 /* Valvknapparna står först i länkraden, bredvid Cardmarket och TCGplayer */
 .cm-vault{display:contents}
 .card-modal .cm-vault-minus{flex:0 0 auto;padding-inline:12px}
+/* Kortet finns både vanligt och som foil: en rad per slag med sitt pris, och i valvet en länk som byter slag */
+.cm-vault.two{display:grid;gap:6px;flex:1 1 100%}
+.cm-vault-row{display:flex;gap:6px;align-items:center}
+.cm-vault-row [data-vault="1"]{flex:1 1 auto}
+.cm-vault-price{flex:0 0 auto;min-width:70px;text-align:right;font-weight:800;font-size:.9rem}
+.cm-vault-swap{justify-self:start;padding:2px 0;border:0;background:none;color:var(--ai1,#6366f1);font:600 .82rem var(--sans);text-decoration:underline;cursor:pointer}
 /* Valvsidan: portföljen överst, Töm valvet under korten och guiden sist */
 .vault-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:0 0 18px}
 .vault-stats:empty{display:none}
@@ -1199,6 +1205,8 @@ span.rd-logo{display:grid;place-items:center;background:var(--surface);border-ra
   .vault-guide{padding:16px}
 }
 .cqty{position:absolute;top:6px;right:6px;z-index:2;padding:2px 8px;border-radius:999px;background:rgba(15,17,23,.88);border:1px solid rgba(255,255,255,.25);font:700 .78rem var(--sans);color:#fff;pointer-events:none}
+/* Foil i valvet: märket nere till vänster på kortbilden */
+.cfoil{position:absolute;left:6px;bottom:6px;z-index:2;padding:2px 8px;border-radius:999px;background:linear-gradient(120deg,#f0abfc,#93c5fd,#86efac,#fde68a);color:#111;font:800 .7rem var(--sans);pointer-events:none;box-shadow:0 1px 4px rgba(0,0,0,.35)}
 .cm-table{width:100%;border-collapse:collapse;font-size:.92rem}
 .cm-table th{text-align:left;font-weight:500;padding:6px 0;border-bottom:1px solid var(--line)}
 .cm-table td{text-align:right;padding:6px 0;border-bottom:1px solid var(--line);font-weight:700}
@@ -3090,7 +3098,16 @@ input[type=search]::-webkit-search-results-decoration {
 .scan-peek span{font:700 .68rem/1.15 var(--sans);text-align:center;max-width:100%;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
 .scan-peek.pop{animation:peekPop .35s ease-out}
 @keyframes peekPop{from{transform:scale(.6);opacity:0}}
-.scan.frozen .scan-peek,.scan.multi .scan-peek{display:none}
+.scan.frozen .scan-peek,.scan.multi .scan-peek,.scan.frozen .scan-view > .scan-foil,.scan.multi .scan-view > .scan-foil{display:none}
+/* Vanlig eller foil: under förhandsvisningen och i listan över skannade kort */
+.scan-foil{border-radius:999px;border:1px solid rgba(255,255,255,.3);background:rgba(12,14,30,.6);color:#e8eaf6;font:700 .7rem/1.2 var(--sans);padding:5px 10px;cursor:pointer;white-space:nowrap}
+.scan-foil[hidden]{display:none}
+.scan-foil.on{background:linear-gradient(120deg,#f0abfc,#93c5fd,#86efac,#fde68a);color:#111;border-color:transparent}
+.scan-view > .scan-foil{position:absolute;top:calc(12px + var(--peek-h,150px));right:12px;z-index:10;width:76px;padding:5px 4px;overflow:hidden;text-overflow:ellipsis;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+.scan-list li{display:flex;align-items:center;gap:8px}
+.scan-list li > button[data-i]{flex:1;min-width:0}
+.scan-list li button.scan-foil{width:auto;flex:none;display:block;padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.3)}
+.scan-list li button.scan-foil.on{border-color:transparent;background:linear-gradient(120deg,#f0abfc,#93c5fd,#86efac,#fde68a);color:#111}
 .scan-tray{position:absolute;left:12px;bottom:40px;z-index:6;width:64px;height:78px;padding:0;border:0;background:none;cursor:pointer}
 .scan-tray[hidden]{display:none}
 .scan-tray-stack{position:absolute;inset:0}
@@ -3109,8 +3126,9 @@ input[type=search]::-webkit-search-results-decoration {
 .scan-manual-row input:focus{outline:2px solid var(--ai1);outline-offset:1px}
 .scan-manual-row button{font:inherit;font-weight:600;border-radius:999px;padding:0 15px;cursor:pointer}
 .scan-manual-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
-.scan-manual-list button{width:100%;display:flex;align-items:center;gap:10px;padding:6px 10px 6px 6px;border-radius:12px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);color:#e8eaf6;font:inherit;text-align:left;cursor:pointer}
-.scan-manual-list button:hover,.scan-manual-list button:focus-visible{background:rgba(255,255,255,.1);outline:none;border-color:var(--ai1)}
+.scan-manual-list button,.scan-manual-list a{width:100%;display:flex;align-items:center;gap:10px;padding:6px 10px 6px 6px;border-radius:12px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);color:#e8eaf6;font:inherit;text-align:left;cursor:pointer}
+.scan-manual-list button:hover,.scan-manual-list button:focus-visible,.scan-manual-list a:hover,.scan-manual-list a:focus-visible{background:rgba(255,255,255,.1);outline:none;border-color:var(--ai1)}
+.scan-manual-list a{text-decoration:none;box-sizing:border-box}
 .scan-manual-list img,.scan-manual-list i{width:36px;height:50px;flex:none;border-radius:4px;object-fit:cover;background:#1b1e33}
 .scan-manual-list span{flex:1;min-width:0;display:flex;flex-direction:column}
 .scan-manual-list b{font-size:.88rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}

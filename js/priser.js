@@ -84,12 +84,33 @@ async function getRates() {
 // Alla priser visas i kronor. Går kursen inte att hämta visas hellre inget pris än ett i fel valuta.
 const sek = (v, cur = "EUR") => (v == null || !rates?.[cur] ? "–" : kr(v * rates[cur]));
 // Kortets pris för sortering och visning: de färdigbyggda spelen har redan kronor, Pokémonkorten euro.
-const value = (c) => (GAMES[c.game] ? c.sek : c.eur);
+// I valvet har Pokémonkorten också kronor (pokemonCard), så att spelen kan sorteras ihop.
+const value = (c) => (GAMES[c.game] || VAULT_PAGE ? c.sek : c.eur);
+// Kortets pris i kronor, eller null
+const sekOf = (c) => c.sek ?? (GAMES[c.game] || c.eur == null || !rates?.EUR ? null : Math.round(c.eur * rates.EUR * 100) / 100);
+const toSek = (v) => (v == null || !rates?.EUR ? null : Math.round(v * rates.EUR * 100) / 100);
+
+// ---------- Vanlig eller foil ----------
+// Ett kort som finns både som vanligt och som foil har två priser: Riftbound har TCGplayers foilpris (c.foil), Pokémon
+// Cardmarkets pris för reverse holo och holo ("-holo"). One Piece har ett pris per kort. I valvet är foil egna
+// exemplar (f: 1) med eget pris.
+const cmOf = (c) => c.full?.pricing?.cardmarket || {};
+// Foilpriset i kronor när kortet finns i båda, annars null
+function foilSek(c) {
+  if (c.game === "rb") return c.foil ?? null;
+  if (GAMES[c.game]) return null;
+  // Kort som bara finns som holo (eller bara vanliga) har inget val. Cardmarket kan ge 0 som holopris för dem.
+  const cm = cmOf(c), v = c.full?.variants, holo = cm["trend-holo"] || cm["avg-holo"];
+  if (v && !(v.normal && (v.reverse || v.holo))) return null;
+  return (cm.trend ?? cm.avg) != null && holo ? toSek(holo) : null;
+}
+const foilLabel = (c) => (c.game === "rb" ? "Foil" : c.full?.variants?.reverse ? "Reverse holo" : "Holo");
 const priceText = (c) => (GAMES[c.game] ? kr(c.sek) : sek(c.eur));
 
 // ---------- Holo-nivå ----------
 // Vanliga kort får bara en ljusreflex, holo får regnbågsglans och specialkort en starkare effekt.
 function finish(c) {
+  if (c.holo) return "rainbow";
   if (GAMES[c.game]) return GAMES[c.game].finish(c);
   const r = (c.rarity || "").toLowerCase();
   if (/special|illustration|secret|hyper|ultra|rainbow|gold|full art|shiny|ace spec|mega hyper|double rare|\bex\b|\bgx\b|vmax|vstar|radiant|crown/.test(r)) return "rainbow";
@@ -111,6 +132,7 @@ function tile(c, i) {
       ${isBack ? `<span class="csoon">Bilder kommer snart</span>` : ""}
       <i class="glare"></i>${langMark(c.lang)}
       ${c.qty > 1 ? `<span class="cqty">×${c.qty}</span>` : ""}
+      ${c.holo ? `<span class="cfoil">${esc(foilLabel(c))}</span>` : ""}
     </span>
     <span class="cname">${c.en ? `${esc(c.en)} <small class="cname-ja">${esc(c.name)}</small>` : esc(c.name)}</span>
     <span class="cset">${esc(c.set || "")}${c.localId ? ` · #${esc(c.localId)}` : ""}</span>
@@ -125,7 +147,7 @@ function tile(c, i) {
 function slim(c, meta = {}) {
   const cm = c.pricing?.cardmarket || {};
   return {
-    lang: meta.lang || "en", en: meta.en || null,
+    game: "pokemon", lang: meta.lang || "en", en: meta.en || null, setId: c.set?.id,
     id: c.id, name: c.name, image: c.image, set: c.set?.name, localId: c.localId, rarity: c.rarity, variants: c.variants,
     eur: cm.trend ?? cm.avg ?? cm["trend-holo"] ?? null, avg7: cm.avg7 ?? null, avg30: cm.avg30 ?? null,
     change: cm.avg7 && cm.avg30 ? Math.round((cm.avg7 / cm.avg30 - 1) * 1000) / 10 : null, full: c,
@@ -334,7 +356,7 @@ async function searchPrebuilt(my, q, rarity, set) {
       if (set && c.setId !== set) return false;
       if (rarity && c.rarity !== rarity) return false;
       if (!q) return true;
-      const hay = `${c.name} ${c.variant || ""} ${c.set} ${c.no}`.toLowerCase();
+      const hay = `${c.name} ${c.variant || ""} ${c.set} ${c.no || c.localId || ""} ${c.holo ? `foil ${foilLabel(c)}` : ""}`.toLowerCase();
       return words.every((w) => hay.includes(w)) || (cq.length >= 4 && compact(c.no).startsWith(cq));
     });
     next = PAGE;
@@ -411,41 +433,81 @@ function saveVault(v) {
   navigator.storage?.persist?.().catch(() => {});
   vaultButton();
 }
-const vaultQty = (c) => loadVault().find((x) => x.game === c.game && x.id === c.id)?.qty || 0;
-// c: kortet (med dagens pris i sek, om det finns). Inköpspriset (p) är snittet av priserna då exemplaren lades in.
-function changeVault(c, d) {
-  const v = loadVault(), i = v.findIndex((x) => x.game === c.game && x.id === c.id);
-  if (i < 0 && d > 0) v.unshift({ game: c.game, id: c.id, qty: d, at: Date.now(), p: c.sek ?? null });
+// Samma kort i valvet, vanligt (f falskt) eller foil
+const sameEntry = (x, c, f) => x.game === c.game && x.id === c.id && !x.f === !f;
+const vaultQty = (c, f = false) => loadVault().find((x) => sameEntry(x, c, f))?.qty || 0;
+const priceAs = (c, f) => (f ? foilSek(c) : sekOf(c));
+// c: kortet (med dagens pris i sek, om det finns), f: foil. Inköpspriset (p) är snittet av priserna då exemplaren lades in.
+// Ett nytt exemplar av ett kort som redan finns flyttar kortet först, som senast inlagt (Nyaste först).
+function changeVault(c, d, f = false) {
+  const v = loadVault(), i = v.findIndex((x) => sameEntry(x, c, f));
+  const now = priceAs(c, f);
+  if (i < 0 && d > 0) v.unshift({ game: c.game, id: c.id, qty: d, at: Date.now(), p: now, ...(f && { f: 1 }) });
   else if (i >= 0) {
     const x = v[i];
-    if (d > 0 && x.p != null && c.sek != null) x.p = Math.round(((x.p * x.qty + c.sek * d) / (x.qty + d)) * 100) / 100;
+    if (d > 0 && x.p != null && now != null) x.p = Math.round(((x.p * x.qty + now * d) / (x.qty + d)) * 100) / 100;
     x.qty += d;
     if (x.qty <= 0) v.splice(i, 1);
+    else if (d > 0) { x.at = Date.now(); v.unshift(...v.splice(i, 1)); }
   }
   saveVault(v);
 }
-// Länken till valvet på Kortpriser, med antalet kort. Syns i One Piece och Riftbound när valvet har kort.
+// Ett exemplar byter mellan vanligt och foil (foil: vad det blir), och behåller sin plats och sin tid i valvet.
+// Inköpspriset blir dagens pris för det nya slaget.
+function moveVault(c, foil) {
+  const v = loadVault(), x = v.find((y) => sameEntry(y, c, !foil));
+  if (!x) return;
+  const now = priceAs(c, foil), y = v.find((z) => sameEntry(z, c, foil));
+  if (y) {
+    if (y.p != null && now != null) y.p = Math.round(((y.p * y.qty + now) / (y.qty + 1)) * 100) / 100;
+    y.qty += 1;
+  } else v.splice(v.indexOf(x), 0, { game: c.game, id: c.id, qty: 1, at: x.at, p: now, ...(foil && { f: 1 }) });
+  x.qty -= 1;
+  if (x.qty <= 0) v.splice(v.indexOf(x), 1);
+  saveVault(v);
+}
+// Länken till valvet på Kortpriser, med antalet kort. Syns när valvet har kort.
 function vaultButton() {
   const btn = $("#vault-open");
   if (!btn) return;
   const n = loadVault().reduce((s, x) => s + x.qty, 0);
-  btn.hidden = !prebuilt() || !n;
+  btn.hidden = !n;
   btn.querySelector(".vault-count").textContent = n ? `(${n})` : "";
 }
 
-// Skannade kort in i valvet. Kort som bara fick ett nummer läst slås upp på numret. Svarar med de inlagda korten.
+// Ett Pokémonkort i valvet, från TCGdex. Pris och månadssnitt räknas om till kronor, som de andra spelens.
+async function pokemonCard(id) {
+  const [full] = await Promise.all([getJSON(`${API}/cards/${enc(id)}`), getRates()]);
+  const c = slim(full);
+  return { ...c, sek: toSek(c.eur), avg30: toSek(c.avg30) };
+}
+// Ett skannat Pokémonkort: kort-id:t, eller namn och nummer när de bara pekar ut ett kort
+async function scannedPokemon(s) {
+  if (s.cardId) return pokemonCard(s.cardId);
+  if (!s.name || !s.number) return null;
+  const list = await filterByNumber(await getList(`${API}/cards?${new URLSearchParams({ name: s.name, localId: apiNumber(s.number) })}`), s.number, s.total);
+  return list.length === 1 ? pokemonCard(list[0].id) : null;
+}
+
+// Ett skannat kort ur kortfilen (eller TCGdex). Kort som bara fick ett nummer läst slås upp på numret.
+async function scannedCard(s) {
+  if (s.game === "pokemon") return scannedPokemon(s);
+  if (!GAMES[s.game]) return null;
+  const d = await gameCards(s.game), cards = d.cards;
+  let c = s.cardId && (cards.find((x) => x.id === s.cardId) || d.alias.get(s.cardId));
+  if (!c && s.number && s.total) {
+    const no = `${String(s.number).replace(/^\d+/, (d) => d.padStart(String(s.total).length, "0"))}/${s.total}`;
+    c = cards.find((x) => x.no === no && !x.variant);
+  }
+  return c || null;
+}
+// Skannade kort in i valvet, som foil när det valts i skannern. Svarar med de inlagda korten.
 async function addScanned(list) {
   const added = [];
   for (const s of list) {
-    if (!GAMES[s.game]) continue;
-    const d = await gameCards(s.game).catch(() => null), cards = d?.cards || [];
-    let c = s.cardId && (cards.find((x) => x.id === s.cardId) || d.alias.get(s.cardId));
-    if (!c && s.number && s.total) {
-      const no = `${String(s.number).replace(/^\d+/, (d) => d.padStart(String(s.total).length, "0"))}/${s.total}`;
-      c = cards.find((x) => x.no === no && !x.variant);
-    }
+    const c = await scannedCard(s).catch(() => null);
     if (!c) continue;
-    changeVault(c, 1);
+    changeVault(c, 1, !!s.foil && foilSek(c) != null);
     added.push(c);
   }
   return added;
@@ -461,8 +523,9 @@ const hitKey = (r) => `${r.game}:${r.cardId || `${r.number}/${r.total}`}`;
 // manual: skannern öppnas direkt med sökrutan (Sök och lägg till i valvet)
 async function scanCards(g = VAULT_PAGE ? "vault" : game, { manual = false } = {}) {
   track("scan", "Öppnad");
-  const { openScanner } = await import("./card-scanner.js?v=20261103k");
+  const { openScanner } = await import("./card-scanner.js?v=20261103o");
   const added = new Map(); // valvet: träffarna som lagts in, för att kunna öppna rätt kort
+  let swaps = Promise.resolve();
   openScanner(async (r) => {
     const { cardId, name, number, total } = r;
     track("scan", cardId ? "Säker träff" : "Läst, söker");
@@ -485,6 +548,15 @@ async function scanCards(g = VAULT_PAGE ? "vault" : game, { manual = false } = {
       const p = addScanned([r]).then(([c]) => { if (c) track("scan", "Till valvet: 1 kort"); showVault(); return c; });
       added.set(hitKey(r), p);
     } : null,
+    // Vanlig eller foil: knappen syns för kort som finns i båda. I valvet byter ett tryck slag på kortet som lagts in.
+    finish: {
+      check: async (r) => { const c = await scannedCard(r), p = c && foilSek(c); return p != null ? { label: foilLabel(c), price: p } : null; },
+      // Flera tryck i rad byter i tur och ordning
+      set: VAULT_PAGE ? (r, foil) => (swaps = swaps.then(async () => {
+        const c = await added.get(hitKey(r));
+        if (c) { moveVault(c, foil); showVault(); }
+      })) : null,
+    },
     done: async (list) => {
       if (VAULT_PAGE) return showVault();
       track("scan", `Till valvet: ${(await addScanned(list)).length} kort`);
@@ -513,10 +585,15 @@ const diff = (now, then) => {
 // En dag utan pris för ett kort använder det senaste priset före, eller det första kända om historiken börjar
 // senare. Kort utan historik räknas med dagens pris. Sista punkten är i dag, med dagens priser.
 const vaultHist = {};
-const histOf = (g, set) => (vaultHist[`${g}/${set}`] ??= fetch(`data/${g}/history/${encodeURIComponent(set)}.json`, { cache: "no-cache" })
+// Pokémonkortens historik ligger i data/card-history (också i kronor)
+const histDir = (g) => (GAMES[g] ? `data/${g}/history` : "data/card-history");
+const histOf = (g, set) => (vaultHist[`${g}/${set}`] ??= fetch(`${histDir(g)}/${encodeURIComponent(set)}.json`, { cache: "no-cache" })
   .then((r) => (r.ok ? r.json() : { cards: {} })).catch(() => ({ cards: {} })));
 async function valueSeries(cards) {
-  const rows = await Promise.all(cards.map(async (c) => ((await histOf(c.game, c.setId)).cards[c.id] || []).map(([d, p]) => [d, p]).filter(([, p]) => p != null)));
+  // Historiken gäller det vanliga priset. Foil räknas med samma utveckling, i dagens foilpris.
+  const k = (c) => (!c.holo ? 1 : c.orig.sek ? c.sek / c.orig.sek : 0);
+  const rows = await Promise.all(cards.map(async (c) => (k(c) ? (await histOf(c.game, c.setId)).cards[c.id] || [] : [])
+    .filter(([, p]) => p != null).map(([d, p]) => [d, p * k(c)])));
   const today = new Date().toISOString().slice(0, 10);
   const dates = [...new Set([...rows.flat().map(([d]) => d), today])].filter((d) => d <= today).sort();
   return dates.map((date) => ({
@@ -561,6 +638,9 @@ async function showVault() {
   try {
     const games = [...new Set(v.map((x) => x.game))].filter((g) => GAMES[g]);
     const byId = {}, alias = {};
+    // Pokémonkorten hämtas ett och ett från TCGdex. Ett kort som inte går att hämta just nu visas inte, men ligger kvar.
+    const pk = await Promise.all(v.filter((x) => x.game === "pokemon").map((x) => pokemonCard(x.id).catch(() => null)));
+    for (const c of pk) if (c) byId[`pokemon:${c.id}`] = c;
     for (const [g, d] of await Promise.all(games.map(async (g) => [g, await gameCards(g)]))) {
       for (const c of d.cards) byId[`${g}:${c.id}`] = c;
       for (const [a, c] of d.alias) alias[`${g}:${a}`] = c;
@@ -569,7 +649,7 @@ async function showVault() {
     // Kort som bytt id sedan de lades in (se tcgAlias) flyttas till sitt nya id, och slås ihop om kortet redan finns
     const moved = v.filter((x) => !byId[`${x.game}:${x.id}`] && alias[`${x.game}:${x.id}`]);
     for (const x of moved) {
-      const id = alias[`${x.game}:${x.id}`].id, same = v.find((y) => y !== x && y.game === x.game && y.id === id);
+      const id = alias[`${x.game}:${x.id}`].id, same = v.find((y) => y !== x && y.game === x.game && y.id === id && !y.f === !x.f);
       if (same) { same.qty += x.qty; same.at = Math.min(same.at ?? x.at, x.at ?? same.at); x.qty = 0; }
       else x.id = id;
     }
@@ -579,7 +659,14 @@ async function showVault() {
       v.push(...keep);
       saveVault(v);
     }
-    found = v.map((x) => byId[`${x.game}:${x.id}`] && { ...byId[`${x.game}:${x.id}`], qty: x.qty, at: x.at, p: x.p ?? null }).filter(Boolean);
+    // Foil visas som ett eget kort med foilpriset. orig är kortet som det står i kortfilen.
+    found = v.map((x) => {
+      const c = byId[`${x.game}:${x.id}`];
+      if (!c) return null;
+      const e = { ...c, orig: c, qty: x.qty, at: x.at, p: x.p ?? null };
+      if (!x.f) return e;
+      return { ...e, holo: true, sek: foilSek(c), change: null, avg30: c.game === "pokemon" ? toSek(cmOf(c)["avg30-holo"]) : null };
+    }).filter(Boolean);
   } catch {
     $("#prices").innerHTML = '<div class="msg">Kunde inte läsa korten just nu. Försök igen om en stund.</div>';
     return;
@@ -668,19 +755,26 @@ if (VAULT_PAGE) {
     if (!e.target.closest(".vs-value") || valuePts.length < 2) return;
     mountSeries(chart.querySelector(".pchart"), valuePts, {
       title: "Valvets värde",
-      note: "Värdet räknas med dagens antal kort och priserna vi sparat varje dag (TCGplayers marknadspris i kronor).",
+      note: "Värdet räknas med dagens antal kort och priserna vi sparat varje dag (i kronor: Cardmarkets trendpris för Pokémon, TCGplayers marknadspris för One Piece och Riftbound).",
     });
     chart.showModal();
   });
   chart.addEventListener("click", (e) => { if (e.target === chart || e.target.closest(".cm-close")) chart.close(); });
 }
-// Knapparna i den stora vyn: lägg till ett exemplar eller ta bort ett
-const vaultActions = (c) => {
-  const q = vaultQty(c);
-  return `<div class="cm-vault">
-    <button type="button" class="btn primary small" data-vault="1">+ Lägg i valvet${q ? ` (${q})` : ""}</button>
-    ${q ? `<button type="button" class="btn small cm-vault-minus" data-vault="-1" aria-label="Ta bort ett ur valvet">−</button>` : ""}
-  </div>`;
+// Knapparna i den stora vyn: lägg till ett exemplar eller ta bort ett. Finns kortet som foil får vanlig och foil
+// var sin rad med sitt pris, och i valvet kan kortet som visas byta slag (shown: kortet i valvet).
+const vaultActions = (c, shown = null) => {
+  const fs = foilSek(c);
+  const buttons = (f, label) => {
+    const q = vaultQty(c, f);
+    return `<button type="button" class="btn primary small" data-vault="1" data-f="${+f}">+ ${label}${q ? ` (${q})` : ""}</button>
+    ${q ? `<button type="button" class="btn small cm-vault-minus" data-vault="-1" data-f="${+f}" aria-label="Ta bort ett ${f ? esc(foilLabel(c)) : "vanligt"} ur valvet">−</button>` : ""}`;
+  };
+  if (fs == null) return `<div class="cm-vault">${buttons(false, "Lägg i valvet")}</div>`;
+  const row = (f, label, price) => `<div class="cm-vault-row">${buttons(f, label)}<span class="cm-vault-price">${price != null ? kr(price) : "–"}</span></div>`;
+  const from = !!shown?.holo, swap = VAULT_PAGE && shown?.orig && vaultQty(c, from)
+    ? `<button type="button" class="cm-vault-swap" data-swap="${+!from}">Markera ett som ${from ? "vanligt" : esc(foilLabel(c))}</button>` : "";
+  return `<div class="cm-vault two">${row(false, "Vanlig", sekOf(c))}${row(true, esc(foilLabel(c)), fs)}${swap}</div>`;
 };
 
 // ---------- Stor vy med holo-effekt ----------
@@ -695,9 +789,11 @@ async function openCard(i) {
   body.innerHTML = `<div class="cm-load">Hämtar kortet…</div>`;
   if (!modal.open) modal.showModal();
   if (GAMES[c.game]) return openPrebuiltCard(c, i, body);
+  c.game ??= "pokemon"; // trendlistornas kort saknar spel, som valvet behöver
   const full = c.full || (await getJSON(`${apiFor(c.lang)}/cards/${encodeURIComponent(c.id)}`).catch(() => null)) || {};
   if (shownIndex !== i) return;
   await getRates();
+  if (full.id) (c.orig || c).full ||= full; // foilpriset till valvets knappar
   const ja = c.lang === "ja";
   const cm = full.pricing?.cardmarket || {}, tp = full.pricing?.tcgplayer || {};
   // "Senast sökta" hämtar korten från den engelska databasen, så japanska kort sparas inte där.
@@ -725,13 +821,14 @@ async function openCard(i) {
     </div>
     <div class="cm-info">
       <h2 id="cm-name">${ja && c.en ? `${esc(c.en)} <small class="cname-ja">${esc(full.name || c.name)}</small> <span class="beta-tag">Beta</span>` : esc(full.name || c.name)}</h2>
-      <div class="cm-price">${c.eur != null ? sek(c.eur) : "Inget pris ännu"} ${change(c.change)}</div>
+      <div class="cm-price">${c.holo ? (c.sek != null ? `${kr(c.sek)} <small class="cname-ja">${esc(foilLabel(c))}</small>` : "Inget pris ännu") : c.eur != null ? sek(c.eur) : "Inget pris ännu"} ${change(c.change)}</div>
       <p class="muted">Cardmarkets trendpris i kronor. Vägledande, uppdateras dagligen.</p>
       <div class="pchart"></div>
       ${cm.trend != null || cm.avg != null ? `<h3>Cardmarket (Europa)</h3><table class="cm-table">${row("Trend", cm.trend, "EUR")}${row("Snitt", cm.avg, "EUR")}${row("Lägsta", cm.low, "EUR")}${row("Snitt 1 dag", cm.avg1, "EUR")}${row("Snitt 7 dagar", cm.avg7, "EUR")}${row("Snitt 30 dagar", cm.avg30, "EUR")}${row("Trend holo", cm["trend-holo"] || null, "EUR")}</table>` : ""}
       ${tpRows ? `<h3>TCGplayer (USA)</h3><table class="cm-table">${tpRows}</table>` : ""}
       <div class="cm-links">
-        <a class="btn primary small" href="https://www.cardmarket.com/en/Pokemon/Products/Search?searchString=${encodeURIComponent(ja ? c.en || full.name : full.name || c.name)}" target="_blank" rel="noopener">Cardmarket ↗</a>
+        ${ja ? "" : vaultActions(c.orig || c, c)}
+        <a class="btn${ja ? " primary" : ""} small" href="https://www.cardmarket.com/en/Pokemon/Products/Search?searchString=${encodeURIComponent(ja ? c.en || full.name : full.name || c.name)}" target="_blank" rel="noopener">Cardmarket ↗</a>
         ${ja ? "" : `<a class="btn small" href="https://www.tcgplayer.com/search/pokemon/product?q=${encodeURIComponent(full.name || c.name)}" target="_blank" rel="noopener">TCGplayer ↗</a>`}
       </div>
     </div>`;
@@ -763,12 +860,12 @@ function openPrebuiltCard(c, i, body) {
     </div>
     <div class="cm-info">
       <h2 id="cm-name">${esc(c.name)}${c.variant ? ` <small class="cname-ja">${esc(c.variant)}</small>` : ""}</h2>
-      <div class="cm-price">${c.sek != null ? kr(c.sek) : "Inget pris ännu"} ${change(c.change)}</div>
+      <div class="cm-price">${c.sek != null ? kr(c.sek) : "Inget pris ännu"}${c.holo ? ` <small class="cname-ja">${esc(foilLabel(c))}</small>` : ""} ${change(c.change)}</div>
       <p class="muted">TCGplayers marknadspris i kronor. Vägledande, uppdateras dagligen.</p>
       <div class="pchart"></div>
       ${c.sek != null || c.low != null ? `<h3>TCGplayer (USA)</h3><table class="cm-table">${row("Marknadspris", c.sek)}${row("Foil", c.foil)}${row("Lägsta i lager", c.low)}</table>` : ""}
       <div class="cm-links">
-        ${vaultActions(c)}
+        ${vaultActions(c.orig || c, c)}
         <a class="btn small" href="${esc(g.cardmarket(c))}" target="_blank" rel="noopener">Cardmarket ↗</a>
         <a class="btn small" href="${esc(g.tcgplayer(c))}" target="_blank" rel="noopener">TCGplayer ↗</a>
       </div>
@@ -816,12 +913,13 @@ modal.addEventListener("pointerleave", () => {
 });
 modal.addEventListener("click", (e) => {
   if (e.target === modal || e.target.closest(".cm-close")) modal.close();
-  const vb = e.target.closest("[data-vault]");
-  if (vb) {
-    const c = current[shownIndex];
-    changeVault(c, +vb.dataset.vault);
+  const vb = e.target.closest("[data-vault]"), sw = e.target.closest("[data-swap]");
+  if (vb || sw) {
+    const shown = current[shownIndex], c = shown.orig || shown;
+    if (vb) changeVault(c, +vb.dataset.vault, vb.dataset.f === "1");
+    else moveVault(c, sw.dataset.swap === "1");
     vaultDirty = true;
-    modal.querySelector(".cm-vault").outerHTML = vaultActions(c);
+    modal.querySelector(".cm-vault").outerHTML = vaultActions(c, shown);
   }
   if (e.target.closest(".prev")) openCard(shownIndex - 1);
   if (e.target.closest(".next")) openCard(shownIndex + 1);
