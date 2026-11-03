@@ -439,16 +439,20 @@ async function addScanned(list) {
 
 // ---------- Kortskanner för Riftbound och One Piece ----------
 // Kortpriser: ett säkert kort öppnas, annars söks det lästa numret (t.ex. "001/167") så att man kan välja bland
-// träffarna. Valvet: skannern letar bland både One Piece och Riftbound ("vault"), och kortet läggs i valvet och
-// öppnas där. Klar i snabbskanningen lägger alla korten i valvet.
+// träffarna. Valvet: skannern letar bland både One Piece och Riftbound ("vault"), och varje träff läggs i valvet
+// direkt. Ett tryck på träffen i skannern öppnar kortet. Klar i snabbskanningen lägger alla korten i valvet
+// (i valvet ligger de redan där).
 // Skannern (js/card-scanner.js) är stor och laddas först när knappen trycks.
+const hitKey = (r) => `${r.game}:${r.cardId || `${r.number}/${r.total}`}`;
 async function scanCards(g = VAULT_PAGE ? "vault" : game) {
   track("scan", "Öppnad");
-  const { openScanner } = await import("./card-scanner.js?v=20261103e");
-  openScanner(async ({ game: found, cardId, name, number, total }) => {
+  const { openScanner } = await import("./card-scanner.js?v=20261103f");
+  const added = new Map(); // valvet: träffarna som lagts in, för att kunna öppna rätt kort
+  openScanner(async (r) => {
+    const { cardId, name, number, total } = r;
     track("scan", cardId ? "Säker träff" : "Läst, söker");
     if (VAULT_PAGE) {
-      const [c] = await addScanned([{ game: found, cardId, number, total }]);
+      const c = await added.get(hitKey(r));
       await showVault();
       const i = c ? current.findIndex((x) => x.game === c.game && x.id === c.id) : -1;
       if (i >= 0) openCard(i);
@@ -458,11 +462,19 @@ async function scanCards(g = VAULT_PAGE ? "vault" : game) {
     // Siffrorna fylls ut som på kortet ("57a" blir "057a"), så att sökningen hittar "057a/221"
     else $("#pq").value = total ? `${String(number).replace(/^\d+/, (d) => d.padStart(total.length, "0"))}/${total}` : number || "";
     search();
-  }, null, { game: g, done: async (list) => {
-    track("scan", `Till valvet: ${(await addScanned(list)).length} kort`);
-    if (VAULT_PAGE) showVault();
-    else location.href = "valv.html";
-  } });
+  }, null, {
+    game: g,
+    hit: VAULT_PAGE ? (r) => {
+      // Kortet läggs i valvet så fort det hittats, och valvet bakom skannern ritas om
+      const p = addScanned([r]).then(([c]) => { if (c) track("scan", "Till valvet: 1 kort"); showVault(); return c; });
+      added.set(hitKey(r), p);
+    } : null,
+    done: async (list) => {
+      if (VAULT_PAGE) return showVault();
+      track("scan", `Till valvet: ${(await addScanned(list)).length} kort`);
+      location.href = "valv.html";
+    },
+  });
 }
 
 // ---------- Valvsidan ----------

@@ -1253,7 +1253,7 @@ export async function rankByLook(canvas, list, limit = 150) {
 
 // ---------- 8. Kamerafönster & Interaktiv HUD ----------
 let dialog = null, stream = null, timer = null, animFrame = null, busy = false;
-let onFound = null, onPartial = null, onDone = null;
+let onFound = null, onPartial = null, onDone = null, onHit = null;
 let torchSupported = false, torchActive = false;
 let stillTicks = 0, lastScanAt = 0;
 let pauseUntil = 0, openedAt = 0; // pauseUntil: auto-skanningen väntar så att ett felmeddelande hinner läsas
@@ -1958,7 +1958,8 @@ function addScanned(r, canvas) {
   scanned.unshift(item);
   scanned.length = Math.min(scanned.length, LIST_MAX);
   saveList();
-  status(`<b>${esc(labelOf(item))}</b> sparat. Nästa kort!`);
+  status(`<b>${esc(labelOf(item))}</b> ${onHit ? "lagt i valvet" : "sparat"}. Nästa kort!`);
+  onHit?.(item);
   if ("vibrate" in navigator) navigator.vibrate(40);
   // Kort som hittades på bilden har inget namn än: det hämtas i bakgrunden
   if (!item.name && item.cardId && item.game === "pokemon") {
@@ -1997,7 +1998,10 @@ async function setPeek(r, canvas) {
   const hud = dialog.querySelector(".scan-hud-status");
   hud?.classList.add("success");
   setTimeout(() => hud?.classList.remove("success"), 1500);
-  status(`Hittade <b>${esc(labelOf(item))}</b>! Tryck på kortet för att öppna det, eller håll nästa i ramen.`);
+  status(onHit
+    ? `<b>${esc(labelOf(item))}</b> lagt i valvet! Håll nästa kort i ramen.`
+    : `Hittade <b>${esc(labelOf(item))}</b>! Tryck på kortet för att öppna det, eller håll nästa i ramen.`);
+  onHit?.(item);
   item.thumb = thumbOf(canvas);
   item.price = await priceOf(item);
   if (peek !== item) return; // ett nytt kort hann hittas
@@ -2123,10 +2127,12 @@ function hideList(restart = true) {
 // game: "pokemon" (känner också igen tydliga Riftbound- och One Piece-kort), "rb" eller "op". Svaret säger vilket
 // spel kortet är (game).
 // done: får alla skannade kort ({ game, cardId, name, number, total }) när man trycker Klar i listan.
-export async function openScanner(callback, partialCallback, { game = "pokemon", done = null } = {}) {
+// hit: får varje kort så fort det är hittat, även i snabbskanningen (Mitt valv lägger in kortet direkt).
+export async function openScanner(callback, partialCallback, { game = "pokemon", done = null, hit = null } = {}) {
   scanGame = game;
   onFound = callback;
   onDone = done;
+  onHit = hit;
   onPartial = partialCallback || null;
   const d = ui();
   d.querySelector(".scan-tip").textContent = game === "rb" || game === "vault"
