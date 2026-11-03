@@ -33,7 +33,7 @@ const STOP = new Set(("pokemon tcg trading card cards game the and och med for o
   "deck decks bundle elite trainer etb display ultra upc build battle edition version utgava " +
   // Butikernas egna tillägg: språk, "importvara", "slumpmässigt motiv", "1st", "OBS".
   "japanska koreansk koreanska korean kinesisk kinesiska chinese simplified forenklad importvara obs " +
-  "samlarbox samlarboxar boosterpaket expansion shrink 1st blandad slumpmassigt slumpmassig motiv random assorted artwork slumpas").split(" "));
+  "samlarbox samlarboxar samlingsbox samlingsboxar boosterpaket expansion shrink 1st blandad slumpmassigt slumpmassig motiv random assorted artwork slumpas").split(" "));
 
 export const fold = (s) => String(s || "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
 const slug = (s) => fold(s).replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
@@ -62,6 +62,8 @@ function nameTokens(title, set, game) {
     .concat([...t.matchAll(/\b([xyz])\b(?=\s*(?:ex|gx|\)|$|\s))/g)].map((m) => m[1]));
   const words = t.replace(/\(.*?\)/g, (m) => (/ex|gx|v\b|vmax|vstar/.test(m) ? m : " "))
     .split(/[^a-z0-9]+/).filter((w) => w.length > 2 && !STOP.has(w) && !GAMES[game]?.stop.has(w) && !setWords.has(w) && w !== "max" && !/^\d+$/.test(w) && !/^[a-z]{1,4}\d+[a-z]?$/.test(w));
+  // Det finns bara en Mega Charizard-UPC (X), så "Mega Charizard Ultra Premium Collection" är den.
+  if (/ultra.?premium|\bupc\b/.test(t) && /mega charizard/.test(t) && !extra.length) extra.push("x");
   return [...new Set([...extra, ...words])].sort();
 }
 
@@ -72,7 +74,16 @@ const SERIES_LIKE = new Set(["mega evolution", "scarlet & violet", "sword & shie
 // Japanska, koreanska och kinesiska set har egna namn som vi inte känner igen. Står bara serien i titeln
 // ("Scarlet & Violet: Crimson Haze") ska produkten hamna med butikerna som skriver "Crimson Haze" utan serie,
 // alltså som utan set. Har titeln inga namnord alls får serien stå kvar, så att den ändå skiljs från andra.
-const ownSet = (p) => ((p.lang || "en") !== "en" && SERIES_LIKE.has(fold(p.set)) && nameTokens(p.title, "").length ? "" : p.set || "");
+// Samma sak gäller samlarboxar (inte blister) på alla språk: "Mega Charizard X ex Mega Evolution: Ultra-Premium-samlingsbox" och
+// "Sword & Shield Charizard Ultra-Premium Collection" ska hamna med butikerna som bara skriver namnet.
+// "Mini" räknas inte som namn där, annars blir "Mega Evolution Mini Tin" samma som "Pokémon GO Mini Tin".
+function ownSet(p) {
+  if (!SERIES_LIKE.has(fold(p.set))) return p.set || "";
+  const words = nameTokens(p.title, "");
+  if ((p.lang || "en") !== "en" && words.length) return "";
+  if (!SIMPLE.has(p.type) && p.type !== "Blister" && words.some((w) => w !== "mini")) return "";
+  return p.set;
+}
 
 export function groupKey(p) {
   // Nycklarna för andra spel börjar med spelet ("rb|", "op|"), så att de aldrig krockar med Pokémon.
@@ -117,7 +128,10 @@ export function groupTitle(members) {
   }
   const clean = (t) => t.replace(/^[\s,;:–-]+/, "").replace(/^\s*pok[eé]mon(\s+tcg)?\s*[:\-–]?\s*/i, "").replace(/\((max|begränsat|limit)[^)]*\)/gi, "")
     .replace(/\s{2,}/g, " ").trim();
-  const shortest = members.map((m) => m.title).sort((a, b) => a.length - b.length)[0];
+  // Har någon butik med bokstaven ("Charizard X ex") tas namnet från dem, så att den inte försvinner.
+  const letter = (m) => /\b[xyz]\b(?=\s*(?:ex|gx|\)|$|\s))/.test(fold(m.title));
+  const pool = members.some(letter) ? members.filter(letter) : members;
+  const shortest = pool.map((m) => m.title).sort((a, b) => a.length - b.length)[0];
   // "Riftbound: League of Legends TCG - Set One: Origins Champion Deck - Jinx" → "Riftbound Origins Champion Deck - Jinx"
   if (g) return `${g.name} ${clean(shortest.replace(g.prefix, ""))}`;
   return clean(shortest);
