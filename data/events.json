@@ -1,6 +1,21 @@
 {
- "updated": 1793745160524,
+ "updated": 1793746080543,
  "events": [
+  {
+   "at": 1793745167165,
+   "store": "spelparken",
+   "product": "spelparken:15547347140983",
+   "group": "op|the-world-s-strongest-warriors|booster-box|en|",
+   "title": "One Piece – The World’s Strongest Warriors OP-17 Booster Box",
+   "url": "https://spelparken.se/products/one-piece-the-world-s-strongest-warriors-op-17-booster-box",
+   "image": "https://cdn.shopify.com/s/files/1/0948/1876/3127/files/images_f7f578ab-d6ea-416c-9d7d-0724a915a644.jpg?v=1787846478",
+   "price": 4199,
+   "type": "Booster Box",
+   "set": "The World's Strongest Warriors",
+   "lang": "en",
+   "game": "op",
+   "kind": "ny"
+  },
   {
    "at": 1793744640374,
    "store": "packs-on-packs",
@@ -7112,20 +7127,6 @@
    "set": "Carrying On His Will",
    "lang": "ja",
    "game": "op",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793216365167,
-   "store": "majki-poke",
-   "product": "majki-poke:15266851029378",
-   "group": "perfect-order|booster-pack|en|",
-   "title": "Perfect Order – Booster Pack (ENG)",
-   "url": "https://majkipoke.se/products/perfect-order-booster-pack-eng",
-   "image": "https://cdn.shopify.com/s/files/1/0953/4629/5170/files/perfect-order-booster-pack-eng-1215432.png?v=1778173721",
-   "price": 99,
-   "type": "Booster Pack",
-   "set": "Perfect Order",
-   "lang": "en",
    "kind": "tillbaka"
   }
  ]
