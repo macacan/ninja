@@ -1,6 +1,34 @@
 {
- "updated": 1793719595516,
+ "updated": 1793720515417,
  "events": [
+  {
+   "at": 1793719784027,
+   "store": "dragon-s-lair",
+   "product": "dragon-s-lair:15952412967260",
+   "group": "x|booster-box|ja||black-flame-ruler",
+   "title": "Pokemon Ruler Of The Black Flame Booster Box (sv3)(Japansk)(30st Boosters)",
+   "url": "https://dragonslair.se/products/pokemon-ruler-of-the-black-flame-booster-box-sv3japansk30st-boosters",
+   "image": "https://cdn.shopify.com/s/files/1/1015/8315/9644/files/rulerofblackflamebb1.webp?v=1793719454",
+   "price": 1895,
+   "type": "Booster Box",
+   "set": null,
+   "lang": "ja",
+   "kind": "ny"
+  },
+  {
+   "at": 1793719784027,
+   "store": "dragon-s-lair",
+   "product": "dragon-s-lair:15554218721628",
+   "group": "x|booster-pack|ja||black-flame-ruler",
+   "title": "Pokémon TCG: Scarlet & Violet - Ruler of the Black Flame Japansk Booster",
+   "url": "https://dragonslair.se/products/pokemon-tcg-scarlet-violet-ruler-of-the-black-flame-japansk-pokemon",
+   "image": "https://cdn.shopify.com/s/files/1/1015/8315/9644/files/Pok-mon-TCG-Scarlet-Violet---Ruler-of-the-Black-Flame-Japansk.webp?v=1777043701",
+   "price": 69,
+   "type": "Booster Pack",
+   "set": "Scarlet & Violet",
+   "lang": "ja",
+   "kind": "ny"
+  },
   {
    "at": 1793719491711,
    "store": "toyspace",
@@ -7076,32 +7104,6 @@
    "price": 10995,
    "type": "Ultra-Premium Collection",
    "set": "151",
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1793179983552,
-   "store": "samlarhobby",
-   "product": "samlarhobby:16089706824061",
-   "group": "x|collection-box|en||lycanroc",
-   "title": "Pokémon, Lycanroc-GX Box",
-   "url": "https://samlarhobby.se/products/pokemon-lycanroc-gx-box",
-   "price": 3995,
-   "type": "Collection Box",
-   "set": null,
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1793179983552,
-   "store": "samlarhobby",
-   "product": "samlarhobby:16089705185661",
-   "group": "x|collection-box|en||snorlax",
-   "title": "Pokémon, Snorlax-GX Box",
-   "url": "https://samlarhobby.se/products/pokemon-snorlax-gx-box",
-   "price": 4995,
-   "type": "Collection Box",
-   "set": null,
    "lang": "en",
    "kind": "ny"
   }
