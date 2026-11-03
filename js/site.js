@@ -25,8 +25,8 @@ const NAV = [
   ["./", "Hem"],
   ["butiker.html#products", "Produkter"],
   ["priser.html", "Kortpriser"],
-  ["valv.html", "Mitt valv"],
-  ["vardering.html", "Värdering", "Pokémon"], // tredje: vilket spel sidan gäller, visas i mobilmenyn och sidfoten
+  ["valv.html", "Valv"],
+  ["vardering.html", "Värdering"], // en tredje del (vilket spel sidan gäller) visas i mobilmenyn och sidfoten
   ["slapp.html", "Kalender"],
   ["set/", "Set"],
   ["nyheter.html", "Nyheter"],

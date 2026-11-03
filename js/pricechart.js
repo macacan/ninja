@@ -33,8 +33,9 @@ function chartPoints(own, cm, eurToSek) {
   return pts.sort((a, b) => a.date.localeCompare(b.date));
 }
 
-function draw(box, all, days) {
-  let pts = all.filter((p) => p.date >= isoDaysAgo(days));
+// label: perioden i rubriken, t.ex. "Senaste månaden". days = Infinity visar allt.
+function draw(box, all, days, label = "Senaste månaden") {
+  let pts = days === Infinity ? all : all.filter((p) => p.date >= isoDaysAgo(days));
   if (pts.length < 2) pts = all.slice(-2);
   const W = 520, H = 230, L = 64, R = 12, T = 14, B = 30;
   const ys = pts.map((p) => p.price), lo = Math.min(...ys), hi = Math.max(...ys);
@@ -58,7 +59,7 @@ function draw(box, all, days) {
 
   box.querySelector(".pc-head").innerHTML = `<span class="pc-now">${kr(last)}</span>
     <span class="chg ${pct >= 0 ? "up" : "down"}">${pct >= 0 ? "▲" : "▼"} ${Math.abs(pct).toLocaleString("sv-SE")} %</span>
-    <span class="muted">Senaste månaden · från ${dayLabel(pts[0].date)}</span>`;
+    <span class="muted">${label} · från ${dayLabel(pts[0].date)}</span>`;
   box.querySelector(".pc-plot").innerHTML = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Pris från ${kr(first)} till ${kr(last)}">
     ${ticks.map((v) => `<line class="pc-grid" x1="${L}" x2="${W - R}" y1="${f(Y(v))}" y2="${f(Y(v))}"/><text class="pc-y" x="${L - 8}" y="${f(Y(v) + 4)}">${kr(v)}</text>`).join("")}
     ${xl.map((p, i) => `<text class="pc-x" x="${f(X(p))}" y="${H - 8}" text-anchor="${i === 0 ? "start" : i === xl.length - 1 ? "end" : "middle"}">${dayLabel(p.date)}</text>`).join("")}
@@ -87,6 +88,30 @@ function draw(box, all, days) {
   svg.addEventListener("pointermove", show);
   svg.addEventListener("pointerdown", show);
   svg.addEventListener("pointerleave", () => { tip.hidden = true; cur.setAttribute("visibility", "hidden"); hot.setAttribute("visibility", "hidden"); });
+}
+
+// En egen serie, t.ex. Mitt valvs värde dag för dag: pts = [{ date, price }]. Knappar för perioden, där perioder
+// som är längre än historiken är avstängda. Börjar på hela historiken.
+const RANGES = [[7, "1V", "Senaste veckan"], [31, "1M", "Senaste månaden"], [92, "3M", "Senaste 3 månaderna"], [366, "1Å", "Senaste året"], [Infinity, "Max", "Hela tiden"]];
+export function mountSeries(box, pts, { title = "Värde", note = "" } = {}) {
+  if (pts.length < 2) { box.innerHTML = ""; return; }
+  const span = (Date.parse(pts.at(-1).date) - Date.parse(pts[0].date)) / 864e5;
+  box.innerHTML = `<div class="pc-top"><h3>${title}</h3><div class="pc-head"></div></div>
+    <div class="pc-plot"></div>
+    <div class="pc-ranges" role="group" aria-label="Period">${RANGES.map(([d, short], i) =>
+      // En period är meningsfull bara om den kortare perioden före inte redan täcker hela historiken
+      `<button type="button" data-i="${i}"${d !== Infinity && i > 0 && RANGES[i - 1][0] >= span ? " disabled" : ""}>${short}</button>`).join("")}</div>
+    ${note ? `<p class="pc-note">${note}</p>` : ""}`;
+  const pick = (i) => {
+    const [d, , label] = RANGES[i];
+    for (const b of box.querySelectorAll(".pc-ranges button")) b.setAttribute("aria-pressed", String(+b.dataset.i === i));
+    draw(box, pts, d, label);
+  };
+  box.querySelector(".pc-ranges").addEventListener("click", (e) => {
+    const b = e.target.closest("button:not(:disabled)");
+    if (b) pick(+b.dataset.i);
+  });
+  pick(RANGES.length - 1);
 }
 
 // opts: { dir, source } för andra spel än Pokémon, t.ex. One Piece (data/op/history, TCGplayers marknadspris).

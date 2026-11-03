@@ -1,5 +1,5 @@
 import { API, $, esc, kr, getJSON, getList, skeleton, liveStamp, cardImg, setPages, setLink } from "./site.js";
-import { mountChart } from "./pricechart.js";
+import { mountChart, mountSeries } from "./pricechart.js?v=20261103a";
 import { recordCard, mountRecent } from "./recent.js";
 import { mountCardAutocomplete, parseCardQuery, resolvePokemonName, loadDataset, sameNumber, filterByNumber, apiNumber } from "./card-autocomplete.js";
 import { langMark } from "./langmark.js";
@@ -493,6 +493,48 @@ const diff = (now, then) => {
   return `<span class="${d >= 0 ? "up" : "down"}">${d >= 0 ? "+" : "−"}${kr(Math.abs(d))} (${d >= 0 ? "+" : "−"}${Math.abs(pct).toLocaleString("sv-SE")} %)</span>`;
 };
 
+// Valvets värde dag för dag, ur korten prishistorik (data/<spel>/history/<set>.json, en punkt per kort och dag).
+// En dag utan pris för ett kort använder det senaste priset före, eller det första kända om historiken börjar
+// senare. Kort utan historik räknas med dagens pris. Sista punkten är i dag, med dagens priser.
+const vaultHist = {};
+const histOf = (g, set) => (vaultHist[`${g}/${set}`] ??= fetch(`data/${g}/history/${encodeURIComponent(set)}.json`, { cache: "no-cache" })
+  .then((r) => (r.ok ? r.json() : { cards: {} })).catch(() => ({ cards: {} })));
+async function valueSeries(cards) {
+  const rows = await Promise.all(cards.map(async (c) => ((await histOf(c.game, c.setId)).cards[c.id] || []).map(([d, p]) => [d, p]).filter(([, p]) => p != null)));
+  const today = new Date().toISOString().slice(0, 10);
+  const dates = [...new Set([...rows.flat().map(([d]) => d), today])].filter((d) => d <= today).sort();
+  return dates.map((date) => ({
+    date,
+    price: cards.reduce((s, c, i) => {
+      if (date === today && c.sek != null) return s + c.sek * c.qty;
+      const h = rows[i];
+      let p = h[0]?.[1] ?? c.sek ?? 0;
+      for (const [d, v] of h) { if (d > date) break; p = v; }
+      return s + p * c.qty;
+    }, 0),
+  }));
+}
+// Liten graf utan axlar i portföljens värderuta
+function spark(pts) {
+  const W = 120, H = 40, ys = pts.map((p) => p.price), lo = Math.min(...ys), hi = Math.max(...ys), k = hi - lo || 1;
+  const xy = pts.map((p, i) => [(i / (pts.length - 1)) * W, H - 3 - ((p.price - lo) / k) * (H - 6)]);
+  const line = xy.map(([x, y], i) => `${i ? "L" : "M"}${x.toFixed(1)},${y.toFixed(1)}`).join(" ");
+  return `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none"><path class="vs-area" d="${line} L${W},${H} L0,${H} Z"/><path class="vs-line" d="${line}"/></svg>`;
+}
+let valuePts = [];
+async function drawValue(cards, worth, my) {
+  const pts = await valueSeries(cards);
+  if (my !== searchId) return;
+  valuePts = pts;
+  const box = $("#vault-stats .vs-value");
+  if (!box || pts.length < 2) { box?.classList.add("flat"); return; }
+  const first = pts[0].price, pct = first ? Math.round((worth / first - 1) * 1000) / 10 : 0;
+  box.classList.toggle("down", pct < 0);
+  box.querySelector(".vs-spark").innerHTML = spark(pts);
+  box.querySelector(".vs-chg").innerHTML = `${pct >= 0 ? "▲" : "▼"} ${Math.abs(pct).toLocaleString("sv-SE")} %`;
+  box.querySelector(".vs-chg").title = `Sedan ${new Date(`${pts[0].date}T12:00:00`).toLocaleDateString("sv-SE", { day: "numeric", month: "long" })}`;
+}
+
 async function showVault() {
   const my = ++searchId;
   vaultDirty = false;
@@ -523,11 +565,17 @@ async function showVault() {
   const nowB = bought.reduce((s, c) => s + c.sek * c.qty, 0), thenB = bought.reduce((s, c) => s + c.p * c.qty, 0);
   const withAvg = found.filter((c) => c.avg30 != null && c.sek != null);
   const nowA = withAvg.reduce((s, c) => s + c.sek * c.qty, 0), thenA = withAvg.reduce((s, c) => s + c.avg30 * c.qty, 0);
+  const top = found.reduce((a, c) => ((c.sek ?? -1) > (a?.sek ?? -1) ? c : a), null);
   $("#vault-stats").innerHTML = n ? `
-    <div><small>Värde</small><b>${kr(worth)}</b></div>
+    <button type="button" class="vs-value" aria-label="Visa valvets värde i en större graf">
+      <span><small>Värde</small><b>${kr(worth)}</b><em class="vs-chg"></em></span>
+      <span class="vs-spark" aria-hidden="true"></span>
+    </button>
     <div><small>Kort</small><b>${n}</b></div>
+    <div><small>Dyraste</small><b class="vs-top">${top?.sek != null ? `${esc(top.name)} · ${kr(top.sek)}` : "–"}</b></div>
     <div><small>Sedan inlagt</small><b>${diff(nowB, thenB)}</b></div>
     <div><small>Mot månadssnitt</small><b>${diff(nowA, thenA)}</b></div>` : "";
+  if (n) drawValue(found, worth, my);
   $("#vault-clear").hidden = !all;
   if (!n) {
     current = [];
@@ -555,6 +603,17 @@ if (VAULT_PAGE) {
   });
   // Klick utanför rutan avbryter
   vaultConfirm.addEventListener("click", (e) => { if (e.target === vaultConfirm) vaultConfirm.close(); });
+  // Värderutan öppnar valvets värde i en stor graf, med knappar för perioden
+  const chart = $("#vault-chart");
+  $("#vault-stats").addEventListener("click", (e) => {
+    if (!e.target.closest(".vs-value") || valuePts.length < 2) return;
+    mountSeries(chart.querySelector(".pchart"), valuePts, {
+      title: "Valvets värde",
+      note: "Värdet räknas med dagens antal kort och priserna vi sparat varje dag (TCGplayers marknadspris i kronor).",
+    });
+    chart.showModal();
+  });
+  chart.addEventListener("click", (e) => { if (e.target === chart || e.target.closest(".cm-close")) chart.close(); });
 }
 // Knapparna i den stora vyn: lägg till ett exemplar eller ta bort ett
 const vaultActions = (c) => {

@@ -1142,6 +1142,23 @@ span.rd-logo{display:grid;place-items:center;background:var(--surface);border-ra
 .vault-stats small{display:block;font:600 .72rem var(--sans);text-transform:uppercase;letter-spacing:.5px;color:var(--muted)}
 .vault-stats b{display:block;margin-top:4px;font:700 1.3rem/1.2 var(--sans);overflow-wrap:anywhere}
 .vault-stats .up{color:#1f8a3a}.vault-stats .down{color:#c2412d}
+/* Värderutan: värdet och förändringen till vänster, en liten graf till höger. Tryck öppnar den stora grafen. */
+.vault-stats .vs-value{grid-column:1/-1;display:flex;align-items:center;gap:14px;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink);font:inherit;text-align:left;cursor:pointer;transition:border-color .15s,box-shadow .15s}
+.vault-stats .vs-value:hover{border-color:#2f5bd8;box-shadow:0 6px 18px -10px rgba(47,91,216,.5)}
+.vs-value>span:first-child{flex:none}
+.vs-value b{font-size:1.8rem}
+.vs-chg{display:inline-block;margin-top:4px;padding:2px 8px;border-radius:999px;font:700 .8rem var(--sans);font-style:normal;background:#d9f5dd;color:#1f6b2c}
+.vs-chg:empty{display:none}
+.vs-value.down .vs-chg{background:#fde3df;color:#a8321a}
+.vs-spark{flex:1;min-width:0;height:56px}
+.vs-spark svg{display:block;width:100%;height:100%;overflow:visible}
+.vs-line{fill:none;stroke:#1f8a3a;stroke-width:2.5;vector-effect:non-scaling-stroke;stroke-linejoin:round}
+.vs-area{fill:#1f8a3a;opacity:.1}
+.vs-value.down .vs-line{stroke:#c2412d}.vs-value.down .vs-area{fill:#c2412d}
+.vault-stats .vs-top{font-size:.95rem;line-height:1.3}
+.card-modal.chart-modal{width:min(720px,calc(100vw - 24px))}
+.chart-modal .pchart{margin:0;border:0;padding:22px 18px 18px}
+.chart-modal .pc-top{padding-right:44px}
 .vault-bar{display:flex;justify-content:flex-end;margin:12px 0 0}
 .vault-guide{margin:40px 0 24px;padding:22px;border:1px solid var(--line);border-radius:16px;background:var(--card)}
 .vault-guide h2{margin:0 0 14px;font:700 1.5rem/1.1 var(--cond);text-transform:uppercase}
