@@ -1,6 +1,48 @@
 {
- "updated": 1793707075608,
+ "updated": 1793707995631,
  "events": [
+  {
+   "at": 1793707975183,
+   "store": "cardlevels",
+   "product": "cardlevels:11057551147319",
+   "group": "generations|collection-box|en||genesect-mythical-specialset",
+   "title": "Pokémon Generations XY specialset: Genesect Mythical Collection Box",
+   "url": "https://cardlevels.se/products/pokemon-generations-xy-specialset-genesect-mythical-collection-box",
+   "image": "https://cdn.shopify.com/s/files/1/0846/0458/4247/files/genesect_4896d7c7-83fd-4bf1-9d5f-6e534817abdb.jpg?v=1793707342",
+   "price": 6999,
+   "type": "Collection Box",
+   "set": "Generations",
+   "lang": "en",
+   "kind": "ny"
+  },
+  {
+   "at": 1793707975183,
+   "store": "cardlevels",
+   "product": "cardlevels:11057413849399",
+   "group": "chaos-rising|booster-bundle|en|",
+   "title": "Pokémon Chaos Rising Mega Evolution 4: Booster Bundle",
+   "url": "https://cardlevels.se/products/pokemon-chaos-rising-mega-evolution-4-booster-bundle",
+   "image": "https://cdn.shopify.com/s/files/1/0846/0458/4247/files/pokemon-mega-evolution-chaos-rising-booster-bundle.webp?v=1793704938",
+   "price": 599,
+   "type": "Booster Bundle",
+   "set": "Chaos Rising",
+   "lang": "en",
+   "kind": "ny"
+  },
+  {
+   "at": 1793707975183,
+   "store": "cardlevels",
+   "product": "cardlevels:11057518477623",
+   "group": "shrouded-fable|collection-box|en||greninja-illustration",
+   "title": "Pokémon Shrouded Fable Scarlet & Violet 6.5: Greninja ex Special Illustration Collection",
+   "url": "https://cardlevels.se/products/pokemon-shrouded-fable-scarlet-violet-6-5-greninja-ex-special-illustration-collection",
+   "image": "https://cdn.shopify.com/s/files/1/0846/0458/4247/files/pokemon-shrouded-fable-greninja-special-illustration-collection.webp?v=1793705312",
+   "price": 1499,
+   "type": "Collection Box",
+   "set": "Shrouded Fable",
+   "lang": "en",
+   "kind": "ny"
+  },
   {
    "at": 1793707058869,
    "store": "cardlevels",
@@ -7044,45 +7086,6 @@
    "set": "Black Bolt",
    "lang": "en",
    "kind": "ny"
-  },
-  {
-   "at": 1793126270795,
-   "store": "samlarhobby",
-   "product": "samlarhobby:15840253313405",
-   "group": "ascended-heroes|collection-box|en||gardevoir-poster",
-   "title": "Pokémon, Ascended Heroes - Premium Poster Collection Gardevoir",
-   "url": "https://samlarhobby.se/products/pokemon-ascended-heroes-premium-poster-collection-gardevoir",
-   "price": 1995,
-   "type": "Collection Box",
-   "set": "Ascended Heroes",
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1793125349619,
-   "store": "samlarhobby",
-   "product": "samlarhobby:16089467191677",
-   "group": "hidden-fates|tin|en||raichu",
-   "title": "Pokémon, Hidden Fates: Raichu GX Tin",
-   "url": "https://samlarhobby.se/products/pokemon-hidden-fates-raichu-gx-tin-2",
-   "price": 1495,
-   "type": "Tin",
-   "set": "Hidden Fates",
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1793125349619,
-   "store": "samlarhobby",
-   "product": "samlarhobby:15344560636285",
-   "group": "151|booster-bundle|en|",
-   "title": "Pokémon, Scarlet & Violet: 151 Booster Bundle (6 packs)",
-   "url": "https://samlarhobby.se/products/pokemon-scarlet-violet-151-booster-bundle-6-packs",
-   "price": 2495,
-   "type": "Booster Bundle",
-   "set": "151",
-   "lang": "en",
-   "kind": "tillbaka"
   }
  ]
 }
