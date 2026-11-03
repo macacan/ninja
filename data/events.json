@@ -1,6 +1,20 @@
 {
- "updated": 1793727015568,
+ "updated": 1793727935587,
  "events": [
+  {
+   "at": 1793727679518,
+   "store": "dragon-s-lair",
+   "product": "dragon-s-lair:15654885425500",
+   "group": "black-bolt|booster-box|ja|",
+   "title": "Pokemon Black Bolt Booster Box Display (Japansk)(20st Boosters)",
+   "url": "https://dragonslair.se/products/pokemon-black-bolt-booster-box-display-japansk",
+   "image": "https://cdn.shopify.com/s/files/1/1015/8315/9644/files/Pokemon-Black-Bolt-sv11B-Japanese-Booster-Box.webp?v=1783005811",
+   "price": 2249,
+   "type": "Booster Box",
+   "set": "Black Bolt",
+   "lang": "ja",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793726253892,
    "store": "dragon-s-lair",
@@ -7106,20 +7120,6 @@
    "type": "Booster Box",
    "set": null,
    "lang": "zh",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793195095980,
-   "store": "poketalk",
-   "product": "poketalk:9453805076822",
-   "group": "151|elite-trainer-box|en|",
-   "title": "Pokémon Scarlet & Violet: 151 Elite Trainer Box",
-   "url": "https://poketalk.se/products/pokemon-scarlet-violet-151-elite-trainer-box",
-   "image": "https://cdn.shopify.com/s/files/1/0862/7860/3094/files/POKETALK_16.png?v=1738966584",
-   "price": 5999,
-   "type": "Elite Trainer Box",
-   "set": "151",
-   "lang": "en",
    "kind": "tillbaka"
   }
  ]
