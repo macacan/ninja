@@ -450,7 +450,6 @@ function saveVault(v) {
   }
   // Be webbläsaren behålla sidans lagring, så att den inte rensas när telefonen får ont om plats
   navigator.storage?.persist?.().catch(() => {});
-  vaultButton();
 }
 // Samma kort i valvet, vanligt (f falskt) eller foil
 const sameEntry = (x, c, f) => x.game === c.game && x.id === c.id && !x.f === !f;
@@ -485,15 +484,6 @@ function moveVault(c, foil) {
   if (x.qty <= 0) v.splice(v.indexOf(x), 1);
   saveVault(v);
 }
-// Länken till valvet på Kortpriser, med antalet kort. Syns när valvet har kort.
-function vaultButton() {
-  const btn = $("#vault-open");
-  if (!btn) return;
-  const n = loadVault().reduce((s, x) => s + x.qty, 0);
-  btn.hidden = !n;
-  btn.querySelector(".vault-count").textContent = n ? `(${n})` : "";
-}
-
 // Ett Pokémonkort i valvet, från TCGdex. Pris och månadssnitt räknas om till kronor, som de andra spelens.
 async function pokemonCard(id) {
   const [full] = await Promise.all([getJSON(`${API}/cards/${enc(id)}`), getRates()]);
@@ -520,34 +510,45 @@ async function scannedCard(s) {
   }
   return c || null;
 }
-// Skannade kort in i valvet, som foil när det valts i skannern. Svarar med de inlagda korten.
+// Skannade kort in i valvet. Svarar med de inlagda korten.
 async function addScanned(list) {
   const added = [];
   for (const s of list) {
     const c = await scannedCard(s).catch(() => null);
     if (!c) continue;
-    changeVault(c, 1, !!s.foil && foilSek(c) != null);
+    changeVault(c, 1);
     added.push(c);
   }
   return added;
 }
 
-// ---------- Kortskanner för Riftbound och One Piece ----------
-// Kortpriser: ett säkert kort öppnas, annars söks det lästa numret (t.ex. "001/167") så att man kan välja bland
-// träffarna. Valvet: skannern letar bland både One Piece och Riftbound ("vault"), och varje träff läggs i valvet
-// direkt. Ett tryck på träffen i skannern öppnar kortet. Klar i snabbskanningen lägger alla korten i valvet
-// (i valvet ligger de redan där).
+// ---------- Kortskanner ----------
+// Kortpriser: ett kort i taget i det valda spelet (Pokémonskannern känner också igen tydliga One Piece- och
+// Riftbound-kort). Träffen poppar upp i skannern, som stängs, och kortet öppnas i den stora vyn med sökträffarna
+// bakom, så att ✕ visar kortet i listan. Ett kort som bara gick att läsa delvis söks på numret (t.ex. "001/167") eller
+// namnet. Valvet: skannern letar bland alla tre spelen ("vault"), och varje träff läggs i valvet direkt. Ett tryck på
+// träffen i skannern öppnar kortet.
 // Skannern (js/card-scanner.js) är stor och laddas först när knappen trycks.
 const hitKey = (r) => `${r.game}:${r.cardId || `${r.number}/${r.total}`}`;
+// Sökningen som hittar ett skannat kort på Kortpriser. Pokémonkort som känts igen på bilden har bara id:t, så namnet
+// och numret hämtas från TCGdex.
+async function scanQuery({ game: g, cardId, name, number, total }) {
+  if (g === "pokemon") {
+    const c = cardId && (await getJSON(`${API}/cards/${enc(cardId)}`).catch(() => null));
+    if (c?.name) return `${c.name} ${c.localId}`;
+    return number ? `${name ? `${name} ` : ""}${number}${total ? `/${total}` : ""}` : name || "";
+  }
+  if (cardId) return name || "";
+  // Siffrorna fylls ut som på kortet ("57a" blir "057a"), så att sökningen hittar "057a/221"
+  return total ? `${String(number).replace(/^\d+/, (d) => d.padStart(total.length, "0"))}/${total}` : number || name || "";
+}
 // manual: skannern öppnas direkt med sökrutan (Sök och lägg till i valvet)
 async function scanCards(g = VAULT_PAGE ? "vault" : game, { manual = false } = {}) {
   track("scan", "Öppnad");
-  const { openScanner } = await import("./card-scanner.js?v=20261104c");
+  const { openScanner } = await import("./card-scanner.js?v=20261105a");
   const added = new Map(); // valvet: träffarna som lagts in, för att kunna öppna rätt kort
-  let swaps = Promise.resolve();
   openScanner(async (r) => {
-    const { cardId, name, number, total } = r;
-    track("scan", cardId ? "Säker träff" : "Läst, söker");
+    track("scan", r.cardId ? "Säker träff" : "Läst, söker");
     if (VAULT_PAGE) {
       const c = await added.get(hitKey(r));
       await showVault();
@@ -555,32 +556,22 @@ async function scanCards(g = VAULT_PAGE ? "vault" : game, { manual = false } = {
       if (i >= 0) openCard(i);
       return;
     }
-    if (cardId) { openAfter = cardId; $("#pq").value = name || ""; }
-    // Siffrorna fylls ut som på kortet ("57a" blir "057a"), så att sökningen hittar "057a/221"
-    else $("#pq").value = total ? `${String(number).replace(/^\d+/, (d) => d.padStart(total.length, "0"))}/${total}` : number || name || "";
+    // Ett kort från ett annat spel än det valda (t.ex. One Piece i Pokémonskannern) byter spel
+    const g = r.game || "pokemon";
+    if (g !== game) await setGame(g);
+    if (g === "pokemon") $("#lang").value = "en";
+    openAfter = r.cardId || null;
+    $("#pq").value = await scanQuery({ ...r, game: g });
     search();
   }, null, {
     game: g,
     manual,
+    open: !VAULT_PAGE,
     hit: VAULT_PAGE ? (r) => {
       // Kortet läggs i valvet så fort det hittats, och valvet bakom skannern ritas om
       const p = addScanned([r]).then(([c]) => { if (c) track("scan", "Till valvet: 1 kort"); showVault(); return c; });
       added.set(hitKey(r), p);
     } : null,
-    // Vanlig eller foil: knappen syns för kort som finns i båda. I valvet byter ett tryck slag på kortet som lagts in.
-    finish: {
-      check: async (r) => { const c = await scannedCard(r), p = c && foilSek(c); return p != null ? { label: foilLabel(c), price: p } : null; },
-      // Flera tryck i rad byter i tur och ordning
-      set: VAULT_PAGE ? (r, foil) => (swaps = swaps.then(async () => {
-        const c = await added.get(hitKey(r));
-        if (c) { moveVault(c, foil); showVault(); }
-      })) : null,
-    },
-    done: async (list) => {
-      if (VAULT_PAGE) return showVault();
-      track("scan", `Till valvet: ${(await addScanned(list)).length} kort`);
-      location.href = "valv.html";
-    },
   });
 }
 
@@ -975,9 +966,6 @@ async function applyGame() {
   PAGE_TITLE ??= document.title;
   document.title = g ? `${g.h1} i kronor | Lootninja` : PAGE_TITLE;
   $("#lang").closest("label").hidden = !!g;
-  // Kortskannern finns för Riftbound och One Piece här. Pokémonkort skannas i värderingen.
-  $("#rb-scan").hidden = !g;
-  vaultButton();
   // "Senast sökta" leder till värderingen, som bara finns för Pokémon.
   $("#recent").style.display = g ? "none" : "";
   if (g) $("#lang").value = "en";

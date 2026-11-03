@@ -17,7 +17,10 @@ const url = (c) => {
   const e = extra[c.id];
   return typeof e === "string" ? e : e?.low || e?.high || null;
 };
-const cards = list.filter(url);
+// Pokémon TCG Pocket (set A1, B1, P-A …) är bara digitala kort. De har ofta samma konstverk som ett fysiskt kort, och
+// då pekar bilden ut två nästan identiska kort, så att skannern inte vågar välja.
+const pocket = (c) => /\/tcgp\//.test(c.image || "") || /^(?:[AB]\d|P-A-)/.test(c.id);
+const cards = list.filter((c) => !pocket(c) && url(c));
 console.log(`${cards.length} kort med bild (${cards.filter((c) => !c.image).length} med reservbild)`);
 
 async function one(c) {

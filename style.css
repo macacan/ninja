@@ -1242,14 +1242,14 @@ span.rd-logo{display:grid;place-items:center;background:var(--surface);border-ra
   .cm-body{padding-bottom:64px}
   .pc-now{white-space:nowrap}
   .cgrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
-  /* Mobil: sökrutan och Sök på en rad, Sortera, Skanna och Mitt valv under */
+  /* Mobil: sökrutan och Sök på en rad, Sortera och Skanna under */
   .card-search{gap:6px;padding:8px}
   #price-form .card-suggest-wrap,#price-form > input[type=search]{flex:1 1 0;min-width:0;order:0}
   .card-search .btn{margin-left:var(--px)}
   .card-search button[type=submit]{order:1;flex:none;padding:12px 16px}
   .card-search::after{content:"";flex:0 0 100%;order:2;margin-top:-6px}
-  /* Skanna och Mitt valv efter Sortera */
-  .card-search #rb-scan,.card-search #vault-open{order:7;flex:1 1 40%}
+  /* Skanna efter Sortera */
+  .card-search #rb-scan{order:7;flex:1 1 40%}
   .card-search .drop:has(#sort){flex:1 1 50%}
   /* Valvsidan har bara Skanna bredvid Sortera: Skanna får sin egen bredd och Sortera resten */
   [data-page=valv] .card-search #rb-scan{flex:0 0 auto}
@@ -3062,7 +3062,6 @@ input[type=search]::-webkit-search-results-decoration {
 /* Raden ovanför kamerabilden: rubriken och blixten uppe till höger, utanför själva bilden */
 .scan-top{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:40px;padding:10px 12px 10px 18px}
 .scan-top b{font:700 .95rem var(--sans);color:#f1f3ff}
-.scan.listing .scan-top{display:none}
 .scan-view{position:relative;aspect-ratio:3/4;background:radial-gradient(120% 90% at 50% 40%,#141633,#05060c);overflow:hidden;border-radius:18px 18px 0 0}
 .scan-view video{width:100%;height:100%;object-fit:cover;display:block}
 .scan-view.nocam video{display:none}
@@ -3093,18 +3092,13 @@ input[type=search]::-webkit-search-results-decoration {
 .scan-torch:hover{background:rgba(30,34,64,.75)}
 .scan-torch.active{background:var(--ai-grad);border-color:transparent;box-shadow:0 0 18px rgba(139,92,246,.8)}
 .scan-tip{position:absolute;left:0;right:0;bottom:12px;margin:0;padding:0 14px;text-align:center;color:rgba(232,234,246,.75);font-size:.78rem;text-shadow:0 1px 4px rgba(0,0,0,.9);z-index:4}
-/* Tipset efter flera läsningar utan träff: en tydlig ruta i stället för grå text, ovanför Flera kort och högen */
+/* Tipset efter flera läsningar utan träff: en tydlig ruta i stället för grå text */
 .scan-tip.warn{left:12px;right:12px;bottom:88px;padding:8px 12px;border-radius:12px;background:rgba(251,191,36,.92);color:#1a1405;font-weight:700;text-shadow:none;box-shadow:0 4px 14px rgba(0,0,0,.45)}
-/* Snabbskanning: knappen "Flera kort", högen nere till vänster, kortet som poppar upp och listan över skannade kort */
-.scan-multi{position:absolute;bottom:40px;right:12px;z-index:10;height:36px;padding:0 12px 0 10px;border-radius:18px;color:#fff;display:flex;align-items:center;gap:6px;font:inherit;font-size:12px;font-weight:700;cursor:pointer;background:rgba(12,14,30,.55);backdrop-filter:blur(14px) saturate(1.4);-webkit-backdrop-filter:blur(14px) saturate(1.4);border:1px solid rgba(255,255,255,.12);transition:background .2s,box-shadow .2s}
-.scan-multi:hover{background:rgba(30,34,64,.75)}
-.scan-multi.active{background:#16a34a;border-color:transparent;box-shadow:0 0 16px rgba(74,222,128,.55)}
-.scan.frozen .scan-multi,.scan.frozen .scan-tray,.scan-multi[hidden]{display:none}
 /* Tips om att installera Lootninja som app, under knapparna */
 .scan-app{margin:0;padding:0 18px 14px;text-align:center;font-size:.74rem;line-height:1.4;color:rgba(232,234,246,.6)}
 .scan-app a{color:#c4b5fd;font-weight:700}
-.scan-app[hidden],.scan.frozen .scan-app,.scan.listing .scan-app{display:none}
-/* Senaste träffen utan snabbskanning: uppe till höger i bilden med priset på, tryck för att öppna kortet */
+.scan-app[hidden],.scan.frozen .scan-app{display:none}
+/* Senaste träffen: uppe till höger i bilden med priset på, tryck för att öppna kortet */
 .scan-peek{position:absolute;top:12px;right:12px;z-index:10;width:76px;padding:4px 4px 6px;border-radius:12px;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;color:#fff;background:rgba(12,14,30,.6);backdrop-filter:blur(14px) saturate(1.4);-webkit-backdrop-filter:blur(14px) saturate(1.4);border:1px solid rgba(74,222,128,.7);box-shadow:0 6px 18px rgba(0,0,0,.5)}
 .scan-peek[hidden]{display:none}
 .scan-peek img{width:66px;height:92px;border-radius:6px;object-fit:cover;display:block;background:#1b1e33}
@@ -3117,25 +3111,7 @@ input[type=search]::-webkit-search-results-decoration {
 .scan-peek span{font:700 .68rem/1.15 var(--sans);text-align:center;max-width:100%;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
 .scan-peek.pop{animation:peekPop .35s ease-out}
 @keyframes peekPop{from{transform:scale(.6);opacity:0}}
-.scan.frozen .scan-peek,.scan.multi .scan-peek{display:none}
-/* Vanlig eller foil: under förhandsvisningen och i listan över skannade kort */
-.scan-foil{border-radius:999px;border:1px solid rgba(255,255,255,.3);background:rgba(12,14,30,.6);color:#e8eaf6;font:700 .7rem/1.2 var(--sans);padding:5px 10px;cursor:pointer;white-space:nowrap}
-.scan-foil[hidden]{display:none}
-.scan-foil.on{background:linear-gradient(120deg,#f0abfc,#93c5fd,#86efac,#fde68a);color:#111;border-color:transparent}
-.scan-list li{display:flex;align-items:center;gap:8px}
-.scan-list li > button[data-i]{flex:1;min-width:0}
-.scan-list li button.scan-foil{width:auto;flex:none;display:block;padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.3)}
-.scan-list li button.scan-foil.on{border-color:transparent;background:linear-gradient(120deg,#f0abfc,#93c5fd,#86efac,#fde68a);color:#111}
-.scan-tray{position:absolute;left:12px;bottom:40px;z-index:6;width:64px;height:78px;padding:0;border:0;background:none;cursor:pointer}
-.scan-tray[hidden]{display:none}
-.scan-tray-stack{position:absolute;inset:0}
-.scan-tray-stack>*{position:absolute;left:8px;top:6px;width:48px;height:67px;border-radius:5px;object-fit:cover;background:#1b1e33;border:2px solid #fff;box-shadow:0 4px 12px rgba(0,0,0,.55)}
-.scan-tray-stack>:nth-last-child(2){transform:rotate(-8deg) translate(-3px,1px)}
-.scan-tray-stack>:nth-last-child(3){transform:rotate(7deg) translate(4px,2px)}
-.scan-tray b{position:absolute;top:-2px;right:0;min-width:22px;height:22px;padding:0 6px;border-radius:11px;background:#16a34a;color:#fff;font:800 .75rem/22px var(--sans);text-align:center;box-shadow:0 2px 6px rgba(0,0,0,.4)}
-.scan-tray:focus-visible{outline:2px solid #4ade80;outline-offset:2px;border-radius:8px}
-.scan-tray.bump .scan-tray-stack{animation:trayBump .35s ease-out}
-@keyframes trayBump{40%{transform:scale(1.14)}}
+.scan.frozen .scan-peek{display:none}
 /* Värdera manuellt: sökrutan ligger över kamerabilden */
 .scan-manual{position:absolute;inset:0;z-index:12;display:flex;flex-direction:column;gap:10px;padding:14px;background:rgba(7,8,15,.96);overflow:auto}
 .scan-manual[hidden]{display:none}
@@ -3158,24 +3134,6 @@ input[type=search]::-webkit-search-results-decoration {
 .scan-pop>div{display:flex;flex-direction:column;align-items:center;gap:8px;will-change:transform,opacity}
 .scan-pop img,.scan-pop i{width:150px;height:209px;border-radius:9px;object-fit:cover;background:#1b1e33;border:3px solid #4ade80;box-shadow:0 0 28px rgba(74,222,128,.55),0 14px 36px rgba(0,0,0,.6)}
 .scan-pop span{max-width:240px;padding:5px 12px;border-radius:999px;background:rgba(12,14,30,.85);color:#fff;font-size:.82rem;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.scan.listing .scan-view,.scan.listing>.scan-actions{display:none}
-.scan-list{padding:18px 14px 0}
-.scan-list[hidden],.scan-list-empty[hidden]{display:none}
-.scan-list-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}
-.scan-list-head h2{margin:0;font-size:1.05rem;color:#fff}
-.scan-list-head h2 span{color:#9aa7c2;font-weight:600}
-.scan-list-head .scan-ghost{font:inherit;font-size:.8rem;font-weight:600;border-radius:999px;padding:7px 14px;cursor:pointer}
-.scan-list ul{list-style:none;margin:0;padding:0;display:grid;gap:8px;max-height:min(60dvh,520px);overflow:auto}
-.scan-list li button{width:100%;display:flex;align-items:center;gap:12px;padding:6px 12px 6px 6px;border-radius:12px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:inherit;font:inherit;text-align:left;cursor:pointer;transition:border-color .15s,background .15s}
-.scan-list li button:hover{border-color:#4ade80;background:rgba(74,222,128,.08)}
-.scan-list li button:focus-visible{outline:2px solid #4ade80;outline-offset:1px}
-.scan-list li img,.scan-list li i{flex:none;width:44px;height:61px;border-radius:5px;object-fit:cover;background:#1b1e33}
-.scan-list li span{min-width:0;display:grid;gap:2px}
-.scan-list li b{font-size:.92rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.scan-list li small{color:#9aa7c2;font-size:.76rem}
-.scan-list-empty{color:#9aa7c2;font-size:.88rem;margin:6px 0 0}
-.scan-list .scan-actions{padding:14px 0}
-@media (prefers-reduced-motion:reduce){.scan-tray.bump .scan-tray-stack{animation:none}}
 .scan-actions{display:flex;gap:8px;align-items:center;padding:14px}
 .scan-actions>*{font:inherit;font-size:.85rem;font-weight:600;border-radius:999px;padding:11px 16px;cursor:pointer;text-align:center;transition:background .2s,transform .15s,box-shadow .2s}
 .scan-actions>*:active{transform:scale(.97)}
