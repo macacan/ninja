@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-03T00:09:30.520Z",
+ "updated": "2026-11-03T00:24:52.046Z",
  "articles": [
   {
    "title": "Target's Pokemon TCG Lottery and Drawing System, Explained",
@@ -515,18 +515,5 @@
    "game": "op"
   }
  ],
- "videos": [
-  {
-   "id": "pGIxhUQvezQ",
-   "title": "TCG Day 2 | 2027 Pokémon Gdańsk Regional Championships",
-   "date": "2026-11-01T19:24:07.000Z",
-   "source": "Pokémon (officiell)"
-  },
-  {
-   "id": "FlkW1YWVQF0",
-   "title": "TCG Day 1 | 2027 Pokémon Gdańsk Regional Championships",
-   "date": "2026-10-31T19:18:36.000Z",
-   "source": "Pokémon (officiell)"
-  }
- ]
+ "videos": []
 }
