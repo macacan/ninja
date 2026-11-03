@@ -3093,6 +3093,8 @@ input[type=search]::-webkit-search-results-decoration {
 .scan-torch:hover{background:rgba(30,34,64,.75)}
 .scan-torch.active{background:var(--ai-grad);border-color:transparent;box-shadow:0 0 18px rgba(139,92,246,.8)}
 .scan-tip{position:absolute;left:0;right:0;bottom:12px;margin:0;padding:0 14px;text-align:center;color:rgba(232,234,246,.75);font-size:.78rem;text-shadow:0 1px 4px rgba(0,0,0,.9);z-index:4}
+/* Tipset efter flera läsningar utan träff: en tydlig ruta i stället för grå text, ovanför Flera kort och högen */
+.scan-tip.warn{left:12px;right:12px;bottom:88px;padding:8px 12px;border-radius:12px;background:rgba(251,191,36,.92);color:#1a1405;font-weight:700;text-shadow:none;box-shadow:0 4px 14px rgba(0,0,0,.45)}
 /* Snabbskanning: knappen "Flera kort", högen nere till vänster, kortet som poppar upp och listan över skannade kort */
 .scan-multi{position:absolute;bottom:40px;right:12px;z-index:10;height:36px;padding:0 12px 0 10px;border-radius:18px;color:#fff;display:flex;align-items:center;gap:6px;font:inherit;font-size:12px;font-weight:700;cursor:pointer;background:rgba(12,14,30,.55);backdrop-filter:blur(14px) saturate(1.4);-webkit-backdrop-filter:blur(14px) saturate(1.4);border:1px solid rgba(255,255,255,.12);transition:background .2s,box-shadow .2s}
 .scan-multi:hover{background:rgba(30,34,64,.75)}

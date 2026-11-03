@@ -1519,6 +1519,24 @@ let stillTicks = 0, lastScanAt = 0;
 let pauseUntil = 0, openedAt = 0; // pauseUntil: auto-skanningen väntar så att ett felmeddelande hinner läsas
 const NUDGE_AFTER = 2000; // ms utan träff innan "Värdera manuellt" lyfts fram
 const PAUSE_AFTER_MISS = 3500; // ms paus efter en misslyckad manuell skanning eller ett foto
+// Läsningar utan träff i rad. Efter MISS_TIP byts tipset under ramen mot råd om plastficka och reflexer, tills ett
+// kort hittas.
+const MISS_TIP = 5;
+let misses = 0, tipText = "";
+function missed() {
+  if (++misses !== MISS_TIP) return;
+  const tip = dialog.querySelector(".scan-tip");
+  tip.textContent = "Svårt att läsa? Skanna kortet utan sleeve eller toploader, undvik reflexer från lampor och håll det plant.";
+  tip.classList.add("warn");
+}
+function hitTip() {
+  if (misses >= MISS_TIP) {
+    const tip = dialog.querySelector(".scan-tip");
+    tip.textContent = tipText;
+    tip.classList.remove("warn");
+  }
+  misses = 0;
+}
 
 const frameEl = () => dialog?.querySelector(".scan-frame i");
 
@@ -2024,11 +2042,13 @@ async function frozenScan(snap, { fromFile }) {
     }
     clearInterval(holoTimer);
     dialog.classList.add("missed");
+    missed();
     status("Hittade inget kort. Tryck <b>Försök igen</b> och håll kortet stilla i ramen.");
   } catch (err) {
     if (!alive()) return;
     clearInterval(holoTimer);
     dialog.classList.add("missed");
+    missed();
     status(esc(err.message || "Något gick fel. Försök igen."));
   } finally {
     busy = false;
@@ -2099,6 +2119,7 @@ async function attempt(canvas, { fromFile = false, manual = false, source } = {}
     } else {
       // Manuell skanning eller foto utan träff: pausa auto-skanningen så att meddelandet hinner läsas
       if (manual || fromFile) pauseUntil = Date.now() + PAUSE_AFTER_MISS;
+      missed();
       status(
         seen
           ? `Läser… <b>${esc(seen)}</b>`
@@ -2249,6 +2270,7 @@ function addScanned(r, canvas) {
   const item = { game: r.game || "pokemon", cardId: r.cardId || null, name: r.name || null, number: r.number || null, total: r.total || null, thumb: thumbOf(canvas) || r.image || null, foil: false };
   skipKey = keyOf(r);
   last = lastNum = null;
+  hitTip();
   pauseUntil = Date.now() + 600; // låt kortet synas innan nästa läsning tar kraft från animationen
   scanned.unshift(item);
   scanned.length = Math.min(scanned.length, LIST_MAX);
@@ -2287,6 +2309,7 @@ async function setPeek(r, canvas) {
   if (keyOf(r) === skipKey) return status("Byt till nästa kort…");
   skipKey = keyOf(r);
   last = lastNum = null;
+  hitTip();
   pauseUntil = Date.now() + 1400; // låt kortet poppa upp och flyga upp till hörnet innan nästa läsning
   const item = { game: r.game || "pokemon", name: r.name, number: r.number, total: r.total, cardId: r.cardId, canvas, dhash: r.dhash };
   peek = item;
@@ -2545,6 +2568,9 @@ export async function openScanner(callback, partialCallback, { game = "pokemon",
     : game === "pokemon"
       ? "Endast Pokémonkort. One Piece och Riftbound skannar du i Mitt valv."
       : "Håll kortet i ramen. Glänser det? Luta det lätt.";
+  tipText = d.querySelector(".scan-tip").textContent;
+  d.querySelector(".scan-tip").classList.remove("warn");
+  misses = 0;
   if (game !== "rb") {
     loadArtIndex("op").catch(() => {});
     opData().catch(() => {});

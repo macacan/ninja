@@ -3,6 +3,7 @@
 import { API, esc, kr, getJSON, cardImg, extraCardImgsReady, setPages, setLink } from "./site.js";
 import { mountChart } from "./pricechart.js";
 import { CONDITIONS, gradeMult } from "./valuation.js";
+import { reverseEur } from "./cmholo.js?v=20261103a";
 
 let dlg = null, token = 0;
 
@@ -54,7 +55,7 @@ export async function openCardPrice(id) {
       <div class="cm-price">${base != null ? kr(base) : "Inget pris ännu"}</div>
       <p class="muted">Cardmarkets trendpris i kronor. Vägledande, uppdateras dagligen.</p></div></div>
     <div class="pchart"></div>
-    ${cm.trend != null || cm.avg != null ? `<h3>Cardmarket (Europa)</h3><table class="cm-table">${row("Trend", cm.trend, "EUR")}${row("Snitt", cm.avg, "EUR")}${row("Lägsta", cm.low, "EUR")}${row("Snitt 1 dag", cm.avg1, "EUR")}${row("Snitt 7 dagar", cm.avg7, "EUR")}${row("Snitt 30 dagar", cm.avg30, "EUR")}${row("Trend holo", cm["trend-holo"] || null, "EUR")}</table>` : ""}
+    ${cm.trend != null || cm.avg != null ? `<h3>Cardmarket (Europa)</h3><table class="cm-table">${row("Trend", cm.trend, "EUR")}${row("Snitt", cm.avg, "EUR")}${row("Lägsta", cm.low, "EUR")}${row("Snitt 1 dag", cm.avg1, "EUR")}${row("Snitt 7 dagar", cm.avg7, "EUR")}${row("Snitt 30 dagar", cm.avg30, "EUR")}${row("Reverse holo", reverseEur(card), "EUR")}</table>` : ""}
     ${values}
     ${tpRows ? `<h3>TCGplayer (USA)</h3><table class="cm-table">${tpRows}</table>` : ""}`;
   mountChart(body.querySelector(".pchart"), card, rate).catch(() => {});

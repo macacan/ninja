@@ -6,6 +6,7 @@ import { langMark } from "./langmark.js";
 import { apiFor, findJapanese } from "./japanese.js";
 import { track } from "./tracker.js";
 import { gameSuggestions } from "./game-guess.js";
+import { reverseEur, baseLabel } from "./cmholo.js?v=20261103a";
 
 // ---------- Spel ----------
 // Pokémon söks direkt mot TCGdex. One Piece och Riftbound söks i färdigbyggda filer i data/<spel>/
@@ -95,16 +96,17 @@ const toSek = (v) => (v == null || !rates?.EUR ? null : Math.round(v * rates.EUR
 // Cardmarkets pris för reverse holo och holo ("-holo"). One Piece har ett pris per kort. I valvet är foil egna
 // exemplar (f: 1) med eget pris.
 const cmOf = (c) => c.full?.pricing?.cardmarket || {};
+
 // Foilpriset i kronor när kortet finns i båda, annars null
+// Foil är aldrig billigare än vanligt: ett lägre foilpris är brus och ger inget val.
 function foilSek(c) {
-  if (c.game === "rb") return c.foil ?? null;
+  if (c.game === "rb") return c.foil != null && c.sek != null && c.foil >= c.sek ? c.foil : null;
   if (GAMES[c.game]) return null;
-  // Kort som bara finns som holo (eller bara vanliga) har inget val. Cardmarket kan ge 0 som holopris för dem.
-  const cm = cmOf(c), v = c.full?.variants, holo = cm["trend-holo"] || cm["avg-holo"];
-  if (v && !(v.normal && (v.reverse || v.holo))) return null;
-  return (cm.trend ?? cm.avg) != null && holo ? toSek(holo) : null;
+  return toSek(reverseEur(c.full));
 }
-const foilLabel = (c) => (c.game === "rb" ? "Foil" : c.full?.variants?.reverse ? "Reverse holo" : "Holo");
+const foilLabel = (c) => (c.game === "rb" ? "Foil" : "Reverse holo");
+// Kortets vanliga version: Vanlig, eller Holo för Pokémonkort som bara trycktes som holo
+const plainLabel = (c) => (GAMES[c.game] ? "Vanlig" : baseLabel(c.full));
 const priceText = (c) => (GAMES[c.game] ? kr(c.sek) : sek(c.eur));
 
 // ---------- Holo-nivå ----------
@@ -523,7 +525,7 @@ const hitKey = (r) => `${r.game}:${r.cardId || `${r.number}/${r.total}`}`;
 // manual: skannern öppnas direkt med sökrutan (Sök och lägg till i valvet)
 async function scanCards(g = VAULT_PAGE ? "vault" : game, { manual = false } = {}) {
   track("scan", "Öppnad");
-  const { openScanner } = await import("./card-scanner.js?v=20261103p");
+  const { openScanner } = await import("./card-scanner.js?v=20261103q");
   const added = new Map(); // valvet: träffarna som lagts in, för att kunna öppna rätt kort
   let swaps = Promise.resolve();
   openScanner(async (r) => {
@@ -773,8 +775,8 @@ const vaultActions = (c, shown = null) => {
   if (fs == null) return `<div class="cm-vault">${buttons(false, "Lägg i valvet")}</div>`;
   const row = (f, label, price) => `<div class="cm-vault-row">${buttons(f, label)}<span class="cm-vault-price">${price != null ? kr(price) : "–"}</span></div>`;
   const from = !!shown?.holo, swap = VAULT_PAGE && shown?.orig && vaultQty(c, from)
-    ? `<button type="button" class="cm-vault-swap" data-swap="${+!from}">Markera ett som ${from ? "vanligt" : esc(foilLabel(c))}</button>` : "";
-  return `<div class="cm-vault two">${row(false, "Vanlig", sekOf(c))}${row(true, esc(foilLabel(c)), fs)}${swap}</div>`;
+    ? `<button type="button" class="cm-vault-swap" data-swap="${+!from}">Markera ett som ${from ? esc(plainLabel(c).toLowerCase()) : esc(foilLabel(c))}</button>` : "";
+  return `<div class="cm-vault two">${row(false, plainLabel(c), sekOf(c))}${row(true, esc(foilLabel(c)), fs)}${swap}</div>`;
 };
 
 // ---------- Stor vy med holo-effekt ----------
@@ -824,7 +826,7 @@ async function openCard(i) {
       <div class="cm-price">${c.holo ? (c.sek != null ? `${kr(c.sek)} <small class="cname-ja">${esc(foilLabel(c))}</small>` : "Inget pris ännu") : c.eur != null ? sek(c.eur) : "Inget pris ännu"} ${change(c.change)}</div>
       <p class="muted">Cardmarkets trendpris i kronor. Vägledande, uppdateras dagligen.</p>
       <div class="pchart"></div>
-      ${cm.trend != null || cm.avg != null ? `<h3>Cardmarket (Europa)</h3><table class="cm-table">${row("Trend", cm.trend, "EUR")}${row("Snitt", cm.avg, "EUR")}${row("Lägsta", cm.low, "EUR")}${row("Snitt 1 dag", cm.avg1, "EUR")}${row("Snitt 7 dagar", cm.avg7, "EUR")}${row("Snitt 30 dagar", cm.avg30, "EUR")}${row("Trend holo", cm["trend-holo"] || null, "EUR")}</table>` : ""}
+      ${cm.trend != null || cm.avg != null ? `<h3>Cardmarket (Europa)</h3><table class="cm-table">${row("Trend", cm.trend, "EUR")}${row("Snitt", cm.avg, "EUR")}${row("Lägsta", cm.low, "EUR")}${row("Snitt 1 dag", cm.avg1, "EUR")}${row("Snitt 7 dagar", cm.avg7, "EUR")}${row("Snitt 30 dagar", cm.avg30, "EUR")}${row("Reverse holo", reverseEur(full), "EUR")}</table>` : ""}
       ${tpRows ? `<h3>TCGplayer (USA)</h3><table class="cm-table">${tpRows}</table>` : ""}
       <div class="cm-links">
         ${ja ? "" : vaultActions(c.orig || c, c)}

@@ -12,8 +12,9 @@ import { track } from "./tracker.js";
 import { recordCard, mountRecent } from "./recent.js";
 import { mountCardAutocomplete } from "./card-autocomplete.js";
 import { CONDITIONS, DEFAULT_COND, gradeMult, isVintage } from "./valuation.js";
-import { openScanner, narrowByTotal, rankByLook } from "./card-scanner.js?v=20261103p";
+import { openScanner, narrowByTotal, rankByLook } from "./card-scanner.js?v=20261103q";
 import { showReveal } from "./card-reveal.js";
+import { reverseEur, baseLabel } from "./cmholo.js?v=20261103a";
 import { getAnatomyData, renderPullRatesModal } from "./anatomy.js";
 
 // Fyra kriterier, som graderingsbolagen: centrering, hörn, kanter och yta. Smuts ingår i ytan.
@@ -321,11 +322,10 @@ async function search(raw, total = null, photo = null, nameHint = null) {
 // ---------- Värdering ----------
 // Skicket ger det ograderade värdet och flyttar reglagen till ett typiskt läge för skicket.
 // Reglagen ger sedan betyget, så man kan finjustera efter att ha valt skick.
-// Holo (eller reverse holo) har ett eget pris på Cardmarket. Valet visas bara när kortet har både vanligt pris och holopris.
-const holoEur = (c) => { const cm = c.pricing?.cardmarket || {}; return cm["trend-holo"] ?? cm["avg-holo"] ?? null; };
-const hasHolo = (c) => { const cm = c.pricing?.cardmarket || {}; return holoEur(c) != null && (cm.trend ?? cm.avg) != null; };
-const holoLabel = (c) => (c.variants?.holo ? "Holo" : "Reverse holo");
-const baseEur = (c, holo = false) => { const cm = c.pricing?.cardmarket || {}; return holo && holoEur(c) != null ? holoEur(c) : cm.trend ?? cm.avg ?? cm["trend-holo"] ?? null; };
+// Reverse holo har ett eget pris på Cardmarket (se cmholo.js). Valet visas bara när kortet säljs som reverse holo.
+// state.holo betyder reverse holo. Kortets vanliga version är Vanlig, eller Holo för kort som bara trycktes som holo.
+const hasHolo = (c) => reverseEur(c) != null;
+const baseEur = (c, holo = false) => { const cm = c.pricing?.cardmarket || {}; return holo && hasHolo(c) ? reverseEur(c) : cm.trend ?? cm.avg ?? (cm["trend-holo"] || null); };
 const baseSek = () => { const e = baseEur(state.card, state.holo); return e != null && state.rate ? e * state.rate : null; };
 // Lägsta annonsen för den valda versionen.
 const lowEur = () => { const cm = state.card.pricing?.cardmarket || {}; return state.holo ? cm["low-holo"] : cm.low; };
@@ -405,7 +405,7 @@ function outputHTML() {
   const tier = (label, v, on) => `<li class="vt${on ? " on" : ""}"><span>${label}</span><b>${ca(v)}</b></li>`;
   return `<div class="vo-main"><span class="vo-label">Ungefärligt värde ${condText(cname)}</span>
       <b class="vo-price">${ca(raw)}</b>
-      <small>Cardmarkets trendpris${state.holo ? ` för ${holoLabel(state.card).toLowerCase()}` : ""} i nyskick: ${krr(base)}${lowEur() != null ? ` · lägsta annons ${krr(lowEur() * state.rate)}` : ""}</small></div>
+      <small>${state.holo ? "Cardmarkets pris för reverse holo (mitten av trend och snittpriser)" : "Cardmarkets trendpris"} i nyskick: ${krr(base)}${lowEur() != null ? ` · lägsta annons ${krr(lowEur() * state.rate)}` : ""}</small></div>
     <ul class="vo-tiers" aria-label="Riktvärden per betyg">
       ${tier("Ograderat, ditt skick", raw, false)}${tier("Graderat", gv, true)}
     </ul>
@@ -439,7 +439,7 @@ function renderCard() {
       <div class="val-info">
         <h2 class="val-dh">${cardTitle(c)}</h2>
         <p class="muted val-dsub">${setLink(c.set, pages)} · #${esc(c.localId || "")}${c.rarity && c.rarity !== "None" ? ` · ${esc(c.rarity)}` : ""}</p>
-        ${hasHolo(c) ? `<div class="chips val-variant" role="radiogroup" aria-label="Version">${[["Vanlig", "Utan glansig folie"], [holoLabel(c), "Glansig folie, eget pris"]].map(([n, d], i) => `<label class="chip"><input type="radio" name="variant" value="${i}"${+state.holo === i ? " checked" : ""}><span><b>${n}</b><small>${d}</small></span></label>`).join("")}</div>` : ""}
+        ${hasHolo(c) ? `<div class="chips val-variant" role="radiogroup" aria-label="Version">${[[baseLabel(c), baseLabel(c) === "Holo" ? "Som kortet trycktes" : "Utan glansig folie"], ["Reverse holo", "Glansig bakgrund, eget pris"]].map(([n, d], i) => `<label class="chip"><input type="radio" name="variant" value="${i}"${+state.holo === i ? " checked" : ""}><span><b>${n}</b><small>${d}</small></span></label>`).join("")}</div>` : ""}
         <details class="acc"${WIDE.matches ? " open" : ""}>
           <summary><span>2. Välj skick</span><span class="acc-val" data-acc="cond"></span></summary>
           <div class="chips" role="radiogroup" aria-label="Kortets skick">${CONDITIONS.map(([n, d], i) => `<label class="chip"><input type="radio" name="cond" value="${i}"${i === state.cond ? " checked" : ""}><span><b>${n}</b><small>${d}</small></span></label>`).join("")}</div>
