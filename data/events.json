@@ -1,6 +1,20 @@
 {
- "updated": 1793711675713,
+ "updated": 1793712595735,
  "events": [
+  {
+   "at": 1793712492921,
+   "store": "spelparken",
+   "product": "spelparken:15185646092663",
+   "group": "151|ultra-premium-collection|en||",
+   "title": "151 UPC",
+   "url": "https://spelparken.se/products/151-upc-oppnas-live",
+   "image": "https://cdn.shopify.com/s/files/1/0948/1876/3127/files/P8975_290-85541_01.jpg?v=1760533786",
+   "price": 11499,
+   "type": "Ultra-Premium Collection",
+   "set": "151",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793710566899,
    "store": "cardvalley",
@@ -7076,19 +7090,6 @@
    "set": null,
    "lang": "en",
    "kind": "tillbaka"
-  },
-  {
-   "at": 1793131514473,
-   "store": "tcgaddan",
-   "product": "tcgaddan:15894591897932",
-   "group": "pitch-black|booster-pack|en|",
-   "title": "Pitch Black Booster Pack",
-   "url": "https://tcgaddan.se/products/pitch-black-booster-pack-moms-vmb",
-   "price": 85,
-   "type": "Booster Pack",
-   "set": "Pitch Black",
-   "lang": "en",
-   "kind": "ny"
   }
  ]
 }
