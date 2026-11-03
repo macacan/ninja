@@ -11,7 +11,7 @@
 // 5. Hittas inte kortet nära ramen letas dess fyra hörn i hela bilden (kanter + Hough-linjer, scan/quad.js).
 // 6. Bildavtryck av konstverket (scan/fingerprint.js) jämförs med ett färdigt index över alla kort (data/hashes.*).
 //    Pekar bilden och det lästa numret ut samma kort är skanningen klar, utan att vänta på namnet.
-import { API, esc, getJSON } from "./site.js";
+import { API, esc, getJSON, kr } from "./site.js";
 import { loadDataset } from "./card-autocomplete.js";
 import "./scan/quad.js?v=20261103a"; // sätter self.Quad
 import "./scan/fingerprint.js?v=20261103a"; // sätter self.Fingerprint (med FP.BOX per spel)
@@ -815,7 +815,7 @@ async function rbBestCanvas(canvas, source, full = false) {
   let best = { canvas, art };
   // Liknar bilden inget Riftbound-kort alls (t.ex. ett Pokémonkort i Pokémonskannern) är det ingen idé att räta om.
   // I Riftbound-skannern provas omrätningarna ändå, eftersom en ficka kan göra den första bilden oigenkännlig.
-  if (source?.corners && (art[0]?.s ?? 0) < 0.9 && (art[0]?.s ?? 0) >= (scanGame === "rb" ? 0.3 : 0.5)) {
+  if (source?.corners && (art[0]?.s ?? 0) < 0.9 && (art[0]?.s ?? 0) >= (scanGame !== "pokemon" ? 0.3 : 0.5)) {
     for (const f of [RB_FRAME, BF_FRAME]) {
       const c = copyCanvas(unwarpCard(source.src, subQuad(source.corners, f)));
       const a = await artMatch(c, 30, "rb").catch(() => []);
@@ -832,7 +832,7 @@ async function rbBestCanvas(canvas, source, full = false) {
   }
   // Var hörnen bara gissade (source.guess: ingen kant hittades, rätningen är ramen på skärmen) vinner den lösa
   // sökningen även när likheten är ungefär densamma, eftersom en gissad rätning kan likna fel kort av en slump
-  if (full && scanGame === "rb" && source?.src && (best.art[0]?.s ?? 0) < 0.85) {
+  if (full && scanGame !== "pokemon" && source?.src && (best.art[0]?.s ?? 0) < 0.85) {
     const loose = await rbLoose(source.src);
     if (loose && (loose.art[0]?.s ?? -1) > (best.art[0]?.s ?? -1) + (source.guess ? -0.05 : 0.02)) best = { ...loose, alt: best.canvas };
   }
@@ -940,7 +940,7 @@ async function identifyOp(art) {
 }
 
 // Vilket spel skannern letar efter: "pokemon" (värderingen, som också känner igen tydliga Riftbound- och One Piece-kort),
-// "rb" eller "op".
+// "rb", "op" eller "vault" (Mitt valv: både One Piece och Riftbound, utan att man väljer spel).
 let scanGame = "pokemon";
 
 // Hittar kortet i ett rätat canvas: först bilden, sedan text. Returnerar avläsningen plus cardId om kortet är säkert.
@@ -953,6 +953,14 @@ export async function identify(canvas, { full = false, source } = {}) {
     return identifyRb(rb.canvas, { full, art: rb.art, alt: rb.alt });
   }
   if (scanGame === "op") return identifyOp((await opBestCanvas(canvas, source)).art);
+  // Mitt valv: kortet jämförs med båda spelen, och det spel vars bästa bild liknar mest får läsa kortet
+  // En tydlig One Piece-träff räcker direkt, så att Riftbounds långsammare omrätningar inte körs i onödan.
+  if (scanGame === "vault") {
+    const op = await opBestCanvas(canvas, source);
+    if (byLook(op.art, 0.85, 0.08) || byLook(op.art, 0.72, 0.15)) return identifyOp(op.art);
+    const rb = await rbBestCanvas(canvas, source, full);
+    return (op.art[0]?.s ?? 0) > (rb.art[0]?.s ?? 0) ? identifyOp(op.art) : identifyRb(rb.canvas, { full, art: rb.art, alt: rb.alt });
+  }
   let [art, rb, op] = await Promise.all([artMatch(canvas).catch(() => []), rbBestCanvas(canvas, source), artMatch(canvas, 30, "op").catch(() => [])]);
   // Ett Riftbound- eller One Piece-kort i Pokémonskannern: bara när bilden tydligt liknar ett sådant kort mer än något Pokémonkort
   const rbQuick = byLook(rb.art, 0.88, 0.12);
@@ -1260,6 +1268,15 @@ function ui() {
   dialog.className = "scan";
   dialog.setAttribute("aria-label", "Skanna kort");
   dialog.innerHTML = `
+    <div class="scan-top">
+      <b>Skanna kort</b>
+      <button class="scan-torch" type="button" aria-label="Blixt" aria-pressed="false" hidden>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M13 2L4 14h7l-1 8 9-12h-7l1-8z"/>
+        </svg>
+        <span>Av</span>
+      </button>
+    </div>
     <div class="scan-view">
       <video playsinline muted autoplay></video>
       <canvas class="scan-hud" aria-hidden="true"></canvas>
@@ -1267,12 +1284,6 @@ function ui() {
       <div class="scan-hud-status">
         <p class="scan-status" role="status" aria-live="polite">Startar kameran…</p>
       </div>
-      <button class="scan-torch" type="button" aria-label="Blixt" aria-pressed="false" hidden>
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-          <path d="M13 2L4 14h7l-1 8 9-12h-7l1-8z"/>
-        </svg>
-        <span>Av</span>
-      </button>
       <button class="scan-multi" type="button" aria-pressed="false" title="Skanna flera kort i rad">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true">
           <rect x="7" y="3" width="12" height="16" rx="2"/><path d="M5 7v12a2 2 0 0 0 2 2h9"/>
@@ -1280,7 +1291,7 @@ function ui() {
         <span>Flera kort</span>
       </button>
       <button class="scan-tray" type="button" hidden aria-label="Visa skannade kort"><span class="scan-tray-stack"></span><b>0</b></button>
-      <button class="scan-peek" type="button" hidden><img alt=""><span></span></button>
+      <button class="scan-peek" type="button" hidden><img alt=""><em class="scan-price" hidden></em><span></span></button>
       <p class="scan-tip">Håll kortet i ramen. Glänser det? Luta det lätt.</p>
       <div class="scan-freeze" aria-hidden="true" hidden>
         <canvas></canvas>
@@ -1621,6 +1632,7 @@ const HOLO_MSGS = {
   pokemon: ["Jämför med 23 000 kort…", "Läser kortnumret…", "Kollar setet…", "Letar efter kortets kanter…", "Matchar konstverket…", "Läser namnet…"],
   rb: ["Jämför med 1 800 Riftbound-kort…", "Läser kortnumret…", "Kollar setet…", "Letar efter kortets kanter…", "Matchar konstverket…"],
   op: ["Jämför med 4 400 One Piece-kort…", "Letar efter kortets kanter…", "Matchar konstverket…", "Kollar varianterna…"],
+  vault: ["Jämför med 6 000 One Piece- och Riftbound-kort…", "Letar efter kortets kanter…", "Matchar konstverket…", "Läser kortnumret…"],
 };
 
 // Visar en stillbild av källan (video eller foto) och returnerar den som canvas att söka i
@@ -1967,26 +1979,45 @@ function addScanned(r, canvas) {
 // Skannern stängs inte vid en träff. Kortet visas som en liten bild uppe till höger och kameran fortsätter, så att man
 // kan ta nästa kort direkt. Ett nytt kort ersätter bilden. Trycker man på den öppnas kortet (onFound).
 let peek = null;
-function setPeek(r, canvas) {
+// Kortets pris i kronor (One Piece och Riftbound, ur kortfilerna), eller null
+async function priceOf(r) {
+  if (!r.cardId) return null;
+  if (r.game === "rb") return (await rbData().catch(() => null))?.byId.get(r.cardId)?.sek ?? null;
+  if (r.game === "op") return (await opData().catch(() => null))?.get(r.cardId)?.sek ?? null;
+  return null;
+}
+async function setPeek(r, canvas) {
   if (keyOf(r) === skipKey) return status("Byt till nästa kort…");
   skipKey = keyOf(r);
   last = lastNum = null;
-  pauseUntil = Date.now() + 600;
-  peek = { game: r.game || "pokemon", name: r.name, number: r.number, total: r.total, cardId: r.cardId, canvas, dhash: r.dhash };
-  const btn = dialog.querySelector(".scan-peek"), thumb = thumbOf(canvas);
-  btn.querySelector("img").src = thumb || "";
-  btn.querySelector("img").hidden = !thumb;
-  btn.querySelector("span").textContent = labelOf(peek);
-  btn.setAttribute("aria-label", `Öppna ${labelOf(peek)}`);
-  btn.hidden = false;
-  btn.classList.remove("pop");
-  void btn.offsetWidth; // starta om animationen när bilden byts
-  btn.classList.add("pop");
+  pauseUntil = Date.now() + 1400; // låt kortet poppa upp och flyga upp till hörnet innan nästa läsning
+  const item = { game: r.game || "pokemon", name: r.name, number: r.number, total: r.total, cardId: r.cardId, canvas, dhash: r.dhash };
+  peek = item;
+  if ("vibrate" in navigator) navigator.vibrate(45);
   const hud = dialog.querySelector(".scan-hud-status");
   hud?.classList.add("success");
   setTimeout(() => hud?.classList.remove("success"), 1500);
-  status(`Hittade <b>${esc(labelOf(peek))}</b>! Tryck på kortet för att öppna det, eller håll nästa i ramen.`);
-  if ("vibrate" in navigator) navigator.vibrate(45);
+  status(`Hittade <b>${esc(labelOf(item))}</b>! Tryck på kortet för att öppna det, eller håll nästa i ramen.`);
+  item.thumb = thumbOf(canvas);
+  item.price = await priceOf(item);
+  if (peek !== item) return; // ett nytt kort hann hittas
+  const btn = dialog.querySelector(".scan-peek"), price = btn.querySelector(".scan-price");
+  btn.querySelector("img").src = item.thumb || "";
+  btn.querySelector("img").hidden = !item.thumb;
+  price.textContent = item.price != null ? kr(item.price) : "";
+  price.hidden = item.price == null;
+  btn.querySelector("span").textContent = labelOf(item);
+  btn.setAttribute("aria-label", `Öppna ${labelOf(item)}${item.price != null ? `, ${kr(item.price)}` : ""}`);
+  // Kortet poppar upp mitt i bilden med priset och flyger sedan upp till hörnet, där det ligger kvar
+  btn.hidden = false;
+  btn.style.visibility = "hidden";
+  popCard(item, btn, () => {
+    if (peek !== item) return;
+    btn.style.visibility = "";
+    btn.classList.remove("pop");
+    void btn.offsetWidth; // starta om animationen när bilden byts
+    btn.classList.add("pop");
+  });
 }
 function clearPeek() {
   peek = null;
@@ -2002,15 +2033,16 @@ function openPeek() {
 }
 
 // Kortet poppar upp mitt i bilden, stannar en stund och flyger ner i högen
-function popCard(item) {
-  const view = dialog.querySelector(".scan-view"), tray = dialog.querySelector(".scan-tray");
+// target: dit kortet flyger (högen, eller förhandsvisningen uppe till höger), end: när det har landat
+function popCard(item, target = dialog.querySelector(".scan-tray"), end = () => renderTray(true)) {
+  const view = dialog.querySelector(".scan-view");
   const pop = document.createElement("div");
   pop.className = "scan-pop";
   pop.setAttribute("aria-hidden", "true");
-  pop.innerHTML = `<div>${item.thumb ? `<img src="${item.thumb}" alt="">` : "<i></i>"}<span>${esc(labelOf(item))}</span></div>`;
+  pop.innerHTML = `<div>${item.thumb ? `<img src="${item.thumb}" alt="">` : "<i></i>"}${item.price != null ? `<em class="scan-price">${esc(kr(item.price))}</em>` : ""}<span>${esc(labelOf(item))}</span></div>`;
   view.append(pop);
-  tray.hidden = false;
-  const card = pop.firstElementChild, p = card.getBoundingClientRect(), t = tray.getBoundingClientRect();
+  target.hidden = false;
+  const card = pop.firstElementChild, p = card.getBoundingClientRect(), t = target.getBoundingClientRect();
   const dx = t.left + t.width / 2 - (p.left + p.width / 2), dy = t.top + t.height / 2 - (p.top + p.height / 2);
   const s = Math.max(0.12, t.height / p.height);
   const quick = matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -2019,10 +2051,10 @@ function popCard(item) {
     { transform: "scale(1.05)", opacity: 1, offset: 0.18 },
     { transform: "scale(1)", opacity: 1, offset: 0.3 },
     { transform: "scale(1)", opacity: 1, offset: 0.62 },
-    { transform: `translate(${dx}px, ${dy}px) scale(${s}) rotate(-8deg)`, opacity: 0.6 },
+    { transform: `translate(${dx}px, ${dy}px) scale(${s})${target.matches(".scan-tray") ? " rotate(-8deg)" : ""}`, opacity: 0.6 },
   ], { duration: quick ? 400 : 1300, easing: "cubic-bezier(.45,0,.2,1)" });
-  const end = () => { pop.remove(); renderTray(true); };
-  anim.finished.then(end, end);
+  const landed = () => { pop.remove(); end(); };
+  anim.finished.then(landed, landed);
 }
 
 // Högen nere till vänster: de tre senaste korten lite huller om buller och antalet
@@ -2097,7 +2129,7 @@ export async function openScanner(callback, partialCallback, { game = "pokemon",
   onDone = done;
   onPartial = partialCallback || null;
   const d = ui();
-  d.querySelector(".scan-tip").textContent = game === "rb"
+  d.querySelector(".scan-tip").textContent = game === "rb" || game === "vault"
     ? "Håll kortet i ramen. Battlefields hålls på högkant."
     : "Håll kortet i ramen. Glänser det? Luta det lätt.";
   if (game !== "rb") {

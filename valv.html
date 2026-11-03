@@ -25,7 +25,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Hem","item":"https://lootninja.se/"},{"@type":"ListItem","position":2,"name":"Mitt valv","item":"https://lootninja.se/valv.html"}]}</script>
 <link href="fonts/fonts.css" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=20261103f">
+<link rel="stylesheet" href="style.css?v=20261103h">
 <link rel="stylesheet" href="dark.css?v=20261103a" id="dark-css" media="(prefers-color-scheme: dark)">
 <script src="js/theme.js?v=20261021"></script>
 </head>
@@ -59,7 +59,7 @@
     <section id="results">
       <div class="section"><h2 id="res-title">Mitt valv <span class="beta-tag">Beta</span></h2><label class="drop res-sort"><span>Sortera</span><select id="sort" name="sort" form="price-form">
         <option value="added">Nyaste först</option><option value="price-desc">Dyrast först</option><option value="price-asc">Billigast först</option>
-        <option value="gain">Ökat mest sedan inlagt</option><option value="rising">Stiger mest</option><option value="falling">Sjunker mest</option>
+        <option value="gain">Ökat mest</option><option value="rising">Stiger mest</option><option value="falling">Sjunker mest</option>
         <option value="number">Kortnummer</option></select></label></div>
       <!-- Portföljen: värde, antal och utveckling för korten som visas -->
       <div class="vault-stats" id="vault-stats" aria-live="polite"></div>
@@ -69,40 +69,28 @@
     </section>
 
     <section class="vault-guide" aria-labelledby="vg-title">
-      <h2 id="vg-title">Så funkar Mitt valv <span class="beta-tag">Beta</span></h2>
+      <h2 id="vg-title">Så funkar valvet <span class="beta-tag">Beta</span></h2>
       <div class="vg-grid">
         <div>
           <h3>Lägg till kort</h3>
-          <p>Tryck på <b>Skanna</b> och håll kortet framför kameran. Vill du skanna en hel hög slår du på <b>Flera kort</b> i skannern och trycker <b>Klar</b> när du är färdig. Du kan också trycka <b>+ Lägg i valvet</b> på vilket kort som helst under <a href="priser.html">Kortpriser</a>.</p>
+          <p>Tryck på <b>Skanna</b> och håll upp kortet. Skannern känner igen både One Piece och Riftbound. Med <b>Flera kort</b> skannar du en hel hög i rad.</p>
         </div>
         <div>
-          <h3>Se vad samlingen är värd</h3>
-          <p>Värdet är TCGplayers marknadspris omräknat till kronor och uppdateras varje dag. <b>Sedan du lade in</b> jämför dagens pris med priset när kortet lades i valvet. <b>Mot snittet 30 dagar</b> visar om korten just nu ligger över eller under månadens snittpris.</p>
+          <h3>Värdet</h3>
+          <p>Dagens marknadspris i kronor, uppdaterat varje dag. <b>Sedan inlagt</b> visar hur priset ändrats sedan du lade in kortet.</p>
         </div>
         <div>
           <h3>Sortera och filtrera</h3>
-          <p>Sortera på dyraste kort, de som ökat mest sedan du lade in dem eller de som stiger just nu. Tryck på ett spel överst för att dölja det, och sök på namn, set eller kortnummer för att bara se vissa kort.</p>
+          <p>Sortera på pris eller utveckling. Tryck på ett spel överst för att dölja det, eller sök på namn eller kortnummer.</p>
         </div>
         <div>
-          <h3>Sparas i den här webbläsaren</h3>
-          <p>Valvet sparas bara här, på den här enheten och i den här webbläsaren, och skickas aldrig till oss. Det syns alltså inte på andra enheter, och det försvinner om du rensar webbplatsdata eller surfar privat. Se <a href="integritet.html#p3">integritetspolicyn</a>.</p>
+          <h3>Sparas här</h3>
+          <p>Valvet finns bara i den här webbläsaren och skickas aldrig till oss. Rensar du webbplatsdata försvinner det. <a href="integritet.html#p3">Mer om lagringen</a>.</p>
         </div>
       </div>
-      <p class="hint">Mitt valv är nytt och i beta. Just nu fungerar det för One Piece och Riftbound. Pokémonkort värderar du under <a href="vardering.html">Värdering</a>.</p>
+      <p class="hint">Beta: fungerar för One Piece och Riftbound. Pokémonkort värderar du under <a href="vardering.html">Värdering</a>.</p>
     </section>
   </div>
-
-  <!-- Vilket spel skannern ska leta bland, när både One Piece och Riftbound är tända -->
-  <dialog id="scan-pick" class="card-modal confirm-modal" aria-labelledby="sp-title">
-    <form method="dialog">
-      <h2 id="sp-title">Vilket spel?</h2>
-      <p class="muted">Skannern letar bland ett spels kort i taget.</p>
-      <div class="confirm-actions">
-        <button class="btn small" value="op">One Piece</button>
-        <button class="btn small" value="rb">Riftbound</button>
-      </div>
-    </form>
-  </dialog>
 
   <!-- Bekräftelse innan valvet töms (sajtens färger i stället för webbläsarens egen ruta) -->
   <dialog id="vault-confirm" class="card-modal confirm-modal" aria-labelledby="vc-title">
@@ -123,6 +111,6 @@
     <div class="cm-body"></div>
   </dialog>
 </main>
-<script type="module" src="js/priser.js?v=20261103g"></script>
+<script type="module" src="js/priser.js?v=20261103i"></script>
 </body>
 </html>

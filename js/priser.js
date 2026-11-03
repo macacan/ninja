@@ -439,15 +439,16 @@ async function addScanned(list) {
 
 // ---------- Kortskanner för Riftbound och One Piece ----------
 // Kortpriser: ett säkert kort öppnas, annars söks det lästa numret (t.ex. "001/167") så att man kan välja bland
-// träffarna. Valvet: kortet läggs i valvet och öppnas där. Klar i snabbskanningen lägger alla korten i valvet.
+// träffarna. Valvet: skannern letar bland både One Piece och Riftbound ("vault"), och kortet läggs i valvet och
+// öppnas där. Klar i snabbskanningen lägger alla korten i valvet.
 // Skannern (js/card-scanner.js) är stor och laddas först när knappen trycks.
-async function scanCards(g = game) {
+async function scanCards(g = VAULT_PAGE ? "vault" : game) {
   track("scan", "Öppnad");
-  const { openScanner } = await import("./card-scanner.js?v=20261103c");
-  openScanner(async ({ cardId, name, number, total }) => {
+  const { openScanner } = await import("./card-scanner.js?v=20261103e");
+  openScanner(async ({ game: found, cardId, name, number, total }) => {
     track("scan", cardId ? "Säker träff" : "Läst, söker");
     if (VAULT_PAGE) {
-      const [c] = await addScanned([{ game: g, cardId, number, total }]);
+      const [c] = await addScanned([{ game: found, cardId, number, total }]);
       await showVault();
       const i = c ? current.findIndex((x) => x.game === c.game && x.id === c.id) : -1;
       if (i >= 0) openCard(i);
@@ -513,30 +514,23 @@ async function showVault() {
   $("#vault-stats").innerHTML = n ? `
     <div><small>Värde</small><b>${kr(worth)}</b></div>
     <div><small>Kort</small><b>${n}</b></div>
-    <div><small>Sedan du lade in</small><b>${diff(nowB, thenB)}</b></div>
-    <div><small>Mot snittet 30 dagar</small><b>${diff(nowA, thenA)}</b></div>` : "";
+    <div><small>Sedan inlagt</small><b>${diff(nowB, thenB)}</b></div>
+    <div><small>Mot månadssnitt</small><b>${diff(nowA, thenA)}</b></div>` : "";
   $("#vault-clear").hidden = !all;
   if (!n) {
     current = [];
     $("#prices").innerHTML = all
       ? '<div class="msg">Inga kort i valvet matchar.</div>'
-      : '<div class="msg">Valvet är tomt. Tryck på <b>Skanna</b> och skanna dina kort, eller lägg till kort med <b>+ Lägg i valvet</b> på <a href="priser.html">Kortpriser</a>.</div>';
+      // Texten i ett eget element: rutan är flex, och annars blir varje fetstilt ord en egen kolumn
+      : '<div class="msg"><span>Valvet är tomt. Tryck på <b>Skanna</b> för att lägga till kort.</span></div>';
     return;
   }
   applyView();
 }
 
+$("#rb-scan").addEventListener("click", () => scanCards());
 if (VAULT_PAGE) {
   $("#pq").placeholder = "Sök i ditt valv";
-  // Skanna: spelet som är tänt, eller ett val mellan One Piece och Riftbound när båda är det
-  const pick = $("#scan-pick");
-  $("#rb-scan").addEventListener("click", () => {
-    const lit = ["op", "rb"].filter((g) => !vaultOff.has(g));
-    if (lit.length === 1) return scanCards(lit[0]);
-    pick.returnValue = "";
-    pick.showModal();
-  });
-  pick.addEventListener("close", () => { if (GAMES[pick.returnValue]) scanCards(pick.returnValue); });
   const vaultConfirm = $("#vault-confirm");
   $("#vault-clear").addEventListener("click", () => {
     vaultConfirm.returnValue = "";
@@ -547,10 +541,8 @@ if (VAULT_PAGE) {
     saveVault([]);
     showVault();
   });
-  // Klick utanför en ruta avbryter
-  for (const d of [pick, vaultConfirm]) d.addEventListener("click", (e) => { if (e.target === d) d.close(); });
-} else {
-  $("#rb-scan").addEventListener("click", () => scanCards());
+  // Klick utanför rutan avbryter
+  vaultConfirm.addEventListener("click", (e) => { if (e.target === vaultConfirm) vaultConfirm.close(); });
 }
 // Knapparna i den stora vyn: lägg till ett exemplar eller ta bort ett
 const vaultActions = (c) => {

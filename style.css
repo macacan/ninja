@@ -235,6 +235,7 @@ canvas.scene{display:block;width:100%;image-rendering:pixelated;image-rendering:
 /* Tomma lägen och fel visas med en liten ninja, så att de känns som en del av sidan. */
 .msg{grid-column:1/-1;display:flex;align-items:center;gap:14px;background:var(--surface);border:2px dashed #d3d8e4;border-radius:12px;padding:16px 18px;color:var(--muted)}
 .msg::before{content:"";flex:none;width:58px;height:42px;background:url(img/logo.png?v=1) center/contain no-repeat}
+.msg>*{min-width:0}
 .loading{grid-column:1/-1;display:flex;align-items:center;gap:14px;font:600 1rem var(--pixel);color:var(--muted);padding:18px 0}
 .loading .bar{width:120px;height:14px;box-shadow:0 0 0 2px var(--ink);background:repeating-linear-gradient(90deg,var(--red) 0 10px,transparent 10px 14px);background-size:14px 100%;animation:load 2s steps(8) infinite;clip-path:inset(0 100% 0 0)}
 @keyframes load{to{clip-path:inset(0 0 0 0)}}
@@ -1201,6 +1202,8 @@ span.rd-logo{display:grid;place-items:center;background:var(--surface);border-ra
   .card-search .drop:has(#sort){flex:1 1 50%}
   /* Valvsidan har bara Skanna bredvid Sortera: Skanna får sin egen bredd och Sortera resten */
   [data-page=valv] .card-search #rb-scan{flex:0 0 auto}
+  /* Valen ("Nyaste först", "Dyrast först" …) säger själva vad de gör, så ordet Sortera får ge plats på smala skärmar */
+  [data-page=valv] .card-search .drop:has(#sort)>span{display:none}
   .card-search .adv::before,.card-search .adv > *{order:6}
   .card-search .adv > .drop:has(#set){flex:1 1 100%;min-width:0}
   .card-search .drop #set{flex:1 1 0;min-width:0;max-width:none;field-sizing:fixed}
@@ -2992,7 +2995,11 @@ input[type=search]::-webkit-search-results-decoration {
 /* Mörk "AI-kamera": glasknappar, cyan–violett accent och hörnvinklar i stället för en hel ram. */
 .scan{--ai1:#22d3ee;--ai2:#a855f7;--ai-grad:linear-gradient(135deg,var(--ai1),#6366f1 55%,var(--ai2));width:calc(100vw - 24px);max-width:440px;max-height:calc(100dvh - 24px);overflow:auto;padding:0;border:1px solid rgba(255,255,255,.08);border-radius:26px;background:#07080f;color:#e8eaf6;box-shadow:0 30px 80px rgba(0,0,0,.7),0 0 0 1px rgba(168,85,247,.12),0 0 60px rgba(99,102,241,.18)}
 .scan::backdrop{background:rgba(4,5,12,.86);backdrop-filter:blur(10px)}
-.scan-view{position:relative;aspect-ratio:3/4;background:radial-gradient(120% 90% at 50% 40%,#141633,#05060c);overflow:hidden;border-radius:25px 25px 0 0}
+/* Raden ovanför kamerabilden: rubriken och blixten uppe till höger, utanför själva bilden */
+.scan-top{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:40px;padding:10px 12px 10px 18px}
+.scan-top b{font:700 .95rem var(--sans);color:#f1f3ff}
+.scan.listing .scan-top{display:none}
+.scan-view{position:relative;aspect-ratio:3/4;background:radial-gradient(120% 90% at 50% 40%,#141633,#05060c);overflow:hidden;border-radius:18px 18px 0 0}
 .scan-view video{width:100%;height:100%;object-fit:cover;display:block}
 .scan-view.nocam video{display:none}
 .scan-hud{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:2}
@@ -3012,10 +3019,12 @@ input[type=search]::-webkit-search-results-decoration {
 .scan-frame i.is-reading{--c:var(--ai1)}
 /* Glaspiller ovanpå kamerabilden */
 .scan-hud-status,.scan-torch{background:rgba(12,14,30,.55);backdrop-filter:blur(14px) saturate(1.4);-webkit-backdrop-filter:blur(14px) saturate(1.4);border:1px solid rgba(255,255,255,.12)}
-.scan-hud-status{position:absolute;top:12px;left:12px;right:62px;z-index:10;display:flex;align-items:center;gap:10px;padding:6px 12px 6px 6px;border-radius:999px;width:max-content;max-width:calc(100% - 74px)}
+.scan-hud-status{position:absolute;top:12px;left:12px;z-index:10;display:flex;align-items:center;gap:10px;padding:6px 12px 6px 6px;border-radius:999px;width:max-content;max-width:calc(100% - 24px)}
+/* Med en träff uppe till höger får statusraden plats bredvid den */
+.scan:has(.scan-peek:not([hidden])) .scan-hud-status{max-width:calc(100% - 112px)}
 .scan-status{margin:0;font-size:.82rem;line-height:1.3;color:#f1f3ff;flex:1}
 .scan-status b{background:var(--ai-grad);-webkit-background-clip:text;background-clip:text;color:transparent}
-.scan-torch{position:absolute;top:12px;right:12px;z-index:10;height:40px;padding:0 14px 0 12px;border-radius:20px;color:#fff;display:flex;align-items:center;gap:6px;font:inherit;font-size:13px;font-weight:700;cursor:pointer;transition:background .2s,box-shadow .2s}
+.scan-torch{height:40px;padding:0 14px 0 12px;border-radius:20px;color:#fff;display:flex;align-items:center;gap:6px;font:inherit;font-size:13px;font-weight:700;cursor:pointer;transition:background .2s,box-shadow .2s}
 .scan-torch[hidden]{display:none}
 .scan-torch:hover{background:rgba(30,34,64,.75)}
 .scan-torch.active{background:var(--ai-grad);border-color:transparent;box-shadow:0 0 18px rgba(139,92,246,.8)}
@@ -3025,11 +3034,16 @@ input[type=search]::-webkit-search-results-decoration {
 .scan-multi:hover{background:rgba(30,34,64,.75)}
 .scan-multi.active{background:#16a34a;border-color:transparent;box-shadow:0 0 16px rgba(74,222,128,.55)}
 .scan.frozen .scan-multi,.scan.frozen .scan-tray{display:none}
-/* Senaste träffen utan snabbskanning: uppe till höger under blixtknappen, tryck för att öppna kortet */
-.scan-peek{position:absolute;top:62px;right:12px;z-index:10;width:76px;padding:4px 4px 6px;border-radius:12px;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;color:#fff;background:rgba(12,14,30,.6);backdrop-filter:blur(14px) saturate(1.4);-webkit-backdrop-filter:blur(14px) saturate(1.4);border:1px solid rgba(74,222,128,.7);box-shadow:0 6px 18px rgba(0,0,0,.5)}
+/* Senaste träffen utan snabbskanning: uppe till höger i bilden med priset på, tryck för att öppna kortet */
+.scan-peek{position:absolute;top:12px;right:12px;z-index:10;width:76px;padding:4px 4px 6px;border-radius:12px;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;color:#fff;background:rgba(12,14,30,.6);backdrop-filter:blur(14px) saturate(1.4);-webkit-backdrop-filter:blur(14px) saturate(1.4);border:1px solid rgba(74,222,128,.7);box-shadow:0 6px 18px rgba(0,0,0,.5)}
 .scan-peek[hidden]{display:none}
 .scan-peek img{width:66px;height:92px;border-radius:6px;object-fit:cover;display:block;background:#1b1e33}
 .scan-peek img[hidden]{display:none}
+/* Priset ligger på kortbilden, nertill, i förhandsvisningen och i kortet som poppar upp */
+.scan-price{position:absolute;left:50%;transform:translateX(-50%);padding:3px 9px;border-radius:999px;background:#16a34a;color:#fff;font:800 .74rem/1.2 var(--sans);font-style:normal;white-space:nowrap;box-shadow:0 2px 8px rgba(0,0,0,.5)}
+.scan-price[hidden]{display:none}
+.scan-peek .scan-price{top:78px}
+.scan-pop .scan-price{position:static;transform:none;font-size:1rem;padding:5px 14px}
 .scan-peek span{font:700 .68rem/1.15 var(--sans);text-align:center;max-width:100%;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
 .scan-peek.pop{animation:peekPop .35s ease-out}
 @keyframes peekPop{from{transform:scale(.6);opacity:0}}
