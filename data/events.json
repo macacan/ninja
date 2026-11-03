@@ -1,6 +1,21 @@
 {
- "updated": 1793738175830,
+ "updated": 1793739135857,
  "events": [
+  {
+   "at": 1793738764469,
+   "store": "skattkistan",
+   "product": "skattkistan:11101299343698",
+   "group": "ascended-heroes|collection-box|en||poster",
+   "title": "Pokémon TCG Mega Evolution Ascended Heroes Premium Poster Collection (Gardevoir)",
+   "url": "https://skattkistan.net/products/ascended-heroes-premium-poster-collection-mega-gardevoir-ex-max-1-per-kund",
+   "image": "https://cdn.shopify.com/s/files/1/1094/6858/2226/files/03.09.2026_00.53.49_REC.png?v=1788389662",
+   "price": 1699,
+   "type": "Collection Box",
+   "set": "Ascended Heroes",
+   "lang": "en",
+   "kind": "prissankt",
+   "from": 1999
+  },
   {
    "at": 1793738127557,
    "store": "tcg-picks",
@@ -7106,20 +7121,6 @@
    "image": "https://cdn.shopify.com/s/files/1/1037/7062/0236/files/P8153_181-85037_01.png?v=1786831615",
    "price": 499,
    "type": "Collection Box",
-   "set": "Astral Radiance",
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793202308296,
-   "store": "tcgaddan",
-   "product": "tcgaddan:15817643950412",
-   "group": "astral-radiance|booster-pack|en|",
-   "title": "Astral Radiance Booster Pack",
-   "url": "https://tcgaddan.se/products/astral-radiance-booster-pack",
-   "image": "https://cdn.shopify.com/s/files/1/1037/7062/0236/files/Astral-Radiance-Booster-Pack-5.webp?v=1793131494",
-   "price": 129,
-   "type": "Booster Pack",
    "set": "Astral Radiance",
    "lang": "en",
    "kind": "tillbaka"
