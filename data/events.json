@@ -1,6 +1,21 @@
 {
- "updated": 1793727935587,
+ "updated": 1793728855606,
  "events": [
+  {
+   "at": 1793728852695,
+   "store": "spelparken",
+   "product": "spelparken:15547344028023",
+   "group": "op|the-world-s-strongest-warriors|booster-pack|en|",
+   "title": "One Piece – The World’s Strongest Warriors OP-17 Booster Pack",
+   "url": "https://spelparken.se/products/one-piece-the-world-s-strongest-warriors-op-17-booster-pack",
+   "image": "https://cdn.shopify.com/s/files/1/0948/1876/3127/files/BlackBox_84_7b1e5c55-af7a-43bb-a319-e0c05489090b.webp?v=1787845867",
+   "price": 189,
+   "type": "Booster Pack",
+   "set": "The World's Strongest Warriors",
+   "lang": "en",
+   "game": "op",
+   "kind": "ny"
+  },
   {
    "at": 1793727679518,
    "store": "dragon-s-lair",
@@ -7106,20 +7121,6 @@
    "type": "Elite Trainer Box",
    "set": "Prismatic Evolutions",
    "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793195230322,
-   "store": "rgb-kingz",
-   "product": "rgb-kingz:15993156731210",
-   "group": "x|booster-box|zh||gem-s3-vol",
-   "title": "Pokémon CBB3C Gem Pack Vol. 3 Booster Box (Kinesisk)",
-   "url": "https://rgbkingz.com/products/pokemon-cbb3c-gem-pack-vol-3-booster-box-kinesisk",
-   "image": "https://cdn.shopify.com/s/files/1/0782/8088/4554/files/845908.png?v=1787650818",
-   "price": 1190,
-   "type": "Booster Box",
-   "set": null,
-   "lang": "zh",
    "kind": "tillbaka"
   }
  ]
