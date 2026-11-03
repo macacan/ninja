@@ -391,7 +391,12 @@ try {
   // Produkterna visas först, om inte länken pekar på en annan flik (t.ex. butiker.html#events).
   const start = location.hash.slice(1);
   renderPrefs();
-  showTab(TABS.includes(start) ? start : "products");
+  // butiker.html#installera (från skannern): Notiser med "Installera som app" utfällt
+  if (start === "installera") {
+    showTab("notiser");
+    $("#installera").open = true;
+    $("#installera").scrollIntoView({ block: "start" });
+  } else showTab(TABS.includes(start) ? start : "products");
   // Länkar till en annan flik på samma sida (t.ex. Notiser i mobilmenyn).
   addEventListener("hashchange", () => { const t = location.hash.slice(1); if (TABS.includes(t)) showTab(t); });
 } catch (err) {

@@ -3099,7 +3099,11 @@ input[type=search]::-webkit-search-results-decoration {
 .scan-multi{position:absolute;bottom:40px;right:12px;z-index:10;height:36px;padding:0 12px 0 10px;border-radius:18px;color:#fff;display:flex;align-items:center;gap:6px;font:inherit;font-size:12px;font-weight:700;cursor:pointer;background:rgba(12,14,30,.55);backdrop-filter:blur(14px) saturate(1.4);-webkit-backdrop-filter:blur(14px) saturate(1.4);border:1px solid rgba(255,255,255,.12);transition:background .2s,box-shadow .2s}
 .scan-multi:hover{background:rgba(30,34,64,.75)}
 .scan-multi.active{background:#16a34a;border-color:transparent;box-shadow:0 0 16px rgba(74,222,128,.55)}
-.scan.frozen .scan-multi,.scan.frozen .scan-tray{display:none}
+.scan.frozen .scan-multi,.scan.frozen .scan-tray,.scan-multi[hidden]{display:none}
+/* Tips om att installera Lootninja som app, under knapparna */
+.scan-app{margin:0;padding:0 18px 14px;text-align:center;font-size:.74rem;line-height:1.4;color:rgba(232,234,246,.6)}
+.scan-app a{color:#c4b5fd;font-weight:700}
+.scan-app[hidden],.scan.frozen .scan-app,.scan.listing .scan-app{display:none}
 /* Senaste träffen utan snabbskanning: uppe till höger i bilden med priset på, tryck för att öppna kortet */
 .scan-peek{position:absolute;top:12px;right:12px;z-index:10;width:76px;padding:4px 4px 6px;border-radius:12px;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;color:#fff;background:rgba(12,14,30,.6);backdrop-filter:blur(14px) saturate(1.4);-webkit-backdrop-filter:blur(14px) saturate(1.4);border:1px solid rgba(74,222,128,.7);box-shadow:0 6px 18px rgba(0,0,0,.5)}
 .scan-peek[hidden]{display:none}

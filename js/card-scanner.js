@@ -1597,6 +1597,7 @@ function ui() {
       <button class="scan-ghost scan-frozen-btn" type="button" data-cancel>Avbryt</button>
       <button class="scan-now scan-frozen-btn" type="button" data-retry>Försök igen</button>
     </div>
+    <p class="scan-app" hidden>Skannar du ofta? <a href="butiker.html#installera">Installera Lootninja som app</a>, så öppnas skannern i helskärm utan webbläsarens fält.</p>
     <div class="scan-list" hidden>
       <div class="scan-list-head">
         <h2>Skannade kort <span></span></h2>
@@ -2504,9 +2505,10 @@ function renderTray(bump = false) {
   }
 }
 
-function setMulti(on) {
+// save: valet sparas till nästa gång (inte när skannern saknar Flera kort och läget bara stängs av)
+function setMulti(on, save = true) {
   multi = on;
-  try { sessionStorage.setItem(MULTI_KEY, on ? "1" : "0"); } catch {}
+  if (save) try { sessionStorage.setItem(MULTI_KEY, on ? "1" : "0"); } catch {}
   const btn = dialog.querySelector(".scan-multi");
   btn.classList.toggle("active", on);
   btn.setAttribute("aria-pressed", String(on));
@@ -2588,9 +2590,15 @@ export async function openScanner(callback, partialCallback, { game = "pokemon",
   // Snabbskanningens läge och kort från tidigare i besöket
   scanned = loadList();
   clearPeek();
+  // Flera kort finns bara på Kortpriser (One Piece och Riftbound), där högen läggs i valvet med Klar. Värderingen
+  // öppnar ett kort i taget, och i valvet läggs varje kort in direkt ändå.
+  const canMulti = game === "rb" || game === "op";
+  d.querySelector(".scan-multi").hidden = !canMulti;
   let on = false;
   try { on = sessionStorage.getItem(MULTI_KEY) === "1"; } catch {}
-  setMulti(on);
+  setMulti(canMulti && on, canMulti);
+  // Tips om appen, för den som skannar i webbläsaren
+  d.querySelector(".scan-app").hidden = matchMedia("(display-mode: standalone)").matches || navigator.standalone === true;
   hideList(false);
   d.showModal();
   // Värm upp textläsarna, setstorlekarna och bildindexen medan kameran startar
