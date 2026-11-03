@@ -13,8 +13,8 @@
 //    Pekar bilden och det lästa numret ut samma kort är skanningen klar, utan att vänta på namnet.
 import { API, esc, getJSON } from "./site.js";
 import { loadDataset } from "./card-autocomplete.js";
-import "./scan/quad.js"; // sätter self.Quad
-import "./scan/fingerprint.js?v=20261031"; // sätter self.Fingerprint (med FP.BOX per spel)
+import "./scan/quad.js?v=20261103a"; // sätter self.Quad
+import "./scan/fingerprint.js?v=20261103a"; // sätter self.Fingerprint (med FP.BOX per spel)
 
 const TESSERACT = "https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/tesseract.min.js";
 // SRI: webbläsaren vägrar köra filen om CDN:et skulle leverera något annat än exakt version 5.1.1.
@@ -37,6 +37,8 @@ const ZONES = {
   numRight: { x: 0.62, y: 0.945, w: 0.37, h: 0.05 }, // "4/102" på äldre kort
   // Riftbound: "OGN • 135/298" i den svarta kanten, som kan hamna ända nere vid kortets kant när hörnen är ungefärliga
   numRb: { x: 0.02, y: 0.925, w: 0.45, h: 0.075 },
+  // Riftbound-battlefield vridet till liggande (se turnCanvas): numret står nere till vänster
+  numBf: { x: 0.01, y: 0.92, w: 0.3, h: 0.08 },
 };
 
 // ---------- Textigenkänning (Tesseract) ----------
@@ -536,7 +538,7 @@ export function detectCardCorners(videoOrImg, guide, band = 0.12) {
 // Kanter (Sobel) och raka linjer (Hough) i en liten kopia av bilden. Fyrhörningen måste ha kortets proportioner och
 // tydlig kant runt om. Klarar kort som ligger snett, långt bort eller utanför ramen. Hörnen i källans koordinater, eller null.
 let quadCanvas = null, quadCtx = null;
-export function findCardQuad(src) {
+function quadSearch(src, loose) {
   const Q = self.Quad;
   const sw = src?.videoWidth || src?.width, sh = src?.videoHeight || src?.height;
   if (!Q || !sw || !sh) return null;
@@ -546,14 +548,19 @@ export function findCardQuad(src) {
     quadCtx = quadCanvas.getContext("2d", { willReadFrequently: true });
   }
   quadCtx.drawImage(src, 0, 0, w, h);
-  const q = Q.find(quadCtx.getImageData(0, 0, w, h).data, w, h);
-  return q ? q.pts.map(([x, y]) => [x / k, y / k]) : null;
+  const r = Q.find(quadCtx.getImageData(0, 0, w, h).data, w, h, loose);
+  const scale = (q) => q.pts.map(([x, y]) => [x / k, y / k]);
+  return loose ? r.map(scale) : r && scale(r);
 }
+export const findCardQuad = (src) => quadSearch(src, 0);
+// Upp till n troliga fyrhörningar med friare proportioner, bästa först (se loose i scan/quad.js)
+export const findCardQuads = (src, n = 4) => quadSearch(src, n) || [];
 
 // ---------- 4c. Bildavtryck mot alla kort ----------
 // Ett index per spel, 240 byte per kort. Pokémon (ca 22 000 kort) i data/, byggt av scripts/build-card-index.mjs.
-// Riftbound (ca 1 500 bilder) i data/rb/, byggt av scripts/build-rb-card-index.mjs. Båda byggs varje månad.
-const ART_BASES = { pokemon: "data/", rb: "data/rb/" };
+// Riftbound (ca 1 500 bilder) i data/rb/, byggt av scripts/build-rb-card-index.mjs. One Piece (ca 4 400 bilder) i
+// data/op/, byggt av scripts/build-op-card-index.mjs. Alla byggs varje månad.
+const ART_BASES = { pokemon: "data/", rb: "data/rb/", op: "data/op/" };
 const artPromises = {}, artFailedAt = {};
 export function loadArtIndex(game = "pokemon") {
   if (!artPromises[game] && Date.now() - (artFailedAt[game] || 0) < 60e3) return Promise.resolve(null); // misslyckades nyss: försök inte vid varje bild
@@ -767,24 +774,67 @@ const copyCanvas = (src) => {
   c.getContext("2d").drawImage(src, 0, 0);
   return c;
 };
+// Bilden vriden ett kvarts varv, medurs (dir = 1) eller moturs (-1)
+function turnCanvas(src, dir) {
+  const c = Object.assign(document.createElement("canvas"), { width: src.height, height: src.width });
+  const g = c.getContext("2d");
+  g.translate(c.width / 2, c.height / 2);
+  g.rotate((dir * Math.PI) / 2);
+  g.drawImage(src, -src.width / 2, -src.height / 2);
+  return c;
+}
+// Battlefields är liggande och hålls på högkant. Ramen ligger då längre in på långsidorna (där numret står i den svarta
+// kanten) och nästan ute vid kortets kant upptill och nertill.
+const BF_FRAME = { u0: -0.09, u1: 1.09, v0: -0.01, v1: 1.01 };
+// Den lösa kantsökningens fyrhörningar kan vara kortets kant eller ramen på ett vanligt kort eller ett battlefield
+const LOOSE_FRAMES = [
+  { u0: 0, u1: 1, v0: 0, v1: 1 }, RB_FRAME, BF_FRAME,
+  { u0: -0.06, u1: 1.06, v0: 0, v1: 1 }, { u0: -0.12, u1: 1.12, v0: -0.03, v1: 1.03 }, { u0: -0.09, u1: 1.09, v0: -0.045, v1: 1.045 },
+];
+// Svart kort mot mörk bakgrund (t.ex. ett battlefield på en musmatta): ytterkanten syns inte, så rätningen blir fel eller
+// hittas inte alls. Alla troliga fyrhörningar i hela bilden vidgas ut till kortets kant på några sätt, och den rätning
+// som liknar ett kort mest vinner. Ett par dussin bildjämförelser, så bara vid manuell skanning och foton.
+async function rbLoose(src) {
+  let best = null;
+  for (const q of findCardQuads(src)) {
+    for (const f of LOOSE_FRAMES) {
+      const c = copyCanvas(unwarpCard(src, subQuad(q, f)));
+      const a = await artMatch(c, 30, "rb").catch(() => []);
+      if ((a[0]?.s ?? -1) > (best?.art[0]?.s ?? -1)) best = { canvas: c, art: a };
+    }
+  }
+  return best;
+}
 // Den rätning (som hörnen hittades, utanför ramen eller kortet inuti en ficka) vars bild liknar ett Riftbound-kort mest.
 // alt är tvåan av de två första, så att numret kan läsas där om det hamnade utanför den bästa (numret sitter i den
 // svarta kanten, som ramrätningen skär bort). source = { src, corners }: bilden kortet rätades från, så att den kan
-// rätas om. Utan den används canvas som den är.
-async function rbBestCanvas(canvas, source) {
+// rätas om. Utan den används canvas som den är. full: manuell skanning, då provas även den lösa sökningen (rbLoose).
+// source.guess: hörnen är bara en gissning.
+async function rbBestCanvas(canvas, source, full = false) {
   const art = await artMatch(canvas, 30, "rb").catch(() => []);
+  let best = { canvas, art };
   // Liknar bilden inget Riftbound-kort alls (t.ex. ett Pokémonkort i Pokémonskannern) är det ingen idé att räta om.
   // I Riftbound-skannern provas omrätningarna ändå, eftersom en ficka kan göra den första bilden oigenkännlig.
-  if (!source?.corners || (art[0]?.s ?? 0) >= 0.9 || (art[0]?.s ?? 0) < (scanGame === "rb" ? 0.3 : 0.5)) return { canvas, art };
-  const alt = copyCanvas(unwarpCard(source.src, outsideFrame(source.corners)));
-  const altArt = await artMatch(alt, 30, "rb").catch(() => []);
-  let best = (altArt[0]?.s ?? -1) > (art[0]?.s ?? -1) ? { canvas: alt, art: altArt, alt: canvas } : { canvas, art, alt };
-  if ((best.art[0]?.s ?? 0) < 0.85) {
-    for (const s of SLEEVES) {
-      const c = copyCanvas(unwarpCard(source.src, subQuad(source.corners, s)));
+  if (source?.corners && (art[0]?.s ?? 0) < 0.9 && (art[0]?.s ?? 0) >= (scanGame === "rb" ? 0.3 : 0.5)) {
+    for (const f of [RB_FRAME, BF_FRAME]) {
+      const c = copyCanvas(unwarpCard(source.src, subQuad(source.corners, f)));
       const a = await artMatch(c, 30, "rb").catch(() => []);
-      if ((a[0]?.s ?? -1) >= 0.8 && a[0].s > (best.art[0]?.s ?? -1) + 0.03) best = { canvas: c, art: a, alt: best.canvas };
+      if ((a[0]?.s ?? -1) > (best.art[0]?.s ?? -1)) best = { canvas: c, art: a, alt: best.canvas };
+      else best.alt ||= c;
     }
+    if ((best.art[0]?.s ?? 0) < 0.85) {
+      for (const s of SLEEVES) {
+        const c = copyCanvas(unwarpCard(source.src, subQuad(source.corners, s)));
+        const a = await artMatch(c, 30, "rb").catch(() => []);
+        if ((a[0]?.s ?? -1) >= 0.8 && a[0].s > (best.art[0]?.s ?? -1) + 0.03) best = { canvas: c, art: a, alt: best.canvas };
+      }
+    }
+  }
+  // Var hörnen bara gissade (source.guess: ingen kant hittades, rätningen är ramen på skärmen) vinner den lösa
+  // sökningen även när likheten är ungefär densamma, eftersom en gissad rätning kan likna fel kort av en slump
+  if (full && scanGame === "rb" && source?.src && (best.art[0]?.s ?? 0) < 0.85) {
+    const loose = await rbLoose(source.src);
+    if (loose && (loose.art[0]?.s ?? -1) > (best.art[0]?.s ?? -1) + (source.guess ? -0.05 : 0.02)) best = { ...loose, alt: best.canvas };
   }
   return best;
 }
@@ -806,23 +856,38 @@ async function identifyRb(canvas, { full = false, art, alt } = {}) {
     return hits.length === 1 || (hits.length > 1 && hits[0].s - hits[1].s >= 0.08) ? hits[0].id : null;
   };
   let num = null, cardId = null;
-  // Varje zon ger några bilder (mörk och ljus text), och de läses samtidigt av två läsare. Första zonen läses även i
-  // den andra rätningen, där numret finns kvar om den bästa rätningen skar bort kortets svarta kant.
-  const zones = [[ZONES.numRb, 1.4], ...EXTRA_NUM_ZONES.slice(0, full ? undefined : 3)];
-  for (const [i, [zone, scale]] of zones.entries()) {
-    const maps = (i === 0 && alt ? [canvas, alt] : [canvas]).flatMap((cv) => (scale ? zoneMaps(cv, zone, scale) : [plainZone(cv, zone)]));
+  // Läser bilderna samtidigt med två läsare. Sant när numret pekar ut ett av korten som liknar bilden.
+  const read = async (maps) => {
     // Signaturkort har en stjärna i numret ("191*/166"). Den tas bort, så att numret läses som 191/166.
     const texts = await Promise.all(maps.map(async (map, j) => (await (await numberWorker(j)).recognize(map)).data.text.replace(/[*✱★]/g, "")));
     for (const text of texts) {
       const n = findNumber(text, rb.sizes);
       if (!n) continue;
       num ||= n;
-      if ((cardId = byNum(n))) { num = n; break; }
+      if ((cardId = byNum(n))) { num = n; return true; }
     }
-    if (cardId) break;
+    return false;
+  };
+  // Varje zon ger några bilder (mörk och ljus text). Första zonen läses även i den andra rätningen, där numret finns
+  // kvar om den bästa rätningen skar bort kortets svarta kant.
+  const zones = [[ZONES.numRb, 1.4], ...EXTRA_NUM_ZONES.slice(0, full ? undefined : 3)];
+  for (const [i, [zone, scale]] of zones.entries()) {
+    const maps = (i === 0 && alt ? [canvas, alt] : [canvas]).flatMap((cv) => (scale ? zoneMaps(cv, zone, scale) : [plainZone(cv, zone)]));
+    if (await read(maps)) break;
     // Automatisk skanning: gick numret inte att läsa första gången men bilden är tydlig nog att räcka på egen
     // hand, väljs bildträffen direkt i stället för att prova fler varianter (som annars tar flera sekunder)
     if (!full && !num && (byLook(art, 0.85, 0.08) || byLook(art, 0.72, 0.15))) break;
+  }
+  // Ett battlefield som hålls på högkant har numret längs långsidan. Kortet vrids åt båda hållen och numret läses nere
+  // till vänster. En säker läsning här går före en osäker från de vanliga zonerna, som då läste något annat.
+  if (!cardId && (full || art.slice(0, 5).some((x) => rb.byId.get(x.id)?.type === "Battlefield"))) {
+    const before = num;
+    num = null;
+    for (const dir of [1, -1]) {
+      const cv = turnCanvas(canvas, dir);
+      if (await read([...zoneMaps(cv, ZONES.numBf, 1.4), plainZone(cv, ZONES.numBf)])) break;
+    }
+    if (before && !num?.sure) num = before;
   }
   // Nummer och setstorlek lästa men bilden pekar inte ut kortet: jämför bilden med just korten som har det numret
   if (!cardId && num?.total) {
@@ -832,13 +897,50 @@ async function identifyRb(canvas, { full = false, art, alt } = {}) {
       const sims = await artSims(canvas, [...new Set(ids.flatMap((id) => rb.siblings(id).map((c) => c.id)))], "rb");
       const ranked = ids.map((id) => ({ id, s: Math.max(-1, ...rb.siblings(id).map((c) => sims[c.id] ?? -1)) })).sort((a, b) => b.s - a.s);
       if (ranked[0]?.s >= 0.5 && ranked[0].s - (ranked[1]?.s ?? -1) >= 0.08) cardId = ranked[0].id;
+      // Bilden skiljer inte vanliga kortet från t.ex. dess Oversized-version (blänk över bilden): ett säkert nummer
+      // med bara ett vanligt kort räcker då
+      const plain = ids.filter((id) => !rb.byId.get(id)?.variant);
+      if (!cardId && num.sure && plain.length === 1) cardId = plain[0];
     }
   }
   cardId ||= byLook(art, 0.85, 0.08) || byLook(art, 0.72, 0.15);
   return { ...rbResult(rb, cardId, { number: num?.number, total: num?.total, numberSure: !!num?.sure }), art };
 }
 
-// Vilket spel skannern letar efter: "pokemon" (värderingen, som också känner igen tydliga Riftbound-kort) eller "rb".
+// ---------- One Piece ----------
+// Kortet känns igen på bilden. Varianterna (parallel, manga, alternativ bild) har egna bilder i indexet.
+let opPromise = null;
+function opData() {
+  opPromise ||= fetch("data/op/cards.json").then((r) => r.json()).then(({ cards }) => new Map(cards.map((c) => [c.id, c])))
+    .catch((e) => { opPromise = null; throw e; });
+  return opPromise;
+}
+// Den rätning (som hörnen hittades, eller kortet inuti en ficka) vars bild liknar ett One Piece-kort mest
+async function opBestCanvas(canvas, source) {
+  let best = { canvas, art: await artMatch(canvas, 30, "op").catch(() => []) };
+  if (!source?.corners || (best.art[0]?.s ?? 0) >= 0.9) return best;
+  for (const s of SLEEVES) {
+    const c = copyCanvas(unwarpCard(source.src, subQuad(source.corners, s)));
+    const a = await artMatch(c, 30, "op").catch(() => []);
+    if ((a[0]?.s ?? -1) >= 0.8 && a[0].s > (best.art[0]?.s ?? -1) + 0.03) best = { canvas: c, art: a };
+  }
+  return best;
+}
+async function identifyOp(art) {
+  const cards = await opData();
+  let id = byLook(art, 0.85, 0.08) || byLook(art, 0.72, 0.15);
+  // En parallel med samma bild som vanliga kortet skiljs inte åt på bilden. Är alla nästan lika lika bilder samma
+  // kortnummer räcker den bästa: rätt kort, möjligen fel utgåva.
+  if (!id && art[0]?.s >= 0.8) {
+    const no = cards.get(art[0].id)?.no;
+    if (no && art.filter((x) => x.s >= art[0].s - 0.08).every((x) => cards.get(x.id)?.no === no)) id = art[0].id;
+  }
+  const c = id && cards.get(id);
+  return { game: "op", name: c?.name || null, number: c?.no || null, total: null, numberSure: !!c, cardId: id || null, art };
+}
+
+// Vilket spel skannern letar efter: "pokemon" (värderingen, som också känner igen tydliga Riftbound- och One Piece-kort),
+// "rb" eller "op".
 let scanGame = "pokemon";
 
 // Hittar kortet i ett rätat canvas: först bilden, sedan text. Returnerar avläsningen plus cardId om kortet är säkert.
@@ -847,13 +949,15 @@ export async function identify(canvas, { full = false, source } = {}) {
   // Den rätade bilden kan vara GPU-rätningens delade canvas, som en omrätning skriver över
   if (source) canvas = copyCanvas(canvas);
   if (scanGame === "rb") {
-    const rb = await rbBestCanvas(canvas, source);
+    const rb = await rbBestCanvas(canvas, source, full);
     return identifyRb(rb.canvas, { full, art: rb.art, alt: rb.alt });
   }
-  let [art, rb] = await Promise.all([artMatch(canvas).catch(() => []), rbBestCanvas(canvas, source)]);
-  // Ett Riftbound-kort i Pokémonskannern: bara när bilden tydligt liknar ett Riftbound-kort mer än något Pokémonkort
+  if (scanGame === "op") return identifyOp((await opBestCanvas(canvas, source)).art);
+  let [art, rb, op] = await Promise.all([artMatch(canvas).catch(() => []), rbBestCanvas(canvas, source), artMatch(canvas, 30, "op").catch(() => [])]);
+  // Ett Riftbound- eller One Piece-kort i Pokémonskannern: bara när bilden tydligt liknar ett sådant kort mer än något Pokémonkort
   const rbQuick = byLook(rb.art, 0.88, 0.12);
   if (rbQuick && rb.art[0].s > (art[0]?.s ?? 0) + 0.05) return identifyRb(rb.canvas, { full, art: rb.art, alt: rb.alt });
+  if (byLook(op, 0.88, 0.12) && op[0].s > (art[0]?.s ?? 0) + 0.05) return identifyOp(op);
   // Kortet kan ligga i en plastficka: då läses både bild och nummer från den rätning som liknar ett kort mest
   ({ canvas, art } = await sleeveBest(canvas, source, art));
   // Så tydlig bildträff att textläsningen inte behövs
@@ -887,13 +991,15 @@ const fallbackRect = (w, h) => [[w * 0.1, h * 0.1], [w * 0.9, h * 0.1], [w * 0.9
 // Ett foto eller en bild: hitta kortet, räta ut det och identifiera det.
 // game väljer spel för just den här bilden (annars det som skannern öppnades med).
 export async function scanImage(img, { full = true, game } = {}) {
-  const corners = findCardQuad(img) || detectCardCorners(img, fallbackRect(img.width, img.height), 0.35).corners;
+  const quad = findCardQuad(img), near = quad ? null : detectCardCorners(img, fallbackRect(img.width, img.height), 0.35);
+  const corners = quad || near.corners;
   const warped = unwarpCard(img, corners);
   const canvas = Object.assign(document.createElement("canvas"), { width: warped.width, height: warped.height });
   canvas.getContext("2d").drawImage(warped, 0, 0);
   const before = scanGame;
   if (game) scanGame = game;
-  try { return { ...(await identify(canvas, { full, source: { src: img, corners } })), canvas, corners }; } finally { scanGame = before; }
+  const source = { src: img, corners, guess: !quad && !near.confident };
+  try { return { ...(await identify(canvas, { full, source })), canvas, corners }; } finally { scanGame = before; }
 }
 
 // ---------- 5. Tolka Text och Pokémonnamn ----------
@@ -1139,7 +1245,7 @@ export async function rankByLook(canvas, list, limit = 150) {
 
 // ---------- 8. Kamerafönster & Interaktiv HUD ----------
 let dialog = null, stream = null, timer = null, animFrame = null, busy = false;
-let onFound = null, onPartial = null;
+let onFound = null, onPartial = null, onDone = null;
 let torchSupported = false, torchActive = false;
 let stillTicks = 0, lastScanAt = 0;
 let pauseUntil = 0, openedAt = 0; // pauseUntil: auto-skanningen väntar så att ett felmeddelande hinner läsas
@@ -1221,7 +1327,17 @@ function ui() {
   dialog.querySelector(".scan-multi").addEventListener("click", () => setMulti(!multi));
   dialog.querySelector(".scan-tray").addEventListener("click", showList);
   dialog.querySelector("[data-more]").addEventListener("click", hideList);
-  dialog.querySelector("[data-done]").addEventListener("click", () => dialog.close());
+  // Klar: har sidan ett valv (onDone) lämnas korten över dit och högen töms, så att de inte läggs in två gånger
+  dialog.querySelector("[data-done]").addEventListener("click", () => {
+    const list = scanned.slice();
+    if (onDone && list.length) {
+      scanned = [];
+      saveList();
+      renderTray();
+    }
+    dialog.close();
+    if (list.length) onDone?.(list);
+  });
   dialog.querySelector("[data-clear]").addEventListener("click", () => {
     scanned = [];
     saveList();
@@ -1571,7 +1687,7 @@ async function frozenScan(snap, { fromFile }) {
       const warped = unwarpCard(snap, corners);
       const canvas = Object.assign(document.createElement("canvas"), { width: warped.width, height: warped.height });
       canvas.getContext("2d").drawImage(warped, 0, 0);
-      const r = await identify(canvas, { full, source: { src: snap, corners } });
+      const r = await identify(canvas, { full, source: { src: snap, corners, guess: corners !== quad && !near.confident } });
       const score = (r.number && r.numberSure ? 2 : 0) + (r.number && r.total ? 1 : 0) + (r.name ? 1 : 0);
       if (!best || score > best.score) best = { r: { ...r, canvas }, score, corners };
       return r;
@@ -1812,7 +1928,7 @@ function setTorch(on) {
 const MULTI_KEY = "nl-scan-multi", LIST_KEY = "nl-scanned", LIST_MAX = 60;
 let multi = false, listOpen = false, scanned = [];
 let skipKey = null; // senast tillagda kortet, som inte räknas igen förrän det lämnat ramen
-const GAME_LABEL = { pokemon: "Pokémon", rb: "Riftbound" };
+const GAME_LABEL = { pokemon: "Pokémon", rb: "Riftbound", op: "One Piece" };
 
 const loadList = () => { try { return JSON.parse(sessionStorage.getItem(LIST_KEY)) || []; } catch { return []; } };
 // Blir lagringen full (stora bilder) sparas så många kort som får plats, de nyaste först
@@ -1945,15 +2061,22 @@ function hideList(restart = true) {
 
 // callback får ett komplett kort (namn + nummer + bild). partialCallback får en delläsning
 // (bara namn eller bara nummer) när användaren tryckt "Skanna nu" eller valt ett foto.
-// game: "pokemon" (känner också igen tydliga Riftbound-kort) eller "rb". Svaret säger vilket spel kortet är (game).
-export async function openScanner(callback, partialCallback, { game = "pokemon" } = {}) {
+// game: "pokemon" (känner också igen tydliga Riftbound- och One Piece-kort), "rb" eller "op". Svaret säger vilket
+// spel kortet är (game).
+// done: får alla skannade kort ({ game, cardId, name, number, total }) när man trycker Klar i listan.
+export async function openScanner(callback, partialCallback, { game = "pokemon", done = null } = {}) {
   scanGame = game;
   onFound = callback;
+  onDone = done;
   onPartial = partialCallback || null;
   const d = ui();
   d.querySelector(".scan-tip").textContent = game === "rb"
     ? "Håll kortet i ramen. Battlefields hålls på högkant."
     : "Håll kortet i ramen. Glänser det? Luta det lätt.";
+  if (game !== "rb") {
+    loadArtIndex("op").catch(() => {});
+    opData().catch(() => {});
+  }
   // Snabbskanningens läge och kort från tidigare i besöket
   scanned = loadList();
   let on = false;

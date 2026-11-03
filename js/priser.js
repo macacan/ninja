@@ -100,6 +100,7 @@ function tile(c, i) {
       <img src="${esc(img)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.src='${backOf(c)}';this.parentNode.classList.add('has-back');">
       ${isBack ? `<span class="csoon">Bilder kommer snart</span>` : ""}
       <i class="glare"></i>${langMark(c.lang)}
+      ${c.qty > 1 ? `<span class="cqty">×${c.qty}</span>` : ""}
     </span>
     <span class="cname">${c.en ? `${esc(c.en)} <small class="cname-ja">${esc(c.name)}</small>` : esc(c.name)}</span>
     <span class="cset">${esc(c.set || "")}${c.localId ? ` · #${esc(c.localId)}` : ""}</span>
@@ -176,13 +177,14 @@ function applyView() {
     number: (a, b) => String(a.localId).localeCompare(String(b.localId), "sv", { numeric: true }),
   }[sort];
   // Korten i de färdigbyggda spelen finns redan alla i minnet, så där sorteras hela träfflistan och de första visas.
-  list = prebuilt() ? [...found].sort(cmp).slice(0, next) : list.sort(cmp);
+  list = prebuilt() || vaultOpen ? [...found].sort(cmp).slice(0, next) : list.sort(cmp);
   current = list;
   renderGrid($("#prices"), list);
   $("#more").hidden = next >= found.length;
 }
 
 async function search() {
+  closeVault();
   const ja = isJa(), pre = !!prebuilt();
   // Set och sällsynthet finns bara för de engelska korten.
   $("#set").disabled = $("#rarity").disabled = ja;
@@ -375,21 +377,139 @@ mountCardAutocomplete($("#pq"), {
   },
 });
 
-// ---------- Kortskanner för Riftbound ----------
+// ---------- Kortskanner för Riftbound och One Piece ----------
 // Ett säkert kort öppnas direkt. Annars söks det lästa numret (t.ex. "001/167"), så att man kan välja bland träffarna.
 // Skannern (js/card-scanner.js) är stor och laddas först när knappen trycks.
-async function scanRb() {
+async function scanCards() {
   track("scan", "Öppnad");
-  const { openScanner } = await import("./card-scanner.js?v=20261102a");
+  const { openScanner } = await import("./card-scanner.js?v=20261103b");
   openScanner(({ cardId, name, number, total }) => {
     track("scan", cardId ? "Säker träff" : "Läst, söker");
     if (cardId) { openAfter = cardId; $("#pq").value = name || ""; }
     // Siffrorna fylls ut som på kortet ("57a" blir "057a"), så att sökningen hittar "057a/221"
     else $("#pq").value = total ? `${String(number).replace(/^\d+/, (d) => d.padStart(total.length, "0"))}/${total}` : number || "";
     search();
-  }, null, { game: "rb" });
+  }, null, { game, done: async (list) => {
+    track("scan", `Till valvet: ${await addScanned(list)} kort`);
+    showVault();
+  } });
 }
-$("#rb-scan").addEventListener("click", scanRb);
+$("#rb-scan").addEventListener("click", scanCards);
+
+// ---------- Mitt valv ----------
+// Korten man skannar och trycker Klar på hamnar här, och man kan lägga till och ta bort kort i den stora vyn.
+// Valvet sparas i webbläsarens localStorage och lämnar den aldrig: bara spel, kort-id, antal och när kortet lades in.
+// Bild och pris tas ur kortfilen när valvet visas, så priset är alltid dagens. Behövs för en funktion man själv
+// använder, så det kräver inget samtycke (se integritet.html).
+const VAULT_KEY = "nl:vault";
+let vaultOpen = false, vaultDirty = false;
+const loadVault = () => { try { return JSON.parse(localStorage.getItem(VAULT_KEY)) || []; } catch { return []; } };
+function saveVault(v) {
+  try { localStorage.setItem(VAULT_KEY, JSON.stringify(v)); } catch {}
+  vaultButton();
+}
+const vaultQty = (c) => loadVault().find((x) => x.game === c.game && x.id === c.id)?.qty || 0;
+function changeVault(c, d) {
+  const v = loadVault(), i = v.findIndex((x) => x.game === c.game && x.id === c.id);
+  if (i < 0 && d > 0) v.unshift({ game: c.game, id: c.id, qty: d, at: Date.now() });
+  else if (i >= 0) {
+    v[i].qty += d;
+    if (v[i].qty <= 0) v.splice(i, 1);
+  }
+  saveVault(v);
+}
+// Knappen syns i One Piece och Riftbound när valvet har kort
+function vaultButton() {
+  const n = loadVault().reduce((s, x) => s + x.qty, 0);
+  $("#vault-open").hidden = !prebuilt() || !n;
+  $("#vault-open .vault-count").textContent = n ? `(${n})` : "";
+}
+
+// Skannerns lista in i valvet. Kort som bara fick ett nummer läst slås upp på numret. Svarar med antalet inlagda kort.
+async function addScanned(list) {
+  let added = 0;
+  for (const s of list) {
+    if (!GAMES[s.game]) continue;
+    let id = s.cardId;
+    if (!id && s.number && s.total) {
+      const no = `${String(s.number).replace(/^\d+/, (d) => d.padStart(String(s.total).length, "0"))}/${s.total}`;
+      id = (await gameCards(s.game).catch(() => null))?.cards.find((c) => c.no === no && !c.variant)?.id;
+    }
+    if (!id) continue;
+    changeVault({ game: s.game, id }, 1);
+    added++;
+  }
+  return added;
+}
+
+async function showVault(push = true) {
+  const my = ++searchId;
+  vaultOpen = true;
+  vaultDirty = false;
+  // Valvet får en egen plats i historiken, så att telefonens bakåtknapp leder tillbaka dit man var
+  if (push && !new URLSearchParams(location.search).has("vault")) history.pushState({ vault: true }, "", `?game=${game}&vault=1`);
+  $("#landing").hidden = true;
+  $("#results").hidden = false;
+  $("#vault-bar").hidden = false;
+  $("#res-title").textContent = "Mitt valv";
+  $("#prices").innerHTML = skeleton(6);
+  $("#more").hidden = true;
+  const v = loadVault();
+  try {
+    const games = [...new Set(v.map((x) => x.game))].filter((g) => GAMES[g]);
+    const byId = {};
+    for (const [g, d] of await Promise.all(games.map(async (g) => [g, await gameCards(g)]))) for (const c of d.cards) byId[`${g}:${c.id}`] = c;
+    if (my !== searchId) return;
+    found = v.map((x) => byId[`${x.game}:${x.id}`] && { ...byId[`${x.game}:${x.id}`], qty: x.qty }).filter(Boolean);
+  } catch {
+    $("#prices").innerHTML = '<div class="msg">Kunde inte läsa korten just nu. Försök igen om en stund.</div>';
+    return;
+  }
+  next = found.length;
+  loaded = [];
+  const n = found.reduce((s, c) => s + c.qty, 0), worth = found.reduce((s, c) => s + (c.sek || 0) * c.qty, 0);
+  $("#vault-bar .vault-sum").innerHTML = n ? `<b>${n} kort</b> · värt ungefär <b>${kr(worth)}</b>` : "";
+  $("#vault-clear").hidden = !n;
+  if (!n) {
+    current = [];
+    $("#prices").innerHTML = '<div class="msg">Valvet är tomt. Slå på <b>Flera kort</b> i skannern, skanna dina kort och tryck <b>Klar</b>, så hamnar de här.</div>';
+    return;
+  }
+  applyView();
+}
+function closeVault() {
+  vaultOpen = false;
+  $("#vault-bar").hidden = true;
+}
+// Tillbaka: samma steg som bakåtknappen om valvet öppnades härifrån, annars till sökningen eller startvyn
+function leaveVault() {
+  if (history.state?.vault) return history.back();
+  closeVault();
+  search();
+  if ($("#results").hidden) landing();
+}
+addEventListener("popstate", () => {
+  if (new URLSearchParams(location.search).has("vault") && prebuilt()) return showVault(false);
+  if (!vaultOpen) return;
+  closeVault();
+  search();
+  if ($("#results").hidden) landing();
+});
+$("#vault-open").addEventListener("click", () => showVault());
+$("#vault-back").addEventListener("click", leaveVault);
+$("#vault-clear").addEventListener("click", () => {
+  if (!confirm("Töm valvet? Alla kort i valvet tas bort från den här webbläsaren.")) return;
+  saveVault([]);
+  showVault(false);
+});
+// Knapparna i den stora vyn: lägg till ett exemplar eller ta bort ett
+const vaultActions = (c) => {
+  const q = vaultQty(c);
+  return `<div class="cm-vault">
+    <button type="button" class="btn small" data-vault="1">+ Lägg i valvet</button>
+    ${q ? `<button type="button" class="btn small" data-vault="-1">− Ta bort</button><span class="cm-vault-qty">${q} i valvet</span>` : ""}
+  </div>`;
+};
 
 // ---------- Stor vy med holo-effekt ----------
 const modal = $("#card-modal");
@@ -473,7 +593,7 @@ function openPrebuiltCard(c, i, body) {
       <h2 id="cm-name">${esc(c.name)}${c.variant ? ` <small class="cname-ja">${esc(c.variant)}</small>` : ""}</h2>
       <div class="cm-price">${c.sek != null ? kr(c.sek) : "Inget pris ännu"} ${change(c.change)}</div>
       <p class="muted">TCGplayers marknadspris i kronor. Vägledande, uppdateras dagligen.</p>
-      ${c.game === "rb" ? `<button type="button" class="btn small cm-scan">Skanna nytt kort <span class="beta-tag">Beta</span></button>` : ""}
+      ${vaultActions(c)}
       <div class="pchart"></div>
       ${c.sek != null || c.low != null ? `<h3>TCGplayer (USA)</h3><table class="cm-table">${row("Marknadspris", c.sek)}${row("Foil", c.foil)}${row("Lägsta i lager", c.low)}</table>` : ""}
       <div class="cm-links">
@@ -524,10 +644,18 @@ modal.addEventListener("pointerleave", () => {
 });
 modal.addEventListener("click", (e) => {
   if (e.target === modal || e.target.closest(".cm-close")) modal.close();
-  if (e.target.closest(".cm-scan")) { modal.close(); scanRb(); }
+  const vb = e.target.closest("[data-vault]");
+  if (vb) {
+    const c = current[shownIndex];
+    changeVault(c, +vb.dataset.vault);
+    vaultDirty = true;
+    modal.querySelector(".cm-vault").outerHTML = vaultActions(c);
+  }
   if (e.target.closest(".prev")) openCard(shownIndex - 1);
   if (e.target.closest(".next")) openCard(shownIndex + 1);
 });
+// Ändrades valvet medan det visades ritas det om när den stora vyn stängs
+modal.addEventListener("close", () => { if (vaultOpen && vaultDirty) showVault(false); });
 modal.addEventListener("keydown", (e) => {
   if (e.key === "ArrowLeft" && shownIndex > 0) openCard(shownIndex - 1);
   if (e.key === "ArrowRight" && shownIndex < current.length - 1) openCard(shownIndex + 1);
@@ -560,8 +688,9 @@ async function applyGame() {
   PAGE_TITLE ??= document.title;
   document.title = g ? `${g.h1} i kronor | Lootninja` : PAGE_TITLE;
   $("#lang").closest("label").hidden = !!g;
-  // Kortskannern finns för Riftbound här. Pokémonkort skannas i värderingen.
-  $("#rb-scan").hidden = game !== "rb";
+  // Kortskannern finns för Riftbound och One Piece här. Pokémonkort skannas i värderingen.
+  $("#rb-scan").hidden = !g;
+  vaultButton();
   // "Senast sökta" leder till värderingen, som bara finns för Pokémon.
   $("#recent").style.display = g ? "none" : "";
   if (g) $("#lang").value = "en";
@@ -589,6 +718,7 @@ async function setGame(g) {
   game = g;
   try { localStorage.setItem(GAME_KEY, g); } catch {}
   searchId++;
+  closeVault();
   $("#pq").value = "";
   await applyGame();
   history.replaceState(null, "", prebuilt() ? `?game=${game}` : location.pathname);
@@ -608,4 +738,5 @@ await applyGame();
 const p = new URLSearchParams(location.search);
 for (const [k, id] of [["q", "#pq"], ["lang", "#lang"], ["rarity", "#rarity"], ["set", "#set"], ["sort", "#sort"]]) if (p.get(k) && !(k === "lang" && prebuilt())) $(id).value = p.get(k);
 if (p.get("lang") === "ja" || p.get("rarity") || p.get("set")) setAdv(true);
-if (p.get("q") || p.get("rarity") || p.get("set")) search(); else landing();
+if (p.has("vault") && prebuilt()) showVault(false);
+else if (p.get("q") || p.get("rarity") || p.get("set")) search(); else landing();

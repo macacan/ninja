@@ -12,7 +12,7 @@ import { track } from "./tracker.js";
 import { recordCard, mountRecent } from "./recent.js";
 import { mountCardAutocomplete } from "./card-autocomplete.js";
 import { CONDITIONS, DEFAULT_COND, gradeMult, isVintage } from "./valuation.js";
-import { openScanner, narrowByTotal, rankByLook } from "./card-scanner.js?v=20261102a";
+import { openScanner, narrowByTotal, rankByLook } from "./card-scanner.js?v=20261103b";
 import { showReveal } from "./card-reveal.js";
 import { getAnatomyData, renderPullRatesModal } from "./anatomy.js";
 
@@ -699,6 +699,13 @@ const startScan = () => { track("scan", "Öppnad"); openScanner(({ game, name, n
     // Siffrorna fylls ut som på kortet ("57a" blir "057a"), så att sökningen hittar "057a/221"
     const q = cardId ? name || "" : total ? `${String(number).replace(/^\d+/, (d) => d.padStart(total.length, "0"))}/${total}` : number || "";
     location.href = `priser.html?game=rb&q=${encodeURIComponent(q)}${cardId ? `&card=${encodeURIComponent(cardId)}` : ""}`;
+    return;
+  }
+  // Ett One Piece-kort: samma sak, och kortnumret (t.ex. EB05-059) söks om kortet inte var säkert
+  if (game === "op") {
+    track("scan", cardId ? "Säker träff" : "Läst, söker");
+    const q = cardId ? name || "" : number || name || "";
+    location.href = `priser.html?game=op&q=${encodeURIComponent(q)}${cardId ? `&card=${encodeURIComponent(cardId)}` : ""}`;
     return;
   }
   if (cardId) {

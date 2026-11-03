@@ -1124,7 +1124,13 @@ span.rd-logo{display:grid;place-items:center;background:var(--surface);border-ra
 .cm-facts li{display:grid;grid-template-columns:100px 1fr;font-size:.88rem;align-items:baseline}
 .cm-facts b{color:var(--muted);font-weight:600}
 .cm-info h3{margin:16px 0 6px;font:600 .78rem var(--sans);text-transform:uppercase;letter-spacing:.6px;color:var(--muted)}
-.cm-scan{margin-top:12px}
+/* Mitt valv */
+.cm-vault{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:12px}
+.cm-vault-qty{font:600 .85rem var(--sans);color:var(--muted)}
+.vault-bar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:-4px 0 16px}
+.vault-sum{margin:0 auto 0 0;font-size:.95rem}
+.vault-sum:empty{display:none}
+.cqty{position:absolute;top:6px;right:6px;z-index:2;padding:2px 8px;border-radius:999px;background:rgba(15,17,23,.88);border:1px solid rgba(255,255,255,.25);font:700 .78rem var(--sans);color:#fff;pointer-events:none}
 .cm-table{width:100%;border-collapse:collapse;font-size:.92rem}
 .cm-table th{text-align:left;font-weight:500;padding:6px 0;border-bottom:1px solid var(--line)}
 .cm-table td{text-align:right;padding:6px 0;border-bottom:1px solid var(--line);font-weight:700}
@@ -1132,9 +1138,12 @@ span.rd-logo{display:grid;place-items:center;background:var(--surface);border-ra
 .cm-links{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}
 @media (max-width:760px){
   /* Mobil: bilden, sedan namn och pris direkt under, och kortfakta sist */
-  .cm-body{display:flex;flex-direction:column;padding:14px;gap:12px;perspective:1000px}
+  .card-modal{width:calc(100vw - 16px);max-height:calc(100dvh - 16px)}
+  /* Krysset ligger på en egen rad ovanför kortet och följer med när man scrollar, så det aldrig täcker bilden. */
+  .cm-close{position:sticky;top:10px;display:grid;place-items:center;margin:10px 10px 0 auto;width:38px;height:38px;background:color-mix(in srgb,var(--card) 85%,transparent);backdrop-filter:blur(6px);box-shadow:0 2px 10px rgba(0,0,0,.25)}
+  .cm-body{display:flex;flex-direction:column;padding:4px 16px 16px;gap:12px;perspective:1000px}
   .cm-card-wrap{display:contents}
-  .cm-card{max-width:280px;margin:0 auto}
+  .cm-card{width:min(240px,64vw);margin:0 auto}
   .cm-facts{order:2;margin:0;padding:10px 12px;gap:4px}
   .cm-facts li{grid-template-columns:88px 1fr;font-size:.8rem}
   .cm-info h2{font-size:1.35rem;padding-right:0}
@@ -1146,7 +1155,11 @@ span.rd-logo{display:grid;place-items:center;background:var(--surface);border-ra
   .cm-links{margin-top:12px}
   .cm-info .pchart{margin:12px 0 0;padding:10px 10px 8px}
   .pc-note{font-size:.72rem}
-  .cm-nav{top:auto;bottom:8px;margin:0;height:44px}
+  /* Pilarna står still längst ner i rutan i stället för att scrolla iväg över prisgrafen. */
+  .cm-nav{position:fixed;top:auto;bottom:18px;margin:0;height:44px;background:color-mix(in srgb,var(--card) 85%,transparent);backdrop-filter:blur(6px);box-shadow:0 2px 10px rgba(0,0,0,.25)}
+  .cm-nav.prev{left:18px}.cm-nav.next{right:18px}
+  .cm-body{padding-bottom:64px}
+  .pc-now{white-space:nowrap}
   .cgrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
   /* Mobil: sökrutan och Sök på en rad, Filter på nästa, Skanna (Riftbound) under. Filtren tar hela bredden,
      så att ett långt setnamn klipps före pilen i stället för att gå utanför rutan. */
@@ -1156,7 +1169,9 @@ span.rd-logo{display:grid;place-items:center;background:var(--surface);border-ra
   .card-search button[type=submit]{order:1;flex:none;padding:12px 16px}
   .card-search::after{content:"";flex:0 0 100%;order:2;margin-top:-6px}
   .card-search #adv-toggle{order:3}
-  .card-search #rb-scan{order:5;flex:1 1 100%}
+  /* Skanna och Mitt valv delar en egen rad under Filter och Sortera */
+  .card-search #rb-scan,.card-search #vault-open{order:7;flex:1 1 40%}
+  .vault-sum{flex:1 1 100%}
   .card-search .adv::before,.card-search .adv > *{order:6}
   .card-search .adv > .drop:has(#set){flex:1 1 100%;min-width:0}
   .card-search .drop #set{flex:1 1 0;min-width:0;max-width:none;field-sizing:fixed}

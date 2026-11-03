@@ -7,8 +7,11 @@
 })(typeof self !== 'undefined' ? self : this, function (){
   const RATIO = 63 / 88;
 
-  /* rgba = pixeldata (4 byte/pixel), w x h. Returnerar { pts: [[x,y] x4 (TL,TR,BR,BL) i samma skala], score } eller null. */
-  function find(rgba, w, h){
+  /* rgba = pixeldata (4 byte/pixel), w x h. Returnerar { pts: [[x,y] x4 (TL,TR,BR,BL) i samma skala], score } eller null.
+     loose = n: lista med upp till n fyrhörningar, bästa först, med friare proportioner och svagare linjer. Svart kort mot
+     mörk bakgrund: ytterkanten syns inte, men ramen innanför gör det (smalare än ett kort). Liggande fyrhörningar vänds
+     så att långsidan står lodrätt, så att kortet rätas ut vridet ett kvarts varv i stället för att förkastas. */
+  function find(rgba, w, h, loose){
     // gråskala + lätt utjämning (3x3 två gånger) så att tryck och holo-mönster inte ger kanter
     let g = new Float32Array(w * h);
     for (let i = 0, j = 0; i < w * h; i++, j += 4) g[i] = rgba[j] * .299 + rgba[j+1] * .587 + rgba[j+2] * .114;
@@ -47,7 +50,7 @@
     // toppar med lokal maxsökning (±4 grader, ±6 px)
     const peaks = [];
     let hmax = 0; for (let k = 0; k < H.length; k++) if (H[k] > hmax) hmax = H[k];
-    const floor = hmax * .12;
+    const floor = hmax * (loose ? .05 : .12);
     for (let t = 0; t < NT; t++) for (let r = 1; r < NR - 1; r++){
       const v = H[t * NR + r]; if (v < floor) continue;
       let ok = true;
@@ -61,7 +64,7 @@
       if (ok) peaks.push({ t, r: r - diag, v });
     }
     peaks.sort((a, b) => b.v - a.v);
-    const lines = peaks.slice(0, 30);
+    const lines = peaks.slice(0, loose ? 40 : 30);
     if (lines.length < 4) return null;
     // linje: x cos t + y sin t = r.  Skärningspunkt mellan två linjer.
     const meet = (a, b) => {
@@ -119,11 +122,11 @@
       if (!convex) continue;
       const L = k => Math.hypot(q[(k + 1) % 4][0] - q[k][0], q[(k + 1) % 4][1] - q[k][1]);
       const s02 = (L(0) + L(2)) / 2, s13 = (L(1) + L(3)) / 2, ar = Math.min(s02, s13) / Math.max(s02, s13);
-      if (ar < RATIO * .9 || ar > RATIO * 1.1) continue;
+      if (loose ? ar < .55 || ar > .85 : ar < RATIO * .9 || ar > RATIO * 1.1) continue;
       cands.push({ q, A, ar, v: a1.v + a2.v + b1.v + b2.v });
     }
     cands.sort((x, y) => y.v - x.v);
-    let best = null;
+    const good = [];
     for (const c of cands.slice(0, 300)){
       const { q, A, ar } = c, sup = [];
       // varje sida måste ha stöd längs större delen av sin längd
@@ -131,11 +134,16 @@
       if (sup.length < 4) continue;
       const minS = Math.min(...sup), mean = sup.reduce((s, v) => s + v, 0) / 4;
       const score = mean * (.6 + .4 * minS) * Math.pow(A / (w * h), .6) * (1 - Math.abs(ar - RATIO) * .8);
-      if (!best || score > best.score) best = { q, score, sup, ar };
+      good.push({ q, score, sup, ar });
     }
-    if (!best) return null;
-    // ordna hörnen: kortet står upprätt (långsidorna lodräta), övre vänstra först
-    let q = best.q;
+    good.sort((x, y) => y.score - x.score);
+    if (loose) return good.map(c => upright(c, true)).filter(Boolean).slice(0, loose);
+    return good.length ? upright(good[0], false) : null;
+  }
+
+  // ordna hörnen: kortet står upprätt (långsidorna lodräta), övre vänstra först
+  function upright(c, turn){
+    let q = c.q;
     const cx = q.reduce((s, p) => s + p[0], 0) / 4, cy = q.reduce((s, p) => s + p[1], 0) / 4;
     q = q.slice().sort((a, b) => Math.atan2(a[1] - cy, a[0] - cx) - Math.atan2(b[1] - cy, b[0] - cx)); // medurs från vänster (skärmkoordinater)
     // börja i det hörn som ligger närmast övre vänstra
@@ -143,8 +151,11 @@
     q.forEach((p, k) => { const d = (p[0] - cx) + (p[1] - cy); if (d < bd){ bd = d; k0 = k; } });
     q = [0, 1, 2, 3].map(k => q[(k0 + k) % 4]);
     const top = Math.hypot(q[1][0] - q[0][0], q[1][1] - q[0][1]), side = Math.hypot(q[3][0] - q[0][0], q[3][1] - q[0][1]);
-    if (top > side) return null;                                      // liggande kort: låt de andra metoderna ta det
-    return { pts: q, score: best.score, sup: best.sup };
+    if (top > side){
+      if (!turn) return null;                                         // liggande kort: låt de andra metoderna ta det
+      q = [q[3], q[0], q[1], q[2]];                                   // börja i nedre vänstra: kortet rätas ut ett kvarts varv vridet
+    }
+    return { pts: q, score: c.score, sup: c.sup };
   }
 
   /* Homografi som tar (u,v) i en W x H-rektangel till fyrhörningen q (TL,TR,BR,BL). */

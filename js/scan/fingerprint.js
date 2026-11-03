@@ -4,8 +4,9 @@
   if (typeof module === 'object' && module.exports) module.exports = factory(); else root.Fingerprint = factory();
 })(typeof self !== 'undefined' ? self : this, function (){
   const CW = 126, CH = 176;                         // kortet skalas till denna storlek före beskrivningen
-  /* Konstverkets ruta i kortet [x0, x1, y0, y1] per spel. Riftbound: under kostnadscirkeln och ovanför typbandet. */
-  const BOX = { pokemon: [.07, .93, .11, .56], rb: [.07, .93, .13, .51] };
+  /* Konstverkets ruta i kortet [x0, x1, y0, y1] per spel. Riftbound: under kostnadscirkeln och ovanför typbandet.
+     One Piece: bildens övre del, ovanför effekttexten och ovanför "SAMPLE"-stämpeln som TCGplayers bilder har. */
+  const BOX = { pokemon: [.07, .93, .11, .56], rb: [.07, .93, .13, .51], op: [.08, .92, .1, .4] };
   const GC = 16, GR = 12, KC = 4, KR = 4, LEN = GC * GR + KC * KR * 3;
   /* data = pixlar (RGB eller RGBA), w x h = kortets bild. dx, dy = litet förskjutet utsnitt (andel av kortet).
      box = konstverkets ruta (BOX.pokemon om den inte anges). */
