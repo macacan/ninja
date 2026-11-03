@@ -1,6 +1,34 @@
 {
- "updated": 1793680141719,
+ "updated": 1793683481819,
  "events": [
+  {
+   "at": 1793683475772,
+   "store": "cardlevels",
+   "product": "cardlevels:10073157370167",
+   "group": "paldea-evolved|booster-box|en|",
+   "title": "Pokémon Paldea Evolved Scarlet & Violet 2: Booster Box",
+   "url": "https://cardlevels.se/products/pokemon-scarlet-violet-paldea-evolved-booster-box",
+   "image": "https://cdn.shopify.com/s/files/1/0846/0458/4247/files/pokemon-paldea-evolved-booster-box.webp?v=1740425338",
+   "price": 4999,
+   "type": "Booster Box",
+   "set": "Paldea Evolved",
+   "lang": "en",
+   "kind": "ny"
+  },
+  {
+   "at": 1793683475772,
+   "store": "cardlevels",
+   "product": "cardlevels:10344603484471",
+   "group": "destined-rivals|booster-box|en|",
+   "title": "Pokémon Destined Rivals Scarlet & Violet 10: Booster Box",
+   "url": "https://cardlevels.se/products/pokemon-scarlet-violet-destined-rivals-booster-box-inklusive-akryl",
+   "image": "https://cdn.shopify.com/s/files/1/0846/0458/4247/files/10-10157-101.jpg?v=1763476724",
+   "price": 4799,
+   "type": "Booster Box",
+   "set": "Destined Rivals",
+   "lang": "en",
+   "kind": "ny"
+  },
   {
    "at": 1793679995318,
    "store": "mtg-butiken",
@@ -7031,32 +7059,6 @@
    "type": "Collection Box",
    "set": "30th Celebration",
    "lang": "zh",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793106617609,
-   "store": "rgb-kingz",
-   "product": "rgb-kingz:16113454580042",
-   "group": "team-rocket|booster-pack|ko|",
-   "title": "Pokémon The Glory of Team Rocket Booster Pack (SV10) – Koreansk",
-   "url": "https://rgbkingz.com/products/pokemon-glory-of-team-rocket-sv10-booster-pack-koreansk",
-   "price": 39,
-   "type": "Booster Pack",
-   "set": "Team Rocket",
-   "lang": "ko",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793105678942,
-   "store": "rgb-kingz",
-   "product": "rgb-kingz:15712451592522",
-   "group": "x|booster-pack|ja||abyss-eye",
-   "title": "Pokémon Mega: Abyss Eye Booster Pack (Japansk)",
-   "url": "https://rgbkingz.com/products/pokemon-mega-abyss-eye-booster-pack-japansk",
-   "price": 49,
-   "type": "Booster Pack",
-   "set": null,
-   "lang": "ja",
    "kind": "tillbaka"
   }
  ]

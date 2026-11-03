@@ -1,5 +1,5 @@
 {
- "updated": 1793680141719,
+ "updated": 1793683481819,
  "stores": [
   {
    "id": "alara-games",
@@ -103,28 +103,28 @@
    "name": "Card Mountain",
    "domain": "cardmountain.se",
    "status": "ej-forbjuden",
-   "checkedAt": 1793679848287,
+   "checkedAt": 1793683452317,
    "ok": true,
-   "lastOkAt": 1793679848287,
+   "lastOkAt": 1793683452317,
    "count": 53,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 60
+   "interval": 36
   },
   {
    "id": "cardclub",
    "name": "Cardclub",
    "domain": "cardclub.se",
    "status": "ej-forbjuden",
-   "checkedAt": 1793679863206,
+   "checkedAt": 1793683477716,
    "ok": true,
-   "lastOkAt": 1793679863206,
+   "lastOkAt": 1793683477716,
    "count": 82,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 60
+   "interval": 36
   },
   {
    "id": "cardgame",
@@ -159,14 +159,14 @@
    "name": "Cardlevels",
    "domain": "cardlevels.se",
    "status": "ej-forbjuden",
-   "checkedAt": 1793679868331,
+   "checkedAt": 1793683475772,
    "ok": true,
-   "lastOkAt": 1793679868331,
-   "count": 32,
+   "lastOkAt": 1793683475772,
+   "count": 34,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 60
+   "interval": 36
   },
   {
    "id": "cards-by-malcolm",
@@ -187,28 +187,28 @@
    "name": "CardValley",
    "domain": "cardvalley.se",
    "status": "ej-forbjuden",
-   "checkedAt": 1793679857348,
+   "checkedAt": 1793683451820,
    "ok": true,
-   "lastOkAt": 1793679857348,
+   "lastOkAt": 1793683451820,
    "count": 122,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 60
+   "interval": 36
   },
   {
    "id": "collected",
    "name": "Collected",
    "domain": "collected.se",
    "status": "ej-forbjuden",
-   "checkedAt": 1793679857492,
+   "checkedAt": 1793683459856,
    "ok": true,
-   "lastOkAt": 1793679857492,
+   "lastOkAt": 1793683459856,
    "count": 49,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 60
+   "interval": 36
   },
   {
    "id": "coolcard",
@@ -293,14 +293,14 @@
    "name": "Gimmick",
    "domain": "gimmick.se",
    "status": "inga-bilder",
-   "checkedAt": 1793679869521,
+   "checkedAt": 1793683480498,
    "ok": true,
-   "lastOkAt": 1793679869521,
+   "lastOkAt": 1793683480498,
    "count": 91,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 60
+   "interval": 36
   },
   {
    "id": "goblinen",
