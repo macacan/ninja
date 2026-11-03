@@ -1519,22 +1519,27 @@ let stillTicks = 0, lastScanAt = 0;
 let pauseUntil = 0, openedAt = 0; // pauseUntil: auto-skanningen väntar så att ett felmeddelande hinner läsas
 const NUDGE_AFTER = 2000; // ms utan träff innan "Värdera manuellt" lyfts fram
 const PAUSE_AFTER_MISS = 3500; // ms paus efter en misslyckad manuell skanning eller ett foto
-// Läsningar utan träff i rad. Efter MISS_TIP byts tipset under ramen mot råd om plastficka och reflexer, tills ett
-// kort hittas.
-const MISS_TIP = 5;
-let misses = 0, tipText = "";
+// Läsningar utan träff i rad. Efter MISS_TIP byts tipset under ramen mot råd om plastficka och reflexer i TIP_SHOW ms.
+// Hittas fortfarande inget kort kommer rådet tillbaka tidigast TIP_AGAIN ms efter att det försvann.
+const MISS_TIP = 5, TIP_SHOW = 4000, TIP_AGAIN = 20000;
+let misses = 0, tipText = "", tipTimer = null, tipAgainAt = 0;
+function plainTip() {
+  clearTimeout(tipTimer);
+  tipTimer = null;
+  const tip = dialog?.querySelector(".scan-tip");
+  if (!tip?.classList.contains("warn")) return;
+  tip.textContent = tipText;
+  tip.classList.remove("warn");
+}
 function missed() {
-  if (++misses !== MISS_TIP) return;
+  if (++misses < MISS_TIP || tipTimer || Date.now() < tipAgainAt) return;
   const tip = dialog.querySelector(".scan-tip");
   tip.textContent = "Svårt att läsa? Skanna kortet utan sleeve eller toploader, undvik reflexer från lampor och håll det plant.";
   tip.classList.add("warn");
+  tipTimer = setTimeout(() => { plainTip(); tipAgainAt = Date.now() + TIP_AGAIN; }, TIP_SHOW);
 }
 function hitTip() {
-  if (misses >= MISS_TIP) {
-    const tip = dialog.querySelector(".scan-tip");
-    tip.textContent = tipText;
-    tip.classList.remove("warn");
-  }
+  plainTip();
   misses = 0;
 }
 
@@ -2570,7 +2575,10 @@ export async function openScanner(callback, partialCallback, { game = "pokemon",
       : "Håll kortet i ramen. Glänser det? Luta det lätt.";
   tipText = d.querySelector(".scan-tip").textContent;
   d.querySelector(".scan-tip").classList.remove("warn");
+  clearTimeout(tipTimer);
+  tipTimer = null;
   misses = 0;
+  tipAgainAt = 0;
   if (game !== "rb") {
     loadArtIndex("op").catch(() => {});
     opData().catch(() => {});

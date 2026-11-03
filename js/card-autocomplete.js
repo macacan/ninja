@@ -593,6 +593,8 @@ export function mountCardAutocomplete(input, options = {}) {
     } else {
       const form = input.closest("form");
       if (form) {
+        // Ett tidigare valt kort ska inte följa med en ny sökning
+        if (!cardId) form.querySelector('input[name="cardId"]')?.remove();
         if (cardId) {
           let hid = form.querySelector('input[name="cardId"]');
           if (!hid) {

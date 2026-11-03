@@ -1,5 +1,6 @@
 // Visar ett säkert identifierat kort med marknadsvärde. Ju mer kortet är värt, desto finare animation.
 import { esc, kr, cardImg } from "./site.js";
+import { versionNote } from "./cmholo.js?v=20261104a";
 
 // Nivåerna börjar vid det lägsta beloppet. Under 100 kr visas kortet utan pengaeffekter.
 const TIERS = [
@@ -27,6 +28,7 @@ function ensure() {
         <p class="rv-kicker">Säker träff</p>
         <h2 class="rv-name"></h2>
         <p class="muted rv-set"></p>
+        <p class="card-version rv-ver"></p>
         <p class="rv-value" aria-live="polite"></p>
       </div>
       <div class="rv-actions">
@@ -87,7 +89,8 @@ function countUp(el, to) {
 }
 
 // card: kortet från TCGdex. sek: marknadsvärdet i kronor, eller null. onGrade körs när man trycker Gradera.
-export function showReveal({ card, sek, onGrade }) {
+// kicker: raden ovanför namnet (Säker träff om inget annat ges).
+export function showReveal({ card, sek, onGrade, kicker = "Säker träff" }) {
   const d = ensure();
   const tier = sek != null ? tierOf(sek) : null;
   const img = cardImg(card, "high") || "img/kortbaksida.webp";
@@ -101,8 +104,13 @@ export function showReveal({ card, sek, onGrade }) {
   const cardImgEl = d.querySelector(".rv-card img");
   cardImgEl.src = img;
   cardImgEl.alt = card.name;
+  d.querySelector(".rv-kicker").textContent = kicker;
   d.querySelector(".rv-name").textContent = card.name;
   d.querySelector(".rv-set").textContent = `${card.set?.name || ""} · #${card.localId || ""}`;
+  // Vilken version kortet är, så att t.ex. ett ex-kort inte tas för ett vanligt kort
+  const ver = d.querySelector(".rv-ver"), note = versionNote(card);
+  ver.textContent = note || "";
+  ver.hidden = !note;
 
   const value = d.querySelector(".rv-value");
   if (sek != null) {

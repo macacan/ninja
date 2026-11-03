@@ -88,7 +88,7 @@ function tabbar() {
   return `<div class="mobile-menu" id="mobile-menu" hidden>
     <div class="mm-sheet" role="dialog" aria-label="Meny">
       <button type="button" class="mm-close" aria-label="Stäng menyn">✕</button>
-      <form class="mm-search" action="${searchTarget()}" role="search">
+      <form class="mm-search" action="priser.html" role="search">
         <input type="search" name="q" placeholder="Sök kort, t.ex. Pikachu, Luffy eller Jinx" aria-label="Sök kort: Pokémon, One Piece eller Riftbound">
         <input type="hidden" name="game" value="pokemon">
       </form>
@@ -129,8 +129,6 @@ function footer() {
   </div></footer>`;
 }
 
-// Sökfältet i headern söker kortpriser, utom på värderingssidan där det värderar kortet.
-const searchTarget = () => (location.pathname.endsWith("vardering.html") ? "vardering.html" : "priser.html");
 
 export function mountChrome() {
   document.querySelector(".static-footer")?.remove();
@@ -167,8 +165,8 @@ export function mountChrome() {
   document.addEventListener("change", (e) => { if (e.target.matches?.(".drop select")) clipCheck(e.target); });
   const clipObserver = new ResizeObserver((entries) => entries.forEach((en) => clipCheck(en.target)));
   document.querySelectorAll(".drop select").forEach((sel) => clipObserver.observe(sel));
-  // Menyns sökfält söker i alla tre spelen, som startsidans (js/game-guess.js). One Piece och Riftbound går alltid
-  // till Kortpriser, även från Värdering. Kortnamnen hämtas först när man börjar söka.
+  // Menyns sökfält söker i alla tre spelen, som startsidans (js/game-guess.js), och går alltid till Kortpriser, även
+  // från Värdering. Kortnamnen hämtas först när man börjar söka.
   const menuForm = $(".mm-search"), menuInput = menuForm?.querySelector("input[name=q]");
   if (menuInput) {
     let names = null;
@@ -180,11 +178,7 @@ export function mountChrome() {
     for (const ev of ["focus", "input"]) menuInput.addEventListener(ev, () => names || loadNames(), { once: true });
     const guess = () => guessGame(menuInput.value, names);
     mountCardAutocomplete(menuInput, { source: (q) => { const g = guess(); return g === "pokemon" ? null : gameSuggestions(g, q); }, suggest: () => guess() === "pokemon" });
-    const target = () => {
-      const g = guess();
-      menuForm.elements.game.value = g;
-      menuForm.action = g === "pokemon" ? searchTarget() : "priser.html";
-    };
+    const target = () => { menuForm.elements.game.value = guess(); };
     menuForm.addEventListener("submit", async (e) => {
       // Hann namnen inte laddas väntar sökningen på dem, annars blir allt Pokémon.
       if (!names) {

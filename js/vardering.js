@@ -12,9 +12,9 @@ import { track } from "./tracker.js";
 import { recordCard, mountRecent } from "./recent.js";
 import { mountCardAutocomplete } from "./card-autocomplete.js";
 import { CONDITIONS, DEFAULT_COND, gradeMult, isVintage } from "./valuation.js";
-import { openScanner, narrowByTotal, rankByLook } from "./card-scanner.js?v=20261103q";
-import { showReveal } from "./card-reveal.js";
-import { reverseEur, baseLabel } from "./cmholo.js?v=20261103a";
+import { openScanner, narrowByTotal, rankByLook } from "./card-scanner.js?v=20261104a";
+import { showReveal } from "./card-reveal.js?v=20261104b";
+import { reverseEur, baseLabel, versionNote } from "./cmholo.js?v=20261104a";
 import { getAnatomyData, renderPullRatesModal } from "./anatomy.js";
 
 // Fyra kriterier, som graderingsbolagen: centrering, hörn, kanter och yta. Smuts ingår i ytan.
@@ -313,7 +313,7 @@ async function search(raw, total = null, photo = null, nameHint = null) {
     $("#vr-title").textContent = title ? `Välj ditt kort: ${title}` : "Välj ditt kort";
     renderResults();
     if (sure) reveal(list[0].id, list[0].lang, list[0].en);
-    else if (list.length === 1 && !photo) pick(list[0].id, list[0].lang, list[0].en);
+    else if (list.length === 1 && !photo) (fromScan ? reveal(list[0].id, list[0].lang, list[0].en, "Ditt kort") : pick(list[0].id, list[0].lang, list[0].en));
   } catch {
     if (my === searchId) $("#vr-grid").innerHTML = '<div class="msg">Kunde inte nå TCGdex just nu. Försök igen om en stund.</div>';
   }
@@ -425,6 +425,8 @@ function updateOut() {
 
 function renderCard() {
   const c = state.card, cm = c.pricing?.cardmarket || {};
+  // Versionen kortet trycktes i. Finns det ett val mellan vanlig och reverse holo visas valet i stället.
+  const note = !hasHolo(c) && versionNote(c), ver = note ? `<span class="card-version">${esc(note)}</span>` : "";
   const src = cardImg(c, "high");
   const img = src || "img/kortbaksida.webp";
   const isBack = !src;
@@ -432,13 +434,14 @@ function renderCard() {
       <div class="val-side">
         <div class="val-img${isBack ? " has-back" : ""}" role="button" tabindex="0" aria-label="Förstora kortet i ditt skick"><span class="vd-card"><img src="${esc(img)}" alt="${esc(c.name)}" referrerpolicy="no-referrer" onerror="this.src='img/kortbaksida.webp';this.closest('.val-img').classList.add('has-back');"></span>${isBack ? `<span class="val-soon">Bilder kommer snart</span>` : ""}<span class="vz-tip" aria-hidden="true">Tryck för att förstora</span></div>
         <div class="val-meta">
-          <div class="val-mtitle"><b>${cardTitle(c)}</b><small>${esc(c.set?.name || "")} · #${esc(c.localId || "")}</small></div>
+          <div class="val-mtitle"><b>${cardTitle(c)}</b><small>${esc(c.set?.name || "")} · #${esc(c.localId || "")}</small>${ver}</div>
           <div class="val-live" id="val-live" aria-hidden="true">${liveHTML()}</div>
         </div>
       </div>
       <div class="val-info">
         <h2 class="val-dh">${cardTitle(c)}</h2>
         <p class="muted val-dsub">${setLink(c.set, pages)} · #${esc(c.localId || "")}${c.rarity && c.rarity !== "None" ? ` · ${esc(c.rarity)}` : ""}</p>
+        ${ver ? `<p class="val-dsub">${ver}</p>` : ""}
         ${hasHolo(c) ? `<div class="chips val-variant" role="radiogroup" aria-label="Version">${[[baseLabel(c), baseLabel(c) === "Holo" ? "Som kortet trycktes" : "Utan glansig folie"], ["Reverse holo", "Glansig bakgrund, eget pris"]].map(([n, d], i) => `<label class="chip"><input type="radio" name="variant" value="${i}"${+state.holo === i ? " checked" : ""}><span><b>${n}</b><small>${d}</small></span></label>`).join("")}</div>` : ""}
         <details class="acc"${WIDE.matches ? " open" : ""}>
           <summary><span>2. Välj skick</span><span class="acc-val" data-acc="cond"></span></summary>
@@ -542,11 +545,12 @@ async function pick(id, lang = "en", en = null) {
 }
 
 // Säker träff från kameran: visar kortet med marknadsvärdet. Gradera öppnar värderingen med pre-gradingen.
-async function reveal(id, lang = "en", en = null) {
+// kicker: raden ovanför namnet, t.ex. "Ditt kort" för ett kort som valts i Värdera manuellt.
+async function reveal(id, lang = "en", en = null, kicker) {
   const [card, rate] = await Promise.all([getJSON(`${apiFor(lang)}/cards/${encodeURIComponent(id)}`).catch(() => null), getRate()]);
   if (!card) return pick(id, lang, en);
   const e = baseEur(card);
-  showReveal({ card, sek: e != null && rate ? e * rate : null, onGrade: () => pick(card.id, lang, en) });
+  showReveal({ card, sek: e != null && rate ? e * rate : null, kicker, onGrade: () => pick(card.id, lang, en) });
 }
 
 // ---------- Kortet i stort format, i nuvarande skick ----------
@@ -651,12 +655,15 @@ function clearAll() {
   vmInput.focus();
 }
 // Förslagen i sökrutan är engelska kort. På japanska söker vi i stället på namnet.
-mountCardAutocomplete(vmInput, { onSelect: (val, cardId) => (cardId && !isJa() ? pick(cardId) : search(val)) });
+// Öppnades fönstret med Värdera manuellt i skannern visas ett valt kort som skannerns träff (kortet med värde), annars
+// öppnas värderingen direkt.
+let fromScan = false;
+mountCardAutocomplete(vmInput, { onSelect: (val, cardId) => (cardId && !isJa() ? (fromScan ? reveal(cardId, "en", null, "Ditt kort") : pick(cardId)) : search(val)) });
 $("#vm-lang").addEventListener("change", () => { if (vmInput.value.trim()) search(vmInput.value); else $("#vm-lang-beta").hidden = !isJa(); });
 $("#vm-form").addEventListener("submit", (e) => { e.preventDefault(); search(vmInput.value); });
 $("#vm-clear").addEventListener("click", clearAll);
 modal.addEventListener("click", (e) => { if (e.target === modal || e.target.closest(".cm-close")) modal.close(); });
-modal.addEventListener("close", () => history.replaceState(null, "", location.pathname));
+modal.addEventListener("close", () => { fromScan = false; history.replaceState(null, "", location.pathname); });
 cardModal.addEventListener("click", (e) => { if (e.target === cardModal || e.target.closest(".cm-close")) cardModal.close(); });
 // Mobil: kortet högst upp krymper när man scrollar ner till reglagen och växer igen högst upp.
 // Olika gränser åt varje håll, så att höjdändringen inte får det att slå fram och tillbaka.
@@ -725,6 +732,7 @@ const startScan = () => { track("scan", "Öppnad"); openScanner(({ game, name, n
   if (input) input.value = q; // sökrutan i sidhuvudet kan saknas
   vmInput.value = q;
   openModal();
+  fromScan = true;
   vmInput.focus();
   // Visa förslag direkt för det ifyllda, t.ex. hela kortnamnet när bara början gick att läsa.
   vmInput.dispatchEvent(new Event("input", { bubbles: true }));

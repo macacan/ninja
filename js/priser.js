@@ -6,7 +6,7 @@ import { langMark } from "./langmark.js";
 import { apiFor, findJapanese } from "./japanese.js";
 import { track } from "./tracker.js";
 import { gameSuggestions } from "./game-guess.js";
-import { reverseEur, baseLabel } from "./cmholo.js?v=20261103a";
+import { reverseEur, baseLabel } from "./cmholo.js?v=20261104a";
 
 // ---------- Spel ----------
 // Pokémon söks direkt mot TCGdex. One Piece och Riftbound söks i färdigbyggda filer i data/<spel>/
@@ -313,7 +313,7 @@ async function search() {
     next = 0;
     await getRates();
     loaded = await loadDetails();
-    if (my === searchId) applyView();
+    if (my === searchId) { applyView(); openWanted(); }
   } catch {
     $("#prices").innerHTML = '<div class="msg">Kunde inte nå TCGdex just nu. Försök igen om en stund.</div>';
   }
@@ -344,7 +344,16 @@ async function searchJa(my, parsed, name) {
 
 // One Piece och Riftbound: sök bara i det valda spelets färdigbyggda fil. Alla ord ska finnas i namn, variant,
 // set eller kortnummer, och kortnumret får skrivas utan bindestreck ("op01120" eller "op01 120").
-let openAfter = new URLSearchParams(location.search).get("card");
+// cardId: ett förslag i menyns sökruta som pekade ut ett enda Pokémonkort (js/card-autocomplete.js)
+let openAfter = new URLSearchParams(location.search).get("card") || new URLSearchParams(location.search).get("cardId");
+// Öppnar kortet som söktes fram (openAfter) när det finns bland de visade träffarna
+function openWanted() {
+  if (!openAfter) return;
+  const id = openAfter;
+  openAfter = null;
+  const i = current.findIndex((c) => c.id === id);
+  if (i >= 0) openCard(i);
+}
 async function searchPrebuilt(my, q, rarity, set) {
   $("#res-title").textContent = q ? `Kort som matchar "${q}"` : set ? $("#set").selectedOptions[0].textContent : $("#rarity").selectedOptions[0].textContent;
   $("#prices").innerHTML = skeleton(8);
@@ -366,11 +375,8 @@ async function searchPrebuilt(my, q, rarity, set) {
     applyView();
     // Länk från en setsida (priser.html?game=rb&set=…&card=<id>): kortet öppnas direkt, även om det ligger längre ner i listan.
     if (openAfter) {
-      const id = openAfter;
-      openAfter = null;
-      if (found.some((c) => c.id === id) && !current.some((c) => c.id === id)) { next = found.length; applyView(); }
-      const i = current.findIndex((c) => c.id === id);
-      if (i >= 0) openCard(i);
+      if (found.some((c) => c.id === openAfter) && !current.some((c) => c.id === openAfter)) { next = found.length; applyView(); }
+      openWanted();
     }
   } catch {
     $("#prices").innerHTML = '<div class="msg">Kunde inte läsa korten just nu. Försök igen om en stund.</div>';
@@ -401,7 +407,11 @@ mountCardAutocomplete($("#pq"), {
   // One Piece och Riftbound får förslag ur spelets egna kort, Pokémon de vanliga. I valvet inga förslag.
   source: (q) => (prebuilt() && !VAULT_PAGE ? gameSuggestions(game, q) : null),
   suggest: () => !prebuilt() && !VAULT_PAGE,
-  onSelect: (val) => {
+  // Ett förslag som pekar ut ett enda kort (t.ex. "Pikachu 051/162") öppnar kortet direkt, med träffarna bakom
+  onSelect: (val, cardId) => {
+    openAfter = cardId || null;
+    // Utan fokus i sökrutan öppnas inte förslagen igen när kortet stängs (dialogen ger fokus tillbaka)
+    if (cardId) $("#pq").blur();
     $("#pq").value = val;
     search();
   },
@@ -525,7 +535,7 @@ const hitKey = (r) => `${r.game}:${r.cardId || `${r.number}/${r.total}`}`;
 // manual: skannern öppnas direkt med sökrutan (Sök och lägg till i valvet)
 async function scanCards(g = VAULT_PAGE ? "vault" : game, { manual = false } = {}) {
   track("scan", "Öppnad");
-  const { openScanner } = await import("./card-scanner.js?v=20261103q");
+  const { openScanner } = await import("./card-scanner.js?v=20261104a");
   const added = new Map(); // valvet: träffarna som lagts in, för att kunna öppna rätt kort
   let swaps = Promise.resolve();
   openScanner(async (r) => {
@@ -773,7 +783,8 @@ const vaultActions = (c, shown = null) => {
     ${q ? `<button type="button" class="btn small cm-vault-minus" data-vault="-1" data-f="${+f}" aria-label="Ta bort ett ${f ? esc(foilLabel(c)) : "vanligt"} ur valvet">−</button>` : ""}`;
   };
   if (fs == null) return `<div class="cm-vault">${buttons(false, "Lägg i valvet")}</div>`;
-  const row = (f, label, price) => `<div class="cm-vault-row">${buttons(f, label)}<span class="cm-vault-price">${price != null ? kr(price) : "–"}</span></div>`;
+  // Knappen säger vad den gör ("Lägg vanlig i valvet"), och priset för just det slaget står bredvid
+  const row = (f, label, price) => `<div class="cm-vault-row">${buttons(f, `Lägg ${label.toLowerCase()} i valvet`)}<span class="cm-vault-price">${price != null ? kr(price) : "–"}</span></div>`;
   const from = !!shown?.holo, swap = VAULT_PAGE && shown?.orig && vaultQty(c, from)
     ? `<button type="button" class="cm-vault-swap" data-swap="${+!from}">Markera ett som ${from ? esc(plainLabel(c).toLowerCase()) : esc(foilLabel(c))}</button>` : "";
   return `<div class="cm-vault two">${row(false, plainLabel(c), sekOf(c))}${row(true, esc(foilLabel(c)), fs)}${swap}</div>`;

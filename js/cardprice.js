@@ -3,7 +3,7 @@
 import { API, esc, kr, getJSON, cardImg, extraCardImgsReady, setPages, setLink } from "./site.js";
 import { mountChart } from "./pricechart.js";
 import { CONDITIONS, gradeMult } from "./valuation.js";
-import { reverseEur } from "./cmholo.js?v=20261103a";
+import { reverseEur } from "./cmholo.js?v=20261104a";
 
 let dlg = null, token = 0;
 

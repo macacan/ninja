@@ -29,3 +29,13 @@ export function reverseEur(card) {
 
 // Namnet på kortets vanliga version: Holo för kort som bara trycktes som holo, annars Vanlig
 export const baseLabel = (card) => (card?.variants?.holo && !card.variants.normal ? "Holo" : "Vanlig");
+
+// Versionerna kortet trycktes i, t.ex. "Finns bara som holo" (ex-kort) eller "Finns som vanlig och reverse holo".
+// Reverse holo räknas också när Cardmarket säljer kortet så (reverseEur). null när TCGdex saknar uppgiften.
+export function versionNote(card) {
+  const v = card?.variants;
+  if (!v) return null;
+  const names = [v.normal && "vanlig", v.holo && "holo", (v.reverse || reverseEur(card) != null) && "reverse holo"].filter(Boolean);
+  if (!names.length) return null;
+  return names.length === 1 ? `Finns bara som ${names[0]}` : `Finns som ${names.slice(0, -1).join(", ")} och ${names.at(-1)}`;
+}
