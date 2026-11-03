@@ -1,6 +1,34 @@
 {
- "updated": 1793707995631,
+ "updated": 1793708895654,
  "events": [
+  {
+   "at": 1793708886675,
+   "store": "cardlevels",
+   "product": "cardlevels:11057577460023",
+   "group": "legendary-treasures|booster-pack|en|",
+   "title": "Pokémon Legendary Treasures Black & White 11: Booster Pack",
+   "url": "https://cardlevels.se/products/pokemon-legendary-treasures-black-white-11-booster-pack",
+   "image": "https://cdn.shopify.com/s/files/1/0846/0458/4247/files/legendary-treasures-booster-product_image-988d02c3_1782663303.png?v=1793707625",
+   "price": 7999,
+   "type": "Booster Pack",
+   "set": "Legendary Treasures",
+   "lang": "en",
+   "kind": "ny"
+  },
+  {
+   "at": 1793708775137,
+   "store": "toyspace",
+   "product": "toyspace:https://toyspace.se/pokemon-super-premium-collection-eevee-ex-sv8-5-pok10106",
+   "group": "prismatic-evolutions|premium-collection|en||eevee-super",
+   "title": "Pokemon TCG: Prismatic Evolutions Super Premium Collection – Eevee ex (SV8.5)",
+   "url": "https://toyspace.se/pokemon-super-premium-collection-eevee-ex-sv8-5-pok10106",
+   "image": "https://d189539ycils2q.cloudfront.net/media/catalog/product/cache/4ffcb2823444acbc328f989dd62e5069/p/o/pok10106-pokemon-super-premium-collection-eevee-ex-sv8-5.jpg",
+   "price": 3365,
+   "type": "Premium Collection",
+   "set": "Prismatic Evolutions",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793707975183,
    "store": "cardlevels",
@@ -7060,32 +7088,6 @@
    "lang": "en",
    "kind": "prissankt",
    "from": 199
-  },
-  {
-   "at": 1793127881976,
-   "store": "shinycards",
-   "product": "shinycards:https://www.shinycards.se/pokemon/tins/pokemon-mega-moonlit-tin-mega-gengar-ex",
-   "group": "x|tin|en||gengar-moonlit",
-   "title": "Pokemon Mega Moonlit Tin - Mega Gengar ex",
-   "url": "https://www.shinycards.se/pokemon/tins/pokemon-mega-moonlit-tin-mega-gengar-ex",
-   "price": 499,
-   "type": "Tin",
-   "set": null,
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793126270795,
-   "store": "samlarhobby",
-   "product": "samlarhobby:15373758792061",
-   "group": "black-bolt|collection-box|en||binder-flare",
-   "title": "Pokémon, Scarlet & Violet 10.5: Black Bolt & White Flare - Black Bolt Binder Collection",
-   "url": "https://samlarhobby.se/products/pokemon-scarlet-violet-10-5-black-bolt-white-flare-black-bolt-binder-collection-forkop-release-18-7",
-   "price": 1295,
-   "type": "Collection Box",
-   "set": "Black Bolt",
-   "lang": "en",
-   "kind": "ny"
   }
  ]
 }
