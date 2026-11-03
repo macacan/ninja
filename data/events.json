@@ -1,6 +1,20 @@
 {
- "updated": 1793702475462,
+ "updated": 1793703395480,
  "events": [
+  {
+   "at": 1793702928510,
+   "store": "toyspace",
+   "product": "toyspace:https://toyspace.se/pokemon-tcg-kaos-uppgang-boosterpaket-pok10407-101",
+   "group": "chaos-rising|booster-pack|en|",
+   "title": "Max 5 per kund. Pokémon TCG Mega Evolution Chaos Rising Boosterpaket",
+   "url": "https://toyspace.se/pokemon-tcg-kaos-uppgang-boosterpaket-pok10407-101",
+   "image": "https://d189539ycils2q.cloudfront.net/media/catalog/product/cache/4ffcb2823444acbc328f989dd62e5069/p/o/pok10407-101-pokemon-chaos-rising-boosterpakke.jpg",
+   "price": 89,
+   "type": "Booster Pack",
+   "set": "Chaos Rising",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793699845367,
    "store": "miniature-metropolis",
@@ -7062,20 +7076,6 @@
    "lang": "en",
    "kind": "prissankt",
    "from": 199
-  },
-  {
-   "at": 1793116277869,
-   "store": "dragon-s-lair",
-   "product": "dragon-s-lair:15849401614684",
-   "group": "x|collection-box|zh||autumn-gift-mid",
-   "title": "Pokemon 2026 Mid Autumn Gift Box (Kinesisk)",
-   "url": "https://dragonslair.se/products/pokemon-2026-mid-autumn-gift-box-kinesisk",
-   "price": 295,
-   "type": "Collection Box",
-   "set": null,
-   "lang": "zh",
-   "kind": "prissankt",
-   "from": 395
   }
  ]
 }
