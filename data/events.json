@@ -1,6 +1,20 @@
 {
- "updated": 1793692702049,
+ "updated": 1793693622071,
  "events": [
+  {
+   "at": 1793693213291,
+   "store": "miniature-metropolis",
+   "product": "miniature-metropolis:11320000315729",
+   "group": "chaos-rising|blister|en||cl",
+   "title": "POKEMON TCG: MEGA EVOLUTION – CHAOS RISING PREMIUM CHECKLANE BLISTER FLYGON",
+   "url": "https://miniaturemetropolis.se/products/pokemon-tcg-mega-evolution-chaos-rising-premium-checklane-blister-flygon",
+   "image": "https://cdn.shopify.com/s/files/1/0958/6832/2129/files/pokemon-chaos-rising-premium-checklane-blister.png?v=1778924362",
+   "price": 95,
+   "type": "Blister",
+   "set": "Chaos Rising",
+   "lang": "en",
+   "kind": "ny"
+  },
   {
    "at": 1793690396924,
    "store": "spelgalaxen",
@@ -7052,19 +7066,6 @@
    "set": null,
    "lang": "zh",
    "kind": "ny"
-  },
-  {
-   "at": 1793108191633,
-   "store": "webhallen",
-   "product": "webhallen:401984",
-   "group": "30th-celebration|premium-collection|en||ditto",
-   "title": "Pokemon 30th Celebration Ditto Premium Collection",
-   "url": "https://www.webhallen.com/se/product/401984-Pokemon-30th-Celebration-Ditto-Premium-Collection",
-   "price": 899,
-   "type": "Premium Collection",
-   "set": "30th Celebration",
-   "lang": "en",
-   "kind": "forbestallning"
   }
  ]
 }

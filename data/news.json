@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-03T07:58:17.024Z",
+ "updated": "2026-11-03T08:13:36.787Z",
  "articles": [
   {
    "title": "The Real Reason Consistent Gaming Gear Beats Constant Upgrades",
@@ -515,5 +515,36 @@
    "game": "op"
   }
  ],
- "videos": []
+ "videos": [
+  {
+   "id": "pGIxhUQvezQ",
+   "title": "TCG Day 2 | 2027 Pokémon Gdańsk Regional Championships",
+   "date": "2026-11-01T19:24:07.000Z",
+   "source": "Pokémon (officiell)"
+  },
+  {
+   "id": "rWsK4plWGM4",
+   "title": "TCG Day 1 | 2027 Pokémon Gdańsk Regional Championships",
+   "date": "2026-10-31T19:26:17.000Z",
+   "source": "Play! Pokémon (officiell)"
+  },
+  {
+   "id": "bQZCF3_X6KA",
+   "title": "Andrew Hedrick Vs Caleb Rogerson - Pokémon TCG Masters Finals | 2027 Puebla Regional Championships",
+   "date": "2026-10-30T20:00:21.000Z",
+   "source": "Play! Pokémon (officiell)"
+  },
+  {
+   "id": "TnNgdVVlepQ",
+   "title": "Andrew Hedrick Vs Yoshiyuki Yamaguchi - Pokémon TCG Top 4 | 2027 Puebla Regional Championships",
+   "date": "2026-10-30T18:00:19.000Z",
+   "source": "Play! Pokémon (officiell)"
+  },
+  {
+   "id": "FLwx-9hf8Ow",
+   "title": "Nathan Ginsburg Vs Caleb Rogerson - Pokémon TCG Top 4 | 2027 Puebla Regional Championships",
+   "date": "2026-10-30T16:00:29.000Z",
+   "source": "Play! Pokémon (officiell)"
+  }
+ ]
 }
