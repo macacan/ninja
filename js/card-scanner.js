@@ -1280,6 +1280,7 @@ function ui() {
         <span>Flera kort</span>
       </button>
       <button class="scan-tray" type="button" hidden aria-label="Visa skannade kort"><span class="scan-tray-stack"></span><b>0</b></button>
+      <button class="scan-peek" type="button" hidden><img alt=""><span></span></button>
       <p class="scan-tip">Håll kortet i ramen. Glänser det? Luta det lätt.</p>
       <div class="scan-freeze" aria-hidden="true" hidden>
         <canvas></canvas>
@@ -1326,6 +1327,7 @@ function ui() {
   // Snabbskanning
   dialog.querySelector(".scan-multi").addEventListener("click", () => setMulti(!multi));
   dialog.querySelector(".scan-tray").addEventListener("click", showList);
+  dialog.querySelector(".scan-peek").addEventListener("click", openPeek);
   dialog.querySelector("[data-more]").addEventListener("click", hideList);
   // Klar: har sidan ett valv (onDone) lämnas korten över dit och högen töms, så att de inte läggs in två gånger
   dialog.querySelector("[data-done]").addEventListener("click", () => {
@@ -1618,6 +1620,7 @@ let frozen = false, scanToken = 0, holoTimer = null;
 const HOLO_MSGS = {
   pokemon: ["Jämför med 23 000 kort…", "Läser kortnumret…", "Kollar setet…", "Letar efter kortets kanter…", "Matchar konstverket…", "Läser namnet…"],
   rb: ["Jämför med 1 800 Riftbound-kort…", "Läser kortnumret…", "Kollar setet…", "Letar efter kortets kanter…", "Matchar konstverket…"],
+  op: ["Jämför med 4 400 One Piece-kort…", "Letar efter kortets kanter…", "Matchar konstverket…", "Kollar varianterna…"],
 };
 
 // Visar en stillbild av källan (video eller foto) och returnerar den som canvas att söka i
@@ -1739,9 +1742,8 @@ async function frozenScan(snap, { fromFile }) {
         if (keyOf(r) !== skipKey) addScanned({ game: "pokemon", ...r }, r.canvas);
         return;
       }
-      stop();
-      dialog.close();
-      if (r.cardId || r.number || r.name) onFound?.({ game: r.game || "pokemon", name: r.name, number: r.number, total: r.total, cardId: r.cardId, canvas: r.canvas, dhash: r.dhash });
+      unfreeze();
+      if (r.cardId || r.number || r.name) setPeek(r, r.canvas);
     }, 650);
   }
 }
@@ -1763,15 +1765,7 @@ async function attempt(canvas, { fromFile = false, manual = false, source } = {}
       addScanned({ game: "pokemon", ...r }, canvas);
       return;
     }
-    if (r.cardId) {
-      status(`Hittade <b>${esc(r.name || "kortet")}</b>!`);
-      dialog.querySelector(".scan-hud-status")?.classList.add("success");
-      if ("vibrate" in navigator) navigator.vibrate(45);
-      stop();
-      dialog.close();
-      onFound?.({ game: r.game || "pokemon", name: r.name, number: r.number, total: r.total, cardId: r.cardId, canvas, dhash: r.dhash });
-      return;
-    }
+    if (r.cardId) return setPeek(r, canvas);
 
     // 2. Annars som förut: namn och nummer söks i TCGdex
     const numKey = r.number && `${r.number}/${r.total}`;
@@ -1789,12 +1783,7 @@ async function attempt(canvas, { fromFile = false, manual = false, source } = {}
       if (keyOf(r) === skipKey) status("Byt till nästa kort…");
       else addScanned({ game: "pokemon", ...r }, canvas);
     } else if (sure) {
-      status(`Hittade <b>${esc(seen)}</b>!`);
-      dialog.querySelector(".scan-hud-status")?.classList.add("success");
-      if ("vibrate" in navigator) navigator.vibrate(45);
-      stop();
-      dialog.close();
-      onFound?.({ game: "pokemon", ...r, canvas });
+      setPeek({ game: "pokemon", ...r }, canvas);
     } else if ((manual || fromFile) && (r.name || r.number) && onPartial && !multi) {
       // Halv läsning: stäng och fyll i det som gick att läsa, så användaren slipper skriva från noll
       stop();
@@ -1974,6 +1963,44 @@ function addScanned(r, canvas) {
   popCard(item);
 }
 
+// ---------- 10b. Träff utan snabbskanning ----------
+// Skannern stängs inte vid en träff. Kortet visas som en liten bild uppe till höger och kameran fortsätter, så att man
+// kan ta nästa kort direkt. Ett nytt kort ersätter bilden. Trycker man på den öppnas kortet (onFound).
+let peek = null;
+function setPeek(r, canvas) {
+  if (keyOf(r) === skipKey) return status("Byt till nästa kort…");
+  skipKey = keyOf(r);
+  last = lastNum = null;
+  pauseUntil = Date.now() + 600;
+  peek = { game: r.game || "pokemon", name: r.name, number: r.number, total: r.total, cardId: r.cardId, canvas, dhash: r.dhash };
+  const btn = dialog.querySelector(".scan-peek"), thumb = thumbOf(canvas);
+  btn.querySelector("img").src = thumb || "";
+  btn.querySelector("img").hidden = !thumb;
+  btn.querySelector("span").textContent = labelOf(peek);
+  btn.setAttribute("aria-label", `Öppna ${labelOf(peek)}`);
+  btn.hidden = false;
+  btn.classList.remove("pop");
+  void btn.offsetWidth; // starta om animationen när bilden byts
+  btn.classList.add("pop");
+  const hud = dialog.querySelector(".scan-hud-status");
+  hud?.classList.add("success");
+  setTimeout(() => hud?.classList.remove("success"), 1500);
+  status(`Hittade <b>${esc(labelOf(peek))}</b>! Tryck på kortet för att öppna det, eller håll nästa i ramen.`);
+  if ("vibrate" in navigator) navigator.vibrate(45);
+}
+function clearPeek() {
+  peek = null;
+  if (dialog) dialog.querySelector(".scan-peek").hidden = true;
+}
+function openPeek() {
+  const r = peek;
+  if (!r) return;
+  clearPeek();
+  stop();
+  dialog.close();
+  onFound?.(r);
+}
+
 // Kortet poppar upp mitt i bilden, stannar en stund och flyger ner i högen
 function popCard(item) {
   const view = dialog.querySelector(".scan-view"), tray = dialog.querySelector(".scan-tray");
@@ -2079,6 +2106,7 @@ export async function openScanner(callback, partialCallback, { game = "pokemon",
   }
   // Snabbskanningens läge och kort från tidigare i besöket
   scanned = loadList();
+  clearPeek();
   let on = false;
   try { on = sessionStorage.getItem(MULTI_KEY) === "1"; } catch {}
   setMulti(on);

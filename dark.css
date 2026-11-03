@@ -218,3 +218,5 @@ input.shop-search { border-color: #0b0c12; }
   background: #fff;
 }
 .install-done { background: rgba(47, 179, 68, 0.16); color: #7fe39a; }
+/* Mitt valv: portföljens upp/ner i mörkt läge */
+.vault-stats .up{color:#4ade80}.vault-stats .down{color:#f87171}

@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Mitt valv – dina kort och vad de är värda | Lootninja</title>
+<meta name="description" content="Samla dina One Piece- och Riftbound-kort i ett valv. Skanna korten med mobilen och se vad samlingen är värd i kronor, och hur värdet har ändrats.">
+<link rel="canonical" href="https://lootninja.se/valv.html">
+<meta name="theme-color" content="#ffffff">
+<meta name="theme-color" content="#1b1e28" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="img/icon-192.png" sizes="192x192" type="image/png">
+<link rel="icon" href="img/favicon-48.png?v=3" sizes="48x48" type="image/png">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png?v=3">
+<link rel="manifest" href="site.webmanifest">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Lootninja">
+<meta property="og:locale" content="sv_SE">
+<meta property="og:url" content="https://lootninja.se/valv.html">
+<meta property="og:title" content="Mitt valv – dina kort och vad de är värda | Lootninja">
+<meta property="og:description" content="Samla dina One Piece- och Riftbound-kort i ett valv. Skanna korten med mobilen och se vad samlingen är värd i kronor.">
+<meta property="og:image" content="https://lootninja.se/img/og-lootninja.jpg">
+<meta property="og:image:alt" content="Lootninja – Pokémonkort: släpp, butikslager och priser">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Hem","item":"https://lootninja.se/"},{"@type":"ListItem","position":2,"name":"Mitt valv","item":"https://lootninja.se/valv.html"}]}</script>
+<link href="fonts/fonts.css" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=20261103f">
+<link rel="stylesheet" href="dark.css?v=20261103a" id="dark-css" media="(prefers-color-scheme: dark)">
+<script src="js/theme.js?v=20261021"></script>
+</head>
+<!-- Valvsidan använder js/priser.js (samma kortrutor, stora vy och skanner som Kortpriser) i valvläge -->
+<body data-page="valv">
+<main id="main">
+  <header class="page-head">
+    <div class="wrap">
+      <nav class="crumbs" aria-label="Brödsmulor"><a href="./">Hem</a><span aria-hidden="true">›</span><span aria-current="page">Mitt valv</span></nav>
+      <h1 class="sr-only" id="page-h1">Mitt valv</h1>
+    </div>
+    <canvas class="scene" data-banner="butik" aria-hidden="true"></canvas>
+  </header>
+
+  <div class="wrap">
+    <div class="seg game-seg" id="game-seg" role="group" aria-label="Visa spel">
+      <button type="button" data-game="pokemon" aria-pressed="true">Pokémon</button><button type="button" data-game="op" aria-pressed="true">One Piece<em class="beta-tag">Beta</em></button><button type="button" data-game="rb" aria-pressed="true">Riftbound<em class="beta-tag">Beta</em></button>
+    </div>
+    <form id="price-form" class="card-search" role="search">
+      <input id="pq" name="q" type="search" placeholder="Sök i ditt valv" aria-label="Sök i ditt valv">
+      <button type="button" class="btn small" id="rb-scan" aria-label="Skanna kort med kameran (beta)">Skanna <span class="beta-tag">Beta</span></button>
+      <!-- Filtren används inte i valvet, men skriptet delas med Kortpriser -->
+      <div class="adv" id="adv" hidden>
+        <select id="lang" name="lang" hidden><option value="en">Engelska</option></select>
+        <select id="set" name="set" hidden><option value="">Alla</option></select>
+        <select id="rarity" name="rarity" hidden><option value="">Alla</option></select>
+      </div>
+      <button class="btn primary" type="submit">Sök</button>
+    </form>
+
+    <section id="results">
+      <div class="section"><h2 id="res-title">Mitt valv <span class="beta-tag">Beta</span></h2><label class="drop res-sort"><span>Sortera</span><select id="sort" name="sort" form="price-form">
+        <option value="added">Nyaste först</option><option value="price-desc">Dyrast först</option><option value="price-asc">Billigast först</option>
+        <option value="gain">Ökat mest sedan inlagt</option><option value="rising">Stiger mest</option><option value="falling">Sjunker mest</option>
+        <option value="number">Kortnummer</option></select></label></div>
+      <!-- Portföljen: värde, antal och utveckling för korten som visas -->
+      <div class="vault-stats" id="vault-stats" aria-live="polite"></div>
+      <div id="prices" class="cgrid"></div>
+      <div class="more-row"><button id="more" class="btn" type="button" hidden>Visa fler</button></div>
+      <div class="vault-bar"><button type="button" class="btn small" id="vault-clear" hidden>Töm valvet</button></div>
+    </section>
+
+    <section class="vault-guide" aria-labelledby="vg-title">
+      <h2 id="vg-title">Så funkar Mitt valv <span class="beta-tag">Beta</span></h2>
+      <div class="vg-grid">
+        <div>
+          <h3>Lägg till kort</h3>
+          <p>Tryck på <b>Skanna</b> och håll kortet framför kameran. Vill du skanna en hel hög slår du på <b>Flera kort</b> i skannern och trycker <b>Klar</b> när du är färdig. Du kan också trycka <b>+ Lägg i valvet</b> på vilket kort som helst under <a href="priser.html">Kortpriser</a>.</p>
+        </div>
+        <div>
+          <h3>Se vad samlingen är värd</h3>
+          <p>Värdet är TCGplayers marknadspris omräknat till kronor och uppdateras varje dag. <b>Sedan du lade in</b> jämför dagens pris med priset när kortet lades i valvet. <b>Mot snittet 30 dagar</b> visar om korten just nu ligger över eller under månadens snittpris.</p>
+        </div>
+        <div>
+          <h3>Sortera och filtrera</h3>
+          <p>Sortera på dyraste kort, de som ökat mest sedan du lade in dem eller de som stiger just nu. Tryck på ett spel överst för att dölja det, och sök på namn, set eller kortnummer för att bara se vissa kort.</p>
+        </div>
+        <div>
+          <h3>Sparas i den här webbläsaren</h3>
+          <p>Valvet sparas bara här, på den här enheten och i den här webbläsaren, och skickas aldrig till oss. Det syns alltså inte på andra enheter, och det försvinner om du rensar webbplatsdata eller surfar privat. Se <a href="integritet.html#p3">integritetspolicyn</a>.</p>
+        </div>
+      </div>
+      <p class="hint">Mitt valv är nytt och i beta. Just nu fungerar det för One Piece och Riftbound. Pokémonkort värderar du under <a href="vardering.html">Värdering</a>.</p>
+    </section>
+  </div>
+
+  <!-- Vilket spel skannern ska leta bland, när både One Piece och Riftbound är tända -->
+  <dialog id="scan-pick" class="card-modal confirm-modal" aria-labelledby="sp-title">
+    <form method="dialog">
+      <h2 id="sp-title">Vilket spel?</h2>
+      <p class="muted">Skannern letar bland ett spels kort i taget.</p>
+      <div class="confirm-actions">
+        <button class="btn small" value="op">One Piece</button>
+        <button class="btn small" value="rb">Riftbound</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- Bekräftelse innan valvet töms (sajtens färger i stället för webbläsarens egen ruta) -->
+  <dialog id="vault-confirm" class="card-modal confirm-modal" aria-labelledby="vc-title">
+    <form method="dialog">
+      <h2 id="vc-title">Töm valvet?</h2>
+      <p class="muted">Alla kort i valvet tas bort från den här webbläsaren.</p>
+      <div class="confirm-actions">
+        <button class="btn small" value="cancel" autofocus>Avbryt</button>
+        <button class="btn primary small" value="ok">Töm valvet</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="card-modal" class="card-modal" aria-labelledby="cm-name">
+    <button type="button" class="cm-close" aria-label="Stäng">✕</button>
+    <button type="button" class="cm-nav prev" aria-label="Föregående kort">‹</button>
+    <button type="button" class="cm-nav next" aria-label="Nästa kort">›</button>
+    <div class="cm-body"></div>
+  </dialog>
+</main>
+<script type="module" src="js/priser.js?v=20261103g"></script>
+</body>
+</html>

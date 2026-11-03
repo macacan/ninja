@@ -1024,6 +1024,8 @@ span.rd-logo{display:grid;place-items:center;background:var(--surface);border-ra
 :is(#game-seg,#news-games,#set-games) button{--shade:rgba(12,13,22,.5);padding:16px 34px;color:#fff;text-shadow:0 1px 2px #000,0 0 8px rgba(0,0,0,.8);background:linear-gradient(var(--shade),var(--shade)),var(--art) center/cover}
 :is(#game-seg,#news-games,#set-games) button:hover{--shade:rgba(12,13,22,.3)}
 :is(#game-seg,#news-games,#set-games) button[aria-pressed=true]{--shade:rgba(12,13,22,.12);color:var(--gold);box-shadow:inset 0 -4px 0 var(--gold)}
+/* I Mitt valv är spelknapparna filter: alla tända, ett släckt spel blir grått och mörkare */
+#game-seg.vault-mode button[aria-pressed=false]{--shade:rgba(12,13,22,.7);color:#9a9caa;filter:grayscale(1)}
 :is(#game-seg,#news-games,#set-games) [data-game=pokemon]{--art:url(img/games/pokemon.webp)}
 :is(#game-seg,#news-games,#set-games) [data-game=op]{--art:url(img/games/op.webp)}
 :is(#game-seg,#news-games,#set-games) [data-game=rb]{--art:url(img/games/rb.webp)}
@@ -1037,14 +1039,12 @@ span.rd-logo{display:grid;place-items:center;background:var(--surface);border-ra
 :is(#game-seg,#news-games,#set-games) .beta-tag{position:absolute;top:4px;right:4px;margin:0;padding:3px 4px;font-size:.52rem;font-style:normal;text-shadow:none}
 @media (max-width:640px){:is(#game-seg,#news-games,#set-games) button{padding:16px 6px}}
 .card-search .btn{margin:var(--px) var(--px) var(--px) auto}
-/* Filter-knappen och de dolda filtren (språk, set, sällsynthet) som fälls ut på en egen rad.
-   Filtren ligger direkt i formulärets rad, så att Sortera och Sök hamnar i linje med dem. */
-.card-search #adv-toggle{margin:0;flex:none}
+/* Filtren (språk, set, sällsynthet) visas inte, men gäller när en länk från setsidorna väljer dem */
 .card-search .adv{display:contents}
 .card-search .adv::before{content:"";flex:0 0 100%}
 .card-search .adv[hidden]{display:none}
-/* Filter och Sortera visas först när det finns sökresultat att filtrera och sortera */
-.wrap:has(#results[hidden]) .card-search :is(#adv-toggle,.adv,.drop){display:none}
+/* Sortera visas först när det finns sökresultat att sortera */
+.wrap:has(#results[hidden]) .card-search :is(.adv,.drop){display:none}
 .cgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:16px}
 .ctile{all:unset;box-sizing:border-box;cursor:pointer;display:flex;flex-direction:column;gap:4px;padding:10px;background:var(--card);border:1px solid var(--line);border-radius:12px;transition:transform .15s,box-shadow .15s,border-color .15s}
 .ctile:hover{transform:translateY(-3px);border-color:var(--ink);box-shadow:0 8px 0 -3px var(--ink)}
@@ -1124,12 +1124,36 @@ span.rd-logo{display:grid;place-items:center;background:var(--surface);border-ra
 .cm-facts li{display:grid;grid-template-columns:100px 1fr;font-size:.88rem;align-items:baseline}
 .cm-facts b{color:var(--muted);font-weight:600}
 .cm-info h3{margin:16px 0 6px;font:600 .78rem var(--sans);text-transform:uppercase;letter-spacing:.6px;color:var(--muted)}
+/* Bekräftelseruta, t.ex. Töm valvet */
+.card-modal.confirm-modal{width:min(380px,calc(100vw - 32px))}
+.confirm-modal form{padding:22px 22px 18px}
+.confirm-modal h2{margin:0 0 6px;font:700 1.4rem/1.1 var(--cond);text-transform:uppercase}
+.confirm-modal p{margin:0}
+.confirm-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:18px}
 /* Mitt valv */
-.cm-vault{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:12px}
-.cm-vault-qty{font:600 .85rem var(--sans);color:var(--muted)}
-.vault-bar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:-4px 0 16px}
-.vault-sum{margin:0 auto 0 0;font-size:.95rem}
-.vault-sum:empty{display:none}
+/* Valvknapparna står först i länkraden, bredvid Cardmarket och TCGplayer */
+.cm-vault{display:contents}
+.card-modal .cm-vault-minus{flex:0 0 auto;padding-inline:12px}
+/* Valvsidan: portföljen överst, Töm valvet under korten och guiden sist */
+.vault-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:0 0 18px}
+.vault-stats:empty{display:none}
+.vault-stats>div{padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:var(--card);min-width:0}
+.vault-stats small{display:block;font:600 .72rem var(--sans);text-transform:uppercase;letter-spacing:.5px;color:var(--muted)}
+.vault-stats b{display:block;margin-top:4px;font:700 1.3rem/1.2 var(--sans);overflow-wrap:anywhere}
+.vault-stats .up{color:#1f8a3a}.vault-stats .down{color:#c2412d}
+.vault-bar{display:flex;justify-content:flex-end;margin:12px 0 0}
+.vault-guide{margin:40px 0 24px;padding:22px;border:1px solid var(--line);border-radius:16px;background:var(--card)}
+.vault-guide h2{margin:0 0 14px;font:700 1.5rem/1.1 var(--cond);text-transform:uppercase}
+.vg-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 28px}
+.vg-grid h3{margin:0 0 4px;font:700 1rem var(--sans)}
+.vg-grid p{margin:0;color:var(--muted);line-height:1.5}
+.vault-guide .hint{margin:18px 0 0}
+@media (max-width:760px){
+  .vault-stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .vault-stats b{font-size:1.05rem}
+  .vg-grid{grid-template-columns:1fr}
+  .vault-guide{padding:16px}
+}
 .cqty{position:absolute;top:6px;right:6px;z-index:2;padding:2px 8px;border-radius:999px;background:rgba(15,17,23,.88);border:1px solid rgba(255,255,255,.25);font:700 .78rem var(--sans);color:#fff;pointer-events:none}
 .cm-table{width:100%;border-collapse:collapse;font-size:.92rem}
 .cm-table th{text-align:left;font-weight:500;padding:6px 0;border-bottom:1px solid var(--line)}
@@ -1152,7 +1176,12 @@ span.rd-logo{display:grid;place-items:center;background:var(--surface);border-ra
   .cm-info h3{margin:12px 0 4px;font-size:.72rem}
   .cm-table{font-size:.85rem}
   .cm-table th,.cm-table td{padding:5px 0}
-  .cm-links{margin-top:12px}
+  .cm-links{margin-top:12px;gap:6px}
+  /* Lägg i valvet, Cardmarket och TCGplayer på en rad */
+  .cm-links .btn.small{flex:1 1 auto;padding:9px 4px;font-size:.66rem;white-space:nowrap}
+  /* Kortet finns i valvet (antal och minusknapp): valvet på första raden, länkarna delar på den andra */
+  .cm-links:has(.cm-vault-minus) [data-vault="1"]{flex-basis:60%}
+  .cm-links:has(.cm-vault-minus) .cm-vault ~ .btn{flex-basis:40%}
   .cm-info .pchart{margin:12px 0 0;padding:10px 10px 8px}
   .pc-note{font-size:.72rem}
   /* Pilarna står still längst ner i rutan i stället för att scrolla iväg över prisgrafen. */
@@ -1161,17 +1190,17 @@ span.rd-logo{display:grid;place-items:center;background:var(--surface);border-ra
   .cm-body{padding-bottom:64px}
   .pc-now{white-space:nowrap}
   .cgrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
-  /* Mobil: sökrutan och Sök på en rad, Filter på nästa, Skanna (Riftbound) under. Filtren tar hela bredden,
-     så att ett långt setnamn klipps före pilen i stället för att gå utanför rutan. */
+  /* Mobil: sökrutan och Sök på en rad, Sortera, Skanna och Mitt valv under */
   .card-search{gap:6px;padding:8px}
   #price-form .card-suggest-wrap,#price-form > input[type=search]{flex:1 1 0;min-width:0;order:0}
   .card-search .btn{margin-left:var(--px)}
   .card-search button[type=submit]{order:1;flex:none;padding:12px 16px}
   .card-search::after{content:"";flex:0 0 100%;order:2;margin-top:-6px}
-  .card-search #adv-toggle{order:3}
-  /* Skanna och Mitt valv delar en egen rad under Filter och Sortera */
+  /* Skanna och Mitt valv efter Sortera */
   .card-search #rb-scan,.card-search #vault-open{order:7;flex:1 1 40%}
-  .vault-sum{flex:1 1 100%}
+  .card-search .drop:has(#sort){flex:1 1 50%}
+  /* Valvsidan har bara Skanna bredvid Sortera: Skanna får sin egen bredd och Sortera resten */
+  [data-page=valv] .card-search #rb-scan{flex:0 0 auto}
   .card-search .adv::before,.card-search .adv > *{order:6}
   .card-search .adv > .drop:has(#set){flex:1 1 100%;min-width:0}
   .card-search .drop #set{flex:1 1 0;min-width:0;max-width:none;field-sizing:fixed}
@@ -2996,6 +3025,15 @@ input[type=search]::-webkit-search-results-decoration {
 .scan-multi:hover{background:rgba(30,34,64,.75)}
 .scan-multi.active{background:#16a34a;border-color:transparent;box-shadow:0 0 16px rgba(74,222,128,.55)}
 .scan.frozen .scan-multi,.scan.frozen .scan-tray{display:none}
+/* Senaste träffen utan snabbskanning: uppe till höger under blixtknappen, tryck för att öppna kortet */
+.scan-peek{position:absolute;top:62px;right:12px;z-index:10;width:76px;padding:4px 4px 6px;border-radius:12px;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;color:#fff;background:rgba(12,14,30,.6);backdrop-filter:blur(14px) saturate(1.4);-webkit-backdrop-filter:blur(14px) saturate(1.4);border:1px solid rgba(74,222,128,.7);box-shadow:0 6px 18px rgba(0,0,0,.5)}
+.scan-peek[hidden]{display:none}
+.scan-peek img{width:66px;height:92px;border-radius:6px;object-fit:cover;display:block;background:#1b1e33}
+.scan-peek img[hidden]{display:none}
+.scan-peek span{font:700 .68rem/1.15 var(--sans);text-align:center;max-width:100%;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.scan-peek.pop{animation:peekPop .35s ease-out}
+@keyframes peekPop{from{transform:scale(.6);opacity:0}}
+.scan.frozen .scan-peek,.scan.multi .scan-peek{display:none}
 .scan-tray{position:absolute;left:12px;bottom:40px;z-index:6;width:64px;height:78px;padding:0;border:0;background:none;cursor:pointer}
 .scan-tray[hidden]{display:none}
 .scan-tray-stack{position:absolute;inset:0}
