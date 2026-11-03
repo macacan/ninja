@@ -93,9 +93,9 @@ Options -Indexes
 
 # 6. Browser Caching
 <IfModule mod_headers.c>
-  # Dynamic data files (products, prices, news) should never be stale in browser cache.
+  # Dynamic data files (products, prices, news, the scanner image index) should never be stale in browser cache.
   # Search engines may fetch them to render the pages, but should not list them as search results.
-  <FilesMatch "\.(json)$">
+  <FilesMatch "\.(json|bin)$">
     Header set Cache-Control "no-cache, must-revalidate"
     Header set X-Robots-Tag "noindex"
   </FilesMatch>

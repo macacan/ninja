@@ -569,9 +569,11 @@ export function loadArtIndex(game = "pokemon") {
   artPromises[game] ||= (async () => {
     try {
       const base = ART_BASES[game];
+      // Båda filerna kontrolleras mot servern (ett billigt 304-svar när de är oförändrade). Annars kunde telefonen ha
+      // kvar en gammal hashes.bin bredvid en ny hashes.json, och då stämde de inte ihop och indexet stängdes av.
       const [j, b] = await Promise.all([
-        fetch(base + "hashes.json").then((r) => (r.ok ? r.json() : Promise.reject())),
-        fetch(base + "hashes.bin").then((r) => (r.ok ? r.arrayBuffer() : Promise.reject())),
+        fetch(base + "hashes.json", { cache: "no-cache" }).then((r) => (r.ok ? r.json() : Promise.reject())),
+        fetch(base + "hashes.bin", { cache: "no-cache" }).then((r) => (r.ok ? r.arrayBuffer() : Promise.reject())),
       ]);
       const db = new Int8Array(b);
       // Ett kort kan finnas flera gånger (liggande battlefields, vridna åt båda hållen). idx pekar på det första.
@@ -1787,7 +1789,7 @@ function startHudLoop() {
       } else {
         lock.hits = 0;
         // Kortet har lämnat ramen: i snabbskanningen får samma kort räknas igen
-        if (++lock.misses >= LOCK_OFF && lock.on) { lock.on = false; lock.target = guide; skipKey = null; }
+        if (++lock.misses >= LOCK_OFF && lock.on) { lock.on = false; lock.target = guide; skipKey = null; cand = null; }
       }
     }
 
@@ -1851,7 +1853,10 @@ function motionLevel(video) {
 // Körs var MOTION_TICK ms. OCR startar först när kameran varit stilla en stund och ingen skanning pågår.
 function motionTick() {
   const video = dialog?.querySelector("video");
-  if (!dialog?.open || !video?.videoWidth || busy || frozen || manualOpen || Date.now() < pauseUntil) return;
+  if (!dialog?.open || !video?.videoWidth || frozen || manualOpen) return;
+  // Under en läsning (och pausen efter en träff) tas stickprovet ändå, så att nästa jämförelse gäller bilden nyss och
+  // inte en bild från innan läsningen. Annars räknades en hand som håller kortet som rörelse efter varje läsning.
+  if (busy || Date.now() < pauseUntil) { motionLevel(video); return; }
 
   // Ingen träff efter en stund: lyft fram "Värdera manuellt"
   if (Date.now() - openedAt > NUDGE_AFTER) dialog.querySelector(".scan-now")?.classList.add("nudge");
@@ -1860,7 +1865,6 @@ function motionTick() {
   stillTicks = level < MOTION_LIMIT ? stillTicks + 1 : 0;
 
   if (stillTicks < STILL_TICKS) {
-    cand = null; // läsningar som ska bekräfta varandra måste komma medan kameran står still
     frameEl()?.classList.add("is-moving");
     status("Håll kortet i ramen…");
     return;
@@ -1868,8 +1872,9 @@ function motionTick() {
   frameEl()?.classList.remove("is-moving");
   // Läs bara när ramen ser ett kort, så att en tom ram inte håller läsarna upptagna när nästa kort kommer.
   // Kort vars kanter inte syns (t.ex. mot en likfärgad bakgrund) får ändå ett försök med jämna mellanrum.
+  // Ett kort som väntar på att bekräftas läses om direkt.
   const seen = lastSeen && Date.now() - lastSeen.at < 400;
-  if (Date.now() - lastScanAt >= (seen ? SCAN_INTERVAL : BLIND_INTERVAL)) runScan(false);
+  if (Date.now() - lastScanAt >= (seen || cand ? SCAN_INTERVAL : BLIND_INTERVAL)) runScan(false);
 }
 
 // Startar en skanning av aktuell bild.
@@ -2024,12 +2029,16 @@ async function frozenScan(snap, { fromFile }) {
 }
 
 let last = null, lastNum = null;
-// Automatisk skanning: ett kort godkänns först när samma kort lästs CONFIRM_FRAMED gånger i rad medan kameran stått
-// still, eller CONFIRM_BLIND gånger när ramen inte såg kortets kanter. Annars kan en suddig bakgrund i en snabb
-// kamerarörelse likna något kort. cand: kortet som väntar på att bekräftas, och hur många gånger det lästs.
-const CONFIRM_FRAMED = 2, CONFIRM_BLIND = 3;
+// Automatisk skanning: en tydlig bildträff (SURE_LOOK eller mer) godkänns direkt, bakgrunden liknar aldrig ett kort
+// så mycket. En svagare träff godkänns först när samma kort lästs CONFIRM_FRAMED gånger, eller CONFIRM_BLIND gånger när
+// ramen inte såg kortets kanter, så att en suddig bakgrund inte tas för ett kort. Läsningar utan kort däremellan räknas
+// inte, och räkningen börjar om först när ett annat kort läses eller kortet lämnar ramen.
+// cand: kortet som väntar på att bekräftas, och hur många gånger det lästs.
+const CONFIRM_FRAMED = 2, CONFIRM_BLIND = 3, SURE_LOOK = 0.88;
 let cand = null;
-function confirmed(id, framed) {
+function confirmed(r, framed) {
+  const id = r.cardId, top = r.art?.[0];
+  if (top?.id === id && top.s >= SURE_LOOK) { cand = null; return true; }
   if (cand?.id !== id) cand = { id, n: 0 };
   if (++cand.n < (framed ? CONFIRM_FRAMED : CONFIRM_BLIND)) return false;
   cand = null;
@@ -2045,8 +2054,7 @@ async function attempt(canvas, { fromFile = false, manual = false, source } = {}
     // 1. Bilden mot alla kort, sedan texten. Pekar de ut samma kort (eller är bildträffen mycket tydlig) är vi klara.
     const r = await identify(canvas, { full: manual || fromFile, source });
     if (!dialog.open) return;
-    if (!r.cardId) cand = null;
-    else if (!manual && !fromFile && !confirmed(r.cardId, !!source?.framed)) return status("Håll kortet stilla i ramen…");
+    if (r.cardId && !manual && !fromFile && !confirmed(r, !!source?.framed)) return status("Håll kortet stilla i ramen…");
     if (r.cardId) return setPeek(r, canvas);
 
     // 2. Annars som förut: namn och nummer söks i TCGdex
