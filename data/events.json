@@ -1,6 +1,20 @@
 {
- "updated": 1793663647739,
+ "updated": 1793664587760,
  "events": [
+  {
+   "at": 1793664581844,
+   "store": "majki-poke",
+   "product": "majki-poke:15353692586370",
+   "group": "30th-celebration|booster-pack|en|",
+   "title": "30th Celebration – Booster Pack (ENG)",
+   "url": "https://majkipoke.se/products/30th-celebration-booster-pack-eng",
+   "image": "https://cdn.shopify.com/s/files/1/0953/4629/5170/files/30thCelebrationBoosterPack_5Pack_ENG.png?v=1781901380",
+   "price": 219,
+   "type": "Booster Pack",
+   "set": "30th Celebration",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793657259044,
    "store": "samlarhobby",
@@ -7038,19 +7052,6 @@
    "price": 2599,
    "type": "Booster Box",
    "set": "Mega Evolution",
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793100008086,
-   "store": "tsp-vault",
-   "product": "tsp-vault:16053440086397",
-   "group": "obsidian-flames|blister|en||3",
-   "title": "Pokémon Tcg Scarlet & Violet Obsidian Flames Booster Blister 3-Pack",
-   "url": "https://tspvault.se/products/pokemon-tcg-scarlet-violet-obsidian-flames-booster-blister-3-pack",
-   "price": 379,
-   "type": "Blister",
-   "set": "Obsidian Flames",
    "lang": "en",
    "kind": "tillbaka"
   }
