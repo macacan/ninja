@@ -545,7 +545,7 @@ async function scanQuery({ game: g, cardId, name, number, total }) {
 // manual: skannern öppnas direkt med sökrutan (Sök och lägg till i valvet)
 async function scanCards(g = VAULT_PAGE ? "vault" : game, { manual = false } = {}) {
   track("scan", "Öppnad");
-  const { openScanner } = await import("./card-scanner.js?v=20261105a");
+  const { openScanner } = await import("./card-scanner.js?v=20261105b");
   const added = new Map(); // valvet: träffarna som lagts in, för att kunna öppna rätt kort
   openScanner(async (r) => {
     track("scan", r.cardId ? "Säker träff" : "Läst, söker");
@@ -835,7 +835,7 @@ async function openCard(i) {
       ${cardmarketTable(full, sek)}
       ${tcgplayerTable(full, sek)}
       <div class="cm-links">
-        ${ja ? "" : vaultActions(c.orig || c, c)}
+        ${ja || !VAULT_PAGE ? "" : vaultActions(c.orig || c, c)}
         <a class="btn${ja ? " primary" : ""} small" href="https://www.cardmarket.com/en/Pokemon/Products/Search?searchString=${encodeURIComponent(ja ? c.en || full.name : full.name || c.name)}" target="_blank" rel="noopener">Cardmarket ↗</a>
         ${ja ? "" : `<a class="btn small" href="https://www.tcgplayer.com/search/pokemon/product?q=${encodeURIComponent(full.name || c.name)}" target="_blank" rel="noopener">TCGplayer ↗</a>`}
       </div>
@@ -873,7 +873,7 @@ function openPrebuiltCard(c, i, body) {
       <div class="pchart"></div>
       ${c.sek != null || c.low != null ? `<h3>TCGplayer (USA)</h3><table class="cm-table">${row("Marknadspris", c.sek)}${row("Foil", c.foil)}${row("Lägsta i lager", c.low)}</table>` : ""}
       <div class="cm-links">
-        ${vaultActions(c.orig || c, c)}
+        ${VAULT_PAGE ? vaultActions(c.orig || c, c) : ""}
         <a class="btn small" href="${esc(g.cardmarket(c))}" target="_blank" rel="noopener">Cardmarket ↗</a>
         <a class="btn small" href="${esc(g.tcgplayer(c))}" target="_blank" rel="noopener">TCGplayer ↗</a>
       </div>

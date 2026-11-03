@@ -2256,7 +2256,7 @@ async function setPeek(r, canvas) {
 }
 // ---------- Värdera manuellt ----------
 // Pokémon på värderingssidan: skannern stängs och sidans egen manuella värdering öppnas (onPartial, utan text).
-// Annars skrivs kortet in i skannern: One Piece och Riftbound (valvet har båda) får förslag ur korten, och ett valt
+// Annars skrivs kortet in i skannern: One Piece och Riftbound får förslag ur korten (valvet även Pokémon, från TCGdex), och ett valt
 // kort blir en träff precis som ett skannat (läggs i valvet eller öppnas). Pokémon utan egen värdering:
 // det skrivna söks på sidan.
 let manualOpen = false, manualHits = [];
@@ -2296,22 +2296,23 @@ async function renderManual() {
     hint.textContent = "Skriv minst två bokstäver av namnet, eller kortnumret.";
     return;
   }
-  const [rb, op] = await Promise.all([scanGame !== "op" ? rbData() : null, scanGame !== "rb" ? opData() : null]);
+  // Valvet: Pokémonkort med namnet hämtas från TCGdex (från tre bokstäver), kort med bild först
+  const [rb, op, pk] = await Promise.all([scanGame !== "op" ? rbData() : null, scanGame !== "rb" ? opData() : null,
+    scanGame === "vault" && q.length >= 3 ? getJSON(`${API}/cards?${new URLSearchParams({ name: q })}`).catch(() => []) : null]);
   if (input.value.trim().toLowerCase() !== q) return; // ny text hann skrivas
   const all = [...(rb?.cards || []).map((c) => ({ game: "rb", c })), ...(op?.cards || []).map((c) => ({ game: "op", c }))];
   const words = q.split(/\s+/), hay = ({ c }) => `${c.name} ${c.no || ""} ${c.variant || ""}`.toLowerCase();
   // Namn som börjar med det skrivna först, sedan dyraste
-  manualHits = all.filter((x) => words.every((w) => hay(x).includes(w)))
-    .sort((a, b) => b.c.name.toLowerCase().startsWith(q) - a.c.name.toLowerCase().startsWith(q) || (b.c.sek ?? -1) - (a.c.sek ?? -1))
-    .slice(0, 8);
+  const hits = all.filter((x) => words.every((w) => hay(x).includes(w)))
+    .sort((a, b) => b.c.name.toLowerCase().startsWith(q) - a.c.name.toLowerCase().startsWith(q) || (b.c.sek ?? -1) - (a.c.sek ?? -1));
+  const pkHits = (Array.isArray(pk) ? pk : []).sort((a, b) => !!b.image - !!a.image)
+    .map((c) => ({ game: "pokemon", c: { id: c.id, name: c.name, no: `#${c.localId} · ${setOf(c.id).toUpperCase()}`, image: c.image ? `${c.image}/low.webp` : null } }));
+  manualHits = [...hits.slice(0, 8), ...pkHits.slice(0, 8)];
   list.innerHTML = manualHits.map(({ game, c }, i) => `<li><button type="button" data-i="${i}">
     ${c.image ? `<img src="${esc(c.image)}" alt="" loading="lazy">` : "<i></i>"}
     <span><b>${esc(c.name)}</b><small>${esc([c.no, c.variant, scanGame === "vault" && GAME_LABEL[game]].filter(Boolean).join(" · "))}</small></span>
-    ${c.sek != null ? `<em>${esc(kr(c.sek))}</em>` : ""}</button></li>`).join("")
-    // Pokémonkort söks på Kortpriser, där kortet läggs i valvet från den stora vyn
-    + (scanGame === "vault" ? `<li><a href="priser.html?game=pokemon&q=${encodeURIComponent(input.value.trim())}"><i></i>
-    <span><b>Sök Pokémonkortet på Kortpriser</b><small>Öppna kortet och tryck Lägg i valvet</small></span></a></li>` : "");
-  hint.textContent = manualHits.length || scanGame === "vault" ? "" : "Hittade inget kort med det namnet.";
+    ${c.sek != null ? `<em>${esc(kr(c.sek))}</em>` : ""}</button></li>`).join("");
+  hint.textContent = manualHits.length ? "" : "Hittade inget kort med det namnet.";
 }
 function pickManual(i) {
   const q = dialog.querySelector(".scan-manual input").value.trim();
@@ -2328,7 +2329,7 @@ function pickManual(i) {
   closeManual();
   // Samma kort som nyss skannades ska gå att lägga in igen när man väljer det själv
   skipKey = null;
-  setPeek({ game: x.game, cardId: x.c.id, name: x.c.name, number: x.c.no || null, total: null, image: x.c.image || null }, null);
+  setPeek({ game: x.game, cardId: x.c.id, name: x.c.name, number: (x.game === "pokemon" ? localOf(x.c.id) : x.c.no) || null, total: null, image: x.c.image || null }, null);
 }
 
 function clearPeek() {
