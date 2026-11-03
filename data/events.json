@@ -1,6 +1,34 @@
 {
- "updated": 1793742380463,
+ "updated": 1793743320485,
  "events": [
+  {
+   "at": 1793742512983,
+   "store": "samlarhobby",
+   "product": "samlarhobby:16096496943485",
+   "group": "scarlet-violet|elite-trainer-box|en|",
+   "title": "Pokémon, Scarlet & Violet, Elite Trainer Box (Purple)",
+   "url": "https://samlarhobby.se/products/pokemon-scarlet-violet-elite-trainer-box-purple",
+   "image": "https://cdn.shopify.com/s/files/1/0905/3120/1405/files/POK85341-MIR_1.jpg?v=1793742133",
+   "price": 1595,
+   "type": "Elite Trainer Box",
+   "set": "Scarlet & Violet",
+   "lang": "en",
+   "kind": "ny"
+  },
+  {
+   "at": 1793742512983,
+   "store": "samlarhobby",
+   "product": "samlarhobby:16096496451965",
+   "group": "scarlet-violet|elite-trainer-box|en|",
+   "title": "Pokémon, Scarlet & Violet, Elite Trainer Box (Red)",
+   "url": "https://samlarhobby.se/products/pokemon-scarlet-violet-elite-trainer-box-red",
+   "image": "https://cdn.shopify.com/s/files/1/0905/3120/1405/files/81kFKYGRq7L.jpg?v=1793742089",
+   "price": 1595,
+   "type": "Elite Trainer Box",
+   "set": "Scarlet & Violet",
+   "lang": "en",
+   "kind": "ny"
+  },
   {
    "at": 1793741750775,
    "store": "dragon-s-lair",
@@ -7098,34 +7126,6 @@
    "set": "Ascended Heroes",
    "lang": "en",
    "kind": "ny"
-  },
-  {
-   "at": 1793213313403,
-   "store": "cardgame",
-   "product": "cardgame:https://cardgame.se/engelska-pokmon-produkter/engelska-booster-bundle/pokmon-scarlet-violet-151-booster-bundle-ppna-med-oss",
-   "group": "151|booster-bundle|en|",
-   "title": "Pokémon Scarlet & Violet: 151 Booster Bundle",
-   "url": "https://cardgame.se/engelska-pokmon-produkter/engelska-booster-bundle/pokmon-scarlet-violet-151-booster-bundle-ppna-med-oss",
-   "image": "https://cdn.quickbutik.com/images/87588Q/products/176305377868ff2ea9261aa.png",
-   "price": 2199,
-   "type": "Booster Bundle",
-   "set": "151",
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793210935821,
-   "store": "majki-poke",
-   "product": "majki-poke:15231601738114",
-   "group": "phantasmal-flames|booster-pack|en|",
-   "title": "Phantasmal Flames – Booster Pack (ENG)",
-   "url": "https://majkipoke.se/products/phantasmal-flames-booster-pack-eng",
-   "image": "https://cdn.shopify.com/s/files/1/0953/4629/5170/files/Phantasmal_Flames_Booster_Pack_ENG1_39eeea4f-b3be-489b-bf99-53637e4280fe.png?v=1778182270",
-   "price": 159,
-   "type": "Booster Pack",
-   "set": "Phantasmal Flames",
-   "lang": "en",
-   "kind": "tillbaka"
   }
  ]
 }
