@@ -1,6 +1,20 @@
 {
- "updated": 1793735435764,
+ "updated": 1793736375789,
  "events": [
+  {
+   "at": 1793736086430,
+   "store": "spelparken",
+   "product": "spelparken:15249607524727",
+   "group": "x|ultra-premium-collection|en||charizard-x",
+   "title": "Mega Charizard X EX – Ultra Premium Collection",
+   "url": "https://spelparken.se/products/pokemon-mega-charizard-x-ex-ultra-premium-collection",
+   "image": "https://cdn.shopify.com/s/files/1/0948/1876/3127/files/poke_upc_2025_charizard.webp?v=1763580606",
+   "price": 3499,
+   "type": "Ultra-Premium Collection",
+   "set": null,
+   "lang": "en",
+   "kind": "ny"
+  },
   {
    "at": 1793733406220,
    "store": "cardlevels",
@@ -7104,20 +7118,6 @@
    "url": "https://cardlevels.se/products/venusaur-15-celebrations-classic-collection-classic-collection",
    "image": "https://cdn.shopify.com/s/files/1/0846/0458/4247/files/1792738254405-scan-1792738536136-0rzmvl-fram.jpg?v=1793198814",
    "price": 199,
-   "type": "Collection Box",
-   "set": "Celebrations",
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1793199581944,
-   "store": "cardlevels",
-   "product": "cardlevels:11038266163511",
-   "group": "celebrations|collection-box|en||classic-luxray-x",
-   "title": "Luxray GL LV.X 109 - Celebrations: Classic Collection - Classic Collection",
-   "url": "https://cardlevels.se/products/luxray-gl-lv-x-109-celebrations-classic-collection-classic-collection",
-   "image": "https://cdn.shopify.com/s/files/1/0846/0458/4247/files/1792738256629-scan-1792738536152-v8inml-fram.jpg?v=1793198812",
-   "price": 49,
    "type": "Collection Box",
    "set": "Celebrations",
    "lang": "en",
