@@ -1,6 +1,62 @@
 {
- "updated": 1793726095543,
+ "updated": 1793727015568,
  "events": [
+  {
+   "at": 1793726253892,
+   "store": "dragon-s-lair",
+   "product": "dragon-s-lair:15662376583516",
+   "group": "white-flare|booster-box|ja|",
+   "title": "Pokémon Scarlet & Violet: White Flare Booster Box (20 Pack) (Japanskt)(SV11W)",
+   "url": "https://dragonslair.se/products/pokemon-scarlet-violet-white-flare-booster-box-20-pack-japanskt",
+   "image": "https://cdn.shopify.com/s/files/1/1015/8315/9644/files/Pics_87_9bfd01b3-f67d-486d-b912-6a46566e344e.webp?v=1783355221",
+   "price": 2249,
+   "type": "Booster Box",
+   "set": "White Flare",
+   "lang": "ja",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1793726253892,
+   "store": "dragon-s-lair",
+   "product": "dragon-s-lair:15554385838428",
+   "group": "white-flare|booster-pack|ja|",
+   "title": "Pokémon TCG - White Flare Booster Japansk (SV11W)",
+   "url": "https://dragonslair.se/products/pokemon-tcg-white-flare-booster-japansk-pokemon",
+   "image": "https://cdn.shopify.com/s/files/1/1015/8315/9644/files/Pok-mon-TCG---White-Flare-Booster-Japansk.webp?v=1777047310",
+   "price": 79,
+   "type": "Booster Pack",
+   "set": "White Flare",
+   "lang": "ja",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1793726143855,
+   "store": "spelparken",
+   "product": "spelparken:15439990718839",
+   "group": "shining-fates|booster-pack|en|",
+   "title": "Shining Fates Booster Pack",
+   "url": "https://spelparken.se/products/shining-fates-booster-pack",
+   "image": "https://cdn.shopify.com/s/files/1/0948/1876/3127/files/shining-fates-booster-pack-3-1200x1536.webp?v=1775081543",
+   "price": 199,
+   "type": "Booster Pack",
+   "set": "Shining Fates",
+   "lang": "en",
+   "kind": "ny"
+  },
+  {
+   "at": 1793726143855,
+   "store": "spelparken",
+   "product": "spelparken:15221112799607",
+   "group": "chilling-reign|booster-pack|en|",
+   "title": "Chilling Reign Booster Pack",
+   "url": "https://spelparken.se/products/pokemon-sword-shield-chilling-reign-booster-pack",
+   "image": "https://cdn.shopify.com/s/files/1/0948/1876/3127/files/pokemon-chilling-reign-articuno.webp?v=1761941201",
+   "price": 169,
+   "type": "Booster Pack",
+   "set": "Chilling Reign",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793725587626,
    "store": "cardgame",
@@ -7065,62 +7121,6 @@
    "set": "151",
    "lang": "en",
    "kind": "tillbaka"
-  },
-  {
-   "at": 1793191712065,
-   "store": "dragon-s-lair",
-   "product": "dragon-s-lair:15726498021724",
-   "group": "x|tin|en||gengar-summer",
-   "title": "Pokémon TCG: Summer Tin 2026 - Mega Gengar EX (max 1/kund)",
-   "url": "https://dragonslair.se/products/pokemon-tcg-summer-tin-2026-mega-gengar-ex-max-1-kund",
-   "image": "https://cdn.shopify.com/s/files/1/1015/8315/9644/files/PokemonTCGSummerTin2026-MegaGengarEX.png?v=1785929335",
-   "price": 549,
-   "type": "Tin",
-   "set": null,
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793191712065,
-   "store": "dragon-s-lair",
-   "product": "dragon-s-lair:15726490943836",
-   "group": "x|tin|en||clefable-summer",
-   "title": "Pokémon TCG: Summer Tin 2026 - Mega Clefable EX (max 1/kund)",
-   "url": "https://dragonslair.se/products/pokemon-tcg-summer-tin-2026-mega-clefable-ex",
-   "image": "https://cdn.shopify.com/s/files/1/1015/8315/9644/files/PokemonTCGSummerTin2026-MegaClefableEX.png?v=1785929148",
-   "price": 425,
-   "type": "Tin",
-   "set": null,
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793186616262,
-   "store": "samlarhobby",
-   "product": "samlarhobby:16089781764477",
-   "group": "x|blister|en||2|enhanced-gengar",
-   "title": "Pokémon, Enhanced 2-Pack Blister, Gengar",
-   "url": "https://samlarhobby.se/products/pokemon-enhanced-2-pack-blister-gengar",
-   "image": "https://cdn.shopify.com/s/files/1/0905/3120/1405/files/0196214155985_1.jpg?v=1793186224",
-   "price": 229,
-   "type": "Blister",
-   "set": null,
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1793185769919,
-   "store": "speltrollet",
-   "product": "speltrollet:15637887942982",
-   "group": "30th-celebration|collection-box|en||figure",
-   "title": "Pokemon  30th Celebration Figure Collection (Mewtwo)",
-   "url": "https://speltrollet.se/products/pokemon-30th-celebration-figure-collection-mew?variant=57715709116742",
-   "image": "https://cdn.shopify.com/s/files/1/0674/0951/0716/files/Pokemon_TCG_30th_Celebration_Figure_Collection_Mewtwo_EN-copy-scaled_9d4b86ea-9245-4e10-8ec1-65b05009bbb6.webp?v=1793094533",
-   "price": 599,
-   "type": "Collection Box",
-   "set": "30th Celebration",
-   "lang": "en",
-   "kind": "ny"
   }
  ]
 }
