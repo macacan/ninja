@@ -1,6 +1,20 @@
 {
- "updated": 1793736375789,
+ "updated": 1793737295811,
  "events": [
+  {
+   "at": 1793736992946,
+   "store": "spelparken",
+   "product": "spelparken:15237517705591",
+   "group": "silver-tempest|booster-pack|en|",
+   "title": "Silver Tempest Booster Pack",
+   "url": "https://spelparken.se/products/pokemon-sword-shield-silver-tempest-booster-pack-oppnas-live",
+   "image": "https://cdn.shopify.com/s/files/1/0948/1876/3127/files/pokemon-tcg-silver-tempest-pok86091-main.webp?v=1762964967",
+   "price": 189,
+   "type": "Booster Pack",
+   "set": "Silver Tempest",
+   "lang": "en",
+   "kind": "ny"
+  },
   {
    "at": 1793736086430,
    "store": "spelparken",
@@ -7108,20 +7122,6 @@
    "set": "Destined Rivals",
    "lang": "en",
    "kind": "tillbaka"
-  },
-  {
-   "at": 1793199581944,
-   "store": "cardlevels",
-   "product": "cardlevels:11038266294583",
-   "group": "celebrations|collection-box|en||classic-venusaur",
-   "title": "Venusaur 15 - Celebrations: Classic Collection - Classic Collection",
-   "url": "https://cardlevels.se/products/venusaur-15-celebrations-classic-collection-classic-collection",
-   "image": "https://cdn.shopify.com/s/files/1/0846/0458/4247/files/1792738254405-scan-1792738536136-0rzmvl-fram.jpg?v=1793198814",
-   "price": 199,
-   "type": "Collection Box",
-   "set": "Celebrations",
-   "lang": "en",
-   "kind": "ny"
   }
  ]
 }
