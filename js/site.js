@@ -406,9 +406,18 @@ export function ago(t, short = false) {
   return `${d} ${d === 1 ? "dag" : "dagar"}${s}`;
 }
 
+// Riftbound-nyheter utan bild får konstverket från ett Legend-kort. Bilderna delas ut i tur och ordning, så att nyheter nära
+// varandra inte ser likadana ut. Blandad ordning, så att samma typ av bild inte följer på varandra.
+const RB_ART = ["jinx", "volibear", "ahri", "darius", "lux", "viktor", "teemo", "miss-fortune", "yasuo", "leona", "kai-sa", "garen", "ezreal", "lee-sin", "sett"];
+const rbArt = (i) => new URL(`../img/news-rb/${RB_ART[i % RB_ART.length]}.webp`, import.meta.url).href;
+
 let newsCache;
 export function news() {
-  newsCache ??= fetch("data/news.json", { cache: "no-cache" }).then((r) => r.json());
+  newsCache ??= fetch("data/news.json", { cache: "no-cache" }).then((r) => r.json()).then((d) => {
+    let i = 0;
+    for (const a of d.articles || []) if (a.game === "rb" && !a.image) a.image = rbArt(i++);
+    return d;
+  });
   return newsCache;
 }
 
