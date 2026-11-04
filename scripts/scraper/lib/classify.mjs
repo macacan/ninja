@@ -7,7 +7,7 @@ const POKEMON = /pok[eé]mon/i;
 
 // Höjs när igenkänningen ändras så att fler produkter räknas. Då sparas de nyfunna produkterna tyst
 // vid nästa kontroll av varje butik, i stället för att larmas som hundratals "nya" (se engine.mjs).
-export const CLASSIFY_VERSION = 10;
+export const CLASSIFY_VERSION = 11;
 
 // Ordningen spelar roll: mer specifika typer först.
 const TYPES = [
@@ -93,7 +93,7 @@ const SET_CODE = /\((?:c?sv\d{1,2}(?:\.\d)?[a-z]?c?|m\d{1,2}[a-z]?|s\d{1,2}[a-z]
 // Setnamn som också är vanliga ord och därför inte räcker som bevis.
 const VAGUE_SETS = new Set(["dragon", "platinum", "emerald", "sample", "jungle", "fossil", "generations", "expedition", "unleashed", "wizards black star promos", "jumbo cards", "best of game", "w promotional", "miscellaneous promos"]);
 // Set som ofta bara är en del av ett produktnamn ("Team Rocket's Mewtwo ex"). Räknas som bevis, men förlorar mot andra set i titeln.
-const LOW_PRIORITY_SETS = new Set(["team rocket"]);
+const LOW_PRIORITY_SETS = new Set(["team rocket", "deoxys"]);
 
 // Andra kortspel än Pokémon: Riftbound (game "rb") och One Piece (game "op"). Lösa kort har sällan en typ i namnet
 // ("Ahri, Inquisitive SFD 227*/221", "Brook OP15-022 L (ENG)") och sorteras bort av NOT_SEALED, SINGLE eller av att

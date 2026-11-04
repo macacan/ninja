@@ -103,6 +103,10 @@ export async function createEngine({ statuses } = {}) {
       state.sets = { t: Date.now(), names: [...new Set(sets.map((s) => s.name))], series: series.map((s) => s.name) };
     } catch { state.sets ||= { t: 0, names: [], series: [] }; }
   }
+  // TCGdex får nya set först efter släppet. Pokémonset i släppkalendern räknas redan innan, annars hamnar
+  // t.ex. "Mega Evolution: Delta Reign" under serien Mega Evolution.
+  const calendar = (await readJSON("data/release-calendar.json", { releases: [] })).releases.filter((r) => !r.game).map((r) => r.set);
+  state.sets.names = [...new Set([...state.sets.names, ...calendar])];
 
   // En Host per butik som lever kvar mellan varven, så att pauser och robots.txt följer med.
   async function hostFor(store) {
