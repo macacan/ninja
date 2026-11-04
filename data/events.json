@@ -1,6 +1,20 @@
 {
- "updated": 1793771258998,
+ "updated": 1793772259025,
  "events": [
+  {
+   "at": 1793772181166,
+   "store": "samlarhobby",
+   "product": "samlarhobby:16096718815613",
+   "group": "x|deck|ja||championships-world-yokohama",
+   "title": "Pokémon: World Championships 2023 Yokohama Deck (Japansk)",
+   "url": "https://samlarhobby.se/products/pokemon-world-championships-2023-yokohama-deck-japansk",
+   "image": "https://cdn.shopify.com/s/files/1/0905/3120/1405/files/pokemon-trading-card-game-scarlet-violet-pokemon-world-championships-2023-yokohama-deck-pikachu.jpg?v=1793772060",
+   "price": 4295,
+   "type": "Deck",
+   "set": null,
+   "lang": "ja",
+   "kind": "ny"
+  },
   {
    "at": 1793754154162,
    "store": "packs-on-packs",
@@ -7112,20 +7126,6 @@
    "type": "Booster Pack",
    "set": null,
    "lang": "ja",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793256563732,
-   "store": "miniature-metropolis",
-   "product": "miniature-metropolis:11021824491857",
-   "group": "destined-rivals|booster-box|en|",
-   "title": "POKÉMON TCG: SCARLET & VIOLET – DESTINED RIVALS BOOSTER DISPLAY",
-   "url": "https://miniaturemetropolis.se/products/pokemon-tcg-scarlet-violet-destined-rivals-booster-display",
-   "image": "https://cdn.shopify.com/s/files/1/0958/6832/2129/files/DESTINEDRIVALSDISPLAY.webp?v=1786882118",
-   "price": 4095,
-   "type": "Booster Box",
-   "set": "Destined Rivals",
-   "lang": "en",
    "kind": "tillbaka"
   }
  ]
