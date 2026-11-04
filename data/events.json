@@ -1,6 +1,48 @@
 {
- "updated": 1793751360650,
+ "updated": 1793754300727,
  "events": [
+  {
+   "at": 1793754154162,
+   "store": "packs-on-packs",
+   "product": "packs-on-packs:https://packsonpacks.se/sealed-produkter/30th-celebration-greninja-ex-box",
+   "group": "30th-celebration|collection-box|en||",
+   "title": "30th Celebration ex Box",
+   "url": "https://packsonpacks.se/sealed-produkter/30th-celebration-greninja-ex-box",
+   "image": "https://cdn.quickbutik.com/images/92330P/products/6aac3ef38e1e9.png",
+   "price": 699,
+   "type": "Collection Box",
+   "set": "30th Celebration",
+   "lang": "en",
+   "kind": "ny"
+  },
+  {
+   "at": 1793754154162,
+   "store": "packs-on-packs",
+   "product": "packs-on-packs:https://packsonpacks.se/sealed-produkter/151-blooming-waters-premium-collection",
+   "group": "151|premium-collection|en||blooming-waters",
+   "title": "151: Blooming Waters (Premium Collection)",
+   "url": "https://packsonpacks.se/sealed-produkter/151-blooming-waters-premium-collection",
+   "image": "https://cdn.quickbutik.com/images/92330P/products/695997c1171b2.png",
+   "price": 4699,
+   "type": "Premium Collection",
+   "set": "151",
+   "lang": "en",
+   "kind": "ny"
+  },
+  {
+   "at": 1793754154162,
+   "store": "packs-on-packs",
+   "product": "packs-on-packs:https://packsonpacks.se/sealed-produkter/pokemon-mega-charizard-x-ex-ultra-premium-collection",
+   "group": "x|ultra-premium-collection|en||charizard-x",
+   "title": "Mega Charizard X EX (Ultra Premium Collection)",
+   "url": "https://packsonpacks.se/sealed-produkter/pokemon-mega-charizard-x-ex-ultra-premium-collection",
+   "image": "https://cdn.quickbutik.com/images/92330P/products/6a1f0e0d40b60.png",
+   "price": 2700,
+   "type": "Ultra-Premium Collection",
+   "set": null,
+   "lang": "en",
+   "kind": "ny"
+  },
   {
    "at": 1793745167165,
    "store": "spelparken",
@@ -7084,49 +7126,6 @@
    "type": "Booster Box",
    "set": "Destined Rivals",
    "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793254575490,
-   "store": "poketalk",
-   "product": "poketalk:9253149081942",
-   "group": "hidden-fates|booster-pack|en|",
-   "title": "Pokémon Sun & Moon: Hidden Fates Booster Pack",
-   "url": "https://poketalk.se/products/pokemon-sun-moon-hidden-fates-booster-pack",
-   "image": "https://cdn.shopify.com/s/files/1/0862/7860/3094/files/PRODUKTSERIER_2_31acdad7-e199-4a38-a190-bb6f971a86d0.png?v=1738866216",
-   "price": 499,
-   "type": "Booster Pack",
-   "set": "Hidden Fates",
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793232234870,
-   "store": "spelparken",
-   "product": "spelparken:15588212670839",
-   "group": "30th-celebration|ultra-premium-collection|en||night",
-   "title": "30th Celebration Ultra-Premium Collection – Night",
-   "url": "https://spelparken.se/products/30th-celebration-ultra-premium-collection-night",
-   "image": "https://cdn.shopify.com/s/files/1/0948/1876/3127/files/91SJZ2YtZhL._AC_UF894_1000_QL80.jpg?v=1793191331",
-   "price": 5999,
-   "type": "Ultra-Premium Collection",
-   "set": "30th Celebration",
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793225822955,
-   "store": "kantovault",
-   "product": "kantovault:10148347609429",
-   "group": "op|carrying-on-his-will|booster-pack|ja|",
-   "title": "One Piece [OP-13]: Carrying on His Will Booster Pack (Japansk)",
-   "url": "https://kantovault.se/products/one-piece-op-13-carrying-on-his-will-booster-pack-japansk",
-   "image": null,
-   "price": 119,
-   "type": "Booster Pack",
-   "set": "Carrying On His Will",
-   "lang": "ja",
-   "game": "op",
    "kind": "tillbaka"
   }
  ]
