@@ -436,6 +436,7 @@ mountCardAutocomplete($("#pq"), {
 const VAULT_PAGE = document.body.dataset.page === "valv";
 const VAULT_KEY = "nl:vault";
 let vaultDirty = false;
+let backToScan = false; // kortet öppnades från skannern, som ska komma tillbaka när kortet stängs
 const loadVault = () => { try { return JSON.parse(localStorage.getItem(VAULT_KEY)) || []; } catch { return []; } };
 function saveVault(v) {
   const json = JSON.stringify(v);
@@ -552,7 +553,7 @@ async function scanCards(g = VAULT_PAGE ? "vault" : game, { manual = false } = {
     getRates(); // kursen ska finnas när första kortet hittas
   }
   track("scan", "Öppnad");
-  const { openScanner } = await import("./card-scanner.js?v=20261106d");
+  const { openScanner } = await import("./card-scanner.js?v=20261106f");
   const added = new Map(); // valvet: träffarna som lagts in, för att kunna öppna rätt kort
   openScanner(async (r) => {
     track("scan", r.cardId ? "Säker träff" : "Läst, söker");
@@ -560,7 +561,10 @@ async function scanCards(g = VAULT_PAGE ? "vault" : game, { manual = false } = {
       const c = await added.get(hitKey(r));
       await showVault();
       const i = c ? current.findIndex((x) => x.game === c.game && x.id === c.id) : -1;
-      if (i >= 0) openCard(i);
+      // Stängs kortet går man tillbaka till kameran, inte till valvet
+      if (i < 0) return scanCards("vault");
+      backToScan = true;
+      openCard(i);
       return;
     }
     // Ett kort från ett annat spel än det valda (t.ex. One Piece i Pokémonskannern) byter spel
@@ -1035,7 +1039,10 @@ modal.addEventListener("click", (e) => {
   if (e.target.closest(".next")) openCard(shownIndex + 1);
 });
 // Ändrades valvet medan det visades ritas det om när den stora vyn stängs
-modal.addEventListener("close", () => { if (VAULT_PAGE && vaultDirty) showVault(); });
+modal.addEventListener("close", () => {
+  if (VAULT_PAGE && vaultDirty) showVault();
+  if (backToScan) { backToScan = false; scanCards("vault"); }
+});
 modal.addEventListener("keydown", (e) => {
   if (e.key === "ArrowLeft" && shownIndex > 0) openCard(shownIndex - 1);
   if (e.key === "ArrowRight" && shownIndex < current.length - 1) openCard(shownIndex + 1);

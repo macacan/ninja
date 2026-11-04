@@ -26,6 +26,7 @@ const SCAN_INTERVAL = 250; // ms minst mellan två OCR-försök under aktiv kame
 const BLIND_INTERVAL = 1000; // ms mellan två försök när ramen inte ser något kort
 const MOTION_TICK = 100; // ms mellan två stabilitetskontroller
 const MOTION_LIMIT = 10; // medelskillnad (0–255 per pixel) under vilken kameran räknas som stilla
+const MOTION_SEEN = 22; // när ramen ser kortet: en hand darrar alltid lite, och bildjämförelsen tål det
 const STILL_TICKS = 2; // antal stilla kontroller i rad innan OCR startar
 // 63:88 mm. Så stort att kortnumret (ca 1,5 % av kortets höjd) behåller kamerans skärpa. Rätningen sker på GPU:n
 // och bara läszonerna läses ut, så storleken kostar nästan inget.
@@ -482,7 +483,7 @@ function strongestLine(peaks, outward) {
   }
   if (!lines.length) return null;
   const most = Math.max(...lines.map((l) => l.pts.length));
-  const best = lines.filter((l) => l.pts.length >= most * 0.8).sort((x, y) => y.out - x.out)[0];
+  const best = lines.filter((l) => l.pts.length >= most * 0.6).sort((x, y) => y.out - x.out)[0];
   const line = fitLine(best.pts);
   return line && line.inliers >= SIDE_SAMPLES * 0.5 ? line : null;
 }
@@ -1675,6 +1676,7 @@ function ui() {
         <ul class="scan-manual-list"></ul>
         <p class="scan-manual-hint"></p>
       </form>
+      <div class="scan-twins" hidden><b>Vilken utgåva?</b><div></div></div>
       <div class="scan-confirm" hidden>
         <img alt="">
         <b></b>
@@ -1719,6 +1721,10 @@ function ui() {
   dialog.querySelector("[data-cancel]").addEventListener("click", () => dialog.close());
   dialog.querySelector("[data-retry]").addEventListener("click", unfreeze);
   dialog.querySelector(".scan-peek").addEventListener("click", openPeek);
+  dialog.querySelector(".scan-twins").addEventListener("click", (e) => {
+    const b = e.target.closest("[data-twin]");
+    if (b) pickTwin(twinCards[+b.dataset.twin]);
+  });
 
   // Ficklampa
   const torchBtn = dialog.querySelector(".scan-torch");
@@ -1885,7 +1891,7 @@ function startHudLoop() {
       } else {
         lock.hits = 0;
         // Kortet har lämnat ramen: i snabbskanningen får samma kort räknas igen
-        if (++lock.misses >= LOCK_OFF && lock.on) { lock.on = false; lock.target = guide; skipKey = null; newCard(); }
+        if (++lock.misses >= LOCK_OFF && lock.on) { lock.on = false; lock.target = guide; skipKey = null; lastHit = null; newCard(); }
       }
     }
 
@@ -1912,7 +1918,7 @@ function grabUnwarpedFrame() {
   const corners = fresh || (near.confident ? near.corners : findCardQuad(video) || near.corners);
   // framed: kortets kanter syns i ramen (annars kan det vara bakgrunden som läses). En fyrhörning någon annanstans i bilden
   // räknas inte: en toploaders kant är också en fyrhörning, och då godkändes fel kort.
-  lastGrab = { src: video, corners, framed: !!fresh || near.confident, guide: corners === near?.corners ? null : near?.corners };
+  lastGrab = { src: video, corners, framed: !!fresh || near.confident, guide: corners === defaultCorners || corners === near?.corners ? null : defaultCorners };
   return unwarpCard(video, corners, CARD_W, CARD_H);
 }
 
@@ -1959,7 +1965,8 @@ function motionTick() {
   if (Date.now() - openedAt > NUDGE_AFTER) dialog.querySelector(".scan-now")?.classList.add("nudge");
 
   const level = motionLevel(video);
-  stillTicks = level < MOTION_LIMIT ? stillTicks + 1 : 0;
+  const seen = lastSeen && Date.now() - lastSeen.at < 400;
+  stillTicks = level < (seen ? MOTION_SEEN : MOTION_LIMIT) ? stillTicks + 1 : 0;
 
   if (stillTicks < STILL_TICKS) {
     frameEl()?.classList.add("is-moving");
@@ -1970,7 +1977,6 @@ function motionTick() {
   // Läs bara när ramen ser ett kort, så att en tom ram inte håller läsarna upptagna när nästa kort kommer.
   // Kort vars kanter inte syns (t.ex. mot en likfärgad bakgrund) får ändå ett försök med jämna mellanrum.
   // Ett kort som väntar på att bekräftas läses om direkt.
-  const seen = lastSeen && Date.now() - lastSeen.at < 400;
   if (Date.now() - lastScanAt >= (seen || cand ? SCAN_INTERVAL : BLIND_INTERVAL)) runScan(false);
 }
 
@@ -2120,7 +2126,7 @@ async function frozenScan(snap, { fromFile }) {
     setTimeout(() => {
       if (!alive()) return;
       unfreeze();
-      if (r.cardId || r.number || r.name) setPeek(r, r.canvas);
+      if (r.cardId || r.number || r.name) setPeek({ ...r, picked: true }, r.canvas);
     }, 650);
   }
 }
@@ -2140,12 +2146,13 @@ const CONFIRM_FRAMED = 2, CONFIRM_BLIND = 3, SURE_LOOK = CLEAR;
 // Röstning: bild för bild skiftar blänket, men det rätta kortet ligger kvar. Är kortet i medeltal klart före de andra i
 // minst VOTE_MIN av de senaste VOTE_FRAMES bilderna räcker ett mindre försprång än för en enstaka bild. Bara bilder där ramen
 // ser kortets kanter räknas, annars kan en stilla bakgrund rösta fram ett kort.
-const VOTE_FRAMES = 4, VOTE_MIN = 3, VOTE_LOOK = 0.56, VOTE_GAP = 0.08, BLIND_VOTE_LOOK = 0.5, BLIND_VOTE_GAP = 0.1;
+const VOTE_FRAMES = 4, VOTE_MIN = 3, VOTE_LOOK = 0.5, VOTE_GAP = 0.09, BLIND_VOTE_LOOK = 0.5, BLIND_VOTE_GAP = 0.1;
 const STRIPED = /^hgss\d-(ONE|TWO|THREE|FOUR)$/; // Alph Lithograph: rader av tecken, som liknar ränder
 let cand = null, trail = [], frameNo = 0;
 let reading = false, readRound = 0, cardEpoch = 0; // cardEpoch: byts när kortet byts, så att en sen läsning inte räknas
 let twin = null; // namnet när bilden pekar ut flera utgåvor av samma Pokémonkort
 function newCard() {
+  hideTwins();
   cand = null;
   trail = [];
   readRound = 0;
@@ -2218,13 +2225,39 @@ function voted({ game, art }) {
   const [look, gap] = mean(seen);
   return look >= BLIND_VOTE_LOOK && gap >= BLIND_VOTE_GAP ? id : null;
 }
+// Utgåvorna som en remsa i skannern, med bild och pris. Ett tryck lägger in kortet, och skannern fortsätter.
+const TWIN_ROUNDS = 3; // omgångar textläsning innan man får välja själv
+const BASIC_ENERGY = /^(Grass|Fire|Water|Lightning|Psychic|Fighting|Darkness|Metal|Fairy) Energy$/;
+let twinOpen = false, twinCards = [];
+function hideTwins() {
+  twinOpen = false;
+  const el = dialog?.querySelector(".scan-twins");
+  if (el) el.hidden = true;
+}
+async function showTwins({ art }) {
+  if (twinOpen) return;
+  twinOpen = true;
+  const near = art.filter((x) => x.s >= art[0].s - 0.06).slice(0, 4), epoch = cardEpoch;
+  const cards = await Promise.all(near.map((x) => getJSON(`${API}/cards/${encodeURIComponent(x.id)}`).catch(() => null)));
+  const prices = await Promise.all(near.map((x) => (onPreview ? Promise.resolve(onPreview({ game: "pokemon", cardId: x.id })).catch(() => null) : null)));
+  if (!twinOpen || epoch !== cardEpoch) return;
+  twinCards = cards.filter(Boolean);
+  const el = dialog.querySelector(".scan-twins");
+  el.querySelector("div").innerHTML = cards.map((c, i) => (c ? `<button type="button" data-twin="${twinCards.indexOf(c)}">${c.image ? `<img src="${esc(c.image)}/low.webp" alt="">` : ""}<b>${esc(c.set?.name || "")}</b><small>#${esc(c.localId)}${prices[i]?.sek != null ? ` · ${esc(kr(prices[i].sek))}` : ""}</small></button>` : "")).join("");
+  el.hidden = false;
+}
+function pickTwin(c) {
+  skipKey = null;
+  setPeek({ game: "pokemon", cardId: c.id, name: c.name, number: c.localId, total: null, picked: true, image: c.image ? `${c.image}/low.webp` : null }, null);
+}
 // Samma konstverk i flera utgåvor (ungefär vart tionde Pokémonkort): bilden kan inte skilja dem åt, det gör bara numret.
 // Namnet när alla kort nära toppen heter likadant, annars null.
 async function twinName({ game, art }) {
   if (game !== "pokemon" || !(art[0]?.s >= 0.55)) return null;
   const near = art.filter((x) => x.s >= art[0].s - 0.04);
   if (near.length < 2) return null;
-  const names = await Promise.all(near.map((x) => pokemonName(x.id)));
+  // Basic Energy heter olika i olika set ("Darkness Energy", "Basic Darkness Energy")
+  const names = (await Promise.all(near.map((x) => pokemonName(x.id)))).map((n) => n?.replace(/^Basic /, ""));
   return names[0] && names.every((n) => n === names[0]) ? names[0] : null;
 }
 // Träffen som kort, med namn och nummer ur kortdatan
@@ -2362,7 +2395,7 @@ async function settle(r, canvas, framed) {
   lastNum = numKey;
   if (sure) return setPeek({ game: "pokemon", ...r }, canvas);
   missed();
-  status(seen ? `Läser… <b>${esc(seen)}</b>` : "Letar efter kortets namn och nummer…");
+  if (!twinOpen) status(seen ? `Läser… <b>${esc(seen)}</b>` : "Letar efter kortets namn och nummer…");
 }
 async function attempt(canvas, source) {
   if (busy) return;
@@ -2370,12 +2403,13 @@ async function attempt(canvas, source) {
   frameEl()?.classList.add("is-reading");
   frameEl()?.classList.remove("is-moving");
   try {
-    let look = await lookFrame(canvas, source, ++frameNo);
-    // Kanterna syntes inte (fingrar kan dölja dem), så hörnen kan vara helt fel. Kortet hålls ändå i ramen, så ramen provas också.
-    if (!source?.framed && source?.guide) {
+    let look = await lookFrame(canvas, source, ++frameNo), framed = !!source?.framed;
+    // Hörnen kan vara helt fel: kanterna syntes inte (fingrar kan dölja dem), eller så hittades en inre kant på kortet. Kortet
+    // hålls ändå i ramen, så ramen provas också när bilden inte räcker.
+    if (source?.guide && (look.art[0]?.s ?? 0) < RETRY && !(await lookId(look, framed))) {
       const lead = (l) => (l.art[0]?.s ?? 0) * 2 - (l.art[1]?.s ?? 0);
       const guided = await lookFrame(unwarpCard(source.src, source.guide), { src: source.src, corners: source.guide }, frameNo);
-      if (lead(guided) > lead(look)) look = guided;
+      if (lead(guided) > lead(look)) { look = guided; framed = false; }
     }
     if (!dialog.open || frozen) return;
     // Ett nytt One Piece-kort kan ligga i indexet under sitt gamla id (se opData). Bilden och texten måste räkna samma kort.
@@ -2385,20 +2419,29 @@ async function attempt(canvas, source) {
       look.art.frame = frame;
     }
     // Kortet som nyss hittades ligger kvar i ramen: inget att läsa
-    if (skipKey && look.art.slice(0, 3).some((x) => x.id === skipKey)) return status("Byt till nästa kort…");
-    trail.push({ game: look.game, framed: !!source?.framed, scores: new Map(look.art.slice(0, 12).map((x) => [x.id, x.s])) });
+    if (look.art.slice(0, 3).some((x) => x.id === skipKey || lastHit?.ids.has(x.id))) {
+      lastHit && (lastHit.seen = Date.now());
+      return status("Byt till nästa kort…");
+    }
+    trail.push({ game: look.game, framed, scores: new Map(look.art.slice(0, 12).map((x) => [x.id, x.s])) });
     if (trail.length > VOTE_FRAMES) trail.shift();
-    const r = await lookHit(look, !!source?.framed);
+    const r = await lookHit(look, framed);
     if (r) return setPeek(r, artCanvas(look.canvas, look.art));
     twin = await twinName(look);
+    // Basic Energy: utgåvorna är i praktiken samma kort med samma värde, så den som liknar mest räcker
+    if (twin && BASIC_ENERGY.test(twin) && look.art[0].s >= 0.6 && confirmed({ cardId: `energy:${twin}`, art: look.art }, framed)) {
+      return setPeek(await hitOf(look, look.art[0].id), artCanvas(look.canvas, look.art));
+    }
     if (twin) {
-      // Har alla nummerzoner lästs utan svar får man välja utgåvan själv
-      const stuck = readRound >= NUM_ROUNDS.length;
-      if (stuck) dialog.querySelector(".scan-now")?.classList.add("nudge");
-      status(stuck ? `Numret går inte att läsa. Tryck på <b>Värdera manuellt</b> och välj utgåva av <b>${esc(twin)}</b>.` : `Flera utgåvor av <b>${esc(twin)}</b>. Läser numret…`);
-    } else status(cand ? "Håll kortet stilla i ramen…" : "Läser av…");
+      // Numret har inte gått att läsa på några försök: man får välja utgåvan med ett tryck
+      if (readRound >= TWIN_ROUNDS) showTwins(look);
+      status(twinOpen ? `Vilken utgåva av <b>${esc(twin)}</b>?` : `Flera utgåvor av <b>${esc(twin)}</b>. Läser numret…`);
+    } else {
+      hideTwins();
+      status(cand ? "Håll kortet stilla i ramen…" : "Läser av…");
+    }
     // Ett kort som inte liknar något i indexet kan ändå läsas när ramen ser dess kanter (t.ex. nya kort)
-    if (!reading && (source?.framed || (look.art[0]?.s ?? 0) >= LIKE)) readBehind(look, !!source?.framed);
+    if (!reading && (framed || (look.art[0]?.s ?? 0) >= LIKE)) readBehind(look, framed);
   } catch (err) {
     status(esc(err.message || "Något gick fel. Försök igen."));
   } finally {
@@ -2523,7 +2566,7 @@ function thumbOf(canvas) {
 // Skannern stängs inte vid en träff. Kortet visas som en liten bild uppe till höger och kameran fortsätter, så att man
 // kan ta nästa kort direkt. Ett nytt kort ersätter bilden. Trycker man på den öppnas kortet (onFound).
 // autoOpen (Kortpriser): kortet poppar upp och öppnas sedan direkt.
-let peek = null;
+let peek = null, resumeHit = null;
 // Kortets pris i kronor (One Piece och Riftbound, ur kortfilerna), eller null
 async function priceOf(r) {
   if (!r.cardId) return null;
@@ -2532,7 +2575,17 @@ async function priceOf(r) {
   return null;
 }
 const HIT_WAIT = 700; // ms som kortet längst väntar på priset innan det poppar upp ändå. Priset fylls i när det kommer.
-const HIT_PAUSE = 700; // ms innan nästa kort läses
+const HIT_PAUSE = 1100; // ms innan nästa kort läses
+const HIT_GAP = 1000; // ms som minst går mellan två träffar, så att samma kort inte räknas två gånger
+const SAME_NAME = 2500; // ms efter att kortet senast setts som ett kort med samma namn räknas som samma kort (en annan utgåva)
+// Senaste träffen: { ids, name, at, seen }. ids är korten som liknade bilden nästan lika mycket, t.ex. kortets andra utgåvor.
+// De räknas inte igen förrän kortet lämnat ramen. seen: när kortet senast syntes.
+let lastHit = null;
+function isLastHit(r) {
+  const same = !!lastHit && (lastHit.ids.has(r.cardId) || (!!r.name && r.name === lastHit.name && Date.now() - lastHit.seen < SAME_NAME));
+  if (same) lastHit.seen = Date.now();
+  return same;
+}
 // I valvet står alltid något om värdet
 const priceText = (item) => (item.price != null ? kr(item.price) : item.pending ? "Hämtar pris…" : onHit ? "Inget pris" : "");
 // Markeringens färg i valvet efter kortets värde, med samma avrundning som priset som visas. Okänt pris blir grått.
@@ -2569,8 +2622,14 @@ function cheer() {
   hud?.classList.add("success");
   setTimeout(() => hud?.classList.remove("success"), 1500);
 }
+// r.picked: man har själv valt kortet (sökning, utgåva eller foto), så det räknas alltid
 async function setPeek(r, canvas) {
-  if (keyOf(r) === skipKey) return status("Byt till nästa kort…");
+  if (!r.picked) {
+    if (Date.now() - (lastHit?.at || 0) < HIT_GAP) return;
+    if (keyOf(r) === skipKey || isLastHit(r)) return status("Byt till nästa kort…");
+  }
+  const near = (r.art || []).filter((x) => x.s >= r.art[0].s - 0.08).map((x) => x.id);
+  lastHit = { ids: new Set([r.cardId, ...near].filter(Boolean)), name: r.name || null, at: Date.now(), seen: Date.now() };
   skipKey = keyOf(r);
   newCard();
   hitTip();
@@ -2586,6 +2645,7 @@ async function setPeek(r, canvas) {
   const failed = () => {
     peek = before;
     skipKey = null;
+    lastHit = null;
     pauseUntil = Date.now() + PAUSE_AFTER_MISS;
     missed();
     const btn = dialog.querySelector(".scan-peek");
@@ -2708,7 +2768,7 @@ function pickManual(i) {
   closeManual();
   // Samma kort som nyss skannades ska gå att lägga in igen när man väljer det själv
   skipKey = null;
-  setPeek({ game: x.game, cardId: x.c.id, name: x.c.name, number: (x.game === "pokemon" ? localOf(x.c.id) : x.c.no) || null, total: null, image: x.c.image || null }, null);
+  setPeek({ game: x.game, cardId: x.c.id, name: x.c.name, number: (x.game === "pokemon" ? localOf(x.c.id) : x.c.no) || null, total: null, picked: true, image: x.c.image || null }, null);
 }
 
 // Valvet: ett valt kort visas direkt med sitt värde, utan kameran, och läggs in först efter ett Ja. Sökrutan ligger kvar
@@ -2774,6 +2834,8 @@ function clearPeek() {
 function openPeek() {
   const r = peek;
   if (!r) return;
+  // Valvet går tillbaka till kameran när kortet stängs, och kortet ligger troligen kvar i handen: det ska inte läsas igen
+  resumeHit = onHit ? { key: keyOf(r), hit: lastHit } : null;
   clearPeek();
   stop();
   dialog.close();
@@ -2867,10 +2929,12 @@ export async function openScanner(callback, partialCallback, { game = "pokemon",
 async function startCamera() {
   const d = dialog;
   newCard();
-  skipKey = null;
+  skipKey = resumeHit?.key ?? null;
+  lastHit = resumeHit?.hit ? { ...resumeHit.hit, at: Date.now(), seen: Date.now() } : null;
   hasPrevMotion = false;
   stillTicks = 0;
-  pauseUntil = 0;
+  pauseUntil = resumeHit ? Date.now() + HIT_PAUSE : 0;
+  resumeHit = null;
   openedAt = Date.now();
   // Återställ allt från förra gången, t.ex. om kameran inte gick att starta då
   d.querySelector(".scan-view").classList.remove("nocam");
