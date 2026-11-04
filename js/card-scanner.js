@@ -1530,7 +1530,7 @@ export async function rankByLook(canvas, list, limit = 150) {
 
 // ---------- 8. Kamerafönster & Interaktiv HUD ----------
 let dialog = null, stream = null, timer = null, animFrame = null, busy = false;
-let onFound = null, onPartial = null, onHit = null;
+let onFound = null, onPartial = null, onHit = null, onPreview = null;
 let autoOpen = false; // träffen öppnas direkt (onFound) i stället för att ligga kvar i hörnet
 let torchSupported = false, torchActive = false;
 let stillTicks = 0, lastScanAt = 0;
@@ -1613,6 +1613,17 @@ function ui() {
         <ul class="scan-manual-list"></ul>
         <p class="scan-manual-hint"></p>
       </form>
+      <div class="scan-confirm" hidden>
+        <img alt="">
+        <b></b>
+        <small></small>
+        <em></em>
+        <p role="status"></p>
+        <div>
+          <button class="scan-ghost" type="button" data-confirm-no></button>
+          <button class="scan-now" type="button" data-confirm-yes></button>
+        </div>
+      </div>
     </div>
     <div class="scan-actions">
       <label class="scan-ghost scan-live">Välj foto<input type="file" accept="image/*" hidden></label>
@@ -1624,12 +1635,14 @@ function ui() {
     <p class="scan-app" hidden>Skannar du ofta? <a href="butiker.html#installera">Installera Lootninja som app</a>, så öppnas skannern i helskärm utan webbläsarens fält.</p>`;
 
   document.body.append(dialog);
-  dialog.addEventListener("close", () => { stop(); closeManual(); });
+  dialog.addEventListener("close", () => { stop(); hideConfirm(); closeManual(); });
   dialog.querySelector("[data-close]").addEventListener("click", () => dialog.close());
-  // Esc stänger först sökrutan för manuell värdering
+  // Esc stänger först sökrutan för manuell värdering. Från förhandsvisningen går den tillbaka till valvet, som Nej.
   dialog.addEventListener("cancel", (e) => {
-    if (manualOpen) { e.preventDefault(); closeManual(); }
+    if (manualOpen && !confirmItem) { e.preventDefault(); closeManual(); }
   });
+  dialog.querySelector("[data-confirm-no]").addEventListener("click", () => dialog.close());
+  dialog.querySelector("[data-confirm-yes]").addEventListener("click", confirmYes);
 
   // Värdera manuellt: skriv in kortet i stället för att skanna det
   dialog.querySelector("[data-manual]").addEventListener("click", openManual);
@@ -2378,10 +2391,64 @@ function pickManual(i) {
   }
   const x = manualHits[i];
   if (!x) return;
+  if (onPreview) return openConfirm(x);
   closeManual();
   // Samma kort som nyss skannades ska gå att lägga in igen när man väljer det själv
   skipKey = null;
   setPeek({ game: x.game, cardId: x.c.id, name: x.c.name, number: (x.game === "pokemon" ? localOf(x.c.id) : x.c.no) || null, total: null, image: x.c.image || null }, null);
+}
+
+// Valvet: ett valt kort visas direkt med sitt värde, utan kameran, och läggs in först efter ett Ja. Sökrutan ligger kvar
+// under, så att "Lägg till fler" går tillbaka till den. Nej och Klar stänger skannern, och valvet syns igen.
+let confirmItem = null;
+function confirmStep(step, text) {
+  const el = dialog.querySelector(".scan-confirm"), done = step === "done";
+  el.dataset.step = step;
+  el.querySelector("p").textContent = text;
+  el.querySelector("[data-confirm-no]").textContent = done ? "Klar" : "Nej";
+  el.querySelector("[data-confirm-yes]").textContent = done ? "Lägg till fler" : "Ja, lägg till";
+  el.querySelector("[data-confirm-yes]").disabled = false;
+}
+async function openConfirm({ game, c }) {
+  const item = { game, cardId: c.id, name: c.name, number: (game === "pokemon" ? localOf(c.id) : c.no) || null, total: null };
+  confirmItem = item;
+  const el = dialog.querySelector(".scan-confirm"), img = el.querySelector("img"), price = el.querySelector("em");
+  img.src = c.image || "";
+  img.hidden = !c.image;
+  el.querySelector("b").textContent = c.name;
+  el.querySelector("small").textContent = [c.no, c.variant, GAME_LABEL[game]].filter(Boolean).join(" · ");
+  price.textContent = c.sek != null ? kr(c.sek) : "Hämtar pris…";
+  confirmStep("ask", "Vill du lägga till kortet i valvet?");
+  el.hidden = false;
+  dialog.classList.add("confirming");
+  el.querySelector("[data-confirm-yes]").focus();
+  const card = await Promise.resolve(onPreview(item)).catch(() => null);
+  if (confirmItem !== item) return; // ett annat kort hann väljas
+  price.textContent = card?.sek != null ? kr(card.sek) : "Inget pris";
+  if (card?.name) el.querySelector("b").textContent = card.name;
+}
+async function confirmYes() {
+  const el = dialog.querySelector(".scan-confirm"), item = confirmItem;
+  if (el.dataset.step === "done") {
+    hideConfirm();
+    const input = dialog.querySelector(".scan-manual input");
+    input.value = "";
+    renderManual();
+    input.focus();
+    return;
+  }
+  el.querySelector("[data-confirm-yes]").disabled = true;
+  const added = await Promise.resolve(onHit(item)).catch(() => null);
+  if (confirmItem !== item) return;
+  if (!added) return confirmStep("ask", "Kortet gick inte att lägga till. Försök igen.");
+  if ("vibrate" in navigator) navigator.vibrate(45);
+  playCoin();
+  confirmStep("done", "Tillagt i valvet! Vill du lägga till fler kort?");
+}
+function hideConfirm() {
+  confirmItem = null;
+  dialog.querySelector(".scan-confirm").hidden = true;
+  dialog.classList.remove("confirming");
 }
 
 function clearPeek() {
@@ -2430,10 +2497,12 @@ function popCard(item, target, end) {
 // hit: får varje kort så fort det är hittat (Mitt valv lägger in kortet direkt).
 // manual: sökrutan (Värdera manuellt) öppnas direkt, och kameran startar först om man går tillbaka till den
 // open: träffen öppnas direkt (callback) när den har poppat upp, i stället för att vänta på ett tryck
-export async function openScanner(callback, partialCallback, { game = "pokemon", hit = null, manual = false, open = false } = {}) {
+// preview: slår upp ett kort utan att lägga in det. Då visas ett kort valt i sökrutan först, och läggs in (hit) efter ett Ja.
+export async function openScanner(callback, partialCallback, { game = "pokemon", hit = null, manual = false, open = false, preview = null } = {}) {
   scanGame = game;
   onFound = callback;
   onHit = hit;
+  onPreview = preview;
   autoOpen = open;
   onPartial = partialCallback || null;
   const d = ui();
