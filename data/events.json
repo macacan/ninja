@@ -1,6 +1,34 @@
 {
- "updated": 1793785241791,
+ "updated": 1793786181815,
  "events": [
+  {
+   "at": 1793785284803,
+   "store": "poketalk",
+   "product": "poketalk:10795637997910",
+   "group": "chaos-rising|booster-pack|en|",
+   "title": "Pokémon Mega & Evolution: Chaos Rising Booster Pack",
+   "url": "https://poketalk.se/products/pokemon-mega-evolution-chaos-rising-booster-pack",
+   "image": "https://cdn.shopify.com/s/files/1/0862/7860/3094/files/PRODUKTSERIER_2000x2000px_d2ed601c-7427-49af-9fcd-aea365b00091.png?v=1779644489",
+   "price": 79,
+   "type": "Booster Pack",
+   "set": "Chaos Rising",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1793785284803,
+   "store": "poketalk",
+   "product": "poketalk:9253005787478",
+   "group": "151|booster-pack|en|",
+   "title": "Pokémon Scarlet & Violet: 151 Booster Pack",
+   "url": "https://poketalk.se/products/pokemon-scarlet-violet-151-booster-pack",
+   "image": "https://cdn.shopify.com/s/files/1/0862/7860/3094/files/PRODUKTSERIER_43.png?v=1750707777",
+   "price": 399,
+   "type": "Booster Pack",
+   "set": "151",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793784366400,
    "store": "poketalk",
@@ -7099,34 +7127,6 @@
    "type": "Collection Box",
    "set": "30th Celebration",
    "lang": "zh",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793276363130,
-   "store": "collected",
-   "product": "collected:11425223901526",
-   "group": "x|booster-box|ja||shiny-treasure",
-   "title": "Pokémon TCG: Shiny Treasure ex Booster Box (Japansk) – SV4a",
-   "url": "https://collected.se/products/pokemon-shiny-treasure-ex-booster-box-japansk-sv4a",
-   "image": null,
-   "price": 1990,
-   "type": "Booster Box",
-   "set": null,
-   "lang": "ja",
-   "kind": "ny"
-  },
-  {
-   "at": 1793271690864,
-   "store": "dragon-s-lair",
-   "product": "dragon-s-lair:15867479064924",
-   "group": "x|blister|en||2|enhanced-gengar",
-   "title": "Pokémon 2-Pack Enhanced Blister Gengar",
-   "url": "https://dragonslair.se/products/pokemon-2-pack-enhanced-blister-gengar",
-   "image": "https://cdn.shopify.com/s/files/1/1015/8315/9644/files/Pokemon2-PackEnhancedBlisterGengar.avif?v=1791198836",
-   "price": 229,
-   "type": "Blister",
-   "set": null,
-   "lang": "en",
    "kind": "tillbaka"
   }
  ]
