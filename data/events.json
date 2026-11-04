@@ -1,6 +1,20 @@
 {
- "updated": 1793819954557,
+ "updated": 1793820874581,
  "events": [
+  {
+   "at": 1793820738159,
+   "store": "spelparken",
+   "product": "spelparken:15596569428343",
+   "group": "30th-celebration|ultra-premium-collection|en|case|case",
+   "title": "30th Celebration UPC Sealed Case",
+   "url": "https://spelparken.se/products/30th-celebration-upc-sealed-case",
+   "image": "https://cdn.shopify.com/s/files/1/0948/1876/3127/files/s-l1600_84530807-3cc5-4a9f-b1e6-a8047dcc7654.webp?v=1793820663",
+   "price": 23990,
+   "type": "Ultra-Premium Collection",
+   "set": "30th Celebration",
+   "lang": "en",
+   "kind": "ny"
+  },
   {
    "at": 1793819833764,
    "store": "spelparken",
@@ -7107,21 +7121,6 @@
    "set": "Lost Origin",
    "lang": "en",
    "kind": "ny"
-  },
-  {
-   "at": 1793300947987,
-   "store": "spelparken",
-   "product": "spelparken:15550805508471",
-   "group": "chaos-rising|blister|en||2",
-   "title": "Pitch Black & Chaos Rising 2-Pack Blister",
-   "url": "https://spelparken.se/products/pitch-black-chaos-rising-2-pack-blister-1",
-   "image": "https://cdn.shopify.com/s/files/1/0948/1876/3127/files/2104121_L_1.webp?v=1788469840",
-   "price": 179,
-   "type": "Blister",
-   "set": "Chaos Rising",
-   "lang": "en",
-   "kind": "prissankt",
-   "from": 199
   }
  ]
 }
