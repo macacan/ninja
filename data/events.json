@@ -1,6 +1,34 @@
 {
- "updated": 1793819034533,
+ "updated": 1793819954557,
  "events": [
+  {
+   "at": 1793819833764,
+   "store": "spelparken",
+   "product": "spelparken:15596483215735",
+   "group": "30th-celebration|elite-trainer-box|en|case",
+   "title": "30th Celebration ETB Sealed Case",
+   "url": "https://spelparken.se/products/30th-celebration-etb-sealed-case",
+   "image": "https://cdn.shopify.com/s/files/1/0948/1876/3127/files/s-l500_f476af87-cee7-4535-8b4f-a084edfb0365.jpg?v=1793819140",
+   "price": 17999,
+   "type": "Elite Trainer Box",
+   "set": "30th Celebration",
+   "lang": "en",
+   "kind": "ny"
+  },
+  {
+   "at": 1793819808792,
+   "store": "rahtech",
+   "product": "rahtech:15784995356998",
+   "group": "mega-evolution|booster-box|en||delta-forhandsbokning-reign",
+   "title": "Förhandsbokning: Mega Evolution Delta Reign – Booster Display (36 Pack) (ENG)",
+   "url": "https://rahtech.se/products/forhandsbokning-mega-evolution-delta-reign-booster-display-36-pack-eng",
+   "image": "https://cdn.shopify.com/s/files/1/0994/8882/5670/files/BlackBox-2026-08-21T000531_783_png.webp?v=1792174338",
+   "price": 2599,
+   "type": "Booster Box",
+   "set": "Mega Evolution",
+   "lang": "en",
+   "kind": "forbestallning"
+  },
   {
    "at": 1793818869267,
    "store": "packs-on-packs",
@@ -7094,34 +7122,6 @@
    "lang": "en",
    "kind": "prissankt",
    "from": 199
-  },
-  {
-   "at": 1793297330879,
-   "store": "spelparken",
-   "product": "spelparken:15472262971767",
-   "group": "paldea-evolved|blister|en||1",
-   "title": "Paldea Evolved – 1-Pack Blister",
-   "url": "https://spelparken.se/products/paldea-evolved-1-pack-blister",
-   "image": "https://cdn.shopify.com/s/files/1/0948/1876/3127/files/Scarlet-and-Violet-Paldea-Evolved-1-Pack-Checklane-Blister-Growlithe.jpg?v=1777831690",
-   "price": 189,
-   "type": "Blister",
-   "set": "Paldea Evolved",
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793296438369,
-   "store": "spelparken",
-   "product": "spelparken:15517990158711",
-   "group": "x|collection-box|en||first-illustration-partner-s2",
-   "title": "First Partner Illustration Collection – Series 2",
-   "url": "https://spelparken.se/products/first-partner-illustration-collection-series-2",
-   "image": "https://cdn.shopify.com/s/files/1/0948/1876/3127/files/OIP_1b6750a5-a7e2-4d00-bd50-1714d317dd0d.webp?v=1784666753",
-   "price": 499,
-   "type": "Collection Box",
-   "set": null,
-   "lang": "en",
-   "kind": "ny"
   }
  ]
 }
