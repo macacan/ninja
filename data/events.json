@@ -1,6 +1,48 @@
 {
- "updated": 1793799168364,
+ "updated": 1793800088386,
  "events": [
+  {
+   "at": 1793799986298,
+   "store": "cardlevels",
+   "product": "cardlevels:11060846952759",
+   "group": "guardians-rising|blister|en||1",
+   "title": "Pokémon Guardians Rising Sun & Moon 2: Spooky 1-pack blister – Crobat",
+   "url": "https://cardlevels.se/products/pokemon-guardians-rising-sun-moon-2-spooky-1-pack-blister-crobat",
+   "image": "https://cdn.shopify.com/s/files/1/0846/0458/4247/files/spooky-blister-crobat.webp?v=1793799736",
+   "price": 799,
+   "type": "Blister",
+   "set": "Guardians Rising",
+   "lang": "en",
+   "kind": "ny"
+  },
+  {
+   "at": 1793799986298,
+   "store": "cardlevels",
+   "product": "cardlevels:11060846756151",
+   "group": "guardians-rising|blister|en||1",
+   "title": "Pokémon Guardians Rising Sun & Moon 2: Spooky 1-pack blister – Alolan Persian",
+   "url": "https://cardlevels.se/products/pokemon-guardians-rising-sun-moon-2-spooky-1-pack-blister-alolan-persian",
+   "image": "https://cdn.shopify.com/s/files/1/0846/0458/4247/files/spooky-blister-alolanpersian.webp?v=1793799694",
+   "price": 799,
+   "type": "Blister",
+   "set": "Guardians Rising",
+   "lang": "en",
+   "kind": "ny"
+  },
+  {
+   "at": 1793799896268,
+   "store": "aquitaz",
+   "product": "aquitaz:10973060792666",
+   "group": "30th-celebration|collection-box|zh||set-sylveon",
+   "title": "Pokémon Mega: 30th Celebration Sylveon EX Card Display Set (3 Pack) (CH)",
+   "url": "https://aquitaz.se/products/pokemon-mega-30th-celebration-sylveon-ex-card-display-set-3-pack-ch",
+   "image": "https://cdn.shopify.com/s/files/1/0885/4087/3050/files/BlackBox-2026-08-26T223634.525.png?v=1787755074",
+   "price": 449,
+   "type": "Collection Box",
+   "set": "30th Celebration",
+   "lang": "zh",
+   "kind": "forbestallning"
+  },
   {
    "at": 1793799074978,
    "store": "cardlevels",
@@ -7082,50 +7124,6 @@
    "type": "Booster Box",
    "set": "Black Bolt",
    "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1793283118833,
-   "store": "rgb-kingz",
-   "product": "rgb-kingz:16149940699466",
-   "group": "op|two-legends|booster-pack|zh|mini",
-   "title": "One Piece Card Game – Two Legends Mini Booster Pack (OPC-08) – Kinesisk",
-   "url": "https://rgbkingz.com/products/one-piece-card-game-two-legends-mini-booster-pack-opc-08-kinesisk",
-   "image": "https://cdn.shopify.com/s/files/1/0782/8088/4554/files/opc08boosterpack.jpg?v=1793282106",
-   "price": 59,
-   "type": "Booster Pack",
-   "set": "Two Legends",
-   "lang": "zh",
-   "game": "op",
-   "kind": "ny"
-  },
-  {
-   "at": 1793282847892,
-   "store": "tcg-card-house",
-   "product": "tcg-card-house:15588945297783",
-   "group": "x|booster-box|en||gem-s7-vol",
-   "title": "Pokémon: Gem Pack Vol. 7 Booster Box (18 Pack) (FÖRKÖP)",
-   "url": "https://tcgcardhouse.se/products/pokemon-gem-pack-vol-7-booster-box-18-pack-forkop",
-   "image": "https://cdn.shopify.com/s/files/1/0950/2815/0647/files/Gem7boosterbox.jpg?v=1793282546",
-   "price": 599,
-   "type": "Booster Box",
-   "set": null,
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1793282168737,
-   "store": "rgb-kingz",
-   "product": "rgb-kingz:16149931458890",
-   "group": "op|adventure-on-kami-s-island|booster-pack|zh|mini",
-   "title": "One Piece Card Game – Adventure on Kami's Island Mini Booster Pack (OPC-15) – Kinesisk",
-   "url": "https://rgbkingz.com/products/one-piece-card-game-adventure-on-kamis-island-mini-booster-pack-opc-15-kinesisk",
-   "image": "https://cdn.shopify.com/s/files/1/0782/8088/4554/files/opc15boosterpack.jpg?v=1793281126",
-   "price": 69,
-   "type": "Booster Pack",
-   "set": "Adventure on Kami's Island",
-   "lang": "zh",
-   "game": "op",
    "kind": "ny"
   }
  ]
