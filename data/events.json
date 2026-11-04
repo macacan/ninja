@@ -1,6 +1,20 @@
 {
- "updated": 1793778680240,
+ "updated": 1793780601636,
  "events": [
+  {
+   "at": 1793779964225,
+   "store": "webhallen",
+   "product": "webhallen:396785",
+   "group": "destined-rivals|booster-box|en|",
+   "title": "Pokemon SV10: Destined Rivals Display (36 boosters)",
+   "url": "https://www.webhallen.com/se/product/396785-Pokemon-SV10-Destined-Rivals-Display-36-boosters",
+   "image": "https://www.webhallen.com/images/product/396785?trim",
+   "price": 3499,
+   "type": "Booster Box",
+   "set": "Destined Rivals",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793774142702,
    "store": "sweet-nerds",
@@ -7109,20 +7123,6 @@
    "title": "Pokémon 30th Celebration Premium Deck Set Espeon (Förenklad kinesiska)",
    "url": "https://maxgaming.se/sv/pokemon/pokemon-30th-celebration-premium-deck-set-espeon-forenklad-kinesiska",
    "image": "https://www.maxgaming.se/bilder/artiklar/41569.jpg?m=1793257130",
-   "price": 449,
-   "type": "Deck",
-   "set": "30th Celebration",
-   "lang": "zh",
-   "kind": "ny"
-  },
-  {
-   "at": 1793262484238,
-   "store": "maxgaming",
-   "product": "maxgaming:https://maxgaming.se/sv/pokemon/pokemon-30th-celebration-premium-deck-set-umbreon-forenklad-kinesiska",
-   "group": "30th-celebration|deck|zh||set-umbreon",
-   "title": "Pokémon 30th Celebration Premium Deck Set Umbreon (Förenklad kinesiska)",
-   "url": "https://maxgaming.se/sv/pokemon/pokemon-30th-celebration-premium-deck-set-umbreon-forenklad-kinesiska",
-   "image": "https://www.maxgaming.se/bilder/artiklar/41570.jpg?m=1793257122",
    "price": 449,
    "type": "Deck",
    "set": "30th Celebration",
