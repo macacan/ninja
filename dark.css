@@ -26,7 +26,7 @@ body{background-color:var(--bg);
 .seg button[aria-pressed=true]{color:#1b1b2f}
 .k-new{color:#1b1b2f}
 .ev-set{background:#152538}
-.badge:not(.hot){color:#1b1b2f}
+.badge:not(.hot):not(.soon){color:#1b1b2f}
 input[type=search],select,.shop-search{background:#2a2f3e}
 /* Dropdowns: syns som knappar med ljus pil, och listan som fälls ut är mörk med ljus text. */
 :root{color-scheme:dark}

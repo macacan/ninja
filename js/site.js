@@ -327,17 +327,25 @@ export function setArt(s) {
 }
 
 export function card(title, date, tag, extra, i, soon, artHtml, badge, attrs = "", href = "") {
-  return `<article class="tcard"${attrs ? ` ${attrs}` : ""}>${badge ? `<span class="badge ${badge.hot ? "hot" : ""}">${esc(badge.text)}</span>` : ""}${artHtml || art(i)}
+  return `<article class="tcard"${attrs ? ` ${attrs}` : ""}>${badge ? `<span class="badge ${badge.hot ? "hot" : badge.soon ? "soon" : ""}">${esc(badge.text)}</span>` : ""}${artHtml || art(i)}
     <h3>${href ? `<a class="stretch" href="${esc(href)}">${esc(title)}</a>` : esc(title)}</h3>
     <span class="tag ${soon ? "soon" : ""}">${esc(tag)}</span>
     <div class="meta"><span>${date ? fmt(date) : "Datum ej satt"}</span><span>${esc(extra)}</span></div></article>`;
 }
 
-// Set som släppts de senaste 60 dagarna får en "Nytt"-etikett. Setet länkar till sin sida i set/ (pages = setPages()),
-// och sökmotorerna hittar sidorna den vägen. Har setet ingen sida än öppnar ett tryck alla kort i en ruta (setcards.js).
+// Etiketten på ett setkort: "Kommande" före släppet, "Släpps idag" på släppdagen och "Nytt" de följande 60 dagarna.
+export const releaseBadge = (date) => {
+  const days = date ? daysUntil(date) : -999;
+  if (days > 0) return { text: "Kommande", soon: true };
+  if (days === 0) return { text: "Släpps idag", hot: true };
+  return days >= -60 ? { text: "Nytt" } : null;
+};
+
+// Setet länkar till sin sida i set/ (pages = setPages()), och sökmotorerna hittar sidorna den vägen.
+// Har setet ingen sida än öppnar ett tryck alla kort i en ruta (setcards.js).
 export const setCard = (s, i, pages) => {
-  const age = s.releaseDate ? -daysUntil(s.releaseDate) : 999, page = pages?.sets?.[s.id];
-  return card(s.name, s.releaseDate, s.serie?.name || "Set", `${s.cardCount?.official ?? "?"} kort`, i, false, setArt(s, i), age <= 60 ? { text: "Nytt" } : null,
+  const page = pages?.sets?.[s.id];
+  return card(s.name, s.releaseDate, s.serie?.name || "Set", `${s.cardCount?.official ?? "?"} kort`, i, false, setArt(s, i), releaseBadge(s.releaseDate),
     page ? "" : `data-set="${esc(s.id)}" role="button" tabindex="0" aria-label="Visa alla kort i ${esc(s.name)}"`, page);
 };
 
@@ -368,6 +376,24 @@ export function releaseSets() {
   releaseData ??= load("data/release-calendar.json").catch(() => load("data/releases.json"));
   return releaseData;
 }
+
+// Engelska huvudset i släppkalendern som kortdatan inte har än: de två närmaste kommande och de som släppts de
+// senaste 60 dagarna. Paket som "Gift of the Rift Bundle" och "Set Sail Deck Set" är inga egna set.
+// known = namn och id som redan finns i kortdatan.
+export async function calendarSets(game, known) {
+  const seen = new Set(known.map((k) => String(k).toLowerCase()));
+  const list = (await releaseSets())
+    .filter((r) => (r.game || "pk") === game && r.language === "en" && r.waves?.length && !/\b(bundle|deck)\b/i.test(r.set)
+      && !seen.has(r.set.toLowerCase()) && !seen.has(String(r.tcgdex).toLowerCase()))
+    .map((r) => ({ ...r, date: r.waves.map((w) => w.date).sort()[0] }))
+    .sort((a, b) => a.date.localeCompare(b.date));
+  const coming = list.filter((r) => daysUntil(r.date) >= 0).slice(0, 2);
+  return [...list.filter((r) => daysUntil(r.date) < 0 && daysUntil(r.date) >= -60), ...coming];
+}
+
+// Setkort för ett set ur släppkalendern. Ett tryck öppnar setets sida i set/.
+export const calendarCard = (r, i, pages, tag = r.series) => card(r.set, r.date, tag, "Mer info kommer snart", i, false,
+  setArt({ name: r.set, serie: { name: r.series }, image: r.logo }), releaseBadge(r.date), "", pages?.releases?.[r.id] || "slapp.html");
 
 // Varje omgång som en egen rad, t.ex. "30th Celebration: Battle Deck" den 30 oktober.
 export async function allReleases() {

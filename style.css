@@ -697,7 +697,8 @@ input[type=search]{width:100%;max-width:360px}
 .tcard .tag{font:600 .72rem/1.6 var(--sans);text-transform:uppercase;letter-spacing:.4px;background:none;border:0;padding:0;color:var(--muted)}
 .tcard .price{font:500 1.05rem/1.2 var(--sans)}
 .badge{top:12px;right:12px;font:700 .8rem/1 var(--cond);letter-spacing:.6px;padding:6px 9px;box-shadow:none;animation:none}
-.badge:not(.hot){background:var(--gold)}
+.badge:not(.hot):not(.soon){background:var(--gold)}
+.badge.soon{background:#3b4a6b;color:#fff}
 .wordmark b{text-shadow:none;color:var(--ink);font:700 1.25rem/1.05 var(--cond);text-transform:uppercase}
 .skel{padding:0}
 .skel i{margin:0 14px}

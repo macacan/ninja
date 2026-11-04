@@ -1,5 +1,5 @@
 import { groupKey } from "./group.js";
-import { $, esc, fmt, skeleton, upcomingReleases, daysUntil, latestSets, setCard, setLogo, setPages, news, newsItem, productCard, fillRows, liveStock, getJSON, card, setArt, whileVisible } from "./site.js";
+import { $, esc, fmt, skeleton, upcomingReleases, daysUntil, latestSets, setCard, setLogo, setPages, releaseBadge, calendarSets, calendarCard, news, newsItem, productCard, fillRows, liveStock, getJSON, card, setArt, whileVisible } from "./site.js";
 import { getPrefs } from "./prefs.js";
 import { bindSetCards } from "./setcards.js";
 import "./restock.js";
@@ -142,8 +142,12 @@ async function homeSets() {
   el.innerHTML = skeleton(4);
   try {
     const [sets, pages] = await Promise.all([latestSets(16), setPages()]);
-    // Senaste set: fem stycken, på en rad på dator (se #home-sets i style.css).
-    el.innerHTML = sets.filter((s) => setLogo(s)).slice(0, 5).map((s, i) => setCard(s, i, pages)).join("");
+    // Senaste set: fem stycken, på en rad på dator (se #home-sets i style.css). Set som TCGdex inte har än
+    // kommer från släppkalendern. Senaste datumet först, så att kommande set ligger längst till vänster.
+    const coming = await calendarSets("pk", sets.flatMap((s) => [s.id, s.name]));
+    const items = [...sets.filter((s) => setLogo(s)).map((s) => ({ date: s.releaseDate || "", show: (i) => setCard(s, i, pages) })),
+      ...coming.map((r) => ({ date: r.date, show: (i) => calendarCard(r, i, pages) }))];
+    el.innerHTML = items.sort((a, b) => b.date.localeCompare(a.date)).slice(0, 5).map((x, i) => x.show(i)).join("");
     bindSetCards(el);
     fillRows(el, 2);
   } catch { el.innerHTML = '<div class="msg">Kunde inte nå TCGdex just nu.</div>'; }
@@ -156,11 +160,12 @@ async function homeGameSets(game, label) {
   el.innerHTML = skeleton(4);
   try {
     const [{ sets }, pages] = await Promise.all([getJSON(`data/${game}/sets.json`), setPages()]);
-    el.innerHTML = sets.filter((s) => s.main && s.date).slice(0, 5).map((s, i) => {
-      const age = -daysUntil(s.date);
-      return card(s.name, s.date, label, s.count ? `${s.count} kort` : "Mer info kommer snart", i, false, setArt({ name: s.name, serie: { name: s.code }, image: s.image }),
-        age <= 60 ? { text: "Nytt" } : null, "", pages.games?.[game]?.[s.id] || `priser.html?game=${game}&set=${encodeURIComponent(s.id)}`);
-    }).join("");
+    const main = sets.filter((s) => s.main && s.date);
+    const coming = await calendarSets(game, main.map((s) => s.name));
+    const items = [...main.map((s) => ({ date: s.date, show: (i) => card(s.name, s.date, label, s.count ? `${s.count} kort` : "Mer info kommer snart", i, false,
+      setArt({ name: s.name, serie: { name: s.code }, image: s.image }), releaseBadge(s.date), "", pages.games?.[game]?.[s.id] || `priser.html?game=${game}&set=${encodeURIComponent(s.id)}`) })),
+      ...coming.map((r) => ({ date: r.date, show: (i) => calendarCard(r, i, pages, label) }))];
+    el.innerHTML = items.sort((a, b) => b.date.localeCompare(a.date)).slice(0, 5).map((x, i) => x.show(i)).join("");
     fillRows(el, 2);
   } catch { el.innerHTML = '<div class="msg">Kunde inte läsa seten just nu.</div>'; }
 }
