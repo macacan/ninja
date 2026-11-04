@@ -2,7 +2,7 @@
 //  1. ett levande flöde av de senast inkomna produkterna, som uppdateras varje minut (startsidans "Senast inkommet")
 //  2. en packöppnare: välj ett pack från de senaste seten, riv upp det och dra korten ett i taget (värderingssidan)
 import { groupKey, groupProducts, changedAt } from "./group.js";
-import { $, esc, kr, ago, latestSets, setLogo, getJSON, API, safeUrl, liveStock, whileVisible } from "./site.js";
+import { $, esc, kr, ago, latestSets, setLogo, getJSON, fxRates, API, safeUrl, liveStock, whileVisible } from "./site.js";
 import { track } from "./tracker.js";
 
 const wait = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -151,7 +151,7 @@ const valueOf = (d, rate) => { const cm = d?.pricing?.cardmarket; const eur = cm
 // Billiga kort visas med ören (0,56 kr), annars blir alla vanliga kort "1 kr".
 const money = (v) => (v < 0.1 ? "under 0,10 kr" : v < 10 ? `${v.toFixed(2).replace(".", ",")} kr` : kr(v));
 const pct = (x) => (x * 100 >= 10 ? (x * 100).toFixed(0) : (x * 100).toFixed(1)).replace(".", ",") + " %";
-const ratePromise = () => getJSON("https://api.frankfurter.dev/v1/latest?from=EUR&to=SEK").then((r) => r.rates.SEK).catch(() => 11.2);
+const ratePromise = () => fxRates().then((r) => r.EUR ?? 11.2);
 const preload = (src) => new Promise((res) => { const i = new Image(); i.onload = i.onerror = () => res(); i.src = src; setTimeout(res, 4000); });
 // Byter bild och väntar tills den laddats (max 3 s). img.decode() används inte: den kan hänga för dolda bilder.
 const setImage = (img, src) => new Promise((res) => {

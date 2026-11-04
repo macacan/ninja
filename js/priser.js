@@ -1,4 +1,4 @@
-import { API, $, esc, kr, getJSON, getList, skeleton, liveStamp, cardImg, setPages, setLink, clearCache } from "./site.js";
+import { API, $, esc, kr, getJSON, getList, fxRates, skeleton, liveStamp, cardImg, setPages, setLink, clearCache } from "./site.js";
 import { mountChart, mountSeries } from "./pricechart.js?v=20261103a";
 import { recordCard, mountRecent } from "./recent.js";
 import { mountCardAutocomplete, parseCardQuery, resolvePokemonName, loadDataset, sameNumber, filterByNumber, apiNumber } from "./card-autocomplete.js";
@@ -76,11 +76,7 @@ const rarityName = (c) => GAMES[c.game]?.rarities[c.rarity] || c.rarity;
 // ---------- Valuta ----------
 let rates = null;
 async function getRates() {
-  if (rates) return rates;
-  try {
-    const [eur, usd] = await Promise.all(["EUR", "USD"].map((c) => getJSON(`https://api.frankfurter.dev/v1/latest?from=${c}&to=SEK`)));
-    rates = { EUR: eur.rates.SEK, USD: usd.rates.SEK };
-  } catch { rates = { EUR: null, USD: null }; }
+  rates ||= await fxRates();
   return rates;
 }
 // Alla priser visas i kronor. Går kursen inte att hämta visas hellre inget pris än ett i fel valuta.
@@ -550,7 +546,7 @@ async function scanCards(g = VAULT_PAGE ? "vault" : game, { manual = false } = {
     getRates(); // kursen ska finnas när första kortet hittas
   }
   track("scan", "Öppnad");
-  const { openScanner } = await import("./card-scanner.js?v=20261105e");
+  const { openScanner } = await import("./card-scanner.js?v=20261106a");
   const added = new Map(); // valvet: träffarna som lagts in, för att kunna öppna rätt kort
   openScanner(async (r) => {
     track("scan", r.cardId ? "Säker träff" : "Läst, söker");

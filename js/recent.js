@@ -1,7 +1,7 @@
 // "Senast sökta/värderade kort": en rad med de kort besökaren nyligen tittat på, med antal sökningar och pris.
 // Historiken sparas bara i den egna webbläsaren (localStorage) och lämnar aldrig datorn.
 // Är historiken tom visas dagens mest sökta trendkort i stället, så att raden aldrig är tom.
-import { esc, kr, ago, getJSON, icon } from "./site.js";
+import { esc, kr, ago, fxRates, icon } from "./site.js";
 
 const KEY = "nl:recent-cards";
 const MAX = 16;
@@ -20,7 +20,7 @@ export function recordCard(c) {
   document.dispatchEvent(new CustomEvent("recent-cards-changed"));
 }
 
-const eurRate = () => getJSON("https://api.frankfurter.dev/v1/latest?from=EUR&to=SEK").then((r) => r.rates.SEK).catch(() => 11.2);
+const eurRate = () => fxRates().then((r) => r.EUR ?? 11.2);
 
 async function trending() {
   const t = await fetch("data/card-trends.json").then((r) => r.json()).catch(() => null);

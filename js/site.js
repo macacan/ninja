@@ -227,6 +227,13 @@ export async function liveStock() {
   return [stock && stock.updated >= status.updated - 60e3 ? stock : await liveJSON("data/products.json"), status];
 }
 
+// Kronor per euro och dollar. Filen sparas varje morgon (scripts/update-card-trends.mjs) och ligger på vår egen server:
+// Frankfurter har hängt i 20 sekunder för webbläsare, och då väntade varje kortpris på den. Saknas filen är kurserna null.
+let ratesPromise = null;
+export const fxRates = () => (ratesPromise ||= fetch(new URL("../data/rates.json", import.meta.url))
+  .then((r) => (r.ok ? r.json() : Promise.reject()))
+  .catch(() => { ratesPromise = null; return { EUR: null, USD: null }; }));
+
 // TCGdex ber att man cachar svar lokalt. Vi sparar dem i webbläsaren i 6 timmar.
 const TTL = 6 * 3600e3;
 export async function getJSON(url, ttl = TTL) {

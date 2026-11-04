@@ -58,5 +58,57 @@
     }
     return top.sort((a, b) => b.s - a.s);
   }
-  return { CW, CH, LEN, BOX, describe, vector, match };
+  /* Var kortet kan sitta i den rätade bilden, i andelar av den. Kantsökningen hittar ofta plastfickans, toploaderns eller
+     ramens kant i stället för kortets, och då ligger kortet en bit in (i en toploader ofta nere). Bildjämförelsen provar
+     alla lägena, så att det inre kortet känns igen utan att bilden behöver rätas om. */
+  const FRAMES = [
+    { u0: 0, u1: 1, v0: 0, v1: 1 },
+    { u0: .03, u1: .97, v0: .02, v1: .98 },   // plastficka
+    { u0: .06, u1: .94, v0: .05, v1: .96 },
+    { u0: .09, u1: .91, v0: .04, v1: .96 },
+    { u0: .09, u1: .91, v0: .1, v1: .97 },    // toploader, kortet nere
+    { u0: .12, u1: .88, v0: .12, v1: .94 },
+    { u0: .12, u1: .88, v0: .04, v1: .92 },
+    { u0: .15, u1: .85, v0: .15, v1: .92 },   // toploader långt bort
+    { u0: .05, u1: .95, v0: .14, v1: .97 },
+  ];
+  const FRAME_COST = .03;
+  /* Avtryck av kortbilden för små förskjutningar, så att en lite snett beskuren bild ändå matchar: 25 när kortet fyller
+     bilden (frame 0), 9 för de inre lägena. Ett avtryck per spel, eftersom konstverket sitter lite olika (BOX).
+     d = RGBA-pixlar i storleken CW x CH. */
+  function queries(d, game, frame){
+    const [x0, x1, y0, y1] = BOX[game], { u0, u1, v0, v1 } = FRAMES[frame];
+    const box = [u0 + x0 * (u1 - u0), u0 + x1 * (u1 - u0), v0 + y0 * (v1 - v0), v0 + y1 * (v1 - v0)];
+    const steps = frame ? [-.03, 0, .03] : [-.06, -.03, 0, .03, .06], out = [];
+    for (const dy of steps) for (const dx of steps) out.push(vector(describe(d, CW, CH, 4, dx * (u1 - u0), dy * (v1 - v0), box)));
+    return out;
+  }
+  /* Korten i databasen som liknar bilden mest: [{ i, s, frame }], osorterade, s = likhet. Hela databasen söks med några
+     avtryck per läge i FRAMES, och korten som hittas jämförs sedan med alla avtryck. quick: bara ett avtryck söker, och
+     de inre lägena provas inte. För en omrätning, där bilden redan är beskuren rätt eller inte alls. */
+  function search(db, n, d, game, k, quick){
+    const qs = (quick ? FRAMES.slice(0, 1) : FRAMES).map((_, f) => queries(d, game, f));
+    const found = new Set();
+    let top = -1;
+    for (const q of (quick ? [12] : [12, 7, 17, 11, 13]).map((i) => qs[0][i])) for (const t of match(db, n, q, k)){ found.add(t.i); top = Math.max(top, t.s); }
+    /* Liknar hela bilden redan ett kort tydligt behövs inte de inre lägena */
+    if (top >= .9) qs.length = 1;
+    for (const q of qs.slice(1).map((q) => q[4])) for (const t of match(db, n, q, k)) found.add(t.i);
+    const out = [];
+    for (const i of found){
+      let s = -1, frame = 0;
+      /* Ett inre läge får ett litet avdrag, så att många extra avtryck inte lyfter fel kort i en bild med blänk */
+      qs.forEach((list, f) => {
+        for (const q of list){
+          let v = 0;
+          for (let j = 0, o = i * LEN; j < LEN; j++) v += db[o + j] * q[j];
+          v = v / (127 * 127) - (f ? FRAME_COST : 0);
+          if (v > s){ s = v; frame = f; }
+        }
+      });
+      out.push({ i, s, frame });
+    }
+    return out;
+  }
+  return { CW, CH, LEN, BOX, FRAMES, describe, vector, match, queries, search };
 });

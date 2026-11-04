@@ -506,7 +506,8 @@ const cardEur = (id) => {
     .then((c) => c?.pricing?.cardmarket?.trend ?? c?.pricing?.cardmarket?.avg ?? null).catch(() => null));
   return priceOf.get(id);
 };
-const sekRate = () => (eurSek ??= fetch("https://api.frankfurter.dev/v1/latest?from=EUR&to=SEK").then((r) => r.json()).then((d) => d.rates.SEK).catch(() => 11.2));
+// Samma fil som fxRates i site.js. site.js laddar den här filen, så den importeras inte härifrån.
+const sekRate = () => (eurSek ??= fetch(new URL("../data/rates.json", import.meta.url)).then((r) => r.json()).then((d) => d.EUR ?? 11.2).catch(() => 11.2));
 function fillPrices(dropdown) {
   for (const li of dropdown.querySelectorAll(".cad-item[data-card-id]")) {
     Promise.all([cardEur(li.dataset.cardId), sekRate()]).then(([eur, rate]) => {

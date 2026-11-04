@@ -47,6 +47,9 @@ const slim = (c) => {
 // TCGdex har bara dagens priser och snitt. Historiken byggs därför upp av oss, en punkt per kort och dag,
 // omräknad till kronor med ECB:s kurs samma dag: [datum, trendpris, lägsta pris].
 const rate = (await getJSON("https://api.frankfurter.dev/v1/latest?from=EUR&to=SEK"))?.rates?.SEK;
+// Kurserna till sidorna (fxRates i js/site.js). Svarar Frankfurter inte ligger gårdagens kvar.
+const usdRate = (await getJSON("https://api.frankfurter.dev/v1/latest?from=USD&to=SEK"))?.rates?.SEK;
+if (rate && usdRate) await writeFile(new URL("../data/rates.json", import.meta.url), JSON.stringify({ updated: Date.now(), EUR: rate, USD: usdRate }) + "\n");
 if (rate) {
   const today = new Date().toISOString().slice(0, 10);
   const oldest = new Date(Date.now() - HISTORY_DAYS * 864e5).toISOString().slice(0, 10);

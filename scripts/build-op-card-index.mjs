@@ -4,6 +4,7 @@
 //
 // Varje variant (parallel, manga, alternativ bild) har en egen bild och ett eget avtryck. Samma bild flera gånger läggs
 // in en gång, under kortet utan variant om det finns.
+import { createHash } from "node:crypto";
 import fs from "node:fs";
 import { createRequire } from "node:module";
 import sharp from "sharp";
@@ -51,5 +52,5 @@ if (ids.length < list.length * 0.9) throw new Error(`För många misslyckade: ${
 const bin = Buffer.alloc(ids.length * FP.LEN);
 vecs.forEach((v, i) => Buffer.from(v.buffer).copy(bin, i * FP.LEN));
 fs.writeFileSync(new URL("../data/op/hashes.bin", import.meta.url), bin);
-fs.writeFileSync(new URL("../data/op/hashes.json", import.meta.url), JSON.stringify({ len: FP.LEN, n: ids.length, ids }));
+fs.writeFileSync(new URL("../data/op/hashes.json", import.meta.url), JSON.stringify({ len: FP.LEN, n: ids.length, v: createHash("sha1").update(bin).digest("hex").slice(0, 12), ids }));
 console.log(`Klart: ${ids.length} avtryck, ${(bin.length / 1e6).toFixed(2)} MB (misslyckade: ${failed})`);

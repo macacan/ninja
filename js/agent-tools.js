@@ -1,6 +1,6 @@
 // Verktyg för AI-agenter i webbläsaren (WebMCP, navigator.modelContext). Bara webbläsare med WebMCP har
 // navigator.modelContext, för alla andra gör filen ingenting. Verktygen läser samma data som sidan själv.
-import { liveStock, upcomingReleases } from "./site.js";
+import { fxRates, liveStock, upcomingReleases } from "./site.js";
 import { gameSuggestions } from "./game-guess.js";
 
 const GAMES = { pokemon: "Pokémon", op: "One Piece", rb: "Riftbound" };
@@ -17,7 +17,7 @@ async function cardPrice({ query, game = "pokemon" }) {
   }
   const [list, rate] = await Promise.all([
     fetch(`https://api.tcgdex.net/v2/en/cards?name=${encodeURIComponent(query)}`).then((r) => r.json()),
-    fetch("https://api.frankfurter.dev/v1/latest?from=EUR&to=SEK").then((r) => r.json()).then((d) => d.rates.SEK).catch(() => 11.2),
+    fxRates().then((r) => r.EUR ?? 11.2),
   ]);
   const cards = await Promise.all((list || []).slice(0, 8).map(async (c) => {
     const full = await fetch(`https://api.tcgdex.net/v2/en/cards/${encodeURIComponent(c.id)}`).then((r) => r.json()).catch(() => null);

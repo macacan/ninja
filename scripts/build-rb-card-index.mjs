@@ -5,6 +5,7 @@
 // Flera kort kan ha samma bild (t.ex. omtryck i ett annat set). Varje bild finns en gång i indexet, under kortet
 // utan variant om det finns. Battlefields är liggande: de läggs in vridna åt båda hållen, så att ett battlefield
 // som hålls på högkant i kameran känns igen.
+import { createHash } from "node:crypto";
 import fs from "node:fs";
 import { createRequire } from "node:module";
 import sharp from "sharp";
@@ -58,5 +59,5 @@ if (results.filter(Boolean).length < list.length * 0.9) throw new Error(`För m�
 const bin = Buffer.alloc(ids.length * FP.LEN);
 vecs.forEach((v, i) => Buffer.from(v.buffer).copy(bin, i * FP.LEN));
 fs.writeFileSync(new URL("../data/rb/hashes.bin", import.meta.url), bin);
-fs.writeFileSync(new URL("../data/rb/hashes.json", import.meta.url), JSON.stringify({ len: FP.LEN, n: ids.length, ids }));
+fs.writeFileSync(new URL("../data/rb/hashes.json", import.meta.url), JSON.stringify({ len: FP.LEN, n: ids.length, v: createHash("sha1").update(bin).digest("hex").slice(0, 12), ids }));
 console.log(`Klart: ${ids.length} avtryck, ${(bin.length / 1e6).toFixed(2)} MB`);

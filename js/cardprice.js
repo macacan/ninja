@@ -1,6 +1,6 @@
 // Prisfönster för ett kort: prishistorik, Cardmarket- och TCGplayer-priser samt värde per skick och betyg.
 // Öppnas ovanpå den förstorade kortvyn, utan att lämna sidan.
-import { API, esc, kr, getJSON, cardImg, extraCardImgsReady, setPages, setLink } from "./site.js";
+import { API, esc, kr, getJSON, fxRates, cardImg, extraCardImgsReady, setPages, setLink } from "./site.js";
 import { mountChart } from "./pricechart.js";
 import { CONDITIONS, gradeMult } from "./valuation.js";
 import { cardmarketTable, tcgplayerTable } from "./cmholo.js?v=20261104b";
@@ -18,18 +18,11 @@ function dialog() {
   return dlg;
 }
 
-async function getRates() {
-  try {
-    const [eur, usd] = await Promise.all(["EUR", "USD"].map((c) => getJSON(`https://api.frankfurter.dev/v1/latest?from=${c}&to=SEK`)));
-    return { EUR: eur.rates.SEK, USD: usd.rates.SEK };
-  } catch { return { EUR: null, USD: null }; }
-}
-
 export async function openCardPrice(id) {
   const d = dialog(), body = d.querySelector(".pm-body"), my = ++token;
   body.innerHTML = '<div class="cm-load">Hämtar priser…</div>';
   if (!d.open) d.showModal();
-  const [card, rates, pages] = await Promise.all([getJSON(`${API}/cards/${encodeURIComponent(id)}`).catch(() => null), getRates(), setPages(), extraCardImgsReady]);
+  const [card, rates, pages] = await Promise.all([getJSON(`${API}/cards/${encodeURIComponent(id)}`).catch(() => null), fxRates(), setPages(), extraCardImgsReady]);
   const rate = rates.EUR;
   if (my !== token) return;
   if (!card) { body.innerHTML = '<div class="msg">Priset kunde inte hämtas just nu.</div>'; return; }

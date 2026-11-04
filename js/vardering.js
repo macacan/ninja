@@ -1,6 +1,6 @@
 // Gratis kortvärdering: sök kort, välj skick, gör en egen pre-grading och se om gradering lönar sig.
 // Utgångspriset är Cardmarkets trendpris (via TCGdex). Skick och betyg är tumregler, se "Så räknar vi" på sidan.
-import { API, $, esc, kr, getJSON, getList, skeleton, loading, cardImg, setPages, setLink } from "./site.js";
+import { API, $, esc, kr, getJSON, getList, fxRates, skeleton, loading, cardImg, setPages, setLink } from "./site.js";
 
 // Setets namn länkar till setsidan. Hinner listan inte laddas före första kortet visas bara namnet.
 let pages = null;
@@ -14,7 +14,7 @@ import { mountCardAutocomplete } from "./card-autocomplete.js";
 import { CONDITIONS, DEFAULT_COND, gradeMult, isVintage } from "./valuation.js";
 // Skannern är stor och behövs bara när man skannar eller söker på ett foto: den hämtas när sidan är klar och laddas
 // först när den används, så att den inte bromsar sidans första visning.
-const scanner = () => import("./card-scanner.js?v=20261105e");
+const scanner = () => import("./card-scanner.js?v=20261106a");
 const warmScanner = () => (window.requestIdleCallback || setTimeout)(() => scanner().catch(() => {}), { timeout: 4000 });
 if (document.readyState === "complete") warmScanner(); else addEventListener("load", warmScanner, { once: true });
 import { showReveal } from "./card-reveal.js?v=20261104c";
@@ -225,7 +225,7 @@ const PAGE = 12;
 
 async function getRate() {
   if (state.rate) return state.rate;
-  try { state.rate = (await getJSON("https://api.frankfurter.dev/v1/latest?from=EUR&to=SEK")).rates.SEK; } catch {}
+  state.rate = (await fxRates()).EUR;
   return state.rate;
 }
 
