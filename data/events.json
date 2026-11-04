@@ -1,6 +1,20 @@
 {
- "updated": 1793815353439,
+ "updated": 1793816274460,
  "events": [
+  {
+   "at": 1793816219433,
+   "store": "spelparken",
+   "product": "spelparken:15596103631223",
+   "group": "fusion-strike|blister|en||3",
+   "title": "Fusion Strike 3-Pack Blister",
+   "url": "https://spelparken.se/products/fusion-strike-3-pack-blister",
+   "image": "https://cdn.shopify.com/s/files/1/0948/1876/3127/files/Pokemon-Fusion-Strike-3-Pack-Blister-Eevee.jpg?v=1793815727",
+   "price": 1099,
+   "type": "Blister",
+   "set": "Fusion Strike",
+   "lang": "en",
+   "kind": "ny"
+  },
   {
    "at": 1793814425692,
    "store": "spelparken",
@@ -7109,21 +7123,6 @@
    "lang": "en",
    "game": "rb",
    "kind": "ny"
-  },
-  {
-   "at": 1793292258157,
-   "store": "sweet-nerds",
-   "product": "sweet-nerds:https://sweetnerds.se/sv/products/one-piece-card-game-eb05-heroines-edition-vol2-booster-box-jp",
-   "group": "op|eb-05|booster-box|ja|",
-   "title": "One Piece Card Game: EB05 - Heroines Edition Vol.2 Booster Box (JP)",
-   "url": "https://sweetnerds.se/sv/products/one-piece-card-game-eb05-heroines-edition-vol2-booster-box-jp",
-   "image": "https://nycdn.nyehandel.se/store_17dfab1e-b233-4e19-a6f0-ae93160c8b85/images/1000004263-79a8be7a.png?width=400&height=400",
-   "price": 1499,
-   "type": "Booster Box",
-   "set": "EB-05",
-   "lang": "ja",
-   "game": "op",
-   "kind": "tillbaka"
   }
  ]
 }
