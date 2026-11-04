@@ -1,6 +1,34 @@
 {
- "updated": 1793834339926,
+ "updated": 1793835259952,
  "events": [
+  {
+   "at": 1793835227717,
+   "store": "samlarverket",
+   "product": "samlarverket:11273268724055",
+   "group": "perfect-order|booster-pack|en|",
+   "title": "Pokémon Perfect Order Booster Pack",
+   "url": "https://samlarverket.com/produkt/pokemon-perfect-order-booster-pack",
+   "image": "https://cdn.shopify.com/s/files/1/1022/5323/2471/files/pokemon-mega-evolution-perfect-order-booster-pack-1.webp?v=1789171276",
+   "price": 99,
+   "type": "Booster Pack",
+   "set": "Perfect Order",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1793835227717,
+   "store": "samlarverket",
+   "product": "samlarverket:11206423085399",
+   "group": "emerald|booster-pack|en|",
+   "title": "Pokémon Storm Emeralda Booster Pack",
+   "url": "https://samlarverket.com/produkt/storm-emeralda-booster-pack",
+   "image": "https://cdn.shopify.com/s/files/1/1022/5323/2471/files/stormemeraldaboosterpack.webp?v=1790207610",
+   "price": 49,
+   "type": "Booster Pack",
+   "set": "Emerald",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793828058479,
    "store": "bangerpack",
@@ -7089,36 +7117,6 @@
    "lang": "zh",
    "kind": "prissankt",
    "from": 189
-  },
-  {
-   "at": 1793303477833,
-   "store": "dragon-s-lair",
-   "product": "dragon-s-lair:15855446229340",
-   "group": "x|collection-box|zh||coin-gathering-glaceon-terastal",
-   "title": "Pokemon Terastal Gathering CSV9.5C Coin Collection Box Glaceon (Kinesisk)",
-   "url": "https://dragonslair.se/products/pokemon-terastal-gathering-csv9-5c-coin-collection-box-glaceon-kinesisk",
-   "image": "https://cdn.shopify.com/s/files/1/1015/8315/9644/files/393174-terastal-gathering-glaceon-coin-set-csv9-5c-csv9-5-terastal-gathering.jpg?v=1790704986",
-   "price": 195,
-   "type": "Collection Box",
-   "set": null,
-   "lang": "zh",
-   "kind": "prissankt",
-   "from": 229
-  },
-  {
-   "at": 1793303477833,
-   "store": "dragon-s-lair",
-   "product": "dragon-s-lair:15855445246300",
-   "group": "x|collection-box|zh||coin-gathering-terastal-vaporeon",
-   "title": "Pokemon Terastal Gathering CSV9.5C Coin Collection Box Vaporeon(Kinesisk)",
-   "url": "https://dragonslair.se/products/pokemon-terastal-gathering-csv9-5c-coin-collection-box-vaporeonkinesisk",
-   "image": "https://cdn.shopify.com/s/files/1/1015/8315/9644/files/393168-terastal-gathering-vaporeon-coin-set-csv9-5c-csv9-5-terastal-gathering.jpg?v=1790704770",
-   "price": 195,
-   "type": "Collection Box",
-   "set": null,
-   "lang": "zh",
-   "kind": "prissankt",
-   "from": 229
   }
  ]
 }
