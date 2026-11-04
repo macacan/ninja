@@ -3104,12 +3104,22 @@ input[type=search]::-webkit-search-results-decoration {
 .scan-app a{color:#c4b5fd;font-weight:700}
 .scan-app[hidden],.scan.frozen .scan-app{display:none}
 /* Senaste träffen: uppe till höger i bilden med priset på, tryck för att öppna kortet */
-.scan-peek{position:absolute;top:12px;right:12px;z-index:10;width:76px;padding:4px 4px 6px;border-radius:12px;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;color:#fff;background:rgba(12,14,30,.6);backdrop-filter:blur(14px) saturate(1.4);-webkit-backdrop-filter:blur(14px) saturate(1.4);border:1px solid rgba(74,222,128,.7);box-shadow:0 6px 18px rgba(0,0,0,.5)}
+/* Markeringens färg: grön som standard, och i valvet efter kortets värde (tierOf i card-scanner.js) */
+.scan-peek,.scan-pop,.scan-confirm{--tier:#4ade80;--tier-glow:rgba(74,222,128,.55);--tier-bg:#16a34a;--tier-ink:#fff}
+.scan [data-tier=gray]{--tier:#5b6270;--tier-glow:rgba(91,98,112,.25);--tier-bg:#4b5563;--tier-ink:#fff}
+.scan [data-tier=bronze]{--tier:#cd7f32;--tier-glow:rgba(205,127,50,.6);--tier-bg:#a05a1f;--tier-ink:#fff}
+.scan [data-tier=silver]{--tier:#e2e8f0;--tier-glow:rgba(226,232,240,.6);--tier-bg:linear-gradient(135deg,#f1f5f9,#a8b3c2);--tier-ink:#111827}
+.scan [data-tier=gold]{--tier:#fbbf24;--tier-glow:rgba(251,191,36,.7);--tier-bg:linear-gradient(135deg,#fde68a,#d99a0b);--tier-ink:#2b1d02}
+.scan [data-tier=diamond]{--tier:#a5f3fc;--tier-glow:rgba(125,211,252,.85);--tier-bg:linear-gradient(120deg,#a5f3fc,#f0fdff,#c4b5fd,#a5f3fc);--tier-ink:#0b2230}
+.scan [data-tier=diamond] .scan-price,.scan-confirm[data-tier=diamond] em{background-size:220% 100%;animation:tierShine 2.4s linear infinite}
+@keyframes tierShine{to{background-position:-220% 0}}
+@media (prefers-reduced-motion:reduce){.scan [data-tier=diamond] .scan-price,.scan-confirm[data-tier=diamond] em{animation:none}}
+.scan-peek{position:absolute;top:12px;right:12px;z-index:10;width:76px;padding:4px 4px 6px;border-radius:12px;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;color:#fff;background:rgba(12,14,30,.6);backdrop-filter:blur(14px) saturate(1.4);-webkit-backdrop-filter:blur(14px) saturate(1.4);border:1px solid var(--tier);box-shadow:0 6px 18px rgba(0,0,0,.5),0 0 12px var(--tier-glow)}
 .scan-peek[hidden]{display:none}
 .scan-peek img{width:66px;height:92px;border-radius:6px;object-fit:cover;display:block;background:#1b1e33}
 .scan-peek img[hidden]{display:none}
 /* Priset ligger på kortbilden, nertill, i förhandsvisningen och i kortet som poppar upp */
-.scan-price{position:absolute;left:50%;transform:translateX(-50%);padding:3px 9px;border-radius:999px;background:#16a34a;color:#fff;font:800 .74rem/1.2 var(--sans);font-style:normal;white-space:nowrap;box-shadow:0 2px 8px rgba(0,0,0,.5)}
+.scan-price{position:absolute;left:50%;transform:translateX(-50%);padding:3px 9px;border-radius:999px;background:var(--tier-bg);color:var(--tier-ink);font:800 .74rem/1.2 var(--sans);font-style:normal;white-space:nowrap;box-shadow:0 2px 8px rgba(0,0,0,.5)}
 .scan-price[hidden]{display:none}
 .scan-peek .scan-price{top:78px}
 .scan-pop .scan-price{position:static;transform:none;font-size:1rem;padding:5px 14px}
@@ -3138,11 +3148,11 @@ input[type=search]::-webkit-search-results-decoration {
 /* Förhandsvisning av ett kort valt i sökrutan (valvet), ovanpå sökrutan och utan kameran */
 .scan-confirm{position:absolute;inset:0;z-index:13;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:14px;background:#07080f;text-align:center;overflow:auto}
 .scan-confirm[hidden]{display:none}
-.scan-confirm img{height:min(52%,300px);min-height:120px;aspect-ratio:63/88;flex:none;object-fit:cover;border-radius:10px;background:#1b1e33;box-shadow:0 10px 30px rgba(0,0,0,.6)}
+.scan-confirm img{height:min(52%,300px);min-height:120px;aspect-ratio:63/88;flex:none;object-fit:cover;border-radius:10px;background:#1b1e33;border:3px solid var(--tier);box-shadow:0 0 22px var(--tier-glow),0 10px 30px rgba(0,0,0,.6)}
 .scan-confirm img[hidden]{display:none}
 .scan-confirm b{margin-top:6px;font-size:1rem;color:#f1f3ff}
 .scan-confirm small{font-size:.76rem;color:rgba(232,234,246,.6)}
-.scan-confirm em{padding:4px 14px;border-radius:999px;background:#16a34a;color:#fff;font:800 1rem/1.2 var(--sans);font-style:normal}
+.scan-confirm em{padding:4px 14px;border-radius:999px;background:var(--tier-bg);color:var(--tier-ink);font:800 1rem/1.2 var(--sans);font-style:normal}
 .scan-confirm p{margin:6px 0 4px;font-size:.88rem;color:#e8eaf6}
 .scan-confirm div{display:flex;gap:8px;width:100%;max-width:320px}
 .scan-confirm button{font:inherit;font-size:.9rem;font-weight:700;border-radius:999px;padding:12px 18px;cursor:pointer}
@@ -3152,7 +3162,7 @@ input[type=search]::-webkit-search-results-decoration {
 .scan.confirming .scan-view{border-radius:18px}
 .scan-pop{position:absolute;inset:0;z-index:7;display:grid;place-items:center;pointer-events:none}
 .scan-pop>div{display:flex;flex-direction:column;align-items:center;gap:8px;will-change:transform,opacity}
-.scan-pop img,.scan-pop i{width:150px;height:209px;border-radius:9px;object-fit:cover;background:#1b1e33;border:3px solid #4ade80;box-shadow:0 0 28px rgba(74,222,128,.55),0 14px 36px rgba(0,0,0,.6)}
+.scan-pop img,.scan-pop i{width:150px;height:209px;border-radius:9px;object-fit:cover;background:#1b1e33;border:3px solid var(--tier);box-shadow:0 0 28px var(--tier-glow),0 14px 36px rgba(0,0,0,.6)}
 .scan-pop span{max-width:240px;padding:5px 12px;border-radius:999px;background:rgba(12,14,30,.85);color:#fff;font-size:.82rem;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .scan-actions{display:flex;gap:8px;align-items:center;padding:14px}
 .scan-actions>*{font:inherit;font-size:.85rem;font-weight:600;border-radius:999px;padding:11px 16px;cursor:pointer;text-align:center;transition:background .2s,transform .15s,box-shadow .2s}

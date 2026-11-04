@@ -2481,6 +2481,11 @@ const HIT_WAIT = 700; // ms som kortet längst väntar på priset innan det popp
 const HIT_PAUSE = 700; // ms innan nästa kort läses
 // I valvet står alltid något om värdet
 const priceText = (item) => (item.price != null ? kr(item.price) : item.pending ? "Hämtar pris…" : onHit ? "Inget pris" : "");
+// Markeringens färg i valvet efter kortets värde, med samma avrundning som priset som visas. Okänt pris blir grått.
+const tierOf = (price) => {
+  const k = price == null ? 0 : Math.round(price);
+  return k > 1000 ? "diamond" : k > 500 ? "gold" : k > 100 ? "silver" : k > 50 ? "bronze" : k >= 5 ? "green" : "gray";
+};
 // saved: valvet har svarat att kortet är inlagt
 const hitText = (item, saved) => (onHit
   ? saved ? `<b>${esc(labelOf(item))}</b> lagt i valvet! Håll nästa kort i ramen.` : `Hittade <b>${esc(labelOf(item))}</b>! Lägger i valvet…`
@@ -2495,8 +2500,11 @@ function paintPeek(item) {
   price.hidden = !price.textContent;
   btn.querySelector("span").textContent = labelOf(item);
   btn.setAttribute("aria-label", `Öppna ${labelOf(item)}${item.price != null ? `, ${kr(item.price)}` : ""}`);
+  if (onHit) btn.dataset.tier = tierOf(item.price);
+  else delete btn.dataset.tier;
   const pop = [...dialog.querySelectorAll(".scan-pop")].at(-1);
   if (!pop) return;
+  if (onHit) pop.dataset.tier = tierOf(item.price);
   pop.querySelector(".scan-price").textContent = priceText(item);
   pop.querySelector("span").textContent = labelOf(item);
 }
@@ -2669,6 +2677,7 @@ async function openConfirm({ game, c }) {
   el.querySelector("b").textContent = c.name;
   el.querySelector("small").textContent = [c.no, c.variant, GAME_LABEL[game]].filter(Boolean).join(" · ");
   price.textContent = c.sek != null ? kr(c.sek) : "Hämtar pris…";
+  el.dataset.tier = tierOf(c.sek);
   confirmStep("ask", "Vill du lägga till kortet i valvet?");
   el.hidden = false;
   dialog.classList.add("confirming");
@@ -2676,6 +2685,7 @@ async function openConfirm({ game, c }) {
   const card = await Promise.resolve(onPreview(item)).catch(() => null);
   if (confirmItem !== item) return; // ett annat kort hann väljas
   price.textContent = card?.sek != null ? kr(card.sek) : "Inget pris";
+  el.dataset.tier = tierOf(card?.sek);
   if (card?.name) el.querySelector("b").textContent = card.name;
 }
 async function confirmYes() {
@@ -2723,6 +2733,7 @@ function popCard(item, target, end) {
   const pop = document.createElement("div");
   pop.className = "scan-pop";
   pop.setAttribute("aria-hidden", "true");
+  if (onHit) pop.dataset.tier = tierOf(item.price);
   pop.innerHTML = `<div>${item.thumb ? `<img src="${item.thumb}" alt="">` : "<i></i>"}<em class="scan-price">${esc(priceText(item))}</em><span>${esc(labelOf(item))}</span></div>`;
   view.append(pop);
   target.hidden = false;
