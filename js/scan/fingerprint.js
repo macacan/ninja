@@ -1,4 +1,4 @@
-/* Bildfingeravtryck för kort: liten beskrivning av konstverket (ljushet 16x12 + färg 4x4).
+/* Bildfingeravtryck för kort: liten beskrivning av konstverket (lokal kontrast 16x12 + färg 4x4).
    Samma kod körs i appen (canvas) och i bygget av kortindex (node + sharp), så avtrycken går att jämföra. */
 (function (root, factory){
   if (typeof module === 'object' && module.exports) module.exports = factory(); else root.Fingerprint = factory();
@@ -6,7 +6,7 @@
   const CW = 126, CH = 176;                         // kortet skalas till denna storlek före beskrivningen
   /* Konstverkets ruta i kortet [x0, x1, y0, y1] per spel. Riftbound: under kostnadscirkeln och ovanför typbandet.
      One Piece: bildens övre del, ovanför effekttexten och ovanför "SAMPLE"-stämpeln som TCGplayers bilder har. */
-  const BOX = { pokemon: [.07, .93, .11, .56], rb: [.07, .93, .13, .51], op: [.08, .92, .1, .4] };
+  const BOX = { pokemon: [.08, .92, .11, .46], rb: [.07, .93, .13, .51], op: [.08, .92, .1, .4] };
   const GC = 16, GR = 12, KC = 4, KR = 4, LEN = GC * GR + KC * KR * 3;
   /* data = pixlar (RGB eller RGBA), w x h = kortets bild. dx, dy = litet förskjutet utsnitt (andel av kortet).
      box = konstverkets ruta (BOX.pokemon om den inte anges). */
@@ -28,11 +28,25 @@
     cell(KC, KR, (i, r, g, b) => { const o = GC * GR + i * 3; out[o] = Math.round(r); out[o+1] = Math.round(g); out[o+2] = Math.round(b); });
     return out;
   }
-  /* Normaliserad vektor (Int8): ljushet och färg med medelvärdet borttaget, så belysning och färgstick spelar mindre roll. */
+  /* Varje ruta jämförs med sin omgivning (RAD rutor åt varje håll): värdet minus omgivningens medel, delat med dess
+     spridning. Ett brett blänk eller reverse holo-folie ändrar ljusheten över stora delar av kortet, men inte formerna, så
+     det rätta kortet får hög likhet även med reflexer, och en tom bakgrund får låg. */
+  const RAD = 2;
+  function contrast(d){
+    const out = new Float32Array(GC * GR);
+    for (let r = 0; r < GR; r++) for (let c = 0; c < GC; c++){
+      let s = 0, q = 0, n = 0;
+      for (let y = Math.max(0, r - RAD); y <= Math.min(GR - 1, r + RAD); y++) for (let x = Math.max(0, c - RAD); x <= Math.min(GC - 1, c + RAD); x++){ const v = d[y * GC + x]; s += v; q += v * v; n++; }
+      const m = s / n, sd = Math.sqrt(Math.max(0, q / n - m * m));
+      out[r * GC + c] = Math.max(-2.5, Math.min(2.5, (d[r * GC + c] - m) / (sd + 6)));
+    }
+    return out;
+  }
+  /* Normaliserad vektor (Int8): lokal kontrast och färg med medelvärdet borttaget, så belysning och färgstick spelar mindre roll. */
   function vector(d){
-    const v = new Float32Array(LEN), G = GC * GR;
-    let m = 0; for (let i = 0; i < G; i++) m += d[i]; m /= G;
-    for (let i = 0; i < G; i++) v[i] = d[i] - m;
+    const v = new Float32Array(LEN), G = GC * GR, l = contrast(d);
+    let m = 0; for (let i = 0; i < G; i++) m += l[i]; m /= G;
+    for (let i = 0; i < G; i++) v[i] = (l[i] - m) * 40;
     for (let ch = 0; ch < 3; ch++){
       let s = 0; for (let i = 0; i < KC * KR; i++) s += d[G + i * 3 + ch]; s /= KC * KR;
       for (let i = 0; i < KC * KR; i++) v[G + i * 3 + ch] = (d[G + i * 3 + ch] - s) * .7;
@@ -92,7 +106,7 @@
     let top = -1;
     for (const q of (quick ? [12] : [12, 7, 17, 11, 13]).map((i) => qs[0][i])) for (const t of match(db, n, q, k)){ found.add(t.i); top = Math.max(top, t.s); }
     /* Liknar hela bilden redan ett kort tydligt behövs inte de inre lägena */
-    if (top >= .9) qs.length = 1;
+    if (top >= .72) qs.length = 1;
     for (const q of qs.slice(1).map((q) => q[4])) for (const t of match(db, n, q, k)) found.add(t.i);
     const out = [];
     for (const i of found){

@@ -546,7 +546,7 @@ async function scanCards(g = VAULT_PAGE ? "vault" : game, { manual = false } = {
     getRates(); // kursen ska finnas när första kortet hittas
   }
   track("scan", "Öppnad");
-  const { openScanner } = await import("./card-scanner.js?v=20261106a");
+  const { openScanner } = await import("./card-scanner.js?v=20261106b");
   const added = new Map(); // valvet: träffarna som lagts in, för att kunna öppna rätt kort
   openScanner(async (r) => {
     track("scan", r.cardId ? "Säker träff" : "Läst, söker");

@@ -8,6 +8,8 @@ const API = "https://api.tcgdex.net/v2/en";
 const DIR = new URL("../data/sets/", import.meta.url);
 const FRESH_DAYS = 120;
 const CONCURRENCY = 4;
+const CODES = new URL("../data/set-codes.json", import.meta.url);
+const setCodes = await readFile(CODES, "utf8").then(JSON.parse).catch(() => ({}));
 
 async function getJSON(url, tries = 3) {
   for (let i = 0; i < tries; i++) {
@@ -46,6 +48,10 @@ await pool(list, async (brief) => {
     cards: s.cards.map((c) => ({ id: c.id, localId: c.localId, name: c.name, image: c.image || null })),
   };
   await writeFile(file, JSON.stringify(out) + "\n");
+  // Setkoden, som är tryckt på kort från 2023 och framåt och som skannern läser (data/set-codes.json)
+  const code = s.abbreviation?.official;
+  if (code && /^(sv|me)/.test(s.serie?.id || "")) setCodes[code] ||= s.id;
   fetched++;
 });
+await writeFile(CODES, JSON.stringify(Object.fromEntries(Object.entries(setCodes).sort())) + "\n");
 console.log(`${list.length} set hos TCGdex: ${fetched} hämtade, ${kept} oförändrade, ${skipped} hoppade över (TCG Pocket eller tomma).`);

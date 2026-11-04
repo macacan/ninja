@@ -36,5 +36,5 @@ jobs:
         run: |
           git config user.name "packninja-bot"
           git config user.email "packninja-bot@users.noreply.github.com"
-          git add data/card-trends.json data/rates.json data/card-history data/op data/rb data/pokemon-names.json data/product-contents.json data/sets data/set-pages.json data/card-images.json set sitemap.xml scripts/sitemap-state.json
+          git add data/card-trends.json data/rates.json data/set-codes.json data/card-history data/op data/rb data/pokemon-names.json data/product-contents.json data/sets data/set-pages.json data/card-images.json set sitemap.xml scripts/sitemap-state.json
           git diff --cached --quiet || (git commit -m "Uppdatera korttrender och setsidor" && git pull --rebase -X theirs && git push)

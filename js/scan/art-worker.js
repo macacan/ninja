@@ -1,6 +1,6 @@
 // Bildjämförelsen i en egen tråd: att söka igenom 21 000 kort tar en stund på en telefon, och på sidans egen tråd
 // hackar då kameran och kantsökningen. Svaret är detsamma som Fingerprint.search på sidan (reserven i card-scanner.js).
-importScripts("fingerprint.js?v=20261106a");
+importScripts("fingerprint.js?v=20261106b");
 const indexes = {};
 onmessage = ({ data: m }) => {
   if (m.load) { indexes[m.load] = { db: m.db, n: m.n }; return; }

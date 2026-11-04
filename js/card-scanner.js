@@ -15,7 +15,7 @@
 import { API, esc, getJSON, kr } from "./site.js";
 import { loadDataset } from "./card-autocomplete.js";
 import "./scan/quad.js?v=20261103a"; // sätter self.Quad
-import "./scan/fingerprint.js?v=20261106a"; // sätter self.Fingerprint (med FP.BOX per spel)
+import "./scan/fingerprint.js?v=20261106b"; // sätter self.Fingerprint (med FP.BOX per spel)
 import { coinMuted, playCoin, setCoinMuted, unlockCoin } from "./scan/coin.js?v=20261105a";
 
 const TESSERACT = "https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/tesseract.min.js";
@@ -53,6 +53,8 @@ const OCR_PARAMS = {
 };
 // En andra nummerläsare, så att flera varianter av nummerraden kan läsas samtidigt (Riftbound)
 OCR_PARAMS.number2 = OCR_PARAMS.number;
+// Setkod och nummer i samma läsning ("JTG EN 084/159"), på kort från 2023 och framåt
+OCR_PARAMS.code = { tessedit_pageseg_mode: "11", tessedit_char_whitelist: "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789/" };
 const numberWorker = (i) => getWorker(i % 2 ? "number2" : "number");
 let scriptPromise = null;
 const workers = {};
@@ -618,7 +620,7 @@ function dropThread() {
 function getThread() {
   if (!artThread && !artThreadDead) {
     try {
-      artThread = new Worker(new URL("./scan/art-worker.js?v=20261106a", import.meta.url));
+      artThread = new Worker(new URL("./scan/art-worker.js?v=20261106b", import.meta.url));
       artThread.onmessage = ({ data }) => {
         const done = artJobs.get(data.id);
         artJobs.delete(data.id);
@@ -724,7 +726,7 @@ async function byNumber(art, r) {
     const counts = r.total ? await setCounts() : null;
     const totalOk = (id) => { const c = counts?.get(setOf(id)); return !c || !r.total || c.official === +r.total || c.total === +r.total; };
     // Numret (och setstorleken) pekar ut ett av korten som liknar bilden
-    const hits = art.filter((x) => numKey(localOf(x.id)) === numKey(r.number) && totalOk(x.id) && x.s >= 0.55);
+    const hits = art.filter((x) => numKey(localOf(x.id)) === numKey(r.number) && totalOk(x.id) && x.s >= LIKE);
     if (hits.length === 1 || (hits.length > 1 && hits[0].s - hits[1].s >= 0.08)) return hits[0].id;
   }
   return null;
@@ -743,17 +745,21 @@ async function byNumberThenLook(canvas, r) {
   const sims = await artSims(canvas, ids);
   const ranked = ids.filter((id) => sims[id] != null).sort((x, y) => sims[y] - sims[x]);
   const s0 = sims[ranked[0]] ?? -1, s1 = ranked[1] ? sims[ranked[1]] : -1;
-  return s0 >= 0.5 && s0 - s1 >= 0.08 ? ranked[0] : null;
+  return s0 >= LIKE && s0 - s1 >= 0.08 ? ranked[0] : null;
 }
+// Likhet (s) med rätt kort på foton: oftast 0,7-0,9. CLEAR: så tydligt att inget mer behövs. LIKE: rimligt likt, när numret
+// eller namnet också pekar ut kortet. RETRY: under det provas omrätningar (ficka, Riftbounds svarta kant).
+const CLEAR = 0.7, CLEAR_GAP = 0.16, LIKE = 0.42, RETRY = 0.62;
 // Bildträff som är tydlig på egen hand: hög likhet och långt före tvåan
 const byLook = (art, s, gap) => (art[0] && art[0].s >= s && art[0].s - (art[1]?.s ?? 0) >= gap ? art[0].id : null);
-// Bildträffen som räcker utan text. En tom ram kan likna ett kort upp till ungefär 0,83, och ibland klart mer än tvåan, så
-// utan kortets kanter (framed falskt) måste likheten vara hög.
-const lookEnough = (art, framed = true) => byLook(art, 0.85, 0.08) || (framed && byLook(art, 0.72, 0.15));
+// Bildträffen som räcker utan text. En vanlig tom ram liknar ett kort högst ungefär 0,55 med försprång 0,12, men ett randigt
+// mönster kan nå 0,74 med försprång 0,16 mot ett kort med mönster. Rätt kort ligger kring 0,8 även med reflexer. Utan kortets kanter (framed
+// falskt) krävs därför både högre likhet och större försprång, och flera bilder (se confirmed).
+const lookEnough = (art, framed = true) => (framed ? byLook(art, 0.58, 0.12) : byLook(art, 0.68, 0.2));
 // Korten nära toppen när alla är samma kort (key = namnet) i olika utgåvor och det närmaste andra kortet ligger klart
 // under, annars null
 function sameCard(art, key) {
-  if (!art[0] || art[0].s < 0.8) return null;
+  if (!art[0] || art[0].s < RETRY) return null;
   const k0 = key(art[0].id), near = art.filter((x) => x.s >= art[0].s - 0.06);
   if (near.length < 2 || !k0 || !near.every((x) => key(x.id) === k0)) return null;
   const other = art.find((x) => key(x.id) !== k0);
@@ -848,15 +854,18 @@ const SLEEVES = [
 // Den rätning (som hörnen hittades, eller kortet inuti en ficka) vars bild liknar ett kort i indexet mest. En ficka
 // väljs bara när bilden då blir en tydlig träff, så att ett blänk inte får en felaktig beskärning att vinna.
 async function sleeveBest(canvas, source, art) {
-  if (!source?.corners || (art[0]?.s ?? 0) >= 0.9) return { canvas, art };
+  if (!source?.corners || (art[0]?.s ?? 0) >= CLEAR) return { canvas, art };
   let best = { canvas, art };
-  for (const s of SLEEVES) {
-    const alt = copyCanvas(unwarpCard(source.src, subQuad(source.corners, s)));
+  for (const corners of altCorners(source)) {
+    const alt = copyCanvas(unwarpCard(source.src, corners));
     const altArt = await artMatch(alt, 30, "pokemon", true).catch(() => []);
-    if ((altArt[0]?.s ?? -1) >= 0.85 && altArt[0].s > (best.art[0]?.s ?? -1) + 0.03) best = { canvas: alt, art: altArt };
+    if ((altArt[0]?.s ?? -1) >= RETRY && altArt[0].s > (best.art[0]?.s ?? -1) + 0.03) best = { canvas: alt, art: altArt };
   }
   return best;
 }
+// Hörnen att prova utöver de hittade: kortet inuti en ficka, och ramen på skärmen när hörnsökningen i hela bilden valde
+// något annat (en plastficka eller hand kan ge en fel fyrhörning, medan kortet hålls i ramen).
+const altCorners = (source) => [...SLEEVES.map((s) => subQuad(source.corners, s)), ...(source.guide ? [source.guide] : [])];
 const copyCanvas = (src) => {
   const c = Object.assign(document.createElement("canvas"), { width: src.width, height: src.height });
   c.getContext("2d").drawImage(src, 0, 0);
@@ -903,24 +912,24 @@ async function rbBestCanvas(canvas, source, full = false, art = null) {
   let best = { canvas, art };
   // Liknar bilden inget Riftbound-kort alls (t.ex. ett Pokémonkort i Pokémonskannern) är det ingen idé att räta om.
   // I Riftbound-skannern provas omrätningarna ändå, eftersom en ficka kan göra den första bilden oigenkännlig.
-  if (source?.corners && (art[0]?.s ?? 0) < 0.9 && (art[0]?.s ?? 0) >= (scanGame !== "pokemon" ? 0.3 : 0.5)) {
+  if (source?.corners && (art[0]?.s ?? 0) < CLEAR && (art[0]?.s ?? 0) >= (scanGame !== "pokemon" ? 0.25 : 0.4)) {
     for (const f of [RB_FRAME, BF_FRAME]) {
       const c = copyCanvas(unwarpCard(source.src, subQuad(source.corners, f)));
       const a = await artMatch(c, 30, "rb").catch(() => []);
       if ((a[0]?.s ?? -1) > (best.art[0]?.s ?? -1)) best = { canvas: c, art: a, alt: best.canvas };
       else best.alt ||= c;
     }
-    if ((best.art[0]?.s ?? 0) < 0.85) {
-      for (const s of SLEEVES) {
-        const c = copyCanvas(unwarpCard(source.src, subQuad(source.corners, s)));
+    if ((best.art[0]?.s ?? 0) < RETRY) {
+      for (const corners of altCorners(source)) {
+        const c = copyCanvas(unwarpCard(source.src, corners));
         const a = await artMatch(c, 30, "rb").catch(() => []);
-        if ((a[0]?.s ?? -1) >= 0.8 && a[0].s > (best.art[0]?.s ?? -1) + 0.03) best = { canvas: c, art: a, alt: best.canvas };
+        if ((a[0]?.s ?? -1) >= 0.6 && a[0].s > (best.art[0]?.s ?? -1) + 0.03) best = { canvas: c, art: a, alt: best.canvas };
       }
     }
   }
   // Var hörnen bara gissade (source.guess: ingen kant hittades, rätningen är ramen på skärmen) vinner den lösa
   // sökningen även när likheten är ungefär densamma, eftersom en gissad rätning kan likna fel kort av en slump
-  if (full && scanGame !== "pokemon" && source?.src && (best.art[0]?.s ?? 0) < 0.85) {
+  if (full && scanGame !== "pokemon" && source?.src && (best.art[0]?.s ?? 0) < RETRY) {
     const loose = await rbLoose(source.src);
     if (loose && (loose.art[0]?.s ?? -1) > (best.art[0]?.s ?? -1) + (source.guess ? -0.05 : 0.02)) best = { ...loose, alt: best.canvas };
   }
@@ -934,7 +943,7 @@ async function identifyRb(canvas, { full = false, art, alt, round = null, framed
   art ||= await artMatch(canvas, 30, "rb").catch(() => []);
   const whole = canvas;
   canvas = artCanvas(canvas, art); // numret läses där kortet sitter, inte i fickans kant
-  const quick = byLook(art, 0.9, 0.12);
+  const quick = byLook(art, CLEAR, CLEAR_GAP);
   if (quick) return { ...rbResult(rb, quick), art };
   // Samma kort i flera utgåvor med samma bild (runorna finns i ett dussin set): bilden kan inte skilja dem åt, så det
   // blir aldrig en tydlig etta. Pekar alla nära toppen ut samma namn räcker det. Numret väljer utgåvan om det går att
@@ -951,7 +960,7 @@ async function identifyRb(canvas, { full = false, art, alt, round = null, framed
   const byNum = (num) => {
     const hits = [];
     for (const x of art) {
-      if (x.s < 0.55) continue;
+      if (x.s < LIKE) continue;
       const c = rb.siblings(x.id).find((c) => { const k = rbNum(c.no); return k.n === numKey(num.number) && (!num.total || k.t === num.total); });
       if (c) hits.push({ id: c.id, s: x.s });
     }
@@ -1002,7 +1011,7 @@ async function identifyRb(canvas, { full = false, art, alt, round = null, framed
       // Indexet har en av korten med samma bild, så likheten hämtas för alla och kortet får den bästa
       const sims = await artSims(canvas, [...new Set(ids.flatMap((id) => rb.siblings(id).map((c) => c.id)))], "rb");
       const ranked = ids.map((id) => ({ id, s: Math.max(-1, ...rb.siblings(id).map((c) => sims[c.id] ?? -1)) })).sort((a, b) => b.s - a.s);
-      if (ranked[0]?.s >= 0.5 && ranked[0].s - (ranked[1]?.s ?? -1) >= 0.08) cardId = ranked[0].id;
+      if (ranked[0]?.s >= LIKE && ranked[0].s - (ranked[1]?.s ?? -1) >= 0.08) cardId = ranked[0].id;
       // Bilden skiljer inte vanliga kortet från t.ex. dess Oversized-version (blänk över bilden): ett säkert nummer
       // med bara ett vanligt kort räcker då
       const plain = ids.filter((id) => !rb.byId.get(id)?.variant);
@@ -1039,11 +1048,11 @@ function opData() {
 // art: bildträffarna för canvas, om de redan är sökta.
 async function opBestCanvas(canvas, source, art = null) {
   let best = { canvas, art: art || (await artMatch(canvas, 30, "op").catch(() => [])) };
-  if (!source?.corners || (best.art[0]?.s ?? 0) >= 0.9) return best;
-  for (const s of SLEEVES) {
-    const c = copyCanvas(unwarpCard(source.src, subQuad(source.corners, s)));
+  if (!source?.corners || (best.art[0]?.s ?? 0) >= CLEAR) return best;
+  for (const corners of altCorners(source)) {
+    const c = copyCanvas(unwarpCard(source.src, corners));
     const a = await artMatch(c, 30, "op").catch(() => []);
-    if ((a[0]?.s ?? -1) >= 0.8 && a[0].s > (best.art[0]?.s ?? -1) + 0.03) best = { canvas: c, art: a };
+    if ((a[0]?.s ?? -1) >= 0.6 && a[0].s > (best.art[0]?.s ?? -1) + 0.03) best = { canvas: c, art: a };
   }
   return best;
 }
@@ -1057,7 +1066,7 @@ async function identifyOp(art, canvas, round = null, framed = true) {
   let id = lookEnough(art, framed);
   // En parallel med samma bild som vanliga kortet skiljs inte åt på bilden. Är alla nästan lika lika bilder samma
   // kortnummer räcker den bästa: rätt kort, möjligen fel utgåva.
-  if (!id && art[0]?.s >= 0.8) {
+  if (!id && art[0]?.s >= RETRY) {
     const no = cards.get(art[0].id)?.no;
     if (no && art.filter((x) => x.s >= art[0].s - 0.08).every((x) => cards.get(x.id)?.no === no)) id = art[0].id;
   }
@@ -1187,12 +1196,12 @@ async function byName(game, canvas, round = null) {
   // flera är lika lika (Riftbound: omtryck med samma bild)
   if (!others.length) return rb ? near.find((id) => !card(id)?.variant) || top.id : top.id;
   // Annars måste bilden vara tydlig och klart före kort med andra nummer
-  if (top.s >= 0.5 && top.s - others[0].s >= 0.06) return top.id;
+  if (top.s >= LIKE && top.s - others[0].s >= 0.06) return top.id;
   // Riftbounds runor: alla utgåvor av en runa är i praktiken samma kort, så namnet räcker
   if (rb && ids.every((id) => card(id)?.type === "Rune")) return ids.find((id) => !card(id)?.variant) || top.id;
   // Riftbound: samma kort finns ofta med samma bild under olika nummer (runorna, omtryck), och då skiljer bilden dem
   // inte åt. Liknar bilden kortet tydligt blir det den vanliga utgåvan bland de nästan lika lika.
-  if (rb && top.s >= 0.45) {
+  if (rb && top.s >= 0.38) {
     const same = ranked.filter((x) => x.s >= top.s - 0.06).map((x) => x.id);
     return same.find((id) => !card(id)?.variant) || top.id;
   }
@@ -1254,9 +1263,9 @@ export async function identify(canvas, { full = false, source } = {}) {
   // Riftbound-omrätningarna bara när bilden liknar ett Riftbound-kort ungefär lika mycket som ett Pokémonkort
   const rb = rbTop0 >= pkTop - 0.05 ? await rbBestCanvas(canvas, source, false, rb0) : { canvas, art: rb0 };
   // Ett Riftbound- eller One Piece-kort i Pokémonskannern: bara när bilden tydligt liknar ett sådant kort mer än något Pokémonkort
-  const rbQuick = byLook(rb.art, 0.88, 0.12);
+  const rbQuick = byLook(rb.art, CLEAR, CLEAR_GAP);
   if (rbQuick && rb.art[0].s > pkTop + 0.05) return identifyRb(rb.canvas, { full, art: rb.art, alt: rb.alt });
-  if (byLook(op0, 0.88, 0.12) && opTop0 > pkTop + 0.05) return identifyOp(op0);
+  if (byLook(op0, CLEAR, CLEAR_GAP) && opTop0 > pkTop + 0.05) return identifyOp(op0);
   return identifyPokemon(canvas, source, pk, full);
 }
 
@@ -1266,7 +1275,7 @@ async function identifyPokemon(canvas, source, art, full) {
   ({ canvas, art } = await sleeveBest(canvas, source, art));
   canvas = artCanvas(canvas, art);
   // Så tydlig bildträff att textläsningen inte behövs
-  const quick = byLook(art, 0.9, 0.12);
+  const quick = byLook(art, CLEAR, CLEAR_GAP);
   if (quick) return { name: await pokemonName(quick), number: localOf(quick), total: null, numberSure: true, cardId: quick, art };
   // Automatisk skanning med en bildträff som räcker på egen hand: textläsningen skulle ändå inte ändra svaret
   const enough = !full && lookEnough(art);
@@ -1275,7 +1284,7 @@ async function identifyPokemon(canvas, source, art, full) {
   let cardId = await byNumber(art, r);
   // Numret saknas eller stämmer inte med något kort som liknar bilden (t.ex. 109 läst som 105): läs nummerraden igen
   // Saknas numret helt sparas första säkra läsningen, så att sökningen på nummer fungerar även om bilden inte känns igen.
-  if (!cardId && (!r.number || (art.length && art[0].s >= 0.55))) {
+  if (!cardId && (!r.number || (art.length && art[0].s >= LIKE))) {
     let firstSure = null;
     // Automatisk skanning (flera gånger i sekunden): bara de tre bästa varianterna, så att nästa bild inte får vänta
     const num = await rereadNumber(canvas, async (n) => {
@@ -1530,7 +1539,7 @@ export async function rankByLook(canvas, list, limit = 150) {
     const known = list.filter((c) => sims[c.id] != null).sort((x, y) => sims[y.id] - sims[x.id]);
     if (known.length >= 2) {
       const s0 = sims[known[0].id], s1 = sims[known[1].id];
-      return { list: [...known, ...list.filter((c) => sims[c.id] == null)], sure: s0 >= 0.5 && s0 - s1 >= 0.08 };
+      return { list: [...known, ...list.filter((c) => sims[c.id] == null)], sure: s0 >= LIKE && s0 - s1 >= 0.08 };
     }
   }
   const withImg = list.filter((c) => c.image).slice(0, limit);
@@ -1874,7 +1883,7 @@ function grabUnwarpedFrame() {
   const corners = fresh || (near.confident ? near.corners : findCardQuad(video) || near.corners);
   // framed: kortets kanter syns i ramen (annars kan det vara bakgrunden som läses). En fyrhörning någon annanstans i bilden
   // räknas inte: en toploaders kant är också en fyrhörning, och då godkändes fel kort.
-  lastGrab = { src: video, corners, framed: !!fresh || near.confident };
+  lastGrab = { src: video, corners, framed: !!fresh || near.confident, guide: corners === near?.corners ? null : near?.corners };
   return unwarpCard(video, corners, CARD_W, CARD_H);
 }
 
@@ -2093,16 +2102,16 @@ let last = null, lastNum = null;
 // Räcker inte bilden läses texten i bakgrunden (readBehind), en liten del per bild, medan bildjämförelsen fortsätter på
 // nya bilder. Då byts ett suddigt ögonblick snabbt mot ett skarpt, och varje läsning görs på en färsk bild.
 //
-// En tydlig bildträff (SURE_LOOK eller mer) godkänns direkt, bakgrunden liknar aldrig ett kort så mycket. En svagare träff
+// En tydlig bildträff (SURE_LOOK eller mer, långt före tvåan) godkänns direkt. En svagare träff
 // godkänns först när samma kort setts CONFIRM_FRAMED gånger, eller CONFIRM_BLIND gånger när ramen inte såg kortets kanter,
 // så att en suddig bakgrund inte tas för ett kort. Bara bilden behöver bekräfta: kortet måste finnas bland de tre som
 // liknar nästa bild mest. Räkningen börjar om när ett annat kort läses eller kortet lämnar ramen.
 // cand: kortet som väntar på att bekräftas, och hur många gånger det setts.
-const CONFIRM_FRAMED = 2, CONFIRM_BLIND = 3, SURE_LOOK = 0.88;
+const CONFIRM_FRAMED = 2, CONFIRM_BLIND = 3, SURE_LOOK = CLEAR;
 // Röstning: bild för bild skiftar blänket, men det rätta kortet ligger kvar. Är kortet i medeltal klart före de andra i
 // minst VOTE_MIN av de senaste VOTE_FRAMES bilderna räcker ett mindre försprång än för en enstaka bild. Bara bilder där ramen
 // ser kortets kanter räknas, annars kan en stilla bakgrund rösta fram ett kort.
-const VOTE_FRAMES = 4, VOTE_MIN = 3, VOTE_LOOK = 0.72, VOTE_GAP = 0.05;
+const VOTE_FRAMES = 4, VOTE_MIN = 3, VOTE_LOOK = 0.56, VOTE_GAP = 0.08;
 let cand = null, trail = [], frameNo = 0;
 let reading = false, readRound = 0, cardEpoch = 0; // cardEpoch: byts när kortet byts, så att en sen läsning inte räknas
 let twin = null; // namnet när bilden pekar ut flera utgåvor av samma Pokémonkort
@@ -2115,8 +2124,8 @@ function newCard() {
   last = lastNum = null;
 }
 function confirmed(r, framed) {
-  const id = r.cardId, top = r.art?.[0];
-  if (top?.id === id && top.s >= SURE_LOOK) { cand = null; return true; }
+  const id = r.cardId, top = r.art?.[0], gap = (top?.s ?? 0) - (r.art?.[1]?.s ?? 0);
+  if (top?.id === id && (framed ? top.s >= SURE_LOOK && gap >= CLEAR_GAP : top.s >= 0.8 && gap >= 0.25)) { cand = null; return true; }
   if (cand?.id !== id) cand = { id, n: 0 };
   if (++cand.n < (framed ? CONFIRM_FRAMED : CONFIRM_BLIND)) return false;
   cand = null;
@@ -2132,14 +2141,14 @@ async function lookFrame(canvas, source, turn = 0) {
   // De små indexen först: en tydlig One Piece- eller Riftbound-träff behöver inte jämföras med 21 000 Pokémonkort
   const [rb0, op0] = await Promise.all([artMatch(canvas, 30, "rb").catch(none), artMatch(canvas, 30, "op").catch(none)]);
   if (scanGame === "vault") {
-    if (top(op0) >= top(rb0) && byLook(op0, 0.9, 0.12)) return { game: "op", canvas, art: op0 };
-    if (top(rb0) > top(op0) && byLook(rb0, 0.9, 0.12)) return { game: "rb", canvas, art: rb0 };
+    if (top(op0) >= top(rb0) && byLook(op0, CLEAR, CLEAR_GAP)) return { game: "op", canvas, art: op0 };
+    if (top(rb0) > top(op0) && byLook(rb0, CLEAR, CLEAR_GAP)) return { game: "rb", canvas, art: rb0 };
   }
   const pk = await artMatch(canvas).catch(none);
   if (scanGame === "pokemon") {
     // Ett Riftbound- eller One Piece-kort i Pokémonskannern: bara när bilden tydligt liknar ett sådant kort mer än något Pokémonkort
-    if (byLook(rb0, 0.88, 0.12) && top(rb0) > top(pk) + 0.05) return { game: "rb", canvas, art: rb0 };
-    if (byLook(op0, 0.88, 0.12) && top(op0) > top(pk) + 0.05) return { game: "op", canvas, art: op0 };
+    if (byLook(rb0, CLEAR, CLEAR_GAP) && top(rb0) > top(pk) + 0.05) return { game: "rb", canvas, art: rb0 };
+    if (byLook(op0, CLEAR, CLEAR_GAP) && top(op0) > top(pk) + 0.05) return { game: "op", canvas, art: op0 };
     return { game: "pokemon", ...(await sleeveBest(canvas, source, pk)) };
   }
   const ranked = [["pokemon", pk], ["op", op0], ["rb", rb0]].sort((a, b) => top(b[1]) - top(a[1]));
@@ -2151,7 +2160,7 @@ async function lookFrame(canvas, source, turn = 0) {
 // Kortet som bilden pekar ut på egen hand, eller null
 async function lookId({ game, art }, framed) {
   const id = lookEnough(art, framed);
-  if (id || game !== "op" || !(art[0]?.s >= 0.8)) return id;
+  if (id || game !== "op" || !(art[0]?.s >= RETRY)) return id;
   // En parallel med samma bild som vanliga kortet: alla nästan lika lika har samma kortnummer
   const cards = await opData(), no = cards.get(art[0].id)?.no;
   return no && art.filter((x) => x.s >= art[0].s - 0.08).every((x) => cards.get(x.id)?.no === no) ? art[0].id : null;
@@ -2170,7 +2179,7 @@ function voted({ game, art }) {
 // Samma konstverk i flera utgåvor (ungefär vart tionde Pokémonkort): bilden kan inte skilja dem åt, det gör bara numret.
 // Namnet när alla kort nära toppen heter likadant, annars null.
 async function twinName({ game, art }) {
-  if (game !== "pokemon" || !(art[0]?.s >= 0.7)) return null;
+  if (game !== "pokemon" || !(art[0]?.s >= 0.55)) return null;
   const near = art.filter((x) => x.s >= art[0].s - 0.04);
   if (near.length < 2) return null;
   const names = await Promise.all(near.map((x) => pokemonName(x.id)));
@@ -2187,10 +2196,60 @@ async function hitOf({ game, art }, id) {
 async function lookHit(look, framed) {
   const id = await lookId(look, framed);
   if (id && confirmed({ cardId: id, art: look.art }, framed)) return hitOf(look, id);
-  const waiting = !id && cand && look.art.slice(0, 3).find((x) => x.id === cand.id && x.s >= (framed ? 0.55 : 0.75));
+  if (id && cand) cand.look = true;
+  // Utan kortets kanter måste kortet ligga kvar långt före tvåan i varje bild, annars kan en stilla bakgrund samla
+  // bekräftelser. Läsningar av texten räknas för sig: de är bevis även när bilden är dålig.
+  const [a0, a1] = look.art;
+  if (!framed && !id && cand?.look && (a0?.id !== cand.id || a0.s - (a1?.s ?? 0) < 0.2)) cand = null;
+  const waiting = framed && !id && cand && look.art.slice(0, 3).find((x) => x.id === cand.id && x.s >= LIKE);
   if (waiting && confirmed({ cardId: waiting.id, art: look.art }, framed)) return hitOf(look, waiting.id);
   const vote = voted(look);
   return vote ? hitOf(look, vote) : null;
+}
+// Setkoden nere till vänster pekar ut setet, och då räcker det att numret ungefär stämmer: "PFL 007/094" är Oddish 001/094.
+// Med bilden som stöd skiljer det också kort med samma konstverk i olika set. data/set-codes.json: kod till set, bara set
+// där koden står tryckt på korten. Kort-id, eller null.
+let codesPromise = null;
+const setCodes = () => (codesPromise ||= fetch("data/set-codes.json").then((r) => (r.ok ? r.json() : {})).catch(() => ({})));
+const CODE_ZONES = [[{ x: 0, y: 0.925, w: 0.5, h: 0.065 }, 110], [{ x: 0.02, y: 0.94, w: 0.42, h: 0.04 }, 90], [{ x: 0, y: 0.9, w: 0.5, h: 0.09 }, 140]];
+async function byCode(canvas, art, round) {
+  const [worker, codes, a] = await Promise.all([getWorker("code"), setCodes(), loadArtIndex()]);
+  const [zone, h] = CODE_ZONES[round % CODE_ZONES.length];
+  const text = (await worker.recognize(plainZone(canvas, zone, h))).data.text.toUpperCase();
+  const code = Object.keys(codes).find((c) => text.includes(c));
+  if (!code || !a || !art[0]) return null;
+  const set = codes[code];
+  // Bilden pekar ut flera utgåvor: koden väljer
+  const near = art.filter((x) => x.s >= art[0].s - 0.06 && x.s >= LIKE && setOf(x.id) === set);
+  if (near.length === 1) return near[0].id;
+  // Annars korten i setet med ungefär det numret, och bilden väljer
+  const digits = text.slice(text.indexOf(code) + code.length).replace(/[^0-9]/g, "").slice(0, 3);
+  if (digits.length < 3) return null;
+  const close = (id) => { const k = localOf(id).padStart(3, "0"); return k.length === 3 && [...k].filter((d, i) => d !== digits[i]).length <= 1; };
+  const ids = a.ids.filter((id) => setOf(id) === set && close(id));
+  if (!ids.length || ids.length > 12) return null;
+  const sims = await artSims(canvas, ids), ranked = ids.filter((id) => sims[id] != null).sort((x, y) => sims[y] - sims[x]);
+  const s0 = sims[ranked[0]] ?? -1, s1 = ranked[1] ? sims[ranked[1]] : -1;
+  return s0 >= LIKE && s0 - s1 >= 0.08 ? ranked[0] : null;
+}
+// Flera utgåvor med samma konstverk: setstorleken läses ofta rätt även när numret inte gör det ("13/132" för 113/132).
+// Stämmer den med exakt en av utgåvorna nära toppen är det den. Kort-id, eller null.
+async function byTotal(art, total) {
+  if (!total || !art[0]) return null;
+  const counts = await setCounts();
+  const hits = art.filter((x) => { const c = counts.get(setOf(x.id)); return x.s >= art[0].s - 0.06 && x.s >= LIKE && c && (c.official === +total || c.total === +total); });
+  return hits.length === 1 ? hits[0].id : null;
+}
+// Namnet går ofta att läsa när bilden är förstörd av blänk eller en ficka. Bland korten med namnet väljer bilden, och den
+// måste vara klart före de andra, annars blir det inget kort. Kort-id, eller null.
+async function byPokemonName(canvas, name) {
+  const a = await loadArtIndex();
+  if (!a?.names || !name) return null;
+  const ids = a.ids.filter((_, i) => a.names[i] === name || a.names[i].startsWith(name + " "));
+  if (!ids.length || ids.length > 60) return null;
+  const sims = await artSims(canvas, ids), ranked = ids.filter((id) => sims[id] != null).sort((x, y) => sims[y] - sims[x]);
+  const s0 = sims[ranked[0]] ?? -1, s1 = ranked[1] ? sims[ranked[1]] : -1;
+  return s0 >= 0.3 && s0 - s1 >= 0.08 ? ranked[0] : null;
 }
 const NUM_ROUNDS = [[ZONES.numLeft, 1.4], [ZONES.numRight, 1.4], ...EXTRA_NUM_ZONES.slice(0, 4)];
 // En del av nummerraden, och namnet var tredje gång. Numret måste peka ut ett kort som liknar bilden.
@@ -2210,7 +2269,11 @@ async function readPokemon(canvas, art, round) {
   const r = { name, number: num?.number || null, total: num?.total || null, numberSure: !!num?.sure, dhash: computeDHash(canvas) };
   let cardId = await byNumber(art, r);
   if (!cardId && r.number && r.total) cardId = await byNumberThenLook(canvas, r);
-  return { ...r, name: r.name || (cardId && (await pokemonName(cardId))), cardId, art };
+  const coded = !cardId && ((await byTotal(art, r.total).catch(() => null)) || (await byCode(canvas, art, round).catch(() => null)));
+  const named = !cardId && !coded && (await byPokemonName(canvas, r.name).catch(() => null));
+  cardId ||= coded || named;
+  if (coded || named) Object.assign(r, { number: localOf(cardId), total: null, numberSure: true });
+  return { ...r, name: (coded || named ? null : r.name) || (cardId && (await pokemonName(cardId))), cardId, coded: !!coded, art };
 }
 // En omgång textläsning på bilden look. Är två spel jämna läses spelet som bilden just nu liknar mest.
 async function readLook({ game, art, canvas, alt }, round, framed) {
@@ -2233,8 +2296,8 @@ async function readBehind(look, framed) {
 // Svaret från en textläsning
 async function settle(r, canvas, framed) {
   if (r.cardId) {
-    // Numret och bilden pekar ut samma kort: två oberoende bevis, så det behöver inte bekräftas
-    const proven = r.number && r.total && r.numberSure && r.art?.some((x) => x.id === r.cardId);
+    // Numret eller setkoden och bilden pekar ut samma kort: två oberoende bevis, så det behöver inte bekräftas
+    const proven = r.coded || (r.number && r.total && r.numberSure && r.art?.some((x) => x.id === r.cardId));
     if (proven || confirmed(r, framed)) return setPeek(r, canvas);
     return status("Håll kortet stilla i ramen…");
   }
@@ -2281,7 +2344,7 @@ async function attempt(canvas, source) {
       status(stuck ? `Numret går inte att läsa. Tryck på <b>Värdera manuellt</b> och välj utgåva av <b>${esc(twin)}</b>.` : `Flera utgåvor av <b>${esc(twin)}</b>. Läser numret…`);
     } else status(cand ? "Håll kortet stilla i ramen…" : "Läser av…");
     // Ett kort som inte liknar något i indexet kan ändå läsas när ramen ser dess kanter (t.ex. nya kort)
-    if (!reading && (source?.framed || (look.art[0]?.s ?? 0) >= 0.55)) readBehind(look, !!source?.framed);
+    if (!reading && (source?.framed || (look.art[0]?.s ?? 0) >= LIKE)) readBehind(look, !!source?.framed);
   } catch (err) {
     status(esc(err.message || "Något gick fel. Försök igen."));
   } finally {
