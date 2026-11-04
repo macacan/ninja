@@ -3132,7 +3132,7 @@ input[type=search]::-webkit-search-results-decoration {
 @media (prefers-reduced-motion:reduce){.scan [data-tier=diamond] .scan-price,.scan-confirm[data-tier=diamond] em{animation:none}}
 .scan-peek{position:absolute;top:12px;right:12px;z-index:10;width:76px;padding:4px 4px 6px;border-radius:12px;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;color:#fff;background:rgba(12,14,30,.6);backdrop-filter:blur(14px) saturate(1.4);-webkit-backdrop-filter:blur(14px) saturate(1.4);border:1px solid var(--tier);box-shadow:0 6px 18px rgba(0,0,0,.5),0 0 12px var(--tier-glow)}
 .scan-peek[hidden]{display:none}
-.scan-peek img{width:66px;height:92px;border-radius:6px;object-fit:cover;display:block;background:#1b1e33}
+.scan-peek img{width:66px;height:92px;border-radius:6px;object-fit:contain;display:block;background:#1b1e33}
 .scan-peek img[hidden]{display:none}
 /* Priset ligger på kortbilden, nertill, i förhandsvisningen och i kortet som poppar upp */
 .scan-price{position:absolute;left:50%;transform:translateX(-50%);padding:3px 9px;border-radius:999px;background:var(--tier-bg);color:var(--tier-ink);font:800 .74rem/1.2 var(--sans);font-style:normal;white-space:nowrap;box-shadow:0 2px 8px rgba(0,0,0,.5)}
@@ -3187,7 +3187,7 @@ input[type=search]::-webkit-search-results-decoration {
 .scan.confirming .scan-view{border-radius:18px}
 .scan-pop{position:absolute;inset:0;z-index:7;display:grid;place-items:center;pointer-events:none}
 .scan-pop>div{display:flex;flex-direction:column;align-items:center;gap:8px;will-change:transform,opacity}
-.scan-pop img,.scan-pop i{width:150px;height:209px;border-radius:9px;object-fit:cover;background:#1b1e33;border:3px solid var(--tier);box-shadow:0 0 28px var(--tier-glow),0 14px 36px rgba(0,0,0,.6)}
+.scan-pop img,.scan-pop i{width:150px;height:209px;border-radius:9px;object-fit:contain;background:#1b1e33;border:3px solid var(--tier);box-shadow:0 0 28px var(--tier-glow),0 14px 36px rgba(0,0,0,.6)}
 .scan-pop span{max-width:240px;padding:5px 12px;border-radius:999px;background:rgba(12,14,30,.85);color:#fff;font-size:.82rem;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .scan-actions{display:flex;gap:8px;align-items:center;padding:14px}
 .scan-actions>*{font:inherit;font-size:.85rem;font-weight:600;border-radius:999px;padding:11px 16px;cursor:pointer;text-align:center;transition:background .2s,transform .15s,box-shadow .2s}

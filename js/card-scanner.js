@@ -12,7 +12,7 @@
 // 6. Bildavtryck av konstverket (scan/fingerprint.js) jämförs med ett färdigt index över alla kort (data/hashes.*).
 //    Pekar bilden och det lästa numret ut samma kort är skanningen klar, utan att vänta på namnet.
 // 7. Automatisk skanning går i två spår: bildjämförelsen på varje bild och textläsningen i bakgrunden, se attempt.
-import { API, esc, getJSON, kr } from "./site.js";
+import { API, cardImg, esc, getJSON, kr } from "./site.js";
 import { loadDataset } from "./card-autocomplete.js";
 import "./scan/quad.js?v=20261103a"; // sätter self.Quad
 import "./scan/fingerprint.js?v=20261106b"; // sätter self.Fingerprint (med FP.BOX per spel)
@@ -2598,6 +2598,22 @@ const hitText = (item, saved) => (onHit
   ? saved ? `<b>${esc(labelOf(item))}</b> lagt i valvet! Håll nästa kort i ramen.` : `Hittade <b>${esc(labelOf(item))}</b>! Lägger i valvet…`
   : autoOpen ? `Hittade <b>${esc(labelOf(item))}</b>!`
   : `Hittade <b>${esc(labelOf(item))}</b>! Tryck på kortet för att öppna det, eller håll nästa i ramen.`);
+// Kortets riktiga bild i stället för kamerabilden, när den har laddats. Går den inte att ladda ligger kamerabilden kvar.
+const IMAGE_WAIT = 350; // ms som kortet längst väntar på bilden innan det poppar upp ändå
+function useCardImage(item, c) {
+  const src = cardImg(c, "low");
+  if (!src) return Promise.resolve();
+  return new Promise((done) => {
+    const img = new Image();
+    img.onload = () => {
+      item.thumb = src;
+      if (peek === item) paintPeek(item);
+      done();
+    };
+    img.onerror = done;
+    img.src = src;
+  });
+}
 // Kortet i hörnet, och kortet som just poppat upp om det syns än
 function paintPeek(item) {
   const btn = dialog.querySelector(".scan-peek"), price = btn.querySelector(".scan-price");
@@ -2612,6 +2628,8 @@ function paintPeek(item) {
   const pop = [...dialog.querySelectorAll(".scan-pop")].at(-1);
   if (!pop) return;
   if (onHit) pop.dataset.tier = tierOf(item.price);
+  const popImg = pop.querySelector("img");
+  if (popImg && item.thumb) popImg.src = item.thumb;
   pop.querySelector(".scan-price").textContent = priceText(item);
   pop.querySelector("span").textContent = labelOf(item);
 }
@@ -2658,13 +2676,14 @@ async function setPeek(r, canvas) {
     item.name = c.name || item.name;
     item.price = c.sek ?? null;
     item.pending = false;
+    return useCardImage(item, c);
   };
   // Dröjer svaret (undefined) poppar kortet upp ändå, och priset fylls i när det kommer
   // Vanlig eller foil väljs inte här: i valvet markeras kortet i den stora vyn
   const added = adding ? await Promise.race([adding, new Promise((done) => setTimeout(done, HIT_WAIT))]) : undefined;
   if (peek !== item) return; // ett nytt kort hann hittas
   if (added === null) return failed();
-  if (added) take(added);
+  if (added) await Promise.race([take(added), new Promise((done) => setTimeout(done, IMAGE_WAIT))]);
   else if (adding) item.pending = true;
   else item.price = await priceOf(item);
   if (peek !== item) return;
