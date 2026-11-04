@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-04T03:01:18.736Z",
+ "updated": "2026-11-04T03:16:34.958Z",
  "articles": [
   {
    "title": "Budget Riftbound Decks: Build with Bulk Cards & Play for $10! – Part 3",
@@ -497,18 +497,5 @@
    "game": "op"
   }
  ],
- "videos": [
-  {
-   "id": "pGIxhUQvezQ",
-   "title": "TCG Day 2 | 2027 Pokémon Gdańsk Regional Championships",
-   "date": "2026-11-01T19:24:07.000Z",
-   "source": "Pokémon (officiell)"
-  },
-  {
-   "id": "FlkW1YWVQF0",
-   "title": "TCG Day 1 | 2027 Pokémon Gdańsk Regional Championships",
-   "date": "2026-10-31T19:18:36.000Z",
-   "source": "Pokémon (officiell)"
-  }
- ]
+ "videos": []
 }
