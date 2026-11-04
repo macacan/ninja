@@ -1,6 +1,20 @@
 {
- "updated": 1793826933267,
+ "updated": 1793827899057,
  "events": [
+  {
+   "at": 1793827074718,
+   "store": "bangerpack",
+   "product": "bangerpack:https://bangerpack.se/pokemon/displayer-boxar/pokemon-destined-rivals-booster-display",
+   "group": "destined-rivals|booster-box|en|",
+   "title": "Pokémon Destined Rivals – Booster Display",
+   "url": "https://bangerpack.se/pokemon/displayer-boxar/pokemon-destined-rivals-booster-display",
+   "image": "https://cdn.quickbutik.com/images/99246J/products/6ae7f40606786.png",
+   "price": 4695,
+   "type": "Booster Box",
+   "set": "Destined Rivals",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793823746820,
    "store": "packs-on-packs",
@@ -7107,20 +7121,6 @@
    "lang": "zh",
    "kind": "prissankt",
    "from": 229
-  },
-  {
-   "at": 1793303477833,
-   "store": "dragon-s-lair",
-   "product": "dragon-s-lair:15682738815324",
-   "group": "x|collection-box|zh||brilliant-cs5ac-cs5bc-energy-gift-mew",
-   "title": "Pokemon TCG S-Chinese Brilliant Energy Gift Box 2.0 \"Mew\" w/ CS5aC CS5bC Booster",
-   "url": "https://dragonslair.se/products/pokemon-tcg-s-chinese-brilliant-energy-gift-box-2-0-mew-w-cs5ac-cs5bc-booster",
-   "image": "https://cdn.shopify.com/s/files/1/1015/8315/9644/files/mewtwo1.jpg?v=1784562974",
-   "price": 1895,
-   "type": "Collection Box",
-   "set": null,
-   "lang": "zh",
-   "kind": "tillbaka"
   }
  ]
 }
