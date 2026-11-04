@@ -1,6 +1,20 @@
 {
- "updated": 1793812593370,
+ "updated": 1793813513394,
  "events": [
+  {
+   "at": 1793812999437,
+   "store": "bangerpack",
+   "product": "bangerpack:https://bangerpack.se/pokemon/displayer-boxar/pokemon-pitch-black-booster-display",
+   "group": "pitch-black|booster-box|en|",
+   "title": "Pokémon Pitch Black – Booster Display",
+   "url": "https://bangerpack.se/pokemon/displayer-boxar/pokemon-pitch-black-booster-display",
+   "image": "https://cdn.quickbutik.com/images/99246J/products/6a8f39451bef6.png",
+   "price": 2399,
+   "type": "Booster Box",
+   "set": "Pitch Black",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793811267449,
    "store": "dragon-s-lair",
@@ -7106,21 +7120,6 @@
    "image": null,
    "price": 69,
    "type": "Booster Pack",
-   "set": "EB-05",
-   "lang": "ja",
-   "game": "op",
-   "kind": "ny"
-  },
-  {
-   "at": 1793290023744,
-   "store": "kantovault",
-   "product": "kantovault:11754719183189",
-   "group": "op|eb-05|booster-box|ja|",
-   "title": "One Piece [EB-05]: Heroines Edition Vol.2 Booster Box (Japansk)",
-   "url": "https://kantovault.se/products/one-piece-eb-05-heroines-edition-vol-2-booster-box-japansk",
-   "image": null,
-   "price": 1499,
-   "type": "Booster Box",
    "set": "EB-05",
    "lang": "ja",
    "game": "op",
