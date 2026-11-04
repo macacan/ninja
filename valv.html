@@ -25,7 +25,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Hem","item":"https://lootninja.se/"},{"@type":"ListItem","position":2,"name":"Mitt valv","item":"https://lootninja.se/valv.html"}]}</script>
 <link href="fonts/fonts.css" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=20261105d">
+<link rel="stylesheet" href="style.css?v=20261105e">
 <link rel="stylesheet" href="dark.css?v=20261103b" id="dark-css" media="(prefers-color-scheme: dark)">
 <script src="js/theme.js?v=20261021"></script>
 </head>
@@ -74,6 +74,11 @@
           </div>
         </div>
       </div>
+      <!-- Påminnelse om säkerhetskopian, efter ett antal nya kort -->
+      <div class="vault-remind" id="vault-remind" role="status" hidden>
+        <p><b>Spara en säkerhetskopia?</b> <span id="vr-text"></span></p>
+        <div><button type="button" class="btn primary small" id="vr-save">Spara nu</button><button type="button" class="btn small" id="vr-later">Senare</button></div>
+      </div>
       <!-- Portföljen: värde, antal och utveckling för korten som visas -->
       <div class="vault-stats" id="vault-stats" aria-live="polite"></div>
       <!-- Verktygsrad direkt ovanför korten: sök bland valvets kort och sortera -->
@@ -87,6 +92,19 @@
       <div id="prices" class="cgrid"></div>
       <div class="more-row"><button id="more" class="btn" type="button" hidden>Visa fler</button></div>
       <div class="vault-bar"><button type="button" class="btn small" id="vault-clear" hidden>Töm valvet</button></div>
+      <!-- Säkerhetskopia: en fil som sparas på telefonen och automatiska kopior i webbläsaren (js/vault-backup.js) -->
+      <section class="vault-backup" aria-labelledby="vb-title">
+        <div class="vb-lost" id="vb-lost" hidden><p id="vb-lost-text"></p><button type="button" class="btn primary small" id="vb-lost-btn">Återställ</button></div>
+        <h3 id="vb-title">Säkerhetskopia</h3>
+        <p class="muted" id="vb-state"></p>
+        <div class="vb-actions">
+          <button type="button" class="btn primary small" id="vb-save">Spara säkerhetskopia</button>
+          <button type="button" class="btn small" id="vb-open">Återställ från fil</button>
+          <button type="button" class="btn small" id="vb-copies" hidden>Tidigare versioner</button>
+          <input type="file" id="vb-file" accept=".json,application/json,text/plain" hidden aria-label="Välj säkerhetskopia">
+        </div>
+        <p class="vb-msg" id="vb-msg" role="status" hidden></p>
+      </section>
     </section>
 
     <section class="vault-guide" aria-labelledby="vg-title">
@@ -106,7 +124,7 @@
         </div>
         <div>
           <h3>Sparas här</h3>
-          <p>Valvet finns bara i den här webbläsaren och skickas aldrig till oss. Rensar du webbplatsdata försvinner det. <a href="integritet.html#p3">Mer om lagringen</a>.</p>
+          <p>Valvet finns bara i den här webbläsaren och skickas aldrig till oss. Rensar du webbplatsdata eller tar bort appen kan det försvinna, så spara en <b>säkerhetskopia</b> då och då. <a href="integritet.html#p3">Mer om lagringen</a>.</p>
         </div>
       </div>
       <p class="hint">Beta: Pokémonkortens pris är Cardmarkets trendpris, One Piece och Riftbound har TCGplayers marknadspris. Allt i kronor.</p>
@@ -125,6 +143,29 @@
     </form>
   </dialog>
 
+  <!-- Återställ valvet från en fil eller en automatisk kopia -->
+  <dialog id="vault-restore" class="card-modal confirm-modal" aria-labelledby="vr-title">
+    <form method="dialog">
+      <h2 id="vr-title">Återställ valvet?</h2>
+      <p class="muted" id="vr-info"></p>
+      <div class="confirm-actions">
+        <button class="btn small" value="cancel" autofocus>Avbryt</button>
+        <button class="btn small" value="replace" id="vr-replace">Ersätt</button>
+        <button class="btn primary small" value="merge" id="vr-merge">Lägg ihop</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- De automatiska kopiorna -->
+  <dialog id="vault-copies" class="card-modal confirm-modal" aria-labelledby="vk-title">
+    <button type="button" class="cm-close" aria-label="Stäng">✕</button>
+    <form method="dialog">
+      <h2 id="vk-title">Tidigare versioner</h2>
+      <p class="muted">Sparas automatiskt i den här webbläsaren. De försvinner om webbplatsdatan rensas, så de ersätter inte en säkerhetskopia.</p>
+      <ul class="vb-copies"></ul>
+    </form>
+  </dialog>
+
   <!-- Valvets värde över tid, öppnas från värderutan i portföljen -->
   <dialog id="vault-chart" class="card-modal chart-modal" aria-label="Valvets värde över tid">
     <button type="button" class="cm-close" aria-label="Stäng">✕</button>
@@ -138,6 +179,6 @@
     <div class="cm-body"></div>
   </dialog>
 </main>
-<script type="module" src="js/priser.js?v=20261106c"></script>
+<script type="module" src="js/priser.js?v=20261106d"></script>
 </body>
 </html>

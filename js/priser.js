@@ -8,6 +8,7 @@ import { track } from "./tracker.js";
 import { gameSuggestions } from "./game-guess.js";
 import { reverseEur, baseLabel, cardmarketTable, tcgplayerTable } from "./cmholo.js?v=20261104b";
 import { unlockCoin } from "./scan/coin.js?v=20261105a";
+import { backupDue, backupFile, backupState, cardCount, listCopies, markSaved, mergeCards, noteAdded, parseBackup, saveCopy, saveFile, snooze } from "./vault-backup.js?v=20261106a";
 
 // ---------- Spel ----------
 // Pokémon söks direkt mot TCGdex. One Piece och Riftbound söks i färdigbyggda filer i data/<spel>/
@@ -447,7 +448,11 @@ function saveVault(v) {
   }
   // Be webbläsaren behålla sidans lagring, så att den inte rensas när telefonen får ont om plats
   navigator.storage?.persist?.().catch(() => {});
+  // En automatisk kopia av läget, en stund efter senaste ändringen (många kort kan skannas i rad)
+  clearTimeout(copyTimer);
+  copyTimer = setTimeout(() => saveCopy(loadVault()), 800);
 }
+let copyTimer = 0;
 // Samma kort i valvet, vanligt (f falskt) eller foil
 const sameEntry = (x, c, f) => x.game === c.game && x.id === c.id && !x.f === !f;
 const vaultQty = (c, f = false) => loadVault().find((x) => sameEntry(x, c, f))?.qty || 0;
@@ -457,6 +462,7 @@ const priceAs = (c, f) => (f ? foilSek(c) : sekOf(c));
 function changeVault(c, d, f = false) {
   const v = loadVault(), i = v.findIndex((x) => sameEntry(x, c, f));
   const now = priceAs(c, f);
+  if (d > 0) noteAdded(d, cardCount(v) + d);
   if (i < 0 && d > 0) v.unshift({ game: c.game, id: c.id, qty: d, at: Date.now(), p: now, ...(f && { f: 1 }) });
   else if (i >= 0) {
     const x = v[i];
@@ -645,6 +651,7 @@ async function showVault() {
   const my = ++searchId;
   vaultDirty = false;
   paintGameSeg();
+  paintBackup();
   $("#prices").innerHTML = skeleton(6);
   $("#more").hidden = true;
   const v = loadVault();
@@ -721,8 +728,100 @@ async function showVault() {
   applyView();
 }
 
+// ---------- Säkerhetskopia ----------
+const when = (t) => new Date(t).toLocaleString("sv-SE", { day: "numeric", month: "long", hour: "2-digit", minute: "2-digit" });
+const cardsText = (n) => `${n} kort`;
+let vaultCopies = [];
+async function paintBackup() {
+  const v = loadVault(), n = cardCount(v), s = backupState(n);
+  $("#vb-save").disabled = !n;
+  $("#vb-state").textContent = !n ? "Spara en fil med dina kort när du har lagt in några, så kan du få tillbaka dem om något händer."
+    : s.at ? `Senast sparad ${when(s.at)}${s.added ? `, ${cardsText(s.added)} tillagda sedan dess` : ""}.`
+    : "Spara en fil med dina kort. Då får du tillbaka valvet även om appen tas bort eller du byter telefon.";
+  $("#vault-remind").hidden = !backupDue(n);
+  $("#vr-text").textContent = s.at ? `Du har lagt till ${cardsText(s.added)} sedan senaste säkerhetskopian.` : `Du har ${cardsText(n)} i valvet men ingen säkerhetskopia än.`;
+  vaultCopies = await listCopies();
+  $("#vb-copies").hidden = !vaultCopies.length;
+  // Valvet är tomt men en kopia finns: det kan ha rensats av misstag
+  const last = vaultCopies[0];
+  $("#vb-lost").hidden = !!n || !last;
+  if (!n && last) $("#vb-lost-text").textContent = `Valvet är tomt, men det finns en kopia från ${when(last.at)} med ${cardsText(last.count)}.`;
+}
+function backupMessage(text) {
+  $("#vb-msg").textContent = text;
+  $("#vb-msg").hidden = !text;
+}
+async function saveBackup() {
+  const v = loadVault(), file = backupFile(v);
+  const saved = await saveFile(file);
+  if (!saved) return;
+  markSaved();
+  backupMessage(`Sparat som ${file.name}. Lägg gärna filen i iCloud eller Google Drive, så överlever den även en ny telefon.`);
+  paintBackup();
+}
+// Frågar hur korten ska återställas. Läget innan sparas som kopia, så att återställningen går att ångra.
+let restoring = [];
+function askRestore(cards, from) {
+  const have = cardCount(loadVault());
+  restoring = cards;
+  $("#vr-title").textContent = have ? "Återställ valvet?" : "Återställ korten?";
+  $("#vr-info").textContent = `${from} innehåller ${cardsText(cardCount(cards))}.${have ? ` Du har ${cardsText(have)} i valvet nu. Lägg ihop behåller alla kort, och finns ett kort i båda används det högsta antalet.` : ""}`;
+  $("#vr-replace").hidden = !have;
+  $("#vr-merge").textContent = have ? "Lägg ihop" : "Återställ";
+  const d = $("#vault-restore");
+  d.returnValue = "";
+  d.showModal();
+}
+async function restoreVault(how) {
+  const now = loadVault(), next = how === "replace" ? restoring : mergeCards(now, restoring);
+  clearTimeout(copyTimer);
+  await saveCopy(now);
+  saveVault(next);
+  backupMessage(`Klart. Valvet har nu ${cardsText(cardCount(next))}.`);
+  showVault();
+}
+
 $("#rb-scan").addEventListener("click", () => scanCards());
 if (VAULT_PAGE) {
+  saveCopy(loadVault());
+  $("#vb-save").addEventListener("click", saveBackup);
+  $("#vr-save").addEventListener("click", saveBackup);
+  $("#vr-later").addEventListener("click", () => { snooze(cardCount(loadVault())); paintBackup(); });
+  $("#vb-open").addEventListener("click", () => $("#vb-file").click());
+  $("#vb-file").addEventListener("change", async (e) => {
+    const file = e.target.files?.[0];
+    e.target.value = "";
+    if (!file) return;
+    try {
+      const { cards, saved } = parseBackup(await file.text());
+      if (!cards.length) return backupMessage("Säkerhetskopian är tom.");
+      backupMessage("");
+      askRestore(cards, saved ? `Säkerhetskopian från ${when(saved)}` : "Säkerhetskopian");
+    } catch (err) { backupMessage(err.message); }
+  });
+  $("#vault-restore").addEventListener("close", () => {
+    const how = $("#vault-restore").returnValue;
+    if (how === "merge" || how === "replace") restoreVault(how);
+  });
+  $("#vault-restore").addEventListener("click", (e) => { if (e.target === e.currentTarget) e.currentTarget.close(); });
+  $("#vb-lost-btn").addEventListener("click", () => {
+    const c = vaultCopies[0];
+    if (c) askRestore(c.cards, `Kopian från ${when(c.at)}`);
+  });
+  // Tidigare versioner: de automatiska kopiorna, nyaste först
+  const copies = $("#vault-copies");
+  $("#vb-copies").addEventListener("click", () => {
+    copies.querySelector("ul").innerHTML = vaultCopies.map((c, i) => `<li><button type="button" class="btn small" data-copy="${i}"><span>${esc(when(c.at))}</span><b>${esc(cardsText(c.count))}</b></button></li>`).join("");
+    copies.showModal();
+  });
+  copies.addEventListener("click", (e) => {
+    const b = e.target.closest("[data-copy]");
+    if (b) {
+      const c = vaultCopies[+b.dataset.copy];
+      copies.close();
+      askRestore(c.cards, `Kopian från ${when(c.at)}`);
+    } else if (e.target === copies || e.target.closest(".cm-close")) copies.close();
+  });
   $("#pq").placeholder = "Sök i ditt valv";
   // Sökrutan står utanför formuläret, i verktygsraden ovanför korten: valvet filtreras medan man skriver
   let typing = 0;
@@ -757,8 +856,8 @@ if (VAULT_PAGE) {
   });
   vaultConfirm.addEventListener("close", () => {
     if (vaultConfirm.returnValue !== "ok") return;
-    saveVault([]);
-    showVault();
+    clearTimeout(copyTimer);
+    saveCopy(loadVault()).then(() => { saveVault([]); showVault(); });
   });
   // Klick utanför rutan avbryter
   vaultConfirm.addEventListener("click", (e) => { if (e.target === vaultConfirm) vaultConfirm.close(); });

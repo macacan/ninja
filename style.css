@@ -1192,6 +1192,22 @@ span.rd-logo{display:grid;place-items:center;background:var(--surface);border-ra
   .vault-tools .res-sort span{display:none}
 }
 .vault-bar{display:flex;justify-content:flex-end;margin:12px 0 0}
+.vault-backup{margin:20px 0 0;padding:16px 18px;border:1px solid var(--line);border-radius:14px;background:var(--card)}
+.vault-backup h3{margin:0 0 4px;font:700 1.1rem/1.2 var(--sans)}
+.vault-backup .muted{margin:0}
+.vb-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.vb-msg{margin:10px 0 0;font-size:.88rem}
+.vb-msg[hidden]{display:none}
+.vb-lost{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 14px;padding:10px 12px;border-radius:10px;background:rgba(232,93,47,.12)}
+.vb-lost[hidden]{display:none}
+.vb-lost p{margin:0;font-size:.9rem}
+.vb-lost .btn{flex:none}
+.vault-remind{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:0 0 14px;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:var(--card)}
+.vault-remind[hidden]{display:none}
+.vault-remind p{margin:0;font-size:.92rem;flex:1 1 220px}
+.vault-remind div{display:flex;gap:8px}
+.vb-copies{list-style:none;margin:14px 0 0;padding:0;display:grid;gap:6px;max-height:50vh;overflow:auto}
+.vb-copies .btn{width:100%;display:flex;justify-content:space-between;gap:12px}
 .vault-guide{margin:40px 0 24px;padding:22px;border:1px solid var(--line);border-radius:16px;background:var(--card)}
 .vault-guide h2{margin:0 0 14px;font:700 1.5rem/1.1 var(--cond);text-transform:uppercase}
 .vg-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 28px}
