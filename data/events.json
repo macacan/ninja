@@ -1,6 +1,20 @@
 {
- "updated": 1793818114510,
+ "updated": 1793819034533,
  "events": [
+  {
+   "at": 1793818869267,
+   "store": "packs-on-packs",
+   "product": "packs-on-packs:https://packsonpacks.se/engelska-packs/4x-destined-rivals-booster-packs-1x-packstack",
+   "group": "destined-rivals|booster-pack|en|",
+   "title": "4x destined rivals Booster Packs (1x Packstack)",
+   "url": "https://packsonpacks.se/engelska-packs/4x-destined-rivals-booster-packs-1x-packstack",
+   "image": "https://cdn.quickbutik.com/images/92330P/products/6a64b5534d972.png",
+   "price": 556,
+   "type": "Booster Pack",
+   "set": "Destined Rivals",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793816219433,
    "store": "spelparken",
@@ -7107,21 +7121,6 @@
    "type": "Collection Box",
    "set": null,
    "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1793293131372,
-   "store": "swepoke",
-   "product": "swepoke:https://www.swepoke.se/alla-produkter/riftbound-radiance-booster-box",
-   "group": "rb|radiance|booster-box|en|",
-   "title": "Riftbound Radiance Booster Box",
-   "url": "https://www.swepoke.se/alla-produkter/riftbound-radiance-booster-box",
-   "image": "https://cdn.quickbutik.com/images/41228G/products/6ae36e65d52bf.webp",
-   "price": 1799,
-   "type": "Booster Box",
-   "set": "Radiance",
-   "lang": "en",
-   "game": "rb",
    "kind": "ny"
   }
  ]
