@@ -1,6 +1,21 @@
 {
- "updated": 1793774119075,
+ "updated": 1793775039099,
  "events": [
+  {
+   "at": 1793774142702,
+   "store": "sweet-nerds",
+   "product": "sweet-nerds:https://sweetnerds.se/sv/products/chokorin-collection-one-piece-egghead-edition",
+   "group": "op|x|collection-box|en||chokorin-egghead",
+   "title": "Chokorin Collection ONE PIECE Egghead Edition",
+   "url": "https://sweetnerds.se/sv/products/chokorin-collection-one-piece-egghead-edition",
+   "image": "https://nycdn.nyehandel.se/store_17dfab1e-b233-4e19-a6f0-ae93160c8b85/images/1000002765-ca36b8f0.jpg?width=400&height=400",
+   "price": 149,
+   "type": "Collection Box",
+   "set": null,
+   "lang": "en",
+   "game": "op",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793772181166,
    "store": "samlarhobby",
@@ -7113,20 +7128,6 @@
    "set": "30th Celebration",
    "lang": "zh",
    "kind": "ny"
-  },
-  {
-   "at": 1793257631163,
-   "store": "speltrollet",
-   "product": "speltrollet:15108607476038",
-   "group": "x|booster-pack|ja||partners",
-   "title": "Pokemon Battle Partners Booster (Japansk - sv9)",
-   "url": "https://speltrollet.se/products/pokemon-battle-partners-booster-japansk",
-   "image": "https://cdn.shopify.com/s/files/1/0674/0951/0716/files/14592126.jpg?v=1755093875",
-   "price": 49,
-   "type": "Booster Pack",
-   "set": null,
-   "lang": "ja",
-   "kind": "tillbaka"
   }
  ]
 }
