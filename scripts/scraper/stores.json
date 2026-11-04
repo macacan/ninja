@@ -326,6 +326,14 @@
    "note": "Inget förbud hittat i villkoren 2026-10-12"
   },
   {
+   "id": "monmon",
+   "name": "MonMon",
+   "domain": "monmon.se",
+   "platform": "generic",
+   "status": "ej-forbjuden",
+   "note": "Köpvillkor, integritetspolicy och robots.txt lästa 2026-11-04, inget förbud mot automatisk insamling. Egen Next.js-butik: sitemap och JSON-LD på produktsidorna."
+  },
+  {
    "id": "netgrade",
    "name": "NetGrade",
    "domain": "netgrade.se",

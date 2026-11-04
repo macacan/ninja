@@ -93,10 +93,16 @@ const FULLY_BOOKED = />\s*(?:tillfälligt\s+)?fullbokad\s*</i;
 // är det räknas, inte menylänkar som "Förbeställ" eller "Förbeställningar".
 const PREORDER_BUTTON = /<button\b[^>]*>(?:\s|<(?!\/button)[^>]+>)*förbeställ(?:\s+nu)?(?:\s|<[^>]+>)*<\/button>|<(?:button|input|buy-form-component)\b[^>]*\b(?:name|value)=["']förbeställ(?:\s+nu)?["']/i;
 
+// InStock i datan men varan fördelas genom lottning och går inte att köpa (MonMon). Sidan har då rutan "Så funkar allokering"
+// och saknar antalsväljaren. Öppnas resten för alla kommer väljaren tillbaka och varan räknas som i lager igen.
+const ALLOCATION = />\s*Så funkar allokering\s*</i;
+const QUANTITY_PLUS = /<button\b[^>]*>\s*\+\s*<\/button>/;
+
 export function parseProductPage(html, url) {
   const p = parsePage(html, url);
   if (p?.preorder && FULLY_BOOKED.test(html)) p.preorder = false;
   if (p?.available && PREORDER_BUTTON.test(html)) { p.available = false; p.preorder = true; }
+  if (p?.available && ALLOCATION.test(html) && !QUANTITY_PLUS.test(html)) p.available = false;
   return p;
 }
 
