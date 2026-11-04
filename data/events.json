@@ -1,6 +1,34 @@
 {
- "updated": 1793789008155,
+ "updated": 1793789948182,
  "events": [
+  {
+   "at": 1793789194750,
+   "store": "tcg-picks",
+   "product": "tcg-picks:16342523871557",
+   "group": "x|booster-box|en||gem-order-pre-s7-vol",
+   "title": "Gem Pack Vol. 7 Booster Box PRE ORDER",
+   "url": "https://tcgpicks.com/produkt/gem-pack-vol-7-booster-box-pre-order",
+   "image": "https://cdn.shopify.com/s/files/1/0977/3046/2021/files/1793786141600-PokemonGemPackVol.7BoosterBox.jpg?v=1793788614",
+   "price": 649,
+   "type": "Booster Box",
+   "set": null,
+   "lang": "en",
+   "kind": "forbestallning"
+  },
+  {
+   "at": 1793789130629,
+   "store": "miniature-metropolis",
+   "product": "miniature-metropolis:11325441704273",
+   "group": "x|booster-box|zh||chasing-glory-slim-together",
+   "title": "POKÉMON TCG: SCARLET & VIOLET CHASING GLORY TOGETHER (CSV10C) SLIM BOOSTER DISPLAY (KINESISK)",
+   "url": "https://miniaturemetropolis.se/products/pokemon-tcg-scarlet-violet-chasing-glory-together-csv10c-slim-booster-display-kinesisk",
+   "image": "https://cdn.shopify.com/s/files/1/0958/6832/2129/files/kinesiskjourneyd.webp?v=1793787361",
+   "price": 499,
+   "type": "Booster Box",
+   "set": "Scarlet & Violet",
+   "lang": "zh",
+   "kind": "ny"
+  },
   {
    "at": 1793788095130,
    "store": "cardlevels",
@@ -7098,34 +7126,6 @@
    "price": 1999,
    "type": "Elite Trainer Box",
    "set": "Black Bolt",
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793279390471,
-   "store": "tcgstore",
-   "product": "tcgstore:10287487222087",
-   "group": "white-flare|collection-box|en||black-bolt-illustration-victini",
-   "title": "Pokémon Scarlet & Violet 10.5: Black Bolt & White Flare Victini Illustration Collection",
-   "url": "https://tcgstore.se/products/pokemon-scarlet-violet-10-5-black-bolt-white-flare-victini-illustration-collection",
-   "image": "https://cdn.shopify.com/s/files/1/0758/2508/6791/files/pokemon-black-bolt-white-flare-victini-illustration-collection.jpg?v=1754383477",
-   "price": 999,
-   "type": "Collection Box",
-   "set": "White Flare",
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793279390471,
-   "store": "tcgstore",
-   "product": "tcgstore:9787673051463",
-   "group": "prismatic-evolutions|collection-box|en||forpackningsskada-sticker-tech",
-   "title": "Pokémon Scarlet & Violet 8.5: Prismatic Evolutions Tech Sticker Collection - Förpackningsskada (Glaceon)",
-   "url": "https://tcgstore.se/products/pokemon-scarlet-violet-8-5-prismatic-evolutions-tech-sticker-collection-box?variant=50553287147847",
-   "image": "https://cdn.shopify.com/s/files/1/0758/2508/6791/files/pokemon-scarlet-and-violet-prismatic-evolutions-tech-sticker-collection-box-glaceon_8ffff01b-578f-4ae0-b8a1-e552eafb4cb6.jpg?v=1731358547",
-   "price": 699,
-   "type": "Collection Box",
-   "set": "Prismatic Evolutions",
    "lang": "en",
    "kind": "tillbaka"
   }
