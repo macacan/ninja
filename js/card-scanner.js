@@ -462,6 +462,31 @@ function fitLine(pts) {
   return { a, b, inliers: use.length };
 }
 
+// Fingrar utanför kortet ger starkare och yttre övergångar än kortets kant på en del av tvärsnitten, och då stämmer ingen
+// rät linje genom de yttersta punkterna. Varje tvärsnitt har därför upp till tre kandidater, och linjen som flest tvärsnitt
+// stöder vinner. Är flera nästan lika starka (kortets kant och ramen innanför) vinner den yttersta.
+function strongestLine(peaks, outward) {
+  const usable = peaks.filter((p) => p.length), third = Math.max(1, Math.floor(usable.length / 3));
+  const lines = [];
+  for (const pa of usable.slice(0, third)) for (const a of pa) for (const pb of usable.slice(-third)) for (const b of pb) {
+    if (a[0] === b[0]) continue;
+    const slope = (b[1] - a[1]) / (b[0] - a[0]);
+    if (Math.abs(slope) > 0.15) continue;
+    const pts = [];
+    for (const list of usable) {
+      let near = null, d = 1.6;
+      for (const c of list) { const e = Math.abs(a[1] + slope * (c[0] - a[0]) - c[1]); if (e < d) { d = e; near = c; } }
+      if (near) pts.push(near);
+    }
+    if (pts.length >= SIDE_SAMPLES * 0.5) lines.push({ pts, out: (outward * pts.reduce((s, p) => s + p[1], 0)) / pts.length });
+  }
+  if (!lines.length) return null;
+  const most = Math.max(...lines.map((l) => l.pts.length));
+  const best = lines.filter((l) => l.pts.length >= most * 0.8).sort((x, y) => y.out - x.out)[0];
+  const line = fitLine(best.pts);
+  return line && line.inliers >= SIDE_SAMPLES * 0.5 ? line : null;
+}
+
 // band kan vara en lista: varje bredd provas i tur och ordning på samma gråskalebild, och den första som ger ett kort
 // vinner. Ett kort i toploader eller plastficka sticker ut utanför ramen, och fångas då av det bredare bandet.
 export function detectCardCorners(videoOrImg, guide, band = 0.12) {
@@ -493,7 +518,7 @@ export function detectCardCorners(videoOrImg, guide, band = 0.12) {
   function cornersInBand(reach) {
     // En kant: horizontal = topp/botten (söker i y), outward = -1 när utsidan ligger mot lägre koordinater
     const side = (horizontal, edge, outward) => {
-      const pts = [];
+      const pts = [], peaks = [];
       const [t0, t1] = horizontal ? [gx0 + gw * 0.15, gx1 - gw * 0.15] : [gy0 + gh * 0.15, gy1 - gh * 0.15];
       const lim = horizontal ? ah : AW;
       for (let s = 0; s < SIDE_SAMPLES; s++) {
@@ -515,9 +540,13 @@ export function detectCardCorners(videoOrImg, guide, band = 0.12) {
         // Yttersta övergången som är nästan lika tydlig som den starkaste
         const idx = grad.findIndex((v) => v >= max * 0.6);
         pts.push([t, from - outward * idx]);
+        // De tre starkaste topparna i tvärsnittet, för strongestLine
+        const tops = [];
+        for (let i = 1; i < grad.length - 1; i++) if (grad[i] >= max * 0.45 && grad[i] >= grad[i - 1] && grad[i] >= grad[i + 1]) tops.push(i);
+        peaks.push(tops.sort((x, y) => grad[y] - grad[x]).slice(0, 3).map((i) => [t, from - outward * i]));
       }
       const line = fitLine(pts);
-      return line && line.inliers >= SIDE_SAMPLES * 0.5 ? line : null;
+      return line && line.inliers >= SIDE_SAMPLES * 0.5 ? line : strongestLine(peaks, outward);
     };
 
     const top = side(true, gy0, -1), bottom = side(true, gy1, 1);
@@ -2111,7 +2140,8 @@ const CONFIRM_FRAMED = 2, CONFIRM_BLIND = 3, SURE_LOOK = CLEAR;
 // Röstning: bild för bild skiftar blänket, men det rätta kortet ligger kvar. Är kortet i medeltal klart före de andra i
 // minst VOTE_MIN av de senaste VOTE_FRAMES bilderna räcker ett mindre försprång än för en enstaka bild. Bara bilder där ramen
 // ser kortets kanter räknas, annars kan en stilla bakgrund rösta fram ett kort.
-const VOTE_FRAMES = 4, VOTE_MIN = 3, VOTE_LOOK = 0.56, VOTE_GAP = 0.08;
+const VOTE_FRAMES = 4, VOTE_MIN = 3, VOTE_LOOK = 0.56, VOTE_GAP = 0.08, BLIND_VOTE_LOOK = 0.5, BLIND_VOTE_GAP = 0.1;
+const STRIPED = /^hgss\d-(ONE|TWO|THREE|FOUR)$/; // Alph Lithograph: rader av tecken, som liknar ränder
 let cand = null, trail = [], frameNo = 0;
 let reading = false, readRound = 0, cardEpoch = 0; // cardEpoch: byts när kortet byts, så att en sen läsning inte räknas
 let twin = null; // namnet när bilden pekar ut flera utgåvor av samma Pokémonkort
@@ -2166,15 +2196,27 @@ async function lookId({ game, art }, framed) {
   return no && art.filter((x) => x.s >= art[0].s - 0.08).every((x) => cards.get(x.id)?.no === no) ? art[0].id : null;
 }
 function voted({ game, art }) {
-  const id = art[0]?.id, frames = trail.filter((t) => t.game === game && t.framed && t.scores.has(id));
-  if (!id || frames.length < VOTE_MIN) return null;
-  let look = 0, gap = 0;
-  for (const { scores } of frames) {
-    const s = scores.get(id);
-    look += s;
-    gap += s - Math.max(-1, ...[...scores].filter(([x]) => x !== id).map(([, v]) => v));
+  const id = art[0]?.id, seen = trail.filter((t) => t.game === game && t.scores.has(id));
+  if (!id || seen.length < VOTE_MIN) return null;
+  const mean = (frames) => {
+    let look = 0, gap = 0;
+    for (const { scores } of frames) {
+      const s = scores.get(id);
+      look += s;
+      gap += s - Math.max(-1, ...[...scores].filter(([x]) => x !== id).map(([, v]) => v));
+    }
+    return [look / frames.length, gap / frames.length];
+  };
+  const framed = seen.filter((t) => t.framed);
+  if (framed.length >= VOTE_MIN) {
+    const [look, gap] = mean(framed);
+    return look >= VOTE_LOOK && gap >= VOTE_GAP ? id : null;
   }
-  return look / frames.length >= VOTE_LOOK && gap / frames.length >= VOTE_GAP ? id : null;
+  // Fingrar kan dölja kortets kanter, och foil och full art drar ner likheten. Samma kort i topp i flera bilder med tydligt
+  // försprång räcker ändå, men bara om kortet självt inte är ett mönster som en randig bakgrund kan likna.
+  if (seen.length < trail.length || STRIPED.test(id)) return null;
+  const [look, gap] = mean(seen);
+  return look >= BLIND_VOTE_LOOK && gap >= BLIND_VOTE_GAP ? id : null;
 }
 // Samma konstverk i flera utgåvor (ungefär vart tionde Pokémonkort): bilden kan inte skilja dem åt, det gör bara numret.
 // Namnet när alla kort nära toppen heter likadant, annars null.
@@ -2211,13 +2253,19 @@ async function lookHit(look, framed) {
 // där koden står tryckt på korten. Kort-id, eller null.
 let codesPromise = null;
 const setCodes = () => (codesPromise ||= fetch("data/set-codes.json").then((r) => (r.ok ? r.json() : {})).catch(() => ({})));
-const CODE_ZONES = [[{ x: 0, y: 0.925, w: 0.5, h: 0.065 }, 110], [{ x: 0.02, y: 0.94, w: 0.42, h: 0.04 }, 90], [{ x: 0, y: 0.9, w: 0.5, h: 0.09 }, 140]];
+// Den sista zonen är hög: med en ungefärlig rätning (ramen på skärmen) kan raden ligga en bit upp
+const CODE_ZONES = [[{ x: 0, y: 0.925, w: 0.5, h: 0.065 }, 110], [{ x: 0.02, y: 0.94, w: 0.42, h: 0.04 }, 90], [{ x: 0, y: 0.9, w: 0.5, h: 0.09 }, 140], [{ x: 0, y: 0.84, w: 0.55, h: 0.14 }, 200]];
 async function byCode(canvas, art, round) {
   const [worker, codes, a] = await Promise.all([getWorker("code"), setCodes(), loadArtIndex()]);
   const [zone, h] = CODE_ZONES[round % CODE_ZONES.length];
   const text = (await worker.recognize(plainZone(canvas, zone, h))).data.text.toUpperCase();
   const code = Object.keys(codes).find((c) => text.includes(c));
-  if (!code || !a || !art[0]) return null;
+  if (!a || !art[0]) return null;
+  // Numret ur samma läsning, med bokstäver tillåtna går det ibland bättre
+  const num = findNumber(text, await setSizes());
+  const hit = num && ((await byNumber(art, num)) || (await byTotal(art, num.total)));
+  if (hit) return hit;
+  if (!code) return null;
   const set = codes[code];
   // Bilden pekar ut flera utgåvor: koden väljer
   const near = art.filter((x) => x.s >= art[0].s - 0.06 && x.s >= LIKE && setOf(x.id) === set);
@@ -2249,7 +2297,7 @@ async function byPokemonName(canvas, name) {
   if (!ids.length || ids.length > 60) return null;
   const sims = await artSims(canvas, ids), ranked = ids.filter((id) => sims[id] != null).sort((x, y) => sims[y] - sims[x]);
   const s0 = sims[ranked[0]] ?? -1, s1 = ranked[1] ? sims[ranked[1]] : -1;
-  return s0 >= 0.3 && s0 - s1 >= 0.08 ? ranked[0] : null;
+  return s0 >= 0.35 && s0 - s1 >= 0.08 ? ranked[0] : null;
 }
 const NUM_ROUNDS = [[ZONES.numLeft, 1.4], [ZONES.numRight, 1.4], ...EXTRA_NUM_ZONES.slice(0, 4)];
 // En del av nummerraden, och namnet var tredje gång. Numret måste peka ut ett kort som liknar bilden.
@@ -2273,7 +2321,7 @@ async function readPokemon(canvas, art, round) {
   const named = !cardId && !coded && (await byPokemonName(canvas, r.name).catch(() => null));
   cardId ||= coded || named;
   if (coded || named) Object.assign(r, { number: localOf(cardId), total: null, numberSure: true });
-  return { ...r, name: (coded || named ? null : r.name) || (cardId && (await pokemonName(cardId))), cardId, coded: !!coded, art };
+  return { ...r, name: (coded || named ? null : r.name) || (cardId && (await pokemonName(cardId))), cardId, coded: !!(coded || named), art };
 }
 // En omgång textläsning på bilden look. Är två spel jämna läses spelet som bilden just nu liknar mest.
 async function readLook({ game, art, canvas, alt }, round, framed) {
@@ -2322,7 +2370,13 @@ async function attempt(canvas, source) {
   frameEl()?.classList.add("is-reading");
   frameEl()?.classList.remove("is-moving");
   try {
-    const look = await lookFrame(canvas, source, ++frameNo);
+    let look = await lookFrame(canvas, source, ++frameNo);
+    // Kanterna syntes inte (fingrar kan dölja dem), så hörnen kan vara helt fel. Kortet hålls ändå i ramen, så ramen provas också.
+    if (!source?.framed && source?.guide) {
+      const lead = (l) => (l.art[0]?.s ?? 0) * 2 - (l.art[1]?.s ?? 0);
+      const guided = await lookFrame(unwarpCard(source.src, source.guide), { src: source.src, corners: source.guide }, frameNo);
+      if (lead(guided) > lead(look)) look = guided;
+    }
     if (!dialog.open || frozen) return;
     // Ett nytt One Piece-kort kan ligga i indexet under sitt gamla id (se opData). Bilden och texten måste räkna samma kort.
     if (look.game === "op") {
