@@ -1,6 +1,20 @@
 {
- "updated": 1793823634650,
+ "updated": 1793824554668,
  "events": [
+  {
+   "at": 1793823746820,
+   "store": "packs-on-packs",
+   "product": "packs-on-packs:https://packsonpacks.se/pack-battle/79-30th-celebration-booster",
+   "group": "30th-celebration|booster-pack|en|",
+   "title": "30th Celebration Booster PB",
+   "url": "https://packsonpacks.se/pack-battle/79-30th-celebration-booster",
+   "image": "https://cdn.quickbutik.com/images/92330P/products/6ab3ed35e1bf1.png",
+   "price": 169,
+   "type": "Booster Pack",
+   "set": "30th Celebration",
+   "lang": "en",
+   "kind": "ny"
+  },
   {
    "at": 1793820738159,
    "store": "spelparken",
@@ -7107,20 +7121,6 @@
    "set": null,
    "lang": "zh",
    "kind": "tillbaka"
-  },
-  {
-   "at": 1793301844304,
-   "store": "spelparken",
-   "product": "spelparken:15289176260983",
-   "group": "lost-origin|blister|en||1",
-   "title": "Lost Origin 1-Pack Blister",
-   "url": "https://spelparken.se/products/1-pack-blister-lost-origin",
-   "image": "https://cdn.shopify.com/s/files/1/0948/1876/3127/files/pokemon-kort-lost-origin-blister-pack.webp?v=1765984153",
-   "price": 269,
-   "type": "Blister",
-   "set": "Lost Origin",
-   "lang": "en",
-   "kind": "ny"
   }
  ]
 }
