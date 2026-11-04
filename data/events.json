@@ -1,6 +1,21 @@
 {
- "updated": 1793781521659,
+ "updated": 1793782461725,
  "events": [
+  {
+   "at": 1793781721026,
+   "store": "tcg-picks",
+   "product": "tcg-picks:16100077863237",
+   "group": "prismatic-evolutions|elite-trainer-box|en|",
+   "title": "Prismatic Evolutions Elite Trainer Box (Skicka hem)",
+   "url": "https://tcgpicks.com/produkt/prismatic-evolutions-elite-trainer-box-1?variant=58889231827269",
+   "image": "https://cdn.shopify.com/s/files/1/0977/3046/2021/files/card-1786819410489-0.jpg?v=1786819414",
+   "price": 1999,
+   "type": "Elite Trainer Box",
+   "set": "Prismatic Evolutions",
+   "lang": "en",
+   "kind": "prissankt",
+   "from": 2299
+  },
   {
    "at": 1793779964225,
    "store": "webhallen",
@@ -7113,20 +7128,6 @@
    "set": "Spiritforged",
    "lang": "en",
    "game": "rb",
-   "kind": "ny"
-  },
-  {
-   "at": 1793262484238,
-   "store": "maxgaming",
-   "product": "maxgaming:https://maxgaming.se/sv/pokemon/pokemon-30th-celebration-premium-deck-set-espeon-forenklad-kinesiska",
-   "group": "30th-celebration|deck|zh||espeon-set",
-   "title": "Pokémon 30th Celebration Premium Deck Set Espeon (Förenklad kinesiska)",
-   "url": "https://maxgaming.se/sv/pokemon/pokemon-30th-celebration-premium-deck-set-espeon-forenklad-kinesiska",
-   "image": "https://www.maxgaming.se/bilder/artiklar/41569.jpg?m=1793257130",
-   "price": 449,
-   "type": "Deck",
-   "set": "30th Celebration",
-   "lang": "zh",
    "kind": "ny"
   }
  ]
