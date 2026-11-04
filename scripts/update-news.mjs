@@ -17,6 +17,8 @@ const EVERGREEN = /^(the )?(top \d+|all pok[eé]mon|best pok[eé]mon)\b/i;
 // Läckta kort och bilder före det officiella avslöjandet tas aldrig med.
 const LEAK = /\bleak(s|ed)?\b/i;
 const OP_TCG = /\b(card game|tcg|trading card|booster|op-?\d{2}|eb-?\d{2}|starter deck|leader)\b/i;
+// Riftbound.gg publicerar också betalda inlägg om casino och speltillbehör: bara inlägg som nämner Riftbound, och aldrig om spel om pengar
+const RB_FANSITE = /^(?![\s\S]*\b(casinos?|blackjack|betting|gambl\w*|slots?|poker|roulette|sportsbooks?)\b)[\s\S]*\briftbound\b/i;
 // game: pk (Pokémon), op (One Piece Card Game), rb (Riftbound). Sidan filtrerar på det.
 const ARTICLE_FEEDS = [
   { source: "Dexerto", url: "https://www.dexerto.com/feed/category/pokemon/", keep: TCG },
@@ -26,7 +28,7 @@ const ARTICLE_FEEDS = [
   { source: "Polygon", url: "https://www.polygon.com/rss/pokemon/index.xml", keep: TCG },
   { source: "PokemonBlog", url: "https://www.pokemonblog.com/feed/", keep: /\b(tcg|trading card|pok[eé]mon cards?)\b/i },
   // Riftbound: fansajten riftbound.gg (bara Riftbound) och Game Rants Riftbound-tagg.
-  { source: "Riftbound.gg", url: "https://riftbound.gg/feed/", game: "rb", keep: /./ },
+  { source: "Riftbound.gg", url: "https://riftbound.gg/feed/", game: "rb", keep: RB_FANSITE },
   { source: "Game Rant", url: "https://gamerant.com/feed/tag/riftbound/", game: "rb", keep: /riftbound/i },
   { source: "Siliconera", url: "https://www.siliconera.com/tag/league-of-legends/feed/", game: "rb", keep: /riftbound/i },
   // One Piece Card Game: fansajten One Piece Top Decks, och kortspelstaggarna hos Siliconera, Wargamer och Game Rant.
