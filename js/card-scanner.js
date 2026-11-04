@@ -15,6 +15,7 @@ import { API, esc, getJSON, kr } from "./site.js";
 import { loadDataset } from "./card-autocomplete.js";
 import "./scan/quad.js?v=20261103a"; // sätter self.Quad
 import "./scan/fingerprint.js?v=20261105a"; // sätter self.Fingerprint (med FP.BOX per spel)
+import { coinMuted, playCoin, setCoinMuted, unlockCoin } from "./scan/coin.js?v=20261105a";
 
 const TESSERACT = "https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/tesseract.min.js";
 // SRI: webbläsaren vägrar köra filen om CDN:et skulle leverera något annat än exakt version 5.1.1.
@@ -1562,6 +1563,16 @@ function hitTip() {
 
 const frameEl = () => dialog?.querySelector(".scan-frame i");
 
+function paintSound() {
+  const btn = dialog.querySelector(".scan-sound"), off = coinMuted();
+  btn.setAttribute("aria-pressed", String(off));
+  btn.setAttribute("aria-label", off ? "Slå på ljudet" : "Stäng av ljudet");
+  btn.title = off ? "Ljud av" : "Ljud på";
+  btn.innerHTML = `<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M4 9h4l5-4v14l-5-4H4z"/>${off
+    ? '<path d="M16 9l5 6M21 9l-5 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/>'
+    : '<path d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/>'}</svg>`;
+}
+
 function ui() {
   if (dialog) return dialog;
   dialog = document.createElement("dialog");
@@ -1570,12 +1581,15 @@ function ui() {
   dialog.innerHTML = `
     <div class="scan-top">
       <b>Skanna kort</b>
-      <button class="scan-torch" type="button" aria-label="Blixt" aria-pressed="false" hidden>
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-          <path d="M13 2L4 14h7l-1 8 9-12h-7l1-8z"/>
-        </svg>
-        <span>Av</span>
-      </button>
+      <div class="scan-tools">
+        <button class="scan-sound" type="button" hidden></button>
+        <button class="scan-torch" type="button" aria-label="Blixt" aria-pressed="false" hidden>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M13 2L4 14h7l-1 8 9-12h-7l1-8z"/>
+          </svg>
+          <span>Av</span>
+        </button>
+      </div>
     </div>
     <div class="scan-view">
       <video playsinline muted autoplay></video>
@@ -1644,6 +1658,13 @@ function ui() {
       // Kameran sa att den har lampa men vägrade tända den
       if (!torchActive) torchBtn.hidden = true;
     }
+  });
+
+  // Myntljudet i valvet
+  dialog.querySelector(".scan-sound").addEventListener("click", () => {
+    setCoinMuted(!coinMuted());
+    unlockCoin();
+    paintSound();
   });
 
   // Välj foto från fil
@@ -2222,6 +2243,14 @@ async function priceOf(r) {
   if (r.game === "op") return (await opData().catch(() => null))?.get(r.cardId)?.sek ?? null;
   return null;
 }
+const HIT_WAIT = 3000; // ms som kortet längst väntar på priset innan det poppar upp ändå
+// I valvet står alltid något om värdet
+const priceText = (item) => (item.price != null ? kr(item.price) : onHit ? "Inget pris" : "");
+// saved: valvet har svarat att kortet är inlagt
+const hitText = (item, saved) => (onHit
+  ? saved ? `<b>${esc(labelOf(item))}</b> lagt i valvet! Håll nästa kort i ramen.` : `Hittade <b>${esc(labelOf(item))}</b>! Lägger i valvet…`
+  : autoOpen ? `Hittade <b>${esc(labelOf(item))}</b>!`
+  : `Hittade <b>${esc(labelOf(item))}</b>! Tryck på kortet för att öppna det, eller håll nästa i ramen.`);
 async function setPeek(r, canvas) {
   if (keyOf(r) === skipKey) return status("Byt till nästa kort…");
   skipKey = keyOf(r);
@@ -2229,25 +2258,40 @@ async function setPeek(r, canvas) {
   hitTip();
   pauseUntil = Date.now() + 1400; // låt kortet poppa upp och flyga upp till hörnet innan nästa läsning
   const item = { game: r.game || "pokemon", name: r.name, number: r.number, total: r.total, cardId: r.cardId, canvas, dhash: r.dhash };
+  const before = peek;
   peek = item;
+  status(hitText(item));
+  // Valvet svarar med det inlagda kortet, eller null om läsningen inte pekade ut något kort
+  const adding = onHit && Promise.resolve(onHit(item)).then((c) => c || null, () => null);
+  item.thumb = thumbOf(canvas) || r.image || null; // ett manuellt valt kort har kortets bild
+  // Svaret ger priset i kronor och kortets rätta namn (bildträffar på Pokémonkort har inget namn, och textläsningen kan
+  // missa t.ex. "ex"). Dröjer det (undefined) poppar kortet upp ändå.
+  // Vanlig eller foil väljs inte här: i valvet markeras kortet i den stora vyn
+  const added = adding ? await Promise.race([adding, new Promise((done) => setTimeout(done, HIT_WAIT))]) : undefined;
+  if (peek !== item) return; // ett nytt kort hann hittas
+  if (added === null) {
+    // Ingen träff att visa: förra kortet ligger kvar i hörnet, och samma kort får läsas om
+    peek = before;
+    skipKey = null;
+    pauseUntil = Date.now() + PAUSE_AFTER_MISS;
+    missed();
+    return status(`Kunde inte lägga <b>${esc(labelOf(item))}</b> i valvet. Håll kortet stilla så läses det om, eller tryck på <b>Värdera manuellt</b>.`);
+  }
   if ("vibrate" in navigator) navigator.vibrate(45);
+  if (onHit) playCoin();
   const hud = dialog.querySelector(".scan-hud-status");
   hud?.classList.add("success");
   setTimeout(() => hud?.classList.remove("success"), 1500);
-  status(onHit
-    ? `<b>${esc(labelOf(item))}</b> lagt i valvet! Håll nästa kort i ramen.`
-    : autoOpen ? `Hittade <b>${esc(labelOf(item))}</b>!`
-    : `Hittade <b>${esc(labelOf(item))}</b>! Tryck på kortet för att öppna det, eller håll nästa i ramen.`);
-  onHit?.(item);
-  item.thumb = thumbOf(canvas) || r.image || null; // ett manuellt valt kort har kortets bild
-  // Vanlig eller foil väljs inte här: i valvet markeras kortet i den stora vyn
-  item.price = await priceOf(item);
-  if (peek !== item) return; // ett nytt kort hann hittas
+  item.name = added?.name || item.name;
+  item.price = added?.sek ?? (await priceOf(item));
+  if (peek !== item) return;
+  pauseUntil = Date.now() + 1400; // priset kan ha dröjt, så tiden räknas från att kortet poppar upp
+  status(hitText(item, !!added));
   const btn = dialog.querySelector(".scan-peek"), price = btn.querySelector(".scan-price");
   btn.querySelector("img").src = item.thumb || "";
   btn.querySelector("img").hidden = !item.thumb;
-  price.textContent = item.price != null ? kr(item.price) : "";
-  price.hidden = item.price == null;
+  price.textContent = priceText(item);
+  price.hidden = !price.textContent;
   btn.querySelector("span").textContent = labelOf(item);
   btn.setAttribute("aria-label", `Öppna ${labelOf(item)}${item.price != null ? `, ${kr(item.price)}` : ""}`);
   // Kortet poppar upp mitt i bilden med priset och flyger sedan upp till hörnet, där det ligger kvar
@@ -2361,7 +2405,7 @@ function popCard(item, target, end) {
   const pop = document.createElement("div");
   pop.className = "scan-pop";
   pop.setAttribute("aria-hidden", "true");
-  pop.innerHTML = `<div>${item.thumb ? `<img src="${item.thumb}" alt="">` : "<i></i>"}${item.price != null ? `<em class="scan-price">${esc(kr(item.price))}</em>` : ""}<span>${esc(labelOf(item))}</span></div>`;
+  pop.innerHTML = `<div>${item.thumb ? `<img src="${item.thumb}" alt="">` : "<i></i>"}${priceText(item) ? `<em class="scan-price">${esc(priceText(item))}</em>` : ""}<span>${esc(labelOf(item))}</span></div>`;
   view.append(pop);
   target.hidden = false;
   const card = pop.firstElementChild, p = card.getBoundingClientRect(), t = target.getBoundingClientRect();
@@ -2396,6 +2440,8 @@ export async function openScanner(callback, partialCallback, { game = "pokemon",
   const title = { pokemon: "Skanna Pokémonkort", rb: "Skanna Riftbound-kort", op: "Skanna One Piece-kort" }[game] || "Skanna kort";
   d.querySelector(".scan-top b").textContent = title;
   d.setAttribute("aria-label", title);
+  d.querySelector(".scan-sound").hidden = !hit; // ljudet hör till valvet
+  paintSound();
   d.querySelector(".scan-tip").textContent = game === "rb" || game === "vault"
     ? "Håll kortet i ramen. Battlefields hålls på högkant."
     : game === "pokemon" && partialCallback

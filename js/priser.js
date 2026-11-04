@@ -7,6 +7,7 @@ import { apiFor, findJapanese } from "./japanese.js";
 import { track } from "./tracker.js";
 import { gameSuggestions } from "./game-guess.js";
 import { reverseEur, baseLabel, cardmarketTable, tcgplayerTable } from "./cmholo.js?v=20261104b";
+import { unlockCoin } from "./scan/coin.js?v=20261105a";
 
 // ---------- Spel ----------
 // Pokémon söks direkt mot TCGdex. One Piece och Riftbound söks i färdigbyggda filer i data/<spel>/
@@ -544,8 +545,12 @@ async function scanQuery({ game: g, cardId, name, number, total }) {
 }
 // manual: skannern öppnas direkt med sökrutan (Sök och lägg till i valvet)
 async function scanCards(g = VAULT_PAGE ? "vault" : game, { manual = false } = {}) {
+  if (VAULT_PAGE) {
+    unlockCoin(); // måste ske i trycket, före första await
+    getRates(); // kursen ska finnas när första kortet hittas
+  }
   track("scan", "Öppnad");
-  const { openScanner } = await import("./card-scanner.js?v=20261105c");
+  const { openScanner } = await import("./card-scanner.js?v=20261105d");
   const added = new Map(); // valvet: träffarna som lagts in, för att kunna öppna rätt kort
   openScanner(async (r) => {
     track("scan", r.cardId ? "Säker träff" : "Läst, söker");
@@ -571,6 +576,7 @@ async function scanCards(g = VAULT_PAGE ? "vault" : game, { manual = false } = {
       // Kortet läggs i valvet så fort det hittats, och valvet bakom skannern ritas om
       const p = addScanned([r]).then(([c]) => { if (c) track("scan", "Till valvet: 1 kort"); showVault(); return c; });
       added.set(hitKey(r), p);
+      return p; // skannern visar kortets namn och värde
     } : null,
   });
 }
