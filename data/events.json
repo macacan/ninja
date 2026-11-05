@@ -1,6 +1,48 @@
 {
- "updated": 1793883317181,
+ "updated": 1793884237201,
  "events": [
+  {
+   "at": 1793884037389,
+   "store": "speltrollet",
+   "product": "speltrollet:15108628250950",
+   "group": "white-flare|booster-pack|ja|",
+   "title": "Pokemon White Flare Booster (Japansk)",
+   "url": "https://speltrollet.se/products/pokemon-white-flare-booster-japansk",
+   "image": "https://cdn.shopify.com/s/files/1/0674/0951/0716/files/white-flare-booster-pack.webp?v=1755095234",
+   "price": 79,
+   "type": "Booster Pack",
+   "set": "White Flare",
+   "lang": "ja",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1793884037389,
+   "store": "speltrollet",
+   "product": "speltrollet:14892693324102",
+   "group": "x|booster-pack|ja||change-mask",
+   "title": "Pokemon Mask of Change Booster (sv6) (Japansk)",
+   "url": "https://speltrollet.se/products/pokemon-scarlet-violet-mask-of-change-booster-japansk",
+   "image": "https://cdn.shopify.com/s/files/1/0674/0951/0716/files/mask-of-change-japansk-booster-pack-pokemonkort_c806dea1-f323-4901-8760-e1ff50c520a9.webp?v=1738235337",
+   "price": 49,
+   "type": "Booster Pack",
+   "set": null,
+   "lang": "ja",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1793884037389,
+   "store": "speltrollet",
+   "product": "speltrollet:14892688474438",
+   "group": "x|booster-pack|ja||cyber-judge",
+   "title": "Pokemon Cyber Judge Booster (sv5M) (Japansk)",
+   "url": "https://speltrollet.se/products/pokemon-scarlet-violet-cyber-judge-booster-japansk-kopia",
+   "image": "https://cdn.shopify.com/s/files/1/0674/0951/0716/files/cyber-judge-booster-pack-japanska-pokemonkort.webp?v=1738234966",
+   "price": 39,
+   "type": "Booster Pack",
+   "set": null,
+   "lang": "ja",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793883144059,
    "store": "webhallen",
@@ -7060,48 +7102,6 @@
    "set": "Scarlet & Violet",
    "lang": "ja",
    "kind": "ny"
-  },
-  {
-   "at": 1793361956524,
-   "store": "shinycards",
-   "product": "shinycards:https://www.shinycards.se/pokemon/booster-box/pokemon-mega-ninja-spinner-booster-box-japansk",
-   "group": "x|booster-box|ja||ninja-spinner",
-   "title": "Pokemon Mega: Ninja Spinner Booster Box (Japansk)",
-   "url": "https://www.shinycards.se/pokemon/booster-box/pokemon-mega-ninja-spinner-booster-box-japansk",
-   "image": "https://cdn.quickbutik.com/images/69946c/products/6ae48261bd31a.png",
-   "price": 999,
-   "type": "Booster Box",
-   "set": null,
-   "lang": "ja",
-   "kind": "ny"
-  },
-  {
-   "at": 1793361956524,
-   "store": "shinycards",
-   "product": "shinycards:https://www.shinycards.se/pokemon/booster-box/pokemon-mega-nihil-zero-booster-box-japansk",
-   "group": "x|booster-box|ja||nihil-zero",
-   "title": "Pokemon Mega: Nihil Zero Booster Box (Japansk)",
-   "url": "https://www.shinycards.se/pokemon/booster-box/pokemon-mega-nihil-zero-booster-box-japansk",
-   "image": "https://cdn.quickbutik.com/images/69946c/products/6ae481c8f16d3.png",
-   "price": 999,
-   "type": "Booster Box",
-   "set": null,
-   "lang": "ja",
-   "kind": "ny"
-  },
-  {
-   "at": 1793361815785,
-   "store": "speltrollet",
-   "product": "speltrollet:14959757918534",
-   "group": "destined-rivals|booster-box|en|",
-   "title": "Pokemon Scarlet & Violet 10: Destined Rivals - Booster Box Display",
-   "url": "https://speltrollet.se/products/pokemon-scarlet-violet-10-destined-rivals-booster-box-display-max-1st-per-kund",
-   "image": "https://cdn.shopify.com/s/files/1/0674/0951/0716/files/Destined-Rivals-Booster-Box-scaled.webp?v=1742899398",
-   "price": 4190,
-   "type": "Booster Box",
-   "set": "Destined Rivals",
-   "lang": "en",
-   "kind": "tillbaka"
   }
  ]
 }
