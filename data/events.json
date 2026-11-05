@@ -1,6 +1,20 @@
 {
- "updated": 1793863431723,
+ "updated": 1793864351750,
  "events": [
+  {
+   "at": 1793864056348,
+   "store": "mtg-butiken",
+   "product": "mtg-butiken:https://mtgbutiken.quickbutik.com/pokemon/kopia-pitch-black-gengar-premium-checklane-blister",
+   "group": "pitch-black|booster-bundle|en|",
+   "title": "Pitch Black Booster Bundle",
+   "url": "https://mtgbutiken.quickbutik.com/pokemon/kopia-pitch-black-gengar-premium-checklane-blister",
+   "image": "https://cdn.quickbutik.com/images/26595u/products/6a4f58882d3d8.png",
+   "price": 475,
+   "type": "Booster Bundle",
+   "set": "Pitch Black",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793863264568,
    "store": "samlarverket",
@@ -7097,20 +7111,6 @@
    "price": 1599,
    "type": "Tin",
    "set": "Paldean Fates",
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793310838633,
-   "store": "samlarverket",
-   "product": "samlarverket:11273279799639",
-   "group": "phantasmal-flames|booster-pack|en|",
-   "title": "Phantasmal Flames Booster Pack",
-   "url": "https://samlarverket.com/produkt/phantasmal-flames-booster-pack",
-   "image": "https://cdn.shopify.com/s/files/1/1022/5323/2471/files/pokemon-mega-evolution-phantasmal-flames-booster-pack-1.webp?v=1789171276",
-   "price": 149,
-   "type": "Booster Pack",
-   "set": "Phantasmal Flames",
    "lang": "en",
    "kind": "tillbaka"
   }
