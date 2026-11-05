@@ -1,6 +1,20 @@
 {
- "updated": 1793908754289,
+ "updated": 1793909634302,
  "events": [
+  {
+   "at": 1793909302124,
+   "store": "cardvalley",
+   "product": "cardvalley:10611330285906",
+   "group": "prismatic-evolutions|booster-bundle|en|",
+   "title": "Pokémon: Prismatic Evolutions Booster Bundle",
+   "url": "https://cardvalley.se/products/pokemon-prismatic-evolutions-booster-bundle",
+   "image": "https://cdn.shopify.com/s/files/1/0934/7946/9394/files/IMG-9967.png?v=1776753974",
+   "price": 1299,
+   "type": "Booster Bundle",
+   "set": "Prismatic Evolutions",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793908498208,
    "store": "rahtech",
@@ -7086,20 +7100,6 @@
    "set": "Journey Together",
    "lang": "en",
    "kind": "tillbaka"
-  },
-  {
-   "at": 1793376897121,
-   "store": "tcgaddan",
-   "product": "tcgaddan:15817449308492",
-   "group": "ascended-heroes|booster-pack|en|",
-   "title": "Ascended Heroes Booster Pack",
-   "url": "https://tcgaddan.se/products/ascended-heroes-booster-packs",
-   "image": "https://cdn.shopify.com/s/files/1/1037/7062/0236/files/AScendedheroes_915a09f2-6585-42c6-a995-5bd199a4b83e.webp?v=1781508800",
-   "price": 189,
-   "type": "Booster Pack",
-   "set": "Ascended Heroes",
-   "lang": "en",
-   "kind": "ny"
   }
  ]
 }
