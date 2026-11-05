@@ -1678,7 +1678,17 @@ function ui() {
         <ul class="scan-manual-list"></ul>
         <p class="scan-manual-hint"></p>
       </form>
-      <div class="scan-twins" hidden><b>Vilken utgåva?</b><div></div></div>
+      <form class="scan-number" hidden>
+        <div class="scan-number-head">
+          <b>Skriv numret nere på kortet</b>
+          <button class="scan-ghost" type="button" data-number-close aria-label="Tillbaka till kameran">✕</button>
+        </div>
+        <input type="text" inputmode="none" maxlength="7" placeholder="116/132" aria-label="Kortets nummer, till exempel 116/132" autocomplete="off" enterkeyhint="done">
+        <div class="scan-number-keys">${[..."123456789/0"].map((k) => `<button type="button" data-key="${k}">${k}</button>`).join("")}<button type="button" data-key="back" aria-label="Radera">⌫</button></div>
+        <p role="status"></p>
+        <button class="scan-now" type="submit">Ta kortet</button>
+      </form>
+      <div class="scan-twins" hidden><b>Vilken utgåva?</b><div></div><button class="scan-twins-none" type="button">Ingen av dem</button></div>
       <div class="scan-confirm" hidden>
         <img alt="">
         <b></b>
@@ -1711,8 +1721,18 @@ function ui() {
   dialog.querySelector("[data-confirm-yes]").addEventListener("click", confirmYes);
 
   // Värdera manuellt: skriv in kortet i stället för att skanna det
-  dialog.querySelector("[data-manual]").addEventListener("click", openManual);
+  dialog.querySelector("[data-manual]").addEventListener("click", () => (twinSeen ? openNumber() : openManual()));
   dialog.querySelector("[data-manual-close]").addEventListener("click", closeManual);
+  // Numret för hand: egna knappar, eftersom telefonernas sifferskärm saknar snedstreck
+  const numberForm = dialog.querySelector(".scan-number"), numberInput = numberForm.querySelector("input");
+  const setNumber = (v) => { numberInput.value = cleanNumber(v); numberForm.querySelector("p").textContent = ""; };
+  numberInput.addEventListener("input", () => setNumber(numberInput.value));
+  numberForm.querySelector(".scan-number-keys").addEventListener("click", (e) => {
+    const k = e.target.closest("[data-key]")?.dataset.key;
+    if (k) setNumber(k === "back" ? numberInput.value.slice(0, -1) : numberInput.value + k);
+  });
+  numberForm.querySelector("[data-number-close]").addEventListener("click", closeManual);
+  numberForm.addEventListener("submit", (e) => { e.preventDefault(); pickNumber(); });
   const manual = dialog.querySelector(".scan-manual");
   manual.querySelector("input").addEventListener("input", renderManual);
   manual.addEventListener("submit", (e) => { e.preventDefault(); pickManual(0); });
@@ -1726,6 +1746,7 @@ function ui() {
   dialog.querySelector(".scan-twins").addEventListener("click", (e) => {
     const b = e.target.closest("[data-twin]");
     if (b) pickTwin(twinCards[+b.dataset.twin]);
+    else if (e.target.closest(".scan-twins-none")) { newCard(); status("Håll kortet i ramen…"); }
   });
 
   // Ficklampa
@@ -1893,7 +1914,7 @@ function startHudLoop() {
       } else {
         lock.hits = 0;
         // Kortet har lämnat ramen: i snabbskanningen får samma kort räknas igen
-        if (++lock.misses >= LOCK_OFF && lock.on) { lock.on = false; lock.target = guide; skipKey = null; lastHit = null; newCard(); }
+        if (++lock.misses >= LOCK_OFF && lock.on) { lock.on = false; lock.target = guide; skipKey = null; lastHit = null; if (!twinOpen) newCard(); }
       }
     }
 
@@ -1958,7 +1979,8 @@ function motionLevel(video) {
 // Körs var MOTION_TICK ms. OCR startar först när kameran varit stilla en stund och ingen skanning pågår.
 function motionTick() {
   const video = dialog?.querySelector("video");
-  if (!dialog?.open || !video?.videoWidth || frozen || manualOpen) return;
+  // Valet av utgåva ligger kvar tills man svarar, så kameran får röra sig utan att något nytt läses under tiden
+  if (!dialog?.open || !video?.videoWidth || frozen || manualOpen || twinOpen) return;
   // Under en läsning (och pausen efter en träff) tas stickprovet ändå, så att nästa jämförelse gäller bilden nyss och
   // inte en bild från innan läsningen. Annars räknades en hand som håller kortet som rörelse efter varje läsning.
   if (busy || Date.now() < pauseUntil) { motionLevel(video); return; }
@@ -2153,12 +2175,19 @@ const STRIPED = /^hgss\d-(ONE|TWO|THREE|FOUR)$/; // Alph Lithograph: rader av te
 let cand = null, trail = [], frameNo = 0;
 let reading = false, readRound = 0, cardEpoch = 0; // cardEpoch: byts när kortet byts, så att en sen läsning inte räknas
 let twin = null; // namnet när bilden pekar ut flera utgåvor av samma Pokémonkort
+let twinSeen = null; // { name, art }: utgåvorna som numret väljer bland. Knappen blir då "Ange numret manuellt".
+function setTwinSeen(seen) {
+  twinSeen = seen;
+  const btn = dialog?.querySelector("[data-manual]");
+  if (btn) btn.textContent = seen ? "Ange numret manuellt" : "Värdera manuellt";
+}
 function newCard() {
   hideTwins();
   cand = null;
   trail = [];
   readRound = 0;
   twin = null;
+  setTwinSeen(null);
   cardEpoch++;
   last = lastNum = null;
 }
@@ -2301,6 +2330,7 @@ async function showTwins({ art }) {
   const prices = await Promise.all(near.map((x) => (onPreview ? Promise.resolve(onPreview({ game: "pokemon", cardId: x.id })).catch(() => null) : null)));
   if (!twinOpen || epoch !== cardEpoch) return;
   twinCards = cards.filter(Boolean);
+  if (!twinCards.length) return hideTwins(); // inget att välja mellan: skanningen fortsätter
   const el = dialog.querySelector(".scan-twins");
   el.querySelector("div").innerHTML = cards.map((c, i) => (c ? `<button type="button" data-twin="${twinCards.indexOf(c)}">${c.image ? `<img src="${esc(c.image)}/low.webp" alt="">` : ""}<b>${esc(c.set?.name || "")}</b><small>#${esc(c.localId)}${prices[i]?.sek != null ? ` · ${esc(kr(prices[i].sek))}` : ""}</small></button>` : "")).join("");
   el.hidden = false;
@@ -2461,7 +2491,7 @@ async function readBehind(look, framed) {
   const epoch = cardEpoch;
   try {
     const r = await readLook(look, readRound++, framed);
-    if (dialog?.open && !frozen && !manualOpen && epoch === cardEpoch) await settle(r, artCanvas(look.canvas, look.art), framed);
+    if (dialog?.open && !frozen && !manualOpen && !twinOpen && epoch === cardEpoch) await settle(r, artCanvas(look.canvas, look.art), framed);
   } catch (err) {
     status(esc(err.message || "Något gick fel. Försök igen."));
   } finally {
@@ -2530,11 +2560,13 @@ async function attempt(canvas, source) {
     if (r) return setPeek(r, artCanvas(look.canvas, look.art));
     twin = await twinName(look);
     if (twin) {
+      setTwinSeen({ name: twin, art: look.art });
       // Numret har inte gått att läsa på några försök: man får välja utgåvan med ett tryck
       if (readRound >= TWIN_ROUNDS) showTwins(look);
       status(twinOpen ? `Vilken utgåva av <b>${esc(twin)}</b>?` : `Flera utgåvor av <b>${esc(twin)}</b>. Läser numret…`);
     } else {
-      hideTwins();
+      // Ett annat kort i ramen: numret ska inte längre välja bland det förra kortets utgåvor
+      if (twinSeen && !look.art.slice(0, 3).some((x) => twinSeen.art.some((y) => y.id === x.id))) setTwinSeen(null);
       status(cand ? "Håll kortet stilla i ramen…" : "Läser av…");
     }
     // Ett kort som inte liknar något i indexet kan ändå läsas när ramen ser dess kanter (t.ex. nya kort)
@@ -2830,10 +2862,47 @@ function openManual() {
 }
 function closeManual() {
   manualOpen = false;
+  numberLook = null;
   dialog.querySelector(".scan-manual").hidden = true;
+  dialog.querySelector(".scan-number").hidden = true;
   stillTicks = 0;
   // Öppnades skannern direkt med sökrutan är kameran inte igång än
   if (dialog.open && !stream) startCamera();
+}
+// Numret för hand när skannern ser flera utgåvor. Bara siffror och ett snedstreck. "116/132" väljer utgåvan direkt, och
+// "116" räcker när bara en utgåva har numret. numberLook: utgåvorna när rutan öppnades, skanningen står still under tiden.
+let numberLook = null;
+function cleanNumber(v) {
+  const [no, ...rest] = v.replace(/[^\d/]/g, "").split("/");
+  return (rest.length ? `${no}/${rest.join("")}` : no).slice(0, 7);
+}
+function openNumber() {
+  numberLook = twinSeen;
+  manualOpen = true;
+  const form = dialog.querySelector(".scan-number"), input = form.querySelector("input");
+  input.value = "";
+  form.querySelector("p").textContent = "";
+  form.hidden = false;
+  input.focus();
+}
+async function pickNumber() {
+  const form = dialog.querySelector(".scan-number"), say = (t) => { form.querySelector("p").textContent = t; };
+  const look = numberLook, typed = form.querySelector("input").value, [, no, total] = typed.match(/^(\d+)(?:\/(\d*))?$/) || [];
+  if (!look) return;
+  if (!no) return say("Skriv numret, till exempel 116/132.");
+  const [a, counts] = await Promise.all([loadArtIndex(), total ? setCounts() : null]);
+  if (numberLook !== look) return;
+  const score = (id) => look.art.find((x) => x.id === id)?.s ?? -1;
+  const sized = (id) => { const c = counts?.get(setOf(id)); return !c || !total || c.official === +total || c.total === +total; };
+  const hits = [...new Set(a?.ids || [])]
+    .filter((id) => numKey(localOf(id)) === numKey(no) && a.names[a.idx.get(id)]?.replace(/^Basic /, "") === look.name && sized(id))
+    .sort((x, y) => score(y) - score(x));
+  if (!hits.length) return say(`Hittade ingen ${look.name} med numret ${typed}.`);
+  if (hits.length > 1 && !total) return say("Flera utgåvor har det numret. Skriv hela, till exempel 116/132.");
+  const id = hits[0], c = await getJSON(`${API}/cards/${encodeURIComponent(id)}`).catch(() => null);
+  if (numberLook !== look) return;
+  closeManual();
+  pickTwin(c || { id, name: look.name, localId: localOf(id) });
 }
 async function renderManual() {
   const form = dialog.querySelector(".scan-manual"), input = form.querySelector("input");

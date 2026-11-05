@@ -3163,6 +3163,18 @@ input[type=search]::-webkit-search-results-decoration {
 .scan-manual-hint{margin:0;font-size:.8rem;color:rgba(232,234,246,.65);text-align:center}
 .scan-manual-hint:empty{display:none}
 /* Förhandsvisning av ett kort valt i sökrutan (valvet), ovanpå sökrutan och utan kameran */
+.scan-number{position:absolute;left:8px;right:8px;bottom:8px;z-index:13;max-height:calc(100% - 16px);box-sizing:border-box;overflow:auto;display:flex;flex-direction:column;gap:8px;padding:12px;border-radius:14px;background:rgba(8,10,20,.96);color:#fff}
+.scan-number[hidden]{display:none}
+.scan-number-head{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:.9rem}
+.scan-number-head button{flex:none;min-width:44px;min-height:44px;padding:0;border-radius:999px;font:inherit;cursor:pointer}
+.scan-number input{box-sizing:border-box;width:100%;padding:10px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.06);color:#e8eaf6;font:700 1.3rem var(--sans);text-align:center}
+.scan-number input:focus{outline:2px solid var(--ai1);outline-offset:1px}
+.scan-number-keys{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.scan-number-keys button{min-height:44px;border:1px solid rgba(255,255,255,.14);border-radius:10px;background:rgba(255,255,255,.08);color:#fff;font:700 1.1rem var(--sans);cursor:pointer}
+.scan-number-keys button:focus-visible{outline:2px solid var(--ai1);outline-offset:1px}
+.scan-number p{margin:0;font-size:.8rem;color:#fca5a5;text-align:center}
+.scan-number p:empty{display:none}
+.scan-number .scan-now{flex:none;min-height:44px;border-radius:999px;font:700 .95rem var(--sans);cursor:pointer}
 .scan-twins{position:absolute;left:8px;right:8px;bottom:8px;z-index:12;padding:8px;border-radius:14px;background:rgba(8,10,20,.88);color:#fff;text-align:center;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
 .scan-twins[hidden]{display:none}
 .scan-twins>b{display:block;margin-bottom:6px;font:700 .82rem var(--sans)}
@@ -3172,6 +3184,7 @@ input[type=search]::-webkit-search-results-decoration {
 .scan-twins img{width:100%;max-width:74px;aspect-ratio:63/88;object-fit:cover;border-radius:5px;background:#1b1e33}
 .scan-twins button b{font:700 .66rem/1.15 var(--sans);max-width:100%;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
 .scan-twins small{font-size:.66rem;color:rgba(255,255,255,.75);white-space:nowrap}
+.scan-twins .scan-twins-none{display:block;width:auto;max-width:none;min-height:36px;margin:6px auto 0;padding:6px 14px;border:0;background:none;color:rgba(255,255,255,.8);font:600 .75rem var(--sans)}
 .scan-confirm{position:absolute;inset:0;z-index:13;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:14px;background:#07080f;text-align:center;overflow:auto}
 .scan-confirm[hidden]{display:none}
 .scan-confirm img{height:min(52%,300px);min-height:120px;aspect-ratio:63/88;flex:none;object-fit:cover;border-radius:10px;background:#1b1e33;border:3px solid var(--tier);box-shadow:0 0 22px var(--tier-glow),0 10px 30px rgba(0,0,0,.6)}
