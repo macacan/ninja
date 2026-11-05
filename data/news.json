@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-05T22:12:20.566Z",
+ "updated": "2026-11-05T22:27:40.551Z",
  "articles": [
   {
    "title": "Riftbound World Showcase: Event Details, Format, and Prizes",
@@ -479,18 +479,5 @@
    "game": "op"
   }
  ],
- "videos": [
-  {
-   "id": "pGIxhUQvezQ",
-   "title": "TCG Day 2 | 2027 Pokémon Gdańsk Regional Championships",
-   "date": "2026-11-01T19:24:07.000Z",
-   "source": "Pokémon (officiell)"
-  },
-  {
-   "id": "rWsK4plWGM4",
-   "title": "TCG Day 1 | 2027 Pokémon Gdańsk Regional Championships",
-   "date": "2026-10-31T19:26:17.000Z",
-   "source": "Play! Pokémon (officiell)"
-  }
- ]
+ "videos": []
 }
