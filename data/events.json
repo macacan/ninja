@@ -1,6 +1,49 @@
 {
- "updated": 1793905974229,
+ "updated": 1793906874242,
  "events": [
+  {
+   "at": 1793906798347,
+   "store": "spelparken",
+   "product": "spelparken:15401178169719",
+   "group": "rb|spiritforged|booster-pack|en|",
+   "title": "Riftbound Spiritforged Booster Pack",
+   "url": "https://spelparken.se/products/riftbound-spiritforged-booster-pack",
+   "image": "https://cdn.shopify.com/s/files/1/0948/1876/3127/files/Pics_-_2025-08-10T091914.603.avif?v=1772209468",
+   "price": 129,
+   "type": "Booster Pack",
+   "set": "Spiritforged",
+   "lang": "en",
+   "game": "rb",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1793906798347,
+   "store": "spelparken",
+   "product": "spelparken:15237517705591",
+   "group": "silver-tempest|booster-pack|en|",
+   "title": "Silver Tempest Booster Pack",
+   "url": "https://spelparken.se/products/pokemon-sword-shield-silver-tempest-booster-pack-oppnas-live",
+   "image": "https://cdn.shopify.com/s/files/1/0948/1876/3127/files/pokemon-tcg-silver-tempest-pok86091-main.webp?v=1762964967",
+   "price": 199,
+   "type": "Booster Pack",
+   "set": "Silver Tempest",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1793906798347,
+   "store": "spelparken",
+   "product": "spelparken:15158492987767",
+   "group": "celebrations|elite-trainer-box|en|",
+   "title": "Celebrations ETB",
+   "url": "https://spelparken.se/products/celebrations-etb-oppnas-live",
+   "image": "https://cdn.shopify.com/s/files/1/0948/1876/3127/files/1600_38_8973d1a1-faea-4205-b728-5d6b422e8d84.jpg?v=1759471087",
+   "price": 5499,
+   "type": "Elite Trainer Box",
+   "set": "Celebrations",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793905764576,
    "store": "samlarverket",
@@ -7059,48 +7102,6 @@
    "lang": "zh",
    "kind": "prissankt",
    "from": 249
-  },
-  {
-   "at": 1793373988883,
-   "store": "samlarverket",
-   "product": "samlarverket:11343708291415",
-   "group": "30th-celebration|ultra-premium-collection|en||espeon-pikachu",
-   "title": "Pokémon 30th Celebration Ultra-Premium Collection Espeon & Pikachu",
-   "url": "https://samlarverket.com/produkt/pokemon-30th-celebration-ultra-premium-collection-espeon-pikachu",
-   "image": "https://cdn.shopify.com/s/files/1/1022/5323/2471/files/Pokemon_30th_Celebration_Ultra-Premium_Collection_Day_1.webp?v=1793373582",
-   "price": 4899,
-   "type": "Ultra-Premium Collection",
-   "set": "30th Celebration",
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1793373988883,
-   "store": "samlarverket",
-   "product": "samlarverket:11343697346903",
-   "group": "30th-celebration|ultra-premium-collection|en||pikachu-umbreon",
-   "title": "Pokémon 30th Celebration Ultra-Premium Collection Umbreon & Pikachu",
-   "url": "https://samlarverket.com/produkt/pokemon-30th-celebration-ultra-premium-collection-umbreon-pikachu",
-   "image": "https://cdn.shopify.com/s/files/1/1022/5323/2471/files/Pokemon_30th_Celebration_Ultra-Premium_Collection_Night_1.webp?v=1793373358",
-   "price": 4899,
-   "type": "Ultra-Premium Collection",
-   "set": "30th Celebration",
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1793373211224,
-   "store": "dragon-s-lair",
-   "product": "dragon-s-lair:15944501854556",
-   "group": "x|booster-pack|zh||arts-blastoise-jumbo-primordial-torrent",
-   "title": "Pokémon Sword & Shield - Primordial Arts: Torrent (CS3bC) Jumbo Booster (25 kort) - KINESISK [BLASTOISE]",
-   "url": "https://dragonslair.se/products/pokemon-sword-shield-primordial-arts-torrent-cs3bc-jumbo-booster-25-kort-kinesisk-blastoise",
-   "image": "https://cdn.shopify.com/s/files/1/1015/8315/9644/files/pok-cs3bc-01_grande_8f1e0fa9-21b1-4a52-80ba-3c139c70a33c.jpg?v=1793372576",
-   "price": 249,
-   "type": "Booster Pack",
-   "set": "Sword & Shield",
-   "lang": "zh",
-   "kind": "ny"
   }
  ]
 }
