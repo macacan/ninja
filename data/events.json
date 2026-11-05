@@ -1,6 +1,48 @@
 {
- "updated": 1793858831597,
+ "updated": 1793859751625,
  "events": [
+  {
+   "at": 1793858957818,
+   "store": "bangerpack",
+   "product": "bangerpack:https://bangerpack.se/pokemon/japanska-utgavor/pokemon-incandescent-arcana-booster-jp",
+   "group": "x|booster-pack|ja||arcana-incandescent",
+   "title": "Pokémon Incandescent Arcana – Booster (JP)",
+   "url": "https://bangerpack.se/pokemon/japanska-utgavor/pokemon-incandescent-arcana-booster-jp",
+   "image": "https://cdn.quickbutik.com/images/99246J/products/6ae8233a6b181.png",
+   "price": 95,
+   "type": "Booster Pack",
+   "set": null,
+   "lang": "ja",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1793858957818,
+   "store": "bangerpack",
+   "product": "bangerpack:https://bangerpack.se/pokemon/displayer-boxar/pokemon-lumiose-city-mini-tin-display-10-burkar",
+   "group": "x|tin|en|mini|city-lumiose-mini",
+   "title": "Pokémon Lumiose City – Mini Tin Display (10 burkar)",
+   "url": "https://bangerpack.se/pokemon/displayer-boxar/pokemon-lumiose-city-mini-tin-display-10-burkar",
+   "image": "https://cdn.quickbutik.com/images/99246J/products/6ae80d7dd5cb9.png",
+   "price": 1639,
+   "type": "Tin",
+   "set": null,
+   "lang": "en",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1793858957818,
+   "store": "bangerpack",
+   "product": "bangerpack:https://bangerpack.se/pokemon/japanska-utgavor/pokemon-triplet-beat-booster-jp",
+   "group": "x|booster-pack|ja||beat-triplet",
+   "title": "Pokémon Triplet Beat – Booster (JP)",
+   "url": "https://bangerpack.se/pokemon/japanska-utgavor/pokemon-triplet-beat-booster-jp",
+   "image": "https://cdn.quickbutik.com/images/99246J/products/6ae81ec44113d.png",
+   "price": 95,
+   "type": "Booster Pack",
+   "set": null,
+   "lang": "ja",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793858137243,
    "store": "webhallen",
@@ -7070,48 +7112,6 @@
    "price": 349,
    "type": "Collection Box",
    "set": null,
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793310838633,
-   "store": "samlarverket",
-   "product": "samlarverket:11178405265751",
-   "group": "pitch-black|booster-pack|en|",
-   "title": "Pokémon Pitch Black Booster Pack",
-   "url": "https://samlarverket.com/produkt/pitch-black-booster-pack",
-   "image": "https://cdn.shopify.com/s/files/1/1022/5323/2471/files/pokemon-mega-evolution-pitch-black-booster-pack-3.webp?v=1789171276",
-   "price": 89,
-   "type": "Booster Pack",
-   "set": "Pitch Black",
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793310838633,
-   "store": "samlarverket",
-   "product": "samlarverket:11177372811607",
-   "group": "destined-rivals|elite-trainer-box|en|",
-   "title": "Pokémon Destined Rivals Elite Trainer Box",
-   "url": "https://samlarverket.com/produkt/destined-rivals-elite-trainer-box",
-   "image": "https://cdn.shopify.com/s/files/1/1022/5323/2471/files/pokemon-scarlet-violet-destined-rivals-elite-trainer-box.webp?v=1789171276",
-   "price": 1499,
-   "type": "Elite Trainer Box",
-   "set": "Destined Rivals",
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793310838633,
-   "store": "samlarverket",
-   "product": "samlarverket:11177353183575",
-   "group": "ascended-heroes|booster-pack|en|",
-   "title": "Pokémon Ascended Heroes Booster Pack",
-   "url": "https://samlarverket.com/produkt/ascended-heroes-booster-pack",
-   "image": "https://cdn.shopify.com/s/files/1/1022/5323/2471/files/pokemon-mega-evolution-ascended-heroes-booster-pack.webp?v=1789171276",
-   "price": 159,
-   "type": "Booster Pack",
-   "set": "Ascended Heroes",
    "lang": "en",
    "kind": "tillbaka"
   }
