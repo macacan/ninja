@@ -1,6 +1,20 @@
 {
- "updated": 1793911120903,
+ "updated": 1793912100928,
  "events": [
+  {
+   "at": 1793911361972,
+   "store": "spelparken",
+   "product": "spelparken:15469220397431",
+   "group": "lost-origin|booster-pack|en|",
+   "title": "Lost Origin Booster Pack",
+   "url": "https://spelparken.se/products/lost-origin-booster-pack-kopia",
+   "image": "https://cdn.shopify.com/s/files/1/0948/1876/3127/files/Pokemon_Lost-Origin_Booster-Pack.png?v=1784762896",
+   "price": 249,
+   "type": "Booster Pack",
+   "set": "Lost Origin",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793909302124,
    "store": "cardvalley",
@@ -7084,20 +7098,6 @@
    "price": 129,
    "type": "Booster Pack",
    "set": "Mega Evolution",
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793378783064,
-   "store": "rgb-kingz",
-   "product": "rgb-kingz:16127784386890",
-   "group": "journey-together|booster-pack|en|",
-   "title": "Pokémon TCG: Scarlet & Violet – Journey Together Booster Pack (ENG)",
-   "url": "https://rgbkingz.com/products/pokemon-tcg-scarlet-violet-journey-together-booster-pack-eng",
-   "image": "https://cdn.shopify.com/s/files/1/0782/8088/4554/files/PokemonTCG-Scarlet_Violet-JourneyTogether-BoosterPack4.webp?v=1792674345",
-   "price": 99,
-   "type": "Booster Pack",
-   "set": "Journey Together",
    "lang": "en",
    "kind": "tillbaka"
   }
