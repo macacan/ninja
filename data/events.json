@@ -1,6 +1,21 @@
 {
- "updated": 1793878717066,
+ "updated": 1793879637087,
  "events": [
+  {
+   "at": 1793879264000,
+   "store": "speltrollet",
+   "product": "speltrollet:15791743566150",
+   "group": "rb|radiance|deck|en||evelynn-seraphine",
+   "title": "Riftbound: League of Legends TCG - Radiance Evelynn vs Seraphine Showdown Deck",
+   "url": "https://speltrollet.se/products/riftbound-league-of-legends-tcg-radiance-showdown-deck-display-4-decks-en-4-pack",
+   "image": "https://cdn.shopify.com/s/files/1/0674/0951/0716/files/lol_riftbound-s5-render-showdown-anr.webp?v=1792584772",
+   "price": 449,
+   "type": "Deck",
+   "set": "Radiance",
+   "lang": "en",
+   "game": "rb",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793877488957,
    "store": "alphaspel",
@@ -7082,20 +7097,6 @@
    "title": "Pokemon 30th Celebration set Sylveon EX Card Box (Kinesisk)",
    "url": "https://dragonslair.se/products/pokemon-30th-celebration-set-sylveon-ex-card-box-kinesisk",
    "image": "https://cdn.shopify.com/s/files/1/1015/8315/9644/files/BlackBox-2026-08-26T223634.525_grande_d2c5ff84-78d7-4c99-a1b5-dc3cc229188a.webp?v=1793360737",
-   "price": 439,
-   "type": "Collection Box",
-   "set": "30th Celebration",
-   "lang": "zh",
-   "kind": "ny"
-  },
-  {
-   "at": 1793361062152,
-   "store": "dragon-s-lair",
-   "product": "dragon-s-lair:15943238386012",
-   "group": "30th-celebration|collection-box|zh||greninja-set",
-   "title": "Pokemon 30th Celebration set Greninja EX Card Box (Kinesisk)",
-   "url": "https://dragonslair.se/products/pokemon-30th-celebration-set-greninja-ex-card-box-kinesisk",
-   "image": "https://cdn.shopify.com/s/files/1/1015/8315/9644/files/tcgs-pokemon-30th-anniversary-celebration-card-display-set-greninja.webp?v=1793360502",
    "price": 439,
    "type": "Collection Box",
    "set": "30th Celebration",
