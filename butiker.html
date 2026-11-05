@@ -27,7 +27,7 @@
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Hem","item":"https://lootninja.se/"},{"@type":"ListItem","position":2,"name":"Butiker","item":"https://lootninja.se/butiker.html"}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Vilka butiker ingår i butiksbevakningen?","acceptedAnswer":{"@type":"Answer","text":"Över 50 svenska webbutiker och spelbutiker som säljer Pokémon TCG, One Piece Card Game och Riftbound. Vi hämtar bara från butiker vars villkor och robots.txt tillåter det. Hela listan finns under Butiker."}},{"@type":"Question","name":"Kostar det något att bevaka priser på Pokémonkort?","acceptedAnswer":{"@type":"Answer","text":"Nej. Lootninja är gratis, utan konto och utan reklam. Du kan bevaka hur många produkter du vill."}},{"@type":"Question","name":"Hur ofta uppdateras priser och lagerstatus?","acceptedAnswer":{"@type":"Answer","text":"Varje butik kollas ungefär var 15:e minut, dygnet runt. Butiker som ber oss vänta längre kollas mer sällan, och på natten går det lite långsammare."}},{"@type":"Question","name":"Hur får jag notis när nya Pokémon-produkter kommer in?","acceptedAnswer":{"@type":"Answer","text":"Slå på pushnotiser under Notiser. De fungerar på Android och dator, och på iPhone när Lootninja är tillagd på hemskärmen."}},{"@type":"Question","name":"Stämmer priserna alltid?","acceptedAnswer":{"@type":"Answer","text":"Priser och lager hämtas automatiskt och är vägledande. Det kan hinna ändras mellan våra kontroller, så dubbelkolla alltid hos butiken innan du köper."}}]}</script>
 <link href="fonts/fonts.css" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=20261105k">
+<link rel="stylesheet" href="style.css?v=20261105l">
 <link rel="stylesheet" href="dark.css?v=20261029b" id="dark-css" media="(prefers-color-scheme: dark)">
 <script src="js/theme.js?v=20261021"></script>
 </head>
@@ -123,7 +123,6 @@
           <div class="ntf-hero-text">
             <h3 id="p-push-title">Få ett pling när boxar kommer i lager</h3>
             <p id="p-push-lead">Slå på notiser så säger ninjan till direkt när något du vill ha dyker upp. Gratis och utan konto.</p>
-            <p class="ntf-ios" id="p-push-ios" hidden><b>På iPhone och iPad</b> fungerar notiser bara när Lootninja ligger på hemskärmen. Följ stegen under <a href="#installera" data-open="installera">Installera som app</a> nedan och slå sedan på notiserna här.</p>
             <div class="ntf-push-btns">
               <button class="btn primary" id="p-push" type="button">Slå på notiser</button>
               <button type="button" class="btn small" id="p-push-test" hidden>Skicka testnotis</button>
@@ -135,6 +134,31 @@
             <span><small>Bevakar</small><em id="sum-watch">0</em></span>
           </div>
         </div>
+
+        <!-- Direkt under rutan: på iPhone går notiser inte att slå på utan hemskärmen. Utfälld där, dold i appen (butiker.js). -->
+        <details class="ntf-row ntf-install" id="installera">
+          <summary><span class="ntf-ic"><img src="img/icon-192.png?v=4" alt="" width="30" height="30"></span><span><b id="install-title">Installera som app</b><small>Krävs för notiser på iPhone och iPad. Rekommenderas på Android.</small></span></summary>
+          <div class="ntf-body">
+            <p class="muted">Då ligger Lootninja på hemskärmen, öppnas i helskärm och notiserna kommer från <b>Lootninja</b> i stället för från webbläsaren.</p>
+            <p class="install-done" id="install-done" hidden></p>
+            <button type="button" class="btn small primary" id="install-btn" hidden>Installera appen</button>
+            <div class="seg2 install-tabs" role="tablist" aria-label="Telefon">
+              <button type="button" role="tab" id="tab-android" aria-controls="steps-android" aria-selected="true">Android</button>
+              <button type="button" role="tab" id="tab-ios" aria-controls="steps-ios" aria-selected="false">iPhone och iPad</button>
+            </div>
+            <ol class="install-steps" id="steps-android" role="tabpanel" aria-labelledby="tab-android">
+              <li>Öppna <b>lootninja.se</b> i <b>Chrome</b>.</li>
+              <li>Tryck på menyn <b>⋮</b> uppe till höger och välj <b>Installera app</b> (ibland <b>Lägg till på startskärmen</b>).</li>
+              <li>Öppna <b>Lootninja</b> från ikonen på hemskärmen, gå till <b>Produkter → Notiser</b> och tryck <b>Slå på notiser</b> högst upp.</li>
+              <li class="muted"><b>Samsung Internet:</b> menyn <b>≡</b> → <b>Lägg till sida på</b> → <b>Startskärm</b>.</li>
+            </ol>
+            <ol class="install-steps" id="steps-ios" role="tabpanel" aria-labelledby="tab-ios" hidden>
+              <li>Öppna <b>lootninja.se</b> i <b>Safari</b> (iOS 16.4 eller senare).</li>
+              <li>Tryck på <b>Dela</b> (rutan med pilen uppåt) och välj <b>Lägg till på hemskärmen</b>.</li>
+              <li>Öppna <b>Lootninja</b> från ikonen på hemskärmen, gå till <b>Produkter → Notiser</b> och tryck <b>Slå på notiser</b> högst upp.</li>
+            </ol>
+          </div>
+        </details>
 
         <h3 class="ntf-step"><i>1</i>Vad vill du få besked om?</h3>
         <p class="muted ntf-lead">Låter du allt vara som det är får du besked om allt. Vill du bara höra om vissa butiker eller set, bocka för dem och tryck <b>Spara mina val</b>.</p>
@@ -179,29 +203,6 @@
 
         <h3 class="ntf-step"><i>?</i>Bra att veta</h3>
         <div class="ntf-list">
-          <details class="ntf-row ntf-install" id="installera">
-            <summary><span class="ntf-ic"><img src="img/icon-192.png?v=4" alt="" width="30" height="30"></span><span><b id="install-title">Installera som app</b><small>Rekommenderas. På iPhone krävs det för notiser.</small></span></summary>
-            <div class="ntf-body">
-              <p class="muted">Då ligger Lootninja på hemskärmen, öppnas i helskärm och notiserna kommer från <b>Lootninja</b> i stället för från webbläsaren.</p>
-              <p class="install-done" id="install-done" hidden>Du använder redan Lootninja som app. Slå på notiserna högst upp på sidan.</p>
-              <button type="button" class="btn small primary" id="install-btn" hidden>Installera appen</button>
-              <div class="seg2 install-tabs" role="tablist" aria-label="Telefon">
-                <button type="button" role="tab" id="tab-android" aria-controls="steps-android" aria-selected="true">Android</button>
-                <button type="button" role="tab" id="tab-ios" aria-controls="steps-ios" aria-selected="false">iPhone och iPad</button>
-              </div>
-              <ol class="install-steps" id="steps-android" role="tabpanel" aria-labelledby="tab-android">
-                <li>Öppna <b>lootninja.se</b> i <b>Chrome</b>.</li>
-                <li>Tryck på menyn <b>⋮</b> uppe till höger och välj <b>Installera app</b> (ibland <b>Lägg till på startskärmen</b>).</li>
-                <li>Öppna <b>Lootninja</b> från ikonen på hemskärmen, gå till <b>Produkter → Notiser</b> och tryck <b>Slå på notiser</b> högst upp.</li>
-                <li class="muted"><b>Samsung Internet:</b> menyn <b>≡</b> → <b>Lägg till sida på</b> → <b>Startskärm</b>.</li>
-              </ol>
-              <ol class="install-steps" id="steps-ios" role="tabpanel" aria-labelledby="tab-ios" hidden>
-                <li>Öppna <b>lootninja.se</b> i <b>Safari</b> (iOS 16.4 eller senare).</li>
-                <li>Tryck på <b>Dela</b> (rutan med pilen uppåt) och välj <b>Lägg till på hemskärmen</b>.</li>
-                <li>Öppna <b>Lootninja</b> från ikonen på hemskärmen, gå till <b>Produkter → Notiser</b> och tryck <b>Slå på notiser</b> högst upp.</li>
-              </ol>
-            </div>
-          </details>
           <details class="ntf-row ntf-guide" id="notis-guide">
             <summary><span class="ntf-ic" data-icon="search" data-size="22"></span><span><b>Kommer inga notiser?</b><small>Vanliga orsaker och hur du stänger av</small></span></summary>
             <div class="ntf-body">
@@ -291,6 +292,6 @@
     <p class="hint" style="margin-top:28px">Lootninja är ett privat hobbyprojekt. Priser och lagerstatus samlas in automatiskt och är endast vägledande – ta inte all data för 100% sanning då felaktiga priser, fördröjda uppdateringar eller tekniska fel kan förekomma. Det är alltid butikens egen sida och kassa som gäller när du köper.</p>
   </div>
 </main>
-<script type="module" src="js/butiker.js?v=20261104a"></script>
+<script type="module" src="js/butiker.js?v=20261105d"></script>
 </body>
 </html>

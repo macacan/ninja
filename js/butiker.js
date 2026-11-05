@@ -413,12 +413,36 @@ function checkList(id, items, selected, label = (x) => x, count = null) {
   $(`#${id}`).innerHTML = items.map((v) => `<label class="chk"><input type="checkbox" value="${esc(v)}"${all || selected.includes(v) ? " checked" : ""}>
     <span>${esc(label(v))}</span>${count ? `<small>${count(v)}</small>` : ""}</label>`).join("");
 }
-function boxes(id) { return [...document.querySelectorAll(`#${id} input`)]; }
+// Bara rutorna som går att välja: de som döljs av narrowToGames räknas inte, så "alla" betyder alla i de valda spelen.
+function boxes(id) { return [...document.querySelectorAll(`#${id} .chk:not(.empty) input`)]; }
 function checked(id) {
   const all = boxes(id), on = all.filter((b) => b.checked).map((b) => b.value);
   return on.length === all.length ? [] : on.length ? on : ["__none__"];
 }
 function countText(id, allWord = "Alla") { const all = boxes(id), on = all.filter((b) => b.checked).length; return on === all.length ? allWord : `${on} av ${all.length}`; }
+
+// Valen följer spelen: det som bara finns i spel som inte är ikryssade avmarkeras och döljs, och kryssas i igen när
+// spelet kommer tillbaka. Alla kvarvarande ikryssade sparas som "alla", inte som en lista, annars skulle produkter
+// utan set och nya set i spelet tappas. Butiker utan produkter alls ligger kvar, de hör inte till något spel än.
+function narrowToGames() {
+  const on = new Set(boxes("p-games").filter((b) => b.checked).map((b) => b.value));
+  for (const [id, key] of [["p-stores", "store"], ["p-sets", "set"], ["p-langs", "lang"], ["p-types", "type"]]) {
+    const total = {}, inGames = {};
+    for (const x of products) {
+      total[x[key]] = (total[x[key]] || 0) + 1;
+      if (on.has(gameOf(x))) inGames[x[key]] = (inGames[x[key]] || 0) + 1;
+    }
+    for (const b of document.querySelectorAll(`#${id} input`)) {
+      const label = b.closest(".chk"), n = inGames[b.value] || 0, gone = !n && !!total[b.value];
+      if (gone !== label.classList.contains("empty")) b.checked = !gone;
+      label.classList.toggle("empty", gone);
+      const small = label.querySelector("small");
+      if (small) small.textContent = n;
+      // Unleashed finns i både Pokémon och Riftbound: utan Riftbound ikryssat ska det inte stå Riftbound.
+      if (id === "p-sets") label.querySelector("span").textContent = on.has(setGame.get(b.value)) ? setLabel(b.value) : b.value;
+    }
+  }
+}
 
 // Utkastet av valen, direkt från formuläret (innan man sparar).
 function draftPrefs() {
@@ -429,6 +453,7 @@ function productMatches(x, p) { return gamesOf(p).includes(gameOf(x)) && (!p.sto
   && (!p.types.length || p.types.includes(x.type)) && (!p.langs?.length || p.langs.includes(x.lang)) && (!p.maxPrice || x.price <= p.maxPrice); }
 
 function refreshSummary() {
+  narrowToGames();
   const p = draftPrefs();
   $("#sum-stores").textContent = `${boxes("p-stores").filter((b) => b.checked).length} av ${boxes("p-stores").length}`;
   $("#sum-kinds").textContent = countText("p-kinds");
@@ -519,12 +544,11 @@ function updatePushButton() {
     on: ["Notiserna är på", "Du får ett pling när något i dina val nedan händer, även när Lootninja är stängd."],
     denied: ["Notiserna är blockerade", "Webbläsaren stoppar notiser från Lootninja. Så här tillåter du dem:"],
     unsupported: ["Notiser fungerar inte här", "Den här webbläsaren kan inte ta emot notiser. Prova Chrome, Edge, Firefox eller Samsung Internet."],
-    "ios-install": ["Lägg Lootninja på hemskärmen först", "På iPhone och iPad kommer notiser bara fram när Lootninja öppnas från hemskärmen."],
+    "ios-install": ["Lägg Lootninja på hemskärmen först", "På iPhone och iPad fungerar notiser bara när Lootninja öppnas från hemskärmen. Följ stegen nedan och slå sedan på notiserna i appen."],
   };
   const btn = $("#p-push"), state = pushState();
   $("#ntf-hero").dataset.state = state;
   [$("#p-push-title").textContent, $("#p-push-lead").textContent] = PUSH_TEXT[state] || PUSH_TEXT.off;
-  $("#p-push-ios").hidden = state !== "ios-install";
   btn.hidden = state === "ios-install" || state === "unsupported" || state === "denied";
   btn.textContent = state === "on" ? "Stäng av notiser" : "Slå på notiser";
   btn.classList.toggle("primary", state === "off");
@@ -534,11 +558,6 @@ function updatePushButton() {
   // På iPhone utan hemskärmsikon är installationen det första steget, så den visas öppen
   if (state === "ios-install") $("#installera").open = true;
 }
-// Länken "Installera som app" i rutan överst fäller ut avsnittet innan sidan hoppar dit
-$("#tab-notiser").addEventListener("click", (e) => {
-  const link = e.target.closest("[data-open]");
-  if (link) $(`#${link.dataset.open}`).open = true;
-});
 $("#p-push").addEventListener("click", async () => {
   const btn = $("#p-push");
   btn.disabled = true;
@@ -575,7 +594,8 @@ function installTab(ios) {
 $("#tab-android").addEventListener("click", () => installTab(false));
 $("#tab-ios").addEventListener("click", () => installTab(true));
 installTab(isIos());
-if (isStandalone()) $("#install-done").hidden = false;
+// Körs sidan redan som app finns inget att installera.
+if (isStandalone()) $("#installera").hidden = true;
 let installEvent = null;
 addEventListener("beforeinstallprompt", (e) => { e.preventDefault(); installEvent = e; $("#install-btn").hidden = false; });
 $("#install-btn").addEventListener("click", async () => {
