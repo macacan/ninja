@@ -217,8 +217,8 @@
    "name": "Hobbykort",
    "domain": "hobbykort.se",
    "platform": "shopify",
-   "status": "forbjuden",
-   "note": "Villkoren förbjuder automatisk insamling"
+   "status": "ej-forbjuden",
+   "note": "Villkoren är omskrivna, inget förbud hittat 2026-11-06. Den gamla regeln mot automatisk insamling är borta."
   },
   {
    "id": "jollyroom",
@@ -242,7 +242,7 @@
    "domain": "kortarkivet.se",
    "platform": "shopify",
    "status": "forbjuden",
-   "note": "Villkoren förbjuder automatisk insamling"
+   "note": "Villkoren förbjuder spidering, crawling och scraping (kontrollerat igen 2026-11-06)"
   },
   {
    "id": "kortbutiken",
@@ -355,7 +355,7 @@
    "domain": "nordicsportscards.se",
    "platform": "shopify",
    "status": "forbjuden",
-   "note": "Villkoren förbjuder automatisk insamling"
+   "note": "Villkoren förbjuder att spindla, crawla och skrapa (kontrollerat igen 2026-11-06)"
   },
   {
    "id": "nordictcg",
