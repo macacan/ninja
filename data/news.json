@@ -1,6 +1,15 @@
 {
- "updated": "2026-11-05T16:54:59.513Z",
+ "updated": "2026-11-05T17:10:19.200Z",
  "articles": [
+  {
+   "title": "Pokémon TCG Delta Reign preorders delayed over checkout bug",
+   "link": "https://www.wargamer.com/pokemon-trading-card-game/delta-reign-preorders-delay",
+   "date": "2026-11-05T15:12:03.000Z",
+   "summary": "There seems to be an issue with Pokémon Center, with many TCG fans receiving news of delays to their preordered packs.",
+   "image": "https://www.wargamer.com/wp-content/sites/wargamer/2026/11/pokemon-trading-card-game-delta-reign-preorders-delay.jpg",
+   "source": "Wargamer",
+   "game": "pk"
+  },
   {
    "title": "Pokemon cards can now be delivered in 15 minutes with massive discounts on rare cards",
    "link": "https://www.dexerto.com/pokemon/pokemon-cards-can-now-be-delivered-in-15-minutes-with-massive-discounts-on-rare-cards-3425137/",
@@ -407,15 +416,6 @@
    "game": "pk"
   },
   {
-   "title": "Coinbase jumps into Pokemon TCG craze with digital packs backed by real cards",
-   "link": "https://www.dexerto.com/pokemon/coinbase-jumps-into-pokemon-tcg-craze-with-digital-packs-backed-by-real-cards-3413480/",
-   "date": "2026-09-29T14:29:50.000Z",
-   "summary": "Coinbase is teasing a Pokemon pack-ripping feature tied to real cards, but has not revealed its price, launch date, or pull odds.",
-   "image": "https://www.dexerto.com/cdn-image/wp-content/uploads/2026/09/29/coinbase-pokemon-card-packs.jpg?width=480&quality=75&format=auto",
-   "source": "Dexerto",
-   "game": "pk"
-  },
-  {
    "title": "[DeckReview] KeyLlua: Red Ace deck in Postban (No Mihawk) OP17 format.",
    "link": "https://onepiecetopdecks.com/deckreview-keyllua-red-ace-deck-in-postban-no-mihawk-op17-format/",
    "date": "2026-09-27T03:49:05.000Z",
@@ -502,12 +502,6 @@
    "id": "TnNgdVVlepQ",
    "title": "Andrew Hedrick Vs Yoshiyuki Yamaguchi - Pokémon TCG Top 4 | 2027 Puebla Regional Championships",
    "date": "2026-10-30T18:00:19.000Z",
-   "source": "Play! Pokémon (officiell)"
-  },
-  {
-   "id": "FLwx-9hf8Ow",
-   "title": "Nathan Ginsburg Vs Caleb Rogerson - Pokémon TCG Top 4 | 2027 Puebla Regional Championships",
-   "date": "2026-10-30T16:00:29.000Z",
    "source": "Play! Pokémon (officiell)"
   }
  ]
