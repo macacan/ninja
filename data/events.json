@@ -1,6 +1,34 @@
 {
- "updated": 1793907834270,
+ "updated": 1793908754289,
  "events": [
+  {
+   "at": 1793908498208,
+   "store": "rahtech",
+   "product": "rahtech:15830808232262",
+   "group": "prismatic-evolutions|premium-collection|en||super",
+   "title": "Scarlet & Violet 8.5: Prismatic Evolutions – Super-Premium Collection (ENG)",
+   "url": "https://rahtech.se/products/scarlet-violet-8-5-prismatic-evolutions-super-premium-collection-eng",
+   "image": "https://cdn.shopify.com/s/files/1/0994/8882/5670/files/377246.webp?v=1793881013",
+   "price": 2799,
+   "type": "Premium Collection",
+   "set": "Prismatic Evolutions",
+   "lang": "en",
+   "kind": "ny"
+  },
+  {
+   "at": 1793908498208,
+   "store": "rahtech",
+   "product": "rahtech:15764749680966",
+   "group": "30th-celebration|booster-bundle|en|",
+   "title": "30th Celebration Booster Bundle",
+   "url": "https://rahtech.se/products/30th-celebration-booster-bundle",
+   "image": "https://cdn.shopify.com/s/files/1/0994/8882/5670/files/IMG-4474.jpg?v=1791375365",
+   "price": 899,
+   "type": "Booster Bundle",
+   "set": "30th Celebration",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793906920500,
    "store": "webhallen",
@@ -7072,35 +7100,6 @@
    "set": "Ascended Heroes",
    "lang": "en",
    "kind": "ny"
-  },
-  {
-   "at": 1793375915813,
-   "store": "dragon-s-lair",
-   "product": "dragon-s-lair:15944775663964",
-   "group": "x|booster-box|zh||arts-blastoise-jumbo-primordial-torrent",
-   "title": "Pokémon Sword & Shield - Primordial Arts: Torrent (CS3bC) Jumbo Booster Display (6 st Booster) - KINESISK [BLASTOISE]",
-   "url": "https://dragonslair.se/products/pokemon-sword-shield-primordial-arts-torrent-cs3bc-jumbo-booster-display-6-st-booster-kinesisk-blastoise",
-   "image": "https://cdn.shopify.com/s/files/1/1015/8315/9644/files/IMG_3521.png?v=1793375301",
-   "price": 749,
-   "type": "Booster Box",
-   "set": "Sword & Shield",
-   "lang": "zh",
-   "kind": "ny"
-  },
-  {
-   "at": 1793375238275,
-   "store": "dragon-s-lair",
-   "product": "dragon-s-lair:15944501854556",
-   "group": "x|booster-pack|zh||arts-blastoise-jumbo-primordial-torrent",
-   "title": "Pokémon Sword & Shield - Primordial Arts: Torrent (CS3bC) Jumbo Booster (25 kort) - KINESISK [BLASTOISE]",
-   "url": "https://dragonslair.se/products/pokemon-sword-shield-primordial-arts-torrent-cs3bc-jumbo-booster-25-kort-kinesisk-blastoise",
-   "image": "https://cdn.shopify.com/s/files/1/1015/8315/9644/files/pok-cs3bc-01_grande_8f1e0fa9-21b1-4a52-80ba-3c139c70a33c.jpg?v=1793372576",
-   "price": 129,
-   "type": "Booster Pack",
-   "set": "Sword & Shield",
-   "lang": "zh",
-   "kind": "prissankt",
-   "from": 249
   }
  ]
 }
