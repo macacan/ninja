@@ -1,6 +1,20 @@
 {
- "updated": 1793905074183,
+ "updated": 1793905974229,
  "events": [
+  {
+   "at": 1793905764576,
+   "store": "samlarverket",
+   "product": "samlarverket:11343655502167",
+   "group": "delta-reign|elite-trainer-box|en|",
+   "title": "Pokémon Delta Reign Elite Trainer Box",
+   "url": "https://samlarverket.com/produkt/pokemon-delta-reign-elite-trainer-box",
+   "image": "https://cdn.shopify.com/s/files/1/1022/5323/2471/files/0196214143906_1.webp?v=1793371075",
+   "price": 1399,
+   "type": "Elite Trainer Box",
+   "set": "Delta Reign",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793895892427,
    "store": "rahtech",
@@ -7086,20 +7100,6 @@
    "type": "Booster Pack",
    "set": "Sword & Shield",
    "lang": "zh",
-   "kind": "ny"
-  },
-  {
-   "at": 1793373091488,
-   "store": "samlarverket",
-   "product": "samlarverket:11343655502167",
-   "group": "x|elite-trainer-box|en||delta-reign",
-   "title": "Pokémon Delta Reign Elite Trainer Box",
-   "url": "https://samlarverket.com/produkt/pokemon-delta-reign-elite-trainer-box",
-   "image": "https://cdn.shopify.com/s/files/1/1022/5323/2471/files/0196214143906_1.webp?v=1793371075",
-   "price": 1299,
-   "type": "Elite Trainer Box",
-   "set": null,
-   "lang": "en",
    "kind": "ny"
   }
  ]
