@@ -1,6 +1,20 @@
 {
- "updated": 1793857911409,
+ "updated": 1793858831597,
  "events": [
+  {
+   "at": 1793858137243,
+   "store": "webhallen",
+   "product": "webhallen:401984",
+   "group": "30th-celebration|premium-collection|en||ditto",
+   "title": "Pokemon 30th Celebration Ditto Premium Collection",
+   "url": "https://www.webhallen.com/se/product/401984-Pokemon-30th-Celebration-Ditto-Premium-Collection",
+   "image": "https://www.webhallen.com/images-ext/images.eu.ctfassets.net/n0e6ajgmrw5w/nvYftl3AS0IfZPI2DPmiC/4e597acefa25cd10d7eeb815688c367d/Pokemon_30th_Celebration_Ditto_Premium_Collection.jpg?fit=pad",
+   "price": 899,
+   "type": "Premium Collection",
+   "set": "30th Celebration",
+   "lang": "en",
+   "kind": "forbestallning"
+  },
   {
    "at": 1793857819601,
    "store": "rahtech",
@@ -7100,21 +7114,6 @@
    "set": "Ascended Heroes",
    "lang": "en",
    "kind": "tillbaka"
-  },
-  {
-   "at": 1793310838633,
-   "store": "samlarverket",
-   "product": "samlarverket:10929897898327",
-   "group": "ascended-heroes|tin|en|mini|mini",
-   "title": "Pokémon Ascended Heroes Mini Tin",
-   "url": "https://samlarverket.com/produkt/ascended-heroes-mini-tin",
-   "image": "https://cdn.shopify.com/s/files/1/1022/5323/2471/files/6ac824f5e6a0bef2042e725f42b3e562.jpg?v=1781720118",
-   "price": 349,
-   "type": "Tin",
-   "set": "Ascended Heroes",
-   "lang": "en",
-   "kind": "prissankt",
-   "from": 399
   }
  ]
 }
