@@ -1,6 +1,20 @@
 {
- "updated": 1793864351750,
+ "updated": 1793865271773,
  "events": [
+  {
+   "at": 1793865031009,
+   "store": "mtg-butiken",
+   "product": "mtg-butiken:https://mtgbutiken.quickbutik.com/pokemon/pitch-black-elite-trainer-box",
+   "group": "pitch-black|elite-trainer-box|en|",
+   "title": "Pitch Black Elite Trainer Box",
+   "url": "https://mtgbutiken.quickbutik.com/pokemon/pitch-black-elite-trainer-box",
+   "image": "https://cdn.quickbutik.com/images/26595u/products/6a4f533ccafe1.png",
+   "price": 795,
+   "type": "Elite Trainer Box",
+   "set": "Pitch Black",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793864056348,
    "store": "mtg-butiken",
@@ -7099,20 +7113,6 @@
    "set": "Paldean Fates",
    "lang": "en",
    "kind": "ny"
-  },
-  {
-   "at": 1793310860815,
-   "store": "spelparken",
-   "product": "spelparken:15378914771319",
-   "group": "paldean-fates|tin|en||",
-   "title": "Paldean Fates Tin (5 Booster Packs)",
-   "url": "https://spelparken.se/products/paldea-fates-tin-5-booster-packs",
-   "image": "https://cdn.shopify.com/s/files/1/0948/1876/3127/files/Pokemon-Scarlet-Violet-Paldean-Fates-Shiny-Great-Tusk-ex-Tin-Set-5-Booster-Packs-Promo-Card_c1d62713-1f42-4aa0-a6db-e10bef0423c7.0eabb3aafec2302759b8534825146922.webp?v=1770918373",
-   "price": 1599,
-   "type": "Tin",
-   "set": "Paldean Fates",
-   "lang": "en",
-   "kind": "tillbaka"
   }
  ]
 }
