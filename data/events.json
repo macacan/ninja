@@ -1,6 +1,21 @@
 {
- "updated": 1793912100928,
+ "updated": 1793913921097,
  "events": [
+  {
+   "at": 1793913235810,
+   "store": "samlarverket",
+   "product": "samlarverket:11343697346903",
+   "group": "30th-celebration|ultra-premium-collection|en||pikachu-umbreon",
+   "title": "Pokémon 30th Celebration Ultra-Premium Collection Umbreon & Pikachu",
+   "url": "https://samlarverket.com/produkt/pokemon-30th-celebration-ultra-premium-collection-umbreon-pikachu",
+   "image": "https://cdn.shopify.com/s/files/1/1022/5323/2471/files/Pokemon_30th_Celebration_Ultra-Premium_Collection_Night_1.webp?v=1793373358",
+   "price": 4899,
+   "type": "Ultra-Premium Collection",
+   "set": "30th Celebration",
+   "lang": "en",
+   "kind": "prissankt",
+   "from": 5299
+  },
   {
    "at": 1793911361972,
    "store": "spelparken",
@@ -7085,20 +7100,6 @@
    "type": "Booster Pack",
    "set": "Sword & Shield",
    "lang": "zh",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793378783064,
-   "store": "rgb-kingz",
-   "product": "rgb-kingz:16127802900810",
-   "group": "mega-evolution|booster-pack|en|",
-   "title": "Pokémon TCG: Mega Evolution Booster Pack (ENG)",
-   "url": "https://rgbkingz.com/products/pokemon-tcg-mega-evolution-booster-pack-eng",
-   "image": "https://cdn.shopify.com/s/files/1/0782/8088/4554/files/megaevolutionboosterpack1.jpg?v=1792676479",
-   "price": 129,
-   "type": "Booster Pack",
-   "set": "Mega Evolution",
-   "lang": "en",
    "kind": "tillbaka"
   }
  ]
