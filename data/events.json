@@ -1,6 +1,20 @@
 {
- "updated": 1793906874242,
+ "updated": 1793907834270,
  "events": [
+  {
+   "at": 1793906920500,
+   "store": "webhallen",
+   "product": "webhallen:402937",
+   "group": "delta-reign|booster-bundle|en|",
+   "title": "Pokemon ME6 Delta Reign Booster Bundle",
+   "url": "https://www.webhallen.com/se/product/402937-Pokemon-ME6-Delta-Reign-Booster-Bundle",
+   "image": "https://www.webhallen.com/images-ext/images.eu.ctfassets.net/n0e6ajgmrw5w/2GhO5nseDy1GpjSyUic1AN/1972d7f406ce824fee5c5b7fd1f5891e/Delta_Reign_Booster_Bundle_1.png?fit=pad",
+   "price": 499,
+   "type": "Booster Bundle",
+   "set": "Delta Reign",
+   "lang": "en",
+   "kind": "forbestallning"
+  },
   {
    "at": 1793906798347,
    "store": "spelparken",
@@ -7081,21 +7095,6 @@
    "title": "Pokémon Sword & Shield - Primordial Arts: Torrent (CS3bC) Jumbo Booster (25 kort) - KINESISK [BLASTOISE]",
    "url": "https://dragonslair.se/products/pokemon-sword-shield-primordial-arts-torrent-cs3bc-jumbo-booster-25-kort-kinesisk-blastoise",
    "image": "https://cdn.shopify.com/s/files/1/1015/8315/9644/files/pok-cs3bc-01_grande_8f1e0fa9-21b1-4a52-80ba-3c139c70a33c.jpg?v=1793372576",
-   "price": 129,
-   "type": "Booster Pack",
-   "set": "Sword & Shield",
-   "lang": "zh",
-   "kind": "prissankt",
-   "from": 249
-  },
-  {
-   "at": 1793375238275,
-   "store": "dragon-s-lair",
-   "product": "dragon-s-lair:15944362754396",
-   "group": "x|booster-pack|zh||arts-jumbo-overgrow-primordial-venusaur",
-   "title": "Pokémon Sword & Shield - Primordial Arts: Overgrow (CS3aC) Jumbo Booster (25 kort) - KINESISK [VENUSAUR]",
-   "url": "https://dragonslair.se/products/pokemon-sword-shield-primordial-arts-overgrow-cs3ac-jumbo-booster-25-kort-kinesisk-venusaur",
-   "image": "https://cdn.shopify.com/s/files/1/1015/8315/9644/files/pok-cs3ac-01_grande_9d2724c7-93ee-4738-b032-92aba686aebe.jpg?v=1793371543",
    "price": 129,
    "type": "Booster Pack",
    "set": "Sword & Shield",
