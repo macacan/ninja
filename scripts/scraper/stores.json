@@ -649,7 +649,10 @@
    "status": "ej-forbjuden",
    "note": "Villkoren lästa manuellt 2026-10-18, inget förbud mot automatisk insamling (köpvillkor). Bara kategorierna Pokémonkort TCG (4661) och Riftbound (17003) bevakas, via butikens öppna kategori-API /api/productdiscovery/category/{id} (2026-10-20, Riftbound 2026-10-28).",
    "feed": "www.webhallen.com",
-   "category": [4661, 17003]
+   "category": [
+    4661,
+    17003
+   ]
   },
   {
    "id": "westcoast-vault",
@@ -658,6 +661,70 @@
    "platform": "shopify",
    "status": "ej-forbjuden",
    "note": "Inget förbud hittat i villkoren 2026-10-12"
+  },
+  {
+   "id": "lekia",
+   "name": "Lekia",
+   "domain": "lekia.se",
+   "platform": "generic",
+   "status": "ej-forbjuden",
+   "note": "Inget förbud hittat i villkoren 2026-11-05. Leksakskedja: sitemapens Pokémon-adresser läses, få är förseglade kort."
+  },
+  {
+   "id": "pocketmonsters",
+   "name": "Pocketmonsters",
+   "domain": "pocketmonsters.se",
+   "platform": "woocommerce",
+   "status": "ej-forbjuden",
+   "note": "Inget förbud hittat i villkoren 2026-11-05. Säljer mest lösa kort och leksaker, få förseglade produkter."
+  },
+  {
+   "id": "pokecollect",
+   "name": "Pokecollect",
+   "domain": "pokecollect.se",
+   "platform": "shopify",
+   "status": "inga-bilder",
+   "note": "Inget förbud mot automatisk insamling, men villkoren säger att texter, bilder och logotyper inte får kopieras utan skriftligt godkännande (2026-11-05). Visas utan produktbilder."
+  },
+  {
+   "id": "skapamer",
+   "name": "Skapamer",
+   "domain": "skapamer.se",
+   "platform": "generic",
+   "status": "ej-forbjuden",
+   "note": "Inget förbud hittat i villkoren 2026-11-05. Hobbybutik: stor katalog, bara adresser som nämner Pokémon läses."
+  },
+  {
+   "id": "spelochsant",
+   "name": "Spel och sånt",
+   "domain": "spelochsant.se",
+   "platform": "generic",
+   "status": "ej-forbjuden",
+   "note": "Inget förbud hittat i villkoren 2026-11-05"
+  },
+  {
+   "id": "starkboxes",
+   "name": "Stark Boxes",
+   "domain": "starkboxes.se",
+   "platform": "generic",
+   "status": "ej-forbjuden",
+   "note": "Inget förbud hittat i villkoren 2026-11-05. Mycket lösa kort i sitemapen, som vi inte bevakar."
+  },
+  {
+   "id": "tt-vault",
+   "name": "TT Vault",
+   "domain": "ttvault.se",
+   "platform": "shopify",
+   "status": "ej-forbjuden",
+   "note": "Inget förbud hittat i villkoren 2026-11-05"
+  },
+  {
+   "id": "worldofboardgames",
+   "name": "World of Boardgames",
+   "domain": "worldofboardgames.com",
+   "platform": "generic",
+   "status": "ej-forbjuden",
+   "note": "Inget förbud hittat i villkoren 2026-11-05"
   }
  ]
 }
