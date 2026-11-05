@@ -3083,7 +3083,8 @@ input[type=search]::-webkit-search-results-decoration {
 .scan-view video{width:100%;height:100%;object-fit:cover;display:block}
 .scan-view.nocam video{display:none}
 .scan-hud{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:2}
-.scan-frame{position:absolute;inset:0;display:grid;place-items:center;pointer-events:none;z-index:1}
+/* Ramen ligger över mitten: man håller då kortet högre, närmare kamerans mitt, och nummerraden nederst blir skarpare */
+.scan-frame{position:absolute;inset:0;display:grid;place-items:center;pointer-events:none;z-index:1;transform:translateY(-6%)}
 /* Siktet har ett riktigt korts proportioner (63 × 88 mm). Fyra hörnvinklar ritas med gradienter och resten av bilden mörkas ner. */
 .scan-frame i{--c:rgba(255,255,255,.85);--l:28px;--w:3px;position:relative;height:80%;aspect-ratio:63/88;border-radius:16px;overflow:hidden;box-shadow:0 0 0 999px rgba(4,5,12,.6);
   background:
@@ -3099,9 +3100,8 @@ input[type=search]::-webkit-search-results-decoration {
 .scan-frame i.is-reading{--c:var(--ai1)}
 /* Glaspiller ovanpå kamerabilden */
 .scan-hud-status,.scan-torch,.scan-sound{background:rgba(12,14,30,.55);backdrop-filter:blur(14px) saturate(1.4);-webkit-backdrop-filter:blur(14px) saturate(1.4);border:1px solid rgba(255,255,255,.12)}
-.scan-hud-status{position:absolute;top:12px;left:12px;z-index:10;display:flex;align-items:center;gap:10px;padding:6px 12px 6px 6px;border-radius:999px;width:max-content;max-width:calc(100% - 24px)}
+.scan-hud-status{position:absolute;bottom:36px;left:50%;transform:translateX(-50%);z-index:10;display:flex;align-items:center;gap:10px;padding:6px 12px 6px 6px;border-radius:999px;width:max-content;max-width:calc(100% - 24px)}
 /* Med en träff uppe till höger får statusraden plats bredvid den */
-.scan:has(.scan-peek:not([hidden])) .scan-hud-status{max-width:calc(100% - 112px)}
 .scan-status{margin:0;font-size:.82rem;line-height:1.3;color:#f1f3ff;flex:1}
 .scan-status b{background:var(--ai-grad);-webkit-background-clip:text;background-clip:text;color:transparent}
 .scan-torch{height:40px;padding:0 14px 0 12px;border-radius:20px;color:#fff;display:flex;align-items:center;gap:6px;font:inherit;font-size:13px;font-weight:700;cursor:pointer;transition:background .2s,box-shadow .2s}

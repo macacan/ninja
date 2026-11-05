@@ -55,6 +55,8 @@ const OCR_PARAMS = {
 // En andra nummerläsare, så att flera varianter av nummerraden kan läsas samtidigt (Riftbound)
 OCR_PARAMS.number2 = OCR_PARAMS.number;
 // Setkod och nummer i samma läsning ("JTG EN 084/159"), på kort från 2023 och framåt
+// En enda rad med siffror: numret i en smal zon
+OCR_PARAMS.line = { tessedit_pageseg_mode: "7", tessedit_char_whitelist: "0123456789/" };
 OCR_PARAMS.code = { tessedit_pageseg_mode: "11", tessedit_char_whitelist: "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789/" };
 const numberWorker = (i) => getWorker(i % 2 ? "number2" : "number");
 let scriptPromise = null;
@@ -2197,6 +2199,7 @@ async function lookFrame(canvas, source, turn = 0) {
 // Kortet som bilden pekar ut på egen hand, eller null
 async function lookId({ game, art }, framed) {
   const id = lookEnough(art, framed);
+  if (!framed && STRIPED.test(id)) return null; // Ränder i bakgrunden liknar Alph Lithograph: utan kortets kanter räknas det inte
   if (id || game !== "op" || !(art[0]?.s >= RETRY)) return id;
   // En parallel med samma bild som vanliga kortet: alla nästan lika lika har samma kortnummer
   const cards = await opData(), no = cards.get(art[0].id)?.no;
@@ -2224,6 +2227,62 @@ function voted({ game, art }) {
   if (seen.length < trail.length || STRIPED.test(id)) return null;
   const [look, gap] = mean(seen);
   return look >= BLIND_VOTE_LOOK && gap >= BLIND_VOTE_GAP ? id : null;
+}
+// Basic Energy: korten har nästan samma form, så bildavtrycket skiljer dem dåligt åt. Färg och symbol gör det i stället. Lampor
+// drar bilden åt gult, så det ljusaste på kortet (det vita skenet och gnistorna runt symbolen) används som vit referens. Bakgrunden
+// runt symbolen mäts sedan, och bara den mättade halvan av pixlarna räknas, så att gnistor och vita sken inte drar ner färgen.
+// Ljusheten räknas mot den vita referensen, så att den inte beror på rummet. { h: nyans 0-360, s: mättnad 0-1, v: bakgrundens
+// ljushet, dark: hur stor del av symbolen som är mörk }
+function cardTone(canvas) {
+  const FP = self.Fingerprint, d = fpPixels(canvas), W = FP.CW, H = FP.CH, all = [], symbol = [];
+  for (let y = Math.round(H * 0.2); y < H * 0.88; y++) for (let x = Math.round(W * 0.08); x < W * 0.92; x++) {
+    const mid = Math.hypot((x / W - 0.5) * 0.72, y / H - 0.54), i = (y * W + x) * 4;
+    // Symbolen mäts generöst: hittas en inre kant på kortet hamnar den högre upp i bilden
+    if (Math.hypot((x / W - 0.5) * 0.72, y / H - 0.5) < 0.15) symbol.push((d[i] + d[i + 1] + d[i + 2]) / 3);
+    if (mid >= 0.2) all.push([d[i], d[i + 1], d[i + 2]]);
+  }
+  const bright = [...all].sort((a, b) => b[0] + b[1] + b[2] - a[0] - a[1] - a[2]).slice(0, Math.ceil(all.length * 0.06));
+  const mean = (list, k) => list.reduce((t, p) => t + p[k], 0) / (list.length || 1);
+  const R = mean(bright, 0) || 1, G = mean(bright, 1) || 1, B = mean(bright, 2) || 1, gray = (R + G + B) / 3;
+  const limit = (k) => Math.min(1.35, Math.max(0.75, k)), kr = limit(gray / R), kg = limit(gray / G), kb = limit(gray / B);
+  const px = all.map(([r, g, b]) => {
+    const p = [r * kr, g * kg, b * kb], mx = Math.max(...p);
+    return [...p, mx ? (mx - Math.min(...p)) / mx : 0];
+  }).sort((a, b) => b[3] - a[3]);
+  const top = px.slice(0, px.length >> 1), r = mean(top, 0), g = mean(top, 1), b = mean(top, 2);
+  const mx = Math.max(r, g, b), c = mx - Math.min(r, g, b);
+  const h = !c ? 0 : mx === r ? ((g - b) / c + 6) % 6 : mx === g ? (b - r) / c + 2 : (r - g) / c + 4;
+  symbol.sort((a, b) => a - b);
+  const n = symbol.length, half = (symbol[Math.floor(n * 0.03)] + symbol[Math.floor(n * 0.97)]) / 2;
+  return { h: h * 60, s: mx ? c / mx : 0, v: mx / gray, dark: symbol.filter((x) => x < half).length / (n || 1) };
+}
+// Typen ur färgen. Water och Darkness har samma nyans men Darkness är mörkare. Metal och Darkness går inte att skilja på färgen
+// i ett foto, men Darkness har en stor mörk fläck i symbolen där Metal har en liten triangel. Gränserna kommer från bilderna på
+// alla utgåvor av energikorten och från foton på riktiga kort.
+const DARK_SYMBOL = 0.44;
+function energyType({ h, s, v, dark }) {
+  if (h >= 250 && h < 320 && s >= 0.15) return "Psychic";
+  if (s < 0.25 || (h >= 165 && h < 250 && v < 0.72)) return dark >= DARK_SYMBOL ? "Darkness" : "Metal";
+  if (h >= 165 && h < 250) return "Water";
+  if (h >= 320 && h < 350) return "Fairy";
+  if (h >= 350 || h < 20) return v >= 0.75 ? "Fire" : "Fighting";
+  if (h < 42) return v >= 0.93 ? "Fire" : "Fighting";
+  return h < 62 ? "Lightning" : "Grass";
+}
+// Energikortet som bilden visar, med typen ur färgen. Kortet nära toppen om typen finns där, annars första kortet av typen.
+async function energyCard(look, framed) {
+  const a = await loadArtIndex(), top = look.art[0];
+  if (look.game !== "pokemon" || !a?.names || !(top?.s >= 0.55)) return null;
+  if (top.s - (look.art[1]?.s ?? 0) >= CLEAR_GAP) return null; // Bilden säger tydligt vilket kort det är: äldre energikort har egna motiv
+  const named = (id) => a.names[a.idx.get(id)]?.replace(/^Basic /, ""), energy = (x) => BASIC_ENERGY.test(named(x.id) || "");
+  if (!energy(top)) return null;
+  // Tomma, släta ytor liknar energikort: utan funna kanter krävs mer, och en ljus grå yta är inget kort
+  if (!framed && (top.s < 0.7 || !look.art.slice(0, 3).every(energy))) return null;
+  const tone = cardTone(artCanvas(look.canvas, look.art));
+  if (tone.s < 0.25 && tone.v >= 0.8) return null;
+  const want = `${energyType(tone)} Energy`;
+  const id = look.art.find((x) => named(x.id) === want)?.id || a.ids.find((x) => x.startsWith("sve-") && named(x) === want) || a.ids.find((x) => named(x) === want);
+  return id ? { id, name: want } : null;
 }
 // Utgåvorna som en remsa i skannern, med bild och pris. Ett tryck lägger in kortet, och skannern fortsätter.
 const TWIN_ROUNDS = 3; // omgångar textläsning innan man får välja själv
@@ -2313,10 +2372,45 @@ async function byCode(canvas, art, round) {
   const s0 = sims[ranked[0]] ?? -1, s1 = ranked[1] ? sims[ranked[1]] : -1;
   return s0 >= LIKE && s0 - s1 >= 0.08 ? ranked[0] : null;
 }
+// Numret på kort från 2023 och framåt står litet och kursivt, ofta vitt på silverfolie. En smal zon runt just numret går att
+// läsa, en bredare gör det inte. Bilden provas i olika storlek, omvänd (ljus text) och lite förskjuten, en variant per omgång.
+const LINE_ZONE = { x: 0.14, y: 0.945, w: 0.24, h: 0.035 };
+const LINE_READS = [[132, false, 0], [132, true, 0], [220, false, 0], [220, true, 0], [132, false, -0.012], [132, true, 0.012], [220, false, 0.012], [220, true, -0.012]];
+function lineImage(canvas, [height, invert, shift]) {
+  const c = plainZone(canvas, { ...LINE_ZONE, y: LINE_ZONE.y + shift }, height);
+  if (invert) {
+    const g = c.getContext("2d");
+    g.globalCompositeOperation = "difference";
+    g.fillStyle = "#fff";
+    g.fillRect(0, 0, c.width, c.height);
+  }
+  return c;
+}
+// Kortet vars nummer närmast stämmer med läsningen, bland korten som liknar bilden. Skannern vet vilka nummer korten har, så
+// läsfel tål jämförelsen: 1 läst som 7 och snedstrecket läst som 7 eller 1 ("1137132" är 113/132). Kortet måste vara klart
+// närmare än övriga. Kort-id, eller null.
+async function byLine(canvas, art, round) {
+  const near = art.filter((x) => x.s >= LIKE && /^d+$/.test(localOf(x.id))).slice(0, 12);
+  if (!near.length) return null;
+  const [worker, counts] = await Promise.all([getWorker("line"), setCounts()]);
+  const text = (await worker.recognize(lineImage(canvas, LINE_READS[round % LINE_READS.length]))).data.text.replace(/[^0-9/]/g, "");
+  if (text.replace(/\D/g, "").length < 5) return null;
+  const distance = (want) => {
+    let best = Infinity;
+    for (let n = want.length - 1; n <= want.length + 1; n++) for (let i = 0; i + n <= text.length; i++) best = Math.min(best, editDist(want, text.slice(i, i + n)));
+    return best;
+  };
+  const ranked = near.map((x) => {
+    const total = String(counts.get(setOf(x.id))?.official ?? ""), no = localOf(x.id).padStart(total.length, "0");
+    // Korta nummer ("7/20") kan se ut att stämma med vad som helst
+    return { id: x.id, d: total && no.length + total.length >= 5 ? Math.min(...["/", "7", "1", ""].map((sep) => distance(no + sep + total))) : Infinity };
+  }).sort((a, b) => a.d - b.d);
+  return ranked[0].d <= 2 && (ranked[1]?.d ?? 99) >= ranked[0].d + 2 ? ranked[0].id : null;
+}
 // Flera utgåvor med samma konstverk: setstorleken läses ofta rätt även när numret inte gör det ("13/132" för 113/132).
 // Stämmer den med exakt en av utgåvorna nära toppen är det den. Kort-id, eller null.
 async function byTotal(art, total) {
-  if (!total || !art[0]) return null;
+  if (!total || !art[0] || art[0].s < 0.5) return null;
   const counts = await setCounts();
   const hits = art.filter((x) => { const c = counts.get(setOf(x.id)); return x.s >= art[0].s - 0.06 && x.s >= LIKE && c && (c.official === +total || c.total === +total); });
   return hits.length === 1 ? hits[0].id : null;
@@ -2350,7 +2444,7 @@ async function readPokemon(canvas, art, round) {
   const r = { name, number: num?.number || null, total: num?.total || null, numberSure: !!num?.sure, dhash: computeDHash(canvas) };
   let cardId = await byNumber(art, r);
   if (!cardId && r.number && r.total) cardId = await byNumberThenLook(canvas, r);
-  const coded = !cardId && ((await byTotal(art, r.total).catch(() => null)) || (await byCode(canvas, art, round).catch(() => null)));
+  const coded = !cardId && ((await byLine(canvas, art, round).catch(() => null)) || (await byTotal(art, r.total).catch(() => null)) || (round % 2 ? await byCode(canvas, art, round).catch(() => null) : null));
   const named = !cardId && !coded && (await byPokemonName(canvas, r.name).catch(() => null));
   cardId ||= coded || named;
   if (coded || named) Object.assign(r, { number: localOf(cardId), total: null, numberSure: true });
@@ -2418,6 +2512,13 @@ async function attempt(canvas, source) {
       look.art = look.art.map((x) => ({ ...x, id: cards.get(x.id)?.id || x.id }));
       look.art.frame = frame;
     }
+    // Basic Energy: typen avgörs av färgen, och utgåvorna är i praktiken samma kort med samma värde
+    const energy = await energyCard(look, framed);
+    if (energy) {
+      if (lastHit?.name === energy.name) { lastHit.seen = Date.now(); return status("Byt till nästa kort…"); }
+      if (!confirmed({ cardId: `energy:${energy.name}`, art: look.art }, framed)) return status("Håll kortet stilla i ramen…");
+      return setPeek({ name: energy.name, number: localOf(energy.id), total: null, numberSure: true, cardId: energy.id, art: [{ id: energy.id, s: 1 }] }, artCanvas(look.canvas, look.art));
+    }
     // Kortet som nyss hittades ligger kvar i ramen: inget att läsa
     if (look.art.slice(0, 3).some((x) => x.id === skipKey || lastHit?.ids.has(x.id))) {
       lastHit && (lastHit.seen = Date.now());
@@ -2428,10 +2529,6 @@ async function attempt(canvas, source) {
     const r = await lookHit(look, framed);
     if (r) return setPeek(r, artCanvas(look.canvas, look.art));
     twin = await twinName(look);
-    // Basic Energy: utgåvorna är i praktiken samma kort med samma värde, så den som liknar mest räcker
-    if (twin && BASIC_ENERGY.test(twin) && look.art[0].s >= 0.6 && confirmed({ cardId: `energy:${twin}`, art: look.art }, framed)) {
-      return setPeek(await hitOf(look, look.art[0].id), artCanvas(look.canvas, look.art));
-    }
     if (twin) {
       // Numret har inte gått att läsa på några försök: man får välja utgåvan med ett tryck
       if (readRound >= TWIN_ROUNDS) showTwins(look);
