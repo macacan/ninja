@@ -1,6 +1,34 @@
 {
- "updated": 1793850511219,
+ "updated": 1793850971228,
  "events": [
+  {
+   "at": 1793850621961,
+   "store": "bangerpack",
+   "product": "bangerpack:https://bangerpack.se/pokemon/koreanska-utgavor/pokemon-lost-abyss-booster-kor",
+   "group": "x|booster-pack|ko||abyss-lost",
+   "title": "Pokémon Lost Abyss – Booster (KOR)",
+   "url": "https://bangerpack.se/pokemon/koreanska-utgavor/pokemon-lost-abyss-booster-kor",
+   "image": "https://cdn.quickbutik.com/images/99246J/products/6ae8241e9a854.png",
+   "price": 69,
+   "type": "Booster Pack",
+   "set": null,
+   "lang": "ko",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1793850621961,
+   "store": "bangerpack",
+   "product": "bangerpack:https://bangerpack.se/pokemon/koreanska-utgavor/pokemon-super-electric-breaker-booster-kor",
+   "group": "x|booster-pack|ko||breaker-electric-super",
+   "title": "Pokémon Super Electric Breaker – Booster (KOR)",
+   "url": "https://bangerpack.se/pokemon/koreanska-utgavor/pokemon-super-electric-breaker-booster-kor",
+   "image": "https://cdn.quickbutik.com/images/99246J/products/6ae823f7b48a5.png",
+   "price": 69,
+   "type": "Booster Pack",
+   "set": null,
+   "lang": "ko",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793846950605,
    "store": "bangerpack",
@@ -7086,35 +7114,6 @@
    "set": null,
    "lang": "en",
    "kind": "tillbaka"
-  },
-  {
-   "at": 1793308985845,
-   "store": "pokemurre",
-   "product": "pokemurre:11216201875794",
-   "group": "x|booster-pack|zh||30th-anniversary-celebration",
-   "title": "Pokemon 30th Anniversary Celebration M6 MEGA Booster Pack (Kinesisk)",
-   "url": "https://pokemurre.se/products/pokemon-30th-anniversary-celebration-m6-mega-booster-pack-kinesisk",
-   "image": null,
-   "price": 69,
-   "type": "Booster Pack",
-   "set": null,
-   "lang": "zh",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793304484713,
-   "store": "dragon-s-lair",
-   "product": "dragon-s-lair:15855106687324",
-   "group": "x|collection-box|zh||gathering-glaceon-terastal",
-   "title": "Pokemon Terastal Gathering Tin Collection Box Chinese - Glaceon (Kinesisk)",
-   "url": "https://dragonslair.se/products/pokemon-terastal-gathering-tin-collection-box-chinese-glaceon-kinesisk",
-   "image": "https://cdn.shopify.com/s/files/1/1015/8315/9644/files/36252_1.webp?v=1790688225",
-   "price": 295,
-   "type": "Collection Box",
-   "set": null,
-   "lang": "zh",
-   "kind": "prissankt",
-   "from": 329
   }
  ]
 }
