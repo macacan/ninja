@@ -1,6 +1,34 @@
 {
- "updated": 1793913921097,
+ "updated": 1793915779602,
  "events": [
+  {
+   "at": 1793915111101,
+   "store": "spelparken",
+   "product": "spelparken:15223823040887",
+   "group": "astral-radiance|booster-pack|en|",
+   "title": "Astral Radiance Booster Pack",
+   "url": "https://spelparken.se/products/pokemon-sword-shield-astral-radiance-booster-pack",
+   "image": "https://cdn.shopify.com/s/files/1/0948/1876/3127/files/astral-radiance-booster-pack-2-engelska-pokemonkort.webp?v=1762105397",
+   "price": 129,
+   "type": "Booster Pack",
+   "set": "Astral Radiance",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1793914933991,
+   "store": "cardvalley",
+   "product": "cardvalley:11277556777298",
+   "group": "delta-reign|booster-pack|en|",
+   "title": "Delta Reign Booster pack",
+   "url": "https://cardvalley.se/products/delta-reign-booster-pack",
+   "image": "https://cdn.shopify.com/s/files/1/0934/7946/9394/files/fd52ac8a-b0d4-4075-8316-c548452eb673.png?v=1793393454",
+   "price": 99,
+   "type": "Booster Pack",
+   "set": "Delta Reign",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793913235810,
    "store": "samlarverket",
@@ -7073,34 +7101,6 @@
    "set": null,
    "lang": "zh",
    "kind": "ny"
-  },
-  {
-   "at": 1793379970004,
-   "store": "dragon-s-lair",
-   "product": "dragon-s-lair:15945166029148",
-   "group": "x|collection-box|zh||gathering-sylveon-terastal",
-   "title": "Pokemon Terastal Gathering Tin Collection Box Chinese - Sylveon (Kinesisk) (Copy)",
-   "url": "https://dragonslair.se/products/pokemon-terastal-gathering-tin-collection-box-chinese-sylveon-kinesisk-copy",
-   "image": "https://cdn.shopify.com/s/files/1/1015/8315/9644/files/36256_1.webp?v=1790337610",
-   "price": 295,
-   "type": "Collection Box",
-   "set": null,
-   "lang": "zh",
-   "kind": "ny"
-  },
-  {
-   "at": 1793379970004,
-   "store": "dragon-s-lair",
-   "product": "dragon-s-lair:15944802107740",
-   "group": "x|booster-pack|zh||arts-jumbo-overgrow-primordial-venusaur",
-   "title": "Pokémon Sword & Shield - Primordial Arts: Overgrow (CS3aC) Jumbo Display (6 st Booster) - KINESISK [VENUSAUR] (Copy)",
-   "url": "https://dragonslair.se/products/pokemon-sword-shield-primordial-arts-overgrow-cs3ac-jumbo-display-6-st-booster-kinesisk-venusaur-copy",
-   "image": "https://cdn.shopify.com/s/files/1/1015/8315/9644/files/CS3aC-Primordial-Arts-Overgrow-JUMBO-Booster-Box-e1781680327748.jpg?v=1793375557",
-   "price": 749,
-   "type": "Booster Pack",
-   "set": "Sword & Shield",
-   "lang": "zh",
-   "kind": "tillbaka"
   }
  ]
 }
