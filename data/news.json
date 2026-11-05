@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-05T14:27:09.284Z",
+ "updated": "2026-11-05T14:42:30.092Z",
  "articles": [
   {
    "title": "Everything Is Dissapointing After Pokémon's Spectacular 30th Anniversary TCG Set",
@@ -8,6 +8,15 @@
    "summary": "The Rayquaza-centric Delta Reign TCG set, which releases on Nov. 6, set never stood a chance against Pokémon's remarkable 30th Anniversary set",
    "image": "https://static0.polygonimages.com/wordpress/wp-content/uploads/2026/11/image-29-thumbnail.jpg",
    "source": "Polygon",
+   "game": "pk"
+  },
+  {
+   "title": "Illegal gambling ring busted after using Pokemon cards as payouts",
+   "link": "https://www.dexerto.com/pokemon/illegal-gambling-ring-busted-after-using-pokemon-cards-as-payouts-3425040/",
+   "date": "2026-11-05T11:51:32.000Z",
+   "summary": "Police in Texas have busted an alleged illegal gambling operation that was using Pokemon and sports trading cards to pay out winnings instead of cash.",
+   "image": "https://www.dexerto.com/cdn-image/wp-content/uploads/2026/11/05/Illegal-gambling-ring-busted-after-using-Pokemon-cards-as-payouts.jpg?width=480&quality=75&format=auto",
+   "source": "Dexerto",
    "game": "pk"
   },
   {
@@ -412,15 +421,6 @@
    "date": "2026-09-28T14:56:33.000Z",
    "summary": "Pokemon TCG's Pitch Black set has some gorgeous cards and a limited print run - which means we still prize these pricey chase cards.",
    "image": "https://www.wargamer.com/wp-content/sites/wargamer/2026/05/pokemon-trading-card-game-pitch-black-chase-cards.jpg",
-   "source": "Wargamer",
-   "game": "pk"
-  },
-  {
-   "title": "Pokémon TCG promos return to McDonald's - God help us all",
-   "link": "https://www.wargamer.com/pokemon-trading-card-game/mcdonalds-november",
-   "date": "2026-09-28T11:48:34.000Z",
-   "summary": "Happy Meal Pikachu can’t hurt you, but hungry scalpers? They make no promises.",
-   "image": "https://www.wargamer.com/wp-content/sites/wargamer/2026/09/pokemon-tcg-mcdonalds.jpg",
    "source": "Wargamer",
    "game": "pk"
   },
