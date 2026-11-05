@@ -219,6 +219,7 @@ function applyView() {
   current = list;
   renderGrid($("#prices"), list);
   $("#more").hidden = next >= found.length;
+  if (selecting) paintPicked();
 }
 
 async function search() {
@@ -651,6 +652,32 @@ async function drawValue(cards, worth, my) {
   box.querySelector(".vs-chg").title = `Sedan ${new Date(`${pts[0].date}T12:00:00`).toLocaleDateString("sv-SE", { day: "numeric", month: "long" })}`;
 }
 
+// Väljläget: ett tryck på ett kort markerar det i stället för att öppna det. Vanligt och foil är olika kort i valvet.
+let selecting = false;
+const picked = new Set();
+const pickKey = (game, id, foil) => `${game}:${id}:${foil ? 1 : 0}`;
+const keyOfTile = (c) => pickKey(c.game, c.id, c.holo);
+function paintPicked() {
+  for (const t of document.querySelectorAll("#prices .ctile")) {
+    const c = current[+t.dataset.i], on = picked.has(keyOfTile(c));
+    t.classList.toggle("picked", on);
+    t.setAttribute("aria-pressed", String(on));
+    t.setAttribute("aria-label", `Välj ${c.name}`);
+  }
+  $("#vs-count").textContent = `${picked.size} ${picked.size === 1 ? "vald" : "valda"}`;
+  $("#vs-delete").disabled = !picked.size;
+  $("#vs-all").textContent = found.length && picked.size === found.length ? "Avmarkera alla" : "Välj alla";
+}
+function setSelecting(on) {
+  selecting = on;
+  picked.clear();
+  $("#vault-select").textContent = on ? "Avbryt" : "Välj";
+  $("#vault-select").setAttribute("aria-pressed", String(on));
+  $("#vault-selbar").hidden = !on;
+  $("#prices").classList.toggle("selecting", on);
+  if (found.length) applyView();
+}
+
 async function showVault() {
   const my = ++searchId;
   vaultDirty = false;
@@ -701,6 +728,10 @@ async function showVault() {
   found = found.filter((c) => !vaultOff.has(c.game) && words.every((w) => `${c.name} ${c.variant || ""} ${c.set} ${c.no}`.toLowerCase().includes(w)));
   next = found.length;
   loaded = [];
+  // Ett kort som filtrerats bort ska inte kunna tas bort utan att synas
+  const shownKeys = new Set(found.map(keyOfTile));
+  for (const k of picked) if (!shownKeys.has(k)) picked.delete(k);
+  if (selecting) paintPicked();
   // Portföljen räknas på korten som visas. Utvecklingen sedan inläggningen bara för kort med sparat pris.
   const sum = (f) => found.reduce((s, c) => s + f(c) * c.qty, 0);
   const n = sum(() => 1), worth = sum((c) => c.sek || 0);
@@ -721,6 +752,7 @@ async function showVault() {
   if (n) drawValue(found, worth, my);
   $("#vault-clear").hidden = !all;
   $("#vault-tools").hidden = !all;
+  if (!all && selecting) setSelecting(false);
   if (!n) {
     current = [];
     $("#prices").innerHTML = all
@@ -865,6 +897,32 @@ if (VAULT_PAGE) {
   });
   // Klick utanför rutan avbryter
   vaultConfirm.addEventListener("click", (e) => { if (e.target === vaultConfirm) vaultConfirm.close(); });
+  // Väljläget: markera flera kort och ta bort dem med papperskorgen
+  const vaultDelete = $("#vault-delete");
+  $("#vault-select").addEventListener("click", () => setSelecting(!selecting));
+  $("#vs-all").addEventListener("click", () => {
+    const all = picked.size === found.length;
+    picked.clear();
+    if (!all) for (const c of found) picked.add(keyOfTile(c));
+    paintPicked();
+  });
+  $("#vs-delete").addEventListener("click", () => {
+    const n = found.filter((c) => picked.has(keyOfTile(c))).reduce((s, c) => s + c.qty, 0);
+    $("#vd-title").textContent = `Ta bort ${n} kort?`;
+    vaultDelete.returnValue = "";
+    vaultDelete.showModal();
+  });
+  vaultDelete.addEventListener("click", (e) => {
+    if (e.target === vaultDelete) return vaultDelete.close();
+    if (!e.target.closest('[value="ok"]')) return;
+    clearTimeout(copyTimer);
+    const gone = new Set(picked);
+    saveCopy(loadVault()).then(() => {
+      saveVault(loadVault().filter((x) => !gone.has(pickKey(x.game, x.id, x.f))));
+      setSelecting(false);
+      showVault();
+    });
+  });
   // Värderutan öppnar valvets värde i en stor graf, med knappar för perioden
   const chart = $("#vault-chart");
   $("#vault-stats").addEventListener("click", (e) => {
@@ -1049,7 +1107,11 @@ modal.addEventListener("keydown", (e) => {
 });
 document.addEventListener("click", (e) => {
   const t = e.target.closest(".ctile");
-  if (t) openCard(+t.dataset.i);
+  if (!t) return;
+  if (!selecting) return openCard(+t.dataset.i);
+  const k = keyOfTile(current[+t.dataset.i]);
+  picked.has(k) ? picked.delete(k) : picked.add(k);
+  paintPicked();
 });
 
 // ---------- Start ----------

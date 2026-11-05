@@ -25,7 +25,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Hem","item":"https://lootninja.se/"},{"@type":"ListItem","position":2,"name":"Mitt valv","item":"https://lootninja.se/valv.html"}]}</script>
 <link href="fonts/fonts.css" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=20261105j">
+<link rel="stylesheet" href="style.css?v=20261105k">
 <link rel="stylesheet" href="dark.css?v=20261103b" id="dark-css" media="(prefers-color-scheme: dark)">
 <script src="js/theme.js?v=20261021"></script>
 </head>
@@ -88,8 +88,17 @@
           <option value="added">Nyaste först</option><option value="price-desc">Dyrast först</option><option value="price-asc">Billigast först</option>
           <option value="gain">Ökat mest</option><option value="rising">Stiger mest</option><option value="falling">Sjunker mest</option>
           <option value="number">Kortnummer</option></select></label>
+        <button type="button" class="btn small" id="vault-select" aria-pressed="false">Välj</button>
       </div>
       <div id="prices" class="cgrid"></div>
+      <!-- Väljläget: markera flera kort och ta bort dem -->
+      <div class="vault-selbar" id="vault-selbar" hidden>
+        <span id="vs-count" role="status">0 valda</span>
+        <button type="button" class="btn small" id="vs-all">Välj alla</button>
+        <button type="button" class="btn primary small vs-trash" id="vs-delete" aria-label="Ta bort valda kort" disabled>
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14M10 11v5M14 11v5"/></svg>
+        </button>
+      </div>
       <div class="more-row"><button id="more" class="btn" type="button" hidden>Visa fler</button></div>
       <div class="vault-bar"><button type="button" class="btn small" id="vault-clear" hidden>Töm valvet</button></div>
       <!-- Säkerhetskopia: en fil som sparas på telefonen och automatiska kopior i webbläsaren (js/vault-backup.js) -->
@@ -143,6 +152,18 @@
     </form>
   </dialog>
 
+  <!-- Ta bort korten som valts i väljläget -->
+  <dialog id="vault-delete" class="card-modal confirm-modal" aria-labelledby="vd-title">
+    <form method="dialog">
+      <h2 id="vd-title">Ta bort korten?</h2>
+      <p class="muted">Alla exemplar av de valda korten tas bort. En automatisk kopia sparas först, så att du kan återställa valvet.</p>
+      <div class="confirm-actions">
+        <button class="btn small" value="cancel" autofocus>Avbryt</button>
+        <button class="btn primary small" value="ok">Ta bort</button>
+      </div>
+    </form>
+  </dialog>
+
   <!-- Återställ valvet från en fil eller en automatisk kopia -->
   <dialog id="vault-restore" class="card-modal confirm-modal" aria-labelledby="vr-title">
     <form method="dialog">
@@ -179,6 +200,6 @@
     <div class="cm-body"></div>
   </dialog>
 </main>
-<script type="module" src="js/priser.js?v=20261106k"></script>
+<script type="module" src="js/priser.js?v=20261106l"></script>
 </body>
 </html>
