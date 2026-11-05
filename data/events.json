@@ -1,6 +1,20 @@
 {
- "updated": 1793875956995,
+ "updated": 1793876877025,
  "events": [
+  {
+   "at": 1793876371552,
+   "store": "cardgame",
+   "product": "cardgame:https://cardgame.se/engelska-pokmon-produkter/engelska-etber/30th-celebrations-elite-trainer-box",
+   "group": "30th-celebration|elite-trainer-box|en|",
+   "title": "30th Celebrations Elite Trainer Box",
+   "url": "https://cardgame.se/engelska-pokmon-produkter/engelska-etber/30th-celebrations-elite-trainer-box",
+   "image": "https://cdn.quickbutik.com/images/87588Q/products/6ab52352506ad.webp",
+   "price": 1750,
+   "type": "Elite Trainer Box",
+   "set": "30th Celebration",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793874541171,
    "store": "webhallen",
@@ -7092,21 +7106,6 @@
    "price": 5200,
    "type": "Booster Box",
    "set": "Premium Booster - The Best - Vol. 2",
-   "lang": "en",
-   "game": "op",
-   "kind": "ny"
-  },
-  {
-   "at": 1793355403197,
-   "store": "tcg-picks",
-   "product": "tcg-picks:16251150434629",
-   "group": "op|the-time-of-battle|booster-box|en|",
-   "title": "One Piece OP-16 Booster box (Skicka hem)",
-   "url": "https://tcgpicks.com/produkt/one-piece-op-16-booster-box?variant=59709499310405",
-   "image": "https://cdn.shopify.com/s/files/1/0977/3046/2021/files/1790406871767-867938.jpg?v=1791924118",
-   "price": 2599,
-   "type": "Booster Box",
-   "set": "The Time of Battle",
    "lang": "en",
    "game": "op",
    "kind": "ny"
