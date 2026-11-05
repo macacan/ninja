@@ -5,6 +5,7 @@
 // Priserna är TCGplayers (USD), omräknade med ECB:s kurs samma dag. Cardmarket går inte att använda här:
 // deras fil skiljer inte på vanlig, parallel och manga (Shanks OP01-120 finns som 15 produkter med samma namn).
 // Körs en gång per dygn (se .github/workflows/trends.yml) eller manuellt: node scripts/update-op-cards.mjs
+import { readFile } from "node:fs/promises";
 import { getJSON, saveGame, sealedImage } from "./lib/prebuilt-cards.mjs";
 
 const API = "https://optcgapi.com/api";
@@ -75,7 +76,10 @@ const allCards = [...setCards, ...(stCards || [])];
 // Kortet hos båda: set, kortnummer och variant. Inte hela namnet, som optcgapi ibland stavar fel ("Gum-Gum Giant Rifl").
 const tcgKey = (set, no, fullName) => `${set}|${no}|${splitName(fullName || "").variant || ""}`;
 const tcgCards = new Map(), tcgOnly = [];
-for (const set of new Set(allCards.filter((c) => !c.card_image).map((c) => c.set_id))) {
+// Ett set som en gång hämtats från TCGplayer fortsätter med det, annars tappar det korten som bara finns där (och deras
+// priser) den dag optcgapi har bilder till alla sina kort.
+const hadTcg = await readFile(new URL("cards.json", DIR), "utf8").then((t) => JSON.parse(t).cards.filter((c) => c.tcg).map((c) => c.set)).catch(() => []);
+for (const set of new Set([...allCards.filter((c) => !c.card_image).map((c) => c.set_id), ...hadTcg])) {
   const g = groupOf.get(code(set));
   if (!g) continue;
   const [products, prices] = await Promise.all([
@@ -110,7 +114,7 @@ const cards = allCards.map((c) => {
   };
 }).filter(Boolean);
 
-// Kort som TCGplayer har men optcgapi saknar (samma nummer och variant), i set där korten ovan hämtade bilder från TCGplayer
+// Kort som TCGplayer har men optcgapi saknar (samma nummer och variant), i seten som hämtas från TCGplayer ovan
 const inApi = new Set(allCards.map((c) => tcgKey(c.set_id, c.card_set_id, c.card_name)));
 for (const t of tcgOnly) {
   const id = `${t.set}/${t.id}`;

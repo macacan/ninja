@@ -1,5 +1,5 @@
 {
- "updated": 1793885390888,
+ "updated": 1793888667113,
  "sets": [
   "Extra Booster: One Piece Heroines Edition Vol. 2",
   "The World's Strongest Warriors",
@@ -192,6 +192,27 @@
    "avg30": 12641.1,
    "change": -0.4,
    "setId": "EB-03"
+  },
+  {
+   "id": "EB-05/tcg726218",
+   "name": "Nico Robin",
+   "variant": "Super Leader Alternate Art",
+   "set": "Extra Booster: One Piece Heroines Edition Vol. 2",
+   "no": "EB05-010",
+   "rarity": "L",
+   "color": "Green Yellow",
+   "type": "Leader",
+   "cost": null,
+   "power": 5000,
+   "counter": null,
+   "life": 4,
+   "attr": "Wisdom",
+   "sub": "Straw Hat Crew",
+   "image": "https://tcgplayer-cdn.tcgplayer.com/product/726218_400w.jpg",
+   "sek": 11631.65,
+   "low": 11636.81,
+   "tcg": "726218",
+   "setId": "EB-05"
   },
   {
    "id": "OP-17/OP17-005_p2",
@@ -401,7 +422,7 @@
    "setId": "OP14-EB04"
   },
   {
-   "id": "EB-05/EB05-055_p3",
+   "id": "EB-05/EB05-055~nami-055-kentaro-yabuki-gold-stamped-",
    "name": "Nami",
    "variant": "Kentaro Yabuki · Gold Stamped",
    "set": "Extra Booster: One Piece Heroines Edition Vol. 2",
@@ -418,7 +439,7 @@
    "image": "https://optcgapi.com/media/static/Card_Images/EB05-055_p3_r341fMd.jpg",
    "sek": 7907.26,
    "low": 14027.59,
-   "tcg": null,
+   "tcg": "722645",
    "setId": "EB-05"
   },
   {
@@ -468,7 +489,28 @@
    "setId": "OP14-EB04"
   },
   {
-   "id": "EB-05/ST17-004_p1",
+   "id": "EB-05/tcg718677",
+   "name": "Shirahoshi",
+   "variant": "Manga",
+   "set": "Extra Booster: One Piece Heroines Edition Vol. 2",
+   "no": "EB05-014",
+   "rarity": "SR",
+   "color": "Green",
+   "type": "Character",
+   "cost": 1,
+   "power": 0,
+   "counter": null,
+   "life": null,
+   "attr": "Wisdom",
+   "sub": "Merfolk;Fish-Man Island",
+   "image": "https://tcgplayer-cdn.tcgplayer.com/product/718677_400w.jpg",
+   "sek": 6324.73,
+   "low": 6324.73,
+   "tcg": "718677",
+   "setId": "EB-05"
+  },
+  {
+   "id": "EB-05/ST17-004",
    "name": "Boa Hancock",
    "variant": "SP",
    "set": "Extra Booster: One Piece Heroines Edition Vol. 2",
@@ -485,7 +527,7 @@
    "image": "https://optcgapi.com/media/static/Card_Images/ST17-004_p1_tZmAcke.jpg",
    "sek": 6280.91,
    "low": 7761.19,
-   "tcg": null,
+   "tcg": "722773",
    "setId": "EB-05"
   },
   {
@@ -510,50 +552,6 @@
    "avg30": 5802.4,
    "change": -0.1,
    "setId": "OP15-EB04"
-  },
-  {
-   "id": "EB-05/OP01-016_p10",
-   "name": "Nami",
-   "variant": "SP",
-   "set": "Extra Booster: One Piece Heroines Edition Vol. 2",
-   "no": "OP01-016",
-   "rarity": "R",
-   "color": "Red",
-   "type": "Character",
-   "cost": 1,
-   "power": 2000,
-   "counter": 1000,
-   "life": null,
-   "attr": "Special",
-   "sub": "Straw Hat Crew",
-   "image": "https://optcgapi.com/media/static/Card_Images/OP01-016_p10_A6UJ7ZU.jpg",
-   "sek": 5198.05,
-   "low": 4382,
-   "tcg": null,
-   "setId": "EB-05"
-  },
-  {
-   "id": "OP14-EB04/OP14-112_p2",
-   "name": "Boa Hancock",
-   "variant": "SP",
-   "set": "The Azure Sea's Seven",
-   "no": "OP14-112",
-   "rarity": "SR",
-   "color": "Yellow",
-   "type": "Character",
-   "cost": 9,
-   "power": 10000,
-   "counter": 0,
-   "life": null,
-   "attr": "Special",
-   "sub": "Kuja Pirates The Seven Warlords of the Sea",
-   "image": "https://optcgapi.com/media/static/Card_Images/OP14-112_p2.jpg",
-   "sek": 5112.35,
-   "low": 2872.71,
-   "tcg": null,
-   "avg30": 5165.67,
-   "change": -0.2,
-   "setId": "OP14-EB04"
   }
  ],
  "rising": [
