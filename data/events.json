@@ -1,6 +1,20 @@
 {
- "updated": 1793893093867,
+ "updated": 1793894033883,
  "events": [
+  {
+   "at": 1793893534676,
+   "store": "dragon-s-lair",
+   "product": "dragon-s-lair:15956720746844",
+   "group": "30th-celebration|booster-pack|zh|",
+   "title": "Pokemon 30th Celebration Booster (Kinesisk)(30th C)",
+   "url": "https://dragonslair.se/products/pokemon-30th-celebration-booster-kinesisk30th-c",
+   "image": "https://cdn.shopify.com/s/files/1/1015/8315/9644/files/s-l16003_65b68412-ede9-4bc9-b6a8-ce22d0eb9ef9.jpg?v=1793893282",
+   "price": 65,
+   "type": "Booster Pack",
+   "set": "30th Celebration",
+   "lang": "zh",
+   "kind": "ny"
+  },
   {
    "at": 1793890582453,
    "store": "speltrollet",
@@ -7087,21 +7101,6 @@
    "set": "Scarlet & Violet",
    "lang": "zh",
    "kind": "ny"
-  },
-  {
-   "at": 1793368074782,
-   "store": "samlargrottan",
-   "product": "samlargrottan:https://www.samlargrottan.se/product-page/riftbound-vendetta-vault",
-   "group": "rb|vendetta|bundle|en|",
-   "title": "Riftbound: Vendetta Vault",
-   "url": "https://www.samlargrottan.se/product-page/riftbound-vendetta-vault",
-   "image": "https://static.wixstatic.com/media/d265aa_d978b3fa314840169645efd3a56bc98b~mv2.png/v1/fit/w_500,h_500,q_90/file.png",
-   "price": 549,
-   "type": "Bundle",
-   "set": "Vendetta",
-   "lang": "en",
-   "game": "rb",
-   "kind": "tillbaka"
   }
  ]
 }
