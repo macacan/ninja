@@ -1,6 +1,35 @@
 {
- "updated": 1793886077245,
+ "updated": 1793886997265,
  "events": [
+  {
+   "at": 1793886888847,
+   "store": "speltrollet",
+   "product": "speltrollet:14970511851846",
+   "group": "x|collection-box|en||bento-electric-type",
+   "title": "Pokemon Bento box låda - Electric Type",
+   "url": "https://speltrollet.se/products/pokemon-bento-box-electric-typee",
+   "image": "https://cdn.shopify.com/s/files/1/0674/0951/0716/files/pokemon-bento-box-electric-type_2.jpg?v=1743876530",
+   "price": 199,
+   "type": "Collection Box",
+   "set": null,
+   "lang": "en",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1793886345647,
+   "store": "alphaspel",
+   "product": "alphaspel:https://alphaspel.se/1762-pokemon-tcg/361793-pokemon-tcg-mega-evolution-delta-reign-booster-pack",
+   "group": "delta-reign|booster-pack|en|",
+   "title": "Pokémon TCG: Mega Evolution - Delta Reign Booster Pack",
+   "url": "https://alphaspel.se/1762-pokemon-tcg/361793-pokemon-tcg-mega-evolution-delta-reign-booster-pack",
+   "image": "https://alphaspel.se/media/products/16893435-c79c-4b4a-a286-aa05bd16c7a3",
+   "price": 79,
+   "type": "Booster Pack",
+   "set": "Delta Reign",
+   "lang": "en",
+   "kind": "prissankt",
+   "from": 89
+  },
   {
    "at": 1793884037389,
    "store": "speltrollet",
@@ -7073,34 +7102,6 @@
    "type": "Booster Pack",
    "set": "Obsidian Flames",
    "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1793361956524,
-   "store": "shinycards",
-   "product": "shinycards:https://www.shinycards.se/pokemon/booster-box/pokemon-sword-shield-time-gazer-booster-box-japansk",
-   "group": "x|booster-box|ja||gazer-time",
-   "title": "Pokemon Sword & Shield: Time Gazer Booster Box (Japansk)",
-   "url": "https://www.shinycards.se/pokemon/booster-box/pokemon-sword-shield-time-gazer-booster-box-japansk",
-   "image": "https://cdn.quickbutik.com/images/69946c/products/6ae483d3d1b9f.png",
-   "price": 1799,
-   "type": "Booster Box",
-   "set": "Sword & Shield",
-   "lang": "ja",
-   "kind": "ny"
-  },
-  {
-   "at": 1793361956524,
-   "store": "shinycards",
-   "product": "shinycards:https://www.shinycards.se/pokemon/booster-box/pokemon-scarlet-violet-triplet-beat-booster-box-japansk",
-   "group": "x|booster-box|ja||beat-triplet",
-   "title": "Pokemon Scarlet & Violet: Triplet Beat Booster Box (Japansk)",
-   "url": "https://www.shinycards.se/pokemon/booster-box/pokemon-scarlet-violet-triplet-beat-booster-box-japansk",
-   "image": "https://cdn.quickbutik.com/images/69946c/products/6ae482fed215c.png",
-   "price": 1799,
-   "type": "Booster Box",
-   "set": "Scarlet & Violet",
-   "lang": "ja",
    "kind": "ny"
   }
  ]
