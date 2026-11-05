@@ -1,6 +1,20 @@
 {
- "updated": 1793846799040,
+ "updated": 1793847191118,
  "events": [
+  {
+   "at": 1793846950605,
+   "store": "bangerpack",
+   "product": "bangerpack:https://bangerpack.se/pokemon/koreanska-utgavor/pokemon-mega-brave-booster-kor",
+   "group": "x|booster-pack|ko||brave",
+   "title": "Pokémon Mega Brave – Booster (KOR)",
+   "url": "https://bangerpack.se/pokemon/koreanska-utgavor/pokemon-mega-brave-booster-kor",
+   "image": "https://cdn.quickbutik.com/images/99246J/products/6ae826733a611.png",
+   "price": 59,
+   "type": "Booster Pack",
+   "set": null,
+   "lang": "ko",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793840656217,
    "store": "skattkistan",
@@ -7095,21 +7109,6 @@
    "title": "Pokemon Terastal Gathering Tin Collection Box Chinese - Glaceon (Kinesisk)",
    "url": "https://dragonslair.se/products/pokemon-terastal-gathering-tin-collection-box-chinese-glaceon-kinesisk",
    "image": "https://cdn.shopify.com/s/files/1/1015/8315/9644/files/36252_1.webp?v=1790688225",
-   "price": 295,
-   "type": "Collection Box",
-   "set": null,
-   "lang": "zh",
-   "kind": "prissankt",
-   "from": 329
-  },
-  {
-   "at": 1793304484713,
-   "store": "dragon-s-lair",
-   "product": "dragon-s-lair:15849191670108",
-   "group": "x|collection-box|zh||gathering-terastal-vaporeon",
-   "title": "Pokemon Terastal Gathering Tin Collection Box Chinese - Vaporeon (Kinesisk)",
-   "url": "https://dragonslair.se/products/pokemon-terastal-gathering-tin-collection-box-chinese-vaporeon-kinesisk",
-   "image": "https://cdn.shopify.com/s/files/1/1015/8315/9644/files/6a3d3b176acd107465590da9.webp?v=1790338361",
    "price": 295,
    "type": "Collection Box",
    "set": null,
