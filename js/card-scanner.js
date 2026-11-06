@@ -1598,6 +1598,7 @@ let dialog = null, stream = null, timer = null, animFrame = null, busy = false;
 let onFound = null, onPartial = null, onHit = null, onPreview = null;
 let autoOpen = false; // träffen öppnas direkt (onFound) i stället för att ligga kvar i hörnet
 let openMode = false; // Kortpriser: träffen öppnas direkt, om man inte valt Snabb skanning
+let onLookup = null; // Kortpriser: slår upp träffens namn, bild och pris till bilden i hörnet, utan att lägga in kortet
 // Snabb skanning: träffen läggs i hörnet som i valvet och man skannar vidare. Ett tryck på bilden öppnar kortet.
 const QUICK_KEY = "nl:scan-quick";
 const quickOn = () => { try { return localStorage.getItem(QUICK_KEY) === "1"; } catch { return false; } };
@@ -2730,7 +2731,7 @@ function isLastHit(r) {
   return same;
 }
 // I valvet står alltid något om värdet
-const priceText = (item) => (item.price != null ? kr(item.price) : item.pending ? "Hämtar pris…" : onHit ? "Inget pris" : "");
+const priceText = (item) => (item.price != null ? kr(item.price) : item.pending ? "Hämtar pris…" : onHit || onLookup ? "Inget pris" : "");
 // Markeringens färg i valvet efter kortets värde, med samma avrundning som priset som visas. Okänt pris blir grått.
 const tierOf = (price) => {
   const k = price == null ? 0 : Math.round(price);
@@ -2766,11 +2767,11 @@ function paintPeek(item) {
   price.hidden = !price.textContent;
   btn.querySelector("span").textContent = labelOf(item);
   btn.setAttribute("aria-label", `Öppna ${labelOf(item)}${item.price != null ? `, ${kr(item.price)}` : ""}`);
-  if (onHit) btn.dataset.tier = tierOf(item.price);
+  if (onHit || onLookup) btn.dataset.tier = tierOf(item.price);
   else delete btn.dataset.tier;
   const pop = [...dialog.querySelectorAll(".scan-pop")].at(-1);
   if (!pop) return;
-  if (onHit) pop.dataset.tier = tierOf(item.price);
+  if (onHit || onLookup) pop.dataset.tier = tierOf(item.price);
   const popImg = pop.querySelector("img");
   if (popImg && item.thumb) popImg.src = item.thumb;
   pop.querySelector(".scan-price").textContent = priceText(item);
@@ -2801,6 +2802,8 @@ async function setPeek(r, canvas) {
   status(hitText(item));
   // Valvet svarar med det inlagda kortet, eller null om läsningen inte pekade ut något kort
   const adding = onHit && Promise.resolve(onHit(item)).then((c) => c || null, () => null);
+  // Snabb skanning: priset till bilden i hörnet. Öppnas kortet direkt behövs det inte här.
+  const lookup = !onHit && !autoOpen && onLookup ? Promise.resolve(onLookup(item)).then((c) => c || null, () => null) : null;
   item.thumb = thumbOf(canvas) || r.image || null; // ett manuellt valt kort har kortets bild
   // Ingen träff att visa: förra kortet ligger kvar i hörnet, och samma kort får läsas om
   const failed = () => {
@@ -2829,7 +2832,12 @@ async function setPeek(r, canvas) {
   if (added === null) return failed();
   if (added) await Promise.race([take(added), new Promise((done) => setTimeout(done, IMAGE_WAIT))]);
   else if (adding) item.pending = true;
-  else item.price = await priceOf(item);
+  else if (lookup) {
+    const c = await Promise.race([lookup, new Promise((done) => setTimeout(done, HIT_WAIT))]);
+    if (peek !== item) return;
+    if (c) await Promise.race([take(c), new Promise((done) => setTimeout(done, IMAGE_WAIT))]);
+    else if (c === undefined) item.pending = true;
+  } else item.price = await priceOf(item);
   if (peek !== item) return;
   if (!item.pending) cheer();
   status(hitText(item, !!added));
@@ -2858,8 +2866,9 @@ async function setPeek(r, canvas) {
     btn.classList.add("pop");
   });
   if (!item.pending) return;
-  const c = await adding;
-  if (peek !== item) { if (c) playCoin(); return; }
+  const c = await (adding || lookup);
+  if (peek !== item) { if (c && adding) playCoin(); return; }
+  if (!c && lookup) { item.pending = false; return paintPeek(item); }
   if (!c) return failed();
   await Promise.race([take(c), new Promise((done) => setTimeout(done, IMAGE_WAIT))]);
   if (peek !== item) return;
@@ -3189,7 +3198,7 @@ function popCard(item, target, end) {
   const pop = document.createElement("div");
   pop.className = "scan-pop";
   pop.setAttribute("aria-hidden", "true");
-  if (onHit) pop.dataset.tier = tierOf(item.price);
+  if (onHit || onLookup) pop.dataset.tier = tierOf(item.price);
   pop.innerHTML = `<div>${item.thumb ? `<img src="${item.thumb}" alt="">` : "<i></i>"}<em class="scan-price">${esc(priceText(item))}</em><span>${esc(labelOf(item))}</span></div>`;
   view.append(pop);
   target.hidden = false;
@@ -3216,13 +3225,15 @@ function popCard(item, target, end) {
 // manual: sökrutan (Värdera manuellt) öppnas direkt, och kameran startar först om man går tillbaka till den
 // open: träffen öppnas direkt (callback) när den har poppat upp, i stället för att vänta på ett tryck
 // preview: slår upp ett kort utan att lägga in det. Då visas ett kort valt i sökrutan först, och läggs in (hit) efter ett Ja.
+// lookup: slår upp en träff utan att lägga in den, så att bilden i hörnet visar kortets namn, bild och pris
 // resume: skannern kommer tillbaka efter att en träff öppnats, och samma kort läses inte igen förrän det bytts
-export async function openScanner(callback, partialCallback, { game = "pokemon", hit = null, manual = false, open = false, preview = null, resume = false } = {}) {
+export async function openScanner(callback, partialCallback, { game = "pokemon", hit = null, manual = false, open = false, preview = null, resume = false, lookup = null } = {}) {
   scanGame = game;
   onFound = callback;
   onHit = hit;
   onPreview = preview;
   openMode = open;
+  onLookup = lookup;
   autoOpen = open && !quickOn();
   if (!resume) resumeHit = null;
   onPartial = partialCallback || null;
