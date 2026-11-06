@@ -1,6 +1,48 @@
 {
- "updated": 1793963191101,
+ "updated": 1793964111123,
  "events": [
+  {
+   "at": 1793963833080,
+   "store": "cards-by-malcolm",
+   "product": "cards-by-malcolm:https://www.cardsbymalcolm.se/product/23569766/pokemon-tcg-mega-evolution-pitch-black-booster-pack",
+   "group": "pitch-black|booster-pack|en|",
+   "title": "Pokémon TCG: Mega Evolution Pitch Black Booster Pack",
+   "url": "https://www.cardsbymalcolm.se/product/23569766/pokemon-tcg-mega-evolution-pitch-black-booster-pack",
+   "image": "https://primary.jwwb.nl/public/j/t/b/temp-lbskgdtsizbkffcqieki/pitch-black-booster-pack-high.png",
+   "price": 99,
+   "type": "Booster Pack",
+   "set": "Pitch Black",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1793963282295,
+   "store": "tt-vault",
+   "product": "tt-vault:16764641608025",
+   "group": "delta-reign|elite-trainer-box|en|",
+   "title": "Pokemon TCG: Mega Evolution - Delta Reign - Elite Trainer Box PREORDER November 6",
+   "url": "https://ttvault.se/products/pokemon-tcg-mega-evolution-delta-reign-elite-trainer-box-preorder-november-6",
+   "image": "https://cdn.shopify.com/s/files/1/1020/3683/2601/files/IMG_0398.jpg?v=1793727769",
+   "price": 1299,
+   "type": "Elite Trainer Box",
+   "set": "Delta Reign",
+   "lang": "en",
+   "kind": "forbestallning"
+  },
+  {
+   "at": 1793963261901,
+   "store": "tcgaddan",
+   "product": "tcgaddan:16289052098892",
+   "group": "crown-zenith|blister|en||3",
+   "title": "Crown Zenith 3-Pack Blister",
+   "url": "https://tcgaddan.se/products/crown-zenith-booster-pack-kopia",
+   "image": "https://cdn.shopify.com/s/files/1/1037/7062/0236/files/Crown-zenith-inteleon-pin-collection-3-pack-blister_49c0fea3-5c97-40bb-99da-41a2d0dc1f78.png?v=1793962058",
+   "price": 1179,
+   "type": "Blister",
+   "set": "Crown Zenith",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793963010767,
    "store": "alphaspel",
@@ -7036,51 +7078,6 @@
    "lang": "en",
    "game": "op",
    "kind": "ny"
-  },
-  {
-   "at": 1793487017037,
-   "store": "alphaspel",
-   "product": "alphaspel:https://alphaspel.se/3959-one-piece-card-game/354952-one-piece-card-game-the-time-of-battle-op16-booster-pack",
-   "group": "op|the-time-of-battle|booster-pack|en|",
-   "title": "One Piece Card Game: The Time Of Battle OP16 Booster Pack",
-   "url": "https://alphaspel.se/3959-one-piece-card-game/354952-one-piece-card-game-the-time-of-battle-op16-booster-pack",
-   "image": "https://alphaspel.se/media/products/fed88b19-7c9d-417f-8d77-a680c6704b8c",
-   "price": 219,
-   "type": "Booster Pack",
-   "set": "The Time of Battle",
-   "lang": "en",
-   "game": "op",
-   "kind": "ny"
-  },
-  {
-   "at": 1793487017037,
-   "store": "alphaspel",
-   "product": "alphaspel:https://alphaspel.se/3959-one-piece-card-game/354954-one-piece-card-game-paramount-war-booster-pack",
-   "group": "op|paramount-war|booster-pack|en|",
-   "title": "One Piece Card Game: Paramount War Booster Pack",
-   "url": "https://alphaspel.se/3959-one-piece-card-game/354954-one-piece-card-game-paramount-war-booster-pack",
-   "image": "https://alphaspel.se/media/products/8826fa07-fd6a-4985-a27c-6e60359c0a10",
-   "price": 399,
-   "type": "Booster Pack",
-   "set": "Paramount War",
-   "lang": "en",
-   "game": "op",
-   "kind": "ny"
-  },
-  {
-   "at": 1793487017037,
-   "store": "alphaspel",
-   "product": "alphaspel:https://alphaspel.se/3959-one-piece-card-game/355794-one-piece-card-game-premium-card-collection-ace-sabo-luffy",
-   "group": "op|x|collection-box|en||ace-luffy-sabo",
-   "title": "One Piece Card Game: Premium Card Collection - Ace & Sabo & Luffy",
-   "url": "https://alphaspel.se/3959-one-piece-card-game/355794-one-piece-card-game-premium-card-collection-ace-sabo-luffy",
-   "image": "https://alphaspel.se/media/products/cb459040-177b-477e-80ea-624bb3d53018",
-   "price": 499,
-   "type": "Collection Box",
-   "set": null,
-   "lang": "en",
-   "game": "op",
-   "kind": "forbestallning"
   }
  ]
 }
