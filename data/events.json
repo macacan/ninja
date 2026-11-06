@@ -1,6 +1,21 @@
 {
- "updated": 1793981307823,
+ "updated": 1793982227850,
  "events": [
+  {
+   "at": 1793981381724,
+   "store": "poketalk",
+   "product": "poketalk:10196432191830",
+   "group": "rb|origins|booster-box|en|",
+   "title": "Riftbound: League of Legends TCG Origins Booster Box",
+   "url": "https://poketalk.se/products/riftbound-league-of-legends-tcg-origins-booster-box",
+   "image": "https://cdn.shopify.com/s/files/1/0862/7860/3094/files/PRODUKTSERIER_2000x2000px_6.png?v=1771262481",
+   "price": 2999,
+   "type": "Booster Box",
+   "set": "Origins",
+   "lang": "en",
+   "game": "rb",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793981262664,
    "store": "kantovault",
@@ -7057,20 +7072,6 @@
    "type": "Elite Trainer Box",
    "set": "Prismatic Evolutions",
    "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793629223170,
-   "store": "speltrollet",
-   "product": "speltrollet:15701342388550",
-   "group": "x|booster-pack|zh||gem-s6-vol",
-   "title": "Pokemon TCG Gem Pack Vol. 6 Booster (Kinesisk)",
-   "url": "https://speltrollet.se/products/pokemon-tcg-gem-pack-vol-6-boosterkinesisk",
-   "image": "https://cdn.shopify.com/s/files/1/0674/0951/0716/files/imgi_82_gemvol6pack.webp?v=1787926969",
-   "price": 39,
-   "type": "Booster Pack",
-   "set": null,
-   "lang": "zh",
    "kind": "tillbaka"
   }
  ]
