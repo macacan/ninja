@@ -14,7 +14,7 @@ import { mountCardAutocomplete } from "./card-autocomplete.js";
 import { CONDITIONS, DEFAULT_COND, gradeMult, isVintage } from "./valuation.js";
 // Skannern är stor och behövs bara när man skannar eller söker på ett foto: den hämtas när sidan är klar och laddas
 // först när den används, så att den inte bromsar sidans första visning.
-const scanner = () => import("./card-scanner.js?v=20261106m");
+const scanner = () => import("./card-scanner.js?v=20261106n");
 const warmScanner = () => (window.requestIdleCallback || setTimeout)(() => scanner().catch(() => {}), { timeout: 4000 });
 if (document.readyState === "complete") warmScanner(); else addEventListener("load", warmScanner, { once: true });
 import { showReveal } from "./card-reveal.js?v=20261104c";

@@ -565,6 +565,9 @@ async function scanQuery({ game: g, cardId, name, number, total }) {
   // Siffrorna fylls ut som på kortet ("57a" blir "057a"), så att sökningen hittar "057a/221"
   return total ? `${String(number).replace(/^\d+/, (d) => d.padStart(total.length, "0"))}/${total}` : number || name || "";
 }
+// Valvet bakom skannern ritas om en stund efter träffen, så att det inte stör kortets animation
+let redrawTimer = 0;
+const redrawSoon = () => { clearTimeout(redrawTimer); redrawTimer = setTimeout(showVault, 2500); };
 // manual: skannern öppnas direkt med sökrutan (Sök och lägg till i valvet)
 async function scanCards(g = "vault", { manual = false, resume = false } = {}) {
   if (VAULT_PAGE) {
@@ -572,7 +575,7 @@ async function scanCards(g = "vault", { manual = false, resume = false } = {}) {
     getRates(); // kursen ska finnas när första kortet hittas
   }
   track("scan", "Öppnad");
-  const { openScanner } = await import("./card-scanner.js?v=20261106m");
+  const { openScanner } = await import("./card-scanner.js?v=20261106n");
   const added = new Map(); // valvet: träffarna som lagts in, för att kunna öppna rätt kort
   openScanner(async (r) => {
     track("scan", r.cardId ? "Säker träff" : "Läst, söker");
@@ -606,7 +609,7 @@ async function scanCards(g = "vault", { manual = false, resume = false } = {}) {
     lookup: VAULT_PAGE ? null : scannedCard,
     hit: VAULT_PAGE ? (r) => {
       // Kortet läggs i valvet så fort det hittats, och valvet bakom skannern ritas om
-      const p = addScanned([r]).then(([c]) => { if (c) track("scan", "Till valvet: 1 kort"); showVault(); return c; });
+      const p = addScanned([r]).then(([c]) => { if (c) track("scan", "Till valvet: 1 kort"); redrawSoon(); return c; });
       added.set(hitKey(r), p);
       return p; // skannern visar kortets namn och värde
     } : null,

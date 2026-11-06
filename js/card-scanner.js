@@ -1915,7 +1915,7 @@ function startHudLoop() {
     animFrame = requestAnimationFrame(loop);
     const dt = Math.min(100, now - lastFrame);
     lastFrame = now;
-    if (!dialog.open || !video.videoWidth || frozen) return;
+    if (!dialog.open || !video.videoWidth || frozen || closeReveal) return; // kortsökningen vilar medan ett kort visas stort
 
     if (now - lastDetect >= DETECT_EVERY) {
       lastDetect = now;
@@ -1994,7 +1994,7 @@ function motionLevel(video) {
 function motionTick() {
   const video = dialog?.querySelector("video");
   // Valet av utgåva ligger kvar tills man svarar, så kameran får röra sig utan att något nytt läses under tiden
-  if (!dialog?.open || !video?.videoWidth || frozen || manualOpen || twinOpen) return;
+  if (!dialog?.open || !video?.videoWidth || frozen || manualOpen || twinOpen || closeReveal) return;
   // Under en läsning (och pausen efter en träff) tas stickprovet ändå, så att nästa jämförelse gäller bilden nyss och
   // inte en bild från innan läsningen. Annars räknades en hand som håller kortet som rörelse efter varje läsning.
   if (busy || Date.now() < pauseUntil) { motionLevel(video); return; }
@@ -3082,7 +3082,7 @@ const revealLevel = (price) => {
 let closeReveal = null;
 // Gnistor från mitten, och vid jackpot även mynt som regnar. Slutar när rutan är borta.
 function sparkle(canvas, level) {
-  const g = canvas.getContext("2d"), dpr = Math.min(devicePixelRatio || 1, 2);
+  const g = canvas.getContext("2d"), dpr = Math.min(devicePixelRatio || 1, 1.5);
   const W = innerWidth, H = innerHeight;
   canvas.width = W * dpr;
   canvas.height = H * dpr;
@@ -3095,8 +3095,8 @@ function sparkle(canvas, level) {
     parts.push({ x: W / 2, y: H * 0.45, vx: Math.cos(a) * v, vy: Math.sin(a) * v, r: 1.5 + Math.random() * 3, life: 50 + Math.random() * 50, age: -delay, c: colors[(Math.random() * colors.length) | 0], fall: 0.05 });
   };
   const coin = (delay) => parts.push({ coin: true, x: Math.random() * W, y: -30, vx: (Math.random() - 0.5) * 1.2, vy: 3 + Math.random() * 4, r: 8 + Math.random() * 7, spin: Math.random() * 6, turn: 0.1 + Math.random() * 0.16, life: 400, age: -delay, fall: 0.04 });
-  for (let i = 0; i < (jackpot ? 150 : 46); i++) spark(jackpot ? (i % 3) * 16 + 14 : Math.random() * 10);
-  if (jackpot) for (let i = 0; i < 90; i++) coin(20 + i * 3);
+  for (let i = 0; i < (jackpot ? 70 : 46); i++) spark(jackpot ? (i % 2) * 14 : Math.random() * 10);
+  if (jackpot) for (let i = 0; i < 45; i++) coin(6 + i * 5);
   const draw = () => {
     if (!canvas.isConnected) return;
     g.clearRect(0, 0, W, H);
@@ -3112,8 +3112,6 @@ function sparkle(canvas, level) {
         p.spin += p.turn;
         const wide = Math.abs(Math.cos(p.spin)) * p.r + 1;
         g.globalAlpha = 1;
-        g.fillStyle = "#b7791f";
-        g.beginPath(); g.ellipse(p.x + 1.5, p.y + 1.5, wide, p.r, 0, 0, 7); g.fill();
         g.fillStyle = Math.cos(p.spin) > 0 ? "#fcd34d" : "#f59e0b";
         g.beginPath(); g.ellipse(p.x, p.y, wide, p.r, 0, 0, 7); g.fill();
         g.fillStyle = "rgba(255,255,255,.6)";
@@ -3161,16 +3159,18 @@ function showReveal(item, level) {
       <em class="sr-price" aria-hidden="true">${esc(kr(item.price))}</em><span class="sr-name" aria-hidden="true">${esc(labelOf(item))}</span>
       <small class="sr-tap" aria-hidden="true">Tryck för att fortsätta</small>`;
     dialog.append(el);
-    // Skarpare bild när den stora har laddats. Går den inte att ladda ligger den lilla kvar.
-    if (item.hi) {
+    // Skarpare bild när kortet landat, så att bilden inte packas upp mitt i snurren. Går den inte att ladda ligger den lilla kvar.
+    if (item.hi) setTimeout(() => {
       const hi = new Image();
-      hi.onload = () => { const img = el.querySelector(".sr-card img"); if (img) img.src = item.hi; };
       hi.src = item.hi;
-    }
+      hi.decode().then(() => { const img = el.querySelector(".sr-card img"); if (img) img.src = item.hi; }).catch(() => {});
+    }, jackpot ? 1400 : 700);
     if (!quick) {
-      sparkle(el.querySelector("canvas"), level);
-      if (jackpot) countUp(el.querySelector(".sr-price"), item.price, 1500, 700);
+      // Vid jackpot kommer gnistorna och mynten när kortet landat, så att snurren har telefonen för sig själv
+      setTimeout(() => { if (el.isConnected) sparkle(el.querySelector("canvas"), level); }, jackpot ? 1000 : 0);
+      if (jackpot) countUp(el.querySelector(".sr-price"), item.price, 1300, 1000);
     }
+    dialog.classList.add("revealing");
     playTier(el.dataset.tier);
     if (jackpot) {
       if ("vibrate" in navigator) navigator.vibrate([70, 50, 70, 50, 180]);
@@ -3180,7 +3180,7 @@ function showReveal(item, level) {
       closeReveal = null;
       pauseUntil = Date.now() + HIT_PAUSE;
       el.classList.add("leaving");
-      setTimeout(() => { el.remove(); done(); }, quick ? 0 : 280);
+      setTimeout(() => { el.remove(); dialog.classList.remove("revealing"); done(); }, quick ? 0 : 280);
     };
     closeReveal = finish;
     // Ett första tryck ska inte råka hoppa över hela visningen

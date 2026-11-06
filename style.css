@@ -3225,28 +3225,31 @@ input[type=search]::-webkit-search-results-decoration {
 .scan-reveal{--ray:var(--tier);position:fixed;inset:0;z-index:30;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:20px 16px;overflow:hidden;cursor:pointer;
   background:radial-gradient(circle at 50% 45%,#1b1f3b,#05060c 70%);color:#fff;text-align:center;animation:srIn .25s ease-out both}
 .scan-reveal.leaving{animation:srOut .28s ease-in forwards}
+.scan-reveal::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:radial-gradient(circle at 50% 45%,transparent 16%,#05060c 66%)}
 .scan-reveal.jackpot{--ray:#fbbf24;background:radial-gradient(circle at 50% 45%,#4a2c05,#120a02 72%)}
+.scan-reveal.jackpot::after{background:radial-gradient(circle at 50% 45%,transparent 18%,#120a02 68%)}
+/* Kameran och allt annat bakom visningen ritas inte medan kortet syns */
+.scan.revealing>:not(.scan-reveal){visibility:hidden}
 .scan-reveal canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:2}
-.sr-rays{position:absolute;left:50%;top:45%;width:170vmax;height:170vmax;margin:-85vmax;border-radius:50%;pointer-events:none;
-  background:repeating-conic-gradient(from 0deg,var(--ray) 0 8deg,transparent 8deg 24deg);opacity:.5;
-  -webkit-mask:radial-gradient(circle,#000 0,transparent 58%);mask:radial-gradient(circle,#000 0,transparent 58%);animation:srRays 18s linear infinite,srFade .5s ease-out both}
+.sr-rays{position:absolute;left:50%;top:45%;width:130vmax;height:130vmax;margin:-65vmax;border-radius:50%;pointer-events:none;will-change:transform;
+  background:repeating-conic-gradient(from 0deg,var(--ray) 0 8deg,transparent 8deg 24deg);opacity:.5;animation:srRays 18s linear infinite,srFade .5s ease-out both}
 .sr-rays.two{opacity:.24;animation:srRaysBack 26s linear infinite,srFade .8s ease-out both}
-.sr-card{position:relative;z-index:3;width:min(62vw,44dvh,300px);aspect-ratio:245/342;border-radius:4.5%;overflow:hidden;background:#1b1e33;
-  box-shadow:0 0 0 2px var(--tier),0 0 50px 8px var(--tier-glow),0 24px 60px rgba(0,0,0,.7);animation:srCard .6s cubic-bezier(.2,1.5,.4,1) both,srFloat 3.2s ease-in-out .7s infinite}
+.sr-card{position:relative;z-index:3;width:min(62vw,44dvh,300px);aspect-ratio:245/342;border-radius:4.5%;overflow:hidden;background:#1b1e33;will-change:transform;
+  box-shadow:0 0 0 2px var(--tier),0 0 40px 6px var(--tier-glow);animation:srCard .6s cubic-bezier(.2,1.5,.4,1) both,srFloat 3.2s ease-in-out .7s infinite}
 .sr-card>img,.sr-card>i:first-child{display:block;width:100%;height:100%;object-fit:cover}
 .sr-sheen{position:absolute;inset:-20% -60%;background:linear-gradient(105deg,transparent 42%,rgba(255,255,255,.55) 50%,transparent 58%);transform:translateX(-70%);animation:srSheen 1.1s ease-out .45s both}
 .sr-price{position:relative;z-index:3;padding:7px 20px;border-radius:999px;font:700 1.5rem/1.1 var(--sans);font-style:normal;background:var(--tier-bg);color:var(--tier-ink);box-shadow:0 0 26px var(--tier-glow);animation:srUp .4s ease-out .3s both}
 .sr-name{position:relative;z-index:3;max-width:100%;font:700 1rem/1.25 var(--sans);text-shadow:0 2px 8px rgba(0,0,0,.8);animation:srUp .4s ease-out .4s both}
 .sr-tap{position:absolute;z-index:3;bottom:max(14px,env(safe-area-inset-bottom));left:0;right:0;font-size:.75rem;color:rgba(255,255,255,.6);animation:srFade .4s ease-out 1.2s both}
 .scan-reveal.jackpot .sr-rays{opacity:.75;animation-duration:9s,.5s}
-.scan-reveal.jackpot .sr-rays.two{opacity:.4;animation-duration:14s,.8s}
-.scan-reveal.jackpot .sr-card{--tier:#fde68a;--tier-glow:rgba(251,191,36,.95);width:min(58vw,40dvh,290px);animation:srSpin 1s cubic-bezier(.16,.9,.3,1.1) .12s both,srFloat 3.2s ease-in-out 1.2s infinite}
+.scan-reveal.jackpot .sr-rays.two{display:none}
+.scan-reveal.jackpot .sr-card{--tier:#fde68a;--tier-glow:rgba(251,191,36,.95);width:min(58vw,40dvh,290px);animation:srSpin 1s cubic-bezier(.22,.8,.3,1) .1s both,srFloat 3.2s ease-in-out 1.2s infinite}
 .scan-reveal.jackpot .sr-sheen{animation-delay:1s}
 .scan-reveal.jackpot .sr-price{font-size:2rem;background:linear-gradient(135deg,#fde68a,#d99a0b);color:#2b1d02;box-shadow:0 0 34px rgba(251,191,36,.9);animation-delay:.7s}
 .scan-reveal.jackpot .sr-price.done{animation:srBump .45s cubic-bezier(.2,1.8,.4,1) both}
 .scan-reveal.jackpot .sr-name{animation-delay:.9s}
 .sr-flash{position:absolute;inset:0;z-index:4;pointer-events:none;background:#fff8e1;animation:srFlash .6s ease-out both}
-.sr-ring{position:absolute;left:50%;top:45%;width:60vmin;height:60vmin;margin:-30vmin;border-radius:50%;border:6px solid #fde68a;box-shadow:0 0 30px #fbbf24;pointer-events:none;z-index:1;animation:srRing 1.1s ease-out .15s both}
+.sr-ring{position:absolute;left:50%;top:45%;width:60vmin;height:60vmin;margin:-30vmin;border-radius:50%;border:6px solid #fde68a;pointer-events:none;z-index:2;will-change:transform,opacity;animation:srRing 1.1s ease-out .15s both}
 .sr-ring.two{animation-delay:.45s}
 @keyframes srIn{from{opacity:0}}
 @keyframes srOut{to{opacity:0;transform:scale(1.04)}}
@@ -3257,7 +3260,7 @@ input[type=search]::-webkit-search-results-decoration {
 @keyframes srFloat{50%{transform:translateY(-7px)}}
 @keyframes srSheen{to{transform:translateX(70%)}}
 @keyframes srUp{from{opacity:0;transform:translateY(12px)}}
-@keyframes srSpin{from{opacity:0;transform:perspective(900px) rotateY(900deg) scale(.25)}}
+@keyframes srSpin{from{opacity:0;transform:perspective(900px) rotateY(360deg) scale(.3)}to{opacity:1;transform:perspective(900px) rotateY(0) scale(1)}}
 @keyframes srBump{40%{transform:scale(1.18)}}
 @keyframes srFlash{from{opacity:.95}to{opacity:0}}
 @keyframes srRing{from{opacity:.9;transform:scale(.25)}to{opacity:0;transform:scale(2.6)}}
