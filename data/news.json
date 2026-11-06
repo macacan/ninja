@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-06T18:56:56.403Z",
+ "updated": "2026-11-06T19:12:16.187Z",
  "articles": [
   {
    "title": "Europe Regional Championship Tracking – Metagame, Popularity, Win & Conversion Rates",
@@ -490,6 +490,12 @@
  ],
  "videos": [
   {
+   "id": "1mE79YetSrQ",
+   "title": "Aarni Karjala Vs Vincenzo Cipolla - Pokémon TCG Top 4 | 2027 Gdańsk Regional Championships",
+   "date": "2026-11-06T19:00:03.000Z",
+   "source": "Play! Pokémon (officiell)"
+  },
+  {
    "id": "bW0cOvHxvLI",
    "title": "Pokémon TCG: Mega Evolution—Delta Reign 🐉 | Available Now",
    "date": "2026-11-06T17:00:33.000Z",
@@ -514,10 +520,10 @@
    "source": "Pokémon (officiell)"
   },
   {
-   "id": "rWsK4plWGM4",
+   "id": "FlkW1YWVQF0",
    "title": "TCG Day 1 | 2027 Pokémon Gdańsk Regional Championships",
-   "date": "2026-10-31T19:26:17.000Z",
-   "source": "Play! Pokémon (officiell)"
+   "date": "2026-10-31T19:18:36.000Z",
+   "source": "Pokémon (officiell)"
   }
  ]
 }
