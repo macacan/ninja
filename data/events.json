@@ -1,6 +1,20 @@
 {
- "updated": 1793960431037,
+ "updated": 1793961351058,
  "events": [
+  {
+   "at": 1793960905413,
+   "store": "cards-by-malcolm",
+   "product": "cards-by-malcolm:https://www.cardsbymalcolm.se/product/24790385/pokemon-tcg-xy-booster-pack",
+   "group": "x|booster-pack|en||",
+   "title": "Pokémon TCG – XY Booster Pack",
+   "url": "https://www.cardsbymalcolm.se/product/24790385/pokemon-tcg-xy-booster-pack",
+   "image": "https://primary.jwwb.nl/public/j/t/b/temp-lbskgdtsizbkffcqieki/xy-booster-pack-ny-high.png",
+   "price": 1099,
+   "type": "Booster Pack",
+   "set": null,
+   "lang": "en",
+   "kind": "ny"
+  },
   {
    "at": 1793959690370,
    "store": "tt-vault",
@@ -7071,21 +7085,6 @@
    "price": 169,
    "type": "Deck",
    "set": "Starter Deck 35: RED/BLACK Sabo",
-   "lang": "en",
-   "game": "op",
-   "kind": "ny"
-  },
-  {
-   "at": 1793486049196,
-   "store": "alphaspel",
-   "product": "alphaspel:https://alphaspel.se/3959-one-piece-card-game/353114-one-piece-card-game-legacy-of-the-master-booster-pack",
-   "group": "op|legacy-of-the-master|booster-pack|en|",
-   "title": "One Piece Card Game: Legacy of the Master Booster Pack",
-   "url": "https://alphaspel.se/3959-one-piece-card-game/353114-one-piece-card-game-legacy-of-the-master-booster-pack",
-   "image": "https://alphaspel.se/media/products/d256160a-3aeb-4766-b40b-6b18c7ab5e0c",
-   "price": 269,
-   "type": "Booster Pack",
-   "set": "Legacy of the Master",
    "lang": "en",
    "game": "op",
    "kind": "ny"
