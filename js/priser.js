@@ -547,10 +547,9 @@ async function addScanned(list) {
 }
 
 // ---------- Kortskanner ----------
-// Kortpriser: ett kort i taget i det valda spelet (Pokémonskannern känner också igen tydliga One Piece- och
-// Riftbound-kort). Träffen poppar upp i skannern, som stängs, och kortet öppnas i den stora vyn med sökträffarna
-// bakom, så att ✕ visar kortet i listan. Ett kort som bara gick att läsa delvis söks på numret (t.ex. "001/167") eller
-// namnet. Valvet: skannern letar bland alla tre spelen ("vault"), och varje träff läggs i valvet direkt. Ett tryck på
+// Skannern letar alltid bland alla tre spelen ("vault"), oavsett spelknapparna, som bara gäller listan på Kortpriser.
+// Kortpriser: träffen öppnas direkt i den stora vyn med sökträffarna bakom, och ✕ går tillbaka till kameran. Ett kort som bara gick att läsa delvis söks på numret (t.ex. "001/167") eller
+// namnet. Valvet: varje träff läggs i valvet direkt. Ett tryck på
 // träffen i skannern öppnar kortet.
 // Skannern (js/card-scanner.js) är stor och laddas först när knappen trycks.
 const hitKey = (r) => `${r.game}:${r.cardId || `${r.number}/${r.total}`}`;
@@ -567,7 +566,7 @@ async function scanQuery({ game: g, cardId, name, number, total }) {
   return total ? `${String(number).replace(/^\d+/, (d) => d.padStart(total.length, "0"))}/${total}` : number || name || "";
 }
 // manual: skannern öppnas direkt med sökrutan (Sök och lägg till i valvet)
-async function scanCards(g = VAULT_PAGE ? "vault" : game === "all" ? "pokemon" : game, { manual = false, resume = false } = {}) {
+async function scanCards(g = "vault", { manual = false, resume = false } = {}) {
   if (VAULT_PAGE) {
     unlockCoin(); // måste ske i trycket, före första await
     getRates(); // kursen ska finnas när första kortet hittas
@@ -587,9 +586,10 @@ async function scanCards(g = VAULT_PAGE ? "vault" : game === "all" ? "pokemon" :
       openCard(i);
       return;
     }
-    // Ett kort från ett annat spel än det valda (t.ex. One Piece i Pokémonskannern) byter spel
+    // Ett kort från ett annat spel än det valda visas bland alla spel, och filter får inte dölja kortet
     const g = r.game || "pokemon";
-    if (game !== "all" && g !== game) await setGame(g);
+    if (game !== "all" && g !== game) await setGame("all");
+    $("#set").value = $("#rarity").value = "";
     if (g === "pokemon") $("#lang").value = "en";
     openAfter = r.cardId || null;
     $("#pq").value = await scanQuery({ ...r, game: g });
