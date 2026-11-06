@@ -3243,11 +3243,11 @@ input[type=search]::-webkit-search-results-decoration {
 .sr-tap{position:absolute;z-index:3;bottom:max(14px,env(safe-area-inset-bottom));left:0;right:0;font-size:.75rem;color:rgba(255,255,255,.6);animation:srFade .4s ease-out 1.2s both}
 .scan-reveal.jackpot .sr-rays{opacity:.75;animation-duration:9s,.5s}
 .scan-reveal.jackpot .sr-rays.two{display:none}
-.scan-reveal.jackpot .sr-card{--tier:#fde68a;--tier-glow:rgba(251,191,36,.95);width:min(58vw,40dvh,290px);animation:srSpin 1s cubic-bezier(.22,.8,.3,1) .1s both,srFloat 3.2s ease-in-out 1.2s infinite}
-.scan-reveal.jackpot .sr-sheen{animation-delay:1s}
-.scan-reveal.jackpot .sr-price{font-size:2rem;background:linear-gradient(135deg,#fde68a,#d99a0b);color:#2b1d02;box-shadow:0 0 34px rgba(251,191,36,.9);animation-delay:.7s}
+.scan-reveal.jackpot .sr-card{--tier:#fde68a;--tier-glow:rgba(251,191,36,.95);width:min(58vw,40dvh,290px);}
+.scan-reveal.jackpot .sr-sheen{animation-delay:.5s}
+.scan-reveal.jackpot .sr-price{font-size:2rem;background:linear-gradient(135deg,#fde68a,#d99a0b);color:#2b1d02;box-shadow:0 0 34px rgba(251,191,36,.9);animation-delay:.35s}
 .scan-reveal.jackpot .sr-price.done{animation:srBump .45s cubic-bezier(.2,1.8,.4,1) both}
-.scan-reveal.jackpot .sr-name{animation-delay:.9s}
+.scan-reveal.jackpot .sr-name{animation-delay:.45s}
 .sr-flash{position:absolute;inset:0;z-index:4;pointer-events:none;background:#fff8e1;animation:srFlash .6s ease-out both}
 .sr-ring{position:absolute;left:50%;top:45%;width:60vmin;height:60vmin;margin:-30vmin;border-radius:50%;border:6px solid #fde68a;pointer-events:none;z-index:2;will-change:transform,opacity;animation:srRing 1.1s ease-out .15s both}
 .sr-ring.two{animation-delay:.45s}
@@ -3260,7 +3260,6 @@ input[type=search]::-webkit-search-results-decoration {
 @keyframes srFloat{50%{transform:translateY(-7px)}}
 @keyframes srSheen{to{transform:translateX(70%)}}
 @keyframes srUp{from{opacity:0;transform:translateY(12px)}}
-@keyframes srSpin{from{opacity:0;transform:perspective(900px) rotateY(360deg) scale(.3)}to{opacity:1;transform:perspective(900px) rotateY(0) scale(1)}}
 @keyframes srBump{40%{transform:scale(1.18)}}
 @keyframes srFlash{from{opacity:.95}to{opacity:0}}
 @keyframes srRing{from{opacity:.9;transform:scale(.25)}to{opacity:0;transform:scale(2.6)}}

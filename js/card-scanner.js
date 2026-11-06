@@ -3073,8 +3073,8 @@ function openPeek() {
 }
 
 // ---------- Värdefulla kort i valvet ----------
-// Över 100 kr visas bara kortet över hela skärmen med strålar bakom. Över 1 000 kr blir det jackpot: blixt, kortet snurrar
-// in, ringar, mynt och priset som räknas upp (ingen text). Visningen ligger kvar tills man trycker.
+// Över 100 kr visas bara kortet över hela skärmen med strålar bakom. Över 1 000 kr blir det jackpot: blixt, kortet poppar
+// upp, ringar, mynt och priset som räknas upp (ingen text). Visningen ligger kvar tills man trycker.
 const revealLevel = (price) => {
   const k = price == null ? 0 : Math.round(price);
   return !onHit ? null : k > 1000 ? "jackpot" : k > 100 ? "rays" : null;
@@ -3159,16 +3159,16 @@ function showReveal(item, level) {
       <em class="sr-price" aria-hidden="true">${esc(kr(item.price))}</em><span class="sr-name" aria-hidden="true">${esc(labelOf(item))}</span>
       <small class="sr-tap" aria-hidden="true">Tryck för att fortsätta</small>`;
     dialog.append(el);
-    // Skarpare bild när kortet landat, så att bilden inte packas upp mitt i snurren. Går den inte att ladda ligger den lilla kvar.
+    // Skarpare bild när kortet poppat upp, så att bilden inte packas upp mitt i animationen. Går den inte att ladda ligger den lilla kvar.
     if (item.hi) setTimeout(() => {
       const hi = new Image();
       hi.src = item.hi;
       hi.decode().then(() => { const img = el.querySelector(".sr-card img"); if (img) img.src = item.hi; }).catch(() => {});
-    }, jackpot ? 1400 : 700);
+    }, 700);
     if (!quick) {
-      // Vid jackpot kommer gnistorna och mynten när kortet landat, så att snurren har telefonen för sig själv
-      setTimeout(() => { if (el.isConnected) sparkle(el.querySelector("canvas"), level); }, jackpot ? 1000 : 0);
-      if (jackpot) countUp(el.querySelector(".sr-price"), item.price, 1300, 1000);
+      // Vid jackpot kommer gnistorna och mynten när kortet poppat upp
+      setTimeout(() => { if (el.isConnected) sparkle(el.querySelector("canvas"), level); }, jackpot ? 450 : 0);
+      if (jackpot) countUp(el.querySelector(".sr-price"), item.price, 1300, 450);
     }
     dialog.classList.add("revealing");
     playTier(el.dataset.tier);
