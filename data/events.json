@@ -1,6 +1,20 @@
 {
- "updated": 1793953430139,
+ "updated": 1793953951391,
  "events": [
+  {
+   "at": 1793953845465,
+   "store": "card-mountain",
+   "product": "card-mountain:10449308254544",
+   "group": "destined-rivals|booster-box|en|",
+   "title": "Pokémon Scarlet & Violet: Destined Rivals Booster Box (MAX 2)",
+   "url": "https://cardmountain.se/products/pokemon-scarlet-violet-destined-rivals-booster-box-max-2",
+   "image": "https://cdn.shopify.com/s/files/1/0932/0765/8832/files/DestinedRivalsBoosterBoxFront_2487c46b-adfa-4cae-8dca-83c7a7b28bfe.webp?v=1774631021",
+   "price": 4499,
+   "type": "Booster Box",
+   "set": "Destined Rivals",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793952368914,
    "store": "poketalk",
@@ -7077,20 +7091,6 @@
    "price": 4695,
    "type": "Elite Trainer Box",
    "set": "Celebrations",
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1793469230440,
-   "store": "samlarhobby",
-   "product": "samlarhobby:16094224712061",
-   "group": "silver-tempest|elite-trainer-box|en|",
-   "title": "Pokémon, Sword & Shield 12: Silver Tempest, Elite Trainer Box",
-   "url": "https://samlarhobby.se/products/pokemon-sword-shield-12-silver-tempest-elite-trainer-box",
-   "image": "https://cdn.shopify.com/s/files/1/0905/3120/1405/files/44_3c76a530-3e8f-4f40-938b-a3e3e0e22ab4.jpg?v=1793468410",
-   "price": 1995,
-   "type": "Elite Trainer Box",
-   "set": "Silver Tempest",
    "lang": "en",
    "kind": "ny"
   }
