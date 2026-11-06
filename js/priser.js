@@ -7,7 +7,7 @@ import { apiFor, findJapanese } from "./japanese.js";
 import { track } from "./tracker.js";
 import { gameSuggestions } from "./game-guess.js";
 import { reverseEur, baseLabel, cardmarketTable, tcgplayerTable } from "./cmholo.js?v=20261104b";
-import { unlockCoin } from "./scan/coin.js?v=20261105a";
+import { unlockCoin } from "./scan/coin.js?v=20261106a";
 import { backupDue, backupFile, backupState, cardCount, listCopies, markSaved, mergeCards, noteAdded, parseBackup, saveCopy, saveFile, snooze } from "./vault-backup.js?v=20261106a";
 
 // ---------- Spel ----------
@@ -572,7 +572,7 @@ async function scanCards(g = "vault", { manual = false, resume = false } = {}) {
     getRates(); // kursen ska finnas när första kortet hittas
   }
   track("scan", "Öppnad");
-  const { openScanner } = await import("./card-scanner.js?v=20261106l");
+  const { openScanner } = await import("./card-scanner.js?v=20261106m");
   const added = new Map(); // valvet: träffarna som lagts in, för att kunna öppna rätt kort
   openScanner(async (r) => {
     track("scan", r.cardId ? "Säker träff" : "Läst, söker");

@@ -16,7 +16,7 @@ import { API, cardImg, esc, getJSON, kr } from "./site.js";
 import { loadDataset } from "./card-autocomplete.js";
 import "./scan/quad.js?v=20261103a"; // sätter self.Quad
 import "./scan/fingerprint.js?v=20261106b"; // sätter self.Fingerprint (med FP.BOX per spel)
-import { coinMuted, playCoin, setCoinMuted, unlockCoin } from "./scan/coin.js?v=20261105a";
+import { coinMuted, hasTierSound, playCoin, playTier, setCoinMuted, unlockCoin } from "./scan/coin.js?v=20261106a";
 
 const TESSERACT = "https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/tesseract.min.js";
 // SRI: webbläsaren vägrar köra filen om CDN:et skulle leverera något annat än exakt version 5.1.1.
@@ -2719,7 +2719,6 @@ async function priceOf(r) {
 }
 const HIT_WAIT = 700; // ms som kortet längst väntar på priset innan det poppar upp ändå. Priset fylls i när det kommer.
 const HIT_PAUSE = 1100; // ms innan nästa kort läses
-const REVEAL_RAYS = 2800, REVEAL_JACKPOT = 5600; // ms som ett värdefullt kort visas innan skannern fortsätter av sig själv
 const HIT_GAP = 1000; // ms som minst går mellan två träffar, så att samma kort inte räknas två gånger
 const SAME_NAME = 2500; // ms efter att kortet senast setts som ett kort med samma namn räknas som samma kort (en annan utgåva)
 // Senaste träffen: { ids, name, at, seen }. ids är korten som liknade bilden nästan lika mycket, t.ex. kortets andra utgåvor.
@@ -2777,9 +2776,11 @@ function paintPeek(item) {
   pop.querySelector(".scan-price").textContent = priceText(item);
   pop.querySelector("span").textContent = labelOf(item);
 }
-function cheer() {
+// Silver-, guld- och diamantkort har egna ljud i stället för myntet (showReveal)
+const coinFor = (price) => { if (!hasTierSound(tierOf(price))) playCoin(); };
+function cheer(item) {
   if ("vibrate" in navigator) navigator.vibrate(45);
-  if (onHit) playCoin();
+  if (onHit) coinFor(item.price);
   const hud = dialog.querySelector(".scan-hud-status");
   hud?.classList.add("success");
   setTimeout(() => hud?.classList.remove("success"), 1500);
@@ -2839,7 +2840,7 @@ async function setPeek(r, canvas) {
     else if (c === undefined) item.pending = true;
   } else item.price = await priceOf(item);
   if (peek !== item) return;
-  if (!item.pending) cheer();
+  if (!item.pending) cheer(item);
   status(hitText(item, !!added));
   if (autoOpen) return openPeek();
   const btn = dialog.querySelector(".scan-peek");
@@ -2872,7 +2873,7 @@ async function setPeek(r, canvas) {
   if (!c) return failed();
   await Promise.race([take(c), new Promise((done) => setTimeout(done, IMAGE_WAIT))]);
   if (peek !== item) return;
-  cheer();
+  cheer(item);
   status(hitText(item, true));
   paintPeek(item);
   // Priset kom efter att kortet poppat upp: den lilla bilden ger plats åt den stora visningen
@@ -3043,7 +3044,7 @@ async function confirmYes() {
   if (confirmItem !== item) return;
   if (!added) return confirmStep("ask", "Kortet gick inte att lägga till. Försök igen.");
   if ("vibrate" in navigator) navigator.vibrate(45);
-  playCoin();
+  coinFor(added.sek);
   confirmStep("done", "Tillagt i valvet! Vill du lägga till fler kort?");
   const level = revealLevel(added.sek);
   if (level) showReveal({ ...item, name: added.name || item.name, price: added.sek, thumb: cardImg(added, "low"), hi: cardImg(added, "high") }, level);
@@ -3073,7 +3074,7 @@ function openPeek() {
 
 // ---------- Värdefulla kort i valvet ----------
 // Över 100 kr visas bara kortet över hela skärmen med strålar bakom. Över 1 000 kr blir det jackpot: blixt, kortet snurrar
-// in, ringar, mynt och priset som räknas upp (ingen text). Ett tryck går vidare, annars fortsätter skannern av sig själv.
+// in, ringar, mynt och priset som räknas upp (ingen text). Visningen ligger kvar tills man trycker.
 const revealLevel = (price) => {
   const k = price == null ? 0 : Math.round(price);
   return !onHit ? null : k > 1000 ? "jackpot" : k > 100 ? "rays" : null;
@@ -3148,8 +3149,7 @@ function showReveal(item, level) {
   closeReveal?.();
   return new Promise((done) => {
     const quick = matchMedia("(prefers-reduced-motion: reduce)").matches, jackpot = level === "jackpot";
-    const ms = jackpot ? REVEAL_JACKPOT : REVEAL_RAYS;
-    pauseUntil = Date.now() + ms + HIT_PAUSE;
+    pauseUntil = Infinity;
     const el = document.createElement("div");
     el.className = `scan-reveal ${level}`;
     el.dataset.tier = tierOf(item.price);
@@ -3171,20 +3171,18 @@ function showReveal(item, level) {
       sparkle(el.querySelector("canvas"), level);
       if (jackpot) countUp(el.querySelector(".sr-price"), item.price, 1500, 700);
     }
+    playTier(el.dataset.tier);
     if (jackpot) {
       if ("vibrate" in navigator) navigator.vibrate([70, 50, 70, 50, 180]);
-      [160, 340, 560, 820].forEach((t) => setTimeout(() => { if (el.isConnected) playCoin(); }, t));
     }
     const finish = () => {
       if (closeReveal !== finish) return;
       closeReveal = null;
-      clearTimeout(timer);
       pauseUntil = Date.now() + HIT_PAUSE;
       el.classList.add("leaving");
       setTimeout(() => { el.remove(); done(); }, quick ? 0 : 280);
     };
     closeReveal = finish;
-    const timer = setTimeout(finish, ms);
     // Ett första tryck ska inte råka hoppa över hela visningen
     const opened = Date.now();
     el.addEventListener("pointerdown", () => { if (Date.now() - opened > 500) finish(); });
