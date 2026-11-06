@@ -1,6 +1,34 @@
 {
- "updated": 1793961351058,
+ "updated": 1793962271081,
  "events": [
+  {
+   "at": 1793961880843,
+   "store": "cards-by-malcolm",
+   "product": "cards-by-malcolm:https://www.cardsbymalcolm.se/product/23047117/pokemon-mega-evolution-phantasmal-flames-booster-pack",
+   "group": "phantasmal-flames|booster-pack|en|",
+   "title": "Pokémon Mega Evolution: Phantasmal Flames Booster Pack",
+   "url": "https://www.cardsbymalcolm.se/product/23047117/pokemon-mega-evolution-phantasmal-flames-booster-pack",
+   "image": "https://primary.jwwb.nl/public/j/t/b/temp-lbskgdtsizbkffcqieki/phantasmal-flames-pack-plastic-high.png",
+   "price": 149,
+   "type": "Booster Pack",
+   "set": "Phantasmal Flames",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1793961460964,
+   "store": "tcgaddan",
+   "product": "tcgaddan:15912561770828",
+   "group": "shining-fates|booster-pack|en|",
+   "title": "Shining Fates Booster Pack",
+   "url": "https://tcgaddan.se/products/shining-fates-booster-pack",
+   "image": "https://cdn.shopify.com/s/files/1/1037/7062/0236/files/Pokemon-Sword-and-Shield-Shining-Fates-Booster.webp?v=1784389690",
+   "price": 199,
+   "type": "Booster Pack",
+   "set": "Shining Fates",
+   "lang": "en",
+   "kind": "ny"
+  },
   {
    "at": 1793960905413,
    "store": "cards-by-malcolm",
@@ -7058,36 +7086,6 @@
    "lang": "en",
    "game": "op",
    "kind": "forbestallning"
-  },
-  {
-   "at": 1793486049196,
-   "store": "alphaspel",
-   "product": "alphaspel:https://alphaspel.se/3959-one-piece-card-game/351735-one-piece-card-game-st33-starter-deck",
-   "group": "op|starter-deck-33-blue-kuzan|deck|en|",
-   "title": "One Piece Card Game: ST33 Starter Deck",
-   "url": "https://alphaspel.se/3959-one-piece-card-game/351735-one-piece-card-game-st33-starter-deck",
-   "image": "https://alphaspel.se/media/products/0e28f3ad-8b9f-4dc5-bc1b-fc39a85a4b36",
-   "price": 169,
-   "type": "Deck",
-   "set": "Starter Deck 33: BLUE Kuzan",
-   "lang": "en",
-   "game": "op",
-   "kind": "ny"
-  },
-  {
-   "at": 1793486049196,
-   "store": "alphaspel",
-   "product": "alphaspel:https://alphaspel.se/3959-one-piece-card-game/351737-one-piece-card-game-st35-starter-deck",
-   "group": "op|starter-deck-35-red-black-sabo|deck|en|",
-   "title": "One Piece Card Game: ST35 Starter Deck",
-   "url": "https://alphaspel.se/3959-one-piece-card-game/351737-one-piece-card-game-st35-starter-deck",
-   "image": "https://alphaspel.se/media/products/768fd907-29f7-4d72-8e71-c2cbc78e05de",
-   "price": 169,
-   "type": "Deck",
-   "set": "Starter Deck 35: RED/BLACK Sabo",
-   "lang": "en",
-   "game": "op",
-   "kind": "ny"
   }
  ]
 }
