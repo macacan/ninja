@@ -1,6 +1,34 @@
 {
- "updated": 1794001213970,
+ "updated": 1794002133984,
  "events": [
+  {
+   "at": 1794001614800,
+   "store": "bangerpack",
+   "product": "bangerpack:https://bangerpack.se/pokemon/displayer-boxar/pokemon-journey-together-booster-bundle-6-boosters",
+   "group": "journey-together|booster-bundle|en|",
+   "title": "Pokémon Journey Together – Booster Bundle (6 boosters)",
+   "url": "https://bangerpack.se/pokemon/displayer-boxar/pokemon-journey-together-booster-bundle-6-boosters",
+   "image": "https://cdn.quickbutik.com/images/99246J/products/6ae7ee2296b0d.png",
+   "price": 789,
+   "type": "Booster Bundle",
+   "set": "Journey Together",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1794001614800,
+   "store": "bangerpack",
+   "product": "bangerpack:https://bangerpack.se/pokemon/boosters-packs/pokemon-perfect-order-sleeved-booster",
+   "group": "perfect-order|booster-pack|en|sleeved",
+   "title": "Pokémon Perfect Order – Sleeved Booster",
+   "url": "https://bangerpack.se/pokemon/boosters-packs/pokemon-perfect-order-sleeved-booster",
+   "image": "https://cdn.quickbutik.com/images/99246J/products/6ae7eedbbf008.png",
+   "price": 109,
+   "type": "Booster Pack",
+   "set": "Perfect Order",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793993568427,
    "store": "webhallen",
@@ -7045,34 +7073,6 @@
    "price": 139,
    "type": "Blister",
    "set": "Obsidian Flames",
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1793641899306,
-   "store": "samlarhobby",
-   "product": "samlarhobby:15165041115517",
-   "group": "obsidian-flames|blister|en||cl",
-   "title": "Pokémon, Scarlet & Violet 3: Obsidian Flames, Premium Checklane blisterpack, Annihilape",
-   "url": "https://samlarhobby.se/products/pokemon-scarlet-violet-3-obsidian-flames-premium-checklane-blisterpack-annihilape",
-   "image": "https://cdn.shopify.com/s/files/1/0905/3120/1405/files/pokemon-tcg-obsidian-flames-premium-checklane-blister-annihilape-1.jpg?v=1745155405",
-   "price": 149,
-   "type": "Blister",
-   "set": "Obsidian Flames",
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1793641899306,
-   "store": "samlarhobby",
-   "product": "samlarhobby:15165033742717",
-   "group": "temporal-forces|blister|en||cl",
-   "title": "Pokémon, Scarlet & Violet 5: Temporal Forces, Premium Checklane, Togekiss",
-   "url": "https://samlarhobby.se/products/pokemon-scarlet-violet-5-temporal-forces-premium-checklane-togekiss",
-   "image": "https://cdn.shopify.com/s/files/1/0905/3120/1405/files/POK86667_3_0d6b3cfe-6966-4bc8-8b09-16469e6f40fb.jpg?v=1745155049",
-   "price": 139,
-   "type": "Blister",
-   "set": "Temporal Forces",
    "lang": "en",
    "kind": "ny"
   }
