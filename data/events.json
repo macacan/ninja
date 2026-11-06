@@ -1,6 +1,50 @@
 {
- "updated": 1793976627715,
+ "updated": 1793977627742,
  "events": [
+  {
+   "at": 1793976923128,
+   "store": "dragon-s-lair",
+   "product": "dragon-s-lair:15832720441692",
+   "group": "x|booster-pack|zh||brilliant-illusions",
+   "title": "Pokemon TCG Scarlet & Violet - Brilliant Illusions (CSV8C) Booster (5-kort) (Kinesisk)",
+   "url": "https://dragonslair.se/products/pokemon-tcg-scarlet-violet-brilliant-illusions-csv8c-booster-5-kort-kinesisk",
+   "image": "https://cdn.shopify.com/s/files/1/1015/8315/9644/files/Pokemon_Brilliant_Illusions_Slim_Booster_Pack_Chinese.webp?v=1789722619",
+   "price": 20,
+   "type": "Booster Pack",
+   "set": "Scarlet & Violet",
+   "lang": "zh",
+   "kind": "prissankt",
+   "from": 29
+  },
+  {
+   "at": 1793976923128,
+   "store": "dragon-s-lair",
+   "product": "dragon-s-lair:15832708448604",
+   "group": "x|booster-box|zh||brilliant",
+   "title": "Pokémon Scarlet & Violet CSV8C: Brilliant Booster Box (Kinesisk)15 st Booster",
+   "url": "https://dragonslair.se/products/pokemon-scarlet-violet-csv8c-brilliant-kinesisk15-st-booster",
+   "image": "https://cdn.shopify.com/s/files/1/1015/8315/9644/files/650705297_ce81ce18-3e10-4205-9fdd-55cc46cc2526.webp?v=1789721744",
+   "price": 295,
+   "type": "Booster Box",
+   "set": "Scarlet & Violet",
+   "lang": "zh",
+   "kind": "prissankt",
+   "from": 395
+  },
+  {
+   "at": 1793976772319,
+   "store": "goblinen",
+   "product": "goblinen:16215736418648",
+   "group": "x|collection-box|en||crafter",
+   "title": "Pokémon TCG: Deck Crafter’s Collection",
+   "url": "https://goblinen.com/products/pokemon-tcg-deck-crafter-s-collection",
+   "image": "https://cdn.shopify.com/s/files/1/0267/3236/3950/files/deck-crafters-collection-169-en.png?v=1793975986",
+   "price": 179,
+   "type": "Collection Box",
+   "set": null,
+   "lang": "en",
+   "kind": "ny"
+  },
   {
    "at": 1793976037763,
    "store": "speltrollet",
@@ -7029,49 +7073,6 @@
    "lang": "zh",
    "kind": "prissankt",
    "from": 499
-  },
-  {
-   "at": 1793622008390,
-   "store": "goblinen",
-   "product": "goblinen:15839876579672",
-   "group": "pitch-black|elite-trainer-box|en|",
-   "title": "Pokémon TCG: Mega Evolution 5 Pitch Black - Elite Trainer Box (Max 1/kund!)",
-   "url": "https://goblinen.com/products/pokemon-tcg-mega-evolution-5-pitch-black-elite-trainer-box-max-1-kund",
-   "image": "https://cdn.shopify.com/s/files/1/0267/3236/3950/files/Pokemon_TCG_Mega_Evolution_Pitch_Black_Elite_Trainer_Box-scaled.png?v=1782852122",
-   "price": 799,
-   "type": "Elite Trainer Box",
-   "set": "Pitch Black",
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1793621786739,
-   "store": "shinycards",
-   "product": "shinycards:https://www.shinycards.se/pokemon/collection-box/pokemon-center-fukuoka-special-collection-box-japansk",
-   "group": "x|premium-collection|ja|pc|center-fukuoka",
-   "title": "Pokemon Center Fukuoka Special Collection Box (Japansk)",
-   "url": "https://www.shinycards.se/pokemon/collection-box/pokemon-center-fukuoka-special-collection-box-japansk",
-   "image": "https://cdn.quickbutik.com/images/69946c/products/6adf2d395d41c.webp",
-   "price": 1399,
-   "type": "Premium Collection",
-   "set": null,
-   "lang": "ja",
-   "kind": "prissankt",
-   "from": 1499
-  },
-  {
-   "at": 1793620946452,
-   "store": "spelparken",
-   "product": "spelparken:15456503923063",
-   "group": "base-set|booster-box|en|",
-   "title": "Scarlet & Violet Booster Box (Base Set)",
-   "url": "https://spelparken.se/products/scarlet-violet-booster-box-base-set",
-   "image": "https://cdn.shopify.com/s/files/1/0948/1876/3127/files/pokemon-scarlet-and-violet-base-set-booster-box.jpg?v=1776272284",
-   "price": 3599,
-   "type": "Booster Box",
-   "set": "Base Set",
-   "lang": "en",
-   "kind": "tillbaka"
   }
  ]
 }
