@@ -1,6 +1,20 @@
 {
- "updated": 1793972391300,
+ "updated": 1793973291318,
  "events": [
+  {
+   "at": 1793972493828,
+   "store": "speltrollet",
+   "product": "speltrollet:15430238830918",
+   "group": "x|collection-box|zh||charizard-gift-set",
+   "title": "Pokemon TCG Card Display Set Gift Box Charizard (Kinesisk)",
+   "url": "https://speltrollet.se/products/pokemon-tcg-card-display-set-gift-box-charizard-kinesisk",
+   "image": "https://cdn.shopify.com/s/files/1/0674/0951/0716/files/6975272836050.jpg?v=1771493064",
+   "price": 249,
+   "type": "Collection Box",
+   "set": null,
+   "lang": "zh",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793971571512,
    "store": "bangerpack",
@@ -7055,20 +7069,6 @@
    "image": "https://cdn.quickbutik.com/images/69946c/products/6a0b495b20638.png",
    "price": 849,
    "type": "Collection Box",
-   "set": "White Flare",
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1793616935043,
-   "store": "shinycards",
-   "product": "shinycards:https://www.shinycards.se/pokemon/booster-pack/pokemon-scarlet-violet-white-flare-booster-pack",
-   "group": "white-flare|booster-pack|en|",
-   "title": "Pokemon Scarlet & Violet 10.5: White Flare Booster Pack",
-   "url": "https://www.shinycards.se/pokemon/booster-pack/pokemon-scarlet-violet-white-flare-booster-pack",
-   "image": "https://cdn.quickbutik.com/images/69946c/products/6821c717e2d83.png",
-   "price": 219,
-   "type": "Booster Pack",
    "set": "White Flare",
    "lang": "en",
    "kind": "ny"
