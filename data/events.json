@@ -1,6 +1,48 @@
 {
- "updated": 1793974766817,
+ "updated": 1793976627715,
  "events": [
+  {
+   "at": 1793976037763,
+   "store": "speltrollet",
+   "product": "speltrollet:15691705352518",
+   "group": "delta-reign|elite-trainer-box|en|",
+   "title": "Pokemon ME06 Delta Reign Elite Trainer Box",
+   "url": "https://speltrollet.se/products/pokemon-me06-delta-reign-elite-trainer-box",
+   "image": "https://cdn.shopify.com/s/files/1/0674/0951/0716/files/Delta-Reign-ETB-copy.webp?v=1787308070",
+   "price": 849,
+   "type": "Elite Trainer Box",
+   "set": "Delta Reign",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1793976037763,
+   "store": "speltrollet",
+   "product": "speltrollet:15691697553734",
+   "group": "delta-reign|booster-box|en|",
+   "title": "Pokemon ME06 Delta Reign Booster Box Display (36 pack)",
+   "url": "https://speltrollet.se/products/pokemon-me06-delta-reign-booster-box-display-36-pack",
+   "image": "https://cdn.shopify.com/s/files/1/0674/0951/0716/files/Delta-Reign-Booster-Box-scaled.webp?v=1787307833",
+   "price": 2290,
+   "type": "Booster Box",
+   "set": "Delta Reign",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1793975889217,
+   "store": "alphaspel",
+   "product": "alphaspel:https://alphaspel.se/1762-pokemon-tcg/362629-pokemon-tcg-30th-celebration-ultra-premium-collection-day",
+   "group": "30th-celebration|ultra-premium-collection|en||day",
+   "title": "Pokémon TCG: 30th Celebration Ultra Premium Collection Day",
+   "url": "https://alphaspel.se/1762-pokemon-tcg/362629-pokemon-tcg-30th-celebration-ultra-premium-collection-day",
+   "image": "https://alphaspel.se/media/products/6ce7e23a-5ab1-4f85-b29f-80fdd1062e20",
+   "price": 3499,
+   "type": "Ultra-Premium Collection",
+   "set": "30th Celebration",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793973507667,
    "store": "bangerpack",
@@ -7030,48 +7072,6 @@
    "set": "Base Set",
    "lang": "en",
    "kind": "tillbaka"
-  },
-  {
-   "at": 1793620946452,
-   "store": "spelparken",
-   "product": "spelparken:15314570084727",
-   "group": "silver-tempest|booster-box|en|",
-   "title": "Silver Tempest Booster Box",
-   "url": "https://spelparken.se/products/silver-tempest-booster-box-oppnas-live",
-   "image": "https://cdn.shopify.com/s/files/1/0948/1876/3127/files/Silvertempestbb1_600x600_0fc13a6e-c403-444d-ad30-84dc9d0cdbce.webp?v=1767884757",
-   "price": 6499,
-   "type": "Booster Box",
-   "set": "Silver Tempest",
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793618719180,
-   "store": "speltrollet",
-   "product": "speltrollet:15562296459590",
-   "group": "x|booster-box|zh||gem-s5-vol",
-   "title": "Pokemon TCG Gem Pack Vol. 5 Booster Box (18-pack) (Kinesisk)",
-   "url": "https://speltrollet.se/products/pokemon-tcg-gem-pack-vol-5-booster-box-18-pack-kinesisk",
-   "image": "https://cdn.shopify.com/s/files/1/0674/0951/0716/files/ChineseGemBoxVol51.webp?v=1779098377",
-   "price": 649,
-   "type": "Booster Box",
-   "set": null,
-   "lang": "zh",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793616935043,
-   "store": "shinycards",
-   "product": "shinycards:https://www.shinycards.se/pokemon/elite-trainer-box/pokemon-scarlet-violet-10-destined-rivals-trainer-box",
-   "group": "destined-rivals|collection-box|en||",
-   "title": "Pokemon Scarlet & Violet 10: Destined Rivals Trainer Box",
-   "url": "https://www.shinycards.se/pokemon/elite-trainer-box/pokemon-scarlet-violet-10-destined-rivals-trainer-box",
-   "image": "https://cdn.quickbutik.com/images/69946c/products/6ae8633f982d3.png",
-   "price": 1899,
-   "type": "Collection Box",
-   "set": "Destined Rivals",
-   "lang": "en",
-   "kind": "ny"
   }
  ]
 }
