@@ -1,6 +1,20 @@
 {
- "updated": 1793946069978,
+ "updated": 1793946990006,
  "events": [
+  {
+   "at": 1793946844666,
+   "store": "bangerpack",
+   "product": "bangerpack:https://bangerpack.se/pokemon/boosters-packs/pokemon-go-booster",
+   "group": "pokemon-go|booster-pack|en|",
+   "title": "Pokémon GO – Booster",
+   "url": "https://bangerpack.se/pokemon/boosters-packs/pokemon-go-booster",
+   "image": "https://cdn.quickbutik.com/images/99246J/products/6ae829176913f.png",
+   "price": 209,
+   "type": "Booster Pack",
+   "set": "Pokémon GO",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793945859127,
    "store": "bangerpack",
@@ -7088,20 +7102,6 @@
    "price": 2699,
    "type": "Booster Box",
    "set": "Chaos Rising",
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793393581942,
-   "store": "shinycards",
-   "product": "shinycards:https://www.shinycards.se/pokemon/collection-box/pokemon-charizard-ex-special-collection",
-   "group": "x|premium-collection|en||charizard",
-   "title": "Pokemon Charizard ex Special Collection",
-   "url": "https://www.shinycards.se/pokemon/collection-box/pokemon-charizard-ex-special-collection",
-   "image": "https://cdn.quickbutik.com/images/69946c/products/6a0b4a47c5f21.png",
-   "price": 999,
-   "type": "Premium Collection",
-   "set": null,
    "lang": "en",
    "kind": "tillbaka"
   }
