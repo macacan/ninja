@@ -1,6 +1,20 @@
 {
- "updated": 1793965031151,
+ "updated": 1793965951171,
  "events": [
+  {
+   "at": 1793965286730,
+   "store": "dragon-s-lair",
+   "product": "dragon-s-lair:15662416331100",
+   "group": "x|booster-box|ja||arena-heat-wave",
+   "title": "Pokemon Heat Wave Arena Booster Box Display (Japansk)[sv9a]",
+   "url": "https://dragonslair.se/products/pokemon-heat-wave-arena-booster-box-display-japansk",
+   "image": "https://cdn.shopify.com/s/files/1/1015/8315/9644/files/bild.jpg?v=1783357317",
+   "price": 1895,
+   "type": "Booster Box",
+   "set": null,
+   "lang": "ja",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793964992471,
    "store": "samlarverket",
@@ -7055,20 +7069,6 @@
    "price": 449,
    "type": "Deck",
    "set": "30th Celebration",
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793535376191,
-   "store": "rahtech",
-   "product": "rahtech:15784995356998",
-   "group": "mega-evolution|booster-box|en||delta-forhandsbokning-reign",
-   "title": "Förhandsbokning: Mega Evolution Delta Reign – Booster Display (36 Pack) (ENG)",
-   "url": "https://rahtech.se/products/forhandsbokning-mega-evolution-delta-reign-booster-display-36-pack-eng",
-   "image": "https://cdn.shopify.com/s/files/1/0994/8882/5670/files/BlackBox-2026-08-21T000531_783_png.webp?v=1792174338",
-   "price": 2599,
-   "type": "Booster Box",
-   "set": "Mega Evolution",
    "lang": "en",
    "kind": "tillbaka"
   }
