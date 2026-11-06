@@ -1,6 +1,48 @@
 {
- "updated": 1794003073997,
+ "updated": 1794003994017,
  "events": [
+  {
+   "at": 1794003654608,
+   "store": "nordic-pulls",
+   "product": "nordic-pulls:https://nordicpulls.se/produkt/delta-reign-boosterpaket",
+   "group": "delta-reign|booster-pack|en|",
+   "title": "Delta Reign Boosterpaket",
+   "url": "https://nordicpulls.se/produkt/delta-reign-boosterpaket",
+   "image": "https://nordicpulls.se/images/products/bp-delta-reign.jpg",
+   "price": 79,
+   "type": "Booster Pack",
+   "set": "Delta Reign",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1794003654608,
+   "store": "nordic-pulls",
+   "product": "nordic-pulls:https://nordicpulls.se/en/produkt/delta-reign-booster-pack",
+   "group": "delta-reign|booster-pack|en|",
+   "title": "Delta Reign Booster Pack",
+   "url": "https://nordicpulls.se/en/produkt/delta-reign-booster-pack",
+   "image": "https://nordicpulls.se/images/products/bp-delta-reign.jpg",
+   "price": 79,
+   "type": "Booster Pack",
+   "set": "Delta Reign",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1794003654608,
+   "store": "nordic-pulls",
+   "product": "nordic-pulls:https://nordicpulls.se/de/produkt/delta-reign-boosterpack",
+   "group": "delta-reign|booster-pack|en|",
+   "title": "Delta Reign Boosterpack",
+   "url": "https://nordicpulls.se/de/produkt/delta-reign-boosterpack",
+   "image": "https://nordicpulls.se/images/products/bp-delta-reign.jpg",
+   "price": 79,
+   "type": "Booster Pack",
+   "set": "Delta Reign",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1794002688057,
    "store": "nordic-pulls",
@@ -7031,48 +7073,6 @@
    "price": 139,
    "type": "Blister",
    "set": "Paradox Rift",
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1793641899306,
-   "store": "samlarhobby",
-   "product": "samlarhobby:15165037969789",
-   "group": "paradox-rift|blister|en||cl",
-   "title": "Pokémon, Scarlet & Violet 4: Paradox Rift, Premium Checklane blisterpack, Tinkaton",
-   "url": "https://samlarhobby.se/products/pokemon-scarlet-violet-4-paradox-rift-premium-checklane-blisterpack-tinkaton",
-   "image": "https://cdn.shopify.com/s/files/1/0905/3120/1405/files/187-85411_1_2048x-600x600.jpg?v=1745155275",
-   "price": 149,
-   "type": "Blister",
-   "set": "Paradox Rift",
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1793641899306,
-   "store": "samlarhobby",
-   "product": "samlarhobby:15165039051133",
-   "group": "paradox-rift|blister|en||cl",
-   "title": "Pokémon, Scarlet & Violet 4: Paradox Rift, Premium Checklane blisterpack, Hydregion",
-   "url": "https://samlarhobby.se/products/pokemon-scarlet-violet-4-paradox-rift-premium-checklane-blisterpack-hydregion",
-   "image": "https://cdn.shopify.com/s/files/1/0905/3120/1405/files/187-85411_2_2048x-600x600.jpg?v=1745155311",
-   "price": 149,
-   "type": "Blister",
-   "set": "Paradox Rift",
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1793641899306,
-   "store": "samlarhobby",
-   "product": "samlarhobby:15165024141693",
-   "group": "journey-together|blister|en||cl",
-   "title": "Pokémon, Scarlet & Violet 9: Journey Together, Premium Checklane, Klinklang",
-   "url": "https://samlarhobby.se/products/pokemon-scarlet-violet-9-journey-together-premium-checklane-klinklang",
-   "image": "https://cdn.shopify.com/s/files/1/0905/3120/1405/files/pok10352-1_grande-600x600.jpg?v=1745154635",
-   "price": 129,
-   "type": "Blister",
-   "set": "Journey Together",
    "lang": "en",
    "kind": "ny"
   }
