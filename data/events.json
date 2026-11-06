@@ -1,6 +1,34 @@
 {
- "updated": 1793951570098,
+ "updated": 1793952510116,
  "events": [
+  {
+   "at": 1793952368914,
+   "store": "poketalk",
+   "product": "poketalk:10497694204246",
+   "group": "perfect-order|booster-pack|en|",
+   "title": "Pokémon Mega & Evolution: Perfect Order Booster Pack",
+   "url": "https://poketalk.se/products/pokemon-mega-evolution-perfect-order-booster-pack-1",
+   "image": "https://cdn.shopify.com/s/files/1/0862/7860/3094/files/PRODUKTSERIER_2000x2000px_-3_39c0224a-60d1-4e71-acc8-2418de0262ab.png?v=1776781497",
+   "price": 75,
+   "type": "Booster Pack",
+   "set": "Perfect Order",
+   "lang": "en",
+   "kind": "ny"
+  },
+  {
+   "at": 1793952368914,
+   "store": "poketalk",
+   "product": "poketalk:10795637997910",
+   "group": "chaos-rising|booster-pack|en|",
+   "title": "Pokémon Mega & Evolution: Chaos Rising Booster Pack",
+   "url": "https://poketalk.se/products/pokemon-mega-evolution-chaos-rising-booster-pack",
+   "image": "https://cdn.shopify.com/s/files/1/0862/7860/3094/files/PRODUKTSERIER_2000x2000px_d2ed601c-7427-49af-9fcd-aea365b00091.png?v=1779644489",
+   "price": 79,
+   "type": "Booster Pack",
+   "set": "Chaos Rising",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793951450405,
    "store": "poketalk",
@@ -7065,34 +7093,6 @@
    "set": "Silver Tempest",
    "lang": "en",
    "kind": "ny"
-  },
-  {
-   "at": 1793469230440,
-   "store": "samlarhobby",
-   "product": "samlarhobby:16094221304189",
-   "group": "paldea-evolved|elite-trainer-box|en|",
-   "title": "Pokémon, Scarlet & Violet 2: Paldea Evolved, Elite Trainer Box",
-   "url": "https://samlarhobby.se/products/pokemon-scarlet-violet-2-paldea-evolved-elite-trainer-box",
-   "image": "https://cdn.shopify.com/s/files/1/0905/3120/1405/files/pokemon-scarlet-violet-paldea-evolved-elite-trainer-box.jpg?v=1793468266",
-   "price": 2995,
-   "type": "Elite Trainer Box",
-   "set": "Paldea Evolved",
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1793469230440,
-   "store": "samlarhobby",
-   "product": "samlarhobby:16094219501949",
-   "group": "lost-origin|elite-trainer-box|en|",
-   "title": "Pokémon, Sword & Shield 11: Lost Origin, Elite Trainer Box",
-   "url": "https://samlarhobby.se/products/pokemon-sword-shield-11-lost-origin-elite-trainer-box",
-   "image": "https://cdn.shopify.com/s/files/1/0905/3120/1405/files/pokemon-sword-shield-lost-origin-elite-trainer-box.jpg?v=1793468201",
-   "price": 2995,
-   "type": "Elite Trainer Box",
-   "set": "Lost Origin",
-   "lang": "en",
-   "kind": "tillbaka"
   }
  ]
 }

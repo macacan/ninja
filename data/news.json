@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-06T07:52:58.029Z",
+ "updated": "2026-11-06T08:08:17.489Z",
  "articles": [
   {
    "title": "Pokémon TCG Live adds Mega Evolution—Delta Reign, new rewards and private Expanded battles",
@@ -479,5 +479,18 @@
    "game": "op"
   }
  ],
- "videos": []
+ "videos": [
+  {
+   "id": "pGIxhUQvezQ",
+   "title": "TCG Day 2 | 2027 Pokémon Gdańsk Regional Championships",
+   "date": "2026-11-01T19:24:07.000Z",
+   "source": "Pokémon (officiell)"
+  },
+  {
+   "id": "rWsK4plWGM4",
+   "title": "TCG Day 1 | 2027 Pokémon Gdańsk Regional Championships",
+   "date": "2026-10-31T19:26:17.000Z",
+   "source": "Play! Pokémon (officiell)"
+  }
+ ]
 }
