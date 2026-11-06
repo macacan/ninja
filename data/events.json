@@ -1,6 +1,35 @@
 {
- "updated": 1793956750728,
+ "updated": 1793957670847,
  "events": [
+  {
+   "at": 1793957062958,
+   "store": "tcgstore",
+   "product": "tcgstore:11473342693703",
+   "group": "op|extra-booster-one-piece-heroines-edition-vol-2|booster-box|ja|",
+   "title": "FÖRKÖP: One Piece Card Game: EB05 - Heroines Edition Vol.2 Booster Box (JPN)",
+   "url": "https://tcgstore.se/products/one-piece-card-game-eb05-heroines-edition-vol-2-booster-box-jpn",
+   "image": "https://cdn.shopify.com/s/files/1/0758/2508/6791/files/one-piece-card-game-heroines-edition-vol-2-booster-box-japansk.jpg?v=1793956345",
+   "price": 1399,
+   "type": "Booster Box",
+   "set": "Extra Booster: One Piece Heroines Edition Vol. 2",
+   "lang": "ja",
+   "game": "op",
+   "kind": "forbestallning"
+  },
+  {
+   "at": 1793956855672,
+   "store": "rahtech",
+   "product": "rahtech:15784994210118",
+   "group": "delta-reign|elite-trainer-box|en|",
+   "title": "Förhandsbokning: Mega Evolution Delta Reign Elite Trainer Box (ME06) (ENG)",
+   "url": "https://rahtech.se/products/forhandsbokning-mega-evolution-delta-reign-elite-trainer-box-me06-eng",
+   "image": "https://cdn.shopify.com/s/files/1/0994/8882/5670/files/BlackBox-2026-08-20T235809_264_png.webp?v=1792174114",
+   "price": 1299,
+   "type": "Elite Trainer Box",
+   "set": "Delta Reign",
+   "lang": "en",
+   "kind": "forbestallning"
+  },
   {
    "at": 1793954017007,
    "store": "card-mountain",
@@ -7064,35 +7093,6 @@
    "lang": "en",
    "kind": "prissankt",
    "from": 3899
-  },
-  {
-   "at": 1793477202458,
-   "store": "samlarverket",
-   "product": "samlarverket:11273212920151",
-   "group": "x|ultra-premium-collection|en||greninja",
-   "title": "Pokémon Greninja ex Ultra Premium Collection",
-   "url": "https://samlarverket.com/produkt/pokemon-greninja-ex-ultra-premium-collection",
-   "image": "https://cdn.shopify.com/s/files/1/1022/5323/2471/files/Greninja-ex-Ultra-Premium-Collection.webp?v=1791844587",
-   "price": 3499,
-   "type": "Ultra-Premium Collection",
-   "set": null,
-   "lang": "en",
-   "kind": "prissankt",
-   "from": 3799
-  },
-  {
-   "at": 1793472596475,
-   "store": "skattkistan",
-   "product": "skattkistan:11116925452626",
-   "group": "chaos-rising|elite-trainer-box|en|",
-   "title": "Pokémon TCG Mega Evolution Chaos Rising Elite Trainer Box",
-   "url": "https://skattkistan.net/products/chaos-rising-elite-trainer-box",
-   "image": "https://cdn.shopify.com/s/files/1/1094/6858/2226/files/07.09.2026_16.04.12_REC.png?v=1788790064",
-   "price": 899,
-   "type": "Elite Trainer Box",
-   "set": "Chaos Rising",
-   "lang": "en",
-   "kind": "tillbaka"
   }
  ]
 }
