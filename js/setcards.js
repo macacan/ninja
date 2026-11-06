@@ -1,5 +1,5 @@
 // Tryck på ett set: en ruta med alla kort i setet, pris i kronor och sortering.
-// Namn, bild och nummer kommer från TCGdex (eller data/card-images.json om TCGdex saknar bilder). Priserna från data/card-history/<set>.json.
+// Namn, bild och nummer kommer från TCGdex (eller data/card-images.json om TCGdex saknar bilder). Set som TCGdex inte har än läses från data/sets/<id>.json. Priserna från data/card-history/<set>.json.
 import { esc, kr, fmt, loading, getJSON, API, setLogo, cardImg, extraCardImgsReady, setPages } from "./site.js";
 import { openCardPrice } from "./cardprice.js?v=20261106a";
 
@@ -42,13 +42,13 @@ function tile(c) {
     }</span>
     <b>${esc(c.name)}</b>
     <small>#${esc(c.localId)}</small>
-    <span class="sm-price${c.price == null ? " none" : ""}">${c.price == null ? "Inget pris ännu" : kr(c.price)}</span>
+    ${current.set.local ? "" : `<span class="sm-price${c.price == null ? " none" : ""}">${c.price == null ? "Inget pris ännu" : kr(c.price)}</span>`}
   </li>`;
 }
 
 function renderCards() {
   const priced = current.cards.filter((c) => c.price != null).length;
-  dlg.querySelector(".sm-count").innerHTML = `<b>${current.cards.length}</b> kort · <b>${priced}</b> med pris${current.date ? ` · priser ${fmt(current.date)}` : ""}`;
+  dlg.querySelector(".sm-count").innerHTML = `<b>${current.cards.length}</b> kort${current.set.local ? "" : ` · <b>${priced}</b> med pris`}${current.date ? ` · priser ${fmt(current.date)}` : ""}`;
   dlg.querySelector(".sm-grid").innerHTML = sorted().map(tile).join("")
     || '<li class="msg">Setet har inga kort i vår lista ännu.</li>';
 }
@@ -121,7 +121,7 @@ function showImage(c) {
   // Saknas bilden hos TCGdex visas kortets baksida i stället, som i rutnätet.
   img.onerror = () => { img.onerror = null; img.src = "img/kortbaksida.webp"; };
   img.src = cardSrc(c, "low"); // finns redan i webbläsaren från rutnätet
-  if (c.image) {
+  if (c.image || cardImg(c, "high")) {
     const hi = new Image(), id = c.id;
     hi.onload = () => { if (zlist[zi]?.id === id) img.src = hi.src; };
     hi.src = cardSrc(c, "high");
@@ -135,9 +135,12 @@ function fillInfo(c) {
   zq(".zm-count").textContent = `${zi + 1} / ${zlist.length}`;
   zq(".zm-name").textContent = c.name;
   zq(".zm-sub").textContent = `#${c.localId} · ${current.set.name}`;
+  // Set som TCGdex inte har än har ingen prissida, så priset och tipset om det döljs.
+  zq(".zm-row").hidden = !!current.set.local;
   zq(".zm-price").innerHTML = c.price == null ? "Visa pris" : `<b>${kr(c.price)}</b>`;
   zq(".zm-nav.prev").disabled = zi === 0;
   zq(".zm-nav.next").disabled = zi === zlist.length - 1;
+  if (current.set.local) { if (c.rarity) zq(".zm-sub").textContent = `#${c.localId} · ${current.set.name} · ${c.rarity}`; return; }
   getJSON(`${API}/cards/${encodeURIComponent(c.id)}`).then((d) => {
     if (t === ztoken && d?.rarity && d.rarity !== "None") zq(".zm-sub").textContent = `#${c.localId} · ${current.set.name} · ${d.rarity}`;
   }).catch(() => {});
@@ -233,16 +236,16 @@ export async function openSet(id) {
   body.innerHTML = loading("Ninjan räknar korten");
   d.showModal();
   try {
-    const [set, p, pages] = await Promise.all([getJSON(`${API}/sets/${encodeURIComponent(id)}`), prices(id), setPages(), extraCardImgsReady]);
+    const [set, p, pages] = await Promise.all([getJSON(`${API}/sets/${encodeURIComponent(id)}`).catch(() => getJSON(`data/sets/${encodeURIComponent(id)}.json`)), prices(id), setPages(), extraCardImgsReady]);
     // Länken till setets egen sida visas inte när rutan öppnas på just den sidan.
     const page = pages.sets?.[id], onPage = page && location.pathname.endsWith(page);
     const cards = (set.cards || []).map((c) => ({ ...c, price: p.prices.get(c.id) ?? null }));
-    current = { set, cards, date: p.date, sort: "price-desc" };
+    current = { set, cards, date: p.date, sort: set.local ? "number" : "price-desc" };
     const logo = setLogo(set);
     body.innerHTML = `<div class="sm-head">${logo ? `<img class="sm-logo" src="${esc(logo)}" alt="">` : ""}
         <div><h3>${esc(set.name)}</h3><p class="muted">${esc(set.serie?.name || "")}${page && !onPage ? ` · <a href="${esc(page)}">Setets sida</a>` : ""}</p></div></div>
       <div class="sm-bar"><span class="sm-count"></span>
-        <label>Sortera <select class="sm-sort">${Object.entries(SORTS).map(([k, [label]]) => `<option value="${k}">${label}</option>`).join("")}</select></label></div>
+        <label>Sortera <select class="sm-sort">${Object.entries(SORTS).filter(([k]) => !set.local || !k.startsWith("price")).map(([k, [label]]) => `<option value="${k}">${label}</option>`).join("")}</select></label></div>
       <ul class="sm-grid"></ul>`;
     renderCards();
   } catch {

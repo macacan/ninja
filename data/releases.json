@@ -34,6 +34,8 @@
     {
       "id": "delta-reign",
       "set": "Delta Reign",
+      "tcgdex": "me06",
+      "cardCount": 103,
       "series": "Mega Evolution",
       "language": "en",
       "logo": "img/set-icons/delta-reign.png",

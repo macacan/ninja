@@ -6130,5 +6130,569 @@
  "xyp-XY68": {
   "low": "https://images.pokemontcg.io/xyp/XY68.png",
   "high": "https://images.pokemontcg.io/xyp/XY68_hires.png"
+ },
+ "me06-001": {
+  "low": "https://images.scrydex.com/pokemon/me6-1/small",
+  "high": "https://images.scrydex.com/pokemon/me6-1/large"
+ },
+ "me06-002": {
+  "low": "https://images.scrydex.com/pokemon/me6-2/small",
+  "high": "https://images.scrydex.com/pokemon/me6-2/large"
+ },
+ "me06-003": {
+  "low": "https://images.scrydex.com/pokemon/me6-3/small",
+  "high": "https://images.scrydex.com/pokemon/me6-3/large"
+ },
+ "me06-004": {
+  "low": "https://images.scrydex.com/pokemon/me6-4/small",
+  "high": "https://images.scrydex.com/pokemon/me6-4/large"
+ },
+ "me06-005": {
+  "low": "https://images.scrydex.com/pokemon/me6-5/small",
+  "high": "https://images.scrydex.com/pokemon/me6-5/large"
+ },
+ "me06-006": {
+  "low": "https://images.scrydex.com/pokemon/me6-6/small",
+  "high": "https://images.scrydex.com/pokemon/me6-6/large"
+ },
+ "me06-007": {
+  "low": "https://images.scrydex.com/pokemon/me6-7/small",
+  "high": "https://images.scrydex.com/pokemon/me6-7/large"
+ },
+ "me06-008": {
+  "low": "https://images.scrydex.com/pokemon/me6-8/small",
+  "high": "https://images.scrydex.com/pokemon/me6-8/large"
+ },
+ "me06-009": {
+  "low": "https://images.scrydex.com/pokemon/me6-9/small",
+  "high": "https://images.scrydex.com/pokemon/me6-9/large"
+ },
+ "me06-010": {
+  "low": "https://images.scrydex.com/pokemon/me6-10/small",
+  "high": "https://images.scrydex.com/pokemon/me6-10/large"
+ },
+ "me06-011": {
+  "low": "https://images.scrydex.com/pokemon/me6-11/small",
+  "high": "https://images.scrydex.com/pokemon/me6-11/large"
+ },
+ "me06-012": {
+  "low": "https://images.scrydex.com/pokemon/me6-12/small",
+  "high": "https://images.scrydex.com/pokemon/me6-12/large"
+ },
+ "me06-013": {
+  "low": "https://images.scrydex.com/pokemon/me6-13/small",
+  "high": "https://images.scrydex.com/pokemon/me6-13/large"
+ },
+ "me06-014": {
+  "low": "https://images.scrydex.com/pokemon/me6-14/small",
+  "high": "https://images.scrydex.com/pokemon/me6-14/large"
+ },
+ "me06-015": {
+  "low": "https://images.scrydex.com/pokemon/me6-15/small",
+  "high": "https://images.scrydex.com/pokemon/me6-15/large"
+ },
+ "me06-016": {
+  "low": "https://images.scrydex.com/pokemon/me6-16/small",
+  "high": "https://images.scrydex.com/pokemon/me6-16/large"
+ },
+ "me06-017": {
+  "low": "https://images.scrydex.com/pokemon/me6-17/small",
+  "high": "https://images.scrydex.com/pokemon/me6-17/large"
+ },
+ "me06-018": {
+  "low": "https://images.scrydex.com/pokemon/me6-18/small",
+  "high": "https://images.scrydex.com/pokemon/me6-18/large"
+ },
+ "me06-019": {
+  "low": "https://images.scrydex.com/pokemon/me6-19/small",
+  "high": "https://images.scrydex.com/pokemon/me6-19/large"
+ },
+ "me06-020": {
+  "low": "https://images.scrydex.com/pokemon/me6-20/small",
+  "high": "https://images.scrydex.com/pokemon/me6-20/large"
+ },
+ "me06-021": {
+  "low": "https://images.scrydex.com/pokemon/me6-21/small",
+  "high": "https://images.scrydex.com/pokemon/me6-21/large"
+ },
+ "me06-022": {
+  "low": "https://images.scrydex.com/pokemon/me6-22/small",
+  "high": "https://images.scrydex.com/pokemon/me6-22/large"
+ },
+ "me06-023": {
+  "low": "https://images.scrydex.com/pokemon/me6-23/small",
+  "high": "https://images.scrydex.com/pokemon/me6-23/large"
+ },
+ "me06-024": {
+  "low": "https://images.scrydex.com/pokemon/me6-24/small",
+  "high": "https://images.scrydex.com/pokemon/me6-24/large"
+ },
+ "me06-025": {
+  "low": "https://images.scrydex.com/pokemon/me6-25/small",
+  "high": "https://images.scrydex.com/pokemon/me6-25/large"
+ },
+ "me06-026": {
+  "low": "https://images.scrydex.com/pokemon/me6-26/small",
+  "high": "https://images.scrydex.com/pokemon/me6-26/large"
+ },
+ "me06-027": {
+  "low": "https://images.scrydex.com/pokemon/me6-27/small",
+  "high": "https://images.scrydex.com/pokemon/me6-27/large"
+ },
+ "me06-028": {
+  "low": "https://images.scrydex.com/pokemon/me6-28/small",
+  "high": "https://images.scrydex.com/pokemon/me6-28/large"
+ },
+ "me06-029": {
+  "low": "https://images.scrydex.com/pokemon/me6-29/small",
+  "high": "https://images.scrydex.com/pokemon/me6-29/large"
+ },
+ "me06-030": {
+  "low": "https://images.scrydex.com/pokemon/me6-30/small",
+  "high": "https://images.scrydex.com/pokemon/me6-30/large"
+ },
+ "me06-031": {
+  "low": "https://images.scrydex.com/pokemon/me6-31/small",
+  "high": "https://images.scrydex.com/pokemon/me6-31/large"
+ },
+ "me06-032": {
+  "low": "https://images.scrydex.com/pokemon/me6-32/small",
+  "high": "https://images.scrydex.com/pokemon/me6-32/large"
+ },
+ "me06-033": {
+  "low": "https://images.scrydex.com/pokemon/me6-33/small",
+  "high": "https://images.scrydex.com/pokemon/me6-33/large"
+ },
+ "me06-034": {
+  "low": "https://images.scrydex.com/pokemon/me6-34/small",
+  "high": "https://images.scrydex.com/pokemon/me6-34/large"
+ },
+ "me06-035": {
+  "low": "https://images.scrydex.com/pokemon/me6-35/small",
+  "high": "https://images.scrydex.com/pokemon/me6-35/large"
+ },
+ "me06-036": {
+  "low": "https://images.scrydex.com/pokemon/me6-36/small",
+  "high": "https://images.scrydex.com/pokemon/me6-36/large"
+ },
+ "me06-037": {
+  "low": "https://images.scrydex.com/pokemon/me6-37/small",
+  "high": "https://images.scrydex.com/pokemon/me6-37/large"
+ },
+ "me06-038": {
+  "low": "https://images.scrydex.com/pokemon/me6-38/small",
+  "high": "https://images.scrydex.com/pokemon/me6-38/large"
+ },
+ "me06-039": {
+  "low": "https://images.scrydex.com/pokemon/me6-39/small",
+  "high": "https://images.scrydex.com/pokemon/me6-39/large"
+ },
+ "me06-040": {
+  "low": "https://images.scrydex.com/pokemon/me6-40/small",
+  "high": "https://images.scrydex.com/pokemon/me6-40/large"
+ },
+ "me06-041": {
+  "low": "https://images.scrydex.com/pokemon/me6-41/small",
+  "high": "https://images.scrydex.com/pokemon/me6-41/large"
+ },
+ "me06-042": {
+  "low": "https://images.scrydex.com/pokemon/me6-42/small",
+  "high": "https://images.scrydex.com/pokemon/me6-42/large"
+ },
+ "me06-043": {
+  "low": "https://images.scrydex.com/pokemon/me6-43/small",
+  "high": "https://images.scrydex.com/pokemon/me6-43/large"
+ },
+ "me06-044": {
+  "low": "https://images.scrydex.com/pokemon/me6-44/small",
+  "high": "https://images.scrydex.com/pokemon/me6-44/large"
+ },
+ "me06-045": {
+  "low": "https://images.scrydex.com/pokemon/me6-45/small",
+  "high": "https://images.scrydex.com/pokemon/me6-45/large"
+ },
+ "me06-046": {
+  "low": "https://images.scrydex.com/pokemon/me6-46/small",
+  "high": "https://images.scrydex.com/pokemon/me6-46/large"
+ },
+ "me06-047": {
+  "low": "https://images.scrydex.com/pokemon/me6-47/small",
+  "high": "https://images.scrydex.com/pokemon/me6-47/large"
+ },
+ "me06-048": {
+  "low": "https://images.scrydex.com/pokemon/me6-48/small",
+  "high": "https://images.scrydex.com/pokemon/me6-48/large"
+ },
+ "me06-049": {
+  "low": "https://images.scrydex.com/pokemon/me6-49/small",
+  "high": "https://images.scrydex.com/pokemon/me6-49/large"
+ },
+ "me06-050": {
+  "low": "https://images.scrydex.com/pokemon/me6-50/small",
+  "high": "https://images.scrydex.com/pokemon/me6-50/large"
+ },
+ "me06-051": {
+  "low": "https://images.scrydex.com/pokemon/me6-51/small",
+  "high": "https://images.scrydex.com/pokemon/me6-51/large"
+ },
+ "me06-052": {
+  "low": "https://images.scrydex.com/pokemon/me6-52/small",
+  "high": "https://images.scrydex.com/pokemon/me6-52/large"
+ },
+ "me06-053": {
+  "low": "https://images.scrydex.com/pokemon/me6-53/small",
+  "high": "https://images.scrydex.com/pokemon/me6-53/large"
+ },
+ "me06-054": {
+  "low": "https://images.scrydex.com/pokemon/me6-54/small",
+  "high": "https://images.scrydex.com/pokemon/me6-54/large"
+ },
+ "me06-055": {
+  "low": "https://images.scrydex.com/pokemon/me6-55/small",
+  "high": "https://images.scrydex.com/pokemon/me6-55/large"
+ },
+ "me06-056": {
+  "low": "https://images.scrydex.com/pokemon/me6-56/small",
+  "high": "https://images.scrydex.com/pokemon/me6-56/large"
+ },
+ "me06-057": {
+  "low": "https://images.scrydex.com/pokemon/me6-57/small",
+  "high": "https://images.scrydex.com/pokemon/me6-57/large"
+ },
+ "me06-058": {
+  "low": "https://images.scrydex.com/pokemon/me6-58/small",
+  "high": "https://images.scrydex.com/pokemon/me6-58/large"
+ },
+ "me06-059": {
+  "low": "https://images.scrydex.com/pokemon/me6-59/small",
+  "high": "https://images.scrydex.com/pokemon/me6-59/large"
+ },
+ "me06-060": {
+  "low": "https://images.scrydex.com/pokemon/me6-60/small",
+  "high": "https://images.scrydex.com/pokemon/me6-60/large"
+ },
+ "me06-061": {
+  "low": "https://images.scrydex.com/pokemon/me6-61/small",
+  "high": "https://images.scrydex.com/pokemon/me6-61/large"
+ },
+ "me06-062": {
+  "low": "https://images.scrydex.com/pokemon/me6-62/small",
+  "high": "https://images.scrydex.com/pokemon/me6-62/large"
+ },
+ "me06-063": {
+  "low": "https://images.scrydex.com/pokemon/me6-63/small",
+  "high": "https://images.scrydex.com/pokemon/me6-63/large"
+ },
+ "me06-064": {
+  "low": "https://images.scrydex.com/pokemon/me6-64/small",
+  "high": "https://images.scrydex.com/pokemon/me6-64/large"
+ },
+ "me06-065": {
+  "low": "https://images.scrydex.com/pokemon/me6-65/small",
+  "high": "https://images.scrydex.com/pokemon/me6-65/large"
+ },
+ "me06-066": {
+  "low": "https://images.scrydex.com/pokemon/me6-66/small",
+  "high": "https://images.scrydex.com/pokemon/me6-66/large"
+ },
+ "me06-067": {
+  "low": "https://images.scrydex.com/pokemon/me6-67/small",
+  "high": "https://images.scrydex.com/pokemon/me6-67/large"
+ },
+ "me06-068": {
+  "low": "https://images.scrydex.com/pokemon/me6-68/small",
+  "high": "https://images.scrydex.com/pokemon/me6-68/large"
+ },
+ "me06-069": {
+  "low": "https://images.scrydex.com/pokemon/me6-69/small",
+  "high": "https://images.scrydex.com/pokemon/me6-69/large"
+ },
+ "me06-070": {
+  "low": "https://images.scrydex.com/pokemon/me6-70/small",
+  "high": "https://images.scrydex.com/pokemon/me6-70/large"
+ },
+ "me06-071": {
+  "low": "https://images.scrydex.com/pokemon/me6-71/small",
+  "high": "https://images.scrydex.com/pokemon/me6-71/large"
+ },
+ "me06-072": {
+  "low": "https://images.scrydex.com/pokemon/me6-72/small",
+  "high": "https://images.scrydex.com/pokemon/me6-72/large"
+ },
+ "me06-073": {
+  "low": "https://images.scrydex.com/pokemon/me6-73/small",
+  "high": "https://images.scrydex.com/pokemon/me6-73/large"
+ },
+ "me06-074": {
+  "low": "https://images.scrydex.com/pokemon/me6-74/small",
+  "high": "https://images.scrydex.com/pokemon/me6-74/large"
+ },
+ "me06-075": {
+  "low": "https://images.scrydex.com/pokemon/me6-75/small",
+  "high": "https://images.scrydex.com/pokemon/me6-75/large"
+ },
+ "me06-076": {
+  "low": "https://images.scrydex.com/pokemon/me6-76/small",
+  "high": "https://images.scrydex.com/pokemon/me6-76/large"
+ },
+ "me06-077": {
+  "low": "https://images.scrydex.com/pokemon/me6-77/small",
+  "high": "https://images.scrydex.com/pokemon/me6-77/large"
+ },
+ "me06-078": {
+  "low": "https://images.scrydex.com/pokemon/me6-78/small",
+  "high": "https://images.scrydex.com/pokemon/me6-78/large"
+ },
+ "me06-079": {
+  "low": "https://images.scrydex.com/pokemon/me6-79/small",
+  "high": "https://images.scrydex.com/pokemon/me6-79/large"
+ },
+ "me06-080": {
+  "low": "https://images.scrydex.com/pokemon/me6-80/small",
+  "high": "https://images.scrydex.com/pokemon/me6-80/large"
+ },
+ "me06-081": {
+  "low": "https://images.scrydex.com/pokemon/me6-81/small",
+  "high": "https://images.scrydex.com/pokemon/me6-81/large"
+ },
+ "me06-082": {
+  "low": "https://images.scrydex.com/pokemon/me6-82/small",
+  "high": "https://images.scrydex.com/pokemon/me6-82/large"
+ },
+ "me06-083": {
+  "low": "https://images.scrydex.com/pokemon/me6-83/small",
+  "high": "https://images.scrydex.com/pokemon/me6-83/large"
+ },
+ "me06-084": {
+  "low": "https://images.scrydex.com/pokemon/me6-84/small",
+  "high": "https://images.scrydex.com/pokemon/me6-84/large"
+ },
+ "me06-085": {
+  "low": "https://images.scrydex.com/pokemon/me6-85/small",
+  "high": "https://images.scrydex.com/pokemon/me6-85/large"
+ },
+ "me06-086": {
+  "low": "https://images.scrydex.com/pokemon/me6-86/small",
+  "high": "https://images.scrydex.com/pokemon/me6-86/large"
+ },
+ "me06-087": {
+  "low": "https://images.scrydex.com/pokemon/me6-87/small",
+  "high": "https://images.scrydex.com/pokemon/me6-87/large"
+ },
+ "me06-088": {
+  "low": "https://images.scrydex.com/pokemon/me6-88/small",
+  "high": "https://images.scrydex.com/pokemon/me6-88/large"
+ },
+ "me06-089": {
+  "low": "https://images.scrydex.com/pokemon/me6-89/small",
+  "high": "https://images.scrydex.com/pokemon/me6-89/large"
+ },
+ "me06-090": {
+  "low": "https://images.scrydex.com/pokemon/me6-90/small",
+  "high": "https://images.scrydex.com/pokemon/me6-90/large"
+ },
+ "me06-091": {
+  "low": "https://images.scrydex.com/pokemon/me6-91/small",
+  "high": "https://images.scrydex.com/pokemon/me6-91/large"
+ },
+ "me06-092": {
+  "low": "https://images.scrydex.com/pokemon/me6-92/small",
+  "high": "https://images.scrydex.com/pokemon/me6-92/large"
+ },
+ "me06-093": {
+  "low": "https://images.scrydex.com/pokemon/me6-93/small",
+  "high": "https://images.scrydex.com/pokemon/me6-93/large"
+ },
+ "me06-094": {
+  "low": "https://images.scrydex.com/pokemon/me6-94/small",
+  "high": "https://images.scrydex.com/pokemon/me6-94/large"
+ },
+ "me06-095": {
+  "low": "https://images.scrydex.com/pokemon/me6-95/small",
+  "high": "https://images.scrydex.com/pokemon/me6-95/large"
+ },
+ "me06-096": {
+  "low": "https://images.scrydex.com/pokemon/me6-96/small",
+  "high": "https://images.scrydex.com/pokemon/me6-96/large"
+ },
+ "me06-097": {
+  "low": "https://images.scrydex.com/pokemon/me6-97/small",
+  "high": "https://images.scrydex.com/pokemon/me6-97/large"
+ },
+ "me06-098": {
+  "low": "https://images.scrydex.com/pokemon/me6-98/small",
+  "high": "https://images.scrydex.com/pokemon/me6-98/large"
+ },
+ "me06-099": {
+  "low": "https://images.scrydex.com/pokemon/me6-99/small",
+  "high": "https://images.scrydex.com/pokemon/me6-99/large"
+ },
+ "me06-100": {
+  "low": "https://images.scrydex.com/pokemon/me6-100/small",
+  "high": "https://images.scrydex.com/pokemon/me6-100/large"
+ },
+ "me06-101": {
+  "low": "https://images.scrydex.com/pokemon/me6-101/small",
+  "high": "https://images.scrydex.com/pokemon/me6-101/large"
+ },
+ "me06-102": {
+  "low": "https://images.scrydex.com/pokemon/me6-102/small",
+  "high": "https://images.scrydex.com/pokemon/me6-102/large"
+ },
+ "me06-103": {
+  "low": "https://images.scrydex.com/pokemon/me6-103/small",
+  "high": "https://images.scrydex.com/pokemon/me6-103/large"
+ },
+ "me06-104": {
+  "low": "https://images.scrydex.com/pokemon/me6-104/small",
+  "high": "https://images.scrydex.com/pokemon/me6-104/large"
+ },
+ "me06-105": {
+  "low": "https://images.scrydex.com/pokemon/me6-105/small",
+  "high": "https://images.scrydex.com/pokemon/me6-105/large"
+ },
+ "me06-106": {
+  "low": "https://images.scrydex.com/pokemon/me6-106/small",
+  "high": "https://images.scrydex.com/pokemon/me6-106/large"
+ },
+ "me06-107": {
+  "low": "https://images.scrydex.com/pokemon/me6-107/small",
+  "high": "https://images.scrydex.com/pokemon/me6-107/large"
+ },
+ "me06-108": {
+  "low": "https://images.scrydex.com/pokemon/me6-108/small",
+  "high": "https://images.scrydex.com/pokemon/me6-108/large"
+ },
+ "me06-109": {
+  "low": "https://images.scrydex.com/pokemon/me6-109/small",
+  "high": "https://images.scrydex.com/pokemon/me6-109/large"
+ },
+ "me06-110": {
+  "low": "https://images.scrydex.com/pokemon/me6-110/small",
+  "high": "https://images.scrydex.com/pokemon/me6-110/large"
+ },
+ "me06-111": {
+  "low": "https://images.scrydex.com/pokemon/me6-111/small",
+  "high": "https://images.scrydex.com/pokemon/me6-111/large"
+ },
+ "me06-112": {
+  "low": "https://images.scrydex.com/pokemon/me6-112/small",
+  "high": "https://images.scrydex.com/pokemon/me6-112/large"
+ },
+ "me06-113": {
+  "low": "https://images.scrydex.com/pokemon/me6-113/small",
+  "high": "https://images.scrydex.com/pokemon/me6-113/large"
+ },
+ "me06-114": {
+  "low": "https://images.scrydex.com/pokemon/me6-114/small",
+  "high": "https://images.scrydex.com/pokemon/me6-114/large"
+ },
+ "me06-115": {
+  "low": "https://images.scrydex.com/pokemon/me6-115/small",
+  "high": "https://images.scrydex.com/pokemon/me6-115/large"
+ },
+ "me06-116": {
+  "low": "https://images.scrydex.com/pokemon/me6-116/small",
+  "high": "https://images.scrydex.com/pokemon/me6-116/large"
+ },
+ "me06-117": {
+  "low": "https://images.scrydex.com/pokemon/me6-117/small",
+  "high": "https://images.scrydex.com/pokemon/me6-117/large"
+ },
+ "me06-118": {
+  "low": "https://images.scrydex.com/pokemon/me6-118/small",
+  "high": "https://images.scrydex.com/pokemon/me6-118/large"
+ },
+ "me06-119": {
+  "low": "https://images.scrydex.com/pokemon/me6-119/small",
+  "high": "https://images.scrydex.com/pokemon/me6-119/large"
+ },
+ "me06-120": {
+  "low": "https://images.scrydex.com/pokemon/me6-120/small",
+  "high": "https://images.scrydex.com/pokemon/me6-120/large"
+ },
+ "me06-121": {
+  "low": "https://images.scrydex.com/pokemon/me6-121/small",
+  "high": "https://images.scrydex.com/pokemon/me6-121/large"
+ },
+ "me06-122": {
+  "low": "https://images.scrydex.com/pokemon/me6-122/small",
+  "high": "https://images.scrydex.com/pokemon/me6-122/large"
+ },
+ "me06-123": {
+  "low": "https://images.scrydex.com/pokemon/me6-123/small",
+  "high": "https://images.scrydex.com/pokemon/me6-123/large"
+ },
+ "me06-124": {
+  "low": "https://images.scrydex.com/pokemon/me6-124/small",
+  "high": "https://images.scrydex.com/pokemon/me6-124/large"
+ },
+ "me06-125": {
+  "low": "https://images.scrydex.com/pokemon/me6-125/small",
+  "high": "https://images.scrydex.com/pokemon/me6-125/large"
+ },
+ "me06-126": {
+  "low": "https://images.scrydex.com/pokemon/me6-126/small",
+  "high": "https://images.scrydex.com/pokemon/me6-126/large"
+ },
+ "me06-127": {
+  "low": "https://images.scrydex.com/pokemon/me6-127/small",
+  "high": "https://images.scrydex.com/pokemon/me6-127/large"
+ },
+ "me06-128": {
+  "low": "https://images.scrydex.com/pokemon/me6-128/small",
+  "high": "https://images.scrydex.com/pokemon/me6-128/large"
+ },
+ "me06-129": {
+  "low": "https://images.scrydex.com/pokemon/me6-129/small",
+  "high": "https://images.scrydex.com/pokemon/me6-129/large"
+ },
+ "me06-130": {
+  "low": "https://images.scrydex.com/pokemon/me6-130/small",
+  "high": "https://images.scrydex.com/pokemon/me6-130/large"
+ },
+ "me06-131": {
+  "low": "https://images.scrydex.com/pokemon/me6-131/small",
+  "high": "https://images.scrydex.com/pokemon/me6-131/large"
+ },
+ "me06-132": {
+  "low": "https://images.scrydex.com/pokemon/me6-132/small",
+  "high": "https://images.scrydex.com/pokemon/me6-132/large"
+ },
+ "me06-133": {
+  "low": "https://images.scrydex.com/pokemon/me6-133/small",
+  "high": "https://images.scrydex.com/pokemon/me6-133/large"
+ },
+ "me06-134": {
+  "low": "https://images.scrydex.com/pokemon/me6-134/small",
+  "high": "https://images.scrydex.com/pokemon/me6-134/large"
+ },
+ "me06-135": {
+  "low": "https://images.scrydex.com/pokemon/me6-135/small",
+  "high": "https://images.scrydex.com/pokemon/me6-135/large"
+ },
+ "me06-136": {
+  "low": "https://images.scrydex.com/pokemon/me6-136/small",
+  "high": "https://images.scrydex.com/pokemon/me6-136/large"
+ },
+ "me06-137": {
+  "low": "https://images.scrydex.com/pokemon/me6-137/small",
+  "high": "https://images.scrydex.com/pokemon/me6-137/large"
+ },
+ "me06-138": {
+  "low": "https://images.scrydex.com/pokemon/me6-138/small",
+  "high": "https://images.scrydex.com/pokemon/me6-138/large"
+ },
+ "me06-139": {
+  "low": "https://images.scrydex.com/pokemon/me6-139/small",
+  "high": "https://images.scrydex.com/pokemon/me6-139/large"
+ },
+ "me06-140": {
+  "low": "https://images.scrydex.com/pokemon/me6-140/small",
+  "high": "https://images.scrydex.com/pokemon/me6-140/large"
+ },
+ "me06-141": {
+  "low": "https://images.scrydex.com/pokemon/me6-141/small",
+  "high": "https://images.scrydex.com/pokemon/me6-141/large"
  }
 }

@@ -1,5 +1,5 @@
 import { groupKey } from "./group.js";
-import { $, esc, fmt, skeleton, upcomingReleases, daysUntil, latestSets, setCard, setLogo, setPages, releaseBadge, calendarSets, calendarCard, news, newsItem, productCard, fillRows, liveStock, getJSON, card, setArt, whileVisible } from "./site.js";
+import { $, esc, fmt, skeleton, upcomingReleases, daysUntil, latestSets, setCard, setLogo, setPages, releaseBadge, calendarSets, calendarCard, newestFirst, news, newsItem, productCard, fillRows, liveStock, getJSON, card, setArt, whileVisible } from "./site.js";
 import { getPrefs } from "./prefs.js";
 import { bindSetCards } from "./setcards.js";
 import "./restock.js";
@@ -147,7 +147,7 @@ async function homeSets() {
     const coming = await calendarSets("pk", sets.flatMap((s) => [s.id, s.name]));
     const items = [...sets.filter((s) => setLogo(s)).map((s) => ({ date: s.releaseDate || "", show: (i) => setCard(s, i, pages) })),
       ...coming.map((r) => ({ date: r.date, show: (i) => calendarCard(r, i, pages) }))];
-    el.innerHTML = items.sort((a, b) => b.date.localeCompare(a.date)).slice(0, 5).map((x, i) => x.show(i)).join("");
+    el.innerHTML = items.sort(newestFirst).slice(0, 5).map((x, i) => x.show(i)).join("");
     bindSetCards(el);
     fillRows(el, 2);
   } catch { el.innerHTML = '<div class="msg">Kunde inte nå TCGdex just nu.</div>'; }
@@ -165,7 +165,7 @@ async function homeGameSets(game, label) {
     const items = [...main.map((s) => ({ date: s.date, show: (i) => card(s.name, s.date, label, s.count ? `${s.count} kort` : "Mer info kommer snart", i, false,
       setArt({ name: s.name, serie: { name: s.code }, image: s.image }), releaseBadge(s.date), "", pages.games?.[game]?.[s.id] || `priser.html?game=${game}&set=${encodeURIComponent(s.id)}`) })),
       ...coming.map((r) => ({ date: r.date, show: (i) => calendarCard(r, i, pages, label) }))];
-    el.innerHTML = items.sort((a, b) => b.date.localeCompare(a.date)).slice(0, 5).map((x, i) => x.show(i)).join("");
+    el.innerHTML = items.sort(newestFirst).slice(0, 5).map((x, i) => x.show(i)).join("");
     fillRows(el, 2);
   } catch { el.innerHTML = '<div class="msg">Kunde inte läsa seten just nu.</div>'; }
 }

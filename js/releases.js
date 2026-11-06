@@ -136,6 +136,7 @@ function status(r) {
   const today = startOfToday();
   const past = r.waves.filter((w) => d(w.date) < today), next = nextWave(r);
   const pre = r.preliminary || next?.preliminary ? " (preliminärt)" : "";
+  if (!past.length && daysUntil(next.date) === 0) return `Släppt idag${pre}`;
   if (!past.length) return `Släpps ${long(next.date)} · ${inDays(daysUntil(next.date))}${pre}`;
   if (!next) return `Släpptes ${long(r.waves[0].date)}`;
   return `Släpptes ${long(r.waves[0].date)} · nästa omgång ${short(next.date)}, ${inDays(daysUntil(next.date))}${pre}`;

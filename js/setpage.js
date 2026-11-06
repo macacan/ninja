@@ -2,7 +2,7 @@
 // det levande till: butikernas lager för setet (uppdateras varje minut) och knappen som visar alla kort med bilder.
 import { $, esc, liveStock, productCard, skeleton, whileVisible } from "./site.js";
 import { groupKey } from "./group.js";
-import { bindSetCards } from "./setcards.js";
+import { bindSetCards } from "./setcards.js?v=20261106a";
 
 bindSetCards($("#main"));
 

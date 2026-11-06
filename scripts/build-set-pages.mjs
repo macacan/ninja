@@ -1,7 +1,7 @@
 // Bygger en statisk sida per set i set/<namn>.html och en översikt i set/index.html, så att sökmotorer hittar
 // "Phantasmal Flames kortlista", "Delta Reign släppdatum" och liknande. Körs med: node scripts/build-set-pages.mjs
 // Läser bara lokala filer (ingen nätverkstrafik), så den kan köras ofta:
-//   data/sets/<id>.json           set och kort från TCGdex (scripts/update-sets.mjs)
+//   data/sets/<id>.json           set och kort från TCGdex (scripts/update-sets.mjs), eller scripts/add-local-set.mjs tills TCGdex har setet
 //   data/card-history/<id>.json   priser i kronor och sällsynthet för de senaste seten (scripts/update-card-trends.mjs)
 //   data/release-calendar.json    kommande släpp, även set som TCGdex inte har än
 //   data/set-logos.json           loggor för set som TCGdex saknar logga för
@@ -44,8 +44,9 @@ const gameAnchor = Object.fromEntries(GAMES.map(([g, anchor]) => [g, anchor]));
 const pages = sets.map((s) => {
   const cards = s.cards || [], known = new Set(cards.map((c) => c.id));
   const extra = (extraCards[s.id] || []).filter((c) => !known.has(c.id)).map((c) => ({ ...c, image: null, extra: true }));
-  return { id: s.id, name: s.name, serie: s.serie?.name || null, date: s.releaseDate, cardCount: s.cardCount,
-    logo: s.logo || extraLogos[s.id] || null, cards: [...cards, ...extra], language: "en", match: [] };
+  // Set som TCGdex inte har än (local) har ingen värderingssida, precis som extrakorten.
+  return { id: s.id, name: s.name, serie: s.serie?.name || null, date: s.releaseDate, cardCount: s.cardCount, local: !!s.local,
+    logo: s.logo || extraLogos[s.id] || null, cards: [...cards.map((c) => (s.local ? { ...c, extra: true } : c)), ...extra], language: "en", match: [] };
 });
 const bySetId = new Map(pages.map((p) => [p.id, p]));
 // One Piece- och Riftbound-släppen i kalendern får ingen setsida, precis som seten ovan.
@@ -95,7 +96,7 @@ for (const p of [...pages].sort((a, b) => (a.date || "9999").localeCompare(b.dat
 // Priser och sällsynthet för set som har prishistorik.
 for (const p of pages.filter((x) => x.id)) {
   const h = await readJSON(`data/card-history/${encodeURIComponent(p.id)}.json`, null);
-  p.prices = new Map(); p.rarity = h?.rarity || {};
+  p.prices = new Map(); p.rarity = { ...Object.fromEntries(p.cards.filter((c) => c.rarity).map((c) => [c.id, c.rarity])), ...h?.rarity };
   for (const [id, pts] of Object.entries(h?.cards || {})) {
     const last = pts.at(-1);
     if (!last || (last[1] ?? last[2]) == null) continue;
@@ -105,6 +106,8 @@ for (const p of pages.filter((x) => x.id)) {
 }
 
 const upcoming = (p) => !!p.date && p.date > today;
+// Datumet i setlistorna. Släppdagen står som "Släppt idag".
+const whenText = (date) => (date === today ? "Släppt idag" : date > today ? `Släpps ${longDate(date)}` : longDate(date));
 const lastWave = (p) => p.cal?.waves?.map((w) => w.date).sort().at(-1);
 // Ett set med pågående omgångar räknas som aktuellt även efter huvudsläppet.
 const current = (p) => upcoming(p) || (lastWave(p) && lastWave(p) >= today);
@@ -131,7 +134,7 @@ const headHtml = ({ title, desc, url, ld }) => `<!doctype html>
 <link rel="canonical" href="${url}">
 <meta name="robots" content="max-image-preview:large">
 <link rel="preconnect" href="https://assets.tcgdex.net">
-<meta name="theme-color" content="#ffffff">
+<meta name="theme-color" content="#1b1e28">
 <meta name="theme-color" content="#1b1e28" media="(prefers-color-scheme: dark)">
 <link rel="icon" href="img/icon-192.png?v=4" sizes="192x192" type="image/png">
 <link rel="icon" href="img/favicon-48.png?v=4" sizes="48x48" type="image/png">
@@ -152,7 +155,7 @@ const headHtml = ({ title, desc, url, ld }) => `<!doctype html>
 <link href="fonts/fonts.css" rel="stylesheet">
 <link rel="stylesheet" href="style.css?v=20261030a">
 <link rel="stylesheet" href="dark.css?v=20261029b" id="dark-css" media="(prefers-color-scheme: dark)">
-<script src="js/theme.js?v=20261021"></script>
+<script src="js/theme.js?v=20261106"></script>
 </head>
 <body>
 <main id="main">`;
@@ -172,7 +175,7 @@ const pageHead = (crumbs) => `
   </header>`;
 const foot = `
 </main>
-<script type="module" src="js/setpage.js?v=20261028a"></script>
+<script type="module" src="js/setpage.js?v=20261106a"></script>
 </body>
 </html>
 `;
@@ -196,7 +199,7 @@ function intro(p) {
   if (upcoming(p)) return `${p.name} är ett kommande Pokémon TCG-set${lang}${p.serie ? ` i serien ${p.serie}` : ""} som släpps ${longDate(p.date)}${prel}. Här ser du vilka produkter som kommer, när de släpps och vilka svenska butiker som redan har dem till förbeställning.`;
   const cards = n ? ` Setet har ${n} kort${extra}.` : "";
   const what = p.prices?.size ? "alla kort med Cardmarkets marknadspris i kronor, de dyraste korten" : p.cards.length ? "alla kort i setet" : "produkterna, när de släpps";
-  return `${p.name} är ett Pokémon TCG-set${lang}${p.serie ? ` i serien ${p.serie}` : ""} som släpptes ${longDate(p.date)}.${cards} Här ser du ${what} och vilka svenska butiker som har ${p.name}-produkter i lager just nu.`;
+  return `${p.name} är ett Pokémon TCG-set${lang}${p.serie ? ` i serien ${p.serie}` : ""} som släpptes ${p.date === today ? "idag, " : ""}${longDate(p.date)}.${cards} Här ser du ${what} och vilka svenska butiker som har ${p.name}-produkter i lager just nu.`;
 }
 
 function wavesHtml(p) {
@@ -235,14 +238,17 @@ function topHtml(p) {
 function cardsHtml(p) {
   if (!p.cards.length) return "";
   const hasRarity = p.cards.some((c) => p.rarity[c.id]);
-  const rows = [...p.cards].sort(byNumber).map((c) => `<tr><td>${esc(c.localId)}</td><td>${c.extra ? `<span${peek(c)}>${esc(c.name)}</span>` : `<a href="${cardHref(c)}"${peek(c)}>${esc(c.name)}</a>`}</td>${hasRarity ? `<td>${esc(p.rarity[c.id] || "")}</td>` : ""}<td class="num">${p.prices.has(c.id) ? kr(p.prices.get(c.id)) : "–"}</td></tr>`).join("\n");
+  // Set utan värderingssida (local) visar ingen priskolumn förrän priserna finns.
+  const showPrice = !p.local || p.prices.size > 0;
+  const rows = [...p.cards].sort(byNumber).map((c) => `<tr><td>${esc(c.localId)}</td><td>${c.extra ? `<span${peek(c)}>${esc(c.name)}</span>` : `<a href="${cardHref(c)}"${peek(c)}>${esc(c.name)}</a>`}</td>${hasRarity ? `<td>${esc(p.rarity[c.id] || "")}</td>` : ""}${showPrice ? `<td class="num">${p.prices.has(c.id) ? kr(p.prices.get(c.id)) : "–"}</td>` : ""}</tr>`).join("\n");
   const note = p.prices.size
     ? `Pris = Cardmarkets trendpris för ett ograderat kort i nyskick, omräknat till kronor ${longDate(p.priceDate)}. Tryck på ett kort för prishistorik och värdering.`
+    : p.local ? "Priserna läggs till så fort de finns."
     : "Tryck på ett kort för att se dagens pris i kronor och värdera ditt exemplar.";
   return `
     <div class="section" id="kort"><h2>Alla ${p.cards.length} kort i ${esc(p.name)}</h2><button class="more" type="button" data-set="${esc(p.id)}">Visa med bilder</button></div>
     <p class="lead-sm">${note}</p>
-    <div class="table-scroll"><table class="set-table cards"><thead><tr><th>Nr</th><th>Kort</th>${hasRarity ? "<th>Sällsynthet</th>" : ""}<th class="num">Pris</th></tr></thead><tbody>
+    <div class="table-scroll"><table class="set-table cards"><thead><tr><th>Nr</th><th>Kort</th>${hasRarity ? "<th>Sällsynthet</th>" : ""}${showPrice ? '<th class="num">Pris</th>' : ""}</tr></thead><tbody>
 ${rows}
 </tbody></table></div>`;
 }
@@ -257,8 +263,8 @@ function relatedHtml(p, all) {
 }
 
 const fold = (s) => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
-const tile = (p) => `<li data-game="pk" data-q="${esc(fold([p.name, p.serie, p.id].filter(Boolean).join(" ")))}"><a href="set/${p.slug}.html">${logoImg(p, "set-tile-logo")}<b>${esc(p.name)}</b><small>${p.date ? (upcoming(p) ? `Släpps ${longDate(p.date)}` : longDate(p.date)) : "Datum ej satt"}${count(p) ? ` · ${count(p)} kort` : ""}</small></a></li>`;
-const gameTile = (p) => `<li data-game="${p.game}" data-q="${esc(fold([p.name, p.code, p.id, GAMES.find(([g]) => g === p.game)[3]].filter(Boolean).join(" ")))}"><a href="set/${p.slug}.html">${p.logo ? `<img class="set-tile-logo" src="${esc(p.logo)}" alt="${esc(p.name)}" loading="lazy" decoding="async">` : `<span class="set-tile-logo set-word">${esc(p.name)}</span>`}<b>${esc(p.code ? `${p.code} · ${p.name}` : p.name)}</b><small>${p.date ? (p.date > today ? `Släpps ${longDate(p.date)}` : longDate(p.date)) : "Datum ej satt"}${p.cards.length ? ` · ${p.cards.length} kort` : p.pending ? " · Mer info kommer snart" : ""}</small></a></li>`;
+const tile = (p) => `<li data-game="pk" data-q="${esc(fold([p.name, p.serie, p.id].filter(Boolean).join(" ")))}"><a href="set/${p.slug}.html">${logoImg(p, "set-tile-logo")}<b>${esc(p.name)}</b><small>${p.date ? whenText(p.date) : "Datum ej satt"}${count(p) ? ` · ${count(p)} kort` : ""}</small></a></li>`;
+const gameTile = (p) => `<li data-game="${p.game}" data-q="${esc(fold([p.name, p.code, p.id, GAMES.find(([g]) => g === p.game)[3]].filter(Boolean).join(" ")))}"><a href="set/${p.slug}.html">${p.logo ? `<img class="set-tile-logo" src="${esc(p.logo)}" alt="${esc(p.name)}" loading="lazy" decoding="async">` : `<span class="set-tile-logo set-word">${esc(p.name)}</span>`}<b>${esc(p.code ? `${p.code} · ${p.name}` : p.name)}</b><small>${p.date ? whenText(p.date) : "Datum ej satt"}${p.cards.length ? ` · ${p.cards.length} kort` : p.pending ? " · Mer info kommer snart" : ""}</small></a></li>`;
 const anyTile = (p) => (p.game ? gameTile(p) : tile(p));
 
 // ---------- One Piece och Riftbound ----------
@@ -340,7 +346,7 @@ function setPage(p, all) {
     ? `${p.name} ${upcoming(p) || !p.date ? "släpps" : "släpptes"} ${p.date ? longDate(p.date) : "snart"}${p.cal?.preliminary ? " (preliminärt)" : ""}. Se alla produkter, släppdatum och vilka svenska butiker som har ${upcoming(p) ? "förbeställning eller lager" : "setet i lager"}.`
     : `Alla ${p.cards.length} kort i ${p.name}${p.serie && p.serie !== p.name ? ` (${p.serie})` : ""}${priced ? " med priser i kronor" : ""}. Släpptes ${longDate(p.date)}.${top ? ` Dyrast just nu: ${top.name} (${kr(p.prices.get(top.id))}).` : ""} Se var setet finns i lager i Sverige.`;
   const crumbs = [["Hem", `${SITE}/`, "./"], ["Kalender", `${SITE}/slapp.html`, "slapp.html"], ["Alla set", `${SITE}/set/`, "set/"], [p.name, p.url, null]];
-  const facts = [p.serie && `Serie: ${esc(p.serie)}`, p.date && (upcoming(p) ? `Släpps <time datetime="${p.date}">${longDate(p.date)}</time>` : `Släpptes <time datetime="${p.date}">${longDate(p.date)}</time>`),
+  const facts = [p.serie && `Serie: ${esc(p.serie)}`, p.date && (upcoming(p) ? `Släpps <time datetime="${p.date}">${longDate(p.date)}</time>` : `${p.date === today ? "Släppt idag" : "Släpptes"} <time datetime="${p.date}">${longDate(p.date)}</time>`),
     count(p) && `${count(p)} kort${p.cardCount?.total > count(p) ? ` (${p.cardCount.total} med hemliga)` : ""}`, p.language !== "en" && `Språk: ${LANG[p.language] || p.language}`].filter(Boolean);
   return `${head({ title, desc, url: p.url, ld: crumbsLd(crumbs.map(([n, u]) => [n, u])) })}${pageHead(crumbs.map(([n, , h]) => [n, h]))}
 
@@ -367,7 +373,8 @@ ${relatedHtml(p, all)}
 
 function indexPage(all) {
   const url = `${SITE}/set/`;
-  const soon = [...all, ...gamePages].filter(current).sort((a, b) => (a.date || "9999").localeCompare(b.date || "9999"));
+  // Det som släpps idag står först, sedan efter datum.
+  const soon = [...all, ...gamePages].filter(current).sort((a, b) => (b.date === today) - (a.date === today) || (a.date || "9999").localeCompare(b.date || "9999"));
   const rest = all.filter((p) => !current(p));
   const series = new Map();
   for (const p of rest.sort((a, b) => (b.date || "").localeCompare(a.date || ""))) {

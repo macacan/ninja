@@ -73,9 +73,9 @@ function renderHero() {
   const w = nextWave(hero), wi = hero.waves.indexOf(w), n = daysUntil(w.date), logo = ctx.logos.get(hero.id);
   const pre = hero.prerelease && day(hero.prerelease.to) >= today ? hero.prerelease : null;
   $("#rel-hero").innerHTML = `
-    <div class="rh-count" aria-label="${esc(inDays(n))}">${n > 0 ? `<b>${n}</b><span>${n === 1 ? "dag kvar" : "dagar kvar"}</span>` : `<b>!</b><span>${esc(inDays(n))}</span>`}</div>
+    <div class="rh-count" aria-label="${n === 0 ? "Släppt idag" : esc(inDays(n))}">${n > 0 ? `<b>${n}</b><span>${n === 1 ? "dag kvar" : "dagar kvar"}</span>` : `<b>!</b><span>${n === 0 ? "Släppt idag" : esc(inDays(n))}</span>`}</div>
     <div class="rh-main">
-      <span class="kicker">Nästa stora släpp${w.preliminary || hero.preliminary ? " · preliminärt datum" : ""}</span>
+      <span class="kicker">${n === 0 ? "Nytt set" : "Nästa stora släpp"}${w.preliminary || hero.preliminary ? " · preliminärt datum" : ""}</span>
       <h2>${esc(hero.set)}</h2>
       <p class="rh-meta">${esc([meta(hero), long(w.date)].filter(Boolean).join(" · "))}</p>
       ${pre ? `<p class="rh-pre">Förrelease i spelbutiker ${short(pre.from)}–${short(pre.to)}</p>` : ""}
@@ -126,7 +126,7 @@ function rowHTML(x) {
 
 function renderLists() {
   const mine = (r) => !game || gameOf(r) === game;
-  const next = rows.filter((x) => isUpcoming(x) && mine(x.r)).sort((a, b) => a.date.localeCompare(b.date) || !!b.pre - !!a.pre);
+  const next = rows.filter((x) => isUpcoming(x) && mine(x.r)).sort((a, b) => a.date.localeCompare(b.date) || !!b.pre - !!a.pre || (a.wi ?? 0) - (b.wi ?? 0)); // samma dag: ett nytt set före senare omgångar
   const months = new Map();
   for (const x of next) { const k = x.date.slice(0, 7); if (!months.has(k)) months.set(k, []); months.get(k).push(x); }
   const ann = announced.filter(mine);

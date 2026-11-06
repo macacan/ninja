@@ -337,7 +337,7 @@ export function card(title, date, tag, extra, i, soon, artHtml, badge, attrs = "
 export const releaseBadge = (date) => {
   const days = date ? daysUntil(date) : -999;
   if (days > 0) return { text: "Kommande", soon: true };
-  if (days === 0) return { text: "Släpps idag", hot: true };
+  if (days === 0) return { text: "Släppt idag", hot: true };
   return days >= -60 ? { text: "Nytt" } : null;
 };
 
@@ -392,8 +392,11 @@ export async function calendarSets(game, known) {
 }
 
 // Setkort för ett set ur släppkalendern. Ett tryck öppnar setets sida i set/.
-export const calendarCard = (r, i, pages, tag = r.series) => card(r.set, r.date, tag, "Mer info kommer snart", i, false,
+export const calendarCard = (r, i, pages, tag = r.series) => card(r.set, r.date, tag, r.cardCount ? `${r.cardCount} kort` : "Mer info kommer snart", i, false,
   setArt({ name: r.set, serie: { name: r.series }, image: r.logo }), releaseBadge(r.date), "", pages?.releases?.[r.id] || "slapp.html");
+
+// Setlistorna: det som släpps idag först, sedan senaste datumet.
+export const newestFirst = (a, b) => (daysUntil(b.date) === 0) - (daysUntil(a.date) === 0) || b.date.localeCompare(a.date);
 
 // Varje omgång som en egen rad, t.ex. "30th Celebration: Battle Deck" den 30 oktober.
 export async function allReleases() {
