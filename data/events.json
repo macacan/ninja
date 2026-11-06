@@ -1,6 +1,20 @@
 {
- "updated": 1793978547764,
+ "updated": 1793979467784,
  "events": [
+  {
+   "at": 1793978633536,
+   "store": "goblinen",
+   "product": "goblinen:16215762108760",
+   "group": "x|tin|en||forces",
+   "title": "Pokémon TCG: Mega Forces Tin (Max 1st/kund!)(Slumpas)",
+   "url": "https://goblinen.com/products/pokemon-tcg-mega-forces-tin",
+   "image": "https://cdn.shopify.com/s/files/1/0267/3236/3950/files/mega-forces-tin-169-en.png?v=1793977602",
+   "price": 379,
+   "type": "Tin",
+   "set": null,
+   "lang": "en",
+   "kind": "ny"
+  },
   {
    "at": 1793978030165,
    "store": "samlargrottan",
@@ -7057,21 +7071,6 @@
    "set": "Ascended Heroes",
    "lang": "en",
    "kind": "ny"
-  },
-  {
-   "at": 1793623739828,
-   "store": "maxgaming",
-   "product": "maxgaming:https://maxgaming.se/sv/pokemon/pokemon-151c-gathering-booster-box-forenklad-kinesiska",
-   "group": "x|booster-box|zh||151c-gathering",
-   "title": "Pokémon 151C Gathering Booster Box (Simplified Chinese)",
-   "url": "https://maxgaming.se/sv/pokemon/pokemon-151c-gathering-booster-box-forenklad-kinesiska",
-   "image": "https://www.maxgaming.se/bilder/artiklar/37037.jpg?m=1761224456",
-   "price": 999,
-   "type": "Booster Box",
-   "set": null,
-   "lang": "zh",
-   "kind": "prissankt",
-   "from": 1199
   }
  ]
 }
