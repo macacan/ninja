@@ -1,6 +1,20 @@
 {
- "updated": 1793945149949,
+ "updated": 1793946069978,
  "events": [
+  {
+   "at": 1793945859127,
+   "store": "bangerpack",
+   "product": "bangerpack:https://bangerpack.se/pokemon/kinesiska-utgavor/pokemon-stellar-crystal-booster-cn",
+   "group": "x|booster-pack|zh||crystal-stellar",
+   "title": "Pokémon Stellar Crystal – Booster (CN)",
+   "url": "https://bangerpack.se/pokemon/kinesiska-utgavor/pokemon-stellar-crystal-booster-cn",
+   "image": "https://cdn.quickbutik.com/images/99246J/products/6ae82f2a674ff.png",
+   "price": 69,
+   "type": "Booster Pack",
+   "set": null,
+   "lang": "zh",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793934323879,
    "store": "spelparken",
@@ -7090,20 +7104,6 @@
    "set": null,
    "lang": "en",
    "kind": "tillbaka"
-  },
-  {
-   "at": 1793393417413,
-   "store": "cardgame",
-   "product": "cardgame:https://cardgame.se/engelska-pokmon-produkter/engelska-special-boxar/paldean-fates-special-tin-shiny-great-tusk-ex",
-   "group": "paldean-fates|tin|en||great-shiny-tusk",
-   "title": "Paldean Fates Special Tin - Shiny Great Tusk ex",
-   "url": "https://cardgame.se/engelska-pokmon-produkter/engelska-special-boxar/paldean-fates-special-tin-shiny-great-tusk-ex",
-   "image": "https://cdn.quickbutik.com/images/87588Q/products/6ae5005d2831d.webp",
-   "price": 1500,
-   "type": "Tin",
-   "set": "Paldean Fates",
-   "lang": "en",
-   "kind": "ny"
   }
  ]
 }
