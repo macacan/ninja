@@ -1,6 +1,51 @@
 {
- "updated": 1793984067896,
+ "updated": 1793984987910,
  "events": [
+  {
+   "at": 1793984909344,
+   "store": "kantovault",
+   "product": "kantovault:10016556843349",
+   "group": "x|collection-box|ja|pc|center-fukuoka",
+   "title": "Pokémon Center Fukuoka Special Box",
+   "url": "https://kantovault.se/products/pokemon-center-fukuoka-special-box",
+   "image": null,
+   "price": 1499,
+   "type": "Collection Box",
+   "set": null,
+   "lang": "ja",
+   "kind": "prissankt",
+   "from": 1749
+  },
+  {
+   "at": 1793984909344,
+   "store": "kantovault",
+   "product": "kantovault:10013019701589",
+   "group": "x|collection-box|ja|pc|center-hiroshima",
+   "title": "Pokémon Center Hiroshima Special Box",
+   "url": "https://kantovault.se/products/pokemon-center-hiroshima-special-box",
+   "image": null,
+   "price": 1699,
+   "type": "Collection Box",
+   "set": null,
+   "lang": "ja",
+   "kind": "prissankt",
+   "from": 1890
+  },
+  {
+   "at": 1793984909344,
+   "store": "kantovault",
+   "product": "kantovault:10013019275605",
+   "group": "x|collection-box|ja|pc|center-tohoku",
+   "title": "Pokémon Center Tohoku Special Box",
+   "url": "https://kantovault.se/products/pokemon-center-tohoku-special-box",
+   "image": null,
+   "price": 1499,
+   "type": "Collection Box",
+   "set": null,
+   "lang": "ja",
+   "kind": "prissankt",
+   "from": 1590
+  },
   {
    "at": 1793983997345,
    "store": "kantovault",
@@ -7030,48 +7075,6 @@
    "set": "Team Rocket",
    "lang": "en",
    "kind": "ny"
-  },
-  {
-   "at": 1793637572355,
-   "store": "rgb-kingz",
-   "product": "rgb-kingz:16160191185226",
-   "group": "prismatic-evolutions|booster-pack|en|",
-   "title": "Pokémon Scarlet & Violet – Prismatic Evolutions Booster Pack (Engelsk)",
-   "url": "https://rgbkingz.com/products/pokemon-scarlet-violet-prismatic-evolutions-booster-pack-engelsk",
-   "image": "https://cdn.shopify.com/s/files/1/0782/8088/4554/files/pokemon-scarlet-and-violet-prismatic-evolutions-booster-pack.webp?v=1793637506",
-   "price": 219,
-   "type": "Booster Pack",
-   "set": "Prismatic Evolutions",
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1793637572355,
-   "store": "rgb-kingz",
-   "product": "rgb-kingz:16077245907274",
-   "group": "30th-celebration|booster-pack|en|",
-   "title": "Pokémon TCG: 30th Celebration Booster Pack (Engelsk)",
-   "url": "https://rgbkingz.com/products/pokemon-tcg-30th-celebration-booster-bundle-6-packs-max-1-per-kund-kopia",
-   "image": "https://cdn.shopify.com/s/files/1/0782/8088/4554/files/IMG-5772.png?v=1790926968",
-   "price": 199,
-   "type": "Booster Pack",
-   "set": "30th Celebration",
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793637269694,
-   "store": "spelparken",
-   "product": "spelparken:15221117583735",
-   "group": "brilliant-stars|booster-pack|en|",
-   "title": "Brilliant Stars Booster Pack",
-   "url": "https://spelparken.se/products/pokemon-sword-shield-brilliant-stars-booster-pack-oppnas-live",
-   "image": "https://cdn.shopify.com/s/files/1/0948/1876/3127/files/pokemon-brilliant-stars-booster-pack-charizard.webp?v=1761941604",
-   "price": 209,
-   "type": "Booster Pack",
-   "set": "Brilliant Stars",
-   "lang": "en",
-   "kind": "tillbaka"
   }
  ]
 }
