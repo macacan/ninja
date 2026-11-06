@@ -1,6 +1,20 @@
 {
- "updated": 1793969631245,
+ "updated": 1793970551270,
  "events": [
+  {
+   "at": 1793969882451,
+   "store": "webhallen",
+   "product": "webhallen:376485",
+   "group": "prismatic-evolutions|elite-trainer-box|en|",
+   "title": "Pokemon Scarlet & Violet 8.5: Prismatic Evolutions Elite Trainer Box",
+   "url": "https://www.webhallen.com/se/product/376485-Pokemon-Scarlet-Violet-8-5-Prismatic-Evolutions-Elite-Trainer-Box",
+   "image": "https://www.webhallen.com/images/product/376485?trim",
+   "price": 1499,
+   "type": "Elite Trainer Box",
+   "set": "Prismatic Evolutions",
+   "lang": "en",
+   "kind": "ny"
+  },
   {
    "at": 1793969628390,
    "store": "bangerpack",
@@ -7056,20 +7070,6 @@
    "price": 3799,
    "type": "Premium Collection",
    "set": "Prismatic Evolutions",
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1793614981676,
-   "store": "shinycards",
-   "product": "shinycards:https://www.shinycards.se/pokemon/collection-box/pokemon-ascend-heroes-delux-pin-collection",
-   "group": "x|collection-box|en||ascend-delux-first-heroes-partner-pin",
-   "title": "Pokemon Ascend Heroes First Partner Delux Pin Collection",
-   "url": "https://www.shinycards.se/pokemon/collection-box/pokemon-ascend-heroes-delux-pin-collection",
-   "image": "https://cdn.quickbutik.com/images/69946c/products/69dcd7afe624a.png",
-   "price": 1099,
-   "type": "Collection Box",
-   "set": null,
    "lang": "en",
    "kind": "ny"
   }
