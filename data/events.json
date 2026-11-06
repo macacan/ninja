@@ -1,6 +1,20 @@
 {
- "updated": 1793973291318,
+ "updated": 1793973870725,
  "events": [
+  {
+   "at": 1793973507667,
+   "store": "bangerpack",
+   "product": "bangerpack:https://bangerpack.se/pokemon/elite-trainer-special/pokemon-tcg-30th-celebration-sylveon-ex-collectors-tin",
+   "group": "30th-celebration|tin|en||collector-sylveon",
+   "title": "Pokémon 30th Celebration – Sylveon ex Collector's Tin",
+   "url": "https://bangerpack.se/pokemon/elite-trainer-special/pokemon-tcg-30th-celebration-sylveon-ex-collectors-tin",
+   "image": "https://cdn.quickbutik.com/images/99246J/products/6aaa78163787e.png",
+   "price": 759,
+   "type": "Tin",
+   "set": "30th Celebration",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793972493828,
    "store": "speltrollet",
@@ -7056,20 +7070,6 @@
    "price": 1899,
    "type": "Collection Box",
    "set": "Destined Rivals",
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1793616935043,
-   "store": "shinycards",
-   "product": "shinycards:https://www.shinycards.se/pokemon/collection-box/pokemon-scarlet-violet-105-black-bolt-white-flare-poster-collection",
-   "group": "white-flare|collection-box|en||black-bolt-poster",
-   "title": "Pokemon Scarlet & Violet 10.5: Black Bolt & White Flare Poster Collection",
-   "url": "https://www.shinycards.se/pokemon/collection-box/pokemon-scarlet-violet-105-black-bolt-white-flare-poster-collection",
-   "image": "https://cdn.quickbutik.com/images/69946c/products/6a0b495b20638.png",
-   "price": 849,
-   "type": "Collection Box",
-   "set": "White Flare",
    "lang": "en",
    "kind": "ny"
   }
