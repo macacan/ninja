@@ -1,6 +1,20 @@
 {
- "updated": 1793953951391,
+ "updated": 1793954870691,
  "events": [
+  {
+   "at": 1793954017007,
+   "store": "card-mountain",
+   "product": "card-mountain:10436111630672",
+   "group": "ascended-heroes|tin|en|mini|mini",
+   "title": "Ascended Heroes Mini Tin (MAX 5)",
+   "url": "https://cardmountain.se/products/ascended-heroes-mini-tin",
+   "image": "https://cdn.shopify.com/s/files/1/0932/0765/8832/files/AscendedMinitinFront_c9b91645-c047-4569-846b-4ee1d6e58c08.webp?v=1773328439",
+   "price": 329,
+   "type": "Tin",
+   "set": "Ascended Heroes",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793953845465,
    "store": "card-mountain",
@@ -7079,20 +7093,6 @@
    "set": "Chaos Rising",
    "lang": "en",
    "kind": "tillbaka"
-  },
-  {
-   "at": 1793469230440,
-   "store": "samlarhobby",
-   "product": "samlarhobby:15440000319869",
-   "group": "celebrations|elite-trainer-box|en|",
-   "title": "Pokémon: 25th Anniversary Celebrations Elite Trainer Box (Read info)",
-   "url": "https://samlarhobby.se/products/pokemon-25th-anniversary-celebrations-elite-trainer-box",
-   "image": "https://cdn.shopify.com/s/files/1/0905/3120/1405/files/celebrations-elite-trainer-box-engelska-pokemonkort.jpg?v=1754426340",
-   "price": 4695,
-   "type": "Elite Trainer Box",
-   "set": "Celebrations",
-   "lang": "en",
-   "kind": "ny"
   }
  ]
 }
