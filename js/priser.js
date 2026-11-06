@@ -13,7 +13,7 @@ import { backupDue, backupFile, backupState, cardCount, listCopies, markSaved, m
 // ---------- Spel ----------
 // Pokémon söks direkt mot TCGdex. One Piece och Riftbound söks i färdigbyggda filer i data/<spel>/
 // (scripts/update-op-cards.mjs, scripts/update-rb-cards.mjs) med TCGplayers priser, redan omräknade till kronor.
-// Sökningen gäller bara det valda spelet. Valet står i adressen (?game=op) och sparas i webbläsaren.
+// Sökrutan söker i alla spel. Spelknapparna smalnar av till ett spel, och valet står i adressen (?game=op).
 const enc = encodeURIComponent;
 const GAMES = {
   op: {
@@ -37,13 +37,9 @@ const GAMES = {
     tcgplayer: (c) => `https://www.tcgplayer.com/search/riftbound-league-of-legends-trading-card-game/product?q=${enc(c.name)}`,
   },
 };
-const GAME_KEY = "nl:price-game";
-const known = (g) => (GAMES[g] ? g : "pokemon");
-let game = (() => {
-  const g = new URLSearchParams(location.search).get("game");
-  if (g) return known(g);
-  try { return known(localStorage.getItem(GAME_KEY)); } catch { return "pokemon"; }
-})();
+// "all": Pokémon från TCGdex och One Piece och Riftbound ur kortfilerna, i samma träfflista.
+const known = (g) => (GAMES[g] || g === "pokemon" ? g : "all");
+let game = known(new URLSearchParams(location.search).get("game"));
 // Det valda spelets inställningar, eller null för Pokémon.
 const prebuilt = () => GAMES[game] || null;
 const isJa = () => !prebuilt() && $("#lang").value === "ja";
@@ -189,6 +185,7 @@ async function landing() {
 // ---------- Sök ----------
 const PAGE = 24;
 let found = [], loaded = [], next = 0, searchId = 0;
+let extra = [], extraShown = 0; // alla spel: träffarna i One Piece och Riftbound, som visas ihop med Pokémonkorten
 
 // Hämtar nästa sida av found. next räknas för sig, eftersom kort som inte går att hämta faller bort ur loaded.
 async function loadDetails() {
@@ -202,8 +199,9 @@ function applyView() {
   const sort = $("#sort").value;
   let list = [...loaded];
   const cmp = {
-    "price-desc": (a, b) => (value(b) ?? -1) - (value(a) ?? -1),
-    "price-asc": (a, b) => (value(a) ?? Infinity) - (value(b) ?? Infinity),
+    // I kronor, så att spelen går att jämföra
+    "price-desc": (a, b) => (sekOf(b) ?? -1) - (sekOf(a) ?? -1),
+    "price-asc": (a, b) => (sekOf(a) ?? Infinity) - (sekOf(b) ?? Infinity),
     rising: (a, b) => (b.change ?? -999) - (a.change ?? -999),
     falling: (a, b) => (a.change ?? 999) - (b.change ?? 999),
     number: (a, b) => String(a.localId).localeCompare(String(b.localId), "sv", { numeric: true }),
@@ -215,10 +213,10 @@ function applyView() {
     },
   }[sort];
   // Korten i de färdigbyggda spelen finns redan alla i minnet, så där sorteras hela träfflistan och de första visas.
-  list = prebuilt() || VAULT_PAGE ? [...found].sort(cmp).slice(0, next) : list.sort(cmp);
+  list = prebuilt() || VAULT_PAGE ? [...found].sort(cmp).slice(0, next) : [...list, ...[...extra].sort(cmp).slice(0, extraShown)].sort(cmp);
   current = list;
   renderGrid($("#prices"), list);
-  $("#more").hidden = next >= found.length;
+  $("#more").hidden = next >= found.length && extraShown >= extra.length;
   if (selecting) paintPicked();
 }
 
@@ -235,7 +233,7 @@ async function search() {
   const resolvedName = !pre && parsed.textPart ? (resolvePokemonName(parsed.textPart, data) || parsed.textPart) : "";
 
   const params = new URLSearchParams();
-  if (pre) params.set("game", game);
+  if (game !== "all") params.set("game", game);
   if (rawQ) params.set("q", rawQ);
   if (ja) params.set("lang", "ja");
   if (rarity) params.set("rarity", rarity);
@@ -250,7 +248,11 @@ async function search() {
   if (!hasQuery) return;
 
   const my = ++searchId;
+  extra = [];
+  extraShown = PAGE;
   if (pre) return searchPrebuilt(my, rawQ, rarity, set);
+  // Alla spel: en sökning på text letar också i One Piece och Riftbound. Set och sällsynthet gäller Pokémon.
+  const others = game === "all" && rawQ && !rarity && !set && !ja ? otherGames(rawQ) : null;
   if (ja) return searchJa(my, parsed, resolvedName);
   if (parsed.numPart && resolvedName) {
     $("#res-title").textContent = `${resolvedName} #${parsed.numPart}`;
@@ -312,8 +314,18 @@ async function search() {
     next = 0;
     await getRates();
     loaded = await loadDetails();
-    if (my === searchId) { applyView(); openWanted(); }
+    const more = others ? await others : [];
+    if (my !== searchId) return;
+    extra = more;
+    // Ett skannat One Piece- eller Riftbound-kort ska synas, även om det ligger längre ner i listan
+    if (openAfter && extra.some((c) => c.id === openAfter)) extraShown = extra.length;
+    applyView();
+    openWanted();
   } catch {
+    // TCGdex svarar inte: träffarna i de andra spelen går ändå att visa
+    const more = others ? await others : [];
+    if (my !== searchId) return;
+    if (more.length) { found = loaded = []; next = 0; extra = more; await getRates().catch(() => {}); applyView(); return; }
     $("#prices").innerHTML = '<div class="msg">Kunde inte nå TCGdex just nu. Försök igen om en stund.</div>';
   }
 }
@@ -353,22 +365,28 @@ function openWanted() {
   const i = current.findIndex((c) => c.id === id);
   if (i >= 0) openCard(i);
 }
+// Korten i spelets fil som matchar sökningen
+function matchCards(cards, q, rarity, set) {
+  const words = q.toLowerCase().split(/\s+/).filter(Boolean);
+  const compact = (s) => s.toLowerCase().replace(/[^a-z0-9]/g, "");
+  const cq = compact(q);
+  return cards.filter((c) => {
+    if (set && c.setId !== set) return false;
+    if (rarity && c.rarity !== rarity) return false;
+    if (!q) return true;
+    const hay = `${c.name} ${c.variant || ""} ${c.set} ${c.no || c.localId || ""} ${c.holo ? `foil ${foilLabel(c)}` : ""}`.toLowerCase();
+    return words.every((w) => hay.includes(w)) || (cq.length >= 4 && compact(c.no).startsWith(cq));
+  });
+}
+// Träffarna i One Piece och Riftbound. Ett spel som inte går att läsa hoppas över.
+const otherGames = async (q) => (await Promise.all(Object.keys(GAMES).map((g) => gameCards(g).then((d) => matchCards(d.cards, q)).catch(() => [])))).flat();
 async function searchPrebuilt(my, q, rarity, set) {
   $("#res-title").textContent = q ? `Kort som matchar "${q}"` : set ? $("#set").selectedOptions[0].textContent : $("#rarity").selectedOptions[0].textContent;
   $("#prices").innerHTML = skeleton(8);
   try {
     const d = await gameCards(game);
     if (my !== searchId) return;
-    const words = q.toLowerCase().split(/\s+/).filter(Boolean);
-    const compact = (s) => s.toLowerCase().replace(/[^a-z0-9]/g, "");
-    const cq = compact(q);
-    found = d.cards.filter((c) => {
-      if (set && c.setId !== set) return false;
-      if (rarity && c.rarity !== rarity) return false;
-      if (!q) return true;
-      const hay = `${c.name} ${c.variant || ""} ${c.set} ${c.no || c.localId || ""} ${c.holo ? `foil ${foilLabel(c)}` : ""}`.toLowerCase();
-      return words.every((w) => hay.includes(w)) || (cq.length >= 4 && compact(c.no).startsWith(cq));
-    });
+    found = matchCards(d.cards, q, rarity, set);
     next = PAGE;
     loaded = [];
     applyView();
@@ -386,12 +404,13 @@ $("#more").addEventListener("click", async () => {
   if (prebuilt()) { next += PAGE; applyView(); return; }
   $("#more").disabled = true;
   loaded = loaded.concat(await loadDetails());
+  extraShown += PAGE;
   $("#more").disabled = false;
   applyView();
 });
 $("#price-form").addEventListener("submit", (e) => { e.preventDefault(); search(); });
 // Valvet har alla sina kort i found, oavsett vilket spel som senast valdes på Kortpriser
-$("#sort").addEventListener("change", () => (loaded.length || ((prebuilt() || VAULT_PAGE) && found.length) ? applyView() : null));
+$("#sort").addEventListener("change", () => (loaded.length || extra.length || ((prebuilt() || VAULT_PAGE) && found.length) ? applyView() : null));
 // Sortera står vid resultatrubriken, men på mobilen i filterraden bredvid Sällsynthet, där det finns plats
 const sortLabel = $("#sort").closest(".drop"), sortHome = sortLabel.parentElement, narrow = matchMedia("(max-width:640px)");
 // Valvet: Sortera står alltid i verktygsraden ovanför korten
@@ -548,13 +567,13 @@ async function scanQuery({ game: g, cardId, name, number, total }) {
   return total ? `${String(number).replace(/^\d+/, (d) => d.padStart(total.length, "0"))}/${total}` : number || name || "";
 }
 // manual: skannern öppnas direkt med sökrutan (Sök och lägg till i valvet)
-async function scanCards(g = VAULT_PAGE ? "vault" : game, { manual = false } = {}) {
+async function scanCards(g = VAULT_PAGE ? "vault" : game === "all" ? "pokemon" : game, { manual = false, resume = false } = {}) {
   if (VAULT_PAGE) {
     unlockCoin(); // måste ske i trycket, före första await
     getRates(); // kursen ska finnas när första kortet hittas
   }
   track("scan", "Öppnad");
-  const { openScanner } = await import("./card-scanner.js?v=20261106j");
+  const { openScanner } = await import("./card-scanner.js?v=20261106k");
   const added = new Map(); // valvet: träffarna som lagts in, för att kunna öppna rätt kort
   openScanner(async (r) => {
     track("scan", r.cardId ? "Säker träff" : "Läst, söker");
@@ -563,21 +582,25 @@ async function scanCards(g = VAULT_PAGE ? "vault" : game, { manual = false } = {
       await showVault();
       const i = c ? current.findIndex((x) => x.game === c.game && x.id === c.id) : -1;
       // Stängs kortet går man tillbaka till kameran, inte till valvet
-      if (i < 0) return scanCards("vault");
+      if (i < 0) return scanCards("vault", { resume: true });
       backToScan = true;
       openCard(i);
       return;
     }
     // Ett kort från ett annat spel än det valda (t.ex. One Piece i Pokémonskannern) byter spel
     const g = r.game || "pokemon";
-    if (g !== game) await setGame(g);
+    if (game !== "all" && g !== game) await setGame(g);
     if (g === "pokemon") $("#lang").value = "en";
     openAfter = r.cardId || null;
     $("#pq").value = await scanQuery({ ...r, game: g });
-    search();
+    await search();
+    if (!modal.open && current.length === 1) openCard(0);
+    // Stängs kortet går man tillbaka till kameran, inte till Kortpriser
+    backToScan = modal.open;
   }, null, {
     game: g,
     manual,
+    resume,
     open: !VAULT_PAGE,
     preview: VAULT_PAGE ? scannedCard : null,
     hit: VAULT_PAGE ? (r) => {
@@ -1099,7 +1122,7 @@ modal.addEventListener("click", (e) => {
 // Ändrades valvet medan det visades ritas det om när den stora vyn stängs
 modal.addEventListener("close", () => {
   if (VAULT_PAGE && vaultDirty) showVault();
-  if (backToScan) { backToScan = false; scanCards("vault"); }
+  if (backToScan) { backToScan = false; scanCards(undefined, { resume: true }); }
 });
 modal.addEventListener("keydown", (e) => {
   if (e.key === "ArrowLeft" && shownIndex > 0) openCard(shownIndex - 1);
@@ -1131,8 +1154,8 @@ async function applyGame() {
   const g = prebuilt();
   pokemonFilters ??= { set: $("#set").innerHTML, rarity: $("#rarity").innerHTML };
   for (const b of document.querySelectorAll("#game-seg button")) b.setAttribute("aria-pressed", String(b.dataset.game === game));
-  $("#pq").placeholder = g ? g.placeholder : "Sök kort, t.ex. Pikachu eller Charizard ex";
-  $("#page-h1").textContent = g ? g.h1 : "Kortpriser för Pokémonkort";
+  $("#pq").placeholder = g ? g.placeholder : game === "all" ? "Sök alla kort, t.ex. Pikachu, Luffy eller Jinx" : "Sök kort, t.ex. Pikachu eller Charizard ex";
+  $("#page-h1").textContent = g ? g.h1 : game === "all" ? "Kortpriser för Pokémon, One Piece och Riftbound" : "Kortpriser för Pokémonkort";
   // Fliken får spelets namn, t.ex. "Kortpriser för Riftbound-kort i kronor | Lootninja". Pokémon behåller sidans titel.
   PAGE_TITLE ??= document.title;
   document.title = g ? `${g.h1} i kronor | Lootninja` : PAGE_TITLE;
@@ -1162,12 +1185,12 @@ async function applyGame() {
 async function setGame(g) {
   if (g === game) return;
   game = g;
-  try { localStorage.setItem(GAME_KEY, g); } catch {}
   searchId++;
-  $("#pq").value = "";
   await applyGame();
-  history.replaceState(null, "", prebuilt() ? `?game=${game}` : location.pathname);
-  found = loaded = []; next = 0;
+  found = loaded = extra = []; next = 0;
+  // Sökningen ligger kvar när man smalnar av till ett spel
+  if ($("#pq").value.trim()) return search();
+  history.replaceState(null, "", game !== "all" ? `?game=${game}` : location.pathname);
   $("#results").hidden = true;
   $("#landing").hidden = false;
   landing();

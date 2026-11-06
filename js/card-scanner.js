@@ -1597,6 +1597,10 @@ export async function rankByLook(canvas, list, limit = 150) {
 let dialog = null, stream = null, timer = null, animFrame = null, busy = false;
 let onFound = null, onPartial = null, onHit = null, onPreview = null;
 let autoOpen = false; // träffen öppnas direkt (onFound) i stället för att ligga kvar i hörnet
+let openMode = false; // Kortpriser: träffen öppnas direkt, om man inte valt Snabb skanning
+// Snabb skanning: träffen läggs i hörnet som i valvet och man skannar vidare. Ett tryck på bilden öppnar kortet.
+const QUICK_KEY = "nl:scan-quick";
+const quickOn = () => { try { return localStorage.getItem(QUICK_KEY) === "1"; } catch { return false; } };
 let torchSupported = false, torchActive = false;
 let stillTicks = 0, lastScanAt = 0;
 let pauseUntil = 0, openedAt = 0; // pauseUntil: auto-skanningen väntar så att ett felmeddelande hinner läsas
@@ -1647,6 +1651,7 @@ function ui() {
     <div class="scan-top">
       <b>Skanna kort</b>
       <div class="scan-tools">
+        <button class="scan-quick" type="button" aria-pressed="false" hidden>Snabb skanning</button>
         <button class="scan-sound" type="button" hidden></button>
         <button class="scan-torch" type="button" aria-label="Blixt" aria-pressed="false" hidden>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -1762,6 +1767,14 @@ function ui() {
       // Kameran sa att den har lampa men vägrade tända den
       if (!torchActive) torchBtn.hidden = true;
     }
+  });
+
+  // Snabb skanning i Kortpriser
+  dialog.querySelector(".scan-quick").addEventListener("click", (e) => {
+    const on = !quickOn();
+    try { localStorage.setItem(QUICK_KEY, on ? "1" : "0"); } catch {}
+    autoOpen = !on;
+    e.currentTarget.setAttribute("aria-pressed", String(on));
   });
 
   // Myntljudet i valvet
@@ -2694,7 +2707,7 @@ function thumbOf(canvas) {
 
 // Skannern stängs inte vid en träff. Kortet visas som en liten bild uppe till höger och kameran fortsätter, så att man
 // kan ta nästa kort direkt. Ett nytt kort ersätter bilden. Trycker man på den öppnas kortet (onFound).
-// autoOpen (Kortpriser): kortet poppar upp och öppnas sedan direkt.
+// autoOpen (Kortpriser): kortet öppnas direkt, utan bilden i hörnet.
 let peek = null, resumeHit = null;
 // Kortets pris i kronor (One Piece och Riftbound, ur kortfilerna), eller null
 async function priceOf(r) {
@@ -2705,6 +2718,7 @@ async function priceOf(r) {
 }
 const HIT_WAIT = 700; // ms som kortet längst väntar på priset innan det poppar upp ändå. Priset fylls i när det kommer.
 const HIT_PAUSE = 1100; // ms innan nästa kort läses
+const REVEAL_RAYS = 2800, REVEAL_JACKPOT = 5600; // ms som ett värdefullt kort visas innan skannern fortsätter av sig själv
 const HIT_GAP = 1000; // ms som minst går mellan två träffar, så att samma kort inte räknas två gånger
 const SAME_NAME = 2500; // ms efter att kortet senast setts som ett kort med samma namn räknas som samma kort (en annan utgåva)
 // Senaste träffen: { ids, name, at, seen }. ids är korten som liknade bilden nästan lika mycket, t.ex. kortets andra utgåvor.
@@ -2805,6 +2819,7 @@ async function setPeek(r, canvas) {
     item.name = c.name || item.name;
     item.price = c.sek ?? null;
     item.pending = false;
+    item.hi = cardImg(c, "high");
     return useCardImage(item, c);
   };
   // Dröjer svaret (undefined) poppar kortet upp ändå, och priset fylls i när det kommer
@@ -2818,14 +2833,25 @@ async function setPeek(r, canvas) {
   if (peek !== item) return;
   if (!item.pending) cheer();
   status(hitText(item, !!added));
+  if (autoOpen) return openPeek();
   const btn = dialog.querySelector(".scan-peek");
   paintPeek(item);
-  // Kortet poppar upp mitt i bilden med priset och flyger sedan upp till hörnet, där det ligger kvar
+  // Värdefulla kort visas över hela skärmen i stället för den lilla bilden, och landar sedan i hörnet
   btn.hidden = false;
   btn.style.visibility = "hidden";
+  const level = !item.pending && revealLevel(item.price);
+  if (level) {
+    await showReveal(item, level);
+    if (peek !== item) return;
+    btn.style.visibility = "";
+    btn.classList.remove("pop");
+    void btn.offsetWidth;
+    btn.classList.add("pop");
+    return;
+  }
+  // Kortet poppar upp mitt i bilden med priset och flyger sedan upp till hörnet, där det ligger kvar
   popCard(item, btn, () => {
     if (peek !== item) return;
-    if (autoOpen) return openPeek();
     btn.style.visibility = "";
     btn.classList.remove("pop");
     void btn.offsetWidth; // starta om animationen när bilden byts
@@ -2835,10 +2861,16 @@ async function setPeek(r, canvas) {
   const c = await adding;
   if (peek !== item) { if (c) playCoin(); return; }
   if (!c) return failed();
-  take(c);
+  await Promise.race([take(c), new Promise((done) => setTimeout(done, IMAGE_WAIT))]);
+  if (peek !== item) return;
   cheer();
   status(hitText(item, true));
   paintPeek(item);
+  // Priset kom efter att kortet poppat upp: den lilla bilden ger plats åt den stora visningen
+  const late = revealLevel(item.price);
+  if (!late) return;
+  dialog.querySelectorAll(".scan-pop").forEach((x) => x.remove());
+  await showReveal(item, late);
 }
 // ---------- Värdera manuellt ----------
 // Pokémon på värderingssidan: skannern stängs och sidans egen manuella värdering öppnas (onPartial, utan text).
@@ -3004,6 +3036,8 @@ async function confirmYes() {
   if ("vibrate" in navigator) navigator.vibrate(45);
   playCoin();
   confirmStep("done", "Tillagt i valvet! Vill du lägga till fler kort?");
+  const level = revealLevel(added.sek);
+  if (level) showReveal({ ...item, name: added.name || item.name, price: added.sek, thumb: cardImg(added, "low"), hi: cardImg(added, "high") }, level);
 }
 function hideConfirm() {
   confirmItem = null;
@@ -3013,18 +3047,139 @@ function hideConfirm() {
 
 function clearPeek() {
   peek = null;
+  closeReveal?.();
   if (dialog) dialog.querySelector(".scan-peek").hidden = true;
 }
 
 function openPeek() {
   const r = peek;
   if (!r) return;
-  // Valvet går tillbaka till kameran när kortet stängs, och kortet ligger troligen kvar i handen: det ska inte läsas igen
-  resumeHit = onHit ? { key: keyOf(r), hit: lastHit } : null;
+  // Valvet och Kortpriser går tillbaka till kameran när kortet stängs, och kortet ligger troligen kvar i handen: det ska inte läsas igen
+  resumeHit = onHit || openMode ? { key: keyOf(r), hit: lastHit } : null;
   clearPeek();
   stop();
   dialog.close();
   onFound?.(r);
+}
+
+// ---------- Värdefulla kort i valvet ----------
+// Över 100 kr visas bara kortet över hela skärmen med strålar bakom. Över 1 000 kr blir det jackpot: blixt, kortet snurrar
+// in, ringar, mynt och priset som räknas upp (ingen text). Ett tryck går vidare, annars fortsätter skannern av sig själv.
+const revealLevel = (price) => {
+  const k = price == null ? 0 : Math.round(price);
+  return !onHit ? null : k > 1000 ? "jackpot" : k > 100 ? "rays" : null;
+};
+let closeReveal = null;
+// Gnistor från mitten, och vid jackpot även mynt som regnar. Slutar när rutan är borta.
+function sparkle(canvas, level) {
+  const g = canvas.getContext("2d"), dpr = Math.min(devicePixelRatio || 1, 2);
+  const W = innerWidth, H = innerHeight;
+  canvas.width = W * dpr;
+  canvas.height = H * dpr;
+  g.scale(dpr, dpr);
+  const jackpot = level === "jackpot";
+  const colors = jackpot ? ["#fde68a", "#fbbf24", "#fff7d6", "#f59e0b"] : ["#ffffff", "#e2e8f0", "#fde68a"];
+  const parts = [];
+  const spark = (delay) => {
+    const a = Math.random() * Math.PI * 2, v = (jackpot ? 5 : 3) + Math.random() * (jackpot ? 9 : 5);
+    parts.push({ x: W / 2, y: H * 0.45, vx: Math.cos(a) * v, vy: Math.sin(a) * v, r: 1.5 + Math.random() * 3, life: 50 + Math.random() * 50, age: -delay, c: colors[(Math.random() * colors.length) | 0], fall: 0.05 });
+  };
+  const coin = (delay) => parts.push({ coin: true, x: Math.random() * W, y: -30, vx: (Math.random() - 0.5) * 1.2, vy: 3 + Math.random() * 4, r: 8 + Math.random() * 7, spin: Math.random() * 6, turn: 0.1 + Math.random() * 0.16, life: 400, age: -delay, fall: 0.04 });
+  for (let i = 0; i < (jackpot ? 150 : 46); i++) spark(jackpot ? (i % 3) * 16 + 14 : Math.random() * 10);
+  if (jackpot) for (let i = 0; i < 90; i++) coin(20 + i * 3);
+  const draw = () => {
+    if (!canvas.isConnected) return;
+    g.clearRect(0, 0, W, H);
+    for (let i = parts.length - 1; i >= 0; i--) {
+      const p = parts[i];
+      if (++p.age < 0) continue;
+      p.x += p.vx;
+      p.y += p.vy;
+      p.vy += p.fall;
+      if (!p.coin) { p.vx *= 0.985; p.vy *= 0.985; }
+      if (p.age > p.life || p.y > H + 40) { parts.splice(i, 1); continue; }
+      if (p.coin) {
+        p.spin += p.turn;
+        const wide = Math.abs(Math.cos(p.spin)) * p.r + 1;
+        g.globalAlpha = 1;
+        g.fillStyle = "#b7791f";
+        g.beginPath(); g.ellipse(p.x + 1.5, p.y + 1.5, wide, p.r, 0, 0, 7); g.fill();
+        g.fillStyle = Math.cos(p.spin) > 0 ? "#fcd34d" : "#f59e0b";
+        g.beginPath(); g.ellipse(p.x, p.y, wide, p.r, 0, 0, 7); g.fill();
+        g.fillStyle = "rgba(255,255,255,.6)";
+        g.beginPath(); g.ellipse(p.x, p.y, wide * 0.55, p.r * 0.6, 0, 0, 7); g.fill();
+      } else {
+        g.globalAlpha = Math.max(0, 1 - p.age / p.life);
+        g.fillStyle = p.c;
+        g.beginPath();
+        g.moveTo(p.x, p.y - p.r * 2); g.lineTo(p.x + p.r * 0.6, p.y); g.lineTo(p.x, p.y + p.r * 2); g.lineTo(p.x - p.r * 0.6, p.y);
+        g.closePath(); g.fill();
+      }
+    }
+    if (parts.length) requestAnimationFrame(draw);
+    else g.clearRect(0, 0, W, H);
+  };
+  requestAnimationFrame(draw);
+}
+// Priset räknas upp till kortets värde
+function countUp(el, value, ms, delay) {
+  const t0 = performance.now() + delay;
+  el.textContent = kr(0);
+  const step = (t) => {
+    if (!el.isConnected) return;
+    const k = Math.min(1, Math.max(0, (t - t0) / ms));
+    el.textContent = kr(k >= 1 ? value : Math.round(value * (1 - (1 - k) ** 3)));
+    if (k < 1) requestAnimationFrame(step);
+    else el.classList.add("done");
+  };
+  requestAnimationFrame(step);
+}
+// Svarar när visningen är över. Skannern läser inget nytt kort under tiden.
+function showReveal(item, level) {
+  closeReveal?.();
+  return new Promise((done) => {
+    const quick = matchMedia("(prefers-reduced-motion: reduce)").matches, jackpot = level === "jackpot";
+    const ms = jackpot ? REVEAL_JACKPOT : REVEAL_RAYS;
+    pauseUntil = Date.now() + ms + HIT_PAUSE;
+    const el = document.createElement("div");
+    el.className = `scan-reveal ${level}`;
+    el.dataset.tier = tierOf(item.price);
+    el.setAttribute("role", "status");
+    el.setAttribute("aria-label", `${labelOf(item)}, ${kr(item.price)}`);
+    el.innerHTML = `<i class="sr-rays"></i><i class="sr-rays two"></i><canvas aria-hidden="true"></canvas>
+      ${jackpot ? '<i class="sr-flash"></i><i class="sr-ring"></i><i class="sr-ring two"></i>' : ""}
+      <div class="sr-card">${item.thumb ? `<img src="${esc(item.thumb)}" alt="">` : "<i></i>"}<i class="sr-sheen"></i></div>
+      <em class="sr-price" aria-hidden="true">${esc(kr(item.price))}</em><span class="sr-name" aria-hidden="true">${esc(labelOf(item))}</span>
+      <small class="sr-tap" aria-hidden="true">Tryck för att fortsätta</small>`;
+    dialog.append(el);
+    // Skarpare bild när den stora har laddats. Går den inte att ladda ligger den lilla kvar.
+    if (item.hi) {
+      const hi = new Image();
+      hi.onload = () => { const img = el.querySelector(".sr-card img"); if (img) img.src = item.hi; };
+      hi.src = item.hi;
+    }
+    if (!quick) {
+      sparkle(el.querySelector("canvas"), level);
+      if (jackpot) countUp(el.querySelector(".sr-price"), item.price, 1500, 700);
+    }
+    if (jackpot) {
+      if ("vibrate" in navigator) navigator.vibrate([70, 50, 70, 50, 180]);
+      [160, 340, 560, 820].forEach((t) => setTimeout(() => { if (el.isConnected) playCoin(); }, t));
+    }
+    const finish = () => {
+      if (closeReveal !== finish) return;
+      closeReveal = null;
+      clearTimeout(timer);
+      pauseUntil = Date.now() + HIT_PAUSE;
+      el.classList.add("leaving");
+      setTimeout(() => { el.remove(); done(); }, quick ? 0 : 280);
+    };
+    closeReveal = finish;
+    const timer = setTimeout(finish, ms);
+    // Ett första tryck ska inte råka hoppa över hela visningen
+    const opened = Date.now();
+    el.addEventListener("pointerdown", () => { if (Date.now() - opened > 500) finish(); });
+  });
 }
 
 // Kortet poppar upp mitt i bilden, stannar en stund och flyger till förhandsvisningen uppe till höger (target).
@@ -3061,18 +3216,23 @@ function popCard(item, target, end) {
 // manual: sökrutan (Värdera manuellt) öppnas direkt, och kameran startar först om man går tillbaka till den
 // open: träffen öppnas direkt (callback) när den har poppat upp, i stället för att vänta på ett tryck
 // preview: slår upp ett kort utan att lägga in det. Då visas ett kort valt i sökrutan först, och läggs in (hit) efter ett Ja.
-export async function openScanner(callback, partialCallback, { game = "pokemon", hit = null, manual = false, open = false, preview = null } = {}) {
+// resume: skannern kommer tillbaka efter att en träff öppnats, och samma kort läses inte igen förrän det bytts
+export async function openScanner(callback, partialCallback, { game = "pokemon", hit = null, manual = false, open = false, preview = null, resume = false } = {}) {
   scanGame = game;
   onFound = callback;
   onHit = hit;
   onPreview = preview;
-  autoOpen = open;
+  openMode = open;
+  autoOpen = open && !quickOn();
+  if (!resume) resumeHit = null;
   onPartial = partialCallback || null;
   const d = ui();
   const title = { pokemon: "Skanna Pokémonkort", rb: "Skanna Riftbound-kort", op: "Skanna One Piece-kort" }[game] || "Skanna kort";
   d.querySelector(".scan-top b").textContent = title;
   d.setAttribute("aria-label", title);
   d.querySelector(".scan-sound").hidden = !hit; // ljudet hör till valvet
+  d.querySelector(".scan-quick").hidden = !open;
+  d.querySelector(".scan-quick").setAttribute("aria-pressed", String(open && !autoOpen));
   paintSound();
   d.querySelector(".scan-tip").textContent = game === "rb" || game === "vault"
     ? "Håll kortet i ramen. Battlefields hålls på högkant."
