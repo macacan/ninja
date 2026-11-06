@@ -1,6 +1,34 @@
 {
- "updated": 1793957670847,
+ "updated": 1793958590861,
  "events": [
+  {
+   "at": 1793957692344,
+   "store": "aquitaz",
+   "product": "aquitaz:10973060792666",
+   "group": "30th-celebration|collection-box|zh||set-sylveon",
+   "title": "Pokémon Mega: 30th Celebration Sylveon EX Card Display Set (3 Pack) (CH)",
+   "url": "https://aquitaz.se/products/pokemon-mega-30th-celebration-sylveon-ex-card-display-set-3-pack-ch",
+   "image": "https://cdn.shopify.com/s/files/1/0885/4087/3050/files/BlackBox-2026-08-26T223634.525.png?v=1787755074",
+   "price": 449,
+   "type": "Collection Box",
+   "set": "30th Celebration",
+   "lang": "zh",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1793957692344,
+   "store": "aquitaz",
+   "product": "aquitaz:10973057941850",
+   "group": "30th-celebration|collection-box|zh||greninja-set",
+   "title": "Pokémon Mega: 30th Celebration Greninja EX Card Display Set (3 Pack) (CH)",
+   "url": "https://aquitaz.se/products/pokemon-mega-30th-celebration-greninja-ex-card-display-set-3-pack-ch",
+   "image": "https://cdn.shopify.com/s/files/1/0885/4087/3050/files/BlackBox-2026-08-26T222227.871.png?v=1787754648",
+   "price": 449,
+   "type": "Collection Box",
+   "set": "30th Celebration",
+   "lang": "zh",
+   "kind": "tillbaka"
+  },
   {
    "at": 1793957062958,
    "store": "tcgstore",
@@ -7063,36 +7091,6 @@
    "lang": "en",
    "game": "op",
    "kind": "forbestallning"
-  },
-  {
-   "at": 1793483492453,
-   "store": "skattkistan",
-   "product": "skattkistan:11116918604114",
-   "group": "chaos-rising|booster-box|en|",
-   "title": "Pokémon TCG Mega Evolution Chaos Rising Booster Box",
-   "url": "https://skattkistan.net/products/chaos-rising-booster-box-max-2-per-kund",
-   "image": "https://cdn.shopify.com/s/files/1/1094/6858/2226/files/07.09.2026_16.02.56_REC.png?v=1788789866",
-   "price": 2299,
-   "type": "Booster Box",
-   "set": "Chaos Rising",
-   "lang": "en",
-   "kind": "prissankt",
-   "from": 2429
-  },
-  {
-   "at": 1793477202458,
-   "store": "samlarverket",
-   "product": "samlarverket:11273223242071",
-   "group": "team-rocket|ultra-premium-collection|en||moltres",
-   "title": "Pokémon Team Rocket’s Moltres ex Ultra-Premium Collection",
-   "url": "https://samlarverket.com/produkt/pokemon-team-rocket-s-moltres-ex-ultra-premium-collection",
-   "image": "https://cdn.shopify.com/s/files/1/1022/5323/2471/files/team-rockets-moltres-ex-ultra-premium-collection-v0-p46d6lwnudkf1.webp?v=1791844975",
-   "price": 3599,
-   "type": "Ultra-Premium Collection",
-   "set": "Team Rocket",
-   "lang": "en",
-   "kind": "prissankt",
-   "from": 3899
   }
  ]
 }
