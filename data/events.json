@@ -1,6 +1,21 @@
 {
- "updated": 1793959511019,
+ "updated": 1793960431037,
  "events": [
+  {
+   "at": 1793959690370,
+   "store": "tt-vault",
+   "product": "tt-vault:16680617574745",
+   "group": "30th-celebration|booster-box|en|",
+   "title": "Pokemon TCG: 30th Celebration Booster Box - CH",
+   "url": "https://ttvault.se/products/pokemon-tcg-30th-celebration-booster-box-ch-preorder",
+   "image": "https://cdn.shopify.com/s/files/1/1020/3683/2601/files/IMG-9583.jpg?v=1791657273",
+   "price": 1399,
+   "type": "Booster Box",
+   "set": "30th Celebration",
+   "lang": "en",
+   "kind": "prissankt",
+   "from": 1499
+  },
   {
    "at": 1793959049574,
    "store": "alphaspel",
@@ -7074,21 +7089,6 @@
    "lang": "en",
    "game": "op",
    "kind": "ny"
-  },
-  {
-   "at": 1793486049196,
-   "store": "alphaspel",
-   "product": "alphaspel:https://alphaspel.se/3959-one-piece-card-game/351742-one-piece-card-game-illustration-box-9",
-   "group": "op|x|illustration-box|en||illustration",
-   "title": "One Piece Card Game: Illustration Box 9",
-   "url": "https://alphaspel.se/3959-one-piece-card-game/351742-one-piece-card-game-illustration-box-9",
-   "image": "https://alphaspel.se/media/products/bf28efc4-989a-424e-b1f9-192f4da703ac",
-   "price": 349,
-   "type": "Illustration Box",
-   "set": null,
-   "lang": "en",
-   "game": "op",
-   "kind": "forbestallning"
   }
  ]
 }
