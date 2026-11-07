@@ -1,5 +1,5 @@
 {
- "updated": 1794010434162,
+ "updated": 1794010574165,
  "stores": [
   {
    "id": "alara-games",
@@ -265,14 +265,14 @@
    "name": "Frog med Vänner",
    "domain": "frogmedvanner.se",
    "status": "ej-forbjuden",
-   "checkedAt": 1794009566184,
+   "checkedAt": 1794010492851,
    "ok": true,
-   "lastOkAt": 1794009566184,
+   "lastOkAt": 1794010492851,
    "count": 10,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 15
+   "interval": 60
   },
   {
    "id": "gameshop",
@@ -335,14 +335,14 @@
    "name": "Jollyroom",
    "domain": "jollyroom.se",
    "status": "ej-forbjuden",
-   "checkedAt": 1794009577062,
+   "checkedAt": 1794010548733,
    "ok": true,
-   "lastOkAt": 1794009577062,
+   "lastOkAt": 1794010548733,
    "count": 7,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 15
+   "interval": 60
   },
   {
    "id": "kantovault",
@@ -424,14 +424,14 @@
    "name": "MaxGaming",
    "domain": "maxgaming.se",
    "status": "ej-forbjuden",
-   "checkedAt": 1794009565417,
+   "checkedAt": 1794010540060,
    "ok": true,
-   "lastOkAt": 1794009565417,
+   "lastOkAt": 1794010540060,
    "count": 73,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 15
+   "interval": 60
   },
   {
    "id": "miniature-metropolis",
@@ -452,14 +452,14 @@
    "name": "Mix-Max",
    "domain": "mix-max.se",
    "status": "ej-forbjuden",
-   "checkedAt": 1794009547083,
+   "checkedAt": 1794010467704,
    "ok": true,
-   "lastOkAt": 1794009547083,
+   "lastOkAt": 1794010467704,
    "count": 2,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 15
+   "interval": 60
   },
   {
    "id": "mtg-butiken",
@@ -480,28 +480,28 @@
    "name": "Mystery Shack",
    "domain": "mysteryshack.se",
    "status": "ej-forbjuden",
-   "checkedAt": 1794009533833,
+   "checkedAt": 1794010499597,
    "ok": true,
-   "lastOkAt": 1794009533833,
+   "lastOkAt": 1794010499597,
    "count": 17,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 15
+   "interval": 60
   },
   {
    "id": "monmon",
    "name": "MonMon",
    "domain": "monmon.se",
    "status": "ej-forbjuden",
-   "checkedAt": 1794009507774,
+   "checkedAt": 1794010481649,
    "ok": true,
-   "lastOkAt": 1794009507774,
+   "lastOkAt": 1794010481649,
    "count": 110,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 15
+   "interval": 60
   },
   {
    "id": "netgrade",
@@ -522,14 +522,14 @@
    "name": "Nordic Pulls",
    "domain": "nordicpulls.se",
    "status": "ej-forbjuden",
-   "checkedAt": 1794009492757,
+   "checkedAt": 1794010474496,
    "ok": true,
-   "lastOkAt": 1794009492757,
+   "lastOkAt": 1794010474496,
    "count": 107,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 15
+   "interval": 60
   },
   {
    "id": "nordic-sports-cards",
@@ -558,14 +558,14 @@
    "name": "Packs on Packs",
    "domain": "packsonpacks.se",
    "status": "ej-forbjuden",
-   "checkedAt": 1794009557836,
+   "checkedAt": 1794010537623,
    "ok": true,
-   "lastOkAt": 1794009557836,
+   "lastOkAt": 1794010537623,
    "count": 28,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 15
+   "interval": 60
   },
   {
    "id": "playoteket",
@@ -583,14 +583,14 @@
    "name": "Pokekid",
    "domain": "pokekid.se",
    "status": "ej-forbjuden",
-   "checkedAt": 1794009567956,
+   "checkedAt": 1794010543607,
    "ok": true,
-   "lastOkAt": 1794009567956,
+   "lastOkAt": 1794010543607,
    "count": 65,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 15
+   "interval": 60
   },
   {
    "id": "pokemastersvault",
@@ -773,14 +773,14 @@
    "name": "Spelexperten",
    "domain": "spelexperten.com",
    "status": "ej-forbjuden",
-   "checkedAt": 1794009587384,
+   "checkedAt": 1794010562939,
    "ok": true,
-   "lastOkAt": 1794009587384,
+   "lastOkAt": 1794010562939,
    "count": 306,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 15
+   "interval": 60
   },
   {
    "id": "spelgalaxen",
