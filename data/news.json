@@ -1,6 +1,24 @@
 {
- "updated": "2026-11-07T17:50:23.257Z",
+ "updated": "2026-11-07T18:05:42.824Z",
  "articles": [
+  {
+   "title": "Man arrested after leaving 6-year-old daughter sleeping in line for Pokemon cards",
+   "link": "https://www.dexerto.com/pokemon/man-arrested-after-leaving-6-year-old-daughter-sleeping-in-line-for-pokemon-cards-3425627/",
+   "date": "2026-11-07T12:50:04.000Z",
+   "summary": "Witnesses told officers that Dooley had given his daughter a pillow and blanket sometime after 1 am before leaving her alone in line.",
+   "image": "https://www.dexerto.com/cdn-image/wp-content/uploads/2026/11/07/pokemon-card-2.jpg?width=480&quality=75&format=auto",
+   "source": "Dexerto",
+   "game": "pk"
+  },
+  {
+   "title": "Store hires overnight guards after thieves steal $50,000 worth of Pokemon cards",
+   "link": "https://www.dexerto.com/pokemon/store-hires-overnight-guards-after-thieves-steal-50000-worth-of-pokemon-cards-3425591/",
+   "date": "2026-11-07T11:08:28.000Z",
+   "summary": "A Tacoma card shop has hired overnight security guards after thieves used a pickup truck as a battering ram to steal around $50,000 in trading cards.",
+   "image": "https://www.dexerto.com/cdn-image/wp-content/uploads/2026/11/07/Pokemon-Cards-Tacoma-Robbery.jpg?width=480&quality=75&format=auto",
+   "source": "Dexerto",
+   "game": "pk"
+  },
   {
    "title": "Europe Regional Championship 2026 Coverage: Metagame, Popularity, Win & Conversion Rates",
    "link": "https://riftbound.gg/europe-regional-championship/",
@@ -26,15 +44,6 @@
    "summary": "Pokémon TCG fans who pre-ordered Delta Reign ETBs still haven't been charged, and TPC has not issued shipping updates",
    "image": "https://static0.polygonimages.com/wordpress/wp-content/uploads/2026/02/sad-pikachu.jpg",
    "source": "Polygon",
-   "game": "pk"
-  },
-  {
-   "title": "Pokémon TCG Delta Reign preorders delayed over checkout bug",
-   "link": "https://www.wargamer.com/pokemon-trading-card-game/delta-reign-preorders-delay",
-   "date": "2026-11-05T15:12:03.000Z",
-   "summary": "There seems to be an issue with Pokémon Center, with many TCG fans receiving news of delays to their preordered packs.",
-   "image": "https://www.wargamer.com/wp-content/sites/wargamer/2026/11/pokemon-trading-card-game-delta-reign-preorders-delay.jpg",
-   "source": "Wargamer",
    "game": "pk"
   },
   {
@@ -412,15 +421,6 @@
    "date": "2026-09-29T19:52:14.000Z",
    "summary": "A Pokemon promo card that never reached stores sold for $8.4 million after 64 bids at Fanatics Collect.",
    "image": "https://www.dexerto.com/cdn-image/wp-content/uploads/2026/09/29/Pikachu-card-8-billion.jpg?width=480&quality=75&format=auto",
-   "source": "Dexerto",
-   "game": "pk"
-  },
-  {
-   "title": "Coinbase jumps into Pokemon TCG craze with digital packs backed by real cards",
-   "link": "https://www.dexerto.com/pokemon/coinbase-jumps-into-pokemon-tcg-craze-with-digital-packs-backed-by-real-cards-3413480/",
-   "date": "2026-09-29T14:29:50.000Z",
-   "summary": "Coinbase is teasing a Pokemon pack-ripping feature tied to real cards, but has not revealed its price, launch date, or pull odds.",
-   "image": "https://www.dexerto.com/cdn-image/wp-content/uploads/2026/09/29/coinbase-pokemon-card-packs.jpg?width=480&quality=75&format=auto",
    "source": "Dexerto",
    "game": "pk"
   },
