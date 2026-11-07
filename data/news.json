@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-07T23:16:40.228Z",
+ "updated": "2026-11-07T23:31:59.276Z",
  "articles": [
   {
    "title": "Man arrested after leaving 6-year-old daughter sleeping in line for Pokemon cards",
@@ -488,5 +488,24 @@
    "game": "op"
   }
  ],
- "videos": []
+ "videos": [
+  {
+   "id": "tjlWKW1f2Hg",
+   "title": "Aarni Karjala Vs Finn Lasse Fries - Pokémon TCG Masters Finals | 2027 Gdańsk Regional Championships",
+   "date": "2026-11-06T21:00:29.000Z",
+   "source": "Play! Pokémon (officiell)"
+  },
+  {
+   "id": "1mE79YetSrQ",
+   "title": "Aarni Karjala Vs Vincenzo Cipolla - Pokémon TCG Top 4 | 2027 Gdańsk Regional Championships",
+   "date": "2026-11-06T19:00:03.000Z",
+   "source": "Play! Pokémon (officiell)"
+  },
+  {
+   "id": "KLVvK8uwelQ",
+   "title": "Miloslav Posledni Vs Finn Lasse Fries - Pokémon TCG Top 4 | 2027 Gdańsk Regional Championships",
+   "date": "2026-11-06T17:00:22.000Z",
+   "source": "Play! Pokémon (officiell)"
+  }
+ ]
 }
