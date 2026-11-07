@@ -1,6 +1,20 @@
 {
- "updated": 1794010574165,
+ "updated": 1794014114246,
  "events": [
+  {
+   "at": 1794014047671,
+   "store": "bangerpack",
+   "product": "bangerpack:https://bangerpack.se/pokemon/boosters-packs/pokemon-sword-shield-brilliant-stars-booster",
+   "group": "brilliant-stars|booster-pack|en|",
+   "title": "Pokémon Brilliant Stars – Booster",
+   "url": "https://bangerpack.se/pokemon/boosters-packs/pokemon-sword-shield-brilliant-stars-booster",
+   "image": "https://cdn.quickbutik.com/images/99246J/products/6ab5820c52fe2.png",
+   "price": 239,
+   "type": "Booster Pack",
+   "set": "Brilliant Stars",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1794003654608,
    "store": "nordic-pulls",
@@ -7059,20 +7073,6 @@
    "price": 129,
    "type": "Blister",
    "set": "Twilight Masquerade",
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1793641899306,
-   "store": "samlarhobby",
-   "product": "samlarhobby:15165040001405",
-   "group": "paradox-rift|blister|en||cl",
-   "title": "Pokémon, Scarlet & Violet 4: Paradox Rift, Checklane blisterpack, Sinistea",
-   "url": "https://samlarhobby.se/products/pokemon-scarlet-violet-4-paradox-rift-checklane-blisterpack-sinistea",
-   "image": "https://cdn.shopify.com/s/files/1/0905/3120/1405/files/187-85406_2_2048x-600x600.jpg?v=1745155344",
-   "price": 139,
-   "type": "Blister",
-   "set": "Paradox Rift",
    "lang": "en",
    "kind": "ny"
   }
