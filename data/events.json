@@ -1,6 +1,21 @@
 {
- "updated": 1794071042639,
+ "updated": 1794072840007,
  "events": [
+  {
+   "at": 1794072016321,
+   "store": "collected",
+   "product": "collected:11452749709654",
+   "group": "op|the-dominance-of-god|booster-box|ja|",
+   "title": "[Förhandsbokning] One Piece TCG: [OP-18] The Dominance of God Booster Box (Japansk)",
+   "url": "https://collected.se/products/one-piece-tcg-op-18-the-dominance-of-god-booster-box-japansk",
+   "image": "https://cdn.shopify.com/s/files/1/0965/6788/6166/files/one-piece-tcg-op-18-the-dominance-of-god-booster-box-japansk.png?v=1794071010",
+   "price": 1749,
+   "type": "Booster Box",
+   "set": "The Dominance of God",
+   "lang": "ja",
+   "game": "op",
+   "kind": "forbestallning"
+  },
   {
    "at": 1794067307505,
    "store": "aquitaz",
@@ -7062,20 +7077,6 @@
    "price": 599,
    "type": "Blister",
    "set": "Destined Rivals",
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1793644604706,
-   "store": "cardlevels",
-   "product": "cardlevels:10439625343287",
-   "group": "ascended-heroes|booster-pack|en|",
-   "title": "Pokémon TCG: Ascended Heroes Booster Pack",
-   "url": "https://cardlevels.se/products/pokemon-tcg-ascended-heroes-booster-pack",
-   "image": "https://cdn.shopify.com/s/files/1/0846/0458/4247/files/Pokemon-TCG-Mega-Evolutions-Ascended-Heroes-Booster-Pack.webp?v=1772018830",
-   "price": 179,
-   "type": "Booster Pack",
-   "set": "Ascended Heroes",
    "lang": "en",
    "kind": "ny"
   }
