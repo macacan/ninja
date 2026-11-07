@@ -79,8 +79,8 @@
    "name": "Blindbox",
    "domain": "blindbox.se",
    "platform": "shopify",
-   "status": "forbjuden",
-   "note": "Villkoren förbjuder automatisk insamling"
+   "status": "inga-bilder",
+   "note": "Villkoren är omskrivna, inget förbud mot automatisk insamling 2026-11-07. Texter, bilder, grafik och logotyper får inte användas utan skriftligt tillstånd, så butikens egna produktbilder visas inte."
   },
   {
    "id": "card-mountain",
@@ -362,8 +362,12 @@
    "name": "NordicTCG",
    "domain": "nordictcg.se",
    "platform": "generic",
-   "status": "forbjuden",
-   "note": "Cloudflare-kontroll mot botar på hela sidan."
+   "status": "ej-forbjuden",
+   "note": "Inget förbud hittat i villkoren eller robots.txt, och Cloudflare-spärren är borta (2026-11-07). Sitemapen är gammal, så produkterna läses från kategorin Booster Boxar.",
+   "listing": {
+    "path": "/3-booster-boxar",
+    "link": "^https://nordictcg\\.se/\\d+-[^/?#]+\\.html$"
+   }
   },
   {
    "id": "packs-on-packs",
