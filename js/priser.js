@@ -3,6 +3,7 @@ import { mountChart, mountSeries } from "./pricechart.js?v=20261103a";
 import { recordCard, mountRecent } from "./recent.js";
 import { mountCardAutocomplete, parseCardQuery, resolvePokemonName, loadDataset, sameNumber, filterByNumber, apiNumber } from "./card-autocomplete.js";
 import { langMark } from "./langmark.js";
+import { signatureBadge } from "./signature.js?v=20261107a";
 import { apiFor, findJapanese } from "./japanese.js";
 import { track } from "./tracker.js";
 import { gameSuggestions } from "./game-guess.js";
@@ -129,6 +130,7 @@ function tile(c, i) {
       <i class="glare"></i>${langMark(c.lang)}
       ${c.qty > 1 ? `<span class="cqty">×${c.qty}</span>` : ""}
       ${c.holo ? `<span class="cfoil">${esc(foilLabel(c))}</span>` : ""}
+      ${c.game === "rb" ? signatureBadge(c) : ""}
     </span>
     <span class="cname">${c.en ? `${esc(c.en)} <small class="cname-ja">${esc(c.name)}</small>` : esc(c.name)}</span>
     <span class="cset">${esc(c.set || "")}${c.localId ? ` · #${esc(c.localId)}` : ""}</span>
@@ -575,7 +577,7 @@ async function scanCards(g = "vault", { manual = false, resume = false } = {}) {
     getRates(); // kursen ska finnas när första kortet hittas
   }
   track("scan", "Öppnad");
-  const { openScanner } = await import("./card-scanner.js?v=20261106o");
+  const { openScanner } = await import("./card-scanner.js?v=20261107a");
   const added = new Map(); // valvet: träffarna som lagts in, för att kunna öppna rätt kort
   openScanner(async (r) => {
     track("scan", r.cardId ? "Säker träff" : "Läst, söker");

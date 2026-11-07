@@ -1237,6 +1237,8 @@ span.rd-logo{display:grid;place-items:center;background:var(--surface);border-ra
 .cqty{position:absolute;top:6px;right:6px;z-index:2;padding:2px 8px;border-radius:999px;background:rgba(15,17,23,.88);border:1px solid rgba(255,255,255,.25);font:700 .78rem var(--sans);color:#fff;pointer-events:none}
 /* Foil i valvet: märket nere till vänster på kortbilden */
 .cfoil{position:absolute;left:6px;bottom:6px;z-index:2;padding:2px 8px;border-radius:999px;background:linear-gradient(120deg,#f0abfc,#93c5fd,#86efac,#fde68a);color:#111;font:800 .7rem var(--sans);pointer-events:none;box-shadow:0 1px 4px rgba(0,0,0,.35)}
+/* Signerade Riftbound-kort (js/signature.js): emblem uppe till vänster på kortrutan, inte i den stora vyn */
+.csig{position:absolute;left:6px;top:6px;z-index:2;padding:2px 8px;border-radius:999px;background:linear-gradient(120deg,#fde68a,#f59e0b 55%,#fcd34d);color:#3b2300;font:800 .68rem var(--sans);letter-spacing:.02em;pointer-events:none;box-shadow:0 1px 4px rgba(0,0,0,.4);white-space:nowrap}
 .cm-table{width:100%;border-collapse:collapse;font-size:.92rem}
 .cm-table th{text-align:left;font-weight:500;padding:6px 0;border-bottom:1px solid var(--line)}
 .cm-table td{text-align:right;padding:6px 0;border-bottom:1px solid var(--line);font-weight:700}

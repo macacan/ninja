@@ -5,7 +5,7 @@
 // Priserna är TCGplayers (USD), omräknade med ECB:s kurs samma dag. Cardmarket går inte att använda här:
 // deras fil skiljer inte på vanlig, parallel och manga (Shanks OP01-120 finns som 15 produkter med samma namn).
 // Körs en gång per dygn (se .github/workflows/trends.yml) eller manuellt: node scripts/update-op-cards.mjs
-import { readFile } from "node:fs/promises";
+import { readFile, writeFile } from "node:fs/promises";
 import { getJSON, saveGame, sealedImage } from "./lib/prebuilt-cards.mjs";
 
 const API = "https://optcgapi.com/api";
@@ -50,9 +50,15 @@ const pending = groups.filter((g) => /^(OP|EB|PRB)\d+(-EB\d+)?$/i.test(g.abbrevi
     date: g.publishedOn?.slice(0, 10) || null, main: true, pending: true, group: g.groupId }))
   .sort((a, b) => (b.date || "").localeCompare(a.date || ""));
 setList.unshift(...pending);
+// TCGplayers produkter per grupp, hämtade en gång (används till setbilden och korten nedan)
+const productCache = new Map();
+const productsOf = (groupId) => {
+  if (!productCache.has(groupId)) productCache.set(groupId, getJSON(`https://tcgcsv.com/tcgplayer/68/${groupId}/products`).then((r) => r?.results || []));
+  return productCache.get(groupId);
+};
 // Setets bild (boosterbox eller starterdeck) från samma TCGplayer-grupp.
 for (const s of setList) {
-  if (s.group) s.image = sealedImage((await getJSON(`https://tcgcsv.com/tcgplayer/68/${s.group}/products`))?.results);
+  if (s.group) s.image = sealedImage(await productsOf(s.group));
   delete s.group;
 }
 
@@ -71,26 +77,63 @@ const sekOf = (usd) => (usd == null ? null : Math.round(usd * rate * 100) / 100)
 // då kortets id, så att två versioner av samma kort inte krockar när bild-id saknas. Bilderna av nya kort har ofta
 // en SAMPLE-stämpel hos TCGplayer. optcgapis egna bilder ersätter dem automatiskt när de kommer. (One Pieces
 // officiella kortbilder går inte att visa på andra sajter: Cross-Origin-Resource-Policy: same-site.)
-// I sådana set saknar optcgapi också ofta några kort (t.ex. ledarna i EB05). De tas med från TCGplayer, se nedan.
+// optcgapi saknar också en del varianter (Shirahoshi EB05-014 Manga, Buggy OP09-051 Manga, Dash Pack-korten …).
+// De tas med från TCGplayer, se nedan. Alla set hämtas därför från TCGplayer.
 const allCards = [...setCards, ...(stCards || [])];
 // Kortet hos båda: set, kortnummer och variant. Inte hela namnet, som optcgapi ibland stavar fel ("Gum-Gum Giant Rifl").
 const tcgKey = (set, no, fullName) => `${set}|${no}|${splitName(fullName || "").variant || ""}`;
 const tcgCards = new Map(), tcgOnly = [];
-// Ett set som en gång hämtats från TCGplayer fortsätter med det, annars tappar det korten som bara finns där (och deras
-// priser) den dag optcgapi har bilder till alla sina kort.
-const hadTcg = await readFile(new URL("cards.json", DIR), "utf8").then((t) => JSON.parse(t).cards.filter((c) => c.tcg).map((c) => c.set)).catch(() => []);
-for (const set of new Set([...allCards.filter((c) => !c.card_image).map((c) => c.set_id), ...hadTcg])) {
+for (const set of new Set(allCards.map((c) => c.set_id))) {
   const g = groupOf.get(code(set));
   if (!g) continue;
-  const [products, prices] = await Promise.all([
-    getJSON(`https://tcgcsv.com/tcgplayer/68/${g.groupId}/products`), getJSON(`https://tcgcsv.com/tcgplayer/68/${g.groupId}/prices`)]);
+  const [products, prices] = await Promise.all([productsOf(g.groupId), getJSON(`https://tcgcsv.com/tcgplayer/68/${g.groupId}/prices`)]);
   const price = new Map((prices?.results || []).map((x) => [x.productId, x]));
-  for (const p of products?.results || []) {
+  for (const p of products) {
     const ex = Object.fromEntries((p.extendedData || []).map((e) => [e.name, e.value]));
     if (!ex.Number || !p.imageUrl) continue;
     const card = { id: `tcg${p.productId}`, image: p.imageUrl.replace(/_\d+w\.jpg$/, "_400w.jpg") };
     tcgCards.set(tcgKey(set, ex.Number, p.name), card);
     tcgOnly.push({ ...card, set, p, ex, price: price.get(p.productId) });
+  }
+}
+
+// optcgapi har ibland laddat upp samma bildfil för flera versioner av ett kort (Shirahoshi EB05-014 och "Super Rare
+// Alternate Art" är byte för byte samma bild, likaså Kaido OP17-062 och "Super Alternate Art"). Bilderna jämförs på
+// filstorlek: en bild-url hos optcgapi byts aldrig ut (den har ett slumpat suffix), så storleken sparas i
+// image-sizes.json och bara nya bilder behöver frågas efter. Varianterna som krockar får TCGplayers bild i stället.
+const SIZES = new URL("image-sizes.json", DIR);
+const sizes = await readFile(SIZES, "utf8").then(JSON.parse).catch(() => ({}));
+const versions = new Map();
+for (const c of allCards) if (c.card_image) {
+  const k = `${c.set_id}|${c.card_set_id}`;
+  if (!versions.has(k)) versions.set(k, []);
+  versions.get(k).push(c);
+}
+const toCheck = [...new Set([...versions.values()].filter((l) => l.length > 1).flat().map((c) => c.card_image))].filter((u) => !(u in sizes));
+for (let i = 0; i < toCheck.length; i += 8) {
+  await Promise.all(toCheck.slice(i, i + 8).map(async (u) => {
+    try {
+      const r = await fetch(u, { method: "HEAD", headers: { "user-agent": "LootninjaTrends/1.0" }, signal: AbortSignal.timeout(30000) });
+      const n = +r.headers.get("content-length");
+      if (r.ok && n) sizes[u] = n;
+    } catch {}
+  }));
+}
+const used = new Set([...versions.values()].flat().map((c) => c.card_image));
+await writeFile(SIZES, JSON.stringify(Object.fromEntries(Object.entries(sizes).filter(([u]) => used.has(u)).sort())));
+const sameImage = new Set();
+for (const list of versions.values()) {
+  const bySize = new Map();
+  for (const c of list) if (sizes[c.card_image]) {
+    if (!bySize.has(sizes[c.card_image])) bySize.set(sizes[c.card_image], []);
+    bySize.get(sizes[c.card_image]).push(c);
+  }
+  for (const group of bySize.values()) {
+    // Två versioner med samma namn (ingen variant) går inte att skilja åt hos TCGplayer heller
+    if (new Set(group.map((c) => c.card_name)).size < 2) continue;
+    // Bilden hör till versionen utan variant om det finns en sådan, annars vet vi inte vilken: alla får TCGplayers
+    const plain = group.some((c) => !splitName(c.card_name || "").variant);
+    for (const c of group) if (!plain || splitName(c.card_name || "").variant) sameImage.add(c);
   }
 }
 
@@ -105,20 +148,32 @@ const cards = allCards.map((c) => {
   if (seen.has(id)) id += `~${(c.card_name || "").toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
   if (seen.has(id)) return null;
   seen.add(id);
+  const image = sameImage.has(c) && tcgHit ? tcgHit.image : c.card_image || tcg?.image || null;
   return {
     id, name, variant, set: c.set_id, no: c.card_set_id, rarity: c.rarity || null,
     color: c.card_color || null, type: c.card_type || null, cost: num(c.card_cost), power: num(c.card_power),
     counter: num(c.counter_amount), life: num(c.life), attr: c.attribute || null, sub: c.sub_types || null,
-    image: c.card_image || tcg?.image || null, sek: sekOf(c.market_price ?? c.inventory_price), low: sekOf(c.inventory_price),
+    image, sek: sekOf(c.market_price ?? c.inventory_price), low: sekOf(c.inventory_price),
     tcg: tcgHit ? tcgHit.id.slice(3) : null,
   };
 }).filter(Boolean);
 
-// Kort som TCGplayer har men optcgapi saknar (samma nummer och variant), i seten som hämtas från TCGplayer ovan
+// Kort som TCGplayer har men optcgapi saknar. optcgapi och TCGplayer namnger inte alltid varianterna lika ("SPR" mot
+// "SP", "Manga" mot "Alternate Art"), så ett kort tas bara med när TCGplayer har fler versioner av numret än optcgapi
+// och exakt så många saknar motsvarighet. I set där optcgapi ännu saknar bilder tas alla som saknar motsvarighet med.
 const inApi = new Set(allCards.map((c) => tcgKey(c.set_id, c.card_set_id, c.card_name)));
+const newSet = new Set(allCards.filter((c) => !c.card_image).map((c) => c.set_id));
+const apiCount = new Map(), tcgCount = new Map(), missing = new Map();
+for (const c of allCards) apiCount.set(`${c.set_id}|${c.card_set_id}`, (apiCount.get(`${c.set_id}|${c.card_set_id}`) || 0) + 1);
 for (const t of tcgOnly) {
-  const id = `${t.set}/${t.id}`;
+  const k = `${t.set}|${t.ex.Number}`;
+  tcgCount.set(k, (tcgCount.get(k) || 0) + 1);
+  if (!inApi.has(tcgKey(t.set, t.ex.Number, t.p.name))) missing.set(k, (missing.get(k) || 0) + 1);
+}
+for (const t of tcgOnly) {
+  const id = `${t.set}/${t.id}`, k = `${t.set}|${t.ex.Number}`;
   if (seen.has(id) || inApi.has(tcgKey(t.set, t.ex.Number, t.p.name))) continue;
+  if (!newSet.has(t.set) && missing.get(k) > tcgCount.get(k) - (apiCount.get(k) || 0)) continue;
   seen.add(id);
   const { name, variant } = splitName(t.p.name);
   cards.push({

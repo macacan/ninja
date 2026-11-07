@@ -6,6 +6,7 @@
 // Körs en gång per dygn (se .github/workflows/trends.yml) eller manuellt: node scripts/update-rb-cards.mjs
 import { writeFile } from "node:fs/promises";
 import { getJSON, saveGame, sealedImage } from "./lib/prebuilt-cards.mjs";
+import { isSignature, signaturePairs } from "../js/signature.js";
 
 const TCG = "https://tcgcsv.com/tcgplayer/89";
 const DIR = new URL("../data/rb/", import.meta.url);
@@ -99,6 +100,11 @@ for (const g of [...groups.results].sort((a, b) => (b.publishedOn || "").localeC
     });
   }
 }
+
+// Ett signerat kort utan egen bild har samma konstverk som det vanliga overnumbered-kortet (Ekko 168*/167 och 168/167),
+// inte som grundkortet med samma namn (139/167)
+const sigPairs = signaturePairs(cards), byId = new Map(cards.map((c) => [c.id, c]));
+for (const c of cards) if (isSignature(c)) c.image ||= byId.get(sigPairs.get(c.id))?.image || null;
 
 // Galleriet saknar Legend-korten och de nyaste Signature-korten. De får bilden från samma kort i ett annat set
 // (helst utan variant), så att promokortet "Jinx, Loose Cannon" visar Jinx i stället för kortbaksidan.

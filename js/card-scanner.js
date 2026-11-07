@@ -14,6 +14,7 @@
 // 7. Automatisk skanning går i två spår: bildjämförelsen på varje bild och textläsningen i bakgrunden, se attempt.
 import { API, cardImg, esc, getJSON, kr } from "./site.js";
 import { loadDataset } from "./card-autocomplete.js";
+import { signaturePairs, isSignature } from "./signature.js?v=20261107a";
 import "./scan/quad.js?v=20261103a"; // sätter self.Quad
 import "./scan/fingerprint.js?v=20261106b"; // sätter self.Fingerprint (med FP.BOX per spel)
 import { coinMuted, hasTierSound, playCoin, playTier, setCoinMuted, unlockCoin } from "./scan/coin.js?v=20261106a";
@@ -856,7 +857,7 @@ function rbData() {
     // Korten som delar bild med ett kort (inklusive kortet självt)
     const siblings = (id) => byImage.get(byId.get(id)?.image) || [byId.get(id)].filter(Boolean);
     const sizes = new Set(cards.map((c) => +rbNum(c.no).t).filter(Boolean));
-    return { cards, byId, siblings, sizes };
+    return { cards, byId, siblings, sizes, sigPairs: signaturePairs(cards) };
   }).catch((e) => { rbPromise = null; throw e; });
   return rbPromise;
 }
@@ -2346,11 +2347,13 @@ async function showTwins({ art }) {
   twinCards = cards.filter(Boolean);
   if (!twinCards.length) return hideTwins(); // inget att välja mellan: skanningen fortsätter
   const el = dialog.querySelector(".scan-twins");
+  el.querySelector("b").textContent = "Vilken utgåva?";
   el.querySelector("div").innerHTML = cards.map((c, i) => (c ? `<button type="button" data-twin="${twinCards.indexOf(c)}">${c.image ? `<img src="${esc(c.image)}/low.webp" alt="">` : ""}<b>${esc(c.set?.name || "")}</b><small>#${esc(c.localId)}${prices[i]?.sek != null ? ` · ${esc(kr(prices[i].sek))}` : ""}</small></button>` : "")).join("");
   el.hidden = false;
 }
 function pickTwin(c) {
   skipKey = null;
+  if (c.sigOf) return setPeek({ ...c.sigOf, picked: true }, c.canvas); // Riftbound: vanligt eller signerat (askSignature)
   setPeek({ game: "pokemon", cardId: c.id, name: c.name, number: c.localId, total: null, picked: true, image: c.image ? `${c.image}/low.webp` : null }, null);
 }
 // Samma konstverk i flera utgåvor (ungefär vart tionde Pokémonkort): bilden kan inte skilja dem åt, det gör bara numret.
@@ -2790,6 +2793,7 @@ async function setPeek(r, canvas) {
   if (!r.picked) {
     if (Date.now() - (lastHit?.at || 0) < HIT_GAP) return;
     if (keyOf(r) === skipKey || isLastHit(r)) return status("Byt till nästa kort…");
+    if (r.game === "rb" && r.cardId && await askSignature(r, canvas)) return;
   }
   const near = (r.art || []).filter((x) => x.s >= r.art[0].s - 0.08).map((x) => x.id);
   lastHit = { ids: new Set([r.cardId, ...near].filter(Boolean)), name: r.name || null, at: Date.now(), seen: Date.now() };
@@ -2881,6 +2885,26 @@ async function setPeek(r, canvas) {
   if (!late) return;
   dialog.querySelectorAll(".scan-pop").forEach((x) => x.remove());
   await showReveal(item, late);
+}
+// Riftbound-kort som finns både vanligt och signerat (js/signature.js) har samma konstverk, så bilden kan inte skilja dem
+// åt. Skanningen stannar och man väljer i remsan längst ner (samma som utgåvorna för Pokémon). Valet blir en träff
+// (pickTwin), "Ingen av dem" läser om kortet. true: valet visas.
+async function askSignature(r, canvas) {
+  const rb = await rbData().catch(() => null), other = rb?.sigPairs.get(r.cardId);
+  if (!other || twinOpen) return !!other && twinOpen;
+  const [plain, signed] = [r.cardId, other].map((id) => rb.byId.get(id)).sort((a, b) => isSignature(a) - isSignature(b));
+  twinOpen = true;
+  twinCards = [plain, signed].map((c) => ({ sigOf: { ...rbResult(rb, c.id), art: r.art }, canvas }));
+  const el = dialog.querySelector(".scan-twins");
+  el.querySelector("b").textContent = `Vanligt eller Signature? ${r.name || plain.name}`;
+  el.querySelector("div").innerHTML = [plain, signed].map((c, i) => {
+    const src = cardImg(plain, "low") || cardImg(c, "low"); // samma konstverk, och signerade kort saknar ofta egen bild
+    return `<button type="button" data-twin="${i}">${src ? `<img src="${esc(src)}" alt="">` : ""}<b>${i ? "✍ Signature" : "Vanligt"}</b><small>${esc(c.no || "")}${c.sek != null ? ` · ${esc(kr(c.sek))}` : ""}</small></button>`;
+  }).join("");
+  el.hidden = false;
+  status(`Är <b>${esc(plain.name)}</b> signerat? Välj nedan.`);
+  if ("vibrate" in navigator) navigator.vibrate(30);
+  return true;
 }
 // ---------- Värdera manuellt ----------
 // Pokémon på värderingssidan: skannern stängs och sidans egen manuella värdering öppnas (onPartial, utan text).

@@ -1,5 +1,5 @@
 {
- "updated": 1794052551122,
+ "updated": 1794085283393,
  "sets": [
   {
    "id": "OP-18",
@@ -63,7 +63,7 @@
    "date": "2026-07-31",
    "main": false,
    "image": "https://tcgplayer-cdn.tcgplayer.com/product/704890_400w.jpg",
-   "count": 14
+   "count": 15
   },
   {
    "id": "ST-32",
@@ -108,7 +108,7 @@
    "date": "2026-04-03",
    "main": true,
    "image": "https://tcgplayer-cdn.tcgplayer.com/product/682057_400w.jpg",
-   "count": 201
+   "count": 203
   },
   {
    "id": "EB-03",
@@ -126,7 +126,7 @@
    "date": "2026-01-16",
    "main": true,
    "image": "https://tcgplayer-cdn.tcgplayer.com/product/665598_400w.jpg",
-   "count": 200
+   "count": 205
   },
   {
    "id": "OP-13",
@@ -135,7 +135,7 @@
    "date": "2025-11-07",
    "main": true,
    "image": "https://tcgplayer-cdn.tcgplayer.com/product/628352_400w.jpg",
-   "count": 174
+   "count": 175
   },
   {
    "id": "PRB-02",
@@ -144,7 +144,7 @@
    "date": "2025-10-03",
    "main": true,
    "image": "https://tcgplayer-cdn.tcgplayer.com/product/628452_400w.jpg",
-   "count": 314
+   "count": 315
   },
   {
    "id": "ST-22",
@@ -207,7 +207,7 @@
    "date": "2025-06-06",
    "main": false,
    "image": "https://tcgplayer-cdn.tcgplayer.com/product/627674_400w.jpg",
-   "count": 17
+   "count": 18
   },
   {
    "id": "ST-24",
@@ -261,7 +261,7 @@
    "date": "2024-12-13",
    "main": true,
    "image": "https://tcgplayer-cdn.tcgplayer.com/product/563834_400w.jpg",
-   "count": 159
+   "count": 160
   },
   {
    "id": "PRB-01",
@@ -270,7 +270,7 @@
    "date": "2024-11-08",
    "main": true,
    "image": "https://tcgplayer-cdn.tcgplayer.com/product/545399_400w.jpg",
-   "count": 317
+   "count": 318
   },
   {
    "id": "ST-20",
@@ -297,7 +297,7 @@
    "date": "2024-10-25",
    "main": false,
    "image": "https://tcgplayer-cdn.tcgplayer.com/product/545042_400w.jpg",
-   "count": 15
+   "count": 16
   },
   {
    "id": "ST-17",
@@ -306,7 +306,7 @@
    "date": "2024-10-25",
    "main": false,
    "image": "https://tcgplayer-cdn.tcgplayer.com/product/545039_400w.jpg",
-   "count": 10
+   "count": 11
   },
   {
    "id": "ST-16",
@@ -315,7 +315,7 @@
    "date": "2024-10-25",
    "main": false,
    "image": "https://tcgplayer-cdn.tcgplayer.com/product/545036_400w.jpg",
-   "count": 15
+   "count": 21
   },
   {
    "id": "ST-15",
