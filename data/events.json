@@ -1,6 +1,20 @@
 {
- "updated": 1794081218716,
+ "updated": 1794082139733,
  "events": [
+  {
+   "at": 1794081476762,
+   "store": "the-swedish-fish",
+   "product": "the-swedish-fish:17234",
+   "group": "30th-celebration|tin|en|mini|mini",
+   "title": "Pokemon 30th Celebration: Mini Tin",
+   "url": "https://theswedishfish.se/product/pokemon-30th-celebration-mini-tin/",
+   "image": "https://theswedishfish.se/wp-content/uploads/2026/11/30th-mini-tin.webp",
+   "price": 389,
+   "type": "Tin",
+   "set": "30th Celebration",
+   "lang": "en",
+   "kind": "ny"
+  },
   {
    "at": 1794079656136,
    "store": "tt-vault",
@@ -7060,20 +7074,6 @@
    "title": "Pokémon, Scarlet & Violet 4: Paradox Rift , 3-Pack Blister: Cetitan",
    "url": "https://samlarhobby.se/products/pokemon-scarlet-violet-4-paradox-rift-3-pack-blister-cetitan",
    "image": "https://cdn.shopify.com/s/files/1/0905/3120/1405/files/cetitan.jpg?v=1793644093",
-   "price": 399,
-   "type": "Blister",
-   "set": "Paradox Rift",
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1793644642233,
-   "store": "samlarhobby",
-   "product": "samlarhobby:16095422546301",
-   "group": "paradox-rift|blister|en||3",
-   "title": "Pokémon, Scarlet & Violet 4: Paradox Rift , 3-Pack Blister: Arctibax",
-   "url": "https://samlarhobby.se/products/pokemon-scarlet-violet-4-paradox-rift-3-pack-blister-arctibax",
-   "image": "https://cdn.shopify.com/s/files/1/0905/3120/1405/files/arctibax.jpg?v=1793644055",
    "price": 399,
    "type": "Blister",
    "set": "Paradox Rift",
