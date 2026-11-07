@@ -1,6 +1,21 @@
 {
- "updated": 1794082139733,
+ "updated": 1794083059746,
  "events": [
+  {
+   "at": 1794082454285,
+   "store": "webhallen",
+   "product": "webhallen:403149",
+   "group": "rb|x|deck|en||evelynn-seraphine",
+   "title": "Riftbound LoL TCG Evelynn vs Seraphine Showdown Deck",
+   "url": "https://www.webhallen.com/se/product/403149-Riftbound-LoL-TCG-Evelynn-vs-Seraphine-Showdown-Deck",
+   "image": "https://www.webhallen.com/images-ext/images.eu.ctfassets.net/n0e6ajgmrw5w/1YPIggyh4OXnh4LoLhdX05/7ab94e2f414be864637edc513af57723/unnamed.png?fit=pad",
+   "price": 499,
+   "type": "Deck",
+   "set": null,
+   "lang": "en",
+   "game": "rb",
+   "kind": "tillbaka"
+  },
   {
    "at": 1794081476762,
    "store": "the-swedish-fish",
@@ -7063,20 +7078,6 @@
    "price": 369,
    "type": "Blister",
    "set": "Journey Together",
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1793644642233,
-   "store": "samlarhobby",
-   "product": "samlarhobby:16095423136125",
-   "group": "paradox-rift|blister|en||3",
-   "title": "Pokémon, Scarlet & Violet 4: Paradox Rift , 3-Pack Blister: Cetitan",
-   "url": "https://samlarhobby.se/products/pokemon-scarlet-violet-4-paradox-rift-3-pack-blister-cetitan",
-   "image": "https://cdn.shopify.com/s/files/1/0905/3120/1405/files/cetitan.jpg?v=1793644093",
-   "price": 399,
-   "type": "Blister",
-   "set": "Paradox Rift",
    "lang": "en",
    "kind": "ny"
   }
