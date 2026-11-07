@@ -1,6 +1,34 @@
 {
- "updated": 1794074760088,
+ "updated": 1794075640122,
  "events": [
+  {
+   "at": 1794075002517,
+   "store": "rgb-kingz",
+   "product": "rgb-kingz:16024276631882",
+   "group": "delta-reign|booster-bundle|en|",
+   "title": "Pokémon TCG: Delta Reign – Booster Bundle (6 Booster Packs) (EN)",
+   "url": "https://rgbkingz.com/products/pokemon-tcg-delta-reign-booster-bundle-6-booster-packs-en",
+   "image": "https://cdn.shopify.com/s/files/1/0782/8088/4554/files/DeltaReign33.png?v=1788950289",
+   "price": 699,
+   "type": "Booster Bundle",
+   "set": "Delta Reign",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1794075002517,
+   "store": "rgb-kingz",
+   "product": "rgb-kingz:16024255365450",
+   "group": "delta-reign|booster-box|en|",
+   "title": "Pokémon Mega Evolution: Delta Reign Booster Box",
+   "url": "https://rgbkingz.com/products/pokemon-mega-evolution-delta-reign-booster-box",
+   "image": "https://cdn.shopify.com/s/files/1/0782/8088/4554/files/DeltaReign33_f12ca885-ca26-4b34-ad6c-b119702d50b3.png?v=1788950802",
+   "price": 2699,
+   "type": "Booster Box",
+   "set": "Delta Reign",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1794072016321,
    "store": "collected",
@@ -7049,34 +7077,6 @@
    "price": 399,
    "type": "Blister",
    "set": "Scarlet & Violet",
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1793644642233,
-   "store": "samlarhobby",
-   "product": "samlarhobby:16095420350845",
-   "group": "destined-rivals|blister|en||3",
-   "title": "Pokémon, Scarlet & Violet 10: Destined Rivals , 3-Pack Blister: Zebstrika",
-   "url": "https://samlarhobby.se/products/pokemon-scarlet-violet-10-destined-rivals-3-pack-blister-zebstrika",
-   "image": "https://cdn.shopify.com/s/files/1/0905/3120/1405/files/zebstrika.jpg?v=1793643819",
-   "price": 599,
-   "type": "Blister",
-   "set": "Destined Rivals",
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1793644642233,
-   "store": "samlarhobby",
-   "product": "samlarhobby:16095419859325",
-   "group": "destined-rivals|blister|en||3",
-   "title": "Pokémon, Scarlet & Violet 10: Destined Rivals , 3-Pack Blister: Kangaskhan",
-   "url": "https://samlarhobby.se/products/pokemon-scarlet-violet-10-destined-rivals-3-pack-blister-kangaskhan",
-   "image": "https://cdn.shopify.com/s/files/1/0905/3120/1405/files/kangaskhan.jpg?v=1793643771",
-   "price": 599,
-   "type": "Blister",
-   "set": "Destined Rivals",
    "lang": "en",
    "kind": "ny"
   }
