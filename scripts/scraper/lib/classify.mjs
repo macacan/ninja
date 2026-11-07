@@ -7,7 +7,7 @@ const POKEMON = /pok[eé]mon/i;
 
 // Höjs när igenkänningen ändras så att fler produkter räknas. Då sparas de nyfunna produkterna tyst
 // vid nästa kontroll av varje butik, i stället för att larmas som hundratals "nya" (se engine.mjs).
-export const CLASSIFY_VERSION = 11;
+export const CLASSIFY_VERSION = 12;
 
 // Ordningen spelar roll: mer specifika typer först.
 const TYPES = [
@@ -16,8 +16,8 @@ const TYPES = [
   ["Booster Box", /(?:booster ?box|booster ?display|display ?box|(?:30|36)[- ]?pack|booster case|display.*(?:30|36)\s*boosters?)(?!.*\(\s*(?:[1-9]|10)\s*(?:kort|cards?)\s*\))/i],
   ["Ultra-Premium Collection", /ultra[- ]premium|\bupc\b/i],
   ["Premium Collection", /premium collection|special collection|super[- ]premium/i],
-  ["Collection Box", /collection|kollektion|ex box|\bbox\b|display set|gift box/i],
-  ["Tin", /\btins?\b|plåtburk/i],
+  ["Collection Box", /collection|kollektion|ex box|\bbox\b|display set|gift box|trainer'?s? toolkit|holiday calendar/i],
+  ["Tin", /\btins?\b|plåtburk|collector'?s? chest/i],
   ["Blister", /blister|checklane|3[- ]?pack|three[- ]pack/i],
   ["Build & Battle", /build (&|and) battle|prerelease/i],
   ["Deck", /\bdeck\b|battle academy|league battle|starter set|start ?deck/i],
@@ -117,7 +117,7 @@ const GAMES = {
   op: {
     match: /one piece/i,
     // Figurer, kläder och annat med One Piece i namnet som inte är kortspelet.
-    not: /figur|figure|statue|pvc|banpresto|grandista|dxf|dissectibles|sweater|hooded|tröj|land station|plush|keychain|poster(?! collection)|blind ?bag|nanofig|nerf|lego|light/i,
+    not: /figur|figure|statue|pvc|banpresto|grandista|dxf|dissectibles|sweater|hooded|tröj|land station|plush|keychain|poster(?! collection)|blind ?bag|nanofig|nerf|lego|light|manga|box set \d|\bvol\.? ?\d+ ?- ?\d+/i,
     types: [
       ["Double Pack", /double pack/i],
       ["Illustration Box", /illustration box/i],
@@ -125,7 +125,8 @@ const GAMES = {
       ["Deck", /\bdecks?\b|\bst-?\d{2}\b/i],
       // "Anime 25th Collection Booster Pack" är ett paket, inte en samlarbox.
       ["Booster Pack", /booster/i],
-      ["Collection Box", /collection|gift|\bbox\b|\btin\b/i],
+      // Tin Pack Set heter ibland "Mini Case Set" eller bara har koden ("TS-03").
+      ["Collection Box", /collection|gift|\bbox\b|\btins?\b|mini[- ]?case|case set|\bts-?\d{2}\b/i],
     ],
     extraSets: [],
   },
