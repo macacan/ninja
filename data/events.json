@@ -1,6 +1,35 @@
 {
- "updated": 1794066442507,
+ "updated": 1794067362552,
  "events": [
+  {
+   "at": 1794067307505,
+   "store": "aquitaz",
+   "product": "aquitaz:10841603637594",
+   "group": "op|the-dominance-of-god|booster-box|ja|",
+   "title": "One Piece: (OP 18) Dominance Of God Booster Box (24 Pack) (JP)",
+   "url": "https://aquitaz.se/products/one-piece-op-18-dominance-of-god-booster-box-24-pack-jp",
+   "image": "https://cdn.shopify.com/s/files/1/0885/4087/3050/files/BlackBox_60_b8fb4709-0f05-461b-bc99-b6788b31caf5.png?v=1790431647",
+   "price": 1799,
+   "type": "Booster Box",
+   "set": "The Dominance of God",
+   "lang": "ja",
+   "game": "op",
+   "kind": "forbestallning"
+  },
+  {
+   "at": 1794067296635,
+   "store": "kantovault",
+   "product": "kantovault:11491120808277",
+   "group": "x|booster-pack|zh||gem-s6-vol",
+   "title": "Pokémon Gem Pack Vol 6 Booster Pack (Kinesisk)",
+   "url": "https://kantovault.se/products/pokemon-gem-pack-vol-6-booster-pack-kinesisk",
+   "image": null,
+   "price": 29,
+   "type": "Booster Pack",
+   "set": null,
+   "lang": "zh",
+   "kind": "tillbaka"
+  },
   {
    "at": 1794066176099,
    "store": "aquitaz",
@@ -7047,34 +7076,6 @@
    "price": 179,
    "type": "Booster Pack",
    "set": "Ascended Heroes",
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1793644604706,
-   "store": "cardlevels",
-   "product": "cardlevels:10245427200311",
-   "group": "destined-rivals|elite-trainer-box|en|",
-   "title": "Pokémon Scarlet & Violet: Destined Rivals Elite Trainer Box",
-   "url": "https://cardlevels.se/products/pokemon-scarlet-violet-destined-rivals-elite-trainer-box",
-   "image": "https://cdn.shopify.com/s/files/1/0846/0458/4247/files/Destined_Rivals_Elite_Trainer_Box_600x600_3e1ec254-d64c-4113-8551-5cf0db5de6af.webp?v=1753907983",
-   "price": 1399,
-   "type": "Elite Trainer Box",
-   "set": "Destined Rivals",
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1793644604706,
-   "store": "cardlevels",
-   "product": "cardlevels:10245428773175",
-   "group": "prismatic-evolutions|premium-collection|en||super",
-   "title": "Pokémon Scarlet & Violet: Prismatic Evolutions Super Premium Collection",
-   "url": "https://cardlevels.se/products/pokemon-scarlet-violet-prismatic-evolutions-super-premium-collection",
-   "image": "https://cdn.shopify.com/s/files/1/0846/0458/4247/files/Prismatic_Evolutions_Super-Premium_Collection_600x600_b3e1fad2-42b4-4f31-9192-8b643007e612.webp?v=1753908421",
-   "price": 3499,
-   "type": "Premium Collection",
-   "set": "Prismatic Evolutions",
    "lang": "en",
    "kind": "ny"
   }
