@@ -1,6 +1,21 @@
 {
- "updated": 1794040994130,
+ "updated": 1794041914151,
  "events": [
+  {
+   "at": 1794041450353,
+   "store": "aquitaz",
+   "product": "aquitaz:10009946489178",
+   "group": "x|deck|ja||beldum-metagross-set-starter-steven",
+   "title": "Pokémon Scarlet & Violet Steven’s Beldum & Metagross ex Starter Set ex (JP)",
+   "url": "https://aquitaz.se/products/pokemon-scarlet-violet-steven-s-beldum-metagross-ex-starter-set-ex-jp",
+   "image": "https://cdn.shopify.com/s/files/1/0885/4087/3050/files/sale-2025-01-30T024528.945.png?v=1738177334",
+   "price": 349,
+   "type": "Deck",
+   "set": "Scarlet & Violet",
+   "lang": "ja",
+   "kind": "prissankt",
+   "from": 499
+  },
   {
    "at": 1794035569438,
    "store": "bangerpack",
@@ -7059,20 +7074,6 @@
    "price": 109,
    "type": "Blister",
    "set": "Scarlet & Violet",
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1793641899306,
-   "store": "samlarhobby",
-   "product": "samlarhobby:15165027385725",
-   "group": "stellar-crown|blister|en||cl",
-   "title": "Pokémon, Scarlet & Violet 7: Stellar Crown, Premium Checklane, Roaring Moon",
-   "url": "https://samlarhobby.se/products/pokemon-scarlet-violet-7-stellar-crown-premium-checklane-roaring-moon",
-   "image": "https://cdn.shopify.com/s/files/1/0905/3120/1405/files/poke_sv07_premblist_ancient-600x600.jpg?v=1745154752",
-   "price": 119,
-   "type": "Blister",
-   "set": "Stellar Crown",
    "lang": "en",
    "kind": "ny"
   }
