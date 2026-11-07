@@ -1,6 +1,20 @@
 {
- "updated": 1794057245012,
+ "updated": 1794058145034,
  "events": [
+  {
+   "at": 1794057570992,
+   "store": "dragon-s-lair",
+   "product": "dragon-s-lair:15960857182556",
+   "group": "30th-celebration|collection-box|zh||greninja-set",
+   "title": "Pokemon 30th Celebration set Greninja EX Card Box (Kinesisk)",
+   "url": "https://dragonslair.se/products/pokemon-30th-celebration-set-greninja-ex-card-box-kinesisk-1",
+   "image": "https://cdn.shopify.com/s/files/1/1015/8315/9644/files/tcgs-pokemon-30th-anniversary-celebration-card-display-set-greninja.webp?v=1793360502",
+   "price": 439,
+   "type": "Collection Box",
+   "set": "30th Celebration",
+   "lang": "zh",
+   "kind": "ny"
+  },
   {
    "at": 1794045516543,
    "store": "kantovault",
@@ -7063,20 +7077,6 @@
    "set": null,
    "lang": "zh",
    "kind": "tillbaka"
-  },
-  {
-   "at": 1793643728892,
-   "store": "samlarhobby",
-   "product": "samlarhobby:16095417991549",
-   "group": "scarlet-violet|blister|en||3",
-   "title": "Pokémon, Scarlet & Violet, 3-Pack Blister: Dondozo",
-   "url": "https://samlarhobby.se/products/pokemon-scarlet-violet-3-pack-blister-dondozo",
-   "image": "https://cdn.shopify.com/s/files/1/0905/3120/1405/files/3dondozo.jpg?v=1793643606",
-   "price": 349,
-   "type": "Blister",
-   "set": "Scarlet & Violet",
-   "lang": "en",
-   "kind": "ny"
   }
  ]
 }
