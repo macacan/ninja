@@ -1,6 +1,20 @@
 {
- "updated": 1794065522479,
+ "updated": 1794066442507,
  "events": [
+  {
+   "at": 1794066176099,
+   "store": "aquitaz",
+   "product": "aquitaz:10873019302234",
+   "group": "30th-celebration|elite-trainer-box|en|",
+   "title": "Pokémon Mega: 30th Celebration Elite Trainer Box (ETB) (9 Pack) (ENG)",
+   "url": "https://aquitaz.se/products/pokemon-mega-30th-celebration-elite-trainer-box-etb-9-pack-eng",
+   "image": "https://cdn.shopify.com/s/files/1/0885/4087/3050/files/BlackBox_-_2026-07-01T002243.770.png?v=1782836723",
+   "price": 2399,
+   "type": "Elite Trainer Box",
+   "set": "30th Celebration",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1794064767637,
    "store": "westcoast-vault",
@@ -7061,20 +7075,6 @@
    "price": 3499,
    "type": "Premium Collection",
    "set": "Prismatic Evolutions",
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1793644604706,
-   "store": "cardlevels",
-   "product": "cardlevels:10343660454199",
-   "group": "mega-evolution|ultra-premium-collection|en||charizard-evolutions-x",
-   "title": "Pokémon Mega Evolutions: Mega Charizard X ex Ultra-Premium Collection",
-   "url": "https://cardlevels.se/products/pokemon-mega-evolutions-mega-charizard-x-ex-ultra-premium-collection-akrylskydd-ingar",
-   "image": "https://cdn.shopify.com/s/files/1/0846/0458/4247/files/AF0ABD8C-FC12-4233-AAB5-8BC8D7857B52.jpg?v=1763392253",
-   "price": 3399,
-   "type": "Ultra-Premium Collection",
-   "set": "Mega Evolution",
    "lang": "en",
    "kind": "ny"
   }
