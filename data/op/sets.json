@@ -1,5 +1,5 @@
 {
- "updated": 1794085283393,
+ "updated": 1794087162741,
  "sets": [
   {
    "id": "OP-18",
@@ -261,7 +261,7 @@
    "date": "2024-12-13",
    "main": true,
    "image": "https://tcgplayer-cdn.tcgplayer.com/product/563834_400w.jpg",
-   "count": 160
+   "count": 159
   },
   {
    "id": "PRB-01",
@@ -297,7 +297,7 @@
    "date": "2024-10-25",
    "main": false,
    "image": "https://tcgplayer-cdn.tcgplayer.com/product/545042_400w.jpg",
-   "count": 16
+   "count": 15
   },
   {
    "id": "ST-17",
@@ -306,7 +306,7 @@
    "date": "2024-10-25",
    "main": false,
    "image": "https://tcgplayer-cdn.tcgplayer.com/product/545039_400w.jpg",
-   "count": 11
+   "count": 10
   },
   {
    "id": "ST-16",
@@ -315,7 +315,7 @@
    "date": "2024-10-25",
    "main": false,
    "image": "https://tcgplayer-cdn.tcgplayer.com/product/545036_400w.jpg",
-   "count": 21
+   "count": 15
   },
   {
    "id": "ST-15",

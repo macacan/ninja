@@ -97,6 +97,22 @@ for (const set of new Set(allCards.map((c) => c.set_id))) {
   }
 }
 
+// optcgapis kortnummer stämmer inte alltid: promokort i starterdecken heter "P-029_r1" (bildens id), och Buggy (Manga) i OP09
+// står som OP05-067 fast bilden och TCGplayer säger OP09-051. Bildens filnamn börjar med kortnumret. Det används när
+// TCGplayer har kortet (samma namn) under bildens nummer i setet men inte under optcgapis.
+const tcgNames = new Map();
+for (const t of tcgOnly) {
+  const k = `${t.set}|${t.ex.Number}`;
+  if (!tcgNames.has(k)) tcgNames.set(k, new Set());
+  tcgNames.get(k).add(splitName(t.p.name).name);
+}
+const imageNo = (c) => c.card_image?.match(/Card_Images\/([A-Z]+\d*-\d{3})/)?.[1] || null;
+const noOf = (c) => {
+  const base = (c.card_set_id || "").replace(/_[pr]\d+$/i, ""), img = imageNo(c), name = splitName(c.card_name || "").name;
+  const has = (no) => !!tcgNames.get(`${c.set_id}|${no}`)?.has(name);
+  return img && img !== base && !has(base) && has(img) ? img : base;
+};
+
 // optcgapi har ibland laddat upp samma bildfil för flera versioner av ett kort (Shirahoshi EB05-014 och "Super Rare
 // Alternate Art" är byte för byte samma bild, likaså Kaido OP17-062 och "Super Alternate Art"). Bilderna jämförs på
 // filstorlek: en bild-url hos optcgapi byts aldrig ut (den har ett slumpat suffix), så storleken sparas i
@@ -105,7 +121,7 @@ const SIZES = new URL("image-sizes.json", DIR);
 const sizes = await readFile(SIZES, "utf8").then(JSON.parse).catch(() => ({}));
 const versions = new Map();
 for (const c of allCards) if (c.card_image) {
-  const k = `${c.set_id}|${c.card_set_id}`;
+  const k = `${c.set_id}|${noOf(c)}`;
   if (!versions.has(k)) versions.set(k, []);
   versions.get(k).push(c);
 }
@@ -142,15 +158,18 @@ const cards = allCards.map((c) => {
   const { name, variant } = splitName(c.card_name || "");
   // TCGplayers produkt sparas även när optcgapi har bilden (tcg), så att sidan känner igen kortets gamla id
   // "SET/tcg123" från tiden innan optcgapi hade kortet (valvet och bildindexet kan ha det sparat)
-  const tcgHit = tcgCards.get(tcgKey(c.set_id, c.card_set_id, c.card_name)), tcg = c.card_image ? null : tcgHit;
+  const tcgHit = tcgCards.get(tcgKey(c.set_id, noOf(c), c.card_name)), tcg = c.card_image ? null : tcgHit;
   // Samma bild-id kan återkomma i flera set (återtryck) och ibland två gånger i samma set med olika namn.
   let id = `${c.set_id}/${c.card_image_id ?? tcg?.id ?? null}`;
   if (seen.has(id)) id += `~${(c.card_name || "").toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
   if (seen.has(id)) return null;
   seen.add(id);
-  const image = sameImage.has(c) && tcgHit ? tcgHit.image : c.card_image || tcg?.image || null;
+  // Bilden av ett annat kort (Basil Hawkins OP10-109 i ST-36 har Capone Beges bild OP10-103): TCGplayers bild, annars
+  // ingen ("" = inte ens den gamla, se keepCards). Hellre kortbaksidan än fel kort.
+  const wrong = imageNo(c) && imageNo(c) !== noOf(c);
+  const image = (sameImage.has(c) || wrong) && tcgHit ? tcgHit.image : wrong ? "" : c.card_image || tcg?.image || null;
   return {
-    id, name, variant, set: c.set_id, no: c.card_set_id, rarity: c.rarity || null,
+    id, name, variant, set: c.set_id, no: noOf(c), rarity: c.rarity || null,
     color: c.card_color || null, type: c.card_type || null, cost: num(c.card_cost), power: num(c.card_power),
     counter: num(c.counter_amount), life: num(c.life), attr: c.attribute || null, sub: c.sub_types || null,
     image, sek: sekOf(c.market_price ?? c.inventory_price), low: sekOf(c.inventory_price),
@@ -161,10 +180,10 @@ const cards = allCards.map((c) => {
 // Kort som TCGplayer har men optcgapi saknar. optcgapi och TCGplayer namnger inte alltid varianterna lika ("SPR" mot
 // "SP", "Manga" mot "Alternate Art"), så ett kort tas bara med när TCGplayer har fler versioner av numret än optcgapi
 // och exakt så många saknar motsvarighet. I set där optcgapi ännu saknar bilder tas alla som saknar motsvarighet med.
-const inApi = new Set(allCards.map((c) => tcgKey(c.set_id, c.card_set_id, c.card_name)));
+const inApi = new Set(allCards.map((c) => tcgKey(c.set_id, noOf(c), c.card_name)));
 const newSet = new Set(allCards.filter((c) => !c.card_image).map((c) => c.set_id));
 const apiCount = new Map(), tcgCount = new Map(), missing = new Map();
-for (const c of allCards) apiCount.set(`${c.set_id}|${c.card_set_id}`, (apiCount.get(`${c.set_id}|${c.card_set_id}`) || 0) + 1);
+for (const c of allCards) apiCount.set(`${c.set_id}|${noOf(c)}`, (apiCount.get(`${c.set_id}|${noOf(c)}`) || 0) + 1);
 for (const t of tcgOnly) {
   const k = `${t.set}|${t.ex.Number}`;
   tcgCount.set(k, (tcgCount.get(k) || 0) + 1);

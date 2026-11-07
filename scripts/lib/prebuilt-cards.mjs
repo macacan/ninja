@@ -37,14 +37,18 @@ async function keepCards(dir, cards, sets) {
   for (const c of prev.cards) { if (!old.has(key(c))) old.set(key(c), []); old.get(key(c)).push(c); }
   const inherit = (c, p) => {
     c.id = p.id;
-    c.image ||= p.image;
+    c.image ??= p.image; // "" betyder att kortet medvetet saknar bild (fel konstverk hos källan), se saveGame
     c.sek ??= p.sek;
     c.low ??= p.low;
     if (p.tcg != null) c.tcg ??= p.tcg;
   };
+  const where = new Map();
+  for (const list of old.values()) for (const p of list) where.set(p.id, list);
   // Först korten som har kvar sitt id, så att två kort med samma nyckel inte byter id med varandra
   const moved = cards.filter((c) => {
-    const list = old.get(key(c)), i = list?.findIndex((p) => p.id === c.id) ?? -1;
+    // Samma id under en annan nyckel: källan har rättat kortets nummer eller variant, kortet behåller sitt id
+    let list = old.get(key(c)), i = list?.findIndex((p) => p.id === c.id) ?? -1;
+    if (i < 0 && (list = where.get(c.id))) i = list.findIndex((p) => p.id === c.id);
     if (i < 0) return true;
     inherit(c, list.splice(i, 1)[0]);
     return false;
@@ -71,6 +75,7 @@ async function keepCards(dir, cards, sets) {
 // trendSets: set-id:n som trendlistorna bygger på. minPrice: kronor, billigare kort ger brus i procent.
 export async function saveGame({ dir, sets, cards, rarities, trendSets, minPrice = 20, rate }) {
   await keepCards(dir, cards, sets);
+  for (const c of cards) if (c.image === "") c.image = null;
   const setName = Object.fromEntries(sets.map((s) => [s.id, s.name]));
   const day = (n) => new Date(Date.now() - n * 864e5).toISOString().slice(0, 10);
   const today = day(0), oldest = day(HISTORY_DAYS), weekAgo = day(7), monthAgo = day(30);

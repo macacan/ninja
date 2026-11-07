@@ -34,7 +34,27 @@ const name = (s) => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").rep
 const num = (n) => decodeURIComponent(String(n)).toUpperCase().replace(/^([A-Z]*)0*(\d)/, "$1$2");
 const sameName = (a, b) => { const x = name(a), y = name(b); return x === y || x.includes(y) || y.includes(x); };
 
+const TCGCSV = { headers: { "User-Agent": "Lootninja-card-images/1.0 (+https://lootninja.se)" } };
 const images = await readJSON(OUT, {});
+
+// Källorna listar ibland bilder som inte finns: Pokémon TCG API:s McDonald's 2014–2018 ger 404, och TCGplayer svarar 403
+// för produkter utan bild (många tränarkit). En sådan adress går före TCGdex på sidan och visar bara kortbaksidan, så
+// bara bilder som går att hämta sparas, och sparade adresser som slutat fungera tas bort (kortet provas då igen).
+// Ett nätverksfel räknas som att bilden finns, så att en tillfällig störning inte tömmer filen.
+const works = new Map();
+const loads = (url) => {
+  if (!works.has(url)) works.set(url, fetch(url, { method: "HEAD", headers: TCGCSV.headers, signal: AbortSignal.timeout(20000) }).then((r) => r.ok || r.status >= 500).catch(() => true));
+  return works.get(url);
+};
+const saved = Object.entries(images);
+let dropped = 0;
+for (let i = 0; i < saved.length; i += 10) {
+  await Promise.all(saved.slice(i, i + 10).map(async ([id, v]) => {
+    if (typeof v === "string") { if (!(await loads(v))) { delete images[id]; dropped++; } return; }
+    if (!(await loads(v.low))) { delete images[id]; dropped++; return; }
+    if (v.high && v.high !== v.low && !(await loads(v.high))) v.high = v.low; // bara den stora saknas (t.ex. xyp XY39)
+  }));
+}
 
 const sets = [];
 for (const f of (await readdir(new URL("data/sets/", ROOT)).catch(() => [])).filter((f) => f.endsWith(".json"))) {
@@ -42,7 +62,11 @@ for (const f of (await readdir(new URL("data/sets/", ROOT)).catch(() => [])).fil
   const missing = s?.cards.filter((c) => !c.image && !images[c.id]) || [];
   if (missing.length) sets.push({ ...s, missing });
 }
-if (!sets.length) { console.log("Alla kort har bild."); process.exit(0); }
+if (!sets.length) {
+  if (dropped) await writeFile(OUT, JSON.stringify(Object.fromEntries(Object.entries(images).sort(([a], [b]) => a.localeCompare(b))), null, 1) + "\n");
+  console.log(`Alla kort har bild.${dropped ? ` ${dropped} trasiga bilder togs bort.` : ""}`);
+  process.exit(0);
+}
 
 // ---------- 1. Pokémon TCG API ----------
 const ptcgSets = (await getJSON(`${PTCG}/sets/en.json`)) || [];
@@ -64,7 +88,7 @@ for (const s of sets) {
     if (m && !sameName(m.name, c.name)) m = null;
     // Annan numrering (t.ex. Classic Collection): namnet räcker om det bara finns en gång i båda seten.
     if (!m) { const same = cards.filter((x) => name(x.name) === name(c.name)); if (same.length === 1 && count(s.cards, c) === 1) m = same[0]; }
-    if (m?.images?.small) { images[c.id] = { low: m.images.small, high: m.images.large || m.images.small }; fromPtcg++; }
+    if (m?.images?.small && await loads(m.images.small)) { images[c.id] = { low: m.images.small, high: m.images.large || m.images.small }; fromPtcg++; }
   }
 }
 
@@ -75,12 +99,12 @@ for (const s of sets) {
 // 1/30 och uppåt, så namnet skiljer dem åt, och vid dubbletter lekens namn i parentes (t.ex. "Energy Switch (Raichu)").
 // Är det fortfarande flera olika kort som passar hoppas kortet över.
 const TCGP_GROUP = {
+  "2014xy": 1692, "2015xy": 1694, "2017sm": 2148, "2018sm": 2364,
   mep: 24451, mee: 24461, "2024sv": 24163, "2023sv": 23306, mfb: 23330, svp: 22872, sve: 24382, swshp: 2545, ecard2: 1397,
   "tk-hs-g": 1540, "tk-hs-r": 1540, "tk-bw-e": 1538, "tk-bw-z": 1538, "tk-sm-r": 2069, "tk-sm-l": 2069,
   "tk-xy-b": 1533, "tk-xy-w": 1533, "tk-xy-latia": 1536, "tk-xy-latio": 1536, "tk-xy-n": 1532, "tk-xy-sy": 1532,
   "tk-xy-p": 1796, "tk-xy-su": 1796, "tk-dp-m": 1541, "tk-dp-l": 1541,
 };
-const TCGCSV = { headers: { "User-Agent": "Lootninja-card-images/1.0 (+https://lootninja.se)" } };
 const groups = new Map();
 const productsOf = async (id) => {
   if (!groups.has(id)) {
@@ -90,7 +114,7 @@ const productsOf = async (id) => {
       const ext = Object.fromEntries((p.extendedData || []).map((e) => [e.name, e.value]));
       // "Energy Switch (Raichu)" och "Meganium - 001 (Cosmos Holo)": själva namnet, numret och det i parentes.
       const tag = (p.name.match(/\(([^)]*)\)/) || [])[1] || "";
-      const base = p.name.replace(/\s*\([^)]*\)/g, "").replace(/\s+-\s+\w+$/, "");
+      const base = p.name.replace(/\s*\([^)]*\)/g, "").replace(/\s+-\s+[\w/]+$/, ""); // "Meganium - 001", "Weedle - 1/12"
       return { id: p.productId, base, tag, num: ext.Number ? num(String(ext.Number).split("/")[0]) : null, card: !!ext.Rarity };
     }).filter((p) => p.card));
   }
@@ -111,6 +135,7 @@ for (const s of sets) {
     if (cands.length > 1) { const plain = cands.filter((p) => !p.tag); if (plain.length === 1) cands = plain; }
     if (cands.length !== 1) continue;
     const id = cands[0].id;
+    if (!(await loads(`https://tcgplayer-cdn.tcgplayer.com/product/${id}_400w.jpg`))) continue;
     images[c.id] = { low: `https://tcgplayer-cdn.tcgplayer.com/product/${id}_400w.jpg`, high: `https://tcgplayer-cdn.tcgplayer.com/product/${id}_in_1000x1000.jpg` };
     fromTcgp++;
   }
@@ -119,4 +144,4 @@ for (const s of sets) {
 const sorted = Object.fromEntries(Object.entries(images).sort(([a], [b]) => a.localeCompare(b)));
 await writeFile(OUT, JSON.stringify(sorted, null, 1) + "\n");
 const left = sets.reduce((n, s) => n + s.missing.filter((c) => !images[c.id]).length, 0);
-console.log(`${fromPtcg} nya bilder från Pokémon TCG API, ${fromTcgp} från TCGplayer. ${left} kort saknar fortfarande bild.`);
+console.log(`${fromPtcg} nya bilder från Pokémon TCG API, ${fromTcgp} från TCGplayer. ${dropped} trasiga bilder togs bort. ${left} kort saknar fortfarande bild.`);

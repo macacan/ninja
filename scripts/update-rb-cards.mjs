@@ -88,7 +88,8 @@ for (const g of [...groups.results].sort((a, b) => (b.publishedOn || "").localeC
     const { name, variant } = splitName(p.name);
     const own = gallery.get(cardKey(g.name, ext(p, "Number"))), same = own || fromName(name);
     const tcg = p.imageUrl?.replace("_200w", "_400w") || null;
-    const image = riot.get(String(p.productId)) || own?.image || (tcg && await loads(tcg) ? tcg : same?.image || null);
+    const exact = riot.get(String(p.productId)) || own?.image || (tcg && await loads(tcg) ? tcg : null);
+    const image = exact || same?.image || null;
     if (same) details[p.productId] = Object.fromEntries(Object.entries({ text: same.text, effect: same.effect, artist: same.artist }).filter(([, v]) => v));
     cards.push({
       id: String(p.productId), name, variant, set: id, no: ext(p, "Number"), rarity: ext(p, "Rarity"),
@@ -97,14 +98,22 @@ for (const g of [...groups.results].sort((a, b) => (b.publishedOn || "").localeC
       image,
       sek: sekOf(main.marketPrice ?? main.midPrice), low: sekOf(main.lowPrice),
       foil: main === pr.Foil ? null : sekOf(pr.Foil?.marketPrice),
+      ...(!exact && image && { named: true }),
     });
   }
 }
 
-// Ett signerat kort utan egen bild har samma konstverk som det vanliga overnumbered-kortet (Ekko 168*/167 och 168/167),
-// inte som grundkortet med samma namn (139/167)
+// named: kortet saknar egen bild och fick bilden från ett kort med samma namn i galleriet. Det stämmer för t.ex. Top 8- och
+// Champion-korten (samma konstverk med en stämpel), men inte för:
+// - Signerade kort: de har samma konstverk som det vanliga overnumbered-kortet (Ekko 168*/167 och 168/167), inte som
+//   grundkortet med samma namn (139/167).
+// - Runor med egen bild (Mind Rune R03a, Body Rune "Vendetta"): grundrunans bild är fel konstverk. Hellre kortbaksidan.
 const sigPairs = signaturePairs(cards), byId = new Map(cards.map((c) => [c.id, c]));
-for (const c of cards) if (isSignature(c)) c.image ||= byId.get(sigPairs.get(c.id))?.image || null;
+for (const c of cards) {
+  const pair = isSignature(c) && (!c.image || c.named) ? byId.get(sigPairs.get(c.id)) : null;
+  if (pair?.image && !pair.named) { c.image = pair.image; delete c.named; }
+  else if (c.named && c.variant && c.type === "Rune") { c.image = ""; c.ownArt = true; } // "": ingen bild, inte ens den gamla (keepCards)
+}
 
 // Galleriet saknar Legend-korten och de nyaste Signature-korten. De får bilden från samma kort i ett annat set
 // (helst utan variant), så att promokortet "Jinx, Loose Cannon" visar Jinx i stället för kortbaksidan.
@@ -114,7 +123,8 @@ for (const c of cards) {
   const k = front(c.name), old = shown.get(k);
   if (c.image && (!old || (old.variant && !c.variant))) shown.set(k, c);
 }
-for (const c of cards) c.image ||= shown.get(front(c.name))?.image || null;
+for (const c of cards) if (!c.ownArt) c.image ||= shown.get(front(c.name))?.image || null;
+for (const c of cards) { delete c.named; delete c.ownArt; }
 
 const ORDER = ["Common", "Uncommon", "Rare", "Epic", "Showcase", "Promo"];
 const present = [...new Set(cards.map((c) => c.rarity).filter((r) => r && r !== "None"))].sort((a, b) => ((ORDER.indexOf(a) + 1) || 99) - ((ORDER.indexOf(b) + 1) || 99));
