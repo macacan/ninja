@@ -1,6 +1,48 @@
 {
- "updated": 1794015513843,
+ "updated": 1794015914674,
  "events": [
+  {
+   "at": 1794015748458,
+   "store": "skattkistan",
+   "product": "skattkistan:11301979717970",
+   "group": "destined-rivals|elite-trainer-box|en|",
+   "title": "Pokémon TCG – Scarlet & Violet: Destined Rivals Elite Trainer Box",
+   "url": "https://skattkistan.net/products/pokemon-tcg-scarlet-violet-destined-rivals-elite-trainer-box",
+   "image": "https://cdn.shopify.com/s/files/1/1094/6858/2226/files/chrome_cudtBOFENO.jpg?v=1794015569",
+   "price": 1349,
+   "type": "Elite Trainer Box",
+   "set": "Destined Rivals",
+   "lang": "en",
+   "kind": "ny"
+  },
+  {
+   "at": 1794015748458,
+   "store": "skattkistan",
+   "product": "skattkistan:10987736793426",
+   "group": "pitch-black|elite-trainer-box|en|",
+   "title": "Pokémon TCG Mega Evolution Pitch Black Elite Trainer Box",
+   "url": "https://skattkistan.net/products/me5-pitch-black-elite-trainer-box-sealed",
+   "image": "https://cdn.shopify.com/s/files/1/1094/6858/2226/files/28.07.2026_23.24.24_REC.png?v=1785274420",
+   "price": 789,
+   "type": "Elite Trainer Box",
+   "set": "Pitch Black",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1794015748458,
+   "store": "skattkistan",
+   "product": "skattkistan:10987741020498",
+   "group": "pitch-black|booster-bundle|en|",
+   "title": "Pokémon TCG Mega Evolution Pitch Black Booster Bundle (6)",
+   "url": "https://skattkistan.net/products/me5-pitch-black-booster-bundle",
+   "image": "https://cdn.shopify.com/s/files/1/1094/6858/2226/files/28.07.2026_23.25.04_REC.png?v=1785274651",
+   "price": 469,
+   "type": "Booster Bundle",
+   "set": "Pitch Black",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1794014047671,
    "store": "bangerpack",
@@ -7031,48 +7073,6 @@
    "price": 129,
    "type": "Blister",
    "set": "Paldea Evolved",
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1793641899306,
-   "store": "samlarhobby",
-   "product": "samlarhobby:15165029745021",
-   "group": "twilight-masquerade|blister|en||cl",
-   "title": "Pokémon, Scarlet & Violet 6: Twilight Masquerade, Premium Checklane, Porygon-Z",
-   "url": "https://samlarhobby.se/products/pokemon-scarlet-violet-6-twilight-masquerade-premium-checklane-porygon-z",
-   "image": "https://cdn.shopify.com/s/files/1/0905/3120/1405/files/857942-porygon.jpg?v=1745154900",
-   "price": 139,
-   "type": "Blister",
-   "set": "Twilight Masquerade",
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1793641899306,
-   "store": "samlarhobby",
-   "product": "samlarhobby:15165031350653",
-   "group": "twilight-masquerade|blister|en||cl",
-   "title": "Pokémon, Scarlet & Violet 6: Twilight Masquerade, Premium Checklane, Kingdra",
-   "url": "https://samlarhobby.se/products/pokemon-scarlet-violet-6-twilight-masquerade-premium-checklane-kingdra",
-   "image": "https://cdn.shopify.com/s/files/1/0905/3120/1405/files/857942-kingdra-1.png?v=1745154941",
-   "price": 139,
-   "type": "Blister",
-   "set": "Twilight Masquerade",
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1793641899306,
-   "store": "samlarhobby",
-   "product": "samlarhobby:15165031711101",
-   "group": "twilight-masquerade|blister|en||cl",
-   "title": "Pokémon, Scarlet & Violet 6: Twilight Masquerade, Checklane, Toxel",
-   "url": "https://samlarhobby.se/products/pokemon-scarlet-violet-6-twilight-masquerade-checklane-toxel",
-   "image": "https://cdn.shopify.com/s/files/1/0905/3120/1405/files/857874-toxel.jpg?v=1745154989",
-   "price": 129,
-   "type": "Blister",
-   "set": "Twilight Masquerade",
    "lang": "en",
    "kind": "ny"
   }
