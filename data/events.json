@@ -1,6 +1,20 @@
 {
- "updated": 1794064602457,
+ "updated": 1794065522479,
  "events": [
+  {
+   "at": 1794064767637,
+   "store": "westcoast-vault",
+   "product": "westcoast-vault:15557959319892",
+   "group": "chaos-rising|booster-pack|en|sleeved",
+   "title": "Pokémon TCG: Chaos rising sleeved Booster Pack",
+   "url": "https://westcoastvault.se/products/chaos-rising-sleeved-boosterpack",
+   "image": "https://cdn.shopify.com/s/files/1/1042/6177/9796/files/5D4E93A0-84D6-4106-913C-894FA1E04517.png?v=1787643538",
+   "price": 99,
+   "type": "Booster Pack",
+   "set": "Chaos Rising",
+   "lang": "en",
+   "kind": "ny"
+  },
   {
    "at": 1794060930235,
    "store": "collected",
@@ -7063,20 +7077,6 @@
    "set": "Mega Evolution",
    "lang": "en",
    "kind": "ny"
-  },
-  {
-   "at": 1793644459873,
-   "store": "rahtech",
-   "product": "rahtech:15801220497734",
-   "group": "phantasmal-flames|booster-pack|en|",
-   "title": "Mega Evolution: Phantasmal Flames – Booster Pack (ENG)",
-   "url": "https://rahtech.se/products/mega-evolution-phantasmal-flames-booster-pack-eng",
-   "image": "https://cdn.shopify.com/s/files/1/0994/8882/5670/files/2025-Pokemon-Mega-Evolution-Phantasmal-Flames-Mega-Charizard-X-Booster-Pack.avif?v=1792967304",
-   "price": 129,
-   "type": "Booster Pack",
-   "set": "Phantasmal Flames",
-   "lang": "en",
-   "kind": "tillbaka"
   }
  ]
 }
