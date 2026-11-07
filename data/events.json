@@ -1,6 +1,20 @@
 {
- "updated": 1794060922360,
+ "updated": 1794061842377,
  "events": [
+  {
+   "at": 1794060930235,
+   "store": "collected",
+   "product": "collected:11452490711382",
+   "group": "aura-seeker|booster-box|ja|",
+   "title": "[Förhandsbokning] - Pokémon TCG: Aura Seeker Booster Box (Japansk) – M7",
+   "url": "https://collected.se/products/pokemon-tcg-aura-seeker-booster-box-japansk-m7",
+   "image": "https://cdn.shopify.com/s/files/1/0965/6788/6166/files/pokemon-tcg-aura-seeker-booster-box-japansk-m7.png?v=1794060347",
+   "price": 1249,
+   "type": "Booster Box",
+   "set": "Aura Seeker",
+   "lang": "ja",
+   "kind": "forbestallning"
+  },
   {
    "at": 1794057570992,
    "store": "dragon-s-lair",
@@ -7062,20 +7076,6 @@
    "type": "Booster Pack",
    "set": "Phantasmal Flames",
    "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793644345569,
-   "store": "collected",
-   "product": "collected:11056474161494",
-   "group": "x|booster-pack|zh||gem-s5-vol",
-   "title": "Pokémon TCG: Gem Pack Vol. 5 Booster Pack (Kinesisk) – CBB5C",
-   "url": "https://collected.se/products/pokemon-tcg-gem-pack-vol-5-booster-pack-kinesisk",
-   "image": "https://cdn.shopify.com/s/files/1/0965/6788/6166/files/pokemon-tcg-gem-pack-vol-5-booster-pack-kinesisk-cbb5c.webp?v=1784469805",
-   "price": 55,
-   "type": "Booster Pack",
-   "set": null,
-   "lang": "zh",
    "kind": "tillbaka"
   }
  ]
