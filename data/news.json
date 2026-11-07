@@ -1,15 +1,6 @@
 {
- "updated": "2026-11-07T06:14:58.651Z",
+ "updated": "2026-11-07T06:30:18.337Z",
  "articles": [
-  {
-   "title": "Pokémon TCG: Mega Evolution—Delta Reign expansion launches with Mega Rayquaza ex",
-   "link": "https://pokemonblog.com/2026/11/06/pokemon-tcg-mega-evolution-delta-reign-expansion-launches-with-mega-rayquaza-ex/",
-   "date": "2026-11-07T05:19:33.000Z",
-   "summary": "The Pokémon TCG: Mega Evolution—Delta Reign expansion is available now at participating retailers worldwide, bringing more than 135 cards, including Mega Rayquaza ex, Mega Golurk…",
-   "image": "https://pokemonblog.com/wp-content/uploads/2026/08/pokemon_tcg_mega_evolution_delta_reign_mega_rayquaza_ex.jpg",
-   "source": "PokemonBlog",
-   "game": "pk"
-  },
   {
    "title": "Europe Regional Championship 2026 Coverage: Metagame, Popularity, Win & Conversion Rates",
    "link": "https://riftbound.gg/europe-regional-championship/",
@@ -421,6 +412,15 @@
    "date": "2026-09-29T19:52:14.000Z",
    "summary": "A Pokemon promo card that never reached stores sold for $8.4 million after 64 bids at Fanatics Collect.",
    "image": "https://www.dexerto.com/cdn-image/wp-content/uploads/2026/09/29/Pikachu-card-8-billion.jpg?width=480&quality=75&format=auto",
+   "source": "Dexerto",
+   "game": "pk"
+  },
+  {
+   "title": "Coinbase jumps into Pokemon TCG craze with digital packs backed by real cards",
+   "link": "https://www.dexerto.com/pokemon/coinbase-jumps-into-pokemon-tcg-craze-with-digital-packs-backed-by-real-cards-3413480/",
+   "date": "2026-09-29T14:29:50.000Z",
+   "summary": "Coinbase is teasing a Pokemon pack-ripping feature tied to real cards, but has not revealed its price, launch date, or pull odds.",
+   "image": "https://www.dexerto.com/cdn-image/wp-content/uploads/2026/09/29/coinbase-pokemon-card-packs.jpg?width=480&quality=75&format=auto",
    "source": "Dexerto",
    "game": "pk"
   },
