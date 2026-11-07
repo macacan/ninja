@@ -1,6 +1,34 @@
 {
- "updated": 1794077500340,
+ "updated": 1794080258699,
  "events": [
+  {
+   "at": 1794079656136,
+   "store": "tt-vault",
+   "product": "tt-vault:16600185176409",
+   "group": "destined-rivals|elite-trainer-box|en|",
+   "title": "Pokémon TCG: Scarlet & Violet: Destined Rivals Elite Trainer Box",
+   "url": "https://ttvault.se/products/pokemon-tcg-scarlet-violet-destined-rivals-elite-trainer-box",
+   "image": "https://cdn.shopify.com/s/files/1/1020/3683/2601/files/DR-ETB.webp?v=1789199391",
+   "price": 1499,
+   "type": "Elite Trainer Box",
+   "set": "Destined Rivals",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1794079593820,
+   "store": "rgb-kingz",
+   "product": "rgb-kingz:15952803823946",
+   "group": "30th-celebration|collection-box|en||sticker-tech",
+   "title": "Pokémon TCG: 30th Celebration Tech Sticker Collection",
+   "url": "https://rgbkingz.com/products/pokemon-tcg-30th-celebration-tech-sticker-collection",
+   "image": "https://cdn.shopify.com/s/files/1/0782/8088/4554/files/pokemon_30th_tech_sticker_collection_square.png?v=1787762988",
+   "price": 649,
+   "type": "Collection Box",
+   "set": "30th Celebration",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1794075002517,
    "store": "rgb-kingz",
@@ -7049,34 +7077,6 @@
    "price": 399,
    "type": "Blister",
    "set": "Paradox Rift",
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1793644642233,
-   "store": "samlarhobby",
-   "product": "samlarhobby:16095421497725",
-   "group": "scarlet-violet|blister|en||3",
-   "title": "Pokémon, Scarlet & Violet 5: Temporal Froces , 3-Pack Blister: Cyclizar",
-   "url": "https://samlarhobby.se/products/pokemon-scarlet-violet-4-temporal-froces-3-pack-blister-cyclizar",
-   "image": "https://cdn.shopify.com/s/files/1/0905/3120/1405/files/cyclizar.jpg?v=1793643997",
-   "price": 399,
-   "type": "Blister",
-   "set": "Scarlet & Violet",
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1793644642233,
-   "store": "samlarhobby",
-   "product": "samlarhobby:16095421202813",
-   "group": "scarlet-violet|blister|en||3",
-   "title": "Pokémon, Scarlet & Violet 5: Temporal Froces , 3-Pack Blister: Cleffa",
-   "url": "https://samlarhobby.se/products/pokemon-scarlet-violet-4-temporal-froces-3-pack-blister-cleffa",
-   "image": "https://cdn.shopify.com/s/files/1/0905/3120/1405/files/cleffa.jpg?v=1793643947",
-   "price": 399,
-   "type": "Blister",
-   "set": "Scarlet & Violet",
    "lang": "en",
    "kind": "ny"
   }
