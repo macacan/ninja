@@ -1,6 +1,36 @@
 {
- "updated": 1794166276924,
+ "updated": 1794167196939,
  "events": [
+  {
+   "at": 1794167082190,
+   "store": "packs-on-packs",
+   "product": "packs-on-packs:https://packsonpacks.se/products/30th-celebration-ultra-premium-collection-night",
+   "group": "30th-celebration|ultra-premium-collection|en||night",
+   "title": "30th Celebration Ultra-Premium Collection – Night",
+   "url": "https://packsonpacks.se/products/30th-celebration-ultra-premium-collection-night",
+   "image": "https://cdn.quickbutik.com/images/92330P/products/6af0a3036279c.png",
+   "price": 4900,
+   "type": "Ultra-Premium Collection",
+   "set": "30th Celebration",
+   "lang": "en",
+   "kind": "prissankt",
+   "from": 5599
+  },
+  {
+   "at": 1794167082190,
+   "store": "packs-on-packs",
+   "product": "packs-on-packs:https://packsonpacks.se/products/30th-celebration-ultra-premium-collection-day",
+   "group": "30th-celebration|ultra-premium-collection|en||day",
+   "title": "30th Celebration Ultra-Premium Collection – Day",
+   "url": "https://packsonpacks.se/products/30th-celebration-ultra-premium-collection-day",
+   "image": "https://cdn.quickbutik.com/images/92330P/products/6af0a1ed1f2ab.png",
+   "price": 4900,
+   "type": "Ultra-Premium Collection",
+   "set": "30th Celebration",
+   "lang": "en",
+   "kind": "prissankt",
+   "from": 5599
+  },
   {
    "at": 1794164526003,
    "store": "spelparken",
@@ -7069,35 +7099,6 @@
    "set": "Paldea Evolved",
    "lang": "en",
    "kind": "ny"
-  },
-  {
-   "at": 1793702928510,
-   "store": "toyspace",
-   "product": "toyspace:https://toyspace.se/pokemon-tcg-kaos-uppgang-boosterpaket-pok10407-101",
-   "group": "chaos-rising|booster-pack|en|",
-   "title": "Max 5 per kund. Pokémon TCG Mega Evolution Chaos Rising Boosterpaket",
-   "url": "https://toyspace.se/pokemon-tcg-kaos-uppgang-boosterpaket-pok10407-101",
-   "image": "https://d189539ycils2q.cloudfront.net/media/catalog/product/cache/4ffcb2823444acbc328f989dd62e5069/p/o/pok10407-101-pokemon-chaos-rising-boosterpakke.jpg",
-   "price": 89,
-   "type": "Booster Pack",
-   "set": "Chaos Rising",
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793699845367,
-   "store": "miniature-metropolis",
-   "product": "miniature-metropolis:10447962145105",
-   "group": "rb|origins|booster-box|en|",
-   "title": "RIFTBOUND: ORIGINS BOOSTER DISPLAY",
-   "url": "https://miniaturemetropolis.se/products/riftbound-origins-booster-display",
-   "image": "https://cdn.shopify.com/s/files/1/0958/6832/2129/files/rbd.png?v=1761894537",
-   "price": 2299,
-   "type": "Booster Box",
-   "set": "Origins",
-   "lang": "en",
-   "game": "rb",
-   "kind": "tillbaka"
   }
  ]
 }

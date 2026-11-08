@@ -1,6 +1,16 @@
 {
- "updated": "2026-11-08T19:31:01.312Z",
+ "updated": "2026-11-08T19:46:21.413Z",
  "articles": [
+  {
+   "title": "Pokémon TCG Pocket launches Pikachu mission with special Pikachu pack",
+   "link": "https://pokemonblog.com/2026/11/08/pokemon-tcg-pocket-launches-pikachu-mission-with-special-pikachu-pack/",
+   "date": "2026-11-08T19:32:36.000Z",
+   "summary": "Pokémon TCG Pocket is running a Pikachu mission that rewards players with a special pack featuring Pikachu, according to a Pokémon announcement published Nov. 7, 2026. The…",
+   "image": "https://pokemonblog.com/wp-content/uploads/2026/10/pokemon_tcg_pocket_pika_pika_pikachu_ex_immersive_card.jpg",
+   "source": "PokemonBlog",
+   "game": "pk",
+   "digital": true
+  },
   {
    "title": "Europe Regional Championship 2026: Decks, Metagame, Popularity, Win & Conversion Rates",
    "link": "https://riftbound.gg/europe-regional-championship/",
@@ -403,15 +413,6 @@
    "date": "2026-10-03T10:14:08.000Z",
    "summary": "Kanye West went on a shopping spree with his kids and spent thousands of dollars on Pokemon cards for them.",
    "image": "https://www.dexerto.com/cdn-image/wp-content/uploads/2026/10/03/poke-ye.jpg?width=480&quality=75&format=auto",
-   "source": "Dexerto",
-   "game": "pk"
-  },
-  {
-   "title": "Pokemon TCG reportedly releasing Valentine’s Day set with package that turns into mailbox",
-   "link": "https://www.dexerto.com/pokemon/pokemon-tcg-reportedly-releasing-valentines-day-set-with-package-that-turns-into-mailbox-3414802/",
-   "date": "2026-10-02T09:51:40.000Z",
-   "summary": "The Pokemon Trading Card Game is reportedly releasing its first Valentine’s Day set, complete with a special box that can be transformed into a mailbox.",
-   "image": "https://www.dexerto.com/cdn-image/wp-content/uploads/2026/10/02/Pokemon-TCG-reportedly-releasing-first-ever-Valentines-Day-set.jpg?width=480&quality=75&format=auto",
    "source": "Dexerto",
    "game": "pk"
   },
