@@ -1,6 +1,20 @@
 {
- "updated": 1794141469045,
+ "updated": 1794142389061,
  "events": [
+  {
+   "at": 1794142059596,
+   "store": "dragon-s-lair",
+   "product": "dragon-s-lair:15962901414236",
+   "group": "30th-celebration|collection-box|zh||futuristic",
+   "title": "Pokemon 30th Celebration Futuristic Box (Kinesisk)",
+   "url": "https://dragonslair.se/products/pokemon-30th-celebration-futuristic-box-kinesisk",
+   "image": "https://cdn.shopify.com/s/files/1/1015/8315/9644/files/30thCanniversaryfuturisticboxcontent_4.webp?v=1794141618",
+   "price": 3895,
+   "type": "Collection Box",
+   "set": "30th Celebration",
+   "lang": "zh",
+   "kind": "ny"
+  },
   {
    "at": 1794141110190,
    "store": "rgb-kingz",
@@ -7076,20 +7090,6 @@
    "title": "Pokémon, Sword & Shield 4: Vivid Voltage, Premium Checklane, Luxray",
    "url": "https://samlarhobby.se/products/pokemon-sword-shield-4-vivid-voltage-premium-checklane-luxray",
    "image": "https://cdn.shopify.com/s/files/1/0905/3120/1405/files/Luxray.jpg?v=1793654786",
-   "price": 279,
-   "type": "Blister",
-   "set": "Vivid Voltage",
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1793655429546,
-   "store": "samlarhobby",
-   "product": "samlarhobby:16095502991741",
-   "group": "vivid-voltage|blister|en||cl",
-   "title": "Pokémon, Sword & Shield 4: Vivid Voltage, Premium Checklane, Chandelure",
-   "url": "https://samlarhobby.se/products/pokemon-sword-shield-4-vivid-voltage-premium-checklane-chandelure",
-   "image": "https://cdn.shopify.com/s/files/1/0905/3120/1405/files/chandelure.jpg?v=1793654741",
    "price": 279,
    "type": "Blister",
    "set": "Vivid Voltage",
