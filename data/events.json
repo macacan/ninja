@@ -1,6 +1,20 @@
 {
- "updated": 1794169957000,
+ "updated": 1794170877032,
  "events": [
+  {
+   "at": 1794170173994,
+   "store": "samlargrottan",
+   "product": "samlargrottan:https://www.samlargrottan.se/category/engelska",
+   "group": "30th-celebration|collection-box|en||classic",
+   "title": "Pokémon: 30th Celebration Classic Collection Booster Pack",
+   "url": "https://www.samlargrottan.se/product-page/pok%C3%A9mon-30th-celebration-classic-collection-booster-pack",
+   "image": "https://static.wixstatic.com/media/d265aa_c84a8ce63a6348ffb442abc4c5bfb47e~mv2.webp/v1/fit/w_500,h_500,q_90/file.webp",
+   "price": 990,
+   "type": "Collection Box",
+   "set": "30th Celebration",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1794169952161,
    "store": "spelparken",
@@ -7083,20 +7097,6 @@
    "price": 1199,
    "type": "Booster Pack",
    "set": "Ascended Heroes",
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1793705241988,
-   "store": "cardlevels",
-   "product": "cardlevels:10073810469175",
-   "group": "151|booster-pack|en|",
-   "title": "Pokémon 151 Scarlet & Violet 3.5: Boosterpaket – 6-pack",
-   "url": "https://cardlevels.se/products/pokemon-tcg-scarlet-violet-151-booster-bundle",
-   "image": "https://cdn.shopify.com/s/files/1/0846/0458/4247/files/P8976_SV03pt5_3D_Booster_Bundle_Outer_Sleeve_EN-2x.png?v=1740470246",
-   "price": 2299,
-   "type": "Booster Pack",
-   "set": "151",
    "lang": "en",
    "kind": "ny"
   }
