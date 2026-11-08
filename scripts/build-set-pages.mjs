@@ -216,8 +216,9 @@ const foot = `
 `;
 
 // Laddar loggan inte blir den en textlogga, som när setet saknar logga.
-const logoImg = (p, cls) => p.logo
-  ? `<img class="${cls}" src="${esc(p.logo)}" alt="${esc(p.name)}" loading="lazy" decoding="async" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:this.className+' set-word',textContent:this.alt}))">`
+// Loggan överst på setsidan (top) laddas direkt och först; loggorna i listorna laddas när de syns.
+const logoImg = (p, cls, top = false) => p.logo
+  ? `<img class="${cls}" src="${esc(p.logo)}" alt="${esc(p.name)}" ${top ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:this.className+' set-word',textContent:this.alt}))">`
   : `<span class="${cls} set-word">${esc(p.name)}</span>`;
 const cardHref = (c) => `vardering.html?id=${encodeURIComponent(c.id)}`;
 const cardImg = (c) => extraImages[c.id]?.low || (c.image ? `${c.image}/low.webp` : "img/kortbaksida.webp");
@@ -389,7 +390,7 @@ function setPage(p, all) {
 
   <div class="wrap">
     <section class="set-hero">
-      ${logoImg(p, "set-hero-logo")}
+      ${logoImg(p, "set-hero-logo", true)}
       <div>
         <h1>${esc(p.name)}</h1>
         <p class="set-facts">${facts.join(" · ")}</p>

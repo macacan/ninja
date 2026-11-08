@@ -201,3 +201,15 @@
   src: url(pixelify-sans-latin-9.woff2) format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
+
+/* Reserv för Pixelify Sans medan den laddas: Arial (Roboto på Android) uppskalad till samma bredd som Pixelify.
+   Rubrikerna bryts då på samma ställen före och efter bytet, så att sidan inte hoppar (CLS). Uppmätt på
+   rubriker och knappar i vikt 600 (som webbläsaren gör fet av Arial): Pixelify är 13,2 % bredare. ascent/descent är Pixelifys, delade med size-adjust. */
+@font-face {
+  font-family: "Pixelify Fallback";
+  src: local("Arial"), local("ArialMT"), local("Roboto"), local("Roboto-Regular"), local("Helvetica Neue"), local("Helvetica");
+  size-adjust: 113.2%;
+  ascent-override: 81.3%;
+  descent-override: 24.7%;
+  line-gap-override: 0%;
+}

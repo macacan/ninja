@@ -4,7 +4,7 @@
   --bg:#eceff4; --card:#fbfcfd; --surface:#e4e8ef; --ink:#1b1b2f; --muted:#555b6e; --line:#d9dee7;
   --red:#e4572e; --red-d:#c2441f; --gold:#f2b632; --navy:#3b4a6b; --mint:#9bd1c0; --peach:#f2b8a4; --lilac:#b9c3e6; --sky:#8ec5ff;
   --px:3px; --r:6px;
-  --pixel:"Pixelify Sans","Courier New",monospace;
+  --pixel:"Pixelify Sans","Pixelify Fallback","Courier New",monospace;
   --sans:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
 }
 *{box-sizing:border-box}
@@ -32,6 +32,10 @@ canvas.scene{display:block;width:100%;image-rendering:pixelated;image-rendering:
 /* ---------- Header ---------- */
 .site-header{position:sticky;top:0;z-index:30;background:rgba(251,252,253,.92);backdrop-filter:saturate(1.4) blur(10px);border-bottom:1px solid var(--line);box-shadow:0 6px 18px -12px rgba(27,27,47,.25)}
 .site-header .wrap{display:flex;align-items:center;gap:22px;min-height:72px}
+/* Headern läggs in av js/site.js när sidans skript har laddats. Fram till dess håller en tom ruta lika hög som
+   headern (72px + 1px kant, 62px + 1px på mobil) platsen, så att sidan inte hoppar ner när den kommer (CLS). */
+body:not(:has(> .site-header))::before{content:"";display:block;height:73px}
+@media (max-width:860px){body:not(:has(> .site-header))::before{height:63px}}
 .logo{display:flex;align-items:center;gap:10px;text-decoration:none;flex:none}
 .logo .logo-mark{display:block;width:auto;height:40px;transition:transform .2s steps(2)}
 .logo:hover .logo-mark{transform:translateY(-2px)}
@@ -130,6 +134,18 @@ canvas.scene{display:block;width:100%;image-rendering:pixelated;image-rendering:
 /* ---------- Hero ---------- */
 .hero{position:relative;border-bottom:4px solid var(--ink);overflow:hidden;background:var(--card)}
 .hero canvas.scene{height:224px}
+/* Banderollen under sidrubriken (js/banners.js: 32 px i dubbel skala). Utan höjd blir en canvas 2:1 av bredden,
+   alltså flera hundra pixlar, tills skriptet har laddats. */
+canvas.scene[data-banner]{height:64px}
+/* Remsan på om, villkor och integritet (js/pixel.js "strip": 30 px i dubbel skala, 24 under 640 px). */
+canvas.scene[data-scene="strip"]{height:60px}
+@media (max-width:639px){canvas.scene[data-scene="strip"]{height:48px}}
+/* Samma storlekar som js/pixel.js ger scenen (hero: 112 px i dubbel skala, 58 under 640 px), och samma
+   negativa marginal som js/home.js sätter för att scenen ska ligga under headern. Står i CSS:en från början
+   så att startsidan inte hoppar när skripten laddats (CLS). */
+@media (max-width:639px){.hero canvas.scene{height:116px}}
+main > .hero:first-child{margin-top:-73px}
+@media (max-width:860px){main > .hero:first-child{margin-top:-63px}}
 .facts{display:flex;gap:16px;flex-wrap:wrap;margin:18px 0 0;padding:0;list-style:none;font-size:.88rem;color:var(--muted)}
 .facts li{display:flex;align-items:center;gap:6px}
 .facts li::before{content:"";width:8px;height:8px;background:var(--mint);box-shadow:0 0 0 2px var(--ink)}
@@ -1048,6 +1064,15 @@ span.rd-logo{display:grid;place-items:center;background:var(--surface);border-ra
 /* Sortera visas först när det finns sökresultat att sortera */
 .wrap:has(#results[hidden]) .card-search :is(.adv,.drop){display:none}
 .cgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:16px}
+/* Kortpriser: topplistorna fylls av js/priser.js och blir 700–1100 px höga. Medan de är tomma håller de en skärmhöjd,
+   så att det som står under redan ligger nedanför skärmen och inte hoppar när korten kommer (CLS). */
+#landing .cgrid:not(:has(> .ctile, > .msg)){min-height:100vh}
+/* Startsidan: "Senast inkommet" visar alltid 5 rader (js/restock.js), 5 x 106 px + mellanrum, 5 x 72 px på mobil. */
+.restock-feed:empty{min-height:562px}
+@media (max-width:640px){.restock-feed:empty{min-height:376px}}
+/* Nyheter: ämnesflikarna och artiklarna fylls av js/nyheter.js. */
+#news-tabs:empty{min-height:39px}
+#articles:empty{min-height:100vh}
 .ctile{all:unset;box-sizing:border-box;cursor:pointer;display:flex;flex-direction:column;gap:4px;padding:10px;background:var(--card);border:1px solid var(--line);border-radius:12px;transition:transform .15s,box-shadow .15s,border-color .15s}
 .ctile:hover{transform:translateY(-3px);border-color:var(--ink);box-shadow:0 8px 0 -3px var(--ink)}
 .ctile:focus-visible{outline:3px solid var(--red);outline-offset:2px}
@@ -3382,6 +3407,8 @@ input[type=search]::-webkit-search-results-decoration {
 .val-hero-search { background: none; box-shadow: none; padding: 0; gap: 10px; flex-direction: row; flex-wrap: wrap; align-items: stretch; }
 .val-hero-search:focus-within { box-shadow: none; }
 .val-hero-search .card-suggest-wrap { flex: 1 1 100%; min-width: 0; }
+/* Samma rad för fältet innan js/card-autocomplete.js har lagt det i .card-suggest-wrap, så att formuläret inte hoppar (CLS). */
+.val-hero-search > input[type=search] { flex: 1 1 100%; min-width: 0; }
 .val-hero-search input[type=search] { width: 100%; max-width: none; padding: 13px 16px; border: 2px solid var(--ink); border-radius: 8px; background: var(--card); font: 500 1rem var(--sans); color: var(--ink); }
 .val-hero-search input[type=search]:focus { outline: none; box-shadow: 0 0 0 3px var(--gold); }
 .val-hero-search .btn { flex: 1 1 auto; width: auto; padding: 14px 18px; white-space: nowrap; }
@@ -4154,6 +4181,10 @@ button.zm-price:hover{background:#1f2132}
 .set-hero h1{margin:0 0 6px;font-size:clamp(1.8rem,4vw,2.6rem)}
 .set-hero p{margin:0 0 12px;max-width:760px;line-height:1.55}
 .set-hero-logo{flex:0 0 auto;width:240px;max-height:120px;object-fit:contain}
+/* Loggan och boxbilden får sin höjd innan bilden laddats (object-fit: contain), annars hoppar texten när den kommer (CLS). */
+img.set-hero-logo{height:120px}
+img.set-hero-logo.set-hero-box{height:220px}
+@media (max-width:640px){img.set-hero-logo{height:90px}img.set-hero-logo.set-hero-box{height:170px}}
 .set-facts{color:var(--muted);font-size:.95rem}
 .set-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px!important}
 .set-word{display:flex;align-items:center;justify-content:center;text-align:center;font:700 1.2rem/1.1 var(--cond);text-transform:uppercase;color:var(--ink)}
