@@ -1,6 +1,21 @@
 {
- "updated": 1794128588751,
+ "updated": 1794129508771,
  "events": [
+  {
+   "at": 1794128964964,
+   "store": "samlargrottan",
+   "product": "samlargrottan:https://www.samlargrottan.se/category/one-piece",
+   "group": "op|eb-04|booster-box|ja|",
+   "title": "One Piece: Egghead Crisis Booster Box (EB-04) (JP)",
+   "url": "https://www.samlargrottan.se/product-page/one-piece-egghead-crisis-booster-box-eb-04-jp",
+   "image": "https://static.wixstatic.com/media/d265aa_bced0a73a07b41ef90c96527dddc4398~mv2.png/v1/fit/w_500,h_500,q_90/file.png",
+   "price": 1499,
+   "type": "Booster Box",
+   "set": "EB-04",
+   "lang": "ja",
+   "game": "op",
+   "kind": "tillbaka"
+  },
   {
    "at": 1794128036637,
    "store": "worldofboardgames",
@@ -7068,20 +7083,6 @@
    "title": "Pokémon, Sword & Shield 4: Vivid Voltage, Checklane blisterpack, Scorbunny",
    "url": "https://samlarhobby.se/products/pokemon-sword-shield-4-vivid-voltage-checklane-blisterpack-scorbunny",
    "image": "https://cdn.shopify.com/s/files/1/0905/3120/1405/files/scor_vivid.jpg?v=1793653945",
-   "price": 269,
-   "type": "Blister",
-   "set": "Vivid Voltage",
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1793654509265,
-   "store": "samlarhobby",
-   "product": "samlarhobby:16095500960125",
-   "group": "vivid-voltage|blister|en||cl",
-   "title": "Pokémon, Sword & Shield 4: Vivid Voltage, Checklane blisterpack, Grookey",
-   "url": "https://samlarhobby.se/products/pokemon-sword-shield-4-vivid-voltage-checklane-blisterpack-grookey",
-   "image": "https://cdn.shopify.com/s/files/1/0905/3120/1405/files/grookey.jpg?v=1793653890",
    "price": 269,
    "type": "Blister",
    "set": "Vivid Voltage",
