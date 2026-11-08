@@ -1,6 +1,38 @@
 {
- "updated": 1794124254697,
+ "updated": 1794125154714,
  "events": [
+  {
+   "at": 1794124971691,
+   "store": "blindbox",
+   "product": "blindbox:15787262411100",
+   "group": "op|the-world-s-strongest-warriors|booster-box|en|",
+   "title": "One Piece OP17 ¨The World's strongest Warriors¨ Booster Box",
+   "url": "https://blindbox.se/products/one-piece-op17-the-worlds-strongest-warriors-booster-box",
+   "image": null,
+   "price": 3350,
+   "type": "Booster Box",
+   "set": "The World's Strongest Warriors",
+   "lang": "en",
+   "game": "op",
+   "kind": "prissankt",
+   "from": 3629
+  },
+  {
+   "at": 1794124971691,
+   "store": "blindbox",
+   "product": "blindbox:15414392848732",
+   "group": "op|the-azure-sea-s-seven|booster-box|en|",
+   "title": "One Piece OP14 Azure Sea's Seven Booster Box",
+   "url": "https://blindbox.se/products/one-piece-op14-azura-seas-seven",
+   "image": null,
+   "price": 2350,
+   "type": "Booster Box",
+   "set": "The Azure Sea's Seven",
+   "lang": "en",
+   "game": "op",
+   "kind": "prissankt",
+   "from": 2499
+  },
   {
    "at": 1794124079423,
    "store": "blindbox",
@@ -7052,34 +7084,6 @@
    "price": 1495,
    "type": "Blister",
    "set": "Burning Shadows",
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1793653600721,
-   "store": "samlarhobby",
-   "product": "samlarhobby:16095498830205",
-   "group": "burning-shadows|blister|en||3",
-   "title": "Pokémon, Sun & Moon: Burning Shadows, 3-Pack Blister: Cosmog",
-   "url": "https://samlarhobby.se/products/pokemon-sun-moon-burning-shadows-3-pack-blister-cosmog",
-   "image": "https://cdn.shopify.com/s/files/1/0905/3120/1405/files/cosmog.jpg?v=1793653463",
-   "price": 1495,
-   "type": "Blister",
-   "set": "Burning Shadows",
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1793653600721,
-   "store": "samlarhobby",
-   "product": "samlarhobby:16095498568061",
-   "group": "unified-minds|blister|en||3",
-   "title": "Pokémon, Sun & Moon: Unified Minds, 3-Pack Blister: Stakataka",
-   "url": "https://samlarhobby.se/products/pokemon-sun-moon-unified-minds-3-pack-blister-stakataka",
-   "image": "https://cdn.shopify.com/s/files/1/0905/3120/1405/files/stakataka.jpg?v=1793653356",
-   "price": 3995,
-   "type": "Blister",
-   "set": "Unified Minds",
    "lang": "en",
    "kind": "ny"
   }
