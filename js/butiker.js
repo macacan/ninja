@@ -47,10 +47,14 @@ function renderEvents() {
 const PRICE = { "": [0, Infinity], "0-50": [0, 50], "50-100": [50, 100], "100-200": [100, 200], "200-500": [200, 500], "500-1000": [500, 1000], "1000-": [1000, Infinity] };
 const LANG = { en: "Engelska", ja: "Japanska", ko: "Koreanska", zh: "Kinesiska", fr: "Franska" };
 const TYPE_LABEL = { "Booster Pack": "Boosterpaket", "Booster Box": "Boosterbox", "Elite Trainer Box": "Elite Trainer Box (ETB)", Blister: "Blister", Tin: "Tin" };
-let groups = new Map(), priceHist = {}, releaseDates = new Map(), setGame = new Map();
+let groups = new Map(), priceHist = {}, releaseDates = new Map(), setGame = new Map(), setGames = new Map();
 // Riftbound-produkter har game: "rb", Pokémon-produkter inget game-fält. Riftbound-set märks i setlistorna.
 const gameOf = (p) => p.game || "pk";
-const setLabel = (s) => (setGame.has(s) ? `${GAMES[setGame.get(s)]}: ${s}` : s);
+// Setet står med sitt eget namn. Spelfiltret visar redan vilket spel det gäller, och listan är sorterad per spel
+// (Pokémon, One Piece, Riftbound). Bara ett namn som finns i flera spel (Unleashed) får spelen efter sig.
+const setLabel = (s) => (setGames.get(s)?.size > 1 ? `${s} (${GAME_ORDER.filter((g) => setGames.get(s).has(g)).map((g) => GAMES[g]).join(" och ")})` : s);
+const GAME_ORDER = Object.keys(GAMES);
+const bySet = (a, b) => GAME_ORDER.indexOf(setGame.get(a) || "pk") - GAME_ORDER.indexOf(setGame.get(b) || "pk") || a.localeCompare(b, "sv");
 const pressed = (id) => $(id).getAttribute("aria-pressed") === "true";
 
 // Produkter som klarar alla filter. Tillgänglighet styrs av snabbfiltren: inget valt betyder allt, även slut.
@@ -369,7 +373,9 @@ function applyProducts(list, initial = false) {
   opts("#f-type", [...new Set(products.map((x) => x.type))].sort());
   const perSet = products.reduce((a, x) => (x.set && (a[x.set] = (a[x.set] || 0) + 1), a), {});
   setGame = new Map(products.filter((x) => x.game && x.set).map((x) => [x.set, x.game]));
-  multiFill("f-set", Object.keys(perSet).sort((a, b) => setLabel(a).localeCompare(setLabel(b), "sv")).map((s) => ({ value: s, text: setLabel(s), count: perSet[s] })));
+  setGames = new Map();
+  for (const x of products) if (x.set) { if (!setGames.has(x.set)) setGames.set(x.set, new Set()); setGames.get(x.set).add(gameOf(x)); }
+  multiFill("f-set", Object.keys(perSet).sort(bySet).map((s) => ({ value: s, text: setLabel(s), count: perSet[s] })));
   opts("#f-lang", [...new Set(products.map((x) => x.lang))].sort(), (l) => LANG[l] || l.toUpperCase());
   // Engelska är förvalt. Välj "Alla" för att se japanska, koreanska och övriga språk också.
   if (initial && $("#f-lang").querySelector('option[value="en"]')) $("#f-lang").value = "en";
@@ -510,7 +516,7 @@ function renderPrefs() {
   checkList("p-stores", active.map((s) => s.id), p.stores, (id) => storeName[id] || id, (id) => perStore[id] || 0);
   checkList("p-kinds", Object.keys(KINDS), p.kinds.length === Object.keys(KINDS).length ? [] : p.kinds, (k) => KINDS[k]);
   const perSet = products.reduce((a, x) => (x.set && (a[x.set] = (a[x.set] || 0) + 1), a), {});
-  checkList("p-sets", Object.keys(perSet).sort((a, b) => setLabel(a).localeCompare(setLabel(b), "sv")), p.sets, setLabel, (s) => perSet[s]);
+  checkList("p-sets", Object.keys(perSet).sort(bySet), p.sets, setLabel, (s) => perSet[s]);
   // Spelen kryssas alltid för var för sig: inget ikryssat är inget spel, inte alla (se gamesOf i prefs.js).
   $("#p-games").innerHTML = Object.entries(GAMES).map(([k, name]) => `<label class="chk"><input type="checkbox" value="${k}"${gamesOf(p).includes(k) ? " checked" : ""}><span>${name}</span></label>`).join("");
   checkList("p-langs", [...new Set(products.map((x) => x.lang))].sort(), p.langs || [], (l) => LANG[l] || l.toUpperCase());
