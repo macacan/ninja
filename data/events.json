@@ -1,6 +1,20 @@
 {
- "updated": 1794145149121,
+ "updated": 1794146069139,
  "events": [
+  {
+   "at": 1794145781781,
+   "store": "samlargrottan",
+   "product": "samlargrottan:https://www.samlargrottan.se/category/i-lager",
+   "group": "30th-celebration|collection-box|en||classic",
+   "title": "Pokémon: 30th Celebration Classic Collection Booster Pack",
+   "url": "https://www.samlargrottan.se/product-page/pok%C3%A9mon-30th-celebration-classic-collection-booster-pack",
+   "image": "https://static.wixstatic.com/media/d265aa_c84a8ce63a6348ffb442abc4c5bfb47e~mv2.webp/v1/fit/w_500,h_500,q_90/file.webp",
+   "price": 990,
+   "type": "Collection Box",
+   "set": "30th Celebration",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1794142987075,
    "store": "rgb-kingz",
@@ -7081,20 +7095,6 @@
    "set": "Battle Styles",
    "lang": "en",
    "kind": "ny"
-  },
-  {
-   "at": 1793656340962,
-   "store": "samlarhobby",
-   "product": "samlarhobby:16095499026813",
-   "group": "burning-shadows|blister|en||3",
-   "title": "Pokémon, Sun & Moon: Burning Shadows, 3-Pack Blister: Alolan Meowth",
-   "url": "https://samlarhobby.se/products/pokemon-sun-moon-burning-shadows-3-pack-blister-alolan-meowth",
-   "image": "https://cdn.shopify.com/s/files/1/0905/3120/1405/files/meowth.jpg?v=1793653541",
-   "price": 1495,
-   "type": "Blister",
-   "set": "Burning Shadows",
-   "lang": "en",
-   "kind": "tillbaka"
   }
  ]
 }
