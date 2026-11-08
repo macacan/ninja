@@ -1,6 +1,20 @@
 {
- "updated": 1794142389061,
+ "updated": 1794143309081,
  "events": [
+  {
+   "at": 1794142987075,
+   "store": "rgb-kingz",
+   "product": "rgb-kingz:16087947051338",
+   "group": "30th-celebration|booster-box|ja|",
+   "title": "Pokémon TCG: 30th Celebration Booster Box sv30 – Japansk",
+   "url": "https://rgbkingz.com/products/pokemon-tcg-30th-celebration-booster-box-sv30-japansk",
+   "image": "https://cdn.shopify.com/s/files/1/0782/8088/4554/files/Pokemon30-arsjubileumBoosterdisplay.png?v=1791358087",
+   "price": 2490,
+   "type": "Booster Box",
+   "set": "30th Celebration",
+   "lang": "ja",
+   "kind": "tillbaka"
+  },
   {
    "at": 1794142059596,
    "store": "dragon-s-lair",
@@ -7081,20 +7095,6 @@
    "set": "Burning Shadows",
    "lang": "en",
    "kind": "tillbaka"
-  },
-  {
-   "at": 1793655429546,
-   "store": "samlarhobby",
-   "product": "samlarhobby:16095503188349",
-   "group": "vivid-voltage|blister|en||cl",
-   "title": "Pokémon, Sword & Shield 4: Vivid Voltage, Premium Checklane, Luxray",
-   "url": "https://samlarhobby.se/products/pokemon-sword-shield-4-vivid-voltage-premium-checklane-luxray",
-   "image": "https://cdn.shopify.com/s/files/1/0905/3120/1405/files/Luxray.jpg?v=1793654786",
-   "price": 279,
-   "type": "Blister",
-   "set": "Vivid Voltage",
-   "lang": "en",
-   "kind": "ny"
   }
  ]
 }
