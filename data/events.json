@@ -1,6 +1,20 @@
 {
- "updated": 1794156767636,
+ "updated": 1794157916740,
  "events": [
+  {
+   "at": 1794157282778,
+   "store": "packs-on-packs",
+   "product": "packs-on-packs:https://packsonpacks.se/products/30th-celebration-ultra-premium-collection-night",
+   "group": "30th-celebration|ultra-premium-collection|en||night",
+   "title": "30th Celebration Ultra-Premium Collection – Night",
+   "url": "https://packsonpacks.se/products/30th-celebration-ultra-premium-collection-night",
+   "image": "https://cdn.quickbutik.com/images/92330P/products/6af0a3036279c.png",
+   "price": 5599,
+   "type": "Ultra-Premium Collection",
+   "set": "30th Celebration",
+   "lang": "en",
+   "kind": "ny"
+  },
   {
    "at": 1794155762185,
    "store": "kantovault",
@@ -7080,20 +7094,6 @@
    "image": "https://cdn.shopify.com/s/files/1/0958/6832/2129/files/dr3packblister.webp?v=1793437466",
    "price": 239,
    "type": "Blister",
-   "set": "Mega Evolution",
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793699845367,
-   "store": "miniature-metropolis",
-   "product": "miniature-metropolis:11308858736977",
-   "group": "mega-evolution|elite-trainer-box|en||delta-reign",
-   "title": "POKÉMON TCG: MEGA EVOLUTION - DELTA REIGN ELITE TRAINER BOX",
-   "url": "https://miniaturemetropolis.se/products/pokemon-tcg-mega-evolution-delta-reign-elite-trainer-box",
-   "image": "https://cdn.shopify.com/s/files/1/0958/6832/2129/files/DRETB.webp?v=1793437055",
-   "price": 895,
-   "type": "Elite Trainer Box",
    "set": "Mega Evolution",
    "lang": "en",
    "kind": "tillbaka"
