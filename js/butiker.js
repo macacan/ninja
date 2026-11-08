@@ -52,9 +52,14 @@ let groups = new Map(), priceHist = {}, releaseDates = new Map(), setGame = new 
 const gameOf = (p) => p.game || "pk";
 // Setet står med sitt eget namn. Spelfiltret visar redan vilket spel det gäller, och listan är sorterad per spel
 // (Pokémon, One Piece, Riftbound). Bara ett namn som finns i flera spel (Unleashed) får spelen efter sig.
-const setLabel = (s) => (setGames.get(s)?.size > 1 ? `${s} (${GAME_ORDER.filter((g) => setGames.get(s).has(g)).map((g) => GAMES[g]).join(" och ")})` : s);
+// Långa One Piece-namn kortas: "Extra Booster: Memorial Collection" blir "EB: Memorial Collection" och
+// "Starter Deck 11: Uta" blir "SD 11: Uta". Bara texten i listan, värdet (setets namn) är detsamma.
+const shortSet = (s) => s.replace(/^Extra Booster\b/, "EB").replace(/^Starter Deck\b/, "SD");
+const setLabel = (s) => (setGames.get(s)?.size > 1 ? `${shortSet(s)} (${GAME_ORDER.filter((g) => setGames.get(s).has(g)).map((g) => GAMES[g]).join(" och ")})` : shortSet(s));
 const GAME_ORDER = Object.keys(GAMES);
-const bySet = (a, b) => GAME_ORDER.indexOf(setGame.get(a) || "pk") - GAME_ORDER.indexOf(setGame.get(b) || "pk") || a.localeCompare(b, "sv");
+// Per spel, sedan på namnet som det står i listan, med siffror i nummerordning (SD 8 före SD 11).
+const bySet = (a, b) => GAME_ORDER.indexOf(setGame.get(a) || "pk") - GAME_ORDER.indexOf(setGame.get(b) || "pk")
+  || setLabel(a).localeCompare(setLabel(b), "sv", { numeric: true });
 const pressed = (id) => $(id).getAttribute("aria-pressed") === "true";
 
 // Produkter som klarar alla filter. Tillgänglighet styrs av snabbfiltren: inget valt betyder allt, även slut.
