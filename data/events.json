@@ -1,6 +1,20 @@
 {
- "updated": 1794172717072,
+ "updated": 1794173617098,
  "events": [
+  {
+   "at": 1794173422102,
+   "store": "dragon-s-lair",
+   "product": "dragon-s-lair:15848050655580",
+   "group": "30th-celebration|booster-pack|en|",
+   "title": "Pokémon TCG: 30th Celebration Booster",
+   "url": "https://dragonslair.se/products/pokemon-tcg-30th-celebration-booster",
+   "image": "https://cdn.shopify.com/s/files/1/1015/8315/9644/files/PokemonTCG30thCelebrationBooster.png?v=1794172382",
+   "price": 169,
+   "type": "Booster Pack",
+   "set": "30th Celebration",
+   "lang": "en",
+   "kind": "ny"
+  },
   {
    "at": 1794170173994,
    "store": "samlargrottan",
@@ -7085,20 +7099,6 @@
    "set": "30th Celebration",
    "lang": "en",
    "kind": "tillbaka"
-  },
-  {
-   "at": 1793705241988,
-   "store": "cardlevels",
-   "product": "cardlevels:10783167840567",
-   "group": "ascended-heroes|booster-pack|en|",
-   "title": "Pokémon Ascended Heroes Mega Evolution 2.5: Boosterpaket – 6-pack",
-   "url": "https://cardlevels.se/products/pokemon-tcg-mega-evolution-ascended-heroes-booster-bundle",
-   "image": "https://cdn.shopify.com/s/files/1/0846/0458/4247/files/Ascended_Heroes_Booster_Bundle_600x600_62e7d744-b9fd-4b0e-991a-3d3cc9014932.webp?v=1781779183",
-   "price": 1199,
-   "type": "Booster Pack",
-   "set": "Ascended Heroes",
-   "lang": "en",
-   "kind": "ny"
   }
  ]
 }
