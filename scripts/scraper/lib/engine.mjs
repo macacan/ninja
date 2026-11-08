@@ -56,15 +56,18 @@ export async function createEngine({ statuses } = {}) {
 
   // Butiker som pausats i statistikens dashboard (stats/dashboard.php, fliken Bevakningar). Listan hämtas från
   // stats/paused.php. Går den inte att nå gäller den senast kända (sparad i state.json).
+  // Butiker kan också pausas i repot, i config.json under "paused" (samma effekt som dashboarden). Tas en bort
+  // därifrån läses butiken tyst nästa gång, precis som när den startas i dashboarden.
   const PAUSE_URL = cfg.pauseUrl || "https://stats.lootninja.se/paused.php";
-  let paused = new Set(state.paused || []), pauseWarned = false;
+  const cfgPaused = Array.isArray(cfg.paused) ? cfg.paused.filter((id) => typeof id === "string") : [];
+  let paused = new Set([...(state.paused || []), ...cfgPaused]), pauseWarned = false;
   async function refreshPaused() {
     try {
       const r = await fetch(PAUSE_URL, { cache: "no-store", signal: AbortSignal.timeout(10e3) });
       if (!r.ok) throw new Error(`HTTP ${r.status}`);
       const ids = (await r.json()).paused;
       if (!Array.isArray(ids)) throw new Error("oväntat svar");
-      const next = new Set(ids.filter((id) => typeof id === "string"));
+      const next = new Set([...ids.filter((id) => typeof id === "string"), ...cfgPaused]);
       const changed = next.size !== paused.size || [...next].some((id) => !paused.has(id));
       // En butik som startas igen läses tyst första gången, så att allt som hänt under pausen inte blir notiser.
       for (const id of paused) if (!next.has(id) && !(state.reclassify ||= []).includes(id)) state.reclassify.push(id);

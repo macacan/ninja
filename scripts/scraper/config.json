@@ -1,5 +1,8 @@
 {
-  "_info": "botInfoUrl och contactEmail är frivilliga. Lämnas de tomma syns boten bara som \"PackninjaBot/1.0 (prisbevakning)\". Pushnotiserna skickas med den hemliga VAPID-nyckeln i miljövariabeln VAPID_PRIVATE_KEY, aldrig i den här filen.",
+  "_info": "botInfoUrl och contactEmail är frivilliga. Lämnas de tomma syns boten bara som \"PackninjaBot/1.0 (prisbevakning)\". Pushnotiserna skickas med den hemliga VAPID-nyckeln i miljövariabeln VAPID_PRIVATE_KEY, aldrig i den här filen. paused: butiker (id ur stores.json) som inte bevakas just nu och inte visas på sajten. Ta bort id:t för att starta butiken igen.",
   "botInfoUrl": "https://lootninja.se/om.html#bot",
-  "contactEmail": "hej@lootninja.se"
+  "contactEmail": "hej@lootninja.se",
+  "paused": [
+    "blindbox"
+  ]
 }
