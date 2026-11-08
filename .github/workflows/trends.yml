@@ -31,10 +31,11 @@ jobs:
       # Kortbilder som TCGdex saknar (Pokémon TCG API, sedan TCGplayer via tcgcsv.com).
       - run: node scripts/update-card-images.mjs || echo "Kortbilderna kunde inte uppdateras den här gången"
       - run: node scripts/build-set-pages.mjs
+      - run: node scripts/build-slapp.mjs || echo "Släppsidan kunde inte byggas den här gången"
       - run: node scripts/build-sitemap.mjs --ping || echo "IndexNow kunde inte pingas den här gången"
       - name: Spara om något ändrats
         run: |
           git config user.name "packninja-bot"
           git config user.email "packninja-bot@users.noreply.github.com"
-          git add data/card-trends.json data/rates.json data/set-codes.json data/card-history data/op data/rb data/pokemon-names.json data/product-contents.json data/sets data/set-pages.json data/card-images.json set sitemap.xml scripts/sitemap-state.json
+          git add data/card-trends.json data/rates.json data/set-codes.json data/card-history data/op data/rb data/pokemon-names.json data/product-contents.json data/sets data/set-pages.json data/card-images.json set slapp.html sitemap.xml scripts/sitemap-state.json
           git diff --cached --quiet || (git commit -m "Uppdatera korttrender och setsidor" && git pull --rebase -X theirs && git push)

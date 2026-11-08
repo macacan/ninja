@@ -11,7 +11,8 @@ const startOfToday = () => { const t = new Date(); t.setHours(0, 0, 0, 0); retur
 const day = (s) => new Date(`${s}T12:00:00`);
 const MONTH_TITLE = (s) => { const d = day(s), m = MONTHS[d.getMonth()]; return `${m[0].toUpperCase()}${m.slice(1)} ${d.getFullYear()}`; };
 
-$("#rel-list").innerHTML = loading("Ninjan kollar vad som är på väg");
+// Listan är redan förrenderad i HTML:en (scripts/build-slapp.mjs) och står kvar tills den levande listan är klar.
+if (!$("#rel-list").children.length) $("#rel-list").innerHTML = loading("Ninjan kollar vad som är på väg");
 $("#days").innerHTML = `<div class="day out" style="grid-column:1/-1">${loading("Ninjan bläddrar i kalendern")}</div>`;
 
 let ctx;
