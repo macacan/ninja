@@ -175,12 +175,12 @@ const headHtml = ({ title, desc, url, ld }) => `<!doctype html>
 <meta property="og:image" content="${SITE}/img/og-lootninja.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Lootninja – Pokémonkort: släpp, butikslager och priser">
+<meta property="og:image:alt" content="Lootninja – Pokémon, One Piece och Riftbound: släpp, butikslager och priser">
 <meta name="twitter:card" content="summary_large_image">
 <script type="application/ld+json">${JSON.stringify(ld).replace(/</g, "\\u003c")}</script>
 <link href="fonts/fonts.css" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=20261030a">
-<link rel="stylesheet" href="dark.css?v=20261029b" id="dark-css" media="(prefers-color-scheme: dark)">
+<link rel="stylesheet" href="style.css?v=20261107a">
+<link rel="stylesheet" href="dark.css?v=20261105a" id="dark-css" media="(prefers-color-scheme: dark)">
 <script src="js/theme.js?v=20261106"></script>
 </head>
 <body>
@@ -210,6 +210,20 @@ const pageHead = (crumbs) => `
   </header>`;
 const foot = `
 </main>
+<footer class="static-footer">
+  <nav aria-label="Huvudsidor och om sajten"><ul>
+    <li><a href="/">Hem</a></li>
+    <li><a href="/butiker.html">Produkter och butikslager</a></li>
+    <li><a href="/priser.html">Kortpriser</a></li>
+    <li><a href="/vardering.html">Värdering</a></li>
+    <li><a href="/slapp.html">Släppkalender</a></li>
+    <li><a href="/set/">Alla set</a></li>
+    <li><a href="/nyheter.html">Nyheter</a></li>
+    <li><a href="/om.html">Om Lootninja</a></li>
+    <li><a href="/villkor.html" rel="terms-of-service">Användarvillkor</a></li>
+    <li><a href="/integritet.html" rel="privacy-policy">Integritet och kakor</a></li>
+  </ul></nav>
+</footer>
 <script type="module" src="js/setpage.js?v=20261106a"></script>
 </body>
 </html>
@@ -341,7 +355,7 @@ function gamePage(p) {
 
   <div class="wrap">
     <section class="set-hero">
-      ${p.logo ? `<img class="set-hero-logo set-hero-box" src="${esc(p.logo)}" alt="${esc(p.name)}" decoding="async">` : `<span class="set-hero-logo set-word">${esc(p.name)}</span>`}
+      ${p.logo ? `<img class="set-hero-logo set-hero-box" src="${esc(p.logo)}" alt="${esc(p.name)}" fetchpriority="high" decoding="async">` : `<span class="set-hero-logo set-word">${esc(p.name)}</span>`}
       <div>
         <h1>${esc(p.name)}</h1>
         <p class="set-facts">${facts.join(" · ")}</p>
@@ -365,7 +379,7 @@ ${p.cards.length ? `
     <ul class="set-top set-all">${[...p.cards].sort(byNo).map((c) => gameCard(p, c)).join("")}
     </ul>` : ""}
 ${others.length ? `
-    <div class="section"><h2>Fler ${esc(game)}-set</h2><a class="more" href="set/?spel=${p.game}">Alla set</a></div>
+    <div class="section"><h2>Fler ${esc(game)}-set</h2><a class="more" href="set/#${gameAnchor[p.game]}">Alla set</a></div>
     <ul class="set-tiles">${others.map(gameTile).join("")}</ul>` : ""}
   </div>${foot}`;
 }

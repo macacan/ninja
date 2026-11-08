@@ -1,11 +1,12 @@
 // Räknar fram "trendande" och "dyraste" kort ur TCGdex (priser från Cardmarket) och sparar data/card-trends.json.
 // Körs en gång per dygn (se .github/workflows/trends.yml) eller manuellt: node scripts/update-card-trends.mjs
 // Läser de senaste fysiska seten kort för kort, några åt gången, så att TCGdex inte belastas i onödan.
-import { writeFile, readFile, mkdir } from "node:fs/promises";
+import { writeFile, readFile, mkdir, readdir } from "node:fs/promises";
 
 const API = "https://api.tcgdex.net/v2/en";
 const OUT = new URL("../data/card-trends.json", import.meta.url);
 const SETS = 10;          // så många av de senaste seten tas med (trender och prishistorik)
+const OLDER_SETS = 6;     // äldre set som fylls på per körning så att alla set får priser och "Dyraste korten"
 const TREND_SETS = 6;     // trendlistorna bygger på de nyaste av dem
 const HISTORY_DAYS = 400;
 const CONCURRENCY = 6;
@@ -33,7 +34,28 @@ const sets = (await getJSON(`${API}/sets?sort:field=releaseDate&sort:order=DESC&
 const details = (await pool(sets, (s) => getJSON(`${API}/sets/${s.id}`))).filter((s) => s && s.serie?.id !== "tcgp" && s.cards?.length)
   .sort((a, b) => (b.releaseDate || "").localeCompare(a.releaseDate || "")).slice(0, SETS);
 
-const cards = (await pool(details.flatMap((s) => s.cards.map((c) => c.id)), (id) => getJSON(`${API}/cards/${id}`))).filter(Boolean);
+// Utöver de senaste seten fylls några äldre set på varje dygn (saknade först, sedan nyaste serierna/äldst uppdaterade),
+// så att även Scarlet & Violet, Sword & Shield, Base Set m.fl. får priser och "Dyraste korten" på sina setsidor.
+const histDir = new URL("../data/card-history/", import.meta.url);
+const setsDir = new URL("../data/sets/", import.meta.url);
+await mkdir(histDir, { recursive: true });
+const recentIds = new Set(details.map((s) => s.id));
+const localFiles = (await readdir(setsDir).catch(() => [])).filter((f) => f.endsWith(".json"));
+const candidates = [];
+for (const f of localFiles) {
+  const s = JSON.parse(await readFile(new URL(f, setsDir), "utf8").catch(() => "null"));
+  if (!s?.id || s.local || !s.cards?.length || recentIds.has(s.id) || ["tcgp", "tk", "mc"].includes(s.serie?.id)) continue;
+  const h = JSON.parse(await readFile(new URL(`${encodeURIComponent(s.id)}.json`, histDir), "utf8").catch(() => "null"));
+  const hasPrices = Object.keys(h?.cards || {}).length > 0;
+  const updated = hasPrices ? (h.updated || 1) : 0;
+  candidates.push({ s, updated });
+}
+candidates.sort((a, b) => (a.updated > 0) - (b.updated > 0)
+  || (a.updated === 0 ? (b.s.releaseDate || "").localeCompare(a.s.releaseDate || "") : a.updated - b.updated));
+const olderDetails = candidates.slice(0, OLDER_SETS).map((x) => x.s);
+const allSets = [...details, ...olderDetails];
+
+const cards = (await pool(allSets.flatMap((s) => s.cards.map((c) => c.id)), (id) => getJSON(`${API}/cards/${id}`))).filter(Boolean);
 
 const slim = (c) => {
   const cm = c.pricing?.cardmarket || {};
@@ -56,7 +78,7 @@ if (rate) {
   const dir = new URL("../data/card-history/", import.meta.url);
   await mkdir(dir, { recursive: true });
   const sek = (v) => (v == null ? null : Math.round(v * rate * 100) / 100);
-  for (const s of details) {
+  for (const s of allSets) {
     const f = new URL(`${encodeURIComponent(s.id)}.json`, dir);
     let h = { cards: {} };
     try { h = JSON.parse(await readFile(f, "utf8")); } catch {}

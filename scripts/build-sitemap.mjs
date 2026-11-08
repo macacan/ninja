@@ -24,20 +24,25 @@ const PAGES = [
   ["priser.html", ["priser.html", "data/card-trends.json"]],
   ["slapp.html", ["slapp.html", "data/release-calendar.json"]],
   ["vardering.html", ["vardering.html"]],
+  ["set/", ["set/index.html"]],
   ["nyheter.html", ["nyheter.html", "data/news.json"]],
   ["om.html", ["om.html"]],
   ["villkor.html", ["villkor.html"]],
   ["integritet.html", ["integritet.html"]],
 ];
 // Setsidorna (scripts/build-set-pages.mjs). Allt de visar står i själva HTML-filen.
-for (const f of (await readdir(new URL("set/", ROOT)).catch(() => [])).filter((f) => f.endsWith(".html")).sort()) {
-  PAGES.push([f === "index.html" ? "set/" : `set/${f}`, [`set/${f}`]]);
+for (const f of (await readdir(new URL("set/", ROOT)).catch(() => [])).filter((f) => f.endsWith(".html") && f !== "index.html").sort()) {
+  PAGES.push([`set/${f}`, [`set/${f}`]]);
 }
 
 const today = new Date().toISOString().slice(0, 10);
+// Små ändringar i antalet bevakade butiksprodukter på en setsida (t.ex. 129 → 130 produkter) ska inte flytta lastmod varje dag.
+const normalize = (f, raw) => f.startsWith("set/")
+  ? raw.replace(/\d+ produkter(?: från [^.<]+)? hos \d+ svenska butik(?:er)?/g, "# produkter hos # butiker")
+  : raw;
 const fingerprint = async (files) => {
   const h = createHash("sha256");
-  for (const f of files) h.update(f).update(await readFile(new URL(f, ROOT)).catch(() => ""));
+  for (const f of files) h.update(f).update(normalize(f, await readFile(new URL(f, ROOT), "utf8").catch(() => "")));
   return h.digest("hex").slice(0, 16);
 };
 

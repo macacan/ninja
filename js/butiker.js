@@ -265,13 +265,17 @@ for (const id of ["#c-in", "#c-pre", "#c-watch"]) {
 // Flervalsfilter för Set och Butik. Ingen ikryssad betyder alla. Panelen stängs när man klickar utanför.
 const picked = (id) => [...document.querySelectorAll(`#${id} input:checked`)].map((b) => b.value);
 function multiFill(id, items) {
-  $(`#${id}`).innerHTML = items.map((x) => `<label class="chk"><input type="checkbox" value="${esc(x.value)}">
+  const prev = new Set(picked(id));
+  $(`#${id}`).innerHTML = items.map((x) => `<label class="chk"><input type="checkbox" value="${esc(x.value)}"${prev.has(x.value) ? " checked" : ""}>
     <span>${esc(x.text)}</span><small>${x.count || 0}</small></label>`).join("");
-  $(`#${id}`).addEventListener("change", () => {
-    const on = picked(id), first = document.querySelector(`#${id} input:checked`)?.closest(".chk").querySelector("span").textContent;
-    $(`#${id}-sum`).textContent = !on.length ? "Alla" : on.length === 1 ? first : `${on.length} valda`;
-    shown = PAGE; renderProducts();
-  });
+  if (!$(`#${id}`).dataset.bound) {
+    $(`#${id}`).dataset.bound = "1";
+    $(`#${id}`).addEventListener("change", () => {
+      const on = picked(id), first = document.querySelector(`#${id} input:checked`)?.closest(".chk").querySelector("span").textContent;
+      $(`#${id}-sum`).textContent = !on.length ? "Alla" : on.length === 1 ? first : `${on.length} valda`;
+      shown = PAGE; renderProducts();
+    });
+  }
 }
 function closeMulti(except = null) {
   document.querySelectorAll(".mdrop-btn").forEach((btn) => {
@@ -350,17 +354,44 @@ setView(savedView === "grid" ? "grid" : "list");
 $("#filters").addEventListener("submit", (e) => e.preventDefault());
 $("#more").addEventListener("click", () => { shown += PAGE; renderProducts(); });
 
+const opts = (id, values, label = (x) => x) => {
+  const el = $(id), cur = el.value;
+  el.innerHTML = `<option value="">Alla</option>` + values.map((x) => `<option value="${esc(x)}">${esc(label(x))}</option>`).join("");
+  if (cur && el.querySelector(`option[value="${CSS.escape(cur)}"]`)) el.value = cur;
+};
+function applyProducts(list, initial = false) {
+  products = list;
+  groups = groupProducts(products);
+  const used = new Set(products.map((x) => x.store));
+  const perStore = products.reduce((a, x) => ((a[x.store] = (a[x.store] || 0) + 1), a), {});
+  multiFill("f-store", stores.filter((x) => used.has(x.id)).sort((a, b) => a.name.localeCompare(b.name, "sv"))
+    .map((x) => ({ value: x.id, text: x.name, count: perStore[x.id] })));
+  opts("#f-type", [...new Set(products.map((x) => x.type))].sort());
+  const perSet = products.reduce((a, x) => (x.set && (a[x.set] = (a[x.set] || 0) + 1), a), {});
+  setGame = new Map(products.filter((x) => x.game && x.set).map((x) => [x.set, x.game]));
+  multiFill("f-set", Object.keys(perSet).sort((a, b) => setLabel(a).localeCompare(setLabel(b), "sv")).map((s) => ({ value: s, text: setLabel(s), count: perSet[s] })));
+  opts("#f-lang", [...new Set(products.map((x) => x.lang))].sort(), (l) => LANG[l] || l.toUpperCase());
+  // Engelska är förvalt. Välj "Alla" för att se japanska, koreanska och övriga språk också.
+  if (initial && $("#f-lang").querySelector('option[value="en"]')) $("#f-lang").value = "en";
+}
+
 $("#events").innerHTML = loading("Ninjan kollar butikerna");
 $("#products").innerHTML = loading("Ninjan kollar butikerna");
 try {
-  const [p, e, s] = await Promise.all([load("data/products.json"), load("data/events.json"), load("data/stores-status.json")]);
-  products = p.products; events = e.events; stores = s.stores;
-  groups = groupProducts(products);
-  priceHist = (await load("data/price-history.json").catch(() => ({ days: {} }))).days || {};
-  storeLogos = await load("data/store-logos.json").catch(() => ({}));
+  // Ladda det som går att köpa (stock.json, ~1,8 MB) först så att produkterna visas snabbt,
+  // och hämta sedan hela produktlistan (inklusive slutsålda), händelser och prishistorik i bakgrunden.
+  const [stock, s, rels, logos] = await Promise.all([
+    load("data/stock.json").catch(() => null),
+    load("data/stores-status.json"),
+    releaseSets().catch(() => []),
+    load("data/store-logos.json").catch(() => ({})),
+  ]);
+  stores = s.stores;
+  storeLogos = logos;
+  storeName = Object.fromEntries(stores.map((x) => [x.id, x.name]));
   // "Släpps 6 nov" på produkter vars omgång inte har kommit än.
   const today = new Date(); today.setHours(0, 0, 0, 0);
-  for (const r of await releaseSets().catch(() => [])) for (const w of r.waves) {
+  for (const r of rels) for (const w of r.waves) {
     const day = new Date(`${w.date}T12:00:00`);
     if (day < today) continue;
     for (const name of w.products) {
@@ -369,34 +400,39 @@ try {
     }
   }
   updateWatchCount();
-  storeName = Object.fromEntries(stores.map((x) => [x.id, x.name]));
-  const used = new Set(products.map((x) => x.store));
-  const perStore = products.reduce((a, x) => ((a[x.store] = (a[x.store] || 0) + 1), a), {});
-  multiFill("f-store", stores.filter((x) => used.has(x.id)).sort((a, b) => a.name.localeCompare(b.name, "sv"))
-    .map((x) => ({ value: x.id, text: x.name, count: perStore[x.id] })));
-  const opts = (id, values, label = (x) => x) => $(id).insertAdjacentHTML("beforeend", values.map((x) => `<option value="${esc(x)}">${esc(label(x))}</option>`).join(""));
-  opts("#f-type", [...new Set(products.map((x) => x.type))].sort());
-  const perSet = products.reduce((a, x) => (x.set && (a[x.set] = (a[x.set] || 0) + 1), a), {});
-  setGame = new Map(products.filter((x) => x.game && x.set).map((x) => [x.set, x.game]));
-  multiFill("f-set", Object.keys(perSet).sort((a, b) => setLabel(a).localeCompare(setLabel(b), "sv")).map((s) => ({ value: s, text: setLabel(s), count: perSet[s] })));
-  opts("#f-lang", [...new Set(products.map((x) => x.lang))].sort(), (l) => LANG[l] || l.toUpperCase());
-  // Engelska är förvalt. Välj "Alla" för att se japanska, koreanska och övriga språk också.
-  if ($("#f-lang").querySelector('option[value="en"]')) $("#f-lang").value = "en";
   // Sökning från länk, t.ex. butiker.html?q=Delta Reign#products
   const q = new URLSearchParams(location.search).get("q");
   if (q) $("#f-q").value = q;
   // butiker.html?visa=forbestall: bara förbeställningar (från startsidan).
   if (new URLSearchParams(location.search).get("visa") === "forbestall") $("#c-in").setAttribute("aria-pressed", "false");
-  renderEvents(); renderProducts(); renderStores(); fitAll();
-  // Produkterna visas först, om inte länken pekar på en annan flik (t.ex. butiker.html#events).
   const start = location.hash.slice(1);
-  renderPrefs();
-  // butiker.html#installera (från skannern): Notiser med "Installera som app" utfällt
-  if (start === "installera") {
-    showTab("notiser");
-    $("#installera").open = true;
-    $("#installera").scrollIntoView({ block: "start" });
-  } else showTab(TABS.includes(start) ? start : "products");
+  const hasFastStock = stock && stock.updated >= s.updated - 60e3;
+  if (hasFastStock) {
+    applyProducts(stock.products, true);
+    renderProducts(); renderStores(); renderPrefs(); fitAll();
+    if (start === "installera") {
+      showTab("notiser");
+      $("#installera").open = true;
+      $("#installera").scrollIntoView({ block: "start" });
+    } else showTab(TABS.includes(start) ? start : "products");
+  }
+  // Fullständig data (alla produkter inkl. slutsålda, händelser och prishistorik)
+  const [p, e, ph] = await Promise.all([
+    load("data/products.json"),
+    load("data/events.json"),
+    load("data/price-history.json").catch(() => ({ days: {} })),
+  ]);
+  events = e.events;
+  priceHist = ph.days || {};
+  applyProducts(p.products, !hasFastStock);
+  renderEvents(); renderProducts(); renderStores(); renderPrefs(); fitAll();
+  if (!hasFastStock) {
+    if (start === "installera") {
+      showTab("notiser");
+      $("#installera").open = true;
+      $("#installera").scrollIntoView({ block: "start" });
+    } else showTab(TABS.includes(start) ? start : "products");
+  }
   // Länkar till en annan flik på samma sida (t.ex. Notiser i mobilmenyn).
   addEventListener("hashchange", () => { const t = location.hash.slice(1); if (TABS.includes(t)) showTab(t); });
 } catch (err) {
