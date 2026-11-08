@@ -1,6 +1,20 @@
 {
- "updated": 1794147527025,
+ "updated": 1794148507051,
  "events": [
+  {
+   "at": 1794147580249,
+   "store": "blindbox",
+   "product": "blindbox:15575520215388",
+   "group": "perfect-order|booster-box|en|",
+   "title": "Pokemon Perfect Order Booster Box Display",
+   "url": "https://blindbox.se/products/pokemon-perfect-order-booster-box-display",
+   "image": null,
+   "price": 2499,
+   "type": "Booster Box",
+   "set": "Perfect Order",
+   "lang": "en",
+   "kind": "ny"
+  },
   {
    "at": 1794146913987,
    "store": "tt-vault",
@@ -7082,20 +7096,6 @@
    "price": 229,
    "type": "Booster Pack",
    "set": "Prismatic Evolutions",
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793664581844,
-   "store": "majki-poke",
-   "product": "majki-poke:15353692586370",
-   "group": "30th-celebration|booster-pack|en|",
-   "title": "30th Celebration – Booster Pack (ENG)",
-   "url": "https://majkipoke.se/products/30th-celebration-booster-pack-eng",
-   "image": "https://cdn.shopify.com/s/files/1/0953/4629/5170/files/30thCelebrationBoosterPack_5Pack_ENG.png?v=1781901380",
-   "price": 219,
-   "type": "Booster Pack",
-   "set": "30th Celebration",
    "lang": "en",
    "kind": "tillbaka"
   }
