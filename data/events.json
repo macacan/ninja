@@ -1,6 +1,20 @@
 {
- "updated": 1794125154714,
+ "updated": 1794126074732,
  "events": [
+  {
+   "at": 1794126035795,
+   "store": "poketalk",
+   "product": "poketalk:10163611369814",
+   "group": "ascended-heroes|booster-pack|en|",
+   "title": "Pokémon Mega Evolution: Ascended Heroes Booster Pack",
+   "url": "https://poketalk.se/products/pokemon-mega-evolution-ascended-heroes-booster-pack",
+   "image": "https://cdn.shopify.com/s/files/1/0862/7860/3094/files/PRODUKTSERIER_2000x2000px_-7.png?v=1770068990",
+   "price": 175,
+   "type": "Booster Pack",
+   "set": "Ascended Heroes",
+   "lang": "en",
+   "kind": "ny"
+  },
   {
    "at": 1794124971691,
    "store": "blindbox",
@@ -7070,20 +7084,6 @@
    "price": 149,
    "type": "Blister",
    "set": "Battle Styles",
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1793653600721,
-   "store": "samlarhobby",
-   "product": "samlarhobby:16095499026813",
-   "group": "burning-shadows|blister|en||3",
-   "title": "Pokémon, Sun & Moon: Burning Shadows, 3-Pack Blister: Alolan Meowth",
-   "url": "https://samlarhobby.se/products/pokemon-sun-moon-burning-shadows-3-pack-blister-alolan-meowth",
-   "image": "https://cdn.shopify.com/s/files/1/0905/3120/1405/files/meowth.jpg?v=1793653541",
-   "price": 1495,
-   "type": "Blister",
-   "set": "Burning Shadows",
    "lang": "en",
    "kind": "ny"
   }
