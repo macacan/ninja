@@ -1,6 +1,34 @@
 {
- "updated": 1794126691122,
+ "updated": 1794127648734,
  "events": [
+  {
+   "at": 1794126754257,
+   "store": "blindbox",
+   "product": "blindbox:15959573201244",
+   "group": "delta-reign|booster-bundle|en|",
+   "title": "Pokemon Delta Reign Booster Bundle",
+   "url": "https://blindbox.se/products/pokemon-delta-reign-booster-bundle",
+   "image": null,
+   "price": 679,
+   "type": "Booster Bundle",
+   "set": "Delta Reign",
+   "lang": "en",
+   "kind": "ny"
+  },
+  {
+   "at": 1794126754257,
+   "store": "blindbox",
+   "product": "blindbox:15959573135708",
+   "group": "delta-reign|elite-trainer-box|en|",
+   "title": "Pokemon Delta Reign Elite Trainer Box",
+   "url": "https://blindbox.se/products/pokemon-delta-reign-elite-trainer-box",
+   "image": null,
+   "price": 1199,
+   "type": "Elite Trainer Box",
+   "set": "Delta Reign",
+   "lang": "en",
+   "kind": "ny"
+  },
   {
    "at": 1794126035795,
    "store": "poketalk",
@@ -7056,34 +7084,6 @@
    "price": 269,
    "type": "Blister",
    "set": "Lost Origin",
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1793654509265,
-   "store": "samlarhobby",
-   "product": "samlarhobby:16095500534141",
-   "group": "lost-origin|blister|en||cl",
-   "title": "Pokémon, Sword & Shield 11: Lost Origin, Checklane blisterpack, Scorbunny",
-   "url": "https://samlarhobby.se/products/pokemon-sword-shield-11-lost-origin-checklane-blisterpack-scorbunny",
-   "image": "https://cdn.shopify.com/s/files/1/0905/3120/1405/files/scorbunny.jpg?v=1793653760",
-   "price": 269,
-   "type": "Blister",
-   "set": "Lost Origin",
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1793654509265,
-   "store": "samlarhobby",
-   "product": "samlarhobby:16095499977085",
-   "group": "battle-styles|blister|en||cl",
-   "title": "Pokémon, Sword & Shield 5: Battle Styles, Checklane blisterpack, Arrokuda",
-   "url": "https://samlarhobby.se/products/pokemon-sword-shield-5-battle-styles-checklane-blisterpack-arrokuda",
-   "image": "https://cdn.shopify.com/s/files/1/0905/3120/1405/files/arrokuda.jpg?v=1793653651",
-   "price": 149,
-   "type": "Blister",
-   "set": "Battle Styles",
    "lang": "en",
    "kind": "ny"
   }
