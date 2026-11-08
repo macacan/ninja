@@ -1,6 +1,20 @@
 {
- "updated": 1794149427070,
+ "updated": 1794150347091,
  "events": [
+  {
+   "at": 1794149760226,
+   "store": "nordic-pulls",
+   "product": "nordic-pulls:https://nordicpulls.se/produkt/30th-celebration-ditto-premium-collection",
+   "group": "30th-celebration|premium-collection|en||ditto",
+   "title": "30th Celebration Ditto Premium Collection",
+   "url": "https://nordicpulls.se/produkt/30th-celebration-ditto-premium-collection",
+   "image": "https://nordicpulls.se/images/products/col-30th-ditto.jpg",
+   "price": 1199,
+   "type": "Premium Collection",
+   "set": "30th Celebration",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1794149386998,
    "store": "blindbox",
@@ -7083,20 +7097,6 @@
    "set": null,
    "lang": "en",
    "kind": "tillbaka"
-  },
-  {
-   "at": 1793685742853,
-   "store": "cardlevels",
-   "product": "cardlevels:11055673639223",
-   "group": "chaos-rising|booster-pack|en|",
-   "title": "Pokémon Chaos Rising Mega Evolution 4: Booster Pack",
-   "url": "https://cardlevels.se/products/pokemon-chaos-rising-mega-evolution-4-booster-pack",
-   "image": "https://cdn.shopify.com/s/files/1/0846/0458/4247/files/chaos-rising-booster-pack.jpg?v=1793683715",
-   "price": 79,
-   "type": "Booster Pack",
-   "set": "Chaos Rising",
-   "lang": "en",
-   "kind": "ny"
   }
  ]
 }
