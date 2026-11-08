@@ -1,6 +1,21 @@
 {
- "updated": 1794127648734,
+ "updated": 1794128588751,
  "events": [
+  {
+   "at": 1794128036637,
+   "store": "worldofboardgames",
+   "product": "worldofboardgames:https://www.worldofboardgames.com/riftbound-the-league-of-legends-tcg-radiance-booster-pack-14-kort-max-6-per-kund",
+   "group": "rb|radiance|booster-pack|en|",
+   "title": "Riftbound: The League of Legends TCG - Radiance Booster Pack (14 Kort) (Max 6 Per Kund)",
+   "url": "https://www.worldofboardgames.com/riftbound-the-league-of-legends-tcg-radiance-booster-pack-14-kort-max-6-per-kund",
+   "image": "https://www.worldofboardgames.com/product_images/79956-1-M.jpg",
+   "price": 65,
+   "type": "Booster Pack",
+   "set": "Radiance",
+   "lang": "en",
+   "game": "rb",
+   "kind": "tillbaka"
+  },
   {
    "at": 1794126754257,
    "store": "blindbox",
@@ -7070,20 +7085,6 @@
    "price": 269,
    "type": "Blister",
    "set": "Vivid Voltage",
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1793654509265,
-   "store": "samlarhobby",
-   "product": "samlarhobby:16095500730749",
-   "group": "lost-origin|blister|en||cl",
-   "title": "Pokémon, Sword & Shield 11: Lost Origin, Checklane blisterpack, Croagunk",
-   "url": "https://samlarhobby.se/products/pokemon-sword-shield-11-lost-origin-checklane-blisterpack-croagunk",
-   "image": "https://cdn.shopify.com/s/files/1/0905/3120/1405/files/croagunk.jpg?v=1793653827",
-   "price": 269,
-   "type": "Blister",
-   "set": "Lost Origin",
    "lang": "en",
    "kind": "ny"
   }
