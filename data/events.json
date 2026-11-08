@@ -1,6 +1,21 @@
 {
- "updated": 1794161676825,
+ "updated": 1794162596843,
  "events": [
+  {
+   "at": 1794162286386,
+   "store": "samlargrottan",
+   "product": "samlargrottan:https://www.samlargrottan.se/category/booster-packs-2",
+   "group": "rb|radiance|booster-pack|en|",
+   "title": "Riftbound: Radiance Booster Pack (1st)",
+   "url": "https://www.samlargrottan.se/product-page/riftbound-radiance-booster-pack-1st",
+   "image": "https://static.wixstatic.com/media/d265aa_84d728b389064f1eba72f74d523e952a~mv2.png/v1/fit/w_500,h_500,q_90/file.png",
+   "price": 89,
+   "type": "Booster Pack",
+   "set": "Radiance",
+   "lang": "en",
+   "game": "rb",
+   "kind": "tillbaka"
+  },
   {
    "at": 1794157282778,
    "store": "packs-on-packs",
@@ -7079,20 +7094,6 @@
    "url": "https://miniaturemetropolis.se/products/pokemon-tcg-mega-evolution-delta-reign-checklane",
    "image": "https://cdn.shopify.com/s/files/1/0958/6832/2129/files/DRchecklaneblister.webp?v=1793436962",
    "price": 89,
-   "type": "Blister",
-   "set": "Mega Evolution",
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793699845367,
-   "store": "miniature-metropolis",
-   "product": "miniature-metropolis:11308858802513",
-   "group": "mega-evolution|blister|en||3",
-   "title": "POKÉMON TCG: MEGA EVOLUTION - DELTA REIGN BLISTER 3-PACK",
-   "url": "https://miniaturemetropolis.se/products/pokemon-tcg-mega-evolution-delta-reign-blister-3-pack",
-   "image": "https://cdn.shopify.com/s/files/1/0958/6832/2129/files/dr3packblister.webp?v=1793437466",
-   "price": 239,
    "type": "Blister",
    "set": "Mega Evolution",
    "lang": "en",
