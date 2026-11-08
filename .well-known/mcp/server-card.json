@@ -1,0 +1,118 @@
+{
+  "mcpVersion": "2025-03-26",
+  "serverInfo": {
+    "name": "Lootninja",
+    "title": "Lootninja – Pokémon, One Piece & Riftbound i Sverige",
+    "version": "1.0.0",
+    "description": "Svensk bevakning av butikslager, prissänkningar, kommande släpp och kortpriser i kronor för Pokémon TCG, One Piece Card Game och Riftbound.",
+    "websiteUrl": "https://lootninja.se/"
+  },
+  "name": "Lootninja",
+  "version": "1.0.0",
+  "description": "Svensk bevakning av butikslager, prissänkningar, kommande släpp och kortpriser i kronor för Pokémon TCG, One Piece Card Game och Riftbound.",
+  "url": "https://lootninja.se/",
+  "transport": {
+    "type": "streamable-http",
+    "url": "https://lootninja.se/"
+  },
+  "authentication": {
+    "type": "none"
+  },
+  "capabilities": {
+    "tools": true,
+    "resources": true
+  },
+  "tools": [
+    {
+      "name": "card_price",
+      "description": "Ungefärligt värde i kronor för ett samlarkort (Pokémon, One Piece eller Riftbound) efter kortnamn.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "Kortnamn, t.ex. Charizard, Luffy eller Jinx"
+          },
+          "game": {
+            "type": "string",
+            "enum": ["pokemon", "op", "rb"],
+            "description": "pokemon (Pokémon TCG), op (One Piece Card Game) eller rb (Riftbound)"
+          }
+        },
+        "required": ["query"]
+      }
+    },
+    {
+      "name": "search_products",
+      "description": "Söker förseglade produkter (booster boxar, Elite Trainer Boxes, booster packs) i 65+ svenska butiker, med pris och lagerstatus.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "Sökord i produktnamnet, t.ex. 'Ascended Heroes booster box'"
+          },
+          "game": {
+            "type": "string",
+            "enum": ["pokemon", "op", "rb"],
+            "description": "pokemon (Pokémon TCG), op (One Piece Card Game) eller rb (Riftbound)"
+          },
+          "inStockOnly": {
+            "type": "boolean",
+            "description": "Bara produkter i lager eller som går att förbeställa (standard: true)"
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 50
+          }
+        }
+      }
+    },
+    {
+      "name": "upcoming_releases",
+      "description": "Kommande släpp av set och produkter, närmast först.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "game": {
+            "type": "string",
+            "enum": ["pokemon", "op", "rb"],
+            "description": "pokemon (Pokémon TCG), op (One Piece Card Game) eller rb (Riftbound)"
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 40
+          }
+        }
+      }
+    }
+  ],
+  "resources": [
+    {
+      "uri": "https://lootninja.se/llms.txt",
+      "name": "llms.txt",
+      "description": "Sammanfattning av Lootninja och dess sidor för AI-agenter",
+      "mimeType": "text/plain"
+    },
+    {
+      "uri": "https://lootninja.se/index.md",
+      "name": "Startsidan som Markdown",
+      "description": "Markdown-version av startsidan",
+      "mimeType": "text/markdown"
+    },
+    {
+      "uri": "https://lootninja.se/data/products.json",
+      "name": "Butikslager (products.json)",
+      "description": "Aktuellt pris och lagerstatus för samlarkortsprodukter i 65+ svenska butiker",
+      "mimeType": "application/json"
+    },
+    {
+      "uri": "https://lootninja.se/data/release-calendar.json",
+      "name": "Släppkalender (release-calendar.json)",
+      "description": "Kommande släpp för Pokémon TCG, One Piece Card Game och Riftbound",
+      "mimeType": "application/json"
+    }
+  ]
+}

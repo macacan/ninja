@@ -116,11 +116,14 @@ function footer() {
         <li><a href="om.html#kallor">Alla källor</a></li>
         <li><a href="om.html#bevakning">Så fungerar bevakningen</a></li>
         <li><a href="butiker.html#notiser">Notiser</a></li>
-        <li><a href="villkor.html">Användarvillkor</a></li>
-        <li><a href="integritet.html">Integritet och kakor</a></li>
+        <li><a href="villkor.html" rel="terms-of-service">Användarvillkor</a></li>
+        <li><a href="integritet.html" rel="privacy-policy">Integritet och kakor</a></li>
         <li><a href="om.html#rattigheter">Rättigheter</a></li>
-        <li><a href="om.html#kontakt">Kontakt</a></li>
-      </ul></div>
+        <li><a href="om.html#kontakt">Kontakt</a> · <a href="mailto:hej@lootninja.se">hej@lootninja.se</a></li>
+        <li><a href="https://www.instagram.com/lootninja.se/" rel="me noopener">Instagram</a></li>
+      </ul>
+      <nav class="sr-only" aria-label="Förtroendesidor"><a href="/about">About us (Om oss)</a> <a href="/contact">Contact us (Kontakt)</a> <a href="/terms">Terms of Service</a> <a href="/privacy">Privacy Policy</a></nav>
+      </div>
     </div>
     <p class="footer-legal">Lootninja är ett ideellt hobbyprojekt och självständigt fanprojekt. Varken The Pokémon Company, Nintendo, Creatures, GAME FREAK, Bandai, Riot Games eller någon butik står bakom sidan.
     All data, priser och lagerstatus samlas in automatiskt och ska ses som vägledande – ta inte allt för 100% sanning då felaktiga priser, fördröjningar i uppdateringar eller tekniska fel kan förekomma. Dubbelkolla alltid direkt hos butiken innan köp.

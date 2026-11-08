@@ -54,6 +54,12 @@ RedirectMatch 403 ^/(research|scripts|\.github|\.claude)/
   RewriteRule ^set/one-piece-the-dominance-of-god(\.html)?$ /set/one-piece-op18-the-dominance-of-god.html [L,R=301]
   RewriteRule ^set/one-piece-extra-booster-one-piece-heroines-edition-vol-2(\.html)?$ /set/one-piece-eb05-extra-booster-one-piece-heroines-edition-vol-2.html [L,R=301]
 
+  # Standard- och engelska alias för förtroendesidor (Om, Kontakt, Villkor, Integritet), så att både AI-agenter och besökare hittar rätt.
+  RewriteRule ^(about|om-oss)(\.html)?/?$ /om.html [L,R=301]
+  RewriteRule ^(contact|kontakt)(\.html)?/?$ /om.html#kontakt [L,R=301,NE]
+  RewriteRule ^(terms|legal)(\.html)?/?$ /villkor.html [L,R=301]
+  RewriteRule ^privacy(\.html)?/?$ /integritet.html [L,R=301]
+
   # Addresses without .html (lootninja.se/butiker, /set/151) go to the real page instead of a 404.
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
@@ -66,12 +72,12 @@ Options -Indexes
 
 # 4c. Security headers
 <IfModule mod_headers.c>
-  # Points agents to the site summary (RFC 8288). The homepage also links its Markdown version, picked by Accept.
+  # Points agents to the site summary and MCP Server Card (RFC 8288). The homepage also links its Markdown version, picked by Accept.
   <FilesMatch "\.html$">
-    Header set Link '</llms.txt>; rel="describedby"; type="text/plain"'
+    Header set Link '</llms.txt>; rel="describedby"; type="text/plain", </.well-known/mcp/server-card.json>; rel="service-desc"; type="application/json"'
   </FilesMatch>
   <FilesMatch "^index\.(html|md)$">
-    Header set Link '</llms.txt>; rel="describedby"; type="text/plain", </index.md>; rel="alternate"; type="text/markdown"'
+    Header set Link '</llms.txt>; rel="describedby"; type="text/plain", </index.md>; rel="alternate"; type="text/markdown", </.well-known/mcp/server-card.json>; rel="service-desc"; type="application/json"'
     Header append Vary Accept
   </FilesMatch>
   # Browsers only use HTTPS for a year after the first visit. Remove "max-age" if the site ever has to go back to HTTP.

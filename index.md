@@ -36,3 +36,4 @@ Ett ideellt hobbyprojekt och självständigt fanprojekt. Varken The Pokémon Com
 - Kontakt: [hej@lootninja.se](mailto:hej@lootninja.se)
 - [Användarvillkor](https://lootninja.se/villkor.html)
 - [Integritet och kakor](https://lootninja.se/integritet.html)
+- [Instagram (@lootninja.se)](https://www.instagram.com/lootninja.se/)

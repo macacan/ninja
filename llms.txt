@@ -20,8 +20,10 @@ Språk: svenska. Priser i SEK. Lager och priser hämtas automatiskt från svensk
 - [Kontakt](https://lootninja.se/om.html#kontakt): e-post hej@lootninja.se
 - [Användarvillkor](https://lootninja.se/villkor.html)
 - [Integritet och kakor](https://lootninja.se/integritet.html)
+- [Instagram](https://www.instagram.com/lootninja.se/)
 
 ## Optional
 
 - [Startsidan som Markdown](https://lootninja.se/index.md)
+- [MCP Server Card](https://lootninja.se/.well-known/mcp/server-card.json)
 - [Sitemap](https://lootninja.se/sitemap.xml)
