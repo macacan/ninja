@@ -1,6 +1,20 @@
 {
- "updated": 1794140549028,
+ "updated": 1794141469045,
  "events": [
+  {
+   "at": 1794141110190,
+   "store": "rgb-kingz",
+   "product": "rgb-kingz:15942952845642",
+   "group": "30th-celebration|elite-trainer-box|en|",
+   "title": "Pokémon TCG: 30th Celebration Elite Trainer Box",
+   "url": "https://rgbkingz.com/products/pokemon-tcg-30th-celebration-elite-trainer-box",
+   "image": "https://cdn.shopify.com/s/files/1/0782/8088/4554/files/30thcelebrationetben.png?v=1786178959",
+   "price": 2089,
+   "type": "Elite Trainer Box",
+   "set": "30th Celebration",
+   "lang": "en",
+   "kind": "ny"
+  },
   {
    "at": 1794138845568,
    "store": "samlargrottan",
@@ -7079,20 +7093,6 @@
    "price": 279,
    "type": "Blister",
    "set": "Vivid Voltage",
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1793655429546,
-   "store": "samlarhobby",
-   "product": "samlarhobby:16095502827901",
-   "group": "lost-origin|blister|en||cl",
-   "title": "Pokémon, Sword & Shield 11: Lost Origin, Premium Checklane, Infernape",
-   "url": "https://samlarhobby.se/products/pokemon-sword-shield-11-lost-origin-premium-checklane-infernape",
-   "image": "https://cdn.shopify.com/s/files/1/0905/3120/1405/files/infernape.jpg?v=1793654685",
-   "price": 289,
-   "type": "Blister",
-   "set": "Lost Origin",
    "lang": "en",
    "kind": "ny"
   }
