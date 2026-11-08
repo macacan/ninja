@@ -1,6 +1,35 @@
 {
- "updated": 1794132268835,
+ "updated": 1794133168853,
  "events": [
+  {
+   "at": 1794132914954,
+   "store": "samlargrottan",
+   "product": "samlargrottan:https://www.samlargrottan.se/category/japansk",
+   "group": "op|eb-04|booster-box|ja|",
+   "title": "One Piece: Egghead Crisis Booster Box (EB-04) (JP)",
+   "url": "https://www.samlargrottan.se/product-page/one-piece-egghead-crisis-booster-box-eb-04-jp",
+   "image": "https://static.wixstatic.com/media/d265aa_bced0a73a07b41ef90c96527dddc4398~mv2.png/v1/fit/w_500,h_500,q_90/file.png",
+   "price": 1499,
+   "type": "Booster Box",
+   "set": "EB-04",
+   "lang": "ja",
+   "game": "op",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1794132914954,
+   "store": "samlargrottan",
+   "product": "samlargrottan:https://www.samlargrottan.se/category/30th-celebration-collections",
+   "group": "30th-celebration|collection-box|en||classic",
+   "title": "Pokémon: 30th Celebration Classic Collection Booster Pack",
+   "url": "https://www.samlargrottan.se/product-page/pok%C3%A9mon-30th-celebration-classic-collection-booster-pack",
+   "image": "https://static.wixstatic.com/media/d265aa_c84a8ce63a6348ffb442abc4c5bfb47e~mv2.webp/v1/fit/w_500,h_500,q_90/file.webp",
+   "price": 990,
+   "type": "Collection Box",
+   "set": "30th Celebration",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1794128964964,
    "store": "samlargrottan",
@@ -7058,34 +7087,6 @@
    "price": 269,
    "type": "Blister",
    "set": "Silver Tempest",
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1793654509265,
-   "store": "samlarhobby",
-   "product": "samlarhobby:16095501156733",
-   "group": "obsidian-flames|blister|en||cl",
-   "title": "Pokémon, Scarlet & Violet 3: Obsidian Flames, Checklane blisterpack, Paldean Wooper",
-   "url": "https://samlarhobby.se/products/pokemon-scarlet-violet-3-obsidian-flames-checklane-blisterpack-alolan-wooper",
-   "image": "https://cdn.shopify.com/s/files/1/0905/3120/1405/files/wooper.jpg?v=1793654002",
-   "price": 159,
-   "type": "Blister",
-   "set": "Obsidian Flames",
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1793654509265,
-   "store": "samlarhobby",
-   "product": "samlarhobby:16095501058429",
-   "group": "vivid-voltage|blister|en||cl",
-   "title": "Pokémon, Sword & Shield 4: Vivid Voltage, Checklane blisterpack, Scorbunny",
-   "url": "https://samlarhobby.se/products/pokemon-sword-shield-4-vivid-voltage-checklane-blisterpack-scorbunny",
-   "image": "https://cdn.shopify.com/s/files/1/0905/3120/1405/files/scor_vivid.jpg?v=1793653945",
-   "price": 269,
-   "type": "Blister",
-   "set": "Vivid Voltage",
    "lang": "en",
    "kind": "ny"
   }
