@@ -1,6 +1,48 @@
 {
- "updated": 1794176397152,
+ "updated": 1794176935032,
  "events": [
+  {
+   "at": 1794176842723,
+   "store": "pokekid",
+   "product": "pokekid:https://pokekid.se/booster-packs/pokmon-tcg-engelskt-mega-evolution-delta-reign-booster-pack",
+   "group": "delta-reign|booster-pack|en|",
+   "title": "Pokémon TCG: Engelskt Mega Evolution: Delta Reign Booster Pack",
+   "url": "https://pokekid.se/booster-packs/pokmon-tcg-engelskt-mega-evolution-delta-reign-booster-pack",
+   "image": "https://cdn.quickbutik.com/images/100865H/products/6af0f649c4efc.png",
+   "price": 99,
+   "type": "Booster Pack",
+   "set": "Delta Reign",
+   "lang": "en",
+   "kind": "ny"
+  },
+  {
+   "at": 1794176842723,
+   "store": "pokekid",
+   "product": "pokekid:https://pokekid.se/booster-packs/pokmon-tcg-frenklad-kinesisk-sharp-blade-awakening-booster-pack-csv7c",
+   "group": "x|booster-pack|zh||awakening-blade-sharp",
+   "title": "Pokémon TCG: Förenklad kinesisk Sharp Blade Awakening Booster Pack (CSV7C / 利刃猛醒)",
+   "url": "https://pokekid.se/booster-packs/pokmon-tcg-frenklad-kinesisk-sharp-blade-awakening-booster-pack-csv7c",
+   "image": "https://cdn.quickbutik.com/images/100865H/products/6af0f658cb773.webp",
+   "price": 50,
+   "type": "Booster Pack",
+   "set": null,
+   "lang": "zh",
+   "kind": "ny"
+  },
+  {
+   "at": 1794176842723,
+   "store": "pokekid",
+   "product": "pokekid:https://pokekid.se/30th/frbestllning-pokmon-tcg-30th-celebration-booster-box-jpn",
+   "group": "30th-celebration|booster-box|ja|",
+   "title": "IMPORTVARA – Pokémon TCG: 30th Celebration Booster Box (JPN)",
+   "url": "https://pokekid.se/30th/frbestllning-pokmon-tcg-30th-celebration-booster-box-jpn",
+   "image": "https://cdn.quickbutik.com/images/100865H/products/6ab1924399041.jpg",
+   "price": 2199,
+   "type": "Booster Box",
+   "set": "30th Celebration",
+   "lang": "ja",
+   "kind": "forbestallning"
+  },
   {
    "at": 1794176124022,
    "store": "samlargrottan",
@@ -7057,48 +7099,6 @@
    "set": "Chaos Rising",
    "lang": "en",
    "kind": "ny"
-  },
-  {
-   "at": 1793707975183,
-   "store": "cardlevels",
-   "product": "cardlevels:11057518477623",
-   "group": "shrouded-fable|collection-box|en||greninja-illustration",
-   "title": "Pokémon Shrouded Fable Scarlet & Violet 6.5: Greninja ex Special Illustration Collection",
-   "url": "https://cardlevels.se/products/pokemon-shrouded-fable-scarlet-violet-6-5-greninja-ex-special-illustration-collection",
-   "image": "https://cdn.shopify.com/s/files/1/0846/0458/4247/files/pokemon-shrouded-fable-greninja-special-illustration-collection.webp?v=1793705312",
-   "price": 1499,
-   "type": "Collection Box",
-   "set": "Shrouded Fable",
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1793707058869,
-   "store": "cardlevels",
-   "product": "cardlevels:10089970336055",
-   "group": "prismatic-evolutions|booster-pack|en|",
-   "title": "Pokémon Prismatic Evolutions Scarlet & Violet 8.5: Booster Pack",
-   "url": "https://cardlevels.se/products/pokemon-tcg-scarlet-violet-prismatic-evolutions-booster",
-   "image": "https://cdn.shopify.com/s/files/1/0846/0458/4247/files/Prismatic_Evolutions_Booster_Packs_600x600_579b0396-7c98-4061-a242-994b0c5c6b20.webp?v=1741636427",
-   "price": 209,
-   "type": "Booster Pack",
-   "set": "Prismatic Evolutions",
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1793706845607,
-   "store": "aquitaz",
-   "product": "aquitaz:9919775932762",
-   "group": "white-flare|booster-pack|ja|",
-   "title": "Pokémon Scarlet & Violet: White Flare Booster Pack (7 Kort) (JP)",
-   "url": "https://aquitaz.se/products/pokemon-scarlet-violet-white-flare-booster-pack-jp",
-   "image": "https://cdn.shopify.com/s/files/1/0885/4087/3050/files/Pics_23_f9e5e35b-55d6-42bd-b90b-832dd8bea7c8.png?v=1746294259",
-   "price": 99,
-   "type": "Booster Pack",
-   "set": "White Flare",
-   "lang": "ja",
-   "kind": "tillbaka"
   }
  ]
 }
