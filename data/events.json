@@ -1,6 +1,20 @@
 {
- "updated": 1794175477134,
+ "updated": 1794176397152,
  "events": [
+  {
+   "at": 1794176124022,
+   "store": "samlargrottan",
+   "product": "samlargrottan:https://www.samlargrottan.se/product-page/pokémon-chaos-rising-booster-pack-1-st",
+   "group": "chaos-rising|booster-pack|en|",
+   "title": "Pokémon: Chaos Rising Booster Pack (1 st)",
+   "url": "https://www.samlargrottan.se/product-page/pok%C3%A9mon-chaos-rising-booster-pack-1-st",
+   "image": "https://static.wixstatic.com/media/d265aa_ad8ed9d5e5b2478ab7cd728c3d31233c~mv2.webp/v1/fit/w_500,h_500,q_90/file.webp",
+   "price": 89,
+   "type": "Booster Pack",
+   "set": "Chaos Rising",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1794174906089,
    "store": "pokekid",
@@ -7084,20 +7098,6 @@
    "type": "Booster Pack",
    "set": "White Flare",
    "lang": "ja",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793705849004,
-   "store": "toyspace",
-   "product": "toyspace:https://toyspace.se/pokemon-tcg-30-arsjubileum-sylveon-ex-box-pok10463-101",
-   "group": "30th-celebration|collection-box|en||sylveon",
-   "title": "Pokémon TCG 30th Celebration Sylveon ex Box",
-   "url": "https://toyspace.se/pokemon-tcg-30-arsjubileum-sylveon-ex-box-pok10463-101",
-   "image": "https://d189539ycils2q.cloudfront.net/media/catalog/product/cache/4ffcb2823444acbc328f989dd62e5069/p/o/pokemon-tcg-30th-celebration-sylveon-ex-box-pok10463-101.jpg",
-   "price": 758,
-   "type": "Collection Box",
-   "set": "30th Celebration",
-   "lang": "en",
    "kind": "tillbaka"
   }
  ]
