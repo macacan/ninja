@@ -98,7 +98,7 @@ select option:checked{background:#3b4a6b;color:#fff}
   background:
     linear-gradient(135deg, rgba(10, 12, 22, 0.70) 0%, rgba(10, 12, 22, 0.42) 48%, rgba(10, 12, 22, 0.78) 100%),
     radial-gradient(circle at 88% 18%, rgba(140, 180, 255, 0.20) 0%, transparent 48%),
-    url("img/pokemon-restock-night.jpg") center 48% / cover no-repeat,
+    url("img/pokemon-restock-night.webp") center 48% / cover no-repeat,
     #131422;
   /* Svart pixelram i stället för den ljusa textfärgen */
   box-shadow: 0 calc(var(--px)*-1) 0 0 #0b0c12, 0 var(--px) 0 0 #0b0c12, calc(var(--px)*-1) 0 0 0 #0b0c12, var(--px) 0 0 0 #0b0c12, 0 16px 36px rgba(0, 0, 0, 0.45);

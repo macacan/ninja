@@ -3419,7 +3419,7 @@ input[type=search]::-webkit-search-results-decoration {
   background:
     linear-gradient(135deg, rgba(14, 16, 28, 0.64) 0%, rgba(14, 16, 28, 0.40) 48%, rgba(14, 16, 28, 0.72) 100%),
     radial-gradient(circle at 88% 18%, rgba(242, 182, 50, 0.22) 0%, transparent 48%),
-    url("img/pokemon-restock-day.jpg") center 48% / cover no-repeat,
+    url("img/pokemon-restock-day.webp") center 48% / cover no-repeat,
     #131422;
   box-shadow: 0 calc(var(--px)*-1) 0 0 var(--ink), 0 var(--px) 0 0 var(--ink), calc(var(--px)*-1) 0 0 0 var(--ink), var(--px) 0 0 0 var(--ink), 0 16px 36px rgba(19, 20, 34, 0.25);
   transition: background 0.3s ease;}
@@ -3429,7 +3429,7 @@ input[type=search]::-webkit-search-results-decoration {
   background:
     linear-gradient(135deg, rgba(10, 12, 22, 0.70) 0%, rgba(10, 12, 22, 0.42) 48%, rgba(10, 12, 22, 0.78) 100%),
     radial-gradient(circle at 88% 18%, rgba(140, 180, 255, 0.20) 0%, transparent 48%),
-    url("img/pokemon-restock-night.jpg") center 48% / cover no-repeat,
+    url("img/pokemon-restock-night.webp") center 48% / cover no-repeat,
     #131422;
 }
 [data-theme="dark"] .val-hero {
@@ -3445,7 +3445,7 @@ input[type=search]::-webkit-search-results-decoration {
     background:
       linear-gradient(135deg, rgba(10, 12, 22, 0.70) 0%, rgba(10, 12, 22, 0.42) 48%, rgba(10, 12, 22, 0.78) 100%),
       radial-gradient(circle at 88% 18%, rgba(140, 180, 255, 0.20) 0%, transparent 48%),
-      url("img/pokemon-restock-night.jpg") center 48% / cover no-repeat,
+      url("img/pokemon-restock-night.webp") center 48% / cover no-repeat,
       #131422;
   }
   :root:not([data-theme="light"]) .val-hero {
