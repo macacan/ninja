@@ -298,6 +298,8 @@ export async function createEngine({ statuses } = {}) {
       while (pts.length && pts[0][0] < oldest) pts.shift();
     }
     await writeJSON("data/price-history.json", { updated: now, days: history }, true);
+    // Händelser (nytt i lager, prissänkt) från pausade butiker visas inte heller, precis som deras produkter.
+    events = events.filter((ev) => !paused.has(ev.store));
     await writeJSON("data/events.json", { updated: now, events });
     await writeJSON("data/stores-status.json", { updated: now, stores: statusList });
     await writeJSON("scripts/scraper/state.json", state, true);
