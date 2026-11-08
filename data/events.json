@@ -1,6 +1,62 @@
 {
- "updated": 1794122414070,
+ "updated": 1794123334092,
  "events": [
+  {
+   "at": 1794123093363,
+   "store": "tt-vault",
+   "product": "tt-vault:16774117556569",
+   "group": "delta-reign|booster-pack|en|sleeved",
+   "title": "Mega Evolution - Delta Reign - Sleeved Booster Pack",
+   "url": "https://ttvault.se/products/mega-evolution-delta-reign-sleeved-booster-pack",
+   "image": "https://cdn.shopify.com/s/files/1/1020/3683/2601/files/BlackBox-2026-08-21T001124.978.webp?v=1793971485",
+   "price": 99,
+   "type": "Booster Pack",
+   "set": "Delta Reign",
+   "lang": "en",
+   "kind": "ny"
+  },
+  {
+   "at": 1794123093363,
+   "store": "tt-vault",
+   "product": "tt-vault:16766648090969",
+   "group": "delta-reign|booster-pack|en|",
+   "title": "Mega Evolution - Delta Reign - Booster Pack",
+   "url": "https://ttvault.se/products/mega-evolution-delta-reign-booster-pack",
+   "image": "https://cdn.shopify.com/s/files/1/1020/3683/2601/files/9168876_1.jpg?v=1793781580",
+   "price": 89,
+   "type": "Booster Pack",
+   "set": "Delta Reign",
+   "lang": "en",
+   "kind": "ny"
+  },
+  {
+   "at": 1794123093363,
+   "store": "tt-vault",
+   "product": "tt-vault:16769524302169",
+   "group": "destined-rivals|elite-trainer-box|en|case",
+   "title": "Pokémon TCG: First Partner Serie 2 Case + Destined Rivals Elite Trainer Box",
+   "url": "https://ttvault.se/products/pokemon-tcg-first-partner-serie-2-case-destined-rivals-elite-trainer-box",
+   "image": "https://cdn.shopify.com/s/files/1/1020/3683/2601/files/Gemini_Generated_Image_s6q598s6q598s6q5_7d00758a-faaf-4e5a-9d59-d295a522ff79.jpg?v=1793869171",
+   "price": 3499,
+   "type": "Elite Trainer Box",
+   "set": "Destined Rivals",
+   "lang": "en",
+   "kind": "ny"
+  },
+  {
+   "at": 1794123093363,
+   "store": "tt-vault",
+   "product": "tt-vault:16769526268249",
+   "group": "destined-rivals|elite-trainer-box|en|case",
+   "title": "Pokémon TCG: First Partner Serie 3 Case + Destined Rivals Elite Trainer Box",
+   "url": "https://ttvault.se/products/pokemon-tcg-first-partner-serie-3-case-destined-rivals-elite-trainer-box",
+   "image": "https://cdn.shopify.com/s/files/1/1020/3683/2601/files/Gemini_Generated_Image_2hy60g2hy60g2hy6.jpg?v=1793869425",
+   "price": 3499,
+   "type": "Elite Trainer Box",
+   "set": "Destined Rivals",
+   "lang": "en",
+   "kind": "ny"
+  },
   {
    "at": 1794122190834,
    "store": "tt-vault",
@@ -7024,63 +7080,6 @@
    "set": "Mega Evolution",
    "lang": "en",
    "kind": "tillbaka"
-  },
-  {
-   "at": 1793648260153,
-   "store": "the-swedish-fish",
-   "product": "the-swedish-fish:16745",
-   "group": "rb|radiance|booster-pack|en|",
-   "title": "Riftbound TCG: Radiance Booster Pack",
-   "url": "https://theswedishfish.se/product/riftbound-tcg-radiance-booster-pack/",
-   "image": "https://theswedishfish.se/wp-content/uploads/2026/10/packkii.webp",
-   "price": 89,
-   "type": "Booster Pack",
-   "set": "Radiance",
-   "lang": "en",
-   "game": "rb",
-   "kind": "ny"
-  },
-  {
-   "at": 1793648045941,
-   "store": "kantovault",
-   "product": "kantovault:11769191039317",
-   "group": "30th-celebration|booster-pack|en|",
-   "title": "Pokémon 30th Celebration Booster Pack",
-   "url": "https://kantovault.se/products/pokemon-30th-celebration-booster-pack",
-   "image": null,
-   "price": 179,
-   "type": "Booster Pack",
-   "set": "30th Celebration",
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1793647680702,
-   "store": "sweet-nerds",
-   "product": "sweet-nerds:https://sweetnerds.se/sv/products/pokemon-aura-seeker-booster-box-jp",
-   "group": "x|booster-box|ja||aura-seeker",
-   "title": "Pokémon Aura Seeker Booster Box (JP)",
-   "url": "https://sweetnerds.se/sv/products/pokemon-aura-seeker-booster-box-jp",
-   "image": "https://nycdn.nyehandel.se/store_17dfab1e-b233-4e19-a6f0-ae93160c8b85/images/1000004291-9bbba991.png?width=400&height=400",
-   "price": 1399,
-   "type": "Booster Box",
-   "set": null,
-   "lang": "ja",
-   "kind": "ny"
-  },
-  {
-   "at": 1793646435288,
-   "store": "cardlevels",
-   "product": "cardlevels:10902251405623",
-   "group": "pitch-black|booster-pack|en|",
-   "title": "Pokémon TCG: Pitch Black Booster Pack",
-   "url": "https://cardlevels.se/products/pokemon-tcg-perfect-order-booster-pack-kopia",
-   "image": "https://cdn.shopify.com/s/files/1/0846/0458/4247/files/pokemon-mega-evolution-pitch-black-booster-pack-3.webp?v=1785828584",
-   "price": 79,
-   "type": "Booster Pack",
-   "set": "Pitch Black",
-   "lang": "en",
-   "kind": "ny"
   }
  ]
 }
