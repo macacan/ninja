@@ -1,6 +1,20 @@
 {
- "updated": 1794179735423,
+ "updated": 1794180655444,
  "events": [
+  {
+   "at": 1794180187336,
+   "store": "pokekid",
+   "product": "pokekid:https://pokekid.se/booster-packs/pokemon-tcg-scarlet-violet-true-mystery-booster-pack-forenklad-kinesiska-s-ch",
+   "group": "x|booster-pack|zh||mystery-true",
+   "title": "Pokémon TCG: Scarlet & Violet – True Mystery Booster Pack (Förenklad Kinesiska / S-CH)",
+   "url": "https://pokekid.se/booster-packs/pokemon-tcg-scarlet-violet-true-mystery-booster-pack-forenklad-kinesiska-s-ch",
+   "image": "https://cdn.quickbutik.com/images/100865H/products/6a6fbb29c161c.jpg",
+   "price": 59,
+   "type": "Booster Pack",
+   "set": "Scarlet & Violet",
+   "lang": "zh",
+   "kind": "tillbaka"
+  },
   {
    "at": 1794179191798,
    "store": "pokekid",
