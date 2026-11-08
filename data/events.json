@@ -1,6 +1,21 @@
 {
- "updated": 1794137788970,
+ "updated": 1794138708990,
  "events": [
+  {
+   "at": 1794137880191,
+   "store": "samlargrottan",
+   "product": "samlargrottan:https://www.samlargrottan.se/category/champion-decks",
+   "group": "rb|radiance|deck|en||evelynn-seraphine",
+   "title": "Riftbound: Radiance Showdown Deck Evelynn & Seraphine",
+   "url": "https://www.samlargrottan.se/product-page/riftbound-radiance-showdown-deck-display-4-decks",
+   "image": "https://static.wixstatic.com/media/d265aa_bc9162f2f3b14711a33e94e08a73219c~mv2.jpg/v1/fit/w_500,h_500,q_90/file.jpg",
+   "price": 449,
+   "type": "Deck",
+   "set": "Radiance",
+   "lang": "en",
+   "game": "rb",
+   "kind": "tillbaka"
+  },
   {
    "at": 1794137703545,
    "store": "rahtech",
@@ -7073,20 +7088,6 @@
    "title": "Pokémon, Sword & Shield 12: Silver Tempest, Premium Checklane, Gallade",
    "url": "https://samlarhobby.se/products/pokemon-sword-shield-12-silver-tempest-premium-checklane-gallade",
    "image": "https://cdn.shopify.com/s/files/1/0905/3120/1405/files/gallade.jpg?v=1793654452",
-   "price": 289,
-   "type": "Blister",
-   "set": "Silver Tempest",
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1793654509265,
-   "store": "samlarhobby",
-   "product": "samlarhobby:16095502270845",
-   "group": "silver-tempest|blister|en||cl",
-   "title": "Pokémon, Sword & Shield 12: Silver Tempest, Premium Checklane, Magnezone",
-   "url": "https://samlarhobby.se/products/pokemon-sword-shield-12-silver-tempest-premium-checklane-magnezone",
-   "image": "https://cdn.shopify.com/s/files/1/0905/3120/1405/files/magnezone.jpg?v=1793654406",
    "price": 289,
    "type": "Blister",
    "set": "Silver Tempest",
