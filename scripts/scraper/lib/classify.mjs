@@ -7,7 +7,7 @@ const POKEMON = /pok[eé]mon/i;
 
 // Höjs när igenkänningen ändras så att fler produkter räknas. Då sparas de nyfunna produkterna tyst
 // vid nästa kontroll av varje butik, i stället för att larmas som hundratals "nya" (se engine.mjs).
-export const CLASSIFY_VERSION = 12;
+export const CLASSIFY_VERSION = 13;
 
 // Ordningen spelar roll: mer specifika typer först.
 const TYPES = [
@@ -198,7 +198,11 @@ export function classify(title, setNames = [], seriesNames = [], hint = "") {
   // Korta namn som "151" måste stå som eget ord, längre namn räcker att de finns i titeln.
   // "Mega Evolutions" (felstavat serienamn) ska inte tolkas som XY-setet "Evolutions".
   const lowNoMega = low.replace(/mega evolutions?/g, " ");
-  const hits = setNames.filter((s) => s === "Evolutions" ? /\bevolutions\b/.test(lowNoMega) && !/prismatic evolutions/.test(low) : (s.length > 3 ? low.includes(s.toLowerCase()) : /^\d{3}$/.test(s) && new RegExp(`\\b${s}\\b`).test(low)));
+  // "Scarlet & Violet: Base Set" och "Sun & Moon Base Set" är första setet i sin serie, inte Base Set från 1999.
+  const seriesBase = /(?:scarlet|violet|sun|moon|sword|shield|black|white|x)\s*(?:&|and)\s*(?:violet|moon|shield|white|y)\s*(?:[-:–]\s*)?(?:\(\w+\)\s*)?base set/;
+  const hits = setNames.filter((s) => s === "Evolutions" ? /\bevolutions\b/.test(lowNoMega) && !/prismatic evolutions/.test(low)
+    : s === "Base Set" ? low.includes("base set") && !seriesBase.test(low)
+    : (s.length > 3 ? low.includes(s.toLowerCase()) : /^\d{3}$/.test(s) && new RegExp(`\\b${s}\\b`).test(low)));
   if (!looksPokemon(title, hits)) return null;
   const lang = langOf(title) || (hint && langOf(hint));
   // Flera set i titeln, t.ex. "Black Bolt & White Flare - Black Bolt Elite Trainer Box": setet som står sist,

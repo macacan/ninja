@@ -15,9 +15,12 @@ const STATE = new URL("scripts/sitemap-state.json", ROOT);
 const OUT = new URL("sitemap.xml", ROOT);
 
 // Sidans adress (efter SITE/) och filerna som avgör när innehållet ändrats.
+// data/products.json och data/news.json ändras vid varje lagerkörning. Ett datum som flyttas varje dag för små ändringar
+// lär Google att strunta i lastmod, så start- och butikssidan räknas bara om när HTML:en eller släppen ändras.
+// valv.html är noindex (besökarens egna kort) och står inte med.
 const PAGES = [
-  ["", ["index.html", "data/products.json", "data/news.json", "data/release-calendar.json"]],
-  ["butiker.html", ["butiker.html", "data/products.json"]],
+  ["", ["index.html", "data/release-calendar.json"]],
+  ["butiker.html", ["butiker.html"]],
   ["priser.html", ["priser.html", "data/card-trends.json"]],
   ["slapp.html", ["slapp.html", "data/release-calendar.json"]],
   ["vardering.html", ["vardering.html"]],

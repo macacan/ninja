@@ -1,6 +1,6 @@
-# Lootninja – Sveriges största bevakning av Pokémon, One Piece och Riftbound
+# Lootninja – Pokémon, One Piece och Riftbound i lager i 65+ butiker
 
-Lootninja är Sveriges största bevakningssajt för samlarkort, med Pokémon TCG, One Piece Card Game och Riftbound. Ninjan bevakar tusentals produkter i över 65 svenska butiker dygnet runt och visar vad som precis kommit in i lager, vad som blivit billigare, när nästa set släpps och vad dina kort är värda i kronor. Inget konto behövs.
+Lootninja är en svensk bevakningssajt för samlarkort, med Pokémon TCG, One Piece Card Game och Riftbound. Ninjan bevakar tusentals produkter i över 65 svenska butiker dygnet runt och visar vad som precis kommit in i lager, vad som blivit billigare, när nästa set släpps och vad dina kort är värda i kronor. Inget konto behövs.
 
 Startsidan i webbläsaren fylls med aktuella data när den laddas. Den här versionen beskriver vad som finns och var.
 

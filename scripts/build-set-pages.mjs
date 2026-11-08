@@ -105,6 +105,32 @@ for (const p of pages.filter((x) => x.id)) {
   }
 }
 
+// Butikernas produkter för varje set, med samma koppling som js/setpage.js men även slutsålda. Står som text i HTML:en
+// så att sökmotorer och AI-sök ser vad Lootninja har hittat utan att köra JavaScript. Set som aldrig har haft någon
+// produkt i en svensk butik (t.ex. Base Set) lovar inget lager.
+const products = (await readJSON("data/products.json", { products: [] })).products || [];
+const TYPE_SV = { "Booster Pack": "booster packs", "Booster Box": "booster boxar", "Elite Trainer Box": "Elite Trainer Boxes", "Booster Bundle": "booster bundles",
+  "Collection Box": "kollektionsboxar", Tin: "tins", Blister: "blisters", Deck: "decks", "Premium Collection": "premiumkollektioner",
+  "Ultra-Premium Collection": "Ultra-Premium Collections", "Build & Battle": "Build & Battle-boxar", "Double Pack": "double packs",
+  "Illustration Box": "illustration boxar", Bundle: "bundles", "Prerelease Kit": "prerelease kits", "Proving Grounds": "Proving Grounds" };
+function listed(p) {
+  const terms = p.match.map((t) => t.toLowerCase()), game = p.game || "";
+  const mine = products.filter((x) => (x.game || "") === game && (x.set === p.name || terms.includes(String(x.set).toLowerCase()) || terms.some((t) => x.title.toLowerCase().includes(t)))
+    && ((p.language || "en") !== "en" || x.lang === "en"));
+  if (!mine.length) return null;
+  const types = {};
+  for (const x of mine) types[x.type] = (types[x.type] || 0) + 1;
+  return { n: mine.length, stores: new Set(mine.map((x) => x.store)).size, types: Object.entries(types).sort((a, b) => b[1] - a[1]).slice(0, 3).map(([t]) => TYPE_SV[t] || t) };
+}
+const listText = (l) => (l.types.length > 1 ? `${l.types.slice(0, -1).join(", ")} och ${l.types.at(-1)}` : l.types[0]);
+// Stycket under "i svenska butiker". js/setpage.js byter ut det mot dagens lager.
+const stockLead = (p) => p.listed
+  ? `Lootninja har hittat ${p.listed.n} produkter från ${p.name} hos ${p.listed.stores} svenska ${p.listed.stores === 1 ? "butik" : "butiker"}, bland annat ${listText(p.listed)}. Lagret uppdateras hela dygnet.`
+  : `Ingen bevakad svensk butik har sålt ${p.name}-produkter än. Sidan visar dem så fort någon butik får in dem.`;
+
+// Sista meningen i beskrivningen: siffror i stället för samma uppmaning på varje sida.
+const stockDesc = (p) => (p.listed ? ` ${p.listed.n} produkter hos ${p.listed.stores} svenska ${p.listed.stores === 1 ? "butik" : "butiker"}.` : "");
+
 const upcoming = (p) => !!p.date && p.date > today;
 // Datumet i setlistorna. Släppdagen står som "Släppt idag".
 const whenText = (date) => (date === today ? "Släppt idag" : date > today ? `Släpps ${longDate(date)}` : longDate(date));
@@ -164,6 +190,15 @@ const crumbsLd = (items) => ({
   "@context": "https://schema.org", "@type": "BreadcrumbList",
   itemListElement: items.map(([name, item], i) => ({ "@type": "ListItem", position: i + 1, name, item })),
 });
+// Setsidorna: en CollectionPage (sidan samlar setets kort och produkter) med brödsmulorna, kopplad till sajten.
+const pageLd = ({ title, desc, url, crumbs, about }) => ({
+  "@context": "https://schema.org",
+  "@graph": [
+    { "@type": "CollectionPage", "@id": `${url}#page`, url, name: fitTitle(title).replace(/ \| Lootninja$/, ""), description: fitDesc(desc), inLanguage: "sv-SE",
+      isPartOf: { "@id": `${SITE}/#website` }, breadcrumb: { "@id": `${url}#breadcrumb` }, ...(about ? { about: { "@type": "Thing", name: about } } : {}) },
+    { ...crumbsLd(crumbs), "@context": undefined, "@id": `${url}#breadcrumb` },
+  ],
+});
 const crumbsHtml = (items) => `<nav class="crumbs" aria-label="Brödsmulor">${items.map(([name, href], i) => i === items.length - 1
   ? `<span aria-current="page">${esc(name)}</span>` : `<a href="${href}">${esc(name)}</a><span aria-hidden="true">›</span>`).join("")}</nav>`;
 const pageHead = (crumbs) => `
@@ -199,7 +234,7 @@ function intro(p) {
   if (upcoming(p)) return `${p.name} är ett kommande Pokémon TCG-set${lang}${p.serie ? ` i serien ${p.serie}` : ""} som släpps ${longDate(p.date)}${prel}. Här ser du vilka produkter som kommer, när de släpps och vilka svenska butiker som redan har dem till förbeställning.`;
   const cards = n ? ` Setet har ${n} kort${extra}.` : "";
   const what = p.prices?.size ? "alla kort med Cardmarkets marknadspris i kronor, de dyraste korten" : p.cards.length ? "alla kort i setet" : "produkterna, när de släpps";
-  return `${p.name} är ett Pokémon TCG-set${lang}${p.serie ? ` i serien ${p.serie}` : ""} som släpptes ${p.date === today ? "idag, " : ""}${longDate(p.date)}.${cards} Här ser du ${what} och vilka svenska butiker som har ${p.name}-produkter i lager just nu.`;
+  return `${p.name} är ett Pokémon TCG-set${lang}${p.serie ? ` i serien ${p.serie}` : ""} som släpptes ${p.date === today ? "idag, " : ""}${longDate(p.date)}.${cards} Här ser du ${what}${p.listed ? ` och vilka svenska butiker som har ${p.name}-produkter i lager just nu` : ""}.`;
 }
 
 function wavesHtml(p) {
@@ -238,8 +273,8 @@ function topHtml(p) {
 function cardsHtml(p) {
   if (!p.cards.length) return "";
   const hasRarity = p.cards.some((c) => p.rarity[c.id]);
-  // Set utan värderingssida (local) visar ingen priskolumn förrän priserna finns.
-  const showPrice = !p.local || p.prices.size > 0;
+  // Priskolumnen visas bara när setet har priser (data/card-history). Annars blir den bara streck.
+  const showPrice = p.prices.size > 0;
   const rows = [...p.cards].sort(byNumber).map((c) => `<tr><td>${esc(c.localId)}</td><td>${c.extra ? `<span${peek(c)}>${esc(c.name)}</span>` : `<a href="${cardHref(c)}"${peek(c)}>${esc(c.name)}</a>`}</td>${hasRarity ? `<td>${esc(p.rarity[c.id] || "")}</td>` : ""}${showPrice ? `<td class="num">${p.prices.has(c.id) ? kr(p.prices.get(c.id)) : "–"}</td>` : ""}</tr>`).join("\n");
   const note = p.prices.size
     ? `Pris = Cardmarkets trendpris för ett ograderat kort i nyskick, omräknat till kronor ${longDate(p.priceDate)}. Tryck på ett kort för prishistorik och värdering.`
@@ -285,7 +320,7 @@ function gameIntro(p) {
   if (!p.cards.length && p.pending) return `${p.name} är ett ${p.date && p.date <= today ? "nytt" : "kommande"} ${game}-set${code} som ${p.date ? `${p.date > today ? "släpps" : "släpptes"} ${longDate(p.date)}` : "släpps snart"}. Mer info kommer snart: kortlistan och priserna läggs in så fort de finns. Redan nu ser du vilka svenska butiker som har setet i lager eller till förbeställning.`;
   if (!p.cards.length) return `${p.name} är ett kommande ${game}-set som släpps ${p.date ? longDate(p.date) : "snart"}. Här ser du vilka produkter som kommer, när de släpps och vilka svenska butiker som redan har dem till förbeställning.`;
   const when = p.date ? ` som ${p.date > today ? "släpps" : "släpptes"} ${longDate(p.date)}` : "";
-  return `${p.name} är ett set i ${game}${code}${when}. Setet har ${p.cards.length} kort. Här ser du alla kort med bilder och TCGplayers marknadspris i kronor, de dyraste korten och vilka svenska butiker som har ${p.name} i lager just nu.`;
+  return `${p.name} är ett set i ${game}${code}${when}. Setet har ${p.cards.length} kort. Här ser du alla kort med bilder och TCGplayers marknadspris i kronor, de dyraste korten${p.listed ? ` och vilka svenska butiker som har ${p.name} i lager just nu` : ""}.`;
 }
 
 function gamePage(p) {
@@ -295,13 +330,13 @@ function gamePage(p) {
   const title = release ? `${p.name} – ${game}, släppdatum och produkter | Lootninja` : `${p.name} – alla ${game}-kort och priser i kronor | Lootninja`;
   const desc = release
     ? `${p.name} (${game}) släpps ${p.date ? longDate(p.date) : "snart"}. Se alla produkter, släppdatum och vilka svenska butiker som har förbeställning eller lager.`
-    : `Alla ${p.cards.length} kort i ${p.name} (${game}${p.code ? ` ${p.code}` : ""}) med bilder och priser i kronor.${p.date ? ` Släpptes ${longDate(p.date)}.` : ""}${top[0] ? ` Dyrast just nu: ${top[0].name} (${kr(top[0].sek)}).` : ""} Se var setet finns i lager i Sverige.`;
+    : `Alla ${p.cards.length} kort i ${p.name} (${game}${p.code ? ` ${p.code}` : ""}) med bilder och priser i kronor.${p.date ? ` Släpptes ${longDate(p.date)}.` : ""}${top[0] ? ` Dyrast just nu: ${top[0].name} (${kr(top[0].sek)}).` : ""}${stockDesc(p)}`;
   const crumbs = [["Hem", `${SITE}/`, "./"], ["Alla set", `${SITE}/set/`, "set/"], [game, `${SITE}/set/#${gameAnchor[p.game]}`, `set/#${gameAnchor[p.game]}`], [p.name, p.url, null]];
   const facts = [esc(game), p.code && `Kod: ${esc(p.code)}`, p.date && (p.date > today ? `Släpps <time datetime="${p.date}">${longDate(p.date)}</time>` : `Släpptes <time datetime="${p.date}">${longDate(p.date)}</time>`),
     p.cards.length && `${p.cards.length} kort`].filter(Boolean);
   const others = gamePages.filter((o) => o !== p && o.game === p.game).sort((a, b) => (b.main - a.main) || (b.date || "").localeCompare(a.date || "")).slice(0, 8);
   const priceNote = `Pris = TCGplayers marknadspris för ett ograderat kort i nyskick, omräknat till kronor ${longDate(new Date(gameData[p.game].updated || Date.now()).toISOString().slice(0, 10))}. Tryck på ett kort för att se det i stort format med pris och fakta.`;
-  return `${head({ title, desc, url: p.url, ld: crumbsLd(crumbs.map(([n, u]) => [n, u])) })}${pageHead(crumbs.map(([n, , h]) => [n, h]))}
+  return `${head({ title, desc, url: p.url, ld: pageLd({ title, desc, url: p.url, crumbs: crumbs.map(([n, u]) => [n, u]), about: `${p.name} (${game})` }) })}${pageHead(crumbs.map(([n, , h]) => [n, h]))}
 
   <div class="wrap">
     <section class="set-hero">
@@ -315,7 +350,7 @@ function gamePage(p) {
     </section>
 ${wavesHtml(p)}
     <div class="section" id="lager"><h2>${esc(p.name)} i svenska butiker</h2><a class="more" href="butiker.html?q=${encodeURIComponent(p.name)}#products">Sök i butikerna</a></div>
-    <p class="lead-sm" id="set-stock-count">Butikernas lager uppdateras hela dygnet.</p>
+    <p class="lead-sm" id="set-stock-count">${esc(stockLead(p))}</p>
     <div id="set-stock" class="pgrid" data-density="small" data-game="${p.game}" data-name="${esc(p.name)}" data-lang="en" data-date="${p.date || ""}" data-match="${esc(JSON.stringify(p.match))}"></div>
     <p class="more-row" id="set-stock-more" hidden><a class="btn" href="butiker.html?q=${encodeURIComponent(p.name)}#products">Visa alla produkter</a></p>
 ${top.length ? `
@@ -339,16 +374,18 @@ function setPage(p, all) {
   const top = priced ? p.cards.filter((c) => p.prices.has(c.id)).sort((a, b) => p.prices.get(b.id) - p.prices.get(a.id))[0] : null;
   // Utan kortlista (kommande set, eller ett set som TCGdex inte har än) handlar sidan om släppet.
   const release = upcoming(p) || !p.date || !p.cards.length;
-  const title = release ? `${p.name} – släppdatum och produkter | Lootninja`
-    : priced ? `${p.name} – alla kort och priser i kronor | Lootninja`
-    : `${p.name} – kortlista och släppdatum | Lootninja`;
+  // "Pokémon" i titeln, som One Piece- och Riftbound-sidorna har sitt spel (och så att Pokémonsetet Unleashed
+  // inte får samma titel som Riftbound Unleashed).
+  const title = release ? `${p.name} (Pokémon TCG) – släppdatum och produkter | Lootninja`
+    : priced ? `${p.name} – alla Pokémonkort och priser i kronor | Lootninja`
+    : `${p.name} – Pokémon TCG-kortlista och släppdatum | Lootninja`;
   const desc = release
-    ? `${p.name} ${upcoming(p) || !p.date ? "släpps" : "släpptes"} ${p.date ? longDate(p.date) : "snart"}${p.cal?.preliminary ? " (preliminärt)" : ""}. Se alla produkter, släppdatum och vilka svenska butiker som har ${upcoming(p) ? "förbeställning eller lager" : "setet i lager"}.`
-    : `Alla ${p.cards.length} kort i ${p.name}${p.serie && p.serie !== p.name ? ` (${p.serie})` : ""}${priced ? " med priser i kronor" : ""}. Släpptes ${longDate(p.date)}.${top ? ` Dyrast just nu: ${top.name} (${kr(p.prices.get(top.id))}).` : ""} Se var setet finns i lager i Sverige.`;
+    ? `${p.name} (Pokémon TCG) ${upcoming(p) || !p.date ? "släpps" : "släpptes"} ${p.date ? longDate(p.date) : "snart"}${p.cal?.preliminary ? " (preliminärt)" : ""}. Se alla produkter, släppdatum och vilka svenska butiker som har ${upcoming(p) ? "förbeställning eller lager" : "setet i lager"}.`
+    : `Alla ${p.cards.length} kort i Pokémon TCG-setet ${p.name}${p.serie && p.serie !== p.name ? ` (${p.serie})` : ""}${priced ? " med priser i kronor" : ""}. Släpptes ${longDate(p.date)}.${top ? ` Dyrast just nu: ${top.name} (${kr(p.prices.get(top.id))}).` : ""}${stockDesc(p)}`;
   const crumbs = [["Hem", `${SITE}/`, "./"], ["Kalender", `${SITE}/slapp.html`, "slapp.html"], ["Alla set", `${SITE}/set/`, "set/"], [p.name, p.url, null]];
   const facts = [p.serie && `Serie: ${esc(p.serie)}`, p.date && (upcoming(p) ? `Släpps <time datetime="${p.date}">${longDate(p.date)}</time>` : `${p.date === today ? "Släppt idag" : "Släpptes"} <time datetime="${p.date}">${longDate(p.date)}</time>`),
     count(p) && `${count(p)} kort${p.cardCount?.total > count(p) ? ` (${p.cardCount.total} med hemliga)` : ""}`, p.language !== "en" && `Språk: ${LANG[p.language] || p.language}`].filter(Boolean);
-  return `${head({ title, desc, url: p.url, ld: crumbsLd(crumbs.map(([n, u]) => [n, u])) })}${pageHead(crumbs.map(([n, , h]) => [n, h]))}
+  return `${head({ title, desc, url: p.url, ld: pageLd({ title, desc, url: p.url, crumbs: crumbs.map(([n, u]) => [n, u]), about: `${p.name} (Pokémon TCG)` }) })}${pageHead(crumbs.map(([n, , h]) => [n, h]))}
 
   <div class="wrap">
     <section class="set-hero">
@@ -362,7 +399,7 @@ function setPage(p, all) {
     </section>
 ${wavesHtml(p)}
     <div class="section" id="lager"><h2>${esc(p.name)} i svenska butiker</h2><a class="more" href="butiker.html?q=${encodeURIComponent(p.name)}#products">Sök i butikerna</a></div>
-    <p class="lead-sm" id="set-stock-count">Butikernas lager uppdateras hela dygnet.</p>
+    <p class="lead-sm" id="set-stock-count">${esc(stockLead(p))}</p>
     <div id="set-stock" class="pgrid" data-density="small" data-name="${esc(p.name)}" data-lang="${esc(p.language)}" data-date="${p.date || ""}" data-match="${esc(JSON.stringify(p.match))}"></div>
     <p class="more-row" id="set-stock-more" hidden><a class="btn" href="butiker.html?q=${encodeURIComponent(p.name)}#products">Visa alla produkter</a></p>
 ${priced ? topHtml(p) : ""}
@@ -385,7 +422,7 @@ function indexPage(all) {
   const title = "Alla set – Pokémon TCG, One Piece och Riftbound";
   const desc = `Alla ${all.length} Pokémon TCG-set från Base Set till de senaste, plus seten i One Piece Card Game och Riftbound, med kortlistor, priser i kronor, släppdatum och kommande set.`;
   const crumbs = [["Hem", `${SITE}/`, "./"], ["Kalender", `${SITE}/slapp.html`, "slapp.html"], ["Alla set", url, null]];
-  return `${head({ title, desc, url, ld: crumbsLd(crumbs.map(([n, u]) => [n, u])) })}${pageHead(crumbs.map(([n, , h]) => [n, h]))}
+  return `${head({ title, desc, url, ld: pageLd({ title, desc, url, crumbs: crumbs.map(([n, u]) => [n, u]) }) })}${pageHead(crumbs.map(([n, , h]) => [n, h]))}
 
   <div class="wrap">
     <section class="set-hero">
@@ -446,6 +483,7 @@ ${[...series].map(([name, list]) => `
 }
 
 // ---------- Skriv ----------
+for (const p of [...pages, ...gamePages]) p.listed = listed(p);
 await mkdir(OUT_DIR, { recursive: true });
 const files = new Map(pages.map((p) => [`${p.slug}.html`, setPage(p, pages)]));
 for (const p of gamePages) files.set(`${p.slug}.html`, gamePage(p));
