@@ -1,6 +1,20 @@
 {
- "updated": 1794117833870,
+ "updated": 1794118753902,
  "events": [
+  {
+   "at": 1794118735897,
+   "store": "bangerpack",
+   "product": "bangerpack:https://bangerpack.se/pokemon/elite-trainer-special/pokemon-holiday-calendar-2024-adventskalender",
+   "group": "x|collection-box|en||adventskalender-calendar-holiday",
+   "title": "Pokémon Holiday Calendar 2024 – Adventskalender",
+   "url": "https://bangerpack.se/pokemon/elite-trainer-special/pokemon-holiday-calendar-2024-adventskalender",
+   "image": "https://cdn.quickbutik.com/images/99246J/products/6ae3138c9a3b2.png",
+   "price": 895,
+   "type": "Collection Box",
+   "set": null,
+   "lang": "en",
+   "kind": "ny"
+  },
   {
    "at": 1794084140133,
    "store": "spelparken",
@@ -7065,20 +7079,6 @@
    "price": 4499,
    "type": "Booster Box",
    "set": "Phantasmal Flames",
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1793645522885,
-   "store": "cardlevels",
-   "product": "cardlevels:10330835910967",
-   "group": "prismatic-evolutions|collection-box|en||surprise",
-   "title": "Pokémon TCG Scarlet & Violet - Prismatic Evolutions Surprise Box",
-   "url": "https://cardlevels.se/products/pokemon-tcg-scarlet-violet-prismatic-evolutions-surprise-box",
-   "image": "https://cdn.shopify.com/s/files/1/0846/0458/4247/files/surprise-box_17adf453-f15e-49d6-91c9-981bcf191c6c.webp?v=1762372648",
-   "price": 999,
-   "type": "Collection Box",
-   "set": "Prismatic Evolutions",
    "lang": "en",
    "kind": "ny"
   }
