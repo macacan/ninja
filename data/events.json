@@ -1,6 +1,20 @@
 {
- "updated": 1794177855380,
+ "updated": 1794178835400,
  "events": [
+  {
+   "at": 1794178103447,
+   "store": "spelparken",
+   "product": "spelparken:15603341623671",
+   "group": "30th-celebration|collection-box|en||classic",
+   "title": "30th Celebration Classic Collection Pack",
+   "url": "https://spelparken.se/products/30th-celebration-classic-collection-pack",
+   "image": "https://cdn.shopify.com/s/files/1/0948/1876/3127/files/images_3ec954e9-f7dc-43ba-bb0c-1b0c9ad7de1b.jpg?v=1794163693",
+   "price": 749,
+   "type": "Collection Box",
+   "set": "30th Celebration",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1794177245030,
    "store": "speltrollet",
