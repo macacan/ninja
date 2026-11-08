@@ -3,6 +3,7 @@
   "botInfoUrl": "https://lootninja.se/om.html#bot",
   "contactEmail": "hej@lootninja.se",
   "paused": [
-    "blindbox"
+    "blindbox",
+    "kantovault"
   ]
 }
