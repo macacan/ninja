@@ -1,6 +1,20 @@
 {
- "updated": 1794162596843,
+ "updated": 1794163516863,
  "events": [
+  {
+   "at": 1794162732435,
+   "store": "tt-vault",
+   "product": "tt-vault:16764641608025",
+   "group": "delta-reign|elite-trainer-box|en|",
+   "title": "Pokemon TCG: Mega Evolution - Delta Reign - Elite Trainer Box PREORDER",
+   "url": "https://ttvault.se/products/pokemon-tcg-mega-evolution-delta-reign-elite-trainer-box-preorder-november-6",
+   "image": "https://cdn.shopify.com/s/files/1/1020/3683/2601/files/IMG_0398.jpg?v=1793727769",
+   "price": 1299,
+   "type": "Elite Trainer Box",
+   "set": "Delta Reign",
+   "lang": "en",
+   "kind": "forbestallning"
+  },
   {
    "at": 1794162286386,
    "store": "samlargrottan",
@@ -7081,20 +7095,6 @@
    "image": "https://cdn.shopify.com/s/files/1/0958/6832/2129/files/drbooster.webp?v=1793437831",
    "price": 79,
    "type": "Booster Pack",
-   "set": "Mega Evolution",
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793699845367,
-   "store": "miniature-metropolis",
-   "product": "miniature-metropolis:11308858835281",
-   "group": "mega-evolution|blister|en||cl",
-   "title": "POKÉMON TCG: MEGA EVOLUTION - DELTA REIGN CHECKLANE BLISTER",
-   "url": "https://miniaturemetropolis.se/products/pokemon-tcg-mega-evolution-delta-reign-checklane",
-   "image": "https://cdn.shopify.com/s/files/1/0958/6832/2129/files/DRchecklaneblister.webp?v=1793436962",
-   "price": 89,
-   "type": "Blister",
    "set": "Mega Evolution",
    "lang": "en",
    "kind": "tillbaka"
