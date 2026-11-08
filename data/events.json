@@ -1,6 +1,20 @@
 {
- "updated": 1794164436884,
+ "updated": 1794165356902,
  "events": [
+  {
+   "at": 1794164526003,
+   "store": "spelparken",
+   "product": "spelparken:15603341623671",
+   "group": "30th-celebration|collection-box|en||classic",
+   "title": "30th Celebration Classic Collection Pack",
+   "url": "https://spelparken.se/products/30th-celebration-classic-collection-pack",
+   "image": "https://cdn.shopify.com/s/files/1/0948/1876/3127/files/images_3ec954e9-f7dc-43ba-bb0c-1b0c9ad7de1b.jpg?v=1794163693",
+   "price": 749,
+   "type": "Collection Box",
+   "set": "30th Celebration",
+   "lang": "en",
+   "kind": "ny"
+  },
   {
    "at": 1794162732435,
    "store": "tt-vault",
@@ -7083,20 +7097,6 @@
    "set": "Origins",
    "lang": "en",
    "game": "rb",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793699845367,
-   "store": "miniature-metropolis",
-   "product": "miniature-metropolis:11308858900817",
-   "group": "mega-evolution|booster-pack|en||delta-reign",
-   "title": "POKÉMON TCG: MEGA EVOLUTION - DELTA REIGN BOOSTER PACK",
-   "url": "https://miniaturemetropolis.se/products/pokemon-tcg-mega-evolution-delta-reign-booster-pack",
-   "image": "https://cdn.shopify.com/s/files/1/0958/6832/2129/files/drbooster.webp?v=1793437831",
-   "price": 79,
-   "type": "Booster Pack",
-   "set": "Mega Evolution",
-   "lang": "en",
    "kind": "tillbaka"
   }
  ]
