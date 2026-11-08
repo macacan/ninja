@@ -1,6 +1,20 @@
 {
- "updated": 1794121493959,
+ "updated": 1794122414070,
  "events": [
+  {
+   "at": 1794122190834,
+   "store": "tt-vault",
+   "product": "tt-vault:16766625939801",
+   "group": "prismatic-evolutions|collection-box|en||figure",
+   "title": "Pokémon TCG: Prismatic Evolutions - Premium Figure Collection",
+   "url": "https://ttvault.se/products/pokemon-tcg-prismatic-evolutions-premium-figure-collection",
+   "image": "https://cdn.shopify.com/s/files/1/1020/3683/2601/files/IMG-4287.webp?v=1793781052",
+   "price": 2599,
+   "type": "Collection Box",
+   "set": "Prismatic Evolutions",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1794118735897,
    "store": "bangerpack",
@@ -7065,20 +7079,6 @@
    "price": 79,
    "type": "Booster Pack",
    "set": "Pitch Black",
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1793645522885,
-   "store": "cardlevels",
-   "product": "cardlevels:10344622620983",
-   "group": "phantasmal-flames|booster-box|en|",
-   "title": "Pokémon Mega Evolution: Phantasmal Flames Booster Box",
-   "url": "https://cardlevels.se/products/pokemon-mega-evolution-phantasmal-flames-booster-box-inklusive-akryl",
-   "image": "https://cdn.shopify.com/s/files/1/0846/0458/4247/files/POK10190-101-DIS_1.webp?v=1763477970",
-   "price": 4499,
-   "type": "Booster Box",
-   "set": "Phantasmal Flames",
    "lang": "en",
    "kind": "ny"
   }
