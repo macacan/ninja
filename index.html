@@ -4,6 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Lootninja | Butiksbevakning, värdering och kortpriser</title>
+<!-- Hela titeln är till för Googles sökresultat. För den som använder sidan blir fliken och Chromes genväg bara
+     "Lootninja", så fort man rör sidan (scroll, tryck, tangent). Sökmotorer rör inte sidan och ser hela titeln. -->
+<script>(() => { const s = () => { document.title = "Lootninja"; for (const t of ["pointerdown", "scroll", "keydown", "touchstart"]) removeEventListener(t, s, true); };
+  for (const t of ["pointerdown", "scroll", "keydown", "touchstart"]) addEventListener(t, s, { capture: true, passive: true }); })();</script>
 <meta name="description" content="En svensk bevakningssajt för samlarkort, med Pokémon TCG, One Piece och Riftbound.">
 <link rel="canonical" href="https://lootninja.se/">
 <meta name="robots" content="max-image-preview:large">
