@@ -1,5 +1,5 @@
 {
- "_info": "status: tillstand = skriftligt ok från butiken, ej-forbjuden = inget förbud hittat, inga-bilder = får bevakas men villkoren skyddar bilder och texter, så produktbilder visas inte, okand = ej kontrollerad, forbjuden = hämtas aldrig. Ändra status när du fått svar från en butik. listing: kategorisida för butiker utan sitemap, { path med {n} för sidnummer, link = regex för produktlänkar, pages = max antal sidor }. feed: domän som katalogen läses från när den skiljer sig från butikens (t.ex. Shopify bakom en egen framsida). productPath: länkmönster på butikens egen domän, t.ex. /produkt/{handle}.",
+ "_info": "status: tillstand = skriftligt ok från butiken, ej-forbjuden = inget förbud hittat, inga-bilder = får bevakas men villkoren skyddar bilder och texter, så produktbilder visas inte, okand = ej kontrollerad, forbjuden = hämtas aldrig. Ändra status när du fått svar från en butik. listing: kategorisida för butiker utan sitemap, { path med {n} för sidnummer, link = regex för produktlänkar, pages = max antal sidor }. feed: domän som katalogen läses från när den skiljer sig från butikens (t.ex. Shopify bakom en egen framsida). productPath: länkmönster på butikens egen domän, t.ex. /produkt/{handle}. titleFix: [regex, ersättning] som rättar butikens titlar innan de klassas, t.ex. ^Poke\\b till Pokémon.",
  "stores": [
   {
    "id": "alara-games",
@@ -673,6 +673,21 @@
    "platform": "generic",
    "status": "ej-forbjuden",
    "note": "Inget förbud hittat i villkoren 2026-11-05. Leksakskedja: sitemapens Pokémon-adresser läses, få är förseglade kort."
+  },
+  {
+   "id": "boozt",
+   "name": "Boozt",
+   "domain": "boozt.com",
+   "feed": "www.boozt.com",
+   "platform": "generic",
+   "titleFix": ["^Poke\\b", "Pokémon"],
+   "status": "ej-forbjuden",
+   "note": "Inget förbud hittat i köpvillkoren, försäljningsvillkoren eller robots.txt 2026-11-09, men Cloudflare stoppar botar (429-utmaning), så butiken är pausad i config.json. Stor klädbutik: bara märket Pokémon Trading Cards under Samlarkort läses.",
+   "listing": {
+    "path": "/se/sv/barn/leksaker/samlarkort?brand=75414&page={n}",
+    "link": "^https://www\\.boozt\\.com/se/sv/pokmon-trading-cards/[^/?#]+_\\d+/\\d+$",
+    "pages": 5
+   }
   },
   {
    "id": "pocketmonsters",

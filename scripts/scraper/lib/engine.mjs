@@ -128,7 +128,7 @@ export async function createEngine({ statuses } = {}) {
       const host = await hostFor(store);
       const before = host.requests;
       // Upp till 40 sidor: stora Shopify-butiker (Aquitaz, Dragon's Lair, RGB Kingz) har över 3 000 produkter.
-      const ctx = { maxPages: 40, pagesPerRun, sitemapMaxAge, state: (state[store.id] ||= {}), setNames: state.sets.names, listing: store.listing, category: store.category,
+      const ctx = { maxPages: 40, pagesPerRun, sitemapMaxAge, state: (state[store.id] ||= {}), setNames: state.sets.names, listing: store.listing, category: store.category, titleFix: store.titleFix,
         // Länkarna ska gå till butikens egen framsida, t.ex. productPath "/produkt/{handle}".
         productUrl: store.productPath && ((h) => `https://${store.domain}${store.productPath.replace("{handle}", encodeURIComponent(h))}`) };
       const raw = await ADAPTERS[store.platform](host, ctx);

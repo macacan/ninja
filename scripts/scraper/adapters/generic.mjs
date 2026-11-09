@@ -117,11 +117,15 @@ function parsePage(html, url) {
       const o = offers.find((x) => /InStock/i.test(x.availability || "")) || offers[0];
       if (!o) continue;
       const availability = String(o.availability || "");
+      // Priset kan ligga i priceSpecification i stället för direkt på erbjudandet (Boozt). Ordinarie pris
+      // (StrikethroughPrice/ListPrice) hoppas över så att reapriset används.
+      const specs = [].concat(o.priceSpecification || []);
+      const spec = specs.find((s) => s?.price != null && !/Strikethrough|ListPrice/i.test(s.priceType || "")) || specs[0];
       return {
         title: decode(String(n.name || "")),
         url: n.url || url,
-        price: Number(o.price ?? o.lowPrice),
-        currency: o.priceCurrency || "SEK",
+        price: Number(o.price ?? o.lowPrice ?? spec?.price),
+        currency: o.priceCurrency || spec?.priceCurrency || "SEK",
         available: /InStock|LimitedAvailability|OnlineOnly/i.test(availability),
         preorder: /PreOrder|PreSale|BackOrder/i.test(availability),
         image: imageUrl(n.image, url) || imageUrl(ogImage(html), url),
@@ -236,6 +240,8 @@ export async function generic(host, ctx) {
       stopped = true;
       break;
     }
+    // titleFix: [regex, ersättning] för butiker som förkortar titlarna, t.ex. Boozts "Poke ME04 Elite Trainer Box".
+    if (p?.title && ctx.titleFix) p.title = p.title.replace(new RegExp(ctx.titleFix[0], "i"), ctx.titleFix[1]);
     const ok = p && p.title && Number.isFinite(p.price) && looksPokemonTitle(p.title, ctx.setNames);
     // En känd produktsida som plötsligt saknar produktdata (tillfälligt fel hos butiken) parkeras inte en vecka
     // direkt: den läses om nästa varv och räknas som avvisad först efter tre missar i rad.
