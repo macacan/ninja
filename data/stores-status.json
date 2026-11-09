@@ -514,13 +514,13 @@
    "domain": "netgrade.se",
    "status": "ej-forbjuden",
    "checkedAt": 1794216871147,
-   "ok": false,
+   "ok": true,
    "lastOkAt": 1792915285282,
    "count": 55,
-   "error": "Cloudflare blockerar automatiska anrop",
-   "blocked": true,
-   "note": "Butiken har ett botskydd som stoppar oss. Bevakningen är pausad.",
-   "interval": 360
+   "error": null,
+   "blocked": false,
+   "note": null,
+   "interval": 15
   },
   {
    "id": "nordic-pulls",
