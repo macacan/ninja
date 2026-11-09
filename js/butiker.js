@@ -12,7 +12,7 @@ const KIND = {
   forbestallning: { label: "Förbeställning", cls: "k-pre" },
 };
 const PAGE = 48;
-let products = [], events = [], stores = [], storeName = {}, storeLogos = {}, shown = PAGE, eventKind = "";
+let products = [], events = [], stores = [], storeName = {}, storeLogos = {}, shown = PAGE, eventKind = "", focusKey = "";
 
 const load = (p) => fetch(p, { cache: "no-cache" }).then((r) => (r.ok ? r.json() : Promise.reject(r.status)));
 
@@ -67,6 +67,8 @@ const pressed = (id) => $(id).getAttribute("aria-pressed") === "true";
 const fold = (s) => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
 // skip: "store" eller "set" hoppar över det filtret, för antalen i listorna (liveCounts).
 function filtered(skip = "") {
+  // En delad länk (?produkt=) visar bara den produkten, oavsett filter, tills man ändrar ett filter.
+  if (focusKey) return products.filter((p) => groupKey(p) === focusKey);
   const q = fold($("#f-q").value.trim());
   const v = (id) => $(id).value;
   const [lo, hi] = PRICE[skip === "price" ? "" : v("#f-price")];
@@ -149,7 +151,8 @@ function storeRows(g) {
       ${pc ? `<span class="srow-chg ${up ? "up" : "down"}"><span aria-hidden="true">${up ? "▲" : "▼"}</span> Senast ändrat pris ${when(pc.at)} · var ${kr(pc.from)}</span>` : ""}
       <span class="srow-name">${esc(storeName[m.store] || m.store)}<small class="srow-lang${m.langGuess ? " guess" : ""}">${esc(lang)}</small></span><span class="srow-price">${kr(m.price)}</span>
       <span class="rs-st ${st[0]}">${st[1]}</span>
-      ${rank(m) < 2 ? `<a class="btn small gold" href="${esc(safeUrl(m.url))}" target="_blank" rel="noopener nofollow">Visa</a>` : `<a class="srow-link" href="${esc(safeUrl(m.url))}" target="_blank" rel="noopener nofollow">Till butiken</a>`}
+      <span class="srow-act">${rank(m) < 2 ? `<a class="btn small gold" href="${esc(safeUrl(m.url))}" target="_blank" rel="noopener nofollow">Visa</a>` : `<a class="srow-link" href="${esc(safeUrl(m.url))}" target="_blank" rel="noopener nofollow">Till butiken</a>`}
+        <button type="button" class="btn small srow-share" data-store="${esc(m.store)}" aria-label="Dela"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg><span class="srow-share-txt">Dela</span></button></span>
       ${median && m.price < median * 0.55 ? '<span class="srow-warn">Ovanligt lågt pris – kontrollera språk och produkt hos butiken</span>' : ""}
     </li>`;
   }).join("");
@@ -237,9 +240,32 @@ function renderProducts() {
   keys.sort(sort === "price-asc" ? (a, b) => price(a) - price(b) : sort === "price-desc" ? (a, b) => price(b) - price(a)
     : sort === "name" ? (a, b) => groupTitle(a.all).localeCompare(groupTitle(b.all), "sv") : sort === "stores" ? (a, b) => b.stores - a.stores || b.bump - a.bump
     : (a, b) => b.bump - a.bump);
-  $("#count").textContent = `${keys.length.toLocaleString("sv-SE")} produkter`;
+  $("#count").innerHTML = focusKey ? `Delad produkt · <button type="button" class="focus-all">Visa alla produkter</button>` : `${keys.length.toLocaleString("sv-SE")} produkter`;
   grid.innerHTML = keys.slice(0, take).map((g) => groupCard(g, openGroups.has(g.key))).join("") || '<div class="msg">Inga produkter matchar. Prova att ta bort ett filter.</div>';
   $("#more").hidden = keys.length <= take;
+}
+
+// Dela en butiksrad: produkten, butiken, priset och en länk till produkten här på Lootninja
+// (butiker.html?produkt=<gruppnyckel>, se focusKey). Telefonens delningsmeny om den finns, annars kopieras länken.
+async function shareRow(btn, key) {
+  const g = groupInfo(key), m = g.all.filter((x) => x.store === btn.dataset.store).sort((a, b) => a.price - b.price)[0];
+  if (!m) return;
+  const title = groupTitle(g.all), store = storeName[m.store] || m.store;
+  const url = new URL(`butiker.html?produkt=${encodeURIComponent(key)}#products`, location.href).href;
+  const text = `${title} – ${kr(m.price)} hos ${store}`;
+  if (navigator.share) {
+    try { await navigator.share({ title, text, url }); return; }
+    catch (err) { if (err?.name === "AbortError") return; }
+  }
+  let ok = false;
+  try { await navigator.clipboard.writeText(`${text}\n${url}`); ok = true; } catch {}
+  shareToast(btn, ok ? "Länk kopierad" : "Kunde inte kopiera länken");
+}
+function shareToast(btn, msg) {
+  document.querySelector(".share-toast")?.remove();
+  const t = Object.assign(document.createElement("span"), { className: "share-toast", textContent: msg, role: "status" });
+  btn.closest(".srow").append(t);
+  setTimeout(() => t.remove(), 2200);
 }
 
 function updateWatchCount() { $("#watch-count").textContent = (getPrefs().watch || []).length; }
@@ -254,6 +280,8 @@ $("#pgrid").addEventListener("click", (e) => {
     // Stängd från knappen längst ner: listan försvinner, så visa kortet igen i stället för tom yta.
     if (fromBottom) document.querySelector(`#pgrid .gcard[data-key="${CSS.escape(key)}"]`)?.scrollIntoView({ block: "nearest", behavior: "smooth" });
   }
+  const share = e.target.closest(".srow-share");
+  if (share) shareRow(share, key);
   if (e.target.closest(".bell")) {
     const p = getPrefs();
     const set = new Set(p.watch || []);
@@ -335,7 +363,13 @@ $("#event-filter").addEventListener("click", (e) => {
   document.querySelectorAll("#event-filter button").forEach((x) => x.setAttribute("aria-pressed", x === b));
   renderEvents();
 });
-$("#filters").addEventListener("input", () => { shown = PAGE; renderProducts(); });
+$("#filters").addEventListener("input", () => { focusKey = ""; shown = PAGE; renderProducts(); });
+$("#count").addEventListener("click", (e) => {
+  if (!e.target.closest(".focus-all")) return;
+  focusKey = "";
+  history.replaceState(null, "", location.pathname + location.hash);
+  shown = PAGE; renderProducts();
+});
 // Rullgardinerna blir lika breda som det valda alternativet, så att filterraden hålls kompakt.
 function fitSelect(sel) {
   const probe = document.createElement("span");
@@ -414,6 +448,9 @@ try {
   // Sökning från länk, t.ex. butiker.html?q=Delta Reign#products
   const q = new URLSearchParams(location.search).get("q");
   if (q) $("#f-q").value = q;
+  // Delad produkt, butiker.html?produkt=<gruppnyckel>: visa den med jämförelsen öppen.
+  focusKey = new URLSearchParams(location.search).get("produkt") || "";
+  if (focusKey) openGroups.add(focusKey);
   // butiker.html?visa=forbestall: bara förbeställningar (från startsidan).
   if (new URLSearchParams(location.search).get("visa") === "forbestall") $("#c-in").setAttribute("aria-pressed", "false");
   const start = location.hash.slice(1);

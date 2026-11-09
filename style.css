@@ -1094,8 +1094,17 @@ span.rd-logo{display:grid;place-items:center;background:var(--surface);border-ra
 .srow-name{grid-area:name;font-weight:700;font-size:.9rem}
 .srow-price{grid-area:price;font-weight:700}
 .srow .rs-st{grid-area:st;justify-self:start}
-.srow .btn,.srow-link{grid-area:act;justify-self:end}
+.srow{position:relative}
+.srow-act{grid-area:act;justify-self:end;display:flex;align-items:center;gap:8px}
 .srow .btn{min-height:36px;padding:7px 14px;margin:var(--px)}
+/* Dela: samma pixelknapp som Visa, men neutral. Ikon plus text på datorn, bara ikonen på mobilen. */
+.srow .srow-share{gap:6px;padding:7px 12px;font-family:var(--sans);font-weight:700;font-size:.85rem}
+.srow-share svg{fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;flex:none}
+.srow-share svg circle{fill:currentColor}
+@media (max-width:600px){.srow .srow-share{padding:7px 10px;min-width:36px}.srow-share-txt{display:none}}
+.share-toast{position:absolute;right:10px;top:-10px;z-index:2;padding:4px 10px;border-radius:999px;background:var(--gold);color:#1b1b2f;font:700 .76rem/1.2 var(--sans);box-shadow:0 4px 12px rgba(0,0,0,.3);pointer-events:none;animation:shareToast 2.2s ease both}
+@keyframes shareToast{0%{opacity:0;transform:translateY(4px)}12%,80%{opacity:1;transform:none}100%{opacity:0}}
+.count .focus-all{background:none;border:0;padding:0;font:inherit;font-weight:700;color:var(--red);text-decoration:underline;cursor:pointer}
 .srow-link{font-size:.8rem;color:var(--muted)}
 .srow-lang{display:block;font-size:.75rem;font-weight:400;color:var(--muted)}
 .srow-lang.guess{font-style:italic}
