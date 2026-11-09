@@ -1,6 +1,6 @@
 {
  "_info": "Byggs av scripts/update-releases.mjs. Ändra inte här, ändra i data/releases.json.",
- "updated": 1794168129289,
+ "updated": 1794249759880,
  "releases": [
   {
    "id": "30th-celebration",
@@ -285,7 +285,7 @@
  "sources": {
   "manual": true,
   "bulbapedia": false,
-  "tcgdex": true,
+  "tcgdex": false,
   "op": true,
   "rb": true
  }

@@ -1,6 +1,48 @@
 {
- "updated": 1794248827125,
+ "updated": 1794249747138,
  "events": [
+  {
+   "at": 1794249170797,
+   "store": "cardgame",
+   "product": "cardgame:https://cardgame.se/engelska-pokmon-produkter/engelskaboosterpacks/paldean-fates-booster-pack-flash-sale-2026-02-13",
+   "group": "paldean-fates|booster-pack|en|",
+   "title": "Paldean Fates Booster Pack",
+   "url": "https://cardgame.se/engelska-pokmon-produkter/engelskaboosterpacks/paldean-fates-booster-pack-flash-sale-2026-02-13",
+   "image": "https://cdn.quickbutik.com/images/87588Q/products/1771005651d6e228cc698738ae00432.jpeg",
+   "price": 300,
+   "type": "Booster Pack",
+   "set": "Paldean Fates",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1794249096811,
+   "store": "webhallen",
+   "product": "webhallen:400148",
+   "group": "x|tin|en||forces-zeraora",
+   "title": "Pokemon Mega Forces Tin Mega Zeraora Ex",
+   "url": "https://www.webhallen.com/se/product/400148-Pokemon-Mega-Forces-Tin-Mega-Zeraora-Ex",
+   "image": "https://www.webhallen.com/images-ext/images.eu.ctfassets.net/n0e6ajgmrw5w/1aJHhkgTWf6uFixilFvH3S/05a8e2a09f6f0865bde8ae2551562995/0196214141841_1.jpg?fit=pad",
+   "price": 399,
+   "type": "Tin",
+   "set": null,
+   "lang": "en",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1794249096811,
+   "store": "webhallen",
+   "product": "webhallen:400146",
+   "group": "x|tin|en||darkai-forces",
+   "title": "Pokemon Mega Forces Tin Mega Darkai Ex",
+   "url": "https://www.webhallen.com/se/product/400146-Pokemon-Mega-Forces-Tin-Mega-Darkai-Ex",
+   "image": "https://www.webhallen.com/images-ext/images.eu.ctfassets.net/n0e6ajgmrw5w/3BGBcksdSJBj0YWrqZ9ToE/624ab61cacdd566aa1528946430633d3/0196214141780_1.jpg?fit=pad",
+   "price": 399,
+   "type": "Tin",
+   "set": null,
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1794246251045,
    "store": "cardgame",
@@ -7044,48 +7086,6 @@
    "set": null,
    "lang": "en",
    "kind": "tillbaka"
-  },
-  {
-   "at": 1793720814239,
-   "store": "dragon-s-lair",
-   "product": "dragon-s-lair:15952430137692",
-   "group": "x|booster-pack|ja||birth-star",
-   "title": "Pokemon Sword & Shield: Star Birth Booster (Japansk)(s9)",
-   "url": "https://dragonslair.se/products/pokemon-sword-shield-star-birth-booster-japansks9",
-   "image": "https://cdn.shopify.com/s/files/1/1015/8315/9644/files/starbirthpack.webp?v=1793720470",
-   "price": 69,
-   "type": "Booster Pack",
-   "set": "Sword & Shield",
-   "lang": "ja",
-   "kind": "ny"
-  },
-  {
-   "at": 1793719784027,
-   "store": "dragon-s-lair",
-   "product": "dragon-s-lair:15952412967260",
-   "group": "x|booster-box|ja||black-flame-ruler",
-   "title": "Pokemon Ruler Of The Black Flame Booster Box (sv3)(Japansk)(30st Boosters)",
-   "url": "https://dragonslair.se/products/pokemon-ruler-of-the-black-flame-booster-box-sv3japansk30st-boosters",
-   "image": "https://cdn.shopify.com/s/files/1/1015/8315/9644/files/rulerofblackflamebb1.webp?v=1793719454",
-   "price": 1895,
-   "type": "Booster Box",
-   "set": null,
-   "lang": "ja",
-   "kind": "ny"
-  },
-  {
-   "at": 1793719784027,
-   "store": "dragon-s-lair",
-   "product": "dragon-s-lair:15554218721628",
-   "group": "x|booster-pack|ja||black-flame-ruler",
-   "title": "Pokémon TCG: Scarlet & Violet - Ruler of the Black Flame Japansk Booster",
-   "url": "https://dragonslair.se/products/pokemon-tcg-scarlet-violet-ruler-of-the-black-flame-japansk-pokemon",
-   "image": "https://cdn.shopify.com/s/files/1/1015/8315/9644/files/Pok-mon-TCG-Scarlet-Violet---Ruler-of-the-Black-Flame-Japansk.webp?v=1777043701",
-   "price": 69,
-   "type": "Booster Pack",
-   "set": "Scarlet & Violet",
-   "lang": "ja",
-   "kind": "ny"
   }
  ]
 }
