@@ -30,7 +30,7 @@
      först när style.css laddats. Mörkt tema är standard (js/theme.js), därför nattbilden. -->
 <link rel="preload" as="image" href="img/pokemon-restock-night.webp" type="image/webp" fetchpriority="high">
 <link href="fonts/fonts.css" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=20261107a">
+<link rel="stylesheet" href="style.css?v=20261109f">
 <link rel="stylesheet" href="dark.css?v=20261105a" id="dark-css" media="(prefers-color-scheme: dark)">
 <script src="js/theme.js?v=20261106"></script>
 </head>
@@ -52,26 +52,32 @@
       <div class="restock-main">
         <h2 id="restock-title">Senast inkommet</h2>
         <ul class="restock-feed" id="restock-feed" aria-live="polite" aria-label="Senast inkomna produkter"></ul>
+        <a class="btn small primary restock-all" href="butiker.html#products">Se hela lagret</a>
       </div>
       <div class="restock-side">
+      <!-- Telefonen: på datorn står introt och knapparna inne i en telefonskärm. På mobilen försvinner ramen (display:contents). -->
+      <div class="phone">
+      <div class="phone-screen">
+      <div class="phone-status" aria-hidden="true"><span>Lootninja</span><i class="phone-island"></i><span class="phone-icons"><i></i><i></i><i></i></span></div>
+      <div class="phone-clock" aria-hidden="true"><span id="phone-date"></span><b id="phone-time">12:33</b></div>
+      <script>
+        // Låsskärmens klocka och datum visar besökarens egen tid.
+        (() => {
+          const t = document.getElementById("phone-time"), d = document.getElementById("phone-date");
+          const tick = () => {
+            const n = new Date();
+            t.textContent = n.toLocaleTimeString("sv-SE", { hour: "2-digit", minute: "2-digit" });
+            const s = n.toLocaleDateString("sv-SE", { weekday: "long", day: "numeric", month: "long" });
+            d.textContent = s.charAt(0).toUpperCase() + s.slice(1);
+          };
+          tick(); setInterval(tick, 15000);
+        })();
+      </script>
       <div class="restock-intro">
-        <!-- Rubriken för sökmotorer och skärmläsare står fast. Den synliga rubriken byts varje gång sidan laddas
-             (en av tio, aldrig samma två gånger i rad). Skriptet körs direkt, innan sidan ritas, så att rubriken inte blinkar. -->
+        <!-- Rubriken för sökmotorer och skärmläsare. Synligt står "Missa aldrig ett släpp!" som rubrik och en kort mening om vad sajten gör. -->
         <h1 class="sr-only">Pokémonkort i lager – vi bevakar 70+ svenska butiker</h1>
-        <div class="ri-title" id="ri-title" aria-hidden="true">Pokémonkort i lager – vi bevakar 70+ svenska butiker</div>
-        <script>
-          (() => {
-            const t = ["Pokémonkort i lager – vi bevakar 70+ svenska butiker","Missa aldrig en restock igen","Ninjan håller koll på boxarna åt dig","Hitta boxen innan den säljer slut","Booster boxar, ETB och packs i lager just nu","70+ butiker. En ninja. Noll missade släpp.","Se direkt vilken butik som har den billigast","Nytt i lager, prissänkt och på väg – allt på ett ställe","Din genväg till nästa Pokémon-, One Piece- och Riftbound-box","Restocks från hela Sverige, dygnet runt"];
-            let last = -1;
-            try { last = +sessionStorage.getItem("nl:ri-title"); } catch {}
-            let i = Math.floor(Math.random() * (t.length - 1));
-            if (i >= last && last >= 0) i++;
-            document.getElementById("ri-title").textContent = t[i];
-            try { sessionStorage.setItem("nl:ri-title", i); } catch {}
-          })();
-        </script>
-        <p class="ri-games">Pokémon · One Piece · Riftbound</p>
-        <p class="ri-long">Lootninja håller koll på tusentals produkter i över 70 svenska butiker, från Pokémon och One Piece till Riftbound.</p>
+        <p class="ri-title" aria-hidden="true">Missa aldrig ett släpp!</p>
+        <p class="ri-long">Lootninja håller koll på tusentals produkter från Pokémon och One Piece till Riftbound.</p>
         <ul class="restock-facts">
           <li><b data-count="70+">70+</b> svenska butiker</li>
           <li><b data-count="8000+">8000+</b> bevakade produkter</li>
@@ -96,8 +102,53 @@
         </script>
       </div>
       <div class="restock-actions">
-        <a class="btn small primary" href="butiker.html#products">Se hela lagret</a>
         <a class="btn small" href="butiker.html#notiser">Få notis när produkter kommer in</a>
+      </div>
+      <span class="phone-home" aria-hidden="true"></span>
+      <div class="phone-notifs" aria-hidden="true"></div>
+      <script>
+        // Då och då glider en låtsasnotis ner på telefonens skärm, med en av de senast inkomna produkterna
+        // från flödet bredvid. Ibland kommer en till strax efter och trycker ner den förra bakom sig, som en hög.
+        // Bara på breda skärmar, där telefonen syns.
+        (() => {
+          const box = document.currentScript.previousElementSibling;
+          const wide = matchMedia("(min-width:901px)");
+          const heads = ["Tillbaka i lager", "Nytt i lager just nu", "Missa aldrig ett släpp!", "Ninjan hittade en box", "Snabbt, innan den tar slut"];
+          let n = 0;
+          const leave = (el) => {
+            if (el.classList.contains("is-out")) return;
+            el.classList.add("is-out");
+            setTimeout(() => el.remove(), 450);
+          };
+          const show = () => {
+            if (!wide.matches || document.hidden) return;
+            const items = [...document.querySelectorAll("#restock-feed .rf a")];
+            const a = items[n % (items.length || 1)];
+            const name = a?.querySelector(".rf-body b")?.textContent;
+            const [store = "", price = ""] = (a?.querySelector(".rf-body small")?.textContent || "").split(" · ");
+            const img = a?.querySelector(".rf-img img")?.src;
+            const el = document.createElement("div");
+            el.className = "phone-notif";
+            el.innerHTML = '<span class="pn-app"></span><span class="pn-text"><span class="pn-top"><b></b><small>nu</small></span><span class="pn-body"></span></span>' + (img ? '<span class="pn-img"><img alt=""></span>' : "");
+            el.querySelector(".pn-top b").textContent = heads[n % heads.length] + (store ? " · " + store : "");
+            el.querySelector(".pn-body").textContent = name ? name + (price ? " – " + price : "") : "Lootninja bevakar 70+ svenska butiker dygnet runt.";
+            if (img) { const i = el.querySelector(".pn-img img"); i.referrerPolicy = "no-referrer"; i.src = img; }
+            n++;
+            // Den nya lägger sig överst och trycker ner den förra bakom sig. Fler än två ryms inte, så den äldsta försvinner.
+            [...box.querySelectorAll(".phone-notif:not(.is-out)")].slice(1).forEach(leave);
+            box.prepend(el);
+            setTimeout(() => leave(el), 7000);
+          };
+          // Var nionde sekund en notis, och ungefär varannan gång en till 1,8 sekunder senare.
+          const loop = () => {
+            show();
+            if (Math.random() < 0.5) setTimeout(show, 1800);
+            setTimeout(loop, 9000);
+          };
+          setTimeout(loop, 2500);
+        })();
+      </script>
+      </div>
       </div>
       </div>
     </section>
