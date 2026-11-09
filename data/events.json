@@ -1,6 +1,34 @@
 {
- "updated": 1794242710278,
+ "updated": 1794243630291,
  "events": [
+  {
+   "at": 1794243534711,
+   "store": "spelparken",
+   "product": "spelparken:15588211229047",
+   "group": "30th-celebration|ultra-premium-collection|en||day",
+   "title": "30th Celebration Ultra-Premium Collection – Day",
+   "url": "https://spelparken.se/products/30th-celebration-ultra-premium-collection-day",
+   "image": "https://cdn.shopify.com/s/files/1/0948/1876/3127/files/BlackBox_-_2026-07-01T003256.558.webp?v=1793191023",
+   "price": 5999,
+   "type": "Ultra-Premium Collection",
+   "set": "30th Celebration",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1794243534711,
+   "store": "spelparken",
+   "product": "spelparken:15268161913207",
+   "group": "journey-together|booster-box|en|",
+   "title": "Journey Together Booster Box",
+   "url": "https://spelparken.se/products/journey-together-booster-box-oppnas-live",
+   "image": "https://cdn.shopify.com/s/files/1/0948/1876/3127/files/journey-together-booster-box-36-boosters-journey-together.webp?v=1764522915",
+   "price": 2999,
+   "type": "Booster Box",
+   "set": "Journey Together",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1794241729482,
    "store": "spelparken",
@@ -7057,34 +7085,6 @@
    "type": "Booster Pack",
    "set": "Chaos Rising",
    "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793719332010,
-   "store": "nordic-pulls",
-   "product": "nordic-pulls:https://nordicpulls.se/produkt/seel-mep-116-holo-3pack-blister-promo",
-   "group": "x|blister|en||3|3pack-mep-promo-seel",
-   "title": "Seel MEP 116 (Holo) - 3pack-blister Promo",
-   "url": "https://nordicpulls.se/produkt/seel-mep-116-holo-3pack-blister-promo",
-   "image": "https://nordicpulls.se/uploads/display/tcgp-24451-116-292692e5f4e7.jpg",
-   "price": 89,
-   "type": "Blister",
-   "set": null,
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1793717983077,
-   "store": "tcg-card-house",
-   "product": "tcg-card-house:15560170963319",
-   "group": "30th-celebration|booster-box|ja|",
-   "title": "Pokémon: 30th Celebration Booster Box (JPN)",
-   "url": "https://tcgcardhouse.se/products/pokemon-30th-celebration-booster-box-jpn",
-   "image": "https://cdn.shopify.com/s/files/1/0950/2815/0647/files/pokemon-card-game-30th-celebration-booster-box-japansk_2.jpg?v=1790084572",
-   "price": 2599,
-   "type": "Booster Box",
-   "set": "30th Celebration",
-   "lang": "ja",
    "kind": "tillbaka"
   }
  ]
