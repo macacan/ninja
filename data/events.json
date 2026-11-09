@@ -1,6 +1,62 @@
 {
- "updated": 1794227989974,
+ "updated": 1794228909996,
  "events": [
+  {
+   "at": 1794228419592,
+   "store": "speltrollet",
+   "product": "speltrollet:15206031032646",
+   "group": "x|booster-pack|ja||inferno-x",
+   "title": "Pokemon Mega: Inferno X Booster (Japansk)",
+   "url": "https://speltrollet.se/products/pokemon-pokemon-mega-inferno-x-booster-japansk",
+   "image": "https://cdn.shopify.com/s/files/1/0674/0951/0716/files/Pok-mon-TCG---Inferno-X-Booster-Japansk.jpg?v=1760022746",
+   "price": 79,
+   "type": "Booster Pack",
+   "set": null,
+   "lang": "ja",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1794228341996,
+   "store": "tcgstore",
+   "product": "tcgstore:10714511016263",
+   "group": "ascended-heroes|booster-pack|en|",
+   "title": "Pokémon Mega Evolution: Ascended Heroes Booster Pack",
+   "url": "https://tcgstore.se/products/pokemon-mega-evolution-ascended-heroes-booster-pack",
+   "image": "https://cdn.shopify.com/s/files/1/0758/2508/6791/files/pokemon-mega-evolution-ascended-heroes-booster-pack.jpg?v=1774447903",
+   "price": 229,
+   "type": "Booster Pack",
+   "set": "Ascended Heroes",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1794228156682,
+   "store": "spelparken",
+   "product": "spelparken:15541912240503",
+   "group": "fusion-strike|booster-box|en|",
+   "title": "Fusion Strike Booster Box",
+   "url": "https://spelparken.se/products/fusion-strike-18-pack-booster-box-kopia",
+   "image": "https://cdn.shopify.com/s/files/1/0948/1876/3127/files/R_666a737a-db7c-4d28-afdd-d00e702d036e.jpg?v=1787333781",
+   "price": 12499,
+   "type": "Booster Box",
+   "set": "Fusion Strike",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1794228156682,
+   "store": "spelparken",
+   "product": "spelparken:15157891858807",
+   "group": "evolving-skies|booster-box|en|",
+   "title": "Evolving Skies Booster Box",
+   "url": "https://spelparken.se/products/evolving-skies-booster-box-oppnas-live",
+   "image": "https://cdn.shopify.com/s/files/1/0948/1876/3127/files/Pokemon-TCG-Sword-Shield-Evolving-Skies-Booster-Box-2.jpg?v=1759426935",
+   "price": 30999,
+   "type": "Booster Box",
+   "set": "Evolving Skies",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1794227286820,
    "store": "tcgaddan",
@@ -7026,20 +7082,6 @@
    "price": 6999,
    "type": "Collection Box",
    "set": "Generations",
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1793707975183,
-   "store": "cardlevels",
-   "product": "cardlevels:11057413849399",
-   "group": "chaos-rising|booster-bundle|en|",
-   "title": "Pokémon Chaos Rising Mega Evolution 4: Booster Bundle",
-   "url": "https://cardlevels.se/products/pokemon-chaos-rising-mega-evolution-4-booster-bundle",
-   "image": "https://cdn.shopify.com/s/files/1/0846/0458/4247/files/pokemon-mega-evolution-chaos-rising-booster-bundle.webp?v=1793704938",
-   "price": 599,
-   "type": "Booster Bundle",
-   "set": "Chaos Rising",
    "lang": "en",
    "kind": "ny"
   }
