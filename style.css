@@ -4123,6 +4123,9 @@ button.zm-price:hover{background:#1f2132}
   .val-card-modal .val-grade{margin-top:0;padding-top:0;border-top:0}
   /* Nerscrollat: litet kort till vänster och namn och värde bredvid, så att reglagen får plats. */
   .val-side .val-img{transition:width .2s ease}
+  /* Utan detta flyttar webbläsaren scrollen bakåt lika mycket som kortet krymper (scroll anchoring). Scrollar man
+     sakta hamnar man då på 0 igen, kortet växer, och så slår det fram och tillbaka. */
+  .val-card-modal{overflow-anchor:none}
   #val-card.is-compact .val-side{grid-template-columns:auto 1fr;justify-items:start;text-align:left;gap:12px;padding-top:6px}
   #val-card.is-compact .val-side .val-img{width:72px}
   #val-card.is-compact .vz-tip{display:none}
