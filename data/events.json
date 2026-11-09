@@ -1,6 +1,36 @@
 {
- "updated": 1794259867305,
+ "updated": 1794260767320,
  "events": [
+  {
+   "at": 1794260189350,
+   "store": "sweet-nerds",
+   "product": "sweet-nerds:https://sweetnerds.se/sv/products/one-piece-card-game-op14-the-azure-seas-seven-booster-box-jp",
+   "group": "op|the-azure-sea-s-seven|booster-box|ja|",
+   "title": "One Piece Card Game: OP14 - The Azure Sea's Seven Booster Box (JP)",
+   "url": "https://sweetnerds.se/sv/products/one-piece-card-game-op14-the-azure-seas-seven-booster-box-jp",
+   "image": "https://nycdn.nyehandel.se/store_17dfab1e-b233-4e19-a6f0-ae93160c8b85/images/IMxpTaTi57bOZs24eqPFrcAUgk7TgWzumTzgmrHZ.png?width=400&height=400",
+   "price": 1159,
+   "type": "Booster Box",
+   "set": "The Azure Sea's Seven",
+   "lang": "ja",
+   "game": "op",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1794260189350,
+   "store": "sweet-nerds",
+   "product": "sweet-nerds:https://sweetnerds.se/sv/products/one-piece-card-game-op07-500-years-in-to-the-future-booster-box",
+   "group": "op|500-years-in-the-future|booster-box|en|",
+   "title": "One Piece Card Game: OP07 - 500 Years In To The Future Booster Box",
+   "url": "https://sweetnerds.se/sv/products/one-piece-card-game-op07-500-years-in-to-the-future-booster-box",
+   "image": "https://nycdn.nyehandel.se/store_17dfab1e-b233-4e19-a6f0-ae93160c8b85/images/IGLlmzrs7F1rFN1CM05MZ6zhCH6rPpoIeZBoRn9R.png?width=400&height=400",
+   "price": 1099,
+   "type": "Booster Box",
+   "set": "500 Years in the Future",
+   "lang": "en",
+   "game": "op",
+   "kind": "tillbaka"
+  },
   {
    "at": 1794259202438,
    "store": "sweet-nerds",
@@ -7073,34 +7103,6 @@
    "set": "Mega Evolution",
    "lang": "en",
    "kind": "tillbaka"
-  },
-  {
-   "at": 1793741750775,
-   "store": "dragon-s-lair",
-   "product": "dragon-s-lair:15940303618396",
-   "group": "mega-evolution|blister|en||3",
-   "title": "Pokémon TCG: Mega Evolution - Delta Reign 3-pack Booster Blister",
-   "url": "https://dragonslair.se/products/pokemon-tcg-mega-evolution-delta-reign-3-pack-booster-blister",
-   "image": "https://cdn.shopify.com/s/files/1/1015/8315/9644/files/PokemonTCGMegaEvolution-DeltaReign3-packBoosterBlister.png?v=1793236574",
-   "price": 269,
-   "type": "Blister",
-   "set": "Mega Evolution",
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793741596408,
-   "store": "samlarhobby",
-   "product": "samlarhobby:16096487473533",
-   "group": "vivid-voltage|elite-trainer-box|en|",
-   "title": "Pokémon, Sword & Shield 4: Vivid Voltage, Elite Trainer Box",
-   "url": "https://samlarhobby.se/products/pokemon-sword-shield-4-vivid-voltage-elite-trainer-box",
-   "image": "https://cdn.shopify.com/s/files/1/0905/3120/1405/files/POK80768_1.jpg?v=1793741327",
-   "price": 1595,
-   "type": "Elite Trainer Box",
-   "set": "Vivid Voltage",
-   "lang": "en",
-   "kind": "ny"
   }
  ]
 }
