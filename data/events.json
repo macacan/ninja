@@ -1,6 +1,20 @@
 {
- "updated": 1794246067063,
+ "updated": 1794246987083,
  "events": [
+  {
+   "at": 1794246251045,
+   "store": "cardgame",
+   "product": "cardgame:https://cardgame.se/engelska-pokmon-produkter/engelska-special-boxar/pokemon-paldean-fates-great-tusk-iron-treads-ex-tin-4-packs",
+   "group": "paldean-fates|tin|en||great-iron-treads-tusk",
+   "title": "Pokemon Paldean Fates Great Tusk /   Iron Treads ex Tin (4 Packs)",
+   "url": "https://cardgame.se/engelska-pokmon-produkter/engelska-special-boxar/pokemon-paldean-fates-great-tusk-iron-treads-ex-tin-4-packs",
+   "image": "https://cdn.quickbutik.com/images/87588Q/products/6af2038075739.webp",
+   "price": 1200,
+   "type": "Tin",
+   "set": "Paldean Fates",
+   "lang": "en",
+   "kind": "ny"
+  },
   {
    "at": 1794243534711,
    "store": "spelparken",
@@ -7072,20 +7086,6 @@
    "set": "Scarlet & Violet",
    "lang": "ja",
    "kind": "ny"
-  },
-  {
-   "at": 1793719491711,
-   "store": "toyspace",
-   "product": "toyspace:https://toyspace.se/pokemon-tcg-kaos-uppgang-boosterpaket-pok10407-101",
-   "group": "chaos-rising|booster-pack|en|",
-   "title": "Max 5 per kund. Pokémon TCG Mega Evolution Chaos Rising Boosterpaket",
-   "url": "https://toyspace.se/pokemon-tcg-kaos-uppgang-boosterpaket-pok10407-101",
-   "image": "https://d189539ycils2q.cloudfront.net/media/catalog/product/cache/4ffcb2823444acbc328f989dd62e5069/p/o/pok10407-101-pokemon-chaos-rising-boosterpakke.jpg",
-   "price": 89,
-   "type": "Booster Pack",
-   "set": "Chaos Rising",
-   "lang": "en",
-   "kind": "tillbaka"
   }
  ]
 }
