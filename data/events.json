@@ -1,6 +1,20 @@
 {
- "updated": 1794215232655,
+ "updated": 1794216152675,
  "events": [
+  {
+   "at": 1794215631496,
+   "store": "aquitaz",
+   "product": "aquitaz:9919775932762",
+   "group": "white-flare|booster-pack|ja|",
+   "title": "Pokémon Scarlet & Violet: White Flare Booster Pack (7 Kort) (JP)",
+   "url": "https://aquitaz.se/products/pokemon-scarlet-violet-white-flare-booster-pack-jp",
+   "image": "https://cdn.shopify.com/s/files/1/0885/4087/3050/files/Pics_23_f9e5e35b-55d6-42bd-b90b-832dd8bea7c8.png?v=1746294259",
+   "price": 99,
+   "type": "Booster Pack",
+   "set": "White Flare",
+   "lang": "ja",
+   "kind": "tillbaka"
+  },
   {
    "at": 1794213345278,
    "store": "aquitaz",
