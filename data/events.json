@@ -1,6 +1,20 @@
 {
- "updated": 1794210632499,
+ "updated": 1794211552558,
  "events": [
+  {
+   "at": 1794211072494,
+   "store": "aquitaz",
+   "product": "aquitaz:10033729962330",
+   "group": "destined-rivals|elite-trainer-box|en|",
+   "title": "Pokémon Scarlet & Violet: Destined Rivals Elite Trainer Box (ETB) (9 Pack) (ENG)",
+   "url": "https://aquitaz.se/products/pokemon-scarlet-violet-destined-rivals-elite-trainer-box-etb9-packs-eng",
+   "image": "https://cdn.shopify.com/s/files/1/0885/4087/3050/files/Blooming_Radiance_22.png?v=1742824383",
+   "price": 2199,
+   "type": "Elite Trainer Box",
+   "set": "Destined Rivals",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1794180187336,
    "store": "pokekid",
