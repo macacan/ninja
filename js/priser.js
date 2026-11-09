@@ -572,12 +572,10 @@ let redrawTimer = 0;
 const redrawSoon = () => { clearTimeout(redrawTimer); redrawTimer = setTimeout(showVault, 2500); };
 // manual: skannern öppnas direkt med sökrutan (Sök och lägg till i valvet)
 async function scanCards(g = "vault", { manual = false, resume = false } = {}) {
-  if (VAULT_PAGE) {
-    unlockCoin(); // måste ske i trycket, före första await
-    getRates(); // kursen ska finnas när första kortet hittas
-  }
+  unlockCoin(); // måste ske i trycket, före första await
+  getRates(); // kursen ska finnas när första kortet hittas
   track("scan", "Öppnad");
-  const { openScanner } = await import("./card-scanner.js?v=20261107a");
+  const { openScanner } = await import("./card-scanner.js?v=20261109b");
   const added = new Map(); // valvet: träffarna som lagts in, för att kunna öppna rätt kort
   openScanner(async (r) => {
     track("scan", r.cardId ? "Säker träff" : "Läst, söker");

@@ -1603,6 +1603,9 @@ let onLookup = null; // Kortpriser: slår upp träffens namn, bild och pris till
 // Snabb skanning: träffen läggs i hörnet som i valvet och man skannar vidare. Ett tryck på bilden öppnar kortet.
 const QUICK_KEY = "nl:scan-quick";
 const quickOn = () => { try { return localStorage.getItem(QUICK_KEY) === "1"; } catch { return false; } };
+// Animationerna för kortens värdenivåer (strålar, jackpot och popp-upp) går att stänga av, i valvet och Kortpriser
+const FX_KEY = "nl:scan-fx-off";
+const fxOff = () => { try { return localStorage.getItem(FX_KEY) === "1"; } catch { return false; } };
 let torchSupported = false, torchActive = false;
 let stillTicks = 0, lastScanAt = 0;
 let pauseUntil = 0, openedAt = 0; // pauseUntil: auto-skanningen väntar så att ett felmeddelande hinner läsas
@@ -1644,6 +1647,15 @@ function paintSound() {
     : '<path d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/>'}</svg>`;
 }
 
+function paintFx() {
+  const btn = dialog.querySelector(".scan-fx"), off = fxOff();
+  btn.setAttribute("aria-pressed", String(off));
+  btn.setAttribute("aria-label", off ? "Slå på animationerna" : "Stäng av animationerna");
+  btn.title = off ? "Animationer av" : "Animationer på";
+  btn.innerHTML = `<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M12 2.5l2.4 6.1 6.1 2.4-6.1 2.4L12 19.5l-2.4-6.1L3.5 11l6.1-2.4z"/>${off
+    ? '<path d="M3 21L21 3" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>' : ""}</svg>`;
+}
+
 function ui() {
   if (dialog) return dialog;
   dialog = document.createElement("dialog");
@@ -1654,6 +1666,7 @@ function ui() {
       <b>Skanna kort</b>
       <div class="scan-tools">
         <button class="scan-quick" type="button" aria-pressed="false" hidden>Snabb skanning</button>
+        <button class="scan-fx" type="button" hidden></button>
         <button class="scan-sound" type="button" hidden></button>
         <button class="scan-torch" type="button" aria-label="Blixt" aria-pressed="false" hidden>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -1777,6 +1790,14 @@ function ui() {
     try { localStorage.setItem(QUICK_KEY, on ? "1" : "0"); } catch {}
     autoOpen = !on;
     e.currentTarget.setAttribute("aria-pressed", String(on));
+  });
+
+  // Animationerna för värdenivåerna
+  dialog.querySelector(".scan-fx").addEventListener("click", () => {
+    const off = !fxOff();
+    try { localStorage.setItem(FX_KEY, off ? "1" : "0"); } catch {}
+    if (off) closeReveal?.();
+    paintFx();
   });
 
   // Myntljudet i valvet
@@ -2720,6 +2741,7 @@ async function priceOf(r) {
   if (r.game === "op") return (await opData().catch(() => null))?.get(r.cardId)?.sek ?? null;
   return null;
 }
+const OPEN_WAIT = 2500; // ms som kortet längst väntar på priset när det öppnas direkt (Kortpriser)
 const HIT_WAIT = 700; // ms som kortet längst väntar på priset innan det poppar upp ändå. Priset fylls i när det kommer.
 const HIT_PAUSE = 1100; // ms innan nästa kort läses
 const HIT_GAP = 1000; // ms som minst går mellan två träffar, så att samma kort inte räknas två gånger
@@ -2780,10 +2802,15 @@ function paintPeek(item) {
   pop.querySelector("span").textContent = labelOf(item);
 }
 // Silver-, guld- och diamantkort har egna ljud i stället för myntet (showReveal)
-const coinFor = (price) => { if (!hasTierSound(tierOf(price))) playCoin(); };
+// Är animationerna av spelas nivåns ljud direkt, eftersom ingen visning kommer
+const coinFor = (price) => {
+  const tier = tierOf(price);
+  if (!hasTierSound(tier)) playCoin();
+  else if (fxOff()) playTier(tier);
+};
 function cheer(item) {
   if ("vibrate" in navigator) navigator.vibrate(45);
-  if (onHit) coinFor(item.price);
+  if (onHit || onLookup) coinFor(item.price);
   const hud = dialog.querySelector(".scan-hud-status");
   hud?.classList.add("success");
   setTimeout(() => hud?.classList.remove("success"), 1500);
@@ -2808,7 +2835,7 @@ async function setPeek(r, canvas) {
   // Valvet svarar med det inlagda kortet, eller null om läsningen inte pekade ut något kort
   const adding = onHit && Promise.resolve(onHit(item)).then((c) => c || null, () => null);
   // Snabb skanning: priset till bilden i hörnet. Öppnas kortet direkt behövs det inte här.
-  const lookup = !onHit && !autoOpen && onLookup ? Promise.resolve(onLookup(item)).then((c) => c || null, () => null) : null;
+  const lookup = !onHit && onLookup ? Promise.resolve(onLookup(item)).then((c) => c || null, () => null) : null;
   item.thumb = thumbOf(canvas) || r.image || null; // ett manuellt valt kort har kortets bild
   // Ingen träff att visa: förra kortet ligger kvar i hörnet, och samma kort får läsas om
   const failed = () => {
@@ -2838,7 +2865,8 @@ async function setPeek(r, canvas) {
   if (added) await Promise.race([take(added), new Promise((done) => setTimeout(done, IMAGE_WAIT))]);
   else if (adding) item.pending = true;
   else if (lookup) {
-    const c = await Promise.race([lookup, new Promise((done) => setTimeout(done, HIT_WAIT))]);
+    // Öppnas kortet direkt väntar det lite längre på priset, så att ljudet och animationen hinner följa med
+    const c = await Promise.race([lookup, new Promise((done) => setTimeout(done, autoOpen ? OPEN_WAIT : HIT_WAIT))]);
     if (peek !== item) return;
     if (c) await Promise.race([take(c), new Promise((done) => setTimeout(done, IMAGE_WAIT))]);
     else if (c === undefined) item.pending = true;
@@ -2846,8 +2874,21 @@ async function setPeek(r, canvas) {
   if (peek !== item) return;
   if (!item.pending) cheer(item);
   status(hitText(item, !!added));
-  if (autoOpen) return openPeek();
   const btn = dialog.querySelector(".scan-peek");
+  // Kortpriser: kortet visas med sin värdenivå (ljud och animation, som i valvet) och öppnas sedan
+  if (autoOpen) {
+    if (item.pending) item.pending = false; // priset kom inte i tid: kortet öppnas ändå
+    const level = onLookup && revealLevel(item.price);
+    if (level) await showReveal(item, level);
+    else if (onLookup && !fxOff()) {
+      paintPeek(item);
+      btn.style.visibility = "hidden";
+      await new Promise((done) => popCard(item, btn, done));
+      btn.style.visibility = "";
+    }
+    if (peek !== item) return;
+    return openPeek();
+  }
   paintPeek(item);
   // Värdefulla kort visas över hela skärmen i stället för den lilla bilden, och landar sedan i hörnet
   btn.hidden = false;
@@ -2862,8 +2903,10 @@ async function setPeek(r, canvas) {
     btn.classList.add("pop");
     return;
   }
-  // Kortet poppar upp mitt i bilden med priset och flyger sedan upp till hörnet, där det ligger kvar
-  popCard(item, btn, () => {
+  // Kortet poppar upp mitt i bilden med priset och flyger sedan upp till hörnet, där det ligger kvar.
+  // Med animationerna av hamnar det direkt i hörnet.
+  if (fxOff() && (onHit || onLookup)) btn.style.visibility = "";
+  else popCard(item, btn, () => {
     if (peek !== item) return;
     btn.style.visibility = "";
     btn.classList.remove("pop");
@@ -3101,7 +3144,7 @@ function openPeek() {
 // upp, ringar, mynt och priset som räknas upp (ingen text). Visningen ligger kvar tills man trycker.
 const revealLevel = (price) => {
   const k = price == null ? 0 : Math.round(price);
-  return !onHit ? null : k > 1000 ? "jackpot" : k > 100 ? "rays" : null;
+  return (!onHit && !onLookup) || fxOff() ? null : k > 1000 ? "jackpot" : k > 100 ? "rays" : null;
 };
 let closeReveal = null;
 // Gnistor från mitten, och vid jackpot även mynt som regnar. Slutar när rutan är borta.
@@ -3263,7 +3306,9 @@ export async function openScanner(callback, partialCallback, { game = "pokemon",
   const title = { pokemon: "Skanna Pokémonkort", rb: "Skanna Riftbound-kort", op: "Skanna One Piece-kort" }[game] || "Skanna kort";
   d.querySelector(".scan-top b").textContent = title;
   d.setAttribute("aria-label", title);
-  d.querySelector(".scan-sound").hidden = !hit; // ljudet hör till valvet
+  d.querySelector(".scan-sound").hidden = !hit && !lookup; // ljudet hör till valvet och Kortpriser
+  d.querySelector(".scan-fx").hidden = !hit && !lookup;
+  paintFx();
   d.querySelector(".scan-quick").hidden = !open;
   d.querySelector(".scan-quick").setAttribute("aria-pressed", String(open && !autoOpen));
   paintSound();
