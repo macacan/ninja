@@ -1,6 +1,51 @@
 {
- "updated": 1794260767320,
+ "updated": 1794261707337,
  "events": [
+  {
+   "at": 1794261160544,
+   "store": "sweet-nerds",
+   "product": "sweet-nerds:https://sweetnerds.se/sv/products/one-piece-card-game-eb-04-egghead-crisis-booster-box",
+   "group": "op|eb-04|booster-box|en|",
+   "title": "One Piece Card Game: EB-04 Egghead Crisis Booster Box",
+   "url": "https://sweetnerds.se/sv/products/one-piece-card-game-eb-04-egghead-crisis-booster-box",
+   "image": "https://nycdn.nyehandel.se/store_17dfab1e-b233-4e19-a6f0-ae93160c8b85/images/MuCK5jUrfETLSp9FUeocYokKsbgQ81FvZDEdYL86.png?width=400&height=400",
+   "price": 999,
+   "type": "Booster Box",
+   "set": "EB-04",
+   "lang": "en",
+   "game": "op",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1794261160544,
+   "store": "sweet-nerds",
+   "product": "sweet-nerds:https://sweetnerds.se/sv/products/one-piece-card-game-eb-04-egghead-crisis-booster-pack",
+   "group": "op|eb-04|booster-pack|en|",
+   "title": "One Piece Card Game: EB-04 Egghead Crisis Booster Pack",
+   "url": "https://sweetnerds.se/sv/products/one-piece-card-game-eb-04-egghead-crisis-booster-pack",
+   "image": "https://nycdn.nyehandel.se/store_17dfab1e-b233-4e19-a6f0-ae93160c8b85/images/v1QJrvdkLMzYAIZz7fPe4v54l2zcDc3ZAdxXTO29.png?width=400&height=400",
+   "price": 59,
+   "type": "Booster Pack",
+   "set": "EB-04",
+   "lang": "en",
+   "game": "op",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1794261160544,
+   "store": "sweet-nerds",
+   "product": "sweet-nerds:https://sweetnerds.se/sv/products/one-piece-card-game-op15-adventure-on-the-island-of-the-gods-booster-box-jp",
+   "group": "op|adventure-on-kami-s-island|booster-box|ja|",
+   "title": "One Piece Card Game: OP15 Adventure On Kami's Island Booster Box (JP)",
+   "url": "https://sweetnerds.se/sv/products/one-piece-card-game-op15-adventure-on-the-island-of-the-gods-booster-box-jp",
+   "image": "https://nycdn.nyehandel.se/store_17dfab1e-b233-4e19-a6f0-ae93160c8b85/images/lveV9K5N14BZp7VNmDvmmexr9QfFvPSa42v1BZuw.png?width=400&height=400",
+   "price": 1199,
+   "type": "Booster Box",
+   "set": "Adventure on Kami's Island",
+   "lang": "ja",
+   "game": "op",
+   "kind": "tillbaka"
+  },
   {
    "at": 1794260189350,
    "store": "sweet-nerds",
@@ -7061,48 +7106,6 @@
    "lang": "en",
    "kind": "prissankt",
    "from": 12000
-  },
-  {
-   "at": 1793742512983,
-   "store": "samlarhobby",
-   "product": "samlarhobby:16096496943485",
-   "group": "scarlet-violet|elite-trainer-box|en|",
-   "title": "Pokémon, Scarlet & Violet, Elite Trainer Box (Purple)",
-   "url": "https://samlarhobby.se/products/pokemon-scarlet-violet-elite-trainer-box-purple",
-   "image": "https://cdn.shopify.com/s/files/1/0905/3120/1405/files/POK85341-MIR_1.jpg?v=1793742133",
-   "price": 1595,
-   "type": "Elite Trainer Box",
-   "set": "Scarlet & Violet",
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1793742512983,
-   "store": "samlarhobby",
-   "product": "samlarhobby:16096496451965",
-   "group": "scarlet-violet|elite-trainer-box|en|",
-   "title": "Pokémon, Scarlet & Violet, Elite Trainer Box (Red)",
-   "url": "https://samlarhobby.se/products/pokemon-scarlet-violet-elite-trainer-box-red",
-   "image": "https://cdn.shopify.com/s/files/1/0905/3120/1405/files/81kFKYGRq7L.jpg?v=1793742089",
-   "price": 1595,
-   "type": "Elite Trainer Box",
-   "set": "Scarlet & Violet",
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1793741750775,
-   "store": "dragon-s-lair",
-   "product": "dragon-s-lair:15940312367452",
-   "group": "mega-evolution|blister|en||cl",
-   "title": "Pokémon TCG: Mega Evolution - Delta Reign Checklane Blister",
-   "url": "https://dragonslair.se/products/pokemon-tcg-mega-evolution-delta-reign-checklane-blister",
-   "image": "https://cdn.shopify.com/s/files/1/1015/8315/9644/files/Checklane.png?v=1793237136",
-   "price": 89,
-   "type": "Blister",
-   "set": "Mega Evolution",
-   "lang": "en",
-   "kind": "tillbaka"
   }
  ]
 }
