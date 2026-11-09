@@ -1,6 +1,48 @@
 {
- "updated": 1794211552558,
+ "updated": 1794212472588,
  "events": [
+  {
+   "at": 1794212216981,
+   "store": "aquitaz",
+   "product": "aquitaz:9734864601434",
+   "group": "paradox-rift|elite-trainer-box|en|",
+   "title": "Pokémon Scarlet & Violet: Paradox Rift (Roaring Moon) Elite Trainer Box (ETB) (9 Pack)",
+   "url": "https://aquitaz.se/products/pokemon-scarlet-violet-paradox-rift-roaring-moon-elite-trainer-box-etb",
+   "image": "https://cdn.shopify.com/s/files/1/0885/4087/3050/files/IMG_2282.png?v=1724421826",
+   "price": 1799,
+   "type": "Elite Trainer Box",
+   "set": "Paradox Rift",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1794212216981,
+   "store": "aquitaz",
+   "product": "aquitaz:9731207627098",
+   "group": "paradox-rift|elite-trainer-box|en|",
+   "title": "Pokémon Scarlet & Violet: Paradox Rift (Iron Valiant) Elite Trainer Box (ETB) (9 Pack)",
+   "url": "https://aquitaz.se/products/pokemon-scarlet-violet-paradox-rift-iron-valiant-elite-trainer-box-etb",
+   "image": "https://cdn.shopify.com/s/files/1/0885/4087/3050/files/ecac42d1-ff0c-4d3e-bf87-8fa116b9b774.ad79eddbc2e5391ac92d4f2aaa3674a3.webp?v=1728746032",
+   "price": 1799,
+   "type": "Elite Trainer Box",
+   "set": "Paradox Rift",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1794211762906,
+   "store": "tcgstore",
+   "product": "tcgstore:8998770147655",
+   "group": "temporal-forces|booster-pack|en|",
+   "title": "Pokémon Scarlet & Violet 5: Temporal Forces Booster Pack",
+   "url": "https://tcgstore.se/products/pokemon-scarlet-violet-5-temporal-forces-booster-pack",
+   "image": "https://cdn.shopify.com/s/files/1/0758/2508/6791/files/pokemon-temporal-forces-booster-pack-walking-wake.jpg?v=1705954682",
+   "price": 139,
+   "type": "Booster Pack",
+   "set": "Temporal Forces",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1794211072494,
    "store": "aquitaz",
