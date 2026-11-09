@@ -1,6 +1,49 @@
 {
- "updated": 1794258027272,
+ "updated": 1794258947285,
  "events": [
+  {
+   "at": 1794258721893,
+   "store": "majki-poke",
+   "product": "majki-poke:15416107303298",
+   "group": "delta-reign|elite-trainer-box|en|",
+   "title": "Delta Reign – Elite Trainer Box (ENG)",
+   "url": "https://majkipoke.se/products/delta-reign-elite-trainer-box-eng",
+   "image": "https://cdn.shopify.com/s/files/1/0953/4629/5170/files/PokemonMegaEvolutionDeltaReignEliteTrainerBox_ETB_9Pack_ENG.png?v=1792027585",
+   "price": 1299,
+   "type": "Elite Trainer Box",
+   "set": "Delta Reign",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1794258721893,
+   "store": "majki-poke",
+   "product": "majki-poke:15416107041154",
+   "group": "delta-reign|booster-pack|en|",
+   "title": "Delta Reign – Booster Pack (ENG)",
+   "url": "https://majkipoke.se/products/delta-reign-booster-pack-eng",
+   "image": "https://cdn.shopify.com/s/files/1/0953/4629/5170/files/PokemonMegaEvolutionDeltaReignBoosterPack.png?v=1792027410",
+   "price": 99,
+   "type": "Booster Pack",
+   "set": "Delta Reign",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1794258224297,
+   "store": "sweet-nerds",
+   "product": "sweet-nerds:https://sweetnerds.se/sv/products/one-piece-card-game-op12-legacy-of-the-master-booster-pack",
+   "group": "op|legacy-of-the-master|booster-pack|en|",
+   "title": "One Piece Card Game: OP12 - Legacy Of The Master Booster Pack",
+   "url": "https://sweetnerds.se/sv/products/one-piece-card-game-op12-legacy-of-the-master-booster-pack",
+   "image": "https://nycdn.nyehandel.se/store_17dfab1e-b233-4e19-a6f0-ae93160c8b85/images/83vWL8dW3RwDK4da0R2ufp06YiKMfbFu6zrQSLLd.png?width=400&height=400",
+   "price": 49,
+   "type": "Booster Pack",
+   "set": "Legacy of the Master",
+   "lang": "en",
+   "game": "op",
+   "kind": "tillbaka"
+  },
   {
    "at": 1794257738064,
    "store": "cardvalley",
@@ -7052,50 +7095,6 @@
    "lang": "en",
    "kind": "prissankt",
    "from": 679
-  },
-  {
-   "at": 1793740662176,
-   "store": "samlarverket",
-   "product": "samlarverket:11183013101911",
-   "group": "30th-celebration|tin|en||greninja",
-   "title": "Pokémon 30th Celebration Greninja Tin",
-   "url": "https://samlarverket.com/produkt/30th-celebration-greninja-tin",
-   "image": "https://cdn.shopify.com/s/files/1/1022/5323/2471/files/Pokemon_30th_Celebration_Greninja_Tin_514e0f9f-af33-4b18-9e3d-1e6171321501.webp?v=1789471048",
-   "price": 629,
-   "type": "Tin",
-   "set": "30th Celebration",
-   "lang": "en",
-   "kind": "prissankt",
-   "from": 679
-  },
-  {
-   "at": 1793739774901,
-   "store": "spelparken",
-   "product": "spelparken:15149816283511",
-   "group": "paldea-evolved|booster-pack|en|",
-   "title": "Paldea Evolved Booster Pack",
-   "url": "https://spelparken.se/products/paldea-evolved-oppnas-live",
-   "image": "https://cdn.shopify.com/s/files/1/0948/1876/3127/files/Paldea_Evolved_BP_-_1_1.webp?v=1759071631",
-   "price": 169,
-   "type": "Booster Pack",
-   "set": "Paldea Evolved",
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793739729158,
-   "store": "dragon-s-lair",
-   "product": "dragon-s-lair:15679002575196",
-   "group": "x|booster-box|zh||gem-s2-vol",
-   "title": "Pokemon TCG Gem Pack Vol. 2 Booster Box (Kinesisk)(15 st Boosters)",
-   "url": "https://dragonslair.se/products/pokemon-tcg-gem-pack-vol-2-booster-box-kinesisk",
-   "image": "https://cdn.shopify.com/s/files/1/1015/8315/9644/files/pokemon-gem-pack-vol-2_1024x1024_a136cbc0-4679-4c59-9e95-c43e7bcb65ce.webp?v=1784209130",
-   "price": 1095,
-   "type": "Booster Box",
-   "set": null,
-   "lang": "zh",
-   "kind": "prissankt",
-   "from": 1249
   }
  ]
 }
