@@ -34,7 +34,7 @@
      först när style.css laddats. Mörkt tema är standard (js/theme.js), därför nattbilden. -->
 <link rel="preload" as="image" href="img/pokemon-restock-night.webp" type="image/webp" fetchpriority="high">
 <link href="fonts/fonts.css" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=20261109f">
+<link rel="stylesheet" href="style.css?v=20261109p">
 <link rel="stylesheet" href="dark.css?v=20261105a" id="dark-css" media="(prefers-color-scheme: dark)">
 <script src="js/theme.js?v=20261106"></script>
 </head>
@@ -65,25 +65,26 @@
       <div class="phone-status" aria-hidden="true"><span>Lootninja</span><i class="phone-island"></i><span class="phone-icons"><i></i><i></i><i></i></span></div>
       <div class="phone-clock" aria-hidden="true"><span id="phone-date"></span><b id="phone-time">12:33</b></div>
       <script>
-        // Låsskärmens klocka och datum visar besökarens egen tid.
+        // Låsskärmens klocka och datum visar besökarens egen tid, både i telefonen på datorn och den halva på mobilen.
         (() => {
-          const t = document.getElementById("phone-time"), d = document.getElementById("phone-date");
           const tick = () => {
             const n = new Date();
-            t.textContent = n.toLocaleTimeString("sv-SE", { hour: "2-digit", minute: "2-digit" });
+            const time = n.toLocaleTimeString("sv-SE", { hour: "2-digit", minute: "2-digit" });
             const s = n.toLocaleDateString("sv-SE", { weekday: "long", day: "numeric", month: "long" });
-            d.textContent = s.charAt(0).toUpperCase() + s.slice(1);
+            document.querySelectorAll("#phone-time, .pm-time").forEach((t) => (t.textContent = time));
+            document.querySelectorAll("#phone-date, .pm-date").forEach((d) => (d.textContent = s.charAt(0).toUpperCase() + s.slice(1)));
           };
           tick(); setInterval(tick, 15000);
+          addEventListener("DOMContentLoaded", tick);
         })();
       </script>
       <div class="restock-intro">
         <!-- Rubriken för sökmotorer och skärmläsare. Synligt står "Missa aldrig ett släpp!" som rubrik och en kort mening om vad sajten gör. -->
-        <h1 class="sr-only">Pokémonkort i lager – vi bevakar 70+ svenska butiker</h1>
+        <h1 class="sr-only">Pokémonkort i lager – vi bevakar 65+ svenska butiker</h1>
         <p class="ri-title" aria-hidden="true">Missa aldrig ett släpp!</p>
-        <p class="ri-long">Lootninja håller koll på tusentals produkter från Pokémon och One Piece till Riftbound.</p>
+        <p class="ri-long">Riftbound, One Piece och Pokémon</p>
         <ul class="restock-facts">
-          <li><b data-count="70+">70+</b> svenska butiker</li>
+          <li><b data-count="65+">65+</b> svenska butiker</li>
           <li><b data-count="8000+">8000+</b> bevakade produkter</li>
           <li><b data-count="24/7">24/7</b> bevakning dygnet runt</li>
         </ul>
@@ -113,9 +114,9 @@
       <script>
         // Då och då glider en låtsasnotis ner på telefonens skärm, med en av de senast inkomna produkterna
         // från flödet bredvid. Ibland kommer en till strax efter och trycker ner den förra bakom sig, som en hög.
-        // Bara på breda skärmar, där telefonen syns.
+        // På breda skärmar i telefonen bredvid flödet, på mobilen i den halva telefonen under introt (.phone-mini).
         (() => {
-          const box = document.currentScript.previousElementSibling;
+          const big = document.currentScript.previousElementSibling;
           const wide = matchMedia("(min-width:901px)");
           const heads = ["Tillbaka i lager", "Nytt i lager just nu", "Missa aldrig ett släpp!", "Ninjan hittade en box", "Snabbt, innan den tar slut"];
           let n = 0;
@@ -125,7 +126,8 @@
             setTimeout(() => el.remove(), 450);
           };
           const show = () => {
-            if (!wide.matches || document.hidden) return;
+            const box = wide.matches ? big : document.querySelector(".phone-mini .phone-notifs");
+            if (!box || document.hidden) return;
             const items = [...document.querySelectorAll("#restock-feed .rf a")];
             const a = items[n % (items.length || 1)];
             const name = a?.querySelector(".rf-body b")?.textContent;
@@ -135,7 +137,7 @@
             el.className = "phone-notif";
             el.innerHTML = '<span class="pn-app"></span><span class="pn-text"><span class="pn-top"><b></b><small>nu</small></span><span class="pn-body"></span></span>' + (img ? '<span class="pn-img"><img alt=""></span>' : "");
             el.querySelector(".pn-top b").textContent = heads[n % heads.length] + (store ? " · " + store : "");
-            el.querySelector(".pn-body").textContent = name ? name + (price ? " – " + price : "") : "Lootninja bevakar 70+ svenska butiker dygnet runt.";
+            el.querySelector(".pn-body").textContent = name ? name + (price ? " – " + price : "") : "Lootninja bevakar 65+ svenska butiker dygnet runt.";
             if (img) { const i = el.querySelector(".pn-img img"); i.referrerPolicy = "no-referrer"; i.src = img; }
             n++;
             // Den nya lägger sig överst och trycker ner den förra bakom sig. Fler än två ryms inte, så den äldsta försvinner.
@@ -154,6 +156,12 @@
       </script>
       </div>
       </div>
+      <!-- Mobilen: den övre halvan av en telefon med klocka och låtsasnotiser, under introt. Dold på datorn. -->
+      <div class="phone-mini" aria-hidden="true"><div class="pm-screen">
+        <div class="phone-status"><span>Lootninja</span><i class="phone-island"></i><span class="phone-icons"><i></i><i></i><i></i></span></div>
+        <div class="phone-clock"><span class="pm-date"></span><b class="pm-time">12:33</b></div>
+        <div class="phone-notifs"></div>
+      </div></div>
       </div>
     </section>
 

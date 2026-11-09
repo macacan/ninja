@@ -323,6 +323,42 @@ input[type=search]{width:100%;max-width:360px}
   .restock-actions .btn.small:not(.primary){flex-grow:1.6}
 }
 .restock-facts b{font:800 1.6rem/1 var(--sans);color:var(--gold);letter-spacing:.5px;font-variant-numeric:tabular-nums}
+/* Telefonens delar som både telefonen på datorn och den halva på mobilen (.phone-mini) använder:
+   statusrad, klocka och låtsasnotiser. */
+.phone-clock{display:grid;justify-items:center;gap:2px;color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.35)}
+.phone-notifs{display:grid;pointer-events:none}
+.phone-status{display:flex;align-items:center;justify-content:space-between;height:30px;padding:0 10px;font:700 .72rem/1 var(--sans);color:#fff}
+.phone-island{position:absolute;left:50%;top:12px;width:96px;height:28px;border-radius:999px;background:#000;translate:-50% 0}
+.phone-icons{display:flex;gap:4px;align-items:flex-end}
+.phone-icons i{display:block;width:4px;border-radius:1px;background:#fff}
+.phone-icons i:nth-child(1){height:5px}.phone-icons i:nth-child(2){height:8px}
+.phone-icons i:nth-child(3){width:20px;height:10px;margin-left:4px;border-radius:3px;background:linear-gradient(90deg,#fff 75%,rgba(255,255,255,.35) 75%)}
+.phone-clock span{font:600 .85rem/1.2 var(--sans);color:#dfe3f5}
+.phone-clock b{font:700 3.6rem/1 var(--sans);letter-spacing:-1px;font-variant-numeric:tabular-nums}
+/* Alla ligger i samma ruta. Den nyaste överst, de äldre en bit nedtryckta och mindre bakom. */
+.phone-notif{grid-area:1/1;position:relative;z-index:2;transition:translate .45s cubic-bezier(.2,.8,.2,1),scale .45s cubic-bezier(.2,.8,.2,1),opacity .45s;display:flex;align-items:center;gap:10px;padding:10px;border-radius:18px;
+  background:rgba(120,130,175,.42);backdrop-filter:blur(16px) saturate(1.4);border:1px solid rgba(255,255,255,.18);box-shadow:0 10px 24px rgba(0,0,0,.35);color:#fff;
+  animation:pnIn .55s cubic-bezier(.2,.9,.3,1.15) both}
+.phone-notif + .phone-notif{z-index:1;translate:0 12px;scale:.92;opacity:.6}
+.phone-notif.is-out{animation:pnOut .45s ease-in both}
+@keyframes pnIn{from{opacity:0;transform:translateY(-70px) scale(.9)}}
+@keyframes pnOut{to{opacity:0;transform:scale(.92)}}
+.pn-app{flex:none;width:34px;height:34px;border-radius:9px;background:url(img/icon-192.png) center/cover,#e4572e}
+.pn-text{flex:1;min-width:0;display:grid;grid-template-columns:minmax(0,1fr);gap:2px}
+.pn-top{display:flex;gap:6px;align-items:baseline}
+.pn-top b{flex:1;min-width:0;font:700 .74rem/1.25 var(--sans);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pn-top small{flex:none;font-size:.66rem;color:rgba(255,255,255,.7)}
+.pn-body{font-size:.72rem;line-height:1.3;color:rgba(255,255,255,.88);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.pn-img{flex:none;width:36px;height:36px;border-radius:8px;background:#fff;overflow:hidden;display:grid;place-items:center}
+.pn-img img{width:100%;height:100%;object-fit:contain}
+[data-theme="light"] .phone-status,[data-theme="light"] .phone-clock{color:#1b1e28;text-shadow:none}
+[data-theme="light"] .phone-clock span{color:#4a5166}
+[data-theme="light"] .phone-icons i{background:#1b1e28}
+[data-theme="light"] .phone-icons i:nth-child(3){background:linear-gradient(90deg,#1b1e28 75%,rgba(27,30,40,.3) 75%)}
+[data-theme="light"] .phone-notif{background:rgba(255,255,255,.85);border-color:rgba(0,0,0,.08);box-shadow:0 8px 20px rgba(19,20,34,.14);color:#1b1e28}
+[data-theme="light"] .pn-top small{color:#6b7286}
+[data-theme="light"] .pn-body{color:#3a4055}
+[data-theme="light"] .pn-img{box-shadow:inset 0 0 0 1px rgba(0,0,0,.08)}
 /* Telefonen till höger om flödet (bara på breda skärmar). Introt och knapparna ligger på skärmen som låsskärmsnotiser. */
 @media (min-width:901px){
   .restock-side{align-items:center}
@@ -337,16 +373,8 @@ input[type=search]{width:100%;max-width:360px}
   .phone::after{right:-3px;top:28%;height:84px}
   .phone-screen{position:relative;height:100%;display:flex;flex-direction:column;gap:14px;padding:14px 16px 26px;border-radius:42px;overflow:hidden;
     background:radial-gradient(120% 60% at 20% 0%,rgba(140,120,255,.35),transparent 60%),radial-gradient(90% 50% at 90% 100%,rgba(120,70,200,.45),transparent 65%),linear-gradient(180deg,#1d2350,#121634 55%,#1a1238)}
-  .phone-status{display:flex;align-items:center;justify-content:space-between;height:30px;padding:0 10px;font:700 .72rem/1 var(--sans);color:#fff}
-  .phone-island{position:absolute;left:50%;top:12px;width:96px;height:28px;border-radius:999px;background:#000;translate:-50% 0}
-  .phone-icons{display:flex;gap:4px;align-items:flex-end}
-  .phone-icons i{display:block;width:4px;border-radius:1px;background:#fff}
-  .phone-icons i:nth-child(1){height:5px}.phone-icons i:nth-child(2){height:8px}
-  .phone-icons i:nth-child(3){width:20px;height:10px;margin-left:4px;border-radius:3px;background:linear-gradient(90deg,#fff 75%,rgba(255,255,255,.35) 75%)}
   /* Under klockan hålls plats för notiserna, så att de aldrig hamnar över kortet. */
-  .phone-clock{display:grid;justify-items:center;gap:2px;margin:-2px 0 62px;color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.35)}
-  .phone-clock span{font:600 .85rem/1.2 var(--sans);color:#dfe3f5}
-  .phone-clock b{font:700 3.6rem/1 var(--sans);letter-spacing:-1px;font-variant-numeric:tabular-nums}
+  .phone-clock{margin:-2px 0 62px}
   .phone-screen .restock-intro{margin-block:auto;gap:10px;padding:16px 14px;border-radius:24px;background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.16);backdrop-filter:blur(14px)}
   .phone-screen .restock-intro .ri-title{font-size:1.1rem;white-space:nowrap}
   .phone-screen .restock-intro p{font-size:.82rem;line-height:1.5;text-align:center}
@@ -357,23 +385,7 @@ input[type=search]{width:100%;max-width:360px}
   .phone-screen .restock-actions{flex-direction:column;flex-wrap:nowrap;gap:8px}
   .phone-screen .restock-actions .btn{width:100%;justify-content:center;text-align:center;white-space:normal}
   /* Låtsasnotisen som glider ner under klockan då och då. */
-  .phone-notifs{position:absolute;left:12px;right:12px;top:146px;z-index:3;display:grid;pointer-events:none}
-  /* Alla ligger i samma ruta. Den nyaste överst, de äldre en bit nedtryckta och mindre bakom. */
-  .phone-notif{grid-area:1/1;position:relative;z-index:2;transition:translate .45s cubic-bezier(.2,.8,.2,1),scale .45s cubic-bezier(.2,.8,.2,1),opacity .45s;display:flex;align-items:center;gap:10px;padding:10px;border-radius:18px;
-    background:rgba(120,130,175,.42);backdrop-filter:blur(16px) saturate(1.4);border:1px solid rgba(255,255,255,.18);box-shadow:0 10px 24px rgba(0,0,0,.35);color:#fff;
-    animation:pnIn .55s cubic-bezier(.2,.9,.3,1.15) both}
-  .phone-notif + .phone-notif{z-index:1;translate:0 12px;scale:.92;opacity:.6}
-  .phone-notif.is-out{animation:pnOut .45s ease-in both}
-  @keyframes pnIn{from{opacity:0;transform:translateY(-70px) scale(.9)}}
-  @keyframes pnOut{to{opacity:0;transform:scale(.92)}}
-  .pn-app{flex:none;width:34px;height:34px;border-radius:9px;background:url(img/icon-192.png) center/cover,#e4572e}
-  .pn-text{flex:1;min-width:0;display:grid;grid-template-columns:minmax(0,1fr);gap:2px}
-  .pn-top{display:flex;gap:6px;align-items:baseline}
-  .pn-top b{flex:1;min-width:0;font:700 .74rem/1.25 var(--sans);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-  .pn-top small{flex:none;font-size:.66rem;color:rgba(255,255,255,.7)}
-  .pn-body{font-size:.72rem;line-height:1.3;color:rgba(255,255,255,.88);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-  .pn-img{flex:none;width:36px;height:36px;border-radius:8px;background:#fff;overflow:hidden;display:grid;place-items:center}
-  .pn-img img{width:100%;height:100%;object-fit:contain}
+  .phone-notifs{position:absolute;left:12px;right:12px;top:146px;z-index:3}
   .phone-home{position:absolute;left:50%;bottom:9px;width:120px;height:4px;border-radius:2px;background:rgba(255,255,255,.85);translate:-50% 0}
 }
 /* Ljust läge: vit telefon med ljus skärm och mörk text. */
@@ -382,28 +394,33 @@ input[type=search]{width:100%;max-width:360px}
   [data-theme="light"] .phone::before,[data-theme="light"] .phone::after{background:#cfd3dc}
   [data-theme="light"] .phone::before{box-shadow:0 -42px 0 -14px #cfd3dc,0 70px 0 0 #cfd3dc}
   [data-theme="light"] .phone-screen{background:radial-gradient(120% 60% at 20% 0%,rgba(242,182,50,.16),transparent 60%),radial-gradient(90% 50% at 90% 100%,rgba(140,160,255,.16),transparent 65%),#fff;box-shadow:inset 0 0 0 1px rgba(0,0,0,.06)}
-  [data-theme="light"] .phone-status,[data-theme="light"] .phone-clock{color:#1b1e28;text-shadow:none}
-  [data-theme="light"] .phone-clock span{color:#4a5166}
-  [data-theme="light"] .phone-icons i{background:#1b1e28}
-  [data-theme="light"] .phone-icons i:nth-child(3){background:linear-gradient(90deg,#1b1e28 75%,rgba(27,30,40,.3) 75%)}
   [data-theme="light"] .phone-screen .restock-intro{background:#f3f4f8;border-color:rgba(0,0,0,.08);backdrop-filter:none}
   [data-theme="light"] .phone-screen .restock-intro .ri-title{color:#1b1e28;text-shadow:none}
   [data-theme="light"] .phone-screen .restock-intro p{color:#3a4055;text-shadow:none}
   [data-theme="light"] .phone-screen .restock-facts{border-top-color:rgba(0,0,0,.1)}
   [data-theme="light"] .phone-screen .restock-facts li{color:#3a4055}
   [data-theme="light"] .phone-screen .restock-facts b{color:#d9480f}
-  [data-theme="light"] .phone-notif{background:rgba(255,255,255,.85);border-color:rgba(0,0,0,.08);box-shadow:0 8px 20px rgba(19,20,34,.14);color:#1b1e28}
-  [data-theme="light"] .pn-top small{color:#6b7286}
-  [data-theme="light"] .pn-body{color:#3a4055}
-  [data-theme="light"] .pn-img{box-shadow:inset 0 0 0 1px rgba(0,0,0,.08)}
   [data-theme="light"] .phone-home{background:#1b1e28}
 }
-@media (min-width:901px) and (prefers-reduced-motion:reduce){.phone,.phone-notif,.phone-notif.is-out{animation:none}}
+@media (prefers-reduced-motion:reduce){.phone,.phone-notif,.phone-notif.is-out{animation:none}}
 /* "Se hela lagret" står under flödet. */
 @media (max-width:900px){.restock-all{display:flex;justify-content:center}}
 @media (max-width:900px){
   .phone,.phone-screen{display:contents}
-  .phone-status,.phone-clock,.phone-home,.phone-notifs{display:none}
+  .phone .phone-status,.phone .phone-clock,.phone .phone-home,.phone .phone-notifs{display:none}
+}
+/* Mobilen: den övre halvan av en telefon under introt, med klockan och låtsasnotiserna. Nedre kanten tonar bort. */
+.phone-mini{display:none}
+@media (max-width:900px){
+  .phone-mini{display:block;order:-1;justify-self:center;width:min(100%,300px);height:300px;margin-bottom:-28px;padding:9px 9px 0;border-radius:46px 46px 0 0;
+    background:linear-gradient(145deg,#2c2f3a,#0b0c12 55%,#22252f);box-shadow:inset 0 0 0 2px #3a3e4b,inset 0 0 0 4px #07080c;
+    -webkit-mask-image:linear-gradient(#000 72%,transparent);mask-image:linear-gradient(#000 72%,transparent)}
+  .pm-screen{position:relative;height:100%;display:flex;flex-direction:column;gap:10px;padding:12px 12px 0;border-radius:38px 38px 0 0;overflow:hidden;
+    background:radial-gradient(120% 60% at 20% 0%,rgba(140,120,255,.35),transparent 60%),linear-gradient(180deg,#1d2350,#121634 70%,#1a1238)}
+  .phone-mini .phone-clock{margin:4px 0 8px}
+  .phone-mini .phone-clock b{font-size:3.2rem}
+  [data-theme="light"] .phone-mini{background:linear-gradient(145deg,#f4f5f8,#d9dce4 55%,#eef0f4);box-shadow:inset 0 0 0 2px #c9cdd7,inset 0 0 0 4px #fff}
+  [data-theme="light"] .pm-screen{background:radial-gradient(120% 60% at 20% 0%,rgba(242,182,50,.16),transparent 60%),#fff}
 }
 /* Rubriken är en knapp som fäller ut sökfältet på mobilen. På större skärmar ser den ut som en vanlig rubrik. */
 .pb-toggle{all:unset;font:inherit;color:inherit;display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;box-sizing:border-box}
