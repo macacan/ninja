@@ -1,6 +1,20 @@
 {
- "updated": 1794237190175,
+ "updated": 1794238110190,
  "events": [
+  {
+   "at": 1794237223413,
+   "store": "tcgaddan",
+   "product": "tcgaddan:16297297674572",
+   "group": "x|booster-pack|ja||brave",
+   "title": "Mega Brave Booster Pack Japanese",
+   "url": "https://tcgaddan.se/products/mega-brave-booster-pack-japanese",
+   "image": "https://cdn.shopify.com/s/files/1/1037/7062/0236/files/pokemon-mega-brave-booster-4521329431154.png?v=1794224308",
+   "price": 45,
+   "type": "Booster Pack",
+   "set": null,
+   "lang": "ja",
+   "kind": "tillbaka"
+  },
   {
    "at": 1794236312130,
    "store": "tcgaddan",
@@ -7072,20 +7086,6 @@
    "set": "Stellar Crown",
    "lang": "en",
    "kind": "ny"
-  },
-  {
-   "at": 1793716318814,
-   "store": "webhallen",
-   "product": "webhallen:402937",
-   "group": "x|booster-bundle|en||delta-reign",
-   "title": "Pokemon ME6 Delta Reign Booster Bundle",
-   "url": "https://www.webhallen.com/se/product/402937-Pokemon-ME6-Delta-Reign-Booster-Bundle",
-   "image": "https://www.webhallen.com/images-ext/images.eu.ctfassets.net/n0e6ajgmrw5w/2GhO5nseDy1GpjSyUic1AN/1972d7f406ce824fee5c5b7fd1f5891e/Delta_Reign_Booster_Bundle_1.png?fit=pad",
-   "price": 499,
-   "type": "Booster Bundle",
-   "set": null,
-   "lang": "en",
-   "kind": "forbestallning"
   }
  ]
 }
