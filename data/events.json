@@ -1,6 +1,21 @@
 {
- "updated": 1794261707337,
+ "updated": 1794262607357,
  "events": [
+  {
+   "at": 1794262141295,
+   "store": "sweet-nerds",
+   "product": "sweet-nerds:https://sweetnerds.se/sv/products/one-piece-card-game-op10-royal-blood-booster-box-jp",
+   "group": "op|royal-blood|booster-box|ja|",
+   "title": "One Piece Card Game: OP10 Royal Blood Booster Box (JP)",
+   "url": "https://sweetnerds.se/sv/products/one-piece-card-game-op10-royal-blood-booster-box-jp",
+   "image": "https://nycdn.nyehandel.se/store_17dfab1e-b233-4e19-a6f0-ae93160c8b85/images/996wp1K8KVpi4qEQLnwENe0VuoNdadq3ad33Izn1.png?width=400&height=400",
+   "price": 799,
+   "type": "Booster Box",
+   "set": "Royal Blood",
+   "lang": "ja",
+   "game": "op",
+   "kind": "tillbaka"
+  },
   {
    "at": 1794261160544,
    "store": "sweet-nerds",
@@ -7091,21 +7106,6 @@
    "lang": "en",
    "game": "op",
    "kind": "ny"
-  },
-  {
-   "at": 1793744640374,
-   "store": "packs-on-packs",
-   "product": "packs-on-packs:https://packsonpacks.se/sealed-produkter/celebrations-ultra-premium-collection-25th-anniversary",
-   "group": "celebrations|ultra-premium-collection|en||",
-   "title": "Celebrations Ultra-Premium Collection (25th Anniversary)",
-   "url": "https://packsonpacks.se/sealed-produkter/celebrations-ultra-premium-collection-25th-anniversary",
-   "image": "https://cdn.quickbutik.com/images/92330P/products/6ac8ee2228f0a.png",
-   "price": 11000,
-   "type": "Ultra-Premium Collection",
-   "set": "Celebrations",
-   "lang": "en",
-   "kind": "prissankt",
-   "from": 12000
   }
  ]
 }

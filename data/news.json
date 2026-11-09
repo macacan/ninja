@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-09T22:01:42.329Z",
+ "updated": "2026-11-09T22:17:02.182Z",
  "articles": [
   {
    "title": "Kai’Sa, Daughter of the Void Guide – Best Decks & Cards: Radiance Update",
@@ -27,16 +27,6 @@
    "image": "https://static0.polygonimages.com/wordpress/wp-content/uploads/chorus/uploads/chorus_asset/file/24836298/pikachu_artwork.jpg",
    "source": "Polygon",
    "game": "pk"
-  },
-  {
-   "title": "Pokémon TCG Pocket launches Pikachu mission with special Pikachu pack",
-   "link": "https://pokemonblog.com/2026/11/08/pokemon-tcg-pocket-launches-pikachu-mission-with-special-pikachu-pack/",
-   "date": "2026-11-08T19:32:36.000Z",
-   "summary": "Pokémon TCG Pocket is running a Pikachu mission that rewards players with a special pack featuring Pikachu, according to a Pokémon announcement published Nov. 7, 2026. The…",
-   "image": "https://pokemonblog.com/wp-content/uploads/2026/10/pokemon_tcg_pocket_pika_pika_pikachu_ex_immersive_card.jpg",
-   "source": "PokemonBlog",
-   "game": "pk",
-   "digital": true
   },
   {
    "title": "Europe Regional Championship 2026: Decks, Metagame, Popularity, Win & Conversion Rates",
@@ -395,6 +385,15 @@
    "date": "2026-10-04T11:12:03.000Z",
    "summary": "Azurill has long been depicted as a morose looking Pokémon down on its luck, the Pokémon TCG's new Delta Reign expansion finally lets it smile.",
    "image": "https://www.wargamer.com/wp-content/sites/wargamer/2026/10/Azurill-Thumbnail-V2.jpg",
+   "source": "Wargamer",
+   "game": "pk"
+  },
+  {
+   "title": "The Pokémon TCG is releasing a new tool kit designed to encourage players to play competitively",
+   "link": "https://www.wargamer.com/pokemon-trading-card-game/deck-crafters-collection-2026",
+   "date": "2026-10-03T16:09:27.000Z",
+   "summary": "A new Pokémon TCG Deck Crafter's Collection is due to release on October 23rd, designed to provide players with staple trainer cards.",
+   "image": "https://www.wargamer.com/wp-content/sites/wargamer/2026/10/Deck-Crafters-Collection-Thumbnail.jpg",
    "source": "Wargamer",
    "game": "pk"
   },
