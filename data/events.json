@@ -1,6 +1,20 @@
 {
- "updated": 1794238110190,
+ "updated": 1794239030208,
  "events": [
+  {
+   "at": 1794238644998,
+   "store": "rgb-kingz",
+   "product": "rgb-kingz:16024269685066",
+   "group": "delta-reign|booster-pack|en|sleeved",
+   "title": "Pokémon TCG: Delta Reign – Sleeved Booster Pack (EN)",
+   "url": "https://rgbkingz.com/products/pokemon-tcg-delta-reign-sleeved-booster-pack-en",
+   "image": "https://cdn.shopify.com/s/files/1/0782/8088/4554/files/PokemonDeltaReignBoosterpack.png?v=1794238002",
+   "price": 89,
+   "type": "Booster Pack",
+   "set": "Delta Reign",
+   "lang": "en",
+   "kind": "ny"
+  },
   {
    "at": 1794237223413,
    "store": "tcgaddan",
@@ -7072,20 +7086,6 @@
    "lang": "en",
    "game": "op",
    "kind": "tillbaka"
-  },
-  {
-   "at": 1793717380196,
-   "store": "aquitaz",
-   "product": "aquitaz:11059722715482",
-   "group": "stellar-crown|elite-trainer-box|en|pc",
-   "title": "Pokémon Scarlet & Violet: Stellar Crown Pokémon Center Elite Trainer Box (ETB) (11 Pack) (ENG)",
-   "url": "https://aquitaz.se/products/pokemon-scarlet-violet-stellar-crown-pokemon-center-elite-trainer-box-etb-11-pack-eng",
-   "image": "https://cdn.shopify.com/s/files/1/0885/4087/3050/files/PuellaMagiMadokaMagica_UE29BT_Boosterpack_ENG_5_0946ebfd-296a-41b7-b4d1-b154122e1a51.png?v=1793715103",
-   "price": 2899,
-   "type": "Elite Trainer Box",
-   "set": "Stellar Crown",
-   "lang": "en",
-   "kind": "ny"
   }
  ]
 }
