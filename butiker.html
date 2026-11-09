@@ -59,7 +59,7 @@
         <button data-kind="forbestallning" aria-pressed="false">Förbeställning</button>
       </div>
       <label class="check mine"><input id="only-mine" type="checkbox"> Bara mitt urval <a href="#notiser" data-goto="notiser">Ändra urval</a></label>
-      <ul id="events" class="events"></ul>
+      <ul id="event-list" class="events"></ul>
     </section>
 
     <section id="tab-products">
@@ -103,14 +103,14 @@
           </div>
         </div>
       </form>
-      <div id="products" class="pgrid"></div>
+      <div id="pgrid" class="pgrid"></div>
       <div class="more-row"><button id="more" class="btn" hidden>Visa fler</button></div>
     </section>
 
     <section id="tab-stores" hidden>
       <div class="section"><h2>Bevakade butiker</h2></div>
       <p class="lead-sm">Vi läser bara butiker som inte förbjuder det, följer deras robots.txt och väntar flera sekunder mellan varje anrop.</p>
-      <ul id="stores" class="store-list"></ul>
+      <ul id="store-list" class="store-list"></ul>
     </section>
 
     <section id="tab-notiser" hidden>
@@ -305,6 +305,6 @@
     <li><a href="/integritet.html" rel="privacy-policy">Integritet och kakor</a></li>
   </ul></nav>
 </footer>
-<script type="module" src="js/butiker.js?v=20261108c"></script>
+<script type="module" src="js/butiker.js?v=20261109a"></script>
 </body>
 </html>

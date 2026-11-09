@@ -128,7 +128,8 @@ function buildStatic(W, H, o, rand, sign = null) {
     signGeo = { word, s, x0, x1: x0 + w - 1, y: Math.max(4, Math.min(want, hillMin - 5 * s - 3)) };
   }
   // Under skylten reser sig berget till en kulle, så att bokstäverna står på bergssidan i stället för i luften.
-  const TAPER = 18;
+  // Sluttningen blir längre ju högre kullen är, annars blir det en lodrät vägg i höga scener.
+  const TAPER = signGeo ? Math.max(18, Math.round((base - signGeo.y + 3) * 1.1)) : 18;
   const ridgeTop = (x) => {
     if (!signGeo) return Infinity;
     const d = x < signGeo.x0 - 4 ? signGeo.x0 - 4 - x : x > signGeo.x1 + 4 ? x - signGeo.x1 - 4 : 0;
@@ -346,7 +347,9 @@ export function mountScene(canvas, opts = {}) {
     // Exakt heltalsskala på höjden, annars blir pixlarna olika stora.
     canvas.style.height = `${H * scale}px`;
     rand = rng(o.seed);
-    scene = buildStatic(W, H, o, rand, o.sign ? signBox(scale) : null);
+    // Upp till 860 px ritas scenen ovanpå headern och täcker loggan, så där står namnet på berget i stället.
+    const so = innerWidth <= 860 && o.smallSign ? { ...o, sign: o.smallSign } : o;
+    scene = buildStatic(W, H, so, rand, so.sign ? signBox(scale) : null);
     sky = o.sky ? buildSky(W, scene.gt + 1, isNight() ? SKY_NIGHT : SKY) : null;
     if (same) { draw(); return; }
     events = [];
@@ -583,7 +586,7 @@ export function icon(name, size = 22) {
 export function mountAllScenes() {
   const presets = {
     // Startsidans landskap: hela scenen i dubbel skala, så att den blir hälften så hög som förut.
-    hero: { height: 112, smallHeight: 58, scale: 2, ground: 26, seed: 7, shop: true },
+    hero: { height: 112, smallHeight: 58, scale: 2, ground: 26, seed: 7, shop: true, smallSign: "LOOTNINJA" },
     // Remsan under sidrubrikerna: lägre och i mindre skala, så att sidhuvudet inte tar halva skärmen.
     strip: { height: 30, smallHeight: 24, ground: 9, scale: 2, mountains: false, pond: false, path: false, ninja: false, seed: 21 },
     footer: { height: 52, ground: 22, mountains: false, pond: true, ninjaDir: -1, seed: 3 },

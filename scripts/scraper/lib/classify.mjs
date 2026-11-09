@@ -7,7 +7,7 @@ const POKEMON = /pok[eé]mon/i;
 
 // Höjs när igenkänningen ändras så att fler produkter räknas. Då sparas de nyfunna produkterna tyst
 // vid nästa kontroll av varje butik, i stället för att larmas som hundratals "nya" (se engine.mjs).
-export const CLASSIFY_VERSION = 13;
+export const CLASSIFY_VERSION = 14;
 
 // Ordningen spelar roll: mer specifika typer först.
 const TYPES = [
@@ -186,7 +186,9 @@ const langOf = (text) => LANGS.find(([, re]) => re.test(text))?.[0] || null;
 // hint: butikens taggar, produkttyp, kategorier och adress. Används bara för språket, och bara när titeln
 // inte säger något. Säger ingen av dem något blir det engelska, markerat som gissat (langGuess).
 export function classify(title, setNames = [], seriesNames = [], hint = "") {
-  if (!title || NOT_SEALED.test(title) || SINGLE.test(title) || GERMAN.test(title)) return null;
+  if (!title) return null;
+  title = title.replace(/[\u2010-\u2015\u2212]/g, "-").replace(/[\u00a0\u202f]/g, " ");
+  if (NOT_SEALED.test(title) || SINGLE.test(title) || GERMAN.test(title)) return null;
   const g = gameOf(title, hint);
   if (g) return classifyGame(g, title, hint);
   const type = TYPES.find(([, re]) => re.test(title))?.[0];
@@ -229,10 +231,14 @@ function classifyGame(g, title, hint) {
   const { codes, names } = gameSets(g);
   const low = fold(title);
   // En kod som inte finns i sets.json än (nytt set, t.ex. "(OP 19)") blir setet under sin kod: "OP-19".
-  const found = [...title.matchAll(/\b(OP|EB|ST|PRB)[- ]?(\d{1,2})\b/gi)].map((m) => `${m[1].toUpperCase()}${m[2].padStart(2, "0")}`);
+  const found = [...title.matchAll(/\b(OP|EB|ST|SD|PRB|TS)[- ]?(\d{1,2})\b/gi)].map((m) => {
+    const prefix = m[1].toUpperCase() === "SD" ? "ST" : m[1].toUpperCase();
+    return `${prefix}${m[2].padStart(2, "0")}`;
+  });
   const code = found.map((c) => codes.get(c)).find(Boolean);
   const named = names.filter((s) => low.includes(fold(s))).sort((a, b) => low.lastIndexOf(fold(b)) - low.lastIndexOf(fold(a)) || b.length - a.length)[0];
-  const set = code || named || found[0]?.replace(/^([A-Z]+)/, "$1-") || null;
+  let set = code || named || found[0]?.replace(/^([A-Z]+)/, "$1-") || null;
+  if (g === "rb" && !set && /(?:champion deck|origins|\bbooster\b)/i.test(title)) set = "Origins";
   const lang = langOf(title) || (hint && langOf(hint));
   return { game: g, type, set, ...(lang ? { lang } : { lang: "en", langGuess: true }) };
 }

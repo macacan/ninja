@@ -4172,7 +4172,7 @@ button.zm-price:hover{background:#1f2132}
 .anat-src p a{color:var(--navy);font-weight:600}
 
 /* Produktkorten i samma rad blir lika höga, och innehållet fyller hela kortet. */
-.pgrid, .ggrid, #products { align-items: stretch; }
+.pgrid, .ggrid, #pgrid { align-items: stretch; }
 .pgrid > .gcard{height:100%}
 .pgrid > .gcard > .gbody{flex:1}
 

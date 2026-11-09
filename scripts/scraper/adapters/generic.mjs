@@ -147,7 +147,7 @@ function parsePage(html, url) {
 }
 
 const WEEK = 7 * 864e5;
-const POKE = /pok[eé]mon/i;
+const TCG = /pok[eé]mon|riftbound|league.?of.?legends|one.?piece/i;
 
 // Butiker utan sitemap: produktlänkar från en kategorisida, sida för sida.
 // listing = { path: "/kategori/pokemon?page={n}", link: "^/produkt/", pages: 10 } i stores.json.
@@ -209,7 +209,7 @@ export async function generic(host, ctx) {
   const rank = (u) => {
     if (fresh.has(u)) return -1; // nya produkter i sitemapen läses allra först
     const s = seen[u];
-    if (!s) return POKE.test(decodeURIComponent(u)) ? 0 : 1;
+    if (!s) return TCG.test(decodeURIComponent(u)) ? 0 : 1;
     if (s.k === "x") return now - s.t > WEEK ? 3 : Infinity;
     return 2;
   };

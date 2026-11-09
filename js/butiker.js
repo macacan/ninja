@@ -27,7 +27,7 @@ function renderEvents() {
   let list = events.filter((e) => (most ? dropPct(e) > 0 : !eventKind || e.kind === eventKind) && (!mine || matches(e, prefs, byId.get(e.product))));
   if (most) list = list.sort((a, b) => dropPct(b) - dropPct(a));
   list = list.slice(0, 120);
-  $("#events").innerHTML = list.length ? list.map((e) => {
+  $("#event-list").innerHTML = list.length ? list.map((e) => {
     const k = KIND[e.kind] || { label: e.kind, cls: "" };
     // Produktens bild med händelsen som etikett ovanpå. Produkter som försvunnit ur butiken saknar bild.
     // Produkttypen syns under bilden och tar över om bilden saknas eller inte laddar.
@@ -226,7 +226,7 @@ function liveCounts() {
 function renderProducts() {
   liveCounts();
   const list = filtered();
-  const grid = $("#products");
+  const grid = $("#pgrid");
   grid.className = "ggrid";
   const cols = getComputedStyle(grid).gridTemplateColumns.split(" ").filter(Boolean).length || 1;
   const take = Math.ceil(shown / cols) * cols;
@@ -244,7 +244,7 @@ function renderProducts() {
 
 function updateWatchCount() { $("#watch-count").textContent = (getPrefs().watch || []).length; }
 
-$("#products").addEventListener("click", (e) => {
+$("#pgrid").addEventListener("click", (e) => {
   const card = e.target.closest(".gcard"); if (!card) return;
   const key = card.dataset.key;
   if (e.target.closest(".gtoggle")) {
@@ -252,7 +252,7 @@ $("#products").addEventListener("click", (e) => {
     const fromBottom = !!e.target.closest(".gclose");
     card.outerHTML = groupCard(groupInfo(key), openGroups.has(key));
     // Stängd från knappen längst ner: listan försvinner, så visa kortet igen i stället för tom yta.
-    if (fromBottom) document.querySelector(`#products .gcard[data-key="${CSS.escape(key)}"]`)?.scrollIntoView({ block: "nearest", behavior: "smooth" });
+    if (fromBottom) document.querySelector(`#pgrid .gcard[data-key="${CSS.escape(key)}"]`)?.scrollIntoView({ block: "nearest", behavior: "smooth" });
   }
   if (e.target.closest(".bell")) {
     const p = getPrefs();
@@ -307,7 +307,7 @@ document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeMulti
 const STATUS = { tillstand: "Tillstånd", "ej-forbjuden": "Bevakas", "inga-bilder": "Bevakas, utan bilder" };
 function renderStores() {
   const order = { tillstand: 0, "ej-forbjuden": 1, "inga-bilder": 1 };
-  $("#stores").innerHTML = stores.filter((s) => s.status in STATUS && !s.paused).sort((a, b) => order[a.status] - order[b.status] || a.name.localeCompare(b.name, "sv")).map((s) => {
+  $("#store-list").innerHTML = stores.filter((s) => s.status in STATUS && !s.paused).sort((a, b) => order[a.status] - order[b.status] || a.name.localeCompare(b.name, "sv")).map((s) => {
     const state = s.ok === false ? `Kunde inte läsas senast` : s.checkedAt ? `Kollad ${ago(new Date(s.checkedAt).toISOString())}` : "Inte kollad än";
     // Butikens egen ikon (se scripts/update-store-logos.mjs), annars första bokstaven.
     const logo = storeLogos[s.id];
@@ -351,7 +351,7 @@ document.fonts?.ready.then(fitAll);
 
 // Kort- eller listvy. Valet sparas till nästa besök.
 function setView(v) {
-  $("#products").dataset.view = v;
+  $("#pgrid").dataset.view = v;
   document.querySelectorAll("#view button").forEach((b) => b.setAttribute("aria-pressed", b.dataset.v === v));
   try { localStorage.setItem("nl:view2", v); } catch {}
 }
@@ -386,8 +386,8 @@ function applyProducts(list, initial = false) {
   if (initial && $("#f-lang").querySelector('option[value="en"]')) $("#f-lang").value = "en";
 }
 
-$("#events").innerHTML = loading("Ninjan kollar butikerna");
-$("#products").innerHTML = loading("Ninjan kollar butikerna");
+$("#event-list").innerHTML = loading("Ninjan kollar butikerna");
+$("#pgrid").innerHTML = loading("Ninjan kollar butikerna");
 try {
   // Ladda det som går att köpa (stock.json, ~1,8 MB) först så att produkterna visas snabbt,
   // och hämta sedan hela produktlistan (inklusive slutsålda), händelser och prishistorik i bakgrunden.
@@ -449,8 +449,8 @@ try {
 } catch (err) {
   console.error(err);
   const msg = "Butiksdatan kunde inte laddas. Kör bevakningen först (se README).";
-  $("#events").innerHTML = `<li class="msg">${msg}</li>`;
-  $("#products").innerHTML = `<div class="msg">${msg}</div>`;
+  $("#event-list").innerHTML = `<li class="msg">${msg}</li>`;
+  $("#pgrid").innerHTML = `<div class="msg">${msg}</div>`;
 }
 
 // ---------- Notiser och urval ----------
