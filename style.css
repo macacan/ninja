@@ -321,10 +321,10 @@ input[type=search]{width:100%;max-width:360px}
   .restock-actions .btn.small{flex:1 1 0;min-width:0;padding-inline:8px;white-space:normal;text-align:center}
   /* Notisknappen har längre text och får mer av bredden, så att den håller sig till två rader. */
   .restock-actions .btn.small:not(.primary){flex-grow:1.6}
-  /* Startsidan på mobilen: faktarutan överst, sedan halva telefonen, notisknappen direkt under notisen och flödet.
+  /* Startsidan på mobilen: faktarutan överst, sedan flödet, och sist halva telefonen med notisknappen direkt under notisen.
      Rubriken "Missa aldrig ett släpp!" visas inte här. */
-  #restock .phone-mini{order:-3}
-  #restock .restock-side .restock-actions{order:-2;position:relative;z-index:1;justify-self:center;width:min(100%,280px)}
+  #restock .phone-mini{order:2;margin-top:8px}
+  #restock .restock-side .restock-actions{order:3;position:relative;z-index:1;justify-self:center;width:min(100%,280px)}
   #restock .restock-intro{order:-4}
   #restock .restock-intro .ri-title{display:none}
   /* Notisknappen ser ut som en vanlig knapp i telefonen, inte som sajtens pixelknappar. */
