@@ -86,6 +86,22 @@ function getWorker(kind) {
   }
   return workers[kind];
 }
+// Textläsarna tar tiotals megabyte var. När skannern varit stängd en stund stängs de, så att sidan inte bär på dem
+// resten av besöket. Nästa gång skannern öppnas startas de om (språkfilen ligger kvar i webbläsarens lager).
+const WORKER_REST = 120e3; // ms från att skannern stängts
+let restTimer = null;
+function restWorkers() {
+  clearTimeout(restTimer);
+  restTimer = setTimeout(() => {
+    if (dialog?.open) return; // öppnad igen: nästa stängning startar en ny väntan
+    if (busy || reading) return restWorkers(); // en läsning pågår än
+    for (const kind of Object.keys(workers)) {
+      const w = workers[kind];
+      delete workers[kind];
+      w.then((x) => x.terminate()).catch(() => {});
+    }
+  }, WORKER_REST);
+}
 
 // ---------- 1. WebGL Hårdvaruaccelererad Perspektivtransformation (GPU Unwarp) ----------
 // I stället för 246 540 CPU-loopar i JavaScript körs 4-punkts rätningen i en WebGL fragment-shader.
@@ -109,8 +125,14 @@ class GLWarper {
         gl_Position = vec4(a_pos, 0.0, 1.0);
       }
     `;
+    // highp där det finns: med mediump (16 bitar på många telefoner) räcker inte upplösningen i texturkoordinaten till en
+    // 1920 px bred bild, och den lilla nummerraden blir då suddig eller hackig.
     const fsSrc = `
+      #ifdef GL_FRAGMENT_PRECISION_HIGH
+      precision highp float;
+      #else
       precision mediump float;
+      #endif
       uniform sampler2D u_image;
       uniform mat3 u_invH;
       varying vec2 v_uv;
@@ -135,6 +157,10 @@ class GLWarper {
     gl.attachShader(prog, createShader(gl.VERTEX_SHADER, vsSrc));
     gl.attachShader(prog, createShader(gl.FRAGMENT_SHADER, fsSrc));
     gl.linkProgram(prog);
+    // Gick shadern inte att bygga ger GPU:n bara svarta bilder: då används 2D-rätningen i stället
+    if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) { this.gl = null; return; }
+    // Telefonen kan ta tillbaka GPU-minnet (t.ex. när fliken legat i bakgrunden). En ny rätare byggs då vid nästa bild.
+    this.canvas.addEventListener("webglcontextlost", () => { if (glWarperInstance === this) glWarperInstance = null; });
     this.prog = prog;
     gl.useProgram(prog);
 
@@ -447,6 +473,7 @@ export function hammingDistance(h1, h2) {
 const AW = 240; // analysbildens bredd, höjden följer bildens proportioner
 const SIDE_SAMPLES = 24; // tvärsnitt per kant
 const MIN_EDGE = 36; // minsta ljusskillnad (summa av tre pixlar) för att räknas som en kant
+const EVEN_SIDES = 0.84; // kortaste av två motstående sidor, som andel av den längsta
 let cornerCanvas = null, cornerCtx = null, cornerGray = null;
 
 function fitLine(pts) {
@@ -568,7 +595,11 @@ export function detectCardCorners(videoOrImg, guide, band = 0.12) {
     const avgW = (dist(corners[0], corners[1]) + dist(corners[3], corners[2])) / 2;
     const avgH = (dist(corners[0], corners[3]) + dist(corners[1], corners[2])) / 2;
     const ratio = avgW / (avgH || 1);
-    const confident = ratio > 0.62 && ratio < 0.82 && corners.every(([x, y]) => x > -sw * 0.05 && x < sw * 1.05 && y > -sh * 0.05 && y < sh * 1.05);
+    // Motstående sidor ska vara ungefär lika långa. Ett kort som lutar 30 grader skiljer omkring 15 %, och mer än så
+    // betyder att en av linjerna är något annat än kortets kant (ramen runt bilden, ett finger, en skugga).
+    const even = (a, b) => Math.min(a, b) >= Math.max(a, b) * EVEN_SIDES;
+    const shaped = even(dist(corners[0], corners[1]), dist(corners[3], corners[2])) && even(dist(corners[0], corners[3]), dist(corners[1], corners[2]));
+    const confident = shaped && ratio > 0.62 && ratio < 0.82 && corners.every(([x, y]) => x > -sw * 0.05 && x < sw * 1.05 && y > -sh * 0.05 && y < sh * 1.05);
     return { corners: confident ? corners : guide, confident };
   }
 }
@@ -605,7 +636,8 @@ const artPromises = {}, artFailedAt = {};
 // alla tre (6,5 MB) ner varje gång skannern öppnas, och första kortet får vänta på dem. Nästa månads index har ett nytt v.
 const ART_CACHE = "nl-scan-index";
 async function artBytes(base, j) {
-  const url = new URL(`${base}hashes.bin?v=${j.v}`, location.href).href, size = j.n * j.len;
+  // document.baseURI, inte location.href: hashes.json hämtas relativt sidans <base>, och .bin-filen måste följa med dit
+  const url = new URL(`${base}hashes.bin?v=${j.v}`, document.baseURI).href, size = j.n * j.len;
   const cache = j.v ? await globalThis.caches?.open(ART_CACHE).catch(() => null) : null;
   const saved = await cache?.match(url).catch(() => null);
   if (saved) {
@@ -1306,6 +1338,7 @@ export async function identify(canvas, { full = false, source } = {}) {
 async function identifyPokemon(canvas, source, art, full) {
   // Kortet kan ligga i en plastficka: då läses både bild och nummer från den rätning som liknar ett kort mest
   ({ canvas, art } = await sleeveBest(canvas, source, art));
+  const whole = canvas;
   canvas = artCanvas(canvas, art);
   // Så tydlig bildträff att textläsningen inte behövs
   const quick = byLook(art, CLEAR, CLEAR_GAP);
@@ -1330,6 +1363,20 @@ async function identifyPokemon(canvas, source, art, full) {
   }
   // Nummer och setstorlek lästa: jämför bilden med just de kort som har det numret (t.ex. 109/182 finns i flera set)
   if (!cardId && r.number && r.total) cardId = await byNumberThenLook(canvas, r);
+  // Samma konstverk i flera utgåvor, eller ett nummer som inte gick att läsa i de vanliga zonerna: setstorleken, numret i
+  // den smala zonen och setkoden väljer bland korten som liknar bilden, som i den automatiska skanningen (readPokemon)
+  if (!cardId && art[0]?.s >= LIKE) {
+    cardId = await byTotal(art, r.total).catch(() => null);
+    for (let i = 0; !cardId && i < (full ? LINE_READS.length : 2); i++) cardId = await byLine(canvas, art, i).catch(() => null);
+    for (let i = 0; !cardId && i < (full ? CODE_ZONES.length : 1); i++) cardId = await byCode(canvas, art, i).catch(() => null);
+    if (cardId) Object.assign(r, { name: (await pokemonName(cardId)) || r.name, number: localOf(cardId), total: null, numberSure: true });
+  }
+  // Basic Energy utan läsbart nummer: typen avgörs av färgen, som i den automatiska skanningen (energyCard). Utgåvan blir
+  // den som liknar bilden mest, så det görs bara i den grundliga läsningen, när alla sätt att läsa numret är provade.
+  if (!cardId && full) {
+    const energy = await energyCard({ game: "pokemon", art, canvas: whole }, !source?.guess).catch(() => null);
+    if (energy) { cardId = energy.id; Object.assign(r, { name: energy.name, number: localOf(energy.id), total: null, numberSure: true }); }
+  }
   // Sist: en bildträff som är klart bättre än alla andra kort räcker
   cardId ||= lookEnough(art);
   return { ...r, cardId, art };
@@ -1731,7 +1778,7 @@ function ui() {
     <p class="scan-app" hidden>Skannar du ofta? <a href="butiker.html#installera">Installera Lootninja som app</a>, så öppnas skannern i helskärm utan webbläsarens fält.</p>`;
 
   document.body.append(dialog);
-  dialog.addEventListener("close", () => { stop(); hideConfirm(); closeManual(); });
+  dialog.addEventListener("close", () => { stop(); hideConfirm(); closeManual(); restWorkers(); });
   dialog.querySelector("[data-close]").addEventListener("click", () => dialog.close());
   // Esc stänger först sökrutan för manuell värdering. Från förhandsvisningen går den tillbaka till valvet, som Nej.
   dialog.addEventListener("cancel", (e) => {
@@ -1815,7 +1862,9 @@ function ui() {
     const img = await createImageBitmap(file).catch(() => null);
     if (!img) return status("Bilden gick inte att läsa.");
     // Fotot visas fryst med samma holografiska sökning som när man tar en bild
-    frozenScan(freeze(img), { fromFile: true });
+    const snap = freeze(img);
+    img.close?.(); // fotot är kopierat till den frysta bilden: släpp originalet ur minnet
+    frozenScan(snap, { fromFile: true });
   });
 
   return dialog;
@@ -2063,6 +2112,7 @@ async function runScan(manual) {
 // bildindexet och alla varianter av nummerraden. Sökningen pågår tills kortet hittas eller man trycker
 // Avbryt (stänger) eller Försök igen (tillbaka till kameran).
 let frozen = false, scanToken = 0, holoTimer = null;
+const MAX_PHOTO = 2560; // längsta sidan på en fryst bild, i pixlar
 const HOLO_MSGS = {
   pokemon: ["Jämför med 21 000 kort…", "Läser kortnumret…", "Kollar setet…", "Letar efter kortets kanter…", "Matchar konstverket…", "Läser namnet…"],
   rb: ["Jämför med 1 800 Riftbound-kort…", "Läser kortnumret…", "Kollar setet…", "Letar efter kortets kanter…", "Matchar konstverket…"],
@@ -2073,8 +2123,11 @@ const HOLO_MSGS = {
 // Visar en stillbild av källan (video eller foto) och returnerar den som canvas att söka i
 function freeze(src) {
   const box = dialog.querySelector(".scan-freeze"), cv = box.querySelector("canvas");
-  cv.width = src.videoWidth || src.width;
-  cv.height = src.videoHeight || src.height;
+  // Stora foton krymps: en iPhone-bild på 24 megapixel är större än vad en canvas rymmer i Safari (ca 16,7) och blir
+  // då helt tom, och GPU:ns texturer tar ofta högst 4096 px. Kortet behåller ändå mer än rätningens 900 px.
+  const sw = src.videoWidth || src.width, sh = src.videoHeight || src.height, k = Math.min(1, MAX_PHOTO / Math.max(sw, sh));
+  cv.width = Math.round(sw * k);
+  cv.height = Math.round(sh * k);
   cv.getContext("2d").drawImage(src, 0, 0, cv.width, cv.height);
   // Foton visas hela (contain), kamerabilden som videon (cover), så att kortet står där man såg det
   cv.style.objectFit = src.videoWidth ? "cover" : "contain";
@@ -2443,6 +2496,7 @@ async function byCode(canvas, art, round) {
 // Numret på kort från 2023 och framåt står litet och kursivt, ofta vitt på silverfolie. En smal zon runt just numret går att
 // läsa, en bredare gör det inte. Bilden provas i olika storlek, omvänd (ljus text) och lite förskjuten, en variant per omgång.
 const LINE_ZONE = { x: 0.14, y: 0.945, w: 0.24, h: 0.035 };
+const LINE_NEAR = 0.15; // så mycket sämre än det bästa kortet får ett kort likna bilden och ändå väljas på numret
 const LINE_READS = [[132, false, 0], [132, true, 0], [220, false, 0], [220, true, 0], [132, false, -0.012], [132, true, 0.012], [220, false, 0.012], [220, true, -0.012]];
 function lineImage(canvas, [height, invert, shift]) {
   const c = plainZone(canvas, { ...LINE_ZONE, y: LINE_ZONE.y + shift }, height);
@@ -2458,7 +2512,8 @@ function lineImage(canvas, [height, invert, shift]) {
 // läsfel tål jämförelsen: 1 läst som 7 och snedstrecket läst som 7 eller 1 ("1137132" är 113/132). Kortet måste vara klart
 // närmare än övriga. Kort-id, eller null.
 async function byLine(canvas, art, round) {
-  const near = art.filter((x) => x.s >= LIKE && /^d+$/.test(localOf(x.id))).slice(0, 12);
+  // Bara kort som liknar bilden ungefär lika mycket som det bästa: ett felläst nummer får inte välja ett helt annat kort
+  const near = art.filter((x) => x.s >= LIKE && x.s >= art[0].s - LINE_NEAR && /^\d+$/.test(localOf(x.id))).slice(0, 12);
   if (!near.length) return null;
   const [worker, counts] = await Promise.all([getWorker("line"), setCounts()]);
   const text = (await worker.recognize(lineImage(canvas, LINE_READS[round % LINE_READS.length]))).data.text.replace(/[^0-9/]/g, "");
@@ -3302,6 +3357,7 @@ export async function openScanner(callback, partialCallback, { game = "pokemon",
   autoOpen = open && !quickOn();
   if (!resume) resumeHit = null;
   onPartial = partialCallback || null;
+  clearTimeout(restTimer);
   const d = ui();
   const title = { pokemon: "Skanna Pokémonkort", rb: "Skanna Riftbound-kort", op: "Skanna One Piece-kort" }[game] || "Skanna kort";
   d.querySelector(".scan-top b").textContent = title;
