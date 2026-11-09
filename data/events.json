@@ -1,6 +1,64 @@
 {
- "updated": 1794231670052,
+ "updated": 1794232590074,
  "events": [
+  {
+   "at": 1794232539914,
+   "store": "hobbykort",
+   "product": "hobbykort:16196045472078",
+   "group": "op|extra-booster-one-piece-heroines-edition-vol-2|booster-pack|ja|",
+   "title": "One Piece: (EB-05) Heroines Edition Vol.2 Extra Booster Pack (JP)",
+   "url": "https://hobbykort.se/products/one-piece-eb-05-heroines-edition-vol-2-extra-booster-pack-jp",
+   "image": "https://cdn.shopify.com/s/files/1/0769/4106/6574/files/OnePiece__EB-05_HeroinesEditionVol.2ExtraBoosterPack_JP_image1.jpg?v=1793047787",
+   "price": 85,
+   "type": "Booster Pack",
+   "set": "Extra Booster: One Piece Heroines Edition Vol. 2",
+   "lang": "ja",
+   "game": "op",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1794232539914,
+   "store": "hobbykort",
+   "product": "hobbykort:16196012409166",
+   "group": "30th-celebration|booster-box|ja|",
+   "title": "Pokémon: 30th Celebration Booster Box (JP)",
+   "url": "https://hobbykort.se/products/pokemon-30th-anniversary-booster-box-jp",
+   "image": "https://cdn.shopify.com/s/files/1/0769/4106/6574/files/Pokemon_30thCelebrationBoosterBox_JP_image1.jpg?v=1793046932",
+   "price": 2590,
+   "type": "Booster Box",
+   "set": "30th Celebration",
+   "lang": "ja",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1794232539914,
+   "store": "hobbykort",
+   "product": "hobbykort:16196001333582",
+   "group": "op|extra-booster-one-piece-heroines-edition-vol-2|booster-box|ja|",
+   "title": "One Piece: (EB-05) Heroines Edition Vol.2 Extra Booster Box (JP)",
+   "url": "https://hobbykort.se/products/one-piece-op17-the-worlds-strongest-warrior-booster-box-jp-copy",
+   "image": "https://cdn.shopify.com/s/files/1/0769/4106/6574/files/OnePiece__EB-05_HeroinesEditionVol.2ExtraBoosterBox_JP_image1.jpg?v=1793046442",
+   "price": 1799,
+   "type": "Booster Box",
+   "set": "Extra Booster: One Piece Heroines Edition Vol. 2",
+   "lang": "ja",
+   "game": "op",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1794232053976,
+   "store": "rgb-kingz",
+   "product": "rgb-kingz:16024255365450",
+   "group": "delta-reign|booster-box|en|",
+   "title": "Pokémon Mega Evolution: Delta Reign Booster Box",
+   "url": "https://rgbkingz.com/products/pokemon-mega-evolution-delta-reign-booster-box",
+   "image": "https://cdn.shopify.com/s/files/1/0782/8088/4554/files/deltareignboosterbox1.jpg?v=1794147329",
+   "price": 2790,
+   "type": "Booster Box",
+   "set": "Delta Reign",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1794230217615,
    "store": "tcgstore",
@@ -7028,62 +7086,6 @@
    "set": "151",
    "lang": "en",
    "kind": "tillbaka"
-  },
-  {
-   "at": 1793710566899,
-   "store": "cardvalley",
-   "product": "cardvalley:10992999924050",
-   "group": "x|collection-box|en||first-illustration-partner-s3",
-   "title": "Pokémon: First Partner Illustration Collection Series 3",
-   "url": "https://cardvalley.se/products/pokemon-first-partner-illustration-collection-series-3",
-   "image": "https://cdn.shopify.com/s/files/1/0934/7946/9394/files/4ee8a37f-9a71-4e0c-bb95-8b9c84481247.png?v=1785512150",
-   "price": 499,
-   "type": "Collection Box",
-   "set": null,
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793710566899,
-   "store": "cardvalley",
-   "product": "cardvalley:10324307542354",
-   "group": "mega-evolution|booster-pack|en|",
-   "title": "Mega Evolution Booster pack",
-   "url": "https://cardvalley.se/products/mega-evolution-booster-pack-oppnas-live",
-   "image": "https://cdn.shopify.com/s/files/1/0934/7946/9394/files/E9E22AF6-5CC3-4B77-AE00-C4346F29B93C.png?v=1760466148",
-   "price": 109,
-   "type": "Booster Pack",
-   "set": "Mega Evolution",
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793709966206,
-   "store": "dragon-s-lair",
-   "product": "dragon-s-lair:15940307911004",
-   "group": "mega-evolution|blister|en||cl",
-   "title": "Pokémon TCG: Mega Evolution - Delta Reign Premium Checklane Blister",
-   "url": "https://dragonslair.se/products/pokemon-tcg-mega-evolution-delta-reign-premium-checklane-blister",
-   "image": "https://cdn.shopify.com/s/files/1/1015/8315/9644/files/Premium.png?v=1793236928",
-   "price": 119,
-   "type": "Blister",
-   "set": "Mega Evolution",
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793709801044,
-   "store": "cardlevels",
-   "product": "cardlevels:11057651286327",
-   "group": "base-set|booster-pack|en|",
-   "title": "Pokémon Base Set Unlimited: Artset med 3 boosterpaket – Light",
-   "url": "https://cardlevels.se/products/pokemon-base-set-unlimited-artset-med-3-boosterpaket-light",
-   "image": "https://cdn.shopify.com/s/files/1/0846/0458/4247/files/Namnlos_-_03_november_2026_13.19.08.jpg?v=1793709322",
-   "price": 20999,
-   "type": "Booster Pack",
-   "set": "Base Set",
-   "lang": "en",
-   "kind": "ny"
   }
  ]
 }
