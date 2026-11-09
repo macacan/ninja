@@ -1,6 +1,36 @@
 {
- "updated": 1794252507191,
+ "updated": 1794253427217,
  "events": [
+  {
+   "at": 1794253326795,
+   "store": "sweet-nerds",
+   "product": "sweet-nerds:https://sweetnerds.se/sv/products/one-piece-card-game-op17-the-worlds-strongest-warrior-booster-box-jp",
+   "group": "op|the-world-s-strongest-warriors|booster-box|ja|",
+   "title": "One Piece Card Game: OP17 - The World's Strongest Warrior Booster Box (JP)",
+   "url": "https://sweetnerds.se/sv/products/one-piece-card-game-op17-the-worlds-strongest-warrior-booster-box-jp",
+   "image": "https://nycdn.nyehandel.se/store_17dfab1e-b233-4e19-a6f0-ae93160c8b85/images/1000003119-505f3a6e.png?width=400&height=400",
+   "price": 1599,
+   "type": "Booster Box",
+   "set": "The World's Strongest Warriors",
+   "lang": "ja",
+   "game": "op",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1794253326795,
+   "store": "sweet-nerds",
+   "product": "sweet-nerds:https://sweetnerds.se/sv/products/one-piece-card-game-op17-the-worlds-strongest-warrior-booster-pack-jp",
+   "group": "op|the-world-s-strongest-warriors|booster-pack|ja|",
+   "title": "One Piece Card Game: OP17 - The World's Strongest Warrior Booster Pack (JP)",
+   "url": "https://sweetnerds.se/sv/products/one-piece-card-game-op17-the-worlds-strongest-warrior-booster-pack-jp",
+   "image": "https://nycdn.nyehandel.se/store_17dfab1e-b233-4e19-a6f0-ae93160c8b85/images/1000003554-79539d9e.webp?width=400&height=400",
+   "price": 79,
+   "type": "Booster Pack",
+   "set": "The World's Strongest Warriors",
+   "lang": "ja",
+   "game": "op",
+   "kind": "tillbaka"
+  },
   {
    "at": 1794252358291,
    "store": "sweet-nerds",
@@ -7063,34 +7093,6 @@
    "set": "Jungle",
    "lang": "en",
    "kind": "ny"
-  },
-  {
-   "at": 1793733406220,
-   "store": "cardlevels",
-   "product": "cardlevels:11058048532791",
-   "group": "hidden-legends|booster-pack|en|",
-   "title": "Pokémon Hidden Legends EX 5: Booster Pack – Regirock",
-   "url": "https://cardlevels.se/products/pokemon-hidden-legends-ex-5-booster-pack-regirock",
-   "image": "https://cdn.shopify.com/s/files/1/0846/0458/4247/files/Namnlos_-_03_november_2026_13.19.08_692d6829-1752-4f88-8194-7f9dfcdd9f5c.png?v=1793733280",
-   "price": 10999,
-   "type": "Booster Pack",
-   "set": "Hidden Legends",
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1793729697616,
-   "store": "toyspace",
-   "product": "toyspace:https://toyspace.se/pokemon-tcg-30-arsjubileum-sylveon-ex-box-pok10463-101",
-   "group": "30th-celebration|collection-box|en||sylveon",
-   "title": "Pokémon TCG 30th Celebration Sylveon ex Box",
-   "url": "https://toyspace.se/pokemon-tcg-30-arsjubileum-sylveon-ex-box-pok10463-101",
-   "image": "https://d189539ycils2q.cloudfront.net/media/catalog/product/cache/4ffcb2823444acbc328f989dd62e5069/p/o/pokemon-tcg-30th-celebration-sylveon-ex-box-pok10463-101.jpg",
-   "price": 758,
-   "type": "Collection Box",
-   "set": "30th Celebration",
-   "lang": "en",
-   "kind": "tillbaka"
   }
  ]
 }
