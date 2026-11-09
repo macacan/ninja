@@ -1,6 +1,35 @@
 {
- "updated": 1794240870246,
+ "updated": 1794241770259,
  "events": [
+  {
+   "at": 1794241729482,
+   "store": "spelparken",
+   "product": "spelparken:15400209809783",
+   "group": "brilliant-stars|collection-box|en||boltund",
+   "title": "Boltund V Box (1× Evolving Skies  ⚔️ 1× Fusion Strike  🌟 2× Brilliant Stars)",
+   "url": "https://spelparken.se/products/boltund-v-box",
+   "image": "https://cdn.shopify.com/s/files/1/0948/1876/3127/files/PokemonTCGBoltundVBox-3.webp?v=1772125825",
+   "price": 1599,
+   "type": "Collection Box",
+   "set": "Brilliant Stars",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1794241240393,
+   "store": "sweet-nerds",
+   "product": "sweet-nerds:https://sweetnerds.se/sv/products/one-piece-card-game-eb05-heroines-edition-vol2-booster-pack-jp",
+   "group": "op|extra-booster-one-piece-heroines-edition-vol-2|booster-pack|ja|",
+   "title": "One Piece Card Game: EB05 - Heroines Edition Vol.2 Booster Pack (JP)",
+   "url": "https://sweetnerds.se/sv/products/one-piece-card-game-eb05-heroines-edition-vol2-booster-pack-jp",
+   "image": "https://nycdn.nyehandel.se/store_17dfab1e-b233-4e19-a6f0-ae93160c8b85/images/1000004262-a52f8eed.png?width=400&height=400",
+   "price": 69,
+   "type": "Booster Pack",
+   "set": "Extra Booster: One Piece Heroines Edition Vol. 2",
+   "lang": "ja",
+   "game": "op",
+   "kind": "forbestallning"
+  },
   {
    "at": 1794238644998,
    "store": "rgb-kingz",
@@ -7056,35 +7085,6 @@
    "type": "Booster Box",
    "set": "30th Celebration",
    "lang": "ja",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793717387238,
-   "store": "nordic-pulls",
-   "product": "nordic-pulls:https://nordicpulls.se/produkt/seel-116-holo",
-   "group": "x|blister|en||3|3pack-mep-promo-seel",
-   "title": "Seel MEP 116 (Holo) - 3pack-blister Promo",
-   "url": "https://nordicpulls.se/produkt/seel-mep-116-holo-3pack-blister-promo",
-   "image": "https://nordicpulls.se/uploads/display/tcgp-24451-116-292692e5f4e7.jpg",
-   "price": 89,
-   "type": "Blister",
-   "set": null,
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1793717380196,
-   "store": "aquitaz",
-   "product": "aquitaz:10554641121626",
-   "group": "op|the-time-of-battle|booster-pack|en|",
-   "title": "One Piece: (OP 16) The Time Of Battle Booster Pack (12 Kort) (ENG)",
-   "url": "https://aquitaz.se/products/one-piece-op-16-the-time-of-battle-booster-pack-12-kort-eng",
-   "image": "https://cdn.shopify.com/s/files/1/0885/4087/3050/files/BlackBox_-_2026-03-29T131716.223.png?v=1774761908",
-   "price": 115,
-   "type": "Booster Pack",
-   "set": "The Time of Battle",
-   "lang": "en",
-   "game": "op",
    "kind": "tillbaka"
   }
  ]
