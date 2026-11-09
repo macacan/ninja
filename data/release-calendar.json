@@ -1,6 +1,6 @@
 {
  "_info": "Byggs av scripts/update-releases.mjs. Ändra inte här, ändra i data/releases.json.",
- "updated": 1794250119159,
+ "updated": 1794250679605,
  "releases": [
   {
    "id": "30th-celebration",
