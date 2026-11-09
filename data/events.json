@@ -1,6 +1,36 @@
 {
- "updated": 1794255267235,
+ "updated": 1794256187244,
  "events": [
+  {
+   "at": 1794255274283,
+   "store": "sweet-nerds",
+   "product": "sweet-nerds:https://sweetnerds.se/sv/products/one-piece-card-game-starter-deck-st33-blue-kuzan-eng",
+   "group": "op|starter-deck-33-blue-kuzan|deck|en|",
+   "title": "One Piece Card Game: Starter Deck ST33 BLUE Kuzan (ENG)",
+   "url": "https://sweetnerds.se/sv/products/one-piece-card-game-starter-deck-st33-blue-kuzan-eng",
+   "image": "https://nycdn.nyehandel.se/store_17dfab1e-b233-4e19-a6f0-ae93160c8b85/images/1000003298-92b8070a.png?width=400&height=400",
+   "price": 199,
+   "type": "Deck",
+   "set": "Starter Deck 33: BLUE Kuzan",
+   "lang": "en",
+   "game": "op",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1794255274283,
+   "store": "sweet-nerds",
+   "product": "sweet-nerds:https://sweetnerds.se/sv/products/one-piece-card-game-starter-deck-st34-purple-charlotte-katakuri-eng",
+   "group": "op|starter-deck-34-purple-charlotte-katakuri|deck|en|",
+   "title": "One Piece Card Game: Starter Deck ST34 PURPLE Charlotte Katakuri (ENG)",
+   "url": "https://sweetnerds.se/sv/products/one-piece-card-game-starter-deck-st34-purple-charlotte-katakuri-eng",
+   "image": "https://nycdn.nyehandel.se/store_17dfab1e-b233-4e19-a6f0-ae93160c8b85/images/1000003299-53e76e9f.png?width=400&height=400",
+   "price": 199,
+   "type": "Deck",
+   "set": "Starter Deck 34: PURPLE Charlotte Katakuri",
+   "lang": "en",
+   "game": "op",
+   "kind": "tillbaka"
+  },
   {
    "at": 1794255198371,
    "store": "rahtech",
@@ -7063,34 +7093,6 @@
    "price": 6999,
    "type": "Booster Pack",
    "set": "Secret Wonders",
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1793733406220,
-   "store": "cardlevels",
-   "product": "cardlevels:11058054725943",
-   "group": "team-up|booster-pack|en|",
-   "title": "Pokémon Team Up Sun & Moon 9: Booster Pack – Pikachu & Zekrom",
-   "url": "https://cardlevels.se/products/pokemon-team-up-sun-moon-9-booster-pack-pikachu-zekrom",
-   "image": "https://cdn.shopify.com/s/files/1/0846/0458/4247/files/Namnlos_-_03_november_2026_13.19.08_88463997-9108-4c7e-be52-b123acf39e76.png?v=1793733220",
-   "price": 3999,
-   "type": "Booster Pack",
-   "set": "Team Up",
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1793733406220,
-   "store": "cardlevels",
-   "product": "cardlevels:11058052759863",
-   "group": "triumphant|booster-pack|en|",
-   "title": "Pokémon Triumphant HeartGold & SoulSilver 4: Booster Pack – Dialga",
-   "url": "https://cardlevels.se/products/pokemon-triumphant-heartgold-soulsilver-4-booster-pack-dialga",
-   "image": "https://cdn.shopify.com/s/files/1/0846/0458/4247/files/Namnlos_-_03_november_2026_13.19.08_29b56138-ee88-4fd0-a072-ef909fe84a5f.png?v=1793733238",
-   "price": 6999,
-   "type": "Booster Pack",
-   "set": "Triumphant",
    "lang": "en",
    "kind": "ny"
   }
