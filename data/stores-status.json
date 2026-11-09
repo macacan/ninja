@@ -1,5 +1,5 @@
 {
- "updated": 1794197211761,
+ "updated": 1794200511854,
  "stores": [
   {
    "id": "alara-games",
@@ -107,9 +107,9 @@
    "name": "Card Mountain",
    "domain": "cardmountain.se",
    "status": "ej-forbjuden",
-   "checkedAt": 1794196858767,
+   "checkedAt": 1794200453973,
    "ok": true,
-   "lastOkAt": 1794196858767,
+   "lastOkAt": 1794200453973,
    "count": 53,
    "error": null,
    "blocked": false,
@@ -121,14 +121,14 @@
    "name": "Cardclub",
    "domain": "cardclub.se",
    "status": "ej-forbjuden",
-   "checkedAt": 1794196875091,
+   "checkedAt": 1794200492787,
    "ok": true,
-   "lastOkAt": 1794196875091,
+   "lastOkAt": 1794200492787,
    "count": 84,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 60
+   "interval": 59
   },
   {
    "id": "cardgame",
@@ -163,14 +163,14 @@
    "name": "Cardlevels",
    "domain": "cardlevels.se",
    "status": "ej-forbjuden",
-   "checkedAt": 1794196873124,
+   "checkedAt": 1794200484783,
    "ok": true,
-   "lastOkAt": 1794196873124,
+   "lastOkAt": 1794200484783,
    "count": 59,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 60
+   "interval": 59
   },
   {
    "id": "cards-by-malcolm",
@@ -191,28 +191,28 @@
    "name": "CardValley",
    "domain": "cardvalley.se",
    "status": "ej-forbjuden",
-   "checkedAt": 1794196868003,
+   "checkedAt": 1794200476007,
    "ok": true,
-   "lastOkAt": 1794196868003,
+   "lastOkAt": 1794200476007,
    "count": 122,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 60
+   "interval": 59
   },
   {
    "id": "collected",
    "name": "Collected",
    "domain": "collected.se",
    "status": "ej-forbjuden",
-   "checkedAt": 1794196869895,
+   "checkedAt": 1794200469978,
    "ok": true,
-   "lastOkAt": 1794196869895,
+   "lastOkAt": 1794200469978,
    "count": 51,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 60
+   "interval": 59
   },
   {
    "id": "coolcard",
@@ -297,14 +297,14 @@
    "name": "Gimmick",
    "domain": "gimmick.se",
    "status": "inga-bilder",
-   "checkedAt": 1794196876858,
+   "checkedAt": 1794200486138,
    "ok": true,
-   "lastOkAt": 1794196876858,
+   "lastOkAt": 1794200486138,
    "count": 92,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 60
+   "interval": 59
   },
   {
    "id": "goblinen",
@@ -325,14 +325,14 @@
    "name": "Hobbykort",
    "domain": "hobbykort.se",
    "status": "ej-forbjuden",
-   "checkedAt": 1794196901273,
+   "checkedAt": 1794200499803,
    "ok": true,
-   "lastOkAt": 1794196901273,
+   "lastOkAt": 1794200499803,
    "count": 176,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 60
+   "interval": 59
   },
   {
    "id": "jollyroom",
