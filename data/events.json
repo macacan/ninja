@@ -1,6 +1,20 @@
 {
- "updated": 1794233510096,
+ "updated": 1794234430109,
  "events": [
+  {
+   "at": 1794233944235,
+   "store": "tcgstore",
+   "product": "tcgstore:11495602716999",
+   "group": "chaos-rising|booster-box|en|half",
+   "title": "Pokémon Mega Evolution: Chaos Rising Half Booster Box",
+   "url": "https://tcgstore.se/products/pokemon-mega-evolution-chaos-rising-half-booster-box",
+   "image": "https://cdn.shopify.com/s/files/1/0758/2508/6791/files/pokemon-mega-evolution-chaos-rising-half-booster-box.jpg?v=1794233663",
+   "price": 1299,
+   "type": "Booster Box",
+   "set": "Chaos Rising",
+   "lang": "en",
+   "kind": "ny"
+  },
   {
    "at": 1794232539914,
    "store": "hobbykort",
@@ -7072,20 +7086,6 @@
    "set": "Black Bolt",
    "lang": "en",
    "kind": "ny"
-  },
-  {
-   "at": 1793712492921,
-   "store": "spelparken",
-   "product": "spelparken:15185646092663",
-   "group": "151|ultra-premium-collection|en||",
-   "title": "151 UPC",
-   "url": "https://spelparken.se/products/151-upc-oppnas-live",
-   "image": "https://cdn.shopify.com/s/files/1/0948/1876/3127/files/P8975_290-85541_01.jpg?v=1760533786",
-   "price": 11499,
-   "type": "Ultra-Premium Collection",
-   "set": "151",
-   "lang": "en",
-   "kind": "tillbaka"
   }
  ]
 }
