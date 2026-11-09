@@ -1,6 +1,21 @@
 {
- "updated": 1794265983920,
+ "updated": 1794266903941,
  "events": [
+  {
+   "at": 1794266397660,
+   "store": "sweet-nerds",
+   "product": "sweet-nerds:https://sweetnerds.se/sv/products/one-piece-card-game-base-shop-card-collection-vol-1-jp",
+   "group": "op|x|collection-box|ja||base-s1-shop-vol",
+   "title": "One Piece Card Game: Base Shop Card Collection Vol. 1 (JP)",
+   "url": "https://sweetnerds.se/sv/products/one-piece-card-game-base-shop-card-collection-vol-1-jp",
+   "image": "https://nycdn.nyehandel.se/store_17dfab1e-b233-4e19-a6f0-ae93160c8b85/images/9svXJyDfWPgfMThRX0LUNlv4aOQoNbcwvLgYerZk.png?width=400&height=400",
+   "price": 1099,
+   "type": "Collection Box",
+   "set": null,
+   "lang": "ja",
+   "game": "op",
+   "kind": "tillbaka"
+  },
   {
    "at": 1794264414883,
    "store": "sweet-nerds",
@@ -7091,20 +7106,6 @@
    "price": 699,
    "type": "Collection Box",
    "set": "30th Celebration",
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1793754154162,
-   "store": "packs-on-packs",
-   "product": "packs-on-packs:https://packsonpacks.se/sealed-produkter/151-blooming-waters-premium-collection",
-   "group": "151|premium-collection|en||blooming-waters",
-   "title": "151: Blooming Waters (Premium Collection)",
-   "url": "https://packsonpacks.se/sealed-produkter/151-blooming-waters-premium-collection",
-   "image": "https://cdn.quickbutik.com/images/92330P/products/695997c1171b2.png",
-   "price": 4699,
-   "type": "Premium Collection",
-   "set": "151",
    "lang": "en",
    "kind": "ny"
   }
