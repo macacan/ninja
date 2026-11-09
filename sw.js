@@ -12,8 +12,8 @@ self.addEventListener("push", (e) => {
     // iPhone visar alltid appikonen och ignorerar bilderna.
     icon: d.image || "/img/icon-192.png?v=4",
     image: d.image || undefined,
-    // Statusfältet på Android visar bara formen (vitt på genomskinligt), så badgen är en enfärgad ninjasiluett.
-    badge: "/img/badge-96.png",
+    // Statusfältet på Android visar bara formen (vitt på genomskinligt), så badgen är LOOT NINJA-texten i vitt (scripts/build-badge.mjs).
+    badge: "/img/badge-96.png?v=2",
     tag: d.tag || undefined,
     data: { url: d.url || "/butiker.html" },
   }));
