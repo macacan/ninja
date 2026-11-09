@@ -1,6 +1,36 @@
 {
- "updated": 1794264087070,
+ "updated": 1794265003896,
  "events": [
+  {
+   "at": 1794264414883,
+   "store": "sweet-nerds",
+   "product": "sweet-nerds:https://sweetnerds.se/sv/products/one-piece-card-game-op16-the-time-of-battle-booster-box-jp",
+   "group": "op|the-time-of-battle|booster-box|ja|",
+   "title": "One Piece Card Game: OP16 The Time Of Battle Booster Box (JP)",
+   "url": "https://sweetnerds.se/sv/products/one-piece-card-game-op16-the-time-of-battle-booster-box-jp",
+   "image": "https://nycdn.nyehandel.se/store_17dfab1e-b233-4e19-a6f0-ae93160c8b85/images/zZwEDCxnQS0Dz9OEt44IOmaZGRoLi5pkOQhXEOCh.png?width=400&height=400",
+   "price": 1499,
+   "type": "Booster Box",
+   "set": "The Time of Battle",
+   "lang": "ja",
+   "game": "op",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1794264414883,
+   "store": "sweet-nerds",
+   "product": "sweet-nerds:https://sweetnerds.se/sv/products/one-piece-card-game-op16-the-time-of-battle-booster-pack-jp",
+   "group": "op|the-time-of-battle|booster-pack|ja|",
+   "title": "One Piece Card Game: OP16 The Time Of Battle Booster Pack (JP)",
+   "url": "https://sweetnerds.se/sv/products/one-piece-card-game-op16-the-time-of-battle-booster-pack-jp",
+   "image": "https://nycdn.nyehandel.se/store_17dfab1e-b233-4e19-a6f0-ae93160c8b85/images/NGcruXWgI4I03Lp5Kk7MiyuPmwoL2DSD8tuC8g5R.png?width=400&height=400",
+   "price": 69,
+   "type": "Booster Pack",
+   "set": "The Time of Battle",
+   "lang": "ja",
+   "game": "op",
+   "kind": "tillbaka"
+  },
   {
    "at": 1794262141295,
    "store": "sweet-nerds",
@@ -7076,35 +7106,6 @@
    "type": "Premium Collection",
    "set": "151",
    "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1793754154162,
-   "store": "packs-on-packs",
-   "product": "packs-on-packs:https://packsonpacks.se/sealed-produkter/pokemon-mega-charizard-x-ex-ultra-premium-collection",
-   "group": "x|ultra-premium-collection|en||charizard-x",
-   "title": "Mega Charizard X EX (Ultra Premium Collection)",
-   "url": "https://packsonpacks.se/sealed-produkter/pokemon-mega-charizard-x-ex-ultra-premium-collection",
-   "image": "https://cdn.quickbutik.com/images/92330P/products/6a1f0e0d40b60.png",
-   "price": 2700,
-   "type": "Ultra-Premium Collection",
-   "set": null,
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1793745167165,
-   "store": "spelparken",
-   "product": "spelparken:15547347140983",
-   "group": "op|the-world-s-strongest-warriors|booster-box|en|",
-   "title": "One Piece – The World’s Strongest Warriors OP-17 Booster Box",
-   "url": "https://spelparken.se/products/one-piece-the-world-s-strongest-warriors-op-17-booster-box",
-   "image": "https://cdn.shopify.com/s/files/1/0948/1876/3127/files/images_f7f578ab-d6ea-416c-9d7d-0724a915a644.jpg?v=1787846478",
-   "price": 4199,
-   "type": "Booster Box",
-   "set": "The World's Strongest Warriors",
-   "lang": "en",
-   "game": "op",
    "kind": "ny"
   }
  ]
