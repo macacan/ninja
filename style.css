@@ -321,6 +321,25 @@ input[type=search]{width:100%;max-width:360px}
   .restock-actions .btn.small{flex:1 1 0;min-width:0;padding-inline:8px;white-space:normal;text-align:center}
   /* Notisknappen har längre text och får mer av bredden, så att den håller sig till två rader. */
   .restock-actions .btn.small:not(.primary){flex-grow:1.6}
+  /* Startsidan på mobilen: faktarutan överst, sedan halva telefonen, notisknappen direkt under notisen och flödet.
+     Rubriken "Missa aldrig ett släpp!" visas inte här. */
+  #restock .phone-mini{order:-3}
+  #restock .restock-side .restock-actions{order:-2;position:relative;z-index:1;justify-self:center;width:min(100%,280px)}
+  #restock .restock-intro{order:-4}
+  #restock .restock-intro .ri-title{display:none}
+  /* Notisknappen ser ut som en vanlig knapp i telefonen, inte som sajtens pixelknappar. */
+  #restock .restock-actions .btn.small{display:flex;align-items:center;justify-content:center;gap:8px;white-space:nowrap;
+    margin:0;padding:12px 18px;border:1px solid rgba(255,255,255,.18);border-radius:999px;box-shadow:0 6px 18px rgba(0,0,0,.25);
+    background:rgba(255,255,255,.12);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);color:#fff;font:600 .9rem/1.2 var(--sans)}
+  #restock .restock-actions .btn.small:hover{transform:none;background:rgba(255,255,255,.18)}
+  #restock .restock-actions .btn.small:active{transform:scale(.98);box-shadow:0 3px 10px rgba(0,0,0,.25)}
+  [data-theme="light"] #restock .restock-actions .btn.small{background:#fff;color:#1b1e28;border-color:rgba(0,0,0,.08)}
+  /* "Se hela lagret" i samma runda stil, men kvar i sajtens röda färg. */
+  #restock .restock-all{margin:0;padding:13px 18px;border:0;border-radius:999px;box-shadow:0 6px 18px rgba(0,0,0,.25);
+    background:var(--red);color:#fff;font:700 .95rem/1.2 var(--sans)}
+  #restock .restock-all:hover{transform:none;filter:brightness(1.08)}
+  #restock .restock-all:active{transform:scale(.98);box-shadow:0 3px 10px rgba(0,0,0,.25)}
+  #restock .restock-actions .btn.small svg{flex:none}
 }
 .restock-facts b{font:800 1.6rem/1 var(--sans);color:var(--gold);letter-spacing:.5px;font-variant-numeric:tabular-nums}
 /* Telefonens delar som både telefonen på datorn och den halva på mobilen (.phone-mini) använder:
