@@ -1,6 +1,48 @@
 {
- "updated": 1794234430109,
+ "updated": 1794235350129,
  "events": [
+  {
+   "at": 1794235219470,
+   "store": "nordic-pulls",
+   "product": "nordic-pulls:https://nordicpulls.se/produkt/mega-forces-tin-mega-darkrai-ex",
+   "group": "x|tin|en||darkrai-forces",
+   "title": "Mega Forces Tin – Mega Darkrai ex",
+   "url": "https://nordicpulls.se/produkt/mega-forces-tin-mega-darkrai-ex",
+   "image": "https://nordicpulls.se/images/products/col-tin-mega-darkrai.jpg",
+   "price": 499,
+   "type": "Tin",
+   "set": null,
+   "lang": "en",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1794235219470,
+   "store": "nordic-pulls",
+   "product": "nordic-pulls:https://nordicpulls.se/produkt/mega-forces-tin-mega-zeraora-ex",
+   "group": "x|tin|en||forces-zeraora",
+   "title": "Mega Forces Tin – Mega Zeraora ex",
+   "url": "https://nordicpulls.se/produkt/mega-forces-tin-mega-zeraora-ex",
+   "image": "https://nordicpulls.se/images/products/col-tin-mega-zeraora.jpg",
+   "price": 499,
+   "type": "Tin",
+   "set": null,
+   "lang": "en",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1794234877348,
+   "store": "tcgstore",
+   "product": "tcgstore:9499950547271",
+   "group": "stellar-crown|booster-box|en|",
+   "title": "Pokémon Scarlet & Violet 7: Stellar Crown Booster Box",
+   "url": "https://tcgstore.se/products/pokemon-scarlet-violet-7-stellar-crown-booster-box",
+   "image": "https://cdn.shopify.com/s/files/1/0758/2508/6791/files/pokemon-stellar-crown-booster-box.jpg?v=1722324617",
+   "price": 3999,
+   "type": "Booster Box",
+   "set": "Stellar Crown",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1794233944235,
    "store": "tcgstore",
@@ -7044,48 +7086,6 @@
    "set": "Perfect Order",
    "lang": "en",
    "kind": "tillbaka"
-  },
-  {
-   "at": 1793715376120,
-   "store": "dragon-s-lair",
-   "product": "dragon-s-lair:15781203280220",
-   "group": "team-rocket|booster-box|ja|",
-   "title": "Pokémon SV10: The Glory of Team Rocket Booster Box (30 Pack) SV10 (Japansk)",
-   "url": "https://dragonslair.se/products/pokemon-scarlet-violet-white-flare-booster-box-20-pack-japansktsv11w",
-   "image": "https://cdn.shopify.com/s/files/1/1015/8315/9644/files/PokemonScarlet_Violet_TheGloryofTeamRocketBoosterBox_Japansk_image1.webp?v=1787852046",
-   "price": 2195,
-   "type": "Booster Box",
-   "set": "Team Rocket",
-   "lang": "ja",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793713648504,
-   "store": "tcg-picks",
-   "product": "tcg-picks:16337060659525",
-   "group": "white-flare|booster-bundle|en|",
-   "title": "White Flare Booster Bundle (Skicka hem)",
-   "url": "https://tcgpicks.com/produkt/white-flare-booster-bundle?variant=60060479226181",
-   "image": "https://cdn.shopify.com/s/files/1/0977/3046/2021/files/card-1793713262386-0.jpg?v=1793713267",
-   "price": 1149,
-   "type": "Booster Bundle",
-   "set": "White Flare",
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1793713648504,
-   "store": "tcg-picks",
-   "product": "tcg-picks:16337018028357",
-   "group": "black-bolt|booster-bundle|en|",
-   "title": "Black Bolt Booster Bundle (Skicka hem)",
-   "url": "https://tcgpicks.com/produkt/black-bolt-booster-bundle?variant=60060346581317",
-   "image": "https://cdn.shopify.com/s/files/1/0977/3046/2021/files/card-1793712909512-0.jpg?v=1793712915",
-   "price": 1249,
-   "type": "Booster Bundle",
-   "set": "Black Bolt",
-   "lang": "en",
-   "kind": "ny"
   }
  ]
 }
