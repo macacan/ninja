@@ -1,6 +1,21 @@
 {
- "updated": 1794256187244,
+ "updated": 1794257107257,
  "events": [
+  {
+   "at": 1794256256939,
+   "store": "sweet-nerds",
+   "product": "sweet-nerds:https://sweetnerds.se/sv/products/one-piece-card-game-starter-deck-st35-redblack-sabo-eng",
+   "group": "op|starter-deck-35-red-black-sabo|deck|en|",
+   "title": "One Piece Card Game: Starter Deck ST35 RED/BLACK Sabo (ENG)",
+   "url": "https://sweetnerds.se/sv/products/one-piece-card-game-starter-deck-st35-redblack-sabo-eng",
+   "image": "https://nycdn.nyehandel.se/store_17dfab1e-b233-4e19-a6f0-ae93160c8b85/images/1000003300-ccbf9986.png?width=400&height=400",
+   "price": 199,
+   "type": "Deck",
+   "set": "Starter Deck 35: RED/BLACK Sabo",
+   "lang": "en",
+   "game": "op",
+   "kind": "tillbaka"
+  },
   {
    "at": 1794255274283,
    "store": "sweet-nerds",
@@ -7079,20 +7094,6 @@
    "price": 2999,
    "type": "Booster Pack",
    "set": "Noble Victories",
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1793733406220,
-   "store": "cardlevels",
-   "product": "cardlevels:11058060591415",
-   "group": "secret-wonders|booster-pack|en|",
-   "title": "Pokémon Secret Wonders Diamond & Pearl 3: Booster Pack – Weavile",
-   "url": "https://cardlevels.se/products/pokemon-secret-wonders-diamond-pearl-3-booster-pack-weavile",
-   "image": "https://cdn.shopify.com/s/files/1/0846/0458/4247/files/Namnlos_-_03_november_2026_13.19.08_5a18a418-2b5e-4640-b4c8-7988436a61e6.png?v=1793733200",
-   "price": 6999,
-   "type": "Booster Pack",
-   "set": "Secret Wonders",
    "lang": "en",
    "kind": "ny"
   }
