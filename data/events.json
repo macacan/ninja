@@ -1,6 +1,62 @@
 {
- "updated": 1794236270151,
+ "updated": 1794237190175,
  "events": [
+  {
+   "at": 1794236312130,
+   "store": "tcgaddan",
+   "product": "tcgaddan:16187779187020",
+   "group": "30th-celebration|booster-pack|zh|",
+   "title": "30th Celebration Booster Pack Chinese",
+   "url": "https://tcgaddan.se/products/30th-celebration-booster-pack-chinese",
+   "image": "https://cdn.shopify.com/s/files/1/1037/7062/0236/files/Pokemon_TCG_30th_Celebration_Booster_Pack.png?v=1791989762",
+   "price": 75,
+   "type": "Booster Pack",
+   "set": "30th Celebration",
+   "lang": "zh",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1794236312130,
+   "store": "tcgaddan",
+   "product": "tcgaddan:16176536486220",
+   "group": "emerald|booster-box|ja|",
+   "title": "Storm Emeralda Booster Box Japanese",
+   "url": "https://tcgaddan.se/products/storm-emeralda-booster-box-japanese",
+   "image": "https://cdn.shopify.com/s/files/1/1037/7062/0236/files/Pokemon-Storm-Emeralda-Booster-Box-Japanese-TCG.webp?v=1791500810",
+   "price": 1399,
+   "type": "Booster Box",
+   "set": "Emerald",
+   "lang": "ja",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1794236312130,
+   "store": "tcgaddan",
+   "product": "tcgaddan:15817604596044",
+   "group": "x|booster-pack|ja||dream",
+   "title": "Mega Dream Booster Pack Japanese",
+   "url": "https://tcgaddan.se/products/mega-dream-jpn-booster-pack-1",
+   "image": "https://cdn.shopify.com/s/files/1/1037/7062/0236/files/Pokemon-TCG-Mega-Dream-Japanese-Booster-Pack_3bf231be-bd7d-4176-afb7-5c6e4aa7fdce.webp?v=1781510203",
+   "price": 139,
+   "type": "Booster Pack",
+   "set": null,
+   "lang": "ja",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1794236312130,
+   "store": "tcgaddan",
+   "product": "tcgaddan:15984601891148",
+   "group": "fusion-strike|booster-pack|en|",
+   "title": "Fusion Strike Booster Pack",
+   "url": "https://tcgaddan.se/products/fusion-strike-booster-pack",
+   "image": "https://cdn.shopify.com/s/files/1/1037/7062/0236/files/bp_pokemon_fusion_strike_1.webp?v=1788956805",
+   "price": 239,
+   "type": "Booster Pack",
+   "set": "Fusion Strike",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1794235219470,
    "store": "nordic-pulls",
@@ -7030,62 +7086,6 @@
    "set": null,
    "lang": "en",
    "kind": "forbestallning"
-  },
-  {
-   "at": 1793715692168,
-   "store": "aquitaz",
-   "product": "aquitaz:10676620853594",
-   "group": "shrouded-fable|elite-trainer-box|en|pc",
-   "title": "Pokémon Scarlet & Violet: Shrouded Fable Pokémon Center Elite Trainer Box (ETB) (11 Pack)",
-   "url": "https://aquitaz.se/products/pokemon-scarlet-violet-shrouded-fable-pokemon-center-elite-trainer-box-etb-11-pack",
-   "image": "https://cdn.shopify.com/s/files/1/0885/4087/3050/files/PokemonMegaEvolutionPhantasmalFlamesEliteTrainerBox_ETB_9Pack_5_5503cf74-c735-4db2-9cc1-19bfe189d76b.png?v=1768274089",
-   "price": 2899,
-   "type": "Elite Trainer Box",
-   "set": "Shrouded Fable",
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793715692168,
-   "store": "aquitaz",
-   "product": "aquitaz:10815269634394",
-   "group": "pitch-black|elite-trainer-box|en|pc",
-   "title": "Pokémon Mega Evolution: Pitch Black Pokémon Center Elite Trainer Box (ETB) (11 Pack) (ENG)",
-   "url": "https://aquitaz.se/products/pokemon-mega-evolution-pitch-black-pokemon-center-elite-trainer-box-etb-11-pack",
-   "image": "https://cdn.shopify.com/s/files/1/0885/4087/3050/files/BlackBox_-_2026-05-01T180024.047.png?v=1777629930",
-   "price": 2899,
-   "type": "Elite Trainer Box",
-   "set": "Pitch Black",
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793715692168,
-   "store": "aquitaz",
-   "product": "aquitaz:10720741327194",
-   "group": "chaos-rising|elite-trainer-box|en|pc",
-   "title": "Pokémon Mega Evolution: Chaos Rising Pokémon Center Elite Trainer Box (ETB) (11 Pack)",
-   "url": "https://aquitaz.se/products/pokemon-mega-evolution-chaos-rising-pokemon-center-elite-trainer-box-etb-11-pack",
-   "image": "https://cdn.shopify.com/s/files/1/0885/4087/3050/files/BlackBox_-_2026-03-13T004046.659.png?v=1773333936",
-   "price": 2899,
-   "type": "Elite Trainer Box",
-   "set": "Chaos Rising",
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793715692168,
-   "store": "aquitaz",
-   "product": "aquitaz:10665560408410",
-   "group": "perfect-order|elite-trainer-box|en|pc",
-   "title": "Pokémon Mega Evolution: Perfect Order Pokémon Center Elite Trainer Box (ETB) (11 Pack) (ENG)",
-   "url": "https://aquitaz.se/products/pokemon-mega-evolution-perfect-order-pokemon-center-elite-trainer-box-etb-11-pack",
-   "image": "https://cdn.shopify.com/s/files/1/0885/4087/3050/files/PokemonMegaEvolutionPhantasmalFlamesEliteTrainerBox_ETB_9Pack_60.png?v=1767845261",
-   "price": 2899,
-   "type": "Elite Trainer Box",
-   "set": "Perfect Order",
-   "lang": "en",
-   "kind": "tillbaka"
   }
  ]
 }
