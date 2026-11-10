@@ -1,6 +1,20 @@
 {
- "updated": 1794342656572,
+ "updated": 1794343576599,
  "events": [
+  {
+   "at": 1794342927404,
+   "store": "tt-vault",
+   "product": "tt-vault:16764641608025",
+   "group": "delta-reign|elite-trainer-box|en|",
+   "title": "Pokemon TCG: Mega Evolution - Delta Reign - Elite Trainer Box PREORDER",
+   "url": "https://ttvault.se/products/pokemon-tcg-mega-evolution-delta-reign-elite-trainer-box-preorder-november-6",
+   "image": "https://cdn.shopify.com/s/files/1/1020/3683/2601/files/IMG_0398.jpg?v=1793727769",
+   "price": 1299,
+   "type": "Elite Trainer Box",
+   "set": "Delta Reign",
+   "lang": "en",
+   "kind": "forbestallning"
+  },
   {
    "at": 1794341019433,
    "store": "spelparken",
@@ -7096,20 +7110,6 @@
    "lang": "zh",
    "kind": "prissankt",
    "from": 4099
-  },
-  {
-   "at": 1793850621961,
-   "store": "bangerpack",
-   "product": "bangerpack:https://bangerpack.se/pokemon/koreanska-utgavor/pokemon-lost-abyss-booster-kor",
-   "group": "x|booster-pack|ko||abyss-lost",
-   "title": "Pokémon Lost Abyss – Booster (KOR)",
-   "url": "https://bangerpack.se/pokemon/koreanska-utgavor/pokemon-lost-abyss-booster-kor",
-   "image": "https://cdn.quickbutik.com/images/99246J/products/6ae8241e9a854.png",
-   "price": 69,
-   "type": "Booster Pack",
-   "set": null,
-   "lang": "ko",
-   "kind": "tillbaka"
   }
  ]
 }
