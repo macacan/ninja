@@ -1,5 +1,5 @@
 {
- "updated": 1794280584591,
+ "updated": 1794280744595,
  "stores": [
   {
    "id": "alara-games",
@@ -149,7 +149,7 @@
    "name": "CardHaven",
    "domain": "cardhaven.se",
    "status": "ej-forbjuden",
-   "checkedAt": 1794276987271,
+   "checkedAt": 1794280740908,
    "ok": false,
    "lastOkAt": 1792667308640,
    "count": 47,
