@@ -1,6 +1,20 @@
 {
- "updated": 1794353698139,
+ "updated": 1794354618160,
  "events": [
+  {
+   "at": 1794354569766,
+   "store": "bangerpack",
+   "product": "bangerpack:https://bangerpack.se/pokemon/boosters-packs/pokemon-silver-tempest-booster",
+   "group": "silver-tempest|booster-pack|en|",
+   "title": "Pokémon Silver Tempest – Booster",
+   "url": "https://bangerpack.se/pokemon/boosters-packs/pokemon-silver-tempest-booster",
+   "image": "https://cdn.quickbutik.com/images/99246J/products/6ae8138255b9b.png",
+   "price": 229,
+   "type": "Booster Pack",
+   "set": "Silver Tempest",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1794352689726,
    "store": "nordic-pulls",
@@ -7095,20 +7109,6 @@
    "url": "https://bangerpack.se/pokemon/japanska-utgavor/pokemon-star-birth-booster-jp",
    "image": "https://cdn.quickbutik.com/images/99246J/products/6ae8174f0e6aa.png",
    "price": 99,
-   "type": "Booster Pack",
-   "set": null,
-   "lang": "ja",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793859932330,
-   "store": "bangerpack",
-   "product": "bangerpack:https://bangerpack.se/pokemon/japanska-utgavor/pokemon-fusion-arts-booster-jp",
-   "group": "x|booster-pack|ja||arts-fusion",
-   "title": "Pokémon Fusion Arts – Booster (JP)",
-   "url": "https://bangerpack.se/pokemon/japanska-utgavor/pokemon-fusion-arts-booster-jp",
-   "image": "https://cdn.quickbutik.com/images/99246J/products/6ae80fbe89703.png",
-   "price": 189,
    "type": "Booster Pack",
    "set": null,
    "lang": "ja",
