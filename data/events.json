@@ -1,6 +1,20 @@
 {
- "updated": 1794331575455,
+ "updated": 1794332495480,
  "events": [
+  {
+   "at": 1794331856050,
+   "store": "webhallen",
+   "product": "webhallen:400148",
+   "group": "x|tin|en||forces-zeraora",
+   "title": "Pokemon Mega Forces Tin Mega Zeraora Ex",
+   "url": "https://www.webhallen.com/se/product/400148-Pokemon-Mega-Forces-Tin-Mega-Zeraora-Ex",
+   "image": "https://www.webhallen.com/images-ext/images.eu.ctfassets.net/n0e6ajgmrw5w/1aJHhkgTWf6uFixilFvH3S/05a8e2a09f6f0865bde8ae2551562995/0196214141841_1.jpg?fit=pad",
+   "price": 399,
+   "type": "Tin",
+   "set": null,
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1794331259544,
    "store": "dragon-s-lair",
@@ -7093,20 +7107,6 @@
    "price": 139,
    "type": "Booster Pack",
    "set": "Temporal Forces",
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793827074718,
-   "store": "bangerpack",
-   "product": "bangerpack:https://bangerpack.se/pokemon/displayer-boxar/pokemon-destined-rivals-booster-display",
-   "group": "destined-rivals|booster-box|en|",
-   "title": "Pokémon Destined Rivals – Booster Display",
-   "url": "https://bangerpack.se/pokemon/displayer-boxar/pokemon-destined-rivals-booster-display",
-   "image": "https://cdn.quickbutik.com/images/99246J/products/6ae7f40606786.png",
-   "price": 4695,
-   "type": "Booster Box",
-   "set": "Destined Rivals",
    "lang": "en",
    "kind": "tillbaka"
   }
