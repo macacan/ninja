@@ -1,6 +1,51 @@
 {
- "updated": 1794301505667,
+ "updated": 1794302445706,
  "events": [
+  {
+   "at": 1794301666587,
+   "store": "tcgstore",
+   "product": "tcgstore:10847025987911",
+   "group": "op|the-time-of-battle|booster-pack|en|",
+   "title": "One Piece Card Game OP16 - The Time of Battle Booster Pack",
+   "url": "https://tcgstore.se/products/one-piece-card-game-op16-the-time-of-battle-booster-pack",
+   "image": "https://cdn.shopify.com/s/files/1/0758/2508/6791/files/one-piece-op16-the-time-of-battle-booster-pack.jpg?v=1781089922",
+   "price": 119,
+   "type": "Booster Pack",
+   "set": "The Time of Battle",
+   "lang": "en",
+   "game": "op",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1794301666587,
+   "store": "tcgstore",
+   "product": "tcgstore:10588678684999",
+   "group": "op|the-azure-sea-s-seven|booster-pack|en|",
+   "title": "One Piece Card Game: OP14 - The Azure Sea's Seven Booster Pack (MAX 10 PER KUND)",
+   "url": "https://tcgstore.se/products/one-piece-card-game-op14-the-azure-seas-seven-booster-pack",
+   "image": "https://cdn.shopify.com/s/files/1/0758/2508/6791/files/one-piece-op14-the-azure-sea_s-seven-booster-pack.jpg?v=1767871885",
+   "price": 119,
+   "type": "Booster Pack",
+   "set": "The Azure Sea's Seven",
+   "lang": "en",
+   "game": "op",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1794301666587,
+   "store": "tcgstore",
+   "product": "tcgstore:10188097519943",
+   "group": "op|a-fist-of-divine-speed|booster-pack|en|",
+   "title": "One Piece Card Game: OP11 - A Fist of Divine Speed Booster Pack",
+   "url": "https://tcgstore.se/products/one-piece-card-game-op11-a-fist-of-divine-speed-booster-pack",
+   "image": "https://cdn.shopify.com/s/files/1/0758/2508/6791/files/one-piece-op11-a-fist-of-divine-speed-booster-pack.jpg?v=1748337449",
+   "price": 219,
+   "type": "Booster Pack",
+   "set": "A Fist of Divine Speed",
+   "lang": "en",
+   "game": "op",
+   "kind": "tillbaka"
+  },
   {
    "at": 1794300685334,
    "store": "spelgalaxen",
@@ -7067,49 +7112,6 @@
    "set": "151",
    "lang": "en",
    "kind": "tillbaka"
-  },
-  {
-   "at": 1793784366400,
-   "store": "poketalk",
-   "product": "poketalk:10065165648214",
-   "group": "phantasmal-flames|elite-trainer-box|en|",
-   "title": "Pokémon Mega Evolution: Phantasmal Flames Elite Trainer Box",
-   "url": "https://poketalk.se/products/pokemon-mega-evolution-phantasmal-flames-elite-trainer-box",
-   "image": "https://cdn.shopify.com/s/files/1/0862/7860/3094/files/49_228580b9-54dd-4167-81b5-bb0432695d78.png?v=1763114196",
-   "price": 1799,
-   "type": "Elite Trainer Box",
-   "set": "Phantasmal Flames",
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793784366400,
-   "store": "poketalk",
-   "product": "poketalk:9208751096150",
-   "group": "surging-sparks|booster-box|en|",
-   "title": "Pokémon Scarlet & Violet: Surging Sparks Booster Box",
-   "url": "https://poketalk.se/products/pokemon-scarlet-violet-surging-sparks-booster-box",
-   "image": "https://cdn.shopify.com/s/files/1/0862/7860/3094/files/Dinstycketext_44.png?v=1729500644",
-   "price": 3799,
-   "type": "Booster Box",
-   "set": "Surging Sparks",
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793781721026,
-   "store": "tcg-picks",
-   "product": "tcg-picks:16100077863237",
-   "group": "prismatic-evolutions|elite-trainer-box|en|",
-   "title": "Prismatic Evolutions Elite Trainer Box (Skicka hem)",
-   "url": "https://tcgpicks.com/produkt/prismatic-evolutions-elite-trainer-box-1?variant=58889231827269",
-   "image": "https://cdn.shopify.com/s/files/1/0977/3046/2021/files/card-1786819410489-0.jpg?v=1786819414",
-   "price": 1999,
-   "type": "Elite Trainer Box",
-   "set": "Prismatic Evolutions",
-   "lang": "en",
-   "kind": "prissankt",
-   "from": 2299
   }
  ]
 }
