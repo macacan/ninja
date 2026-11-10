@@ -1,6 +1,20 @@
 {
- "updated": 1794328815395,
+ "updated": 1794329735424,
  "events": [
+  {
+   "at": 1794328998026,
+   "store": "tcgaddan",
+   "product": "tcgaddan:15817449308492",
+   "group": "ascended-heroes|booster-pack|en|",
+   "title": "Ascended Heroes Booster Pack",
+   "url": "https://tcgaddan.se/products/ascended-heroes-booster-packs",
+   "image": "https://cdn.shopify.com/s/files/1/1037/7062/0236/files/AScendedheroes_915a09f2-6585-42c6-a995-5bd199a4b83e.webp?v=1781508800",
+   "price": 195,
+   "type": "Booster Pack",
+   "set": "Ascended Heroes",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1794328172109,
    "store": "mystery-shack",
@@ -7095,20 +7109,6 @@
    "set": "30th Celebration",
    "lang": "en",
    "kind": "ny"
-  },
-  {
-   "at": 1793819808792,
-   "store": "rahtech",
-   "product": "rahtech:15784995356998",
-   "group": "mega-evolution|booster-box|en||delta-forhandsbokning-reign",
-   "title": "Förhandsbokning: Mega Evolution Delta Reign – Booster Display (36 Pack) (ENG)",
-   "url": "https://rahtech.se/products/forhandsbokning-mega-evolution-delta-reign-booster-display-36-pack-eng",
-   "image": "https://cdn.shopify.com/s/files/1/0994/8882/5670/files/BlackBox-2026-08-21T000531_783_png.webp?v=1792174338",
-   "price": 2599,
-   "type": "Booster Box",
-   "set": "Mega Evolution",
-   "lang": "en",
-   "kind": "forbestallning"
   }
  ]
 }
