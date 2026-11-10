@@ -1,5 +1,5 @@
 {
- "updated": 1794284405285,
+ "updated": 1794287745370,
  "stores": [
   {
    "id": "alara-games",
@@ -107,28 +107,28 @@
    "name": "Card Mountain",
    "domain": "cardmountain.se",
    "status": "ej-forbjuden",
-   "checkedAt": 1794284072422,
+   "checkedAt": 1794287669145,
    "ok": true,
-   "lastOkAt": 1794284072422,
+   "lastOkAt": 1794287669145,
    "count": 53,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 60
+   "interval": 46
   },
   {
    "id": "cardclub",
    "name": "Cardclub",
    "domain": "cardclub.se",
    "status": "ej-forbjuden",
-   "checkedAt": 1794284088621,
+   "checkedAt": 1794287709939,
    "ok": true,
-   "lastOkAt": 1794284088621,
+   "lastOkAt": 1794287709939,
    "count": 84,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 60
+   "interval": 45
   },
   {
    "id": "cardgame",
@@ -163,14 +163,14 @@
    "name": "Cardlevels",
    "domain": "cardlevels.se",
    "status": "ej-forbjuden",
-   "checkedAt": 1794284086698,
+   "checkedAt": 1794287695938,
    "ok": true,
-   "lastOkAt": 1794284086698,
+   "lastOkAt": 1794287695938,
    "count": 59,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 60
+   "interval": 46
   },
   {
    "id": "cards-by-malcolm",
@@ -191,28 +191,28 @@
    "name": "CardValley",
    "domain": "cardvalley.se",
    "status": "ej-forbjuden",
-   "checkedAt": 1794284081664,
+   "checkedAt": 1794287676158,
    "ok": true,
-   "lastOkAt": 1794284081664,
+   "lastOkAt": 1794287676158,
    "count": 125,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 60
+   "interval": 46
   },
   {
    "id": "collected",
    "name": "Collected",
    "domain": "collected.se",
    "status": "ej-forbjuden",
-   "checkedAt": 1794284083276,
+   "checkedAt": 1794287691148,
    "ok": true,
-   "lastOkAt": 1794284083276,
+   "lastOkAt": 1794287691148,
    "count": 51,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 60
+   "interval": 46
   },
   {
    "id": "coolcard",
@@ -269,14 +269,14 @@
    "name": "Frog med Vänner",
    "domain": "frogmedvanner.se",
    "status": "ej-forbjuden",
-   "checkedAt": 1794284106631,
+   "checkedAt": 1794287722567,
    "ok": true,
-   "lastOkAt": 1794284106631,
+   "lastOkAt": 1794287722567,
    "count": 9,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 60
+   "interval": 45
   },
   {
    "id": "gameshop",
@@ -297,42 +297,42 @@
    "name": "Gimmick",
    "domain": "gimmick.se",
    "status": "inga-bilder",
-   "checkedAt": 1794284090336,
+   "checkedAt": 1794287681171,
    "ok": true,
-   "lastOkAt": 1794284090336,
+   "lastOkAt": 1794287681171,
    "count": 92,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 60
+   "interval": 46
   },
   {
    "id": "goblinen",
    "name": "Goblinen",
    "domain": "goblinen.com",
    "status": "ej-forbjuden",
-   "checkedAt": 1794284119636,
+   "checkedAt": 1794287742957,
    "ok": true,
-   "lastOkAt": 1794284119636,
+   "lastOkAt": 1794287742957,
    "count": 21,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 60
+   "interval": 45
   },
   {
    "id": "hobbykort",
    "name": "Hobbykort",
    "domain": "hobbykort.se",
    "status": "ej-forbjuden",
-   "checkedAt": 1794284113740,
+   "checkedAt": 1794287719956,
    "ok": true,
-   "lastOkAt": 1794284113740,
+   "lastOkAt": 1794287719956,
    "count": 176,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 60
+   "interval": 45
   },
   {
    "id": "jollyroom",
@@ -379,14 +379,14 @@
    "name": "Kortbutiken",
    "domain": "kortbutiken-shop.se",
    "status": "ej-forbjuden",
-   "checkedAt": 1794284126914,
+   "checkedAt": 1794287738957,
    "ok": true,
-   "lastOkAt": 1794284126914,
+   "lastOkAt": 1794287738957,
    "count": 81,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 60
+   "interval": 45
   },
   {
    "id": "kortgrossisten",
@@ -404,14 +404,14 @@
    "name": "Majki Poke",
    "domain": "majkipoke.se",
    "status": "ej-forbjuden",
-   "checkedAt": 1794284128296,
+   "checkedAt": 1794287724633,
    "ok": true,
-   "lastOkAt": 1794284128296,
+   "lastOkAt": 1794287724633,
    "count": 126,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 60
+   "interval": 45
   },
   {
    "id": "mana-torsk",
