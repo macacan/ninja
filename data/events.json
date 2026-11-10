@@ -1,6 +1,34 @@
 {
- "updated": 1794308521216,
+ "updated": 1794309421238,
  "events": [
+  {
+   "at": 1794309066928,
+   "store": "spelexperten",
+   "product": "spelexperten:https://www.spelexperten.com/sallskapsspel/pokemon/pokemon-tcg-delta-reign-premium-checklane-delphox.html",
+   "group": "delta-reign|blister|en||cl",
+   "title": "Pokémon TCG: Delta Reign - Premium Checklane Delphox",
+   "url": "https://www.spelexperten.com/sallskapsspel/pokemon/pokemon-tcg-delta-reign-premium-checklane-delphox.html",
+   "image": "https://www.spelexperten.com/bilder/artiklar/POK10444-FBD.jpg?m=1793195665",
+   "price": 129,
+   "type": "Blister",
+   "set": "Delta Reign",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1794309066928,
+   "store": "spelexperten",
+   "product": "spelexperten:https://www.spelexperten.com/sallskapsspel/pokemon/pokemon-tcg-delta-reign-booster-pack.html",
+   "group": "delta-reign|booster-pack|en|",
+   "title": "Pokémon TCG: Delta Reign - Booster Pack",
+   "url": "https://www.spelexperten.com/sallskapsspel/pokemon/pokemon-tcg-delta-reign-booster-pack.html",
+   "image": "https://www.spelexperten.com/bilder/artiklar/POK10446-BOS.jpg?m=1793193950",
+   "price": 79,
+   "type": "Booster Pack",
+   "set": "Delta Reign",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1794307959631,
    "store": "tcgstore",
@@ -7083,34 +7111,6 @@
    "price": 1999,
    "type": "Elite Trainer Box",
    "set": "30th Celebration",
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1793799074978,
-   "store": "cardlevels",
-   "product": "cardlevels:11060786331959",
-   "group": "30th-celebration|booster-pack|en|",
-   "title": "Pokémon 30th Celebration: Booster Pack",
-   "url": "https://cardlevels.se/products/pokemon-30th-celebration-booster-pack",
-   "image": "https://cdn.shopify.com/s/files/1/0846/0458/4247/files/pokemon-30th-celebrations-booster-pack.webp?v=1793798223",
-   "price": 189,
-   "type": "Booster Pack",
-   "set": "30th Celebration",
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1793799056112,
-   "store": "spelparken",
-   "product": "spelparken:15403345871223",
-   "group": "temporal-forces|booster-box|en|",
-   "title": "Temporal Forces Booster Box",
-   "url": "https://spelparken.se/products/paradox-rift-box-oppnas-live-kopia-kopia",
-   "image": "https://cdn.shopify.com/s/files/1/0948/1876/3127/files/Skarmbild2026-03-02131656_c8c04ef0-824a-41ec-8e56-568f1664b371.png?v=1772454222",
-   "price": 3699,
-   "type": "Booster Box",
-   "set": "Temporal Forces",
    "lang": "en",
    "kind": "ny"
   }
