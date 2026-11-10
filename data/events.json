@@ -1,6 +1,20 @@
 {
- "updated": 1794333415503,
+ "updated": 1794334335521,
  "events": [
+  {
+   "at": 1794333781888,
+   "store": "rgb-kingz",
+   "product": "rgb-kingz:15892301021514",
+   "group": "pitch-black|booster-pack|en|",
+   "title": "Pokémon TCG: Mega Evolution Pitch Black Booster Pack",
+   "url": "https://rgbkingz.com/products/pokemon-tcg-mega-evolution-pitch-black-booster-pack",
+   "image": "https://cdn.shopify.com/s/files/1/0782/8088/4554/files/pokemon-pitch-black-booster.png?v=1784016051",
+   "price": 89,
+   "type": "Booster Pack",
+   "set": "Pitch Black",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1794331856050,
    "store": "webhallen",
@@ -7094,20 +7108,6 @@
    "type": "Booster Pack",
    "set": null,
    "lang": "ja",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793828058479,
-   "store": "bangerpack",
-   "product": "bangerpack:https://bangerpack.se/pokemon/boosters-packs/pokemon-temporal-forces-booster",
-   "group": "temporal-forces|booster-pack|en|",
-   "title": "Pokémon Temporal Forces – Booster",
-   "url": "https://bangerpack.se/pokemon/boosters-packs/pokemon-temporal-forces-booster",
-   "image": "https://cdn.quickbutik.com/images/99246J/products/6ae7f4d7812c1.png",
-   "price": 139,
-   "type": "Booster Pack",
-   "set": "Temporal Forces",
-   "lang": "en",
    "kind": "tillbaka"
   }
  ]
