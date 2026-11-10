@@ -1,6 +1,34 @@
 {
- "updated": 1794338016030,
+ "updated": 1794338936052,
  "events": [
+  {
+   "at": 1794338683663,
+   "store": "gimmick",
+   "product": "gimmick:15527601111370",
+   "group": "ascended-heroes|booster-pack|en|",
+   "title": "Pokémon Mega Evolution - Ascended Heroes Booster Pack",
+   "url": "https://gimmick.se/product/pokemon-mega-evolution-ascended-heroes-booster-pack",
+   "image": null,
+   "price": 199,
+   "type": "Booster Pack",
+   "set": "Ascended Heroes",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1794338683663,
+   "store": "gimmick",
+   "product": "gimmick:10302619582794",
+   "group": "destined-rivals|booster-pack|en|",
+   "title": "Pokémon Scarlet & Violet - Destined Rivals Booster Pack",
+   "url": "https://gimmick.se/product/pokemon-scarlet-violet-destined-rivals-booster-pack-1",
+   "image": null,
+   "price": 129,
+   "type": "Booster Pack",
+   "set": "Destined Rivals",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1794337967739,
    "store": "skattkistan",
@@ -7079,34 +7107,6 @@
    "price": 79,
    "type": "Booster Pack",
    "set": null,
-   "lang": "ja",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793859932330,
-   "store": "bangerpack",
-   "product": "bangerpack:https://bangerpack.se/pokemon/japanska-utgavor/pokemon-terastal-festival-ex-booster-jp",
-   "group": "x|booster-pack|ja||festival-terastal",
-   "title": "Pokémon Terastal Festival ex – Booster (JP)",
-   "url": "https://bangerpack.se/pokemon/japanska-utgavor/pokemon-terastal-festival-ex-booster-jp",
-   "image": "https://cdn.quickbutik.com/images/99246J/products/6ae7ff143f336.png",
-   "price": 239,
-   "type": "Booster Pack",
-   "set": null,
-   "lang": "ja",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793859932330,
-   "store": "bangerpack",
-   "product": "bangerpack:https://bangerpack.se/pokemon/japanska-utgavor/pokemon-black-bolt-booster-jp",
-   "group": "black-bolt|booster-pack|ja|",
-   "title": "Pokémon Black Bolt – Booster (JP)",
-   "url": "https://bangerpack.se/pokemon/japanska-utgavor/pokemon-black-bolt-booster-jp",
-   "image": "https://cdn.quickbutik.com/images/99246J/products/6ae7ff040387f.png",
-   "price": 109,
-   "type": "Booster Pack",
-   "set": "Black Bolt",
    "lang": "ja",
    "kind": "tillbaka"
   }
