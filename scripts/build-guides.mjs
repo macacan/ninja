@@ -118,7 +118,7 @@ ${gr.qs.map((x) => `        <details>
       </div>
     </section>`).join("\n")}
     ${updated}
-    <p class="guide-more">Fler guider: ${data.guides.filter((o) => o !== g).map((o) => `<a href="guider/${o.slug}.html">${esc(o.game)}</a>`).join(" · ")} · <a href="guider/">Alla guider</a></p>`;
+${g.sources?.length ? `    <p class="guide-updated">Officiella källor: ${g.sources.map(([name, href]) => `<a href="${esc(href)}" rel="noopener">${esc(name)}</a>`).join(" · ")}</p>\n` : ""}    <p class="guide-more">Fler guider: ${data.guides.filter((o) => o !== g).map((o) => `<a href="guider/${o.slug}.html">${esc(o.game)}</a>`).join(" · ")} · <a href="guider/">Alla guider</a></p>`;
   const html = page({
     path, title: g.title, description: g.description,
     crumbs: [["Hem", "./"], ["Guider", "guider/"], [g.game, path]],
@@ -126,6 +126,7 @@ ${gr.qs.map((x) => `        <details>
       "@type": "FAQPage", "@id": `${url}#faq`, url, name: g.h1, description: g.description, inLanguage: "sv-SE",
       dateModified: data.updated, isPartOf: { "@id": `${SITE}/#website` }, publisher: { "@id": `${SITE}/#org` },
       about: { "@type": "Thing", name: g.game }, breadcrumb: { "@id": `${url}#breadcrumb` },
+      ...(g.sources?.length ? { citation: g.sources.map(([name, href]) => ({ "@type": "CreativeWork", name, url: href })) } : {}),
       mainEntity: all.map((x) => ({ "@type": "Question", name: x.q, acceptedAnswer: { "@type": "Answer", text: plain(x.a) } })),
     }],
     body,

@@ -21,7 +21,8 @@
             { "q": "Vad är Battle Academy?", "a": "Battle Academy är en låda för nybörjare med tre färdiga lekar, en spelmatta, tärningar och en guide som lär ut reglerna steg för steg. Den är ett av de enklaste sätten för två personer att lära sig spelet tillsammans." },
             { "q": "Vad är skillnaden mellan Pokémon TCG Pocket och Pokémon TCG Live?", "a": "Pokémon TCG Live är den digitala versionen av det riktiga kortspelet, med samma regler och kort, och kodkorten i fysiska paket kan lösas in där. Pokémon TCG Pocket är ett separat mobilspel med förenklade regler, mindre lekar och egna digitala paket. Kodkorten fungerar inte i Pocket." },
             { "q": "Var kan man spela Pokémon TCG i Sverige?", "a": "Många spelbutiker har ligakvällar och mindre turneringar, ofta med särskilda tider för nybörjare och barn. Officiella evenemang går att hitta med Play! Pokémon Event Locator på pokemon.com. Där finns också större turneringar som League Challenges och League Cups." },
-            { "q": "Är Pokémonkort en bra investering?", "a": "Det finns ingen garanti. Vissa förseglade boxar och eftertraktade kort har stigit kraftigt i värde, men många produkter tappar i stället när de trycks om eller när intresset svalnar. Köp helst det du själv tycker är roligt att samla, och se eventuell värdeökning som en bonus." }
+            { "q": "Är Pokémonkort en bra investering?", "a": "Det finns ingen garanti. Vissa förseglade boxar och eftertraktade kort har stigit kraftigt i värde, men många produkter tappar i stället när de trycks om eller när intresset svalnar. Köp helst det du själv tycker är roligt att samla, och se eventuell värdeökning som en bonus." },
+            { "q": "Hur går man från Pokémon TCG Pocket till det fysiska kortspelet?", "a": "Pokémon TCG Pocket använder lekar på 20 kort, en automatisk energizon och 3 poäng för att vinna. Det fysiska Pokémon TCG har lekar på 60 kort (högst 4 av samma namn), energikort i leken och 6 priskort. Enklast är att börja med en färdig League Battle Deck eller Battle Academy och sedan byta ut kort med lösa singlar." }
           ]
         },
         {
@@ -72,7 +73,7 @@
           "name": "Värde, skick och gradering",
           "qs": [
             { "q": "Hur kollar man vad ett Pokémonkort är värt?", "a": "Sök på kortets namn och nummer i <a href=\"priser.html?game=pokemon\">Lootninjas Kortpriser</a>, som visar Cardmarket-priset i kronor, eller fota kortet i <a href=\"vardering.html\">Värdering</a>. Kom ihåg att skicket påverkar priset mycket." },
-            { "q": "Hur ser man om ett Pokémonkort är äkta?", "a": "Jämför med ett kort du vet är äkta: baksidans färger, typsnittet, glansen och kortets tjocklek. Falska kort har ofta bleka eller fel färger, konstiga typsnitt och en för blank eller för tunn kartong." },
+            { "q": "Hur ser man om ett Pokémonkort är äkta?", "a": "Jämför med ett kort du vet är äkta: baksidans färger, typsnittet, glansen och kortets tjocklek. Falska kort har ofta bleka eller fel färger, konstiga typsnitt, stavfel och en för blank eller för tunn kartong. Med en lupp ser du på äkta kort ett jämnt rastermönster av färgprickar och skarp svart text." },
             { "q": "Vad betyder Near Mint (NM)?", "a": "Att kortet är i nästan nyskick, med högst minimala spår av hantering. Skalan går från Mint och Near Mint ner till Poor." },
             { "q": "Vad är gradering och PSA?", "a": "Ett graderingsföretag som PSA bedömer kortets äkthet och skick på en skala 1–10 och förseglar det i ett hårt fodral (slab). En PSA 10 kan vara värd mycket mer än samma kort ograderat." },
             { "q": "Vilka andra graderingsföretag finns?", "a": "Utöver PSA är Beckett (BGS) och CGC de största. Beckett är kända för sin Black Label för helt felfria kort." },
@@ -87,7 +88,8 @@
             { "q": "Är det säkert att köpa Pokémonkort på Wish, Temu eller AliExpress?", "a": "Nej, där säljs ofta förfalskade kort och paket. Förfalskningarna kan vara svåra att se på bild. Köp förseglade produkter från etablerade butiker och lösa kort från säljare med bra omdömen." },
             { "q": "Vad är en toploader, en penny sleeve och en Card Saver?", "a": "En penny sleeve är en tunn och mjuk plastficka som kortet läggs i först. En toploader är ett hårt plastfodral som kortet sedan skjuts in i, bra för förvaring och frakt. En Card Saver är ett halvstyvt fodral som graderingsföretag som PSA föredrar när man skickar in kort." },
             { "q": "Vad är skillnaden mellan PSA 9 och PSA 10?", "a": "PSA 10 (Gem Mint) betyder i princip felfritt: bra centrering, skarpa hörn, rena kanter och ingen skada på ytan. PSA 9 (Mint) tillåter ett litet fel. För eftertraktade kort kan ett PSA 10 vara värt flera gånger mer än samma kort i PSA 9." },
-            { "q": "Hur skickar man kort till gradering från Sverige?", "a": "Man kan skicka själv direkt till graderingsföretaget eller gå med i en gruppinskickning via en butik eller samlare, vilket ofta blir billigare per kort. Räkna med kostnad för graderingen, frakt åt båda hållen och eventuell moms eller avgift när korten kommer tillbaka. Gradera bara kort där värdet efter gradering täcker kostnaden." }
+            { "q": "Hur skickar man kort till gradering från Sverige?", "a": "Man kan skicka själv direkt till graderingsföretaget eller gå med i en gruppinskickning via en butik eller samlare, vilket ofta blir billigare per kort. Räkna med kostnad för graderingen, frakt åt båda hållen och eventuell moms eller avgift när korten kommer tillbaka. Gradera bara kort där värdet efter gradering täcker kostnaden." },
+            { "q": "Vilken pärm är bäst för Pokémonkort?", "a": "En pärm med fastsydda sidomatade fickor och dragkedja (zip binder) skyddar bäst, eftersom korten inte glider ut och inga ringar trycker på dem. Ringpärmar kan ge bucklor i korten närmast ryggen. Pärmar med gummiband fungerar också, men bandet kan trycka på korten i kanten om pärmen är överfull." }
           ]
         },
         {
@@ -119,6 +121,9 @@
             { "q": "När släpps nästa Pokémon-set?", "a": "<a href=\"slapp.html\">Släppkalendern</a> visar kommande engelska och japanska set med datum." }
           ]
         }
+      ],
+      "sources": [
+        ["Pokémon TCG: officiella regler (The Pokémon Company)", "https://www.pokemon.com/us/pokemon-tcg/rules"]
       ]
     },
     {
@@ -172,7 +177,11 @@
             { "q": "Hur fungerar Event-kort med [Counter]?", "a": "Event-kort med [Counter] spelar man under motståndarens attack genom att betala kostnaden med DON!!. De ger oftast extra power till din Leader eller karaktär så att attacken misslyckas, ibland med en extra effekt." },
             { "q": "Vad är ett Stage-kort?", "a": "Ett Stage-kort är en plats ur One Piece, till exempel ett skepp, som ligger kvar på bordet och ger en fortlöpande effekt. Varje spelare får bara ha ett Stage-kort i spel. Spelar du ett nytt hamnar det gamla i trash." },
             { "q": "Vad betyder [On K.O.], [Your Turn] och [Opponent's Turn]?", "a": "[On K.O.] aktiveras när karaktären blir utslagen. [Your Turn] betyder att effekten bara gäller under din egen tur, och [Opponent's Turn] att den bara gäller under motståndarens tur." },
-            { "q": "Hur länge tar ett parti One Piece Card Game?", "a": "Ett vanligt parti brukar ta ungefär 20–30 minuter. På turneringar finns en tidsgräns per rond." }
+            { "q": "Hur länge tar ett parti One Piece Card Game?", "a": "Ett vanligt parti brukar ta ungefär 20–30 minuter. På turneringar finns en tidsgräns per rond." },
+            { "q": "Hur mycket Power ska man attackera med i One Piece Card Game?", "a": "Anfallaren vinner vid lika Power, så försvararen måste komma över attackens värde. Eftersom de flesta Counter-värden på karaktärer är +1000 eller +2000 lönar det sig att anfalla i steg om 2000 över målet. Mot en Leader med 5000 Power kräver en attack på 7000 minst två kort från handen och 9000 minst tre, medan 8000 inte kräver fler kort än 7000. Counter-event kan ge mer än +2000, så räkna med dem också." },
+            { "q": "Blir DON!! aktiva igen om man använt dem på motståndarens tur?", "a": "Ja. I din Refresh Phase blir alla vilande DON!! och kort aktiva igen, och DON!! som satt fästa på Leader och karaktärer går tillbaka till kostnadsområdet. Det gäller även DON!! som du vilade för att betala ett Counter-event under motståndarens tur, om inte ett kort säger något annat." },
+            { "q": "Är Trigger frivilligt och gäller det alltid när man tar ett Life-kort?", "a": "Trigger är frivilligt: när du tar skada och vänder upp ett Life-kort med Trigger väljer du om du vill använda effekten eller ta kortet till handen. Trigger gäller bara när Life-kortet tas på grund av skada. Tar du ett Life-kort till handen med en vanlig korteffekt får du inte använda Trigger." },
+            { "q": "Kan man ha fler Life-kort än Leaderns Life-värde?", "a": "Ja. Life-värdet på Leadern är bara hur många Life-kort du börjar med, inte ett tak. Kort som lägger till Life-kort kan ge dig fler än du startade med." }
           ]
         },
         {
@@ -211,7 +220,7 @@
             { "q": "Var spelar man One Piece Card Game i Sverige?", "a": "Många spelbutiker har spelkvällar och turneringar, bland annat Store Treasure Cup. Officiella evenemang hittar du i appen Bandai TCG+, där du också registrerar dig som spelare." },
             { "q": "Vad är Bandai TCG+?", "a": "Bandais officiella app och webbtjänst för turneringar. Där skapar du ett spelar-ID, hittar evenemang i närheten, anmäler dig och ser dina resultat." },
             { "q": "Vad är Block X?", "a": "Kort som har fått en Manga Rare-version märks som Block X och lämnar aldrig Standard, även när resten av deras block roterar ut. Det gäller även kortets vanliga versioner." },
-            { "q": "Hur ser man att ett One Piece-kort är äkta?", "a": "Jämför med ett kort du vet är äkta: färgerna, typsnittet, kortets tjocklek och glansen. Förfalskningar är vanligast bland dyra kort som Manga Rare och parallellkort. Köp dyra kort från säljare med bra omdömen, gärna graderade." },
+            { "q": "Hur ser man att ett One Piece-kort är äkta?", "a": "Jämför med ett kort du vet är äkta från samma set: färgerna, typsnittet i texten och copyright-raden, kortets tjocklek och glansen. Äkta kort har en matt baksida, medan många förfalskningar har en blank, plastig baksida och mörkare färger. Med en lupp ser du på äkta kort ett jämnt rastermönster och skarp svart text. Förfalskningar är vanligast bland dyra kort som Manga Rare och parallellkort, så köp dem från säljare med bra omdömen eller graderade." },
             { "q": "Var säljer man One Piece-kort i Sverige?", "a": "Cardmarket är störst i Europa för lösa kort. Tradera, Facebook-grupper och vissa spelbutiker är andra alternativ. Kolla vad korten säljs för innan du sätter ett pris." },
             { "q": "Lönar det sig att gradera One Piece-kort?", "a": "Oftast bara för dyra kort som Manga Rare, parallellkort och värdefulla promokort i mycket fint skick. Graderingen kostar pengar per kort plus frakt, så för billigare kort blir det sällan lönsamt." },
             { "q": "Vad är Extra Regulation?", "a": "Ett tävlingsformat i One Piece Card Game där även kort som har roterat ut ur Standard får användas. Vilket format en turnering har står i anmälan." }
@@ -225,6 +234,9 @@
             { "q": "Vilken One Piece-produkt passar som present?", "a": "För någon som vill spela är en startlek eller en Double Pack ett bra och billigt val. För en samlare är en hel booster box den största upplevelsen, och lösa booster-paket passar som mindre presenter. Jämför priser och lager på <a href=\"butiker.html\">Lootninja</a>." }
           ]
         }
+      ],
+      "sources": [
+        ["One Piece Card Game: officiella regler och FAQ (Bandai)", "https://en.onepiece-cardgame.com/rules/"]
       ]
     },
     {
@@ -256,7 +268,8 @@
             { "q": "Vad är en Showdown?", "a": "När enheter flyttar till ett slagfält blir det en Showdown, ett läge där spelarna turas om att spela kort med Action eller Reaction, med början hos den som anföll. När båda passar i rad avgörs striden (Combat) om det finns enheter från båda sidor på slagfältet." },
             { "q": "Vad är skillnaden mellan Action och Reaction?", "a": "Kort med Action kan spelas under din egen tur och under Showdowns. Kort med Reaction kan spelas nästan när som helst, även som svar på motståndarens kort innan det har fått effekt. Kort utan någon av dem spelas bara i din egen huvudfas." },
             { "q": "Hur flyttar man enheter?", "a": "En redo enhet kan flytta mellan din Base och ett slagfält, och blir då exhausted (vriden). Enheter med Ganking kan dessutom flytta direkt mellan slagfält. Nya enheter kommer in vridna och kan oftast inte flytta samma tur som de spelas." },
-            { "q": "Ligger skadan kvar på enheterna?", "a": "Nej. En enhet som tar minst lika mycket skada som sin Might slås ut, men skada som inte räckte försvinner i slutet av turen." }
+            { "q": "Ligger skadan kvar på enheterna?", "a": "Nej. En enhet som tar minst lika mycket skada som sin Might slås ut, men skada som inte räckte försvinner i slutet av turen." },
+            { "q": "Vad är Priority och Focus i Riftbound?", "a": "Priority bestämmer vem som får agera när ingen strid pågår. Focus är motsvarigheten under en Showdown: spelaren med Focus får spela Action- eller Reaction-kort eller passa. När båda passar i rad är Showdownen slut och striden avgörs." }
           ]
         },
         {
@@ -309,7 +322,10 @@
             { "q": "Vad är Signature-kort?", "a": "Kort som hör till en viss champion och bara får användas i en lek med den championens Legend. Du får ha högst tre Signature-kort i leken." },
             { "q": "Behöver man en spelmatta för Riftbound?", "a": "Nej, men det hjälper. En spelmatta visar var Base, slagfält, runes och lekar ska ligga, vilket gör det lättare att hålla ordning, särskilt i början." },
             { "q": "Hur ser man att Riftbound-kort är äkta?", "a": "Jämför med ett kort du vet är äkta: färger, typsnitt, glans och kortets tjocklek. Förfalskningar är vanligast bland dyra kort, till exempel signerade och alternativa versioner. Köp förseglat från seriösa butiker och lösa kort från säljare med bra omdömen." },
-            { "q": "Var säljer man Riftbound-kort i Sverige?", "a": "Cardmarket, Tradera och Facebook-grupper är vanliga platser. Kolla vad korten säljs för på <a href=\"priser.html?game=rb\">Kortpriser</a> innan du sätter ett pris." }
+            { "q": "Var säljer man Riftbound-kort i Sverige?", "a": "Cardmarket, Tradera och Facebook-grupper är vanliga platser. Kolla vad korten säljs för på <a href=\"priser.html?game=rb\">Kortpriser</a> innan du sätter ett pris." },
+            { "q": "Vilka setkoder har Riftbound?", "a": "Riftbounds set förkortas med tre bokstäver som står på korten: OGN (Origins), OGS (Proving Grounds), SFD (Spiritforged), UNL (Unleashed), VEN (Vendetta) och RAD (Radiance). Nästa set, Legacy, har koden LGC." },
+            { "q": "Vilka kort är bannade i Riftbound?", "a": "Enligt Riots banlista från 18 september 2026 är sju kort bannade i Standard: Called Shot, Draven Vanquisher, Fight or Flight, Scrapheap, Stealthy Pursuer, Ekko Recurrent och Stacked Deck. Dessutom är fem slagfält bannade: The Dreaming Tree, Obelisk of Power, Reaver's Row, The Arena's Greatest och Aspirant's Climb. I 2v2 är även Master Yi, Wuju Bladesman bannad. Listan ändras, så kolla Riots senaste besked." },
+            { "q": "Har Riftbound rotation?", "a": "Inte ännu. Alla set är tillåtna i Standard. Riot har sagt att den första rotationen planeras till 2028, då de äldsta seten ska lämna Standard samtidigt." }
           ]
         },
         {
@@ -320,6 +336,10 @@
             { "q": "Varför är Riftbound ofta slutsålt?", "a": "Riftbound har blivit mycket populärt, och nya set och Champion Decks säljer ofta slut vid släppet eftersom butikerna får begränsade mängder. Produkterna kommer ofta tillbaka när de trycks om. Med <a href=\"butiker.html#notiser\">Lootninjas notiser</a> får du veta när något kommer in i lager igen." }
           ]
         }
+      ],
+      "sources": [
+        ["Riftbound Rules Hub (Riot Games)", "https://playriftbound.com/en-us/rules-hub/"],
+        ["Riftbound: banlistan från 18 september 2026 (Riot Games)", "https://playriftbound.com/en-us/news/announcements/september-ban-list-updates-effective-september-18-2026/"]
       ]
     }
   ]
