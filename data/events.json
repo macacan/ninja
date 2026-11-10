@@ -1,6 +1,21 @@
 {
- "updated": 1794268743988,
+ "updated": 1794269664009,
  "events": [
+  {
+   "at": 1794269350700,
+   "store": "sweet-nerds",
+   "product": "sweet-nerds:https://sweetnerds.se/sv/products/one-piece-card-game-op01-romance-dawn-booster-box-jp",
+   "group": "op|romance-dawn|booster-box|ja|",
+   "title": "One Piece Card Game: OP01 Romance Dawn - Booster Box (JP)",
+   "url": "https://sweetnerds.se/sv/products/one-piece-card-game-op01-romance-dawn-booster-box-jp",
+   "image": "https://nycdn.nyehandel.se/store_17dfab1e-b233-4e19-a6f0-ae93160c8b85/images/1000002990-4b239994.png?width=400&height=400",
+   "price": 3699,
+   "type": "Booster Box",
+   "set": "Romance Dawn",
+   "lang": "ja",
+   "game": "op",
+   "kind": "tillbaka"
+  },
   {
    "at": 1794266397660,
    "store": "sweet-nerds",
@@ -7093,20 +7108,6 @@
    "type": "Deck",
    "set": null,
    "lang": "ja",
-   "kind": "ny"
-  },
-  {
-   "at": 1793754154162,
-   "store": "packs-on-packs",
-   "product": "packs-on-packs:https://packsonpacks.se/sealed-produkter/30th-celebration-greninja-ex-box",
-   "group": "30th-celebration|collection-box|en||",
-   "title": "30th Celebration ex Box",
-   "url": "https://packsonpacks.se/sealed-produkter/30th-celebration-greninja-ex-box",
-   "image": "https://cdn.quickbutik.com/images/92330P/products/6aac3ef38e1e9.png",
-   "price": 699,
-   "type": "Collection Box",
-   "set": "30th Celebration",
-   "lang": "en",
    "kind": "ny"
   }
  ]
