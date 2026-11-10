@@ -1,6 +1,20 @@
 {
- "updated": 1794312200916,
+ "updated": 1794313140938,
  "events": [
+  {
+   "at": 1794312481427,
+   "store": "tcgstore",
+   "product": "tcgstore:8758377578823",
+   "group": "x|booster-box|ja||burst-clay",
+   "title": "Pokémon Scarlet & Violet: Clay Burst Booster Box (JPN)",
+   "url": "https://tcgstore.se/products/pokemon-scarlet-violet-clay-burst-booster-box",
+   "image": "https://cdn.shopify.com/s/files/1/0758/2508/6791/files/clayburstbb1.jpg?v=1692728992",
+   "price": 1299,
+   "type": "Booster Box",
+   "set": "Scarlet & Violet",
+   "lang": "ja",
+   "kind": "tillbaka"
+  },
   {
    "at": 1794311486677,
    "store": "rgb-kingz",
@@ -7097,20 +7111,6 @@
    "price": 549,
    "type": "Collection Box",
    "set": null,
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1793800872593,
-   "store": "westcoast-vault",
-   "product": "westcoast-vault:15944007909716",
-   "group": "ascended-heroes|collection-box|en||charmander-sticker-tech",
-   "title": "Pokémon TCG: Ascended Heroes - 3 pack  tech sticker collection Charmander",
-   "url": "https://westcoastvault.se/products/pokemon-tcg-ascended-heroes-3-pack-tech-sticker-collection-charmander",
-   "image": "https://cdn.shopify.com/s/files/1/1042/6177/9796/files/library-3E2B8188-B4F9-4FB4-90B6-FF48D72697D0-L0-001.png?v=1793800783",
-   "price": 599,
-   "type": "Collection Box",
-   "set": "Ascended Heroes",
    "lang": "en",
    "kind": "ny"
   }
