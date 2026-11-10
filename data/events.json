@@ -1,6 +1,20 @@
 {
- "updated": 1794314980982,
+ "updated": 1794315901234,
  "events": [
+  {
+   "at": 1794315282431,
+   "store": "tcgstore",
+   "product": "tcgstore:10490891305287",
+   "group": "phantasmal-flames|blister|en||cl",
+   "title": "Pokémon Mega Evolution: Phantasmal Flames Premium Checklane Blister Pack: Hydrapple (MAX 2 PER KUND)",
+   "url": "https://tcgstore.se/products/pokemon-mega-evolution-phantasmal-flames-premium-checklane-blister-pack-hydrapple",
+   "image": "https://cdn.shopify.com/s/files/1/0758/2508/6791/files/pokemon-mega-evolution-phantasmal-flames-premium-checklane-blister-hydrapple.jpg?v=1763628667",
+   "price": 219,
+   "type": "Blister",
+   "set": "Phantasmal Flames",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1794313339689,
    "store": "alphaspel",
@@ -7097,20 +7111,6 @@
    "price": 1599,
    "type": "Elite Trainer Box",
    "set": "Destined Rivals",
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793803809234,
-   "store": "bangerpack",
-   "product": "bangerpack:https://bangerpack.se/pokemon/elite-trainer-special/pokemon-ascended-heroes-elite-trainer-box",
-   "group": "ascended-heroes|elite-trainer-box|en|",
-   "title": "Pokémon Ascended Heroes – Elite Trainer Box",
-   "url": "https://bangerpack.se/pokemon/elite-trainer-special/pokemon-ascended-heroes-elite-trainer-box",
-   "image": "https://cdn.quickbutik.com/images/99246J/products/6a8f39c1c446e.png",
-   "price": 2495,
-   "type": "Elite Trainer Box",
-   "set": "Ascended Heroes",
    "lang": "en",
    "kind": "tillbaka"
   }
