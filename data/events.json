@@ -1,6 +1,34 @@
 {
- "updated": 1794330655439,
+ "updated": 1794331575455,
  "events": [
+  {
+   "at": 1794331259544,
+   "store": "dragon-s-lair",
+   "product": "dragon-s-lair:15969964786012",
+   "group": "black-bolt|booster-box|ja|",
+   "title": "Pokemon Black Bolt Deluxe Booster Box Display (sv11B)(Japansk)",
+   "url": "https://dragonslair.se/products/pokemon-black-bolt-deluxe-booster-box-display-sv11bjapansk",
+   "image": "https://cdn.shopify.com/s/files/1/1015/8315/9644/files/4262480271004-29-_1.webp?v=1794330884",
+   "price": 2749,
+   "type": "Booster Box",
+   "set": "Black Bolt",
+   "lang": "ja",
+   "kind": "ny"
+  },
+  {
+   "at": 1794331259544,
+   "store": "dragon-s-lair",
+   "product": "dragon-s-lair:15554385903964",
+   "group": "black-bolt|booster-pack|ja|",
+   "title": "Pokémon TCG - Black Bolt Deluxe Booster Japansk",
+   "url": "https://dragonslair.se/products/pokemon-tcg-black-bolt-deluxe-booster-japansk-pokemon",
+   "image": "https://cdn.shopify.com/s/files/1/1015/8315/9644/files/Pok-mon-TCG---Black-Bolt-Deluxe-Booster-Japansk.webp?v=1777047313",
+   "price": 695,
+   "type": "Booster Pack",
+   "set": "Black Bolt",
+   "lang": "ja",
+   "kind": "tillbaka"
+  },
   {
    "at": 1794329906297,
    "store": "tcgaddan",
@@ -7081,34 +7109,6 @@
    "set": "Destined Rivals",
    "lang": "en",
    "kind": "tillbaka"
-  },
-  {
-   "at": 1793823746820,
-   "store": "packs-on-packs",
-   "product": "packs-on-packs:https://packsonpacks.se/pack-battle/79-30th-celebration-booster",
-   "group": "30th-celebration|booster-pack|en|",
-   "title": "30th Celebration Booster PB",
-   "url": "https://packsonpacks.se/pack-battle/79-30th-celebration-booster",
-   "image": "https://cdn.quickbutik.com/images/92330P/products/6ab3ed35e1bf1.png",
-   "price": 169,
-   "type": "Booster Pack",
-   "set": "30th Celebration",
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1793820738159,
-   "store": "spelparken",
-   "product": "spelparken:15596569428343",
-   "group": "30th-celebration|ultra-premium-collection|en|case|case",
-   "title": "30th Celebration UPC Sealed Case",
-   "url": "https://spelparken.se/products/30th-celebration-upc-sealed-case",
-   "image": "https://cdn.shopify.com/s/files/1/0948/1876/3127/files/s-l1600_84530807-3cc5-4a9f-b1e6-a8047dcc7654.webp?v=1793820663",
-   "price": 23990,
-   "type": "Ultra-Premium Collection",
-   "set": "30th Celebration",
-   "lang": "en",
-   "kind": "ny"
   }
  ]
 }
