@@ -1,6 +1,20 @@
 {
- "updated": 1794326895347,
+ "updated": 1794327895375,
  "events": [
+  {
+   "at": 1794327192761,
+   "store": "rgb-kingz",
+   "product": "rgb-kingz:15888329703754",
+   "group": "ascended-heroes|booster-pack|en|",
+   "title": "Pokémon Mega Evolution: Ascended Heroes Booster Pack",
+   "url": "https://rgbkingz.com/products/pokemon-mega-evolution-ascended-heroes-booster-pack",
+   "image": "https://cdn.shopify.com/s/files/1/0782/8088/4554/files/pokemon-mega-evolution-ascended-heroes-booster-pack.webp?v=1783791048",
+   "price": 199,
+   "type": "Booster Pack",
+   "set": "Ascended Heroes",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1794326303048,
    "store": "spelexperten",
@@ -7092,20 +7106,6 @@
    "title": "Pokémon Mewtwo V-UNION Binder Collection (Kinesisk)",
    "url": "https://rgbkingz.com/products/pokemon-mewtwo-v-union-binder-collection-kinesisk",
    "image": "https://cdn.shopify.com/s/files/1/0782/8088/4554/files/pokemon-tcg-simplified-chinese-sword-shield-csec-mewtwo-v-union.png?v=1791036988",
-   "price": 349,
-   "type": "Collection Box",
-   "set": null,
-   "lang": "zh",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793813813467,
-   "store": "rgb-kingz",
-   "product": "rgb-kingz:16079449227594",
-   "group": "x|collection-box|zh||binder-union-zacian",
-   "title": "Pokémon Zacian V-UNION Binder Collection (Kinesisk)",
-   "url": "https://rgbkingz.com/products/pokemon-zacian-v-union-binder-collection-kinesisk",
-   "image": "https://cdn.shopify.com/s/files/1/0782/8088/4554/files/Zacian.png?v=1791361270",
    "price": 349,
    "type": "Collection Box",
    "set": null,
