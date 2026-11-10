@@ -1,6 +1,21 @@
 {
- "updated": 1794300605647,
+ "updated": 1794301505667,
  "events": [
+  {
+   "at": 1794300685334,
+   "store": "spelgalaxen",
+   "product": "spelgalaxen:15450823819643",
+   "group": "rb|radiance|bundle|en|",
+   "title": "League of Legends: Riftbound Radiance Vault",
+   "url": "https://spelgalaxen.se/products/league-of-legends-riftbound-radiance-vault",
+   "image": "https://cdn.shopify.com/s/files/1/0902/2554/1499/files/RiftboundRadianceVault.png?v=1792270179",
+   "price": 500,
+   "type": "Bundle",
+   "set": "Radiance",
+   "lang": "en",
+   "game": "rb",
+   "kind": "ny"
+  },
   {
    "at": 1794294411235,
    "store": "speltrollet",
@@ -7095,20 +7110,6 @@
    "lang": "en",
    "kind": "prissankt",
    "from": 2299
-  },
-  {
-   "at": 1793779964225,
-   "store": "webhallen",
-   "product": "webhallen:396785",
-   "group": "destined-rivals|booster-box|en|",
-   "title": "Pokemon SV10: Destined Rivals Display (36 boosters)",
-   "url": "https://www.webhallen.com/se/product/396785-Pokemon-SV10-Destined-Rivals-Display-36-boosters",
-   "image": "https://www.webhallen.com/images/product/396785?trim",
-   "price": 3499,
-   "type": "Booster Box",
-   "set": "Destined Rivals",
-   "lang": "en",
-   "kind": "tillbaka"
   }
  ]
 }
