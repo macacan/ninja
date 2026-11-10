@@ -1,6 +1,15 @@
 {
- "updated": "2026-11-10T15:22:55.503Z",
+ "updated": "2026-11-10T15:38:16.125Z",
  "articles": [
+  {
+   "title": "Father Accused of Leaving 6-Year-Old Daughter Alone in Line to Buy Pokemon Cards",
+   "link": "https://gamerant.com/man-leaves-daughter-alone-in-pokemon-tcg-card-line/",
+   "date": "2026-11-10T15:30:14.000Z",
+   "summary": "A man is facing a serious criminal charge after leaving his 6-year-old daughter alone to hold his place in a store line for Pokemon card products.",
+   "image": "https://static0.gamerantimages.com/wordpress/wp-content/uploads/wm/2026/11/father-accused-of-leaving-6-year-old-daughter-alone-in-line-to-buy-pokemon-cards-gamerant.jpg",
+   "source": "Game Rant",
+   "game": "pk"
+  },
   {
    "title": "Riftbound Game Director Confirms Card Ban Update on Friday",
    "link": "https://riftbound.gg/riftbound-game-director-confirms-card-ban-update-on-friday/",
@@ -62,15 +71,6 @@
    "summary": "Pokemon Trading Card Game fans can claim free packs of the newly released Delta Reign set for a limited time, but with a major caveat.",
    "image": "https://static0.gamerantimages.com/wordpress/wp-content/uploads/2026/11/pokemon-tcg-live-delta-reign-free-packs.jpg",
    "source": "Game Rant",
-   "game": "pk"
-  },
-  {
-   "title": "Man arrested after leaving 6-year-old daughter sleeping in line for Pokemon cards",
-   "link": "https://www.dexerto.com/pokemon/man-arrested-after-leaving-6-year-old-daughter-sleeping-in-line-for-pokemon-cards-3425627/",
-   "date": "2026-11-07T12:50:04.000Z",
-   "summary": "Witnesses told officers that Dooley had given his daughter a pillow and blanket sometime after 1 am before leaving her alone in line.",
-   "image": "https://www.dexerto.com/cdn-image/wp-content/uploads/2026/11/07/pokemon-card-2.jpg?width=480&quality=75&format=auto",
-   "source": "Dexerto",
    "game": "pk"
   },
   {
@@ -254,15 +254,6 @@
    "game": "pk"
   },
   {
-   "title": "New Official Pokemon TCG Release Confirmed for October 23",
-   "link": "https://gamerant.com/pokemon-tcg-deck-crafter-collection-release-date-price-cost/",
-   "date": "2026-10-22T13:00:16.000Z",
-   "summary": "The Pokemon Company formally confirms a new Pokemon TCG release for October 23, expanding the trading card game's busy 2026 schedule.",
-   "image": "https://static0.gamerantimages.com/wordpress/wp-content/uploads/2026/10/meowth-happy-excited-next-to-pokemon-tcg-card-composite.jpg",
-   "source": "Game Rant",
-   "game": "pk"
-  },
-  {
    "title": "The Pokémon TCG's first 2027 release, Flowing Fists, is revealed",
    "link": "https://www.wargamer.com/pokemon-trading-card-game/flowing-fists",
    "date": "2026-10-21T11:10:05.000Z",
@@ -394,6 +385,15 @@
    "date": "2026-10-04T11:12:03.000Z",
    "summary": "Azurill has long been depicted as a morose looking Pokémon down on its luck, the Pokémon TCG's new Delta Reign expansion finally lets it smile.",
    "image": "https://www.wargamer.com/wp-content/sites/wargamer/2026/10/Azurill-Thumbnail-V2.jpg",
+   "source": "Wargamer",
+   "game": "pk"
+  },
+  {
+   "title": "The Pokémon TCG is releasing a new tool kit designed to encourage players to play competitively",
+   "link": "https://www.wargamer.com/pokemon-trading-card-game/deck-crafters-collection-2026",
+   "date": "2026-10-03T16:09:27.000Z",
+   "summary": "A new Pokémon TCG Deck Crafter's Collection is due to release on October 23rd, designed to provide players with staple trainer cards.",
+   "image": "https://www.wargamer.com/wp-content/sites/wargamer/2026/10/Deck-Crafters-Collection-Thumbnail.jpg",
    "source": "Wargamer",
    "game": "pk"
   },
