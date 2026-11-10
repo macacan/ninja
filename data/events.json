@@ -1,6 +1,20 @@
 {
- "updated": 1794307601046,
+ "updated": 1794308521216,
  "events": [
+  {
+   "at": 1794307959631,
+   "store": "tcgstore",
+   "product": "tcgstore:9550971076935",
+   "group": "surging-sparks|booster-pack|en|",
+   "title": "Pokémon Scarlet & Violet 8: Surging Sparks Booster Pack",
+   "url": "https://tcgstore.se/products/pokemon-scarlet-violet-8-surging-sparks-booster-pack",
+   "image": "https://cdn.shopify.com/s/files/1/0758/2508/6791/files/surging-sparks-pokemon-booster-pack.jpg?v=1724795376",
+   "price": 149,
+   "type": "Booster Pack",
+   "set": "Surging Sparks",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1794306441007,
    "store": "aquitaz",
@@ -7099,21 +7113,6 @@
    "set": "Temporal Forces",
    "lang": "en",
    "kind": "ny"
-  },
-  {
-   "at": 1793799000141,
-   "store": "skattkistan",
-   "product": "skattkistan:11277988036946",
-   "group": "emerald|booster-box|ja|",
-   "title": "Pokémon TCG – Storm Emeralda (M6) Booster Box (JP)",
-   "url": "https://skattkistan.net/products/pokemon-tcg-storm-emeralda-m6-booster-box-jp",
-   "image": "https://cdn.shopify.com/s/files/1/1094/6858/2226/files/chrome_3xYXQv7KB0.png?v=1793404735",
-   "price": 999,
-   "type": "Booster Box",
-   "set": "Emerald",
-   "lang": "ja",
-   "kind": "prissankt",
-   "from": 1099
   }
  ]
 }
