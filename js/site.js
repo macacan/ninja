@@ -110,7 +110,7 @@ function footer() {
         <a class="logo" href="./">${LOGO}</a>
         <p>Ett ideellt hobbyprojekt. Ninjan smyger fram kortsläpp, set och priser – gratis och utan konto. Priser och lager är vägledande och kan innehålla felaktigheter.</p>
       </div>
-      <div><h2>Utforska</h2><ul>${NAV.map(([h, l, only]) => `<li><a href="${h}">${l}${only ? ` (${only})` : ""}</a></li>`).join("")}<li><a href="set/">Alla set</a></li></ul></div>
+      <div><h2>Utforska</h2><ul>${NAV.map(([h, l, only]) => `<li><a href="${h}">${l}${only ? ` (${only})` : ""}</a></li>`).join("")}<li><a href="set/">Alla set</a></li><li><a href="guider/">Guider</a></li></ul></div>
       <div><h2>Mer</h2><ul>
         <li><a href="om.html">Om Lootninja</a></li>
         <li><a href="om.html#kallor">Alla källor</a></li>

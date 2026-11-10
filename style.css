@@ -4563,6 +4563,16 @@ img.set-hero-logo.set-hero-box{height:220px}
 .seo-faq summary{cursor:pointer;padding:14px 0;font-weight:700}
 .seo-faq details[open] summary{border-bottom:1px solid var(--line)}
 .seo-faq details p{margin:12px 0 14px}
+/* Guidesidorna under /guider/ (scripts/build-guides.mjs). */
+.guide-page h1{margin:32px 0 10px;font-size:2rem;line-height:1.15}
+.guide-page .lead{font-size:1.05rem;line-height:1.6}
+.guide-toc ul{display:flex;flex-wrap:wrap;gap:8px;list-style:none;padding:0;margin:18px 0 0}
+.guide-toc a{display:inline-block;padding:6px 12px;border:1px solid var(--line);border-radius:999px;background:var(--card);text-decoration:none;font-size:.9rem}
+.guide-page section{scroll-margin-top:80px}
+.guide-list{list-style:none;padding:0;display:grid;gap:12px}
+.guide-list li{padding:14px 16px;background:var(--card);border:1px solid var(--line);border-radius:10px;line-height:1.55}
+.guide-updated,.guide-more{color:var(--muted);font-size:.9rem;margin-top:28px}
+.guide-more{margin-top:8px}
 /* En vanlig prisuppdatering (inte den billigaste): neutral rad i stället för grön prissänkning. */
 .gpricechg{font-size:.78rem;color:var(--muted);line-height:1.35}
 /* Nyheter utan egen bild får spelets bild, samma som spelknapparna. */

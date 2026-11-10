@@ -1,0 +1,231 @@
+{
+  "_info": "Frågor och svar till guidesidorna under /guider/. Ändra här och kör sedan: node scripts/build-guides.mjs. Svaren får innehålla enkla länkar (<a href=\"butiker.html\">), de tas bort i JSON-LD. Håll svaren korta (1–3 meningar) och sakliga: stryk hellre en fråga än gissa.",
+  "updated": "2026-11-10",
+  "guides": [
+    {
+      "slug": "pokemon",
+      "game": "Pokémon TCG",
+      "title": "Pokémon TCG-guide: vanliga frågor om att samla och spela Pokémonkort",
+      "h1": "Pokémon TCG – frågor och svar",
+      "description": "Korta svar om Pokémon TCG: hur man börjar, vad en Elite Trainer Box och booster box innehåller, sällsynthet, kortvärde, gradering, regler och var man köper i Sverige.",
+      "intro": "Korta svar på det folk oftast undrar om Pokémonkort, från första Elite Trainer Boxen till gradering och turneringsregler. Vill du veta vad ett visst kort är värt finns <a href=\"priser.html?game=pokemon\">Kortpriser</a>, och <a href=\"butiker.html\">Produkter och butikslager</a> visar vilka svenska butiker som har boxarna inne just nu.",
+      "groups": [
+        {
+          "name": "Komma igång",
+          "qs": [
+            { "q": "Hur börjar man samla på Pokémonkort?", "a": "Börja med en Elite Trainer Box eller några booster-paket från ett aktuellt set, plus plastfickor (sleeves) och en pärm. Bestäm gärna tidigt vad du samlar på, till exempel din favorit-Pokémon eller ett helt set." },
+            { "q": "Hur lär man sig spela Pokémon TCG enklast?", "a": "Boxen Pokémon Battle Academy och gratisappen Pokémon TCG Live lär ut reglerna steg för steg med färdiga lekar. Många butiker har också nybörjarkvällar." },
+            { "q": "Hur många kort är det i en Pokémon-kortlek?", "a": "En lek har exakt 60 kort. Du får ha högst fyra kort med samma namn, utom grundläggande energikort (Basic Energy) som du får ha hur många av som helst." },
+            { "q": "Är det bäst att köpa booster-paket eller lösa kort?", "a": "Vill du ha ett visst kort eller bygga en tävlingslek är lösa kort (singles) nästan alltid billigare. Paket köper man främst för spänningen i att öppna dem." }
+          ]
+        },
+        {
+          "name": "Produkter och paket",
+          "qs": [
+            { "q": "Vad är en Elite Trainer Box (ETB)?", "a": "En samlarlåda med 9 booster-paket, 65 kortfickor, energikort, tärningar och markörer, och i nyare boxar ett promokort. Lådan används ofta som förvaring efteråt." },
+            { "q": "Hur många paket är det i en Pokémon Booster Box?", "a": "En engelsk booster box har 36 paket. Japanska boxar har oftast 30 paket med 5 kort i varje, medan japanska high class-set säljs i mindre boxar." },
+            { "q": "Hur många kort finns det i ett Pokémon booster-paket?", "a": "Ett engelskt paket i Scarlet & Violet-eran och senare har 10 spelkort och ett kodkort till Pokémon TCG Live. Minst ett kort är Rare eller bättre." },
+            { "q": "Vad är en Booster Bundle?", "a": "En liten kartong med 6 booster-paket utan tillbehör. Den är ett billigare mellanting mellan lösa paket och en hel box, och ofta det enklaste sättet att köpa paket från specialset." },
+            { "q": "Vad är skillnaden mellan vanliga set och specialset?", "a": "Vanliga huvudset släpps flera gånger om året och säljs i booster boxar med 36 paket. Specialset, som 151 och Prismatic Evolutions, finns oftast bara i ETB:er, bundles, tins och samlarboxar." },
+            { "q": "Vad innehåller en Collection Box eller Tin?", "a": "Oftast 3 till 6 booster-paket och ett eller flera promokort. De är populära som presenter." },
+            { "q": "Vad är en League Battle Deck?", "a": "En färdig lek på 60 kort byggd för tävling, med starkare kort än en vanlig startlek. Den är ett bra sätt att börja spela turneringar." },
+            { "q": "Vad är en Build & Battle Box?", "a": "Boxen man spelar med på en prerelease: 4 booster-paket och färdiga kort som man bygger en lek på 40 kort av. Prerelease hålls i spelbutiker ungefär en vecka innan ett set släpps." },
+            { "q": "Kan man lösa in kodkorten digitalt?", "a": "Ja. Kodkorten i paket och boxar ger motsvarande paket eller kort i appen Pokémon TCG Live." }
+          ]
+        },
+        {
+          "name": "Sällsynthet och samlande",
+          "qs": [
+            { "q": "Vad betyder kortnumret längst ner på kortet?", "a": "Numret, till exempel 025/165, visar kortets plats i setet. Är första siffran högre än den andra, som 199/165, är kortet ett så kallat secret rare." },
+            { "q": "Vad är ett secret rare?", "a": "Ett sällsynt kort vars nummer är högre än setets officiella antal kort. I nyare set är det bland annat Illustration Rare, Special Illustration Rare och guldkort (Hyper Rare)." },
+            { "q": "Vad är skillnaden mellan Illustration Rare och Special Illustration Rare?", "a": "Illustration Rare (en guldstjärna) har en helbild på en vanlig Pokémon. Special Illustration Rare (två guldstjärnor) är ovanligare, visar oftast Pokémon ex eller Supporter-kort och är ofta setets dyraste kort." },
+            { "q": "Vad är Reverse Holo?", "a": "Ett kort där allt utom själva bilden glittrar. De flesta engelska paket innehåller ett eller två Reverse Holo-kort." },
+            { "q": "Vad är ett Master Set?", "a": "Att ha alla kort i ett set, inklusive alla Reverse Holo-varianter och alla secret rares. Många använder en egen pärm per set." },
+            { "q": "Vad betyder pull rate?", "a": "Hur stor chans det är att få en viss sällsynthet ur ett paket. Den skiljer sig mellan set, och Pokémon publicerar inga officiella siffror." },
+            { "q": "Vad är ett chase-kort?", "a": "Det mest eftertraktade och oftast dyraste kortet i ett set, som samlare jagar när de öppnar paket. Exempel är Umbreon VMAX (\"Moonbreon\") från Evolving Skies." },
+            { "q": "Vad är ett God Pack?", "a": "Ett mycket ovanligt paket där alla eller nästan alla kort är sällsynta illustrationskort. De finns främst i japanska set men också i vissa engelska specialset." },
+            { "q": "Vad är ett promokort?", "a": "Ett kort som inte finns i vanliga paket utan följer med samlarboxar, tins och ETB:er eller delas ut på evenemang. Engelska promokort har en svart stjärna med texten PROMO." },
+            { "q": "Vad betyder 1st Edition och Shadowless?", "a": "1st Edition är en stämpel på första tryckningen av de gamla Wizards of the Coast-seten (1999–2002). Shadowless är en tidig tryckning av Base Set där skuggan bredvid bildrutan saknas. Båda är eftertraktade bland vintagesamlare." },
+            { "q": "Vad är skillnaden mellan japanska och engelska Pokémonkort?", "a": "Japanska set släpps tidigare, har en annan baksida och andra paketstorlekar, och många tycker att trycket håller högre kvalitet. Engelska kort är de som gäller på turneringar i Sverige." },
+            { "q": "Vad gör man med bulk, alltså vanliga dubbletter?", "a": "Sortera dem i kartonglådor, bygg lekar, ge bort till yngre spelare eller sälj dem i större partier. Enstaka vanliga kort är sällan värda mycket." }
+          ]
+        },
+        {
+          "name": "Värde, skick och gradering",
+          "qs": [
+            { "q": "Hur kollar man vad ett Pokémonkort är värt?", "a": "Sök på kortets namn och nummer i <a href=\"priser.html?game=pokemon\">Lootninjas Kortpriser</a>, som visar Cardmarket-priset i kronor, eller fota kortet i <a href=\"vardering.html\">Värdering</a>. Kom ihåg att skicket påverkar priset mycket." },
+            { "q": "Hur ser man om ett Pokémonkort är äkta?", "a": "Jämför med ett kort du vet är äkta: baksidans färger, typsnittet, glansen och kortets tjocklek. Falska kort har ofta bleka eller fel färger, konstiga typsnitt och en för blank eller för tunn kartong." },
+            { "q": "Vad betyder Near Mint (NM)?", "a": "Att kortet är i nästan nyskick, med högst minimala spår av hantering. Skalan går från Mint och Near Mint ner till Poor." },
+            { "q": "Vad är gradering och PSA?", "a": "Ett graderingsföretag som PSA bedömer kortets äkthet och skick på en skala 1–10 och förseglar det i ett hårt fodral (slab). En PSA 10 kan vara värd mycket mer än samma kort ograderat." },
+            { "q": "Vilka andra graderingsföretag finns?", "a": "Utöver PSA är Beckett (BGS) och CGC de största. Beckett är kända för sin Black Label för helt felfria kort." },
+            { "q": "Vad betyder centrering?", "a": "Hur jämna ramarna är runt kortets bild. Ett illa centrerat kort får sällan högsta betyg, även om det i övrigt är felfritt." },
+            { "q": "Hur skyddar man värdefulla kort?", "a": "Sätt kortet i en mjuk ficka (penny sleeve) och sedan i en hård toploader eller en pärm utan ringar. Förvara korten torrt, mörkt och i rumstemperatur." },
+            { "q": "Varför ska man undvika ringpärmar för dyra kort?", "a": "Ringarna kan trycka bucklor i korten närmast ryggen. Pärmar med fastsydda fickor och dragkedja skyddar bättre." },
+            { "q": "Vad är double sleeving?", "a": "Att först sätta en tight innerficka över kortet och sedan en vanlig ficka utanpå, från andra hållet. Det skyddar bättre mot damm och spill." },
+            { "q": "Varför böjer sig glittriga kort?", "a": "Foliekort kan böja sig när luftfuktigheten ändras, eftersom framsidan och baksidan reagerar olika. De rätar ofta ut sig igen om de förvaras plant i en toploader eller pärm." },
+            { "q": "Vilket är det dyraste Pokémonkortet?", "a": "Pikachu Illustrator, som delades ut i en teckningstävling i Japan 1998. Ett exemplar i PSA 10 har sålts för miljontals dollar." }
+          ]
+        },
+        {
+          "name": "Regler och format",
+          "qs": [
+            { "q": "Hur fungerar priskorten?", "a": "Varje spelare lägger 6 kort med baksidan upp som priskort i början. Slår du ut en motståndares Pokémon tar du ett priskort, två för Pokémon ex, och den som tar alla sex först vinner." },
+            { "q": "Vad är en Pokémon ex?", "a": "En extra stark Pokémon med högt HP och kraftfulla attacker. Nackdelen är att motståndaren tar två priskort när den slås ut." },
+            { "q": "Vad är en Tera Pokémon ex?", "a": "En Pokémon ex med kristalldesign som inte tar skada från motståndarens attacker så länge den sitter på bänken." },
+            { "q": "Vad är ACE SPEC-kort?", "a": "Extra starka Tränar- eller energikort. Du får bara ha ett enda ACE SPEC-kort i hela leken." },
+            { "q": "Vilka typer av Tränarkort finns?", "a": "Item (hur många som helst per tur), Supporter (ett per tur), Pokémon Tool (fästs på en Pokémon) och Stadium (ligger kvar och påverkar båda spelarna)." },
+            { "q": "Vad är rotation och regleringsbokstaven?", "a": "En gång om året lämnar de äldsta korten tävlingsformatet Standard. Bokstaven nere till vänster på kortet visar vilken period kortet hör till och om det är tillåtet." },
+            { "q": "Vad är skillnaden mellan Standard och Expanded?", "a": "Standard tillåter bara de senaste årens kort och är det vanligaste formatet. Expanded tillåter kort ända från Black & White-eran (2011)." },
+            { "q": "Vad är Gym Leader Challenge?", "a": "Ett fanformat där leken bara får ha Pokémon av en typ, ett exemplar av varje kort och inga Pokémon med regelruta som ex och V." },
+            { "q": "Får man spela med japanska kort på turneringar i Sverige?", "a": "Nej. På officiella turneringar i Europa används kort på europeiska språk, i Sverige nästan alltid engelska." }
+          ]
+        },
+        {
+          "name": "Köpa i Sverige",
+          "qs": [
+            { "q": "Var hittar man Pokémonkort i lager i Sverige?", "a": "<a href=\"butiker.html\">Lootninjas butikslager</a> visar vilka svenska butiker som har booster boxar, ETB:er och andra Pokémonprodukter inne just nu, och vad de kostar. Lootninja säljer inget själv, köpet sker hos butiken." },
+            { "q": "Hur får man veta när en slutsåld box kommer tillbaka i lager?", "a": "Slå på <a href=\"butiker.html#notiser\">notiser</a> på Lootninja. Du får en pushnotis när en produkt du följer kommer tillbaka i lager, får ett lägre pris eller går att förbeställa." },
+            { "q": "När släpps nästa Pokémon-set?", "a": "<a href=\"slapp.html\">Släppkalendern</a> visar kommande engelska och japanska set med datum." }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "one-piece",
+      "game": "One Piece Card Game",
+      "title": "One Piece Card Game-guide: vanliga frågor om regler, set och samlande",
+      "h1": "One Piece Card Game – frågor och svar",
+      "description": "Korta svar om One Piece Card Game: lekens uppbyggnad, DON!!, Life och Counter, sällsynthet och Manga Rare, booster boxar, startlekar och var man köper i Sverige.",
+      "intro": "Korta svar om One Piece Card Game, för både nya spelare och samlare. Priser på enskilda kort finns i <a href=\"priser.html?game=op\">Kortpriser</a>, och <a href=\"butiker.html\">Produkter och butikslager</a> visar vilka svenska butiker som har boxar och startlekar inne just nu.",
+      "groups": [
+        {
+          "name": "Grunderna",
+          "qs": [
+            { "q": "Hur fungerar One Piece Card Game?", "a": "Du väljer en Leader och bygger en lek på 50 kort. Målet är att ta bort motståndarens Life-kort med attacker och sedan träffa motståndarens Leader en gång till. Resurserna kommer från en separat lek med 10 DON!!-kort." },
+            { "q": "Hur många kort är det i en One Piece-lek?", "a": "50 kort i huvudleken, 1 Leader och 10 DON!!-kort. Du får ha högst 4 kort med samma kortnummer." },
+            { "q": "Vad är ett Leader-kort?", "a": "Lekens kapten, som ligger på bordet hela matchen. Leadern bestämmer hur många Life-kort du börjar med och vilka färger leken får innehålla." },
+            { "q": "Hur fungerar DON!!-korten?", "a": "Du lägger till 2 DON!! per tur, upp till 10. Den som börjar får bara 1 första turen. DON!! betalar för kort eller fästs på Leadern eller en karaktär för +1000 Power under din tur." },
+            { "q": "Hur vinner man?", "a": "Du vinner när motståndaren har 0 Life-kort och du träffar deras Leader med ännu en attack. Du vinner också om motståndarens lek tar slut." },
+            { "q": "Hur fungerar Life-korten?", "a": "Vid start läggs lika många kort som Leaderns Life-värde med baksidan upp. Varje gång Leadern tar skada tar du det översta Life-kortet till handen." },
+            { "q": "Vilka korttyper finns?", "a": "I huvudleken finns Character, Event och Stage. Leader och DON!! ligger utanför huvudleken." },
+            { "q": "Vilka färger finns och vad gör de?", "a": "Röd (Power och anfall), grön (vila och låsa motståndarens kort), blå (kortdrag och skicka tillbaka kort), lila (DON!!), svart (lägre kostnader och K.O.) och gul (Life-kort och Trigger)." },
+            { "q": "Kan man blanda färger i leken?", "a": "Bara färger som finns på din Leader. Enfärgade Leaders har oftast 5 Life och tvåfärgade oftast 4." }
+          ]
+        },
+        {
+          "name": "Strid och nyckelord",
+          "qs": [
+            { "q": "Hur avgörs en strid?", "a": "Attacken lyckas om anfallarens Power är lika med eller högre än försvararens. Försvararen kan höja sin Power med Counter-kort eller styra om attacken med en Blocker." },
+            { "q": "Vad betyder Counter på kortets kant?", "a": "Ett värde, oftast +1000 eller +2000, som du får genom att slänga kortet från handen när motståndaren attackerar. Det höjer försvararens Power under den striden." },
+            { "q": "Vad betyder Trigger?", "a": "Har ett Life-kort du tar upp en Trigger-effekt kan du använda den direkt i stället för att ta kortet till handen." },
+            { "q": "Vad betyder Rush?", "a": "Karaktären får attackera samma tur som den spelas. Annars måste nya karaktärer vänta en tur." },
+            { "q": "Vad betyder Blocker?", "a": "När motståndaren attackerar kan du vila en aktiv Blocker för att göra den till försvarare i stället." },
+            { "q": "Vad betyder Double Attack och Banish?", "a": "Double Attack tar 2 Life-kort i stället för 1. Banish skickar Life-kortet till skrothögen (Trash) i stället för till handen, och dess Trigger används inte." },
+            { "q": "Vad betyder [On Play] och [When Attacking]?", "a": "[On Play] händer en gång när karaktären spelas. [When Attacking] händer varje gång kortet attackerar." },
+            { "q": "Vad betyder [Activate: Main] och [Once Per Turn]?", "a": "[Activate: Main] är en förmåga du själv väljer att använda under din huvudfas. [Once Per Turn] betyder att den bara får användas en gång per tur." },
+            { "q": "Vad betyder DON!! −X på ett kort?", "a": "Att du måste lämna tillbaka så många DON!! från spelplanen till DON!!-leken för att använda effekten. Det är vanligt på lila kort." },
+            { "q": "Vad är skillnaden mellan K.O. och Trash?", "a": "Blir en karaktär K.O. kan effekter som [On K.O.] och skydd mot K.O. påverka. Säger en effekt att kortet ska läggas i Trash räknas det inte som K.O., så sådant skydd hjälper inte." },
+            { "q": "Kan man attackera en aktiv karaktär?", "a": "Nej, normalt bara motståndarens Leader eller karaktärer som är vilade (rested). Vissa kort gör undantag." },
+            { "q": "Hur många karaktärer får man ha på bordet?", "a": "Högst 5 karaktärer och 1 Stage. Har du redan 5 och spelar en ny måste du först lägga en av dem i Trash." },
+            { "q": "Får man ha flera kort med samma namn i leken?", "a": "Ja. Gränsen på 4 gäller kortnumret, till exempel OP01-025, inte namnet. Du kan alltså ha många olika Luffy-kort." }
+          ]
+        },
+        {
+          "name": "Set, produkter och sällsynthet",
+          "qs": [
+            { "q": "Hur många paket är det i en One Piece Booster Box?", "a": "Både engelska och japanska boxar har 24 paket. Engelska paket har 12 kort och japanska 6, därför är japanska boxar billigare." },
+            { "q": "Vad är skillnaden mellan OP-, EB- och PRB-set?", "a": "OP är de vanliga huvudseten, EB (Extra Booster) är mindre mellanset och PRB (Premium Booster) samlar populära kort i nya versioner." },
+            { "q": "Vad betyder C, UC, R, SR, SEC och L?", "a": "Common, Uncommon, Rare, Super Rare, Secret Rare och Leader. Därtill finns alternativa versioner (Alternate Art eller parallel) med annan bild och folie." },
+            { "q": "Vad är ett Manga Rare?", "a": "En mycket ovanlig version där karaktären visas mot en bakgrund av serierutor från mangan. Manga Rares är ofta de dyraste korten i ett set." },
+            { "q": "Vad är ett SP-kort?", "a": "En specialversion av ett äldre populärt kort med ny bild, som läggs in i ett nyare set." },
+            { "q": "Vad är ett Double Pack?", "a": "En liten förpackning med 2 booster-paket och ett DON!!-kort med specialdesign." },
+            { "q": "Vad är en case?", "a": "En förseglad fabrikskartong med 12 booster boxar. Butiker och storköpare köper ibland hela cases." },
+            { "q": "Vilken startlek är bäst för nybörjare?", "a": "Välj en färg eller karaktär du gillar. ST-15 till ST-20 finns i en färg var, och de nyaste lekarna, som ST-33 till ST-36, har moderna kort som är lätta att bygga vidare på." },
+            { "q": "Vad är en Ultra Deck?", "a": "En startlek med fler kort av högre kvalitet, till exempel ST-10 The Three Captains och ST-13 The Three Brothers. Den är oftast starkare direkt ur förpackningen än en vanlig startlek." },
+            { "q": "Varför köper vissa två likadana startlekar?", "a": "Startlekar har ofta färre än 4 exemplar av sina bästa kort. Med två lekar kommer man närmare ett fullt playset." }
+          ]
+        },
+        {
+          "name": "Turneringar och samlande",
+          "qs": [
+            { "q": "Får man spela med japanska One Piece-kort på turneringar i Sverige?", "a": "Nej, på officiella turneringar i Europa används de europeiska utgåvorna, i Sverige engelska. Japanska kort är populära bland samlare." },
+            { "q": "Finns det en ban-lista?", "a": "Ja. Bandai förbjuder eller begränsar ibland kort som blir för starka i tävlingsspel." },
+            { "q": "Har One Piece Card Game rotation?", "a": "Ja. Korten har en blockikon, och Bandai har infört att de äldsta blocken lämnar Standard-formatet. Aktuella datum finns i Bandais officiella regler." },
+            { "q": "Vilken storlek på kortfickor passar?", "a": "Standardstorlek, 63 × 88 mm, samma som Pokémon och Magic." },
+            { "q": "Varför är det bra att förbeställa nya One Piece-set?", "a": "Efterfrågan är stor och första upplagan tar ofta slut snabbt. Med <a href=\"butiker.html#notiser\">notiser på Lootninja</a> får du veta när en svensk butik öppnar förbeställning." },
+            { "q": "Är One Piece Card Game kul att samla om man bara gillar animen?", "a": "Ja. Många samlar på sina favoritkaraktärer eller en viss arc utan att spela, och korten har både bilder från mangan och från andra illustratörer." },
+            { "q": "Hur kollar man vad ett One Piece-kort är värt?", "a": "Sök på kortets namn eller nummer i <a href=\"priser.html?game=op\">Kortpriser</a>, som visar TCGplayers marknadspris omräknat till kronor." }
+          ]
+        },
+        {
+          "name": "Köpa i Sverige",
+          "qs": [
+            { "q": "Var hittar man One Piece-kort i lager i Sverige?", "a": "<a href=\"butiker.html\">Lootninjas butikslager</a> visar vilka svenska butiker som har One Piece-boxar, startlekar och paket inne just nu, både engelska och japanska. Lootninja säljer inget själv, köpet sker hos butiken." },
+            { "q": "När släpps nästa One Piece-set?", "a": "<a href=\"slapp.html\">Släppkalendern</a> visar kommande One Piece-set med datum." }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "riftbound",
+      "game": "Riftbound",
+      "title": "Riftbound-guide: vanliga frågor om League of Legends-kortspelet",
+      "h1": "Riftbound – frågor och svar",
+      "description": "Korta svar om Riftbound, League of Legends-kortspelet från Riot Games: hur man vinner, lekens uppbyggnad, Runes och Battlefields, set, booster boxar och var man köper i Sverige.",
+      "intro": "Riftbound är Riot Games samlarkortspel i League of Legends-världen. Här är korta svar på det nya spelare och samlare brukar undra. Reglerna uppdateras ibland, så kolla Riots officiella regler inför turneringar. Kortpriser finns i <a href=\"priser.html?game=rb\">Kortpriser</a>.",
+      "groups": [
+        {
+          "name": "Grunderna",
+          "qs": [
+            { "q": "Vad är Riftbound?", "a": "Ett fysiskt samlarkortspel från Riot Games som utspelar sig i League of Legends-världen Runeterra. Det spelas en mot en, två mot två eller tre–fyra spelare var för sig." },
+            { "q": "Är Riftbound samma spel som Legends of Runeterra?", "a": "Nej. Legends of Runeterra är ett digitalt kortspel, medan Riftbound är ett fysiskt kortspel med egna regler." },
+            { "q": "Hur vinner man i Riftbound?", "a": "Genom att ta poäng på slagfälten (Battlefields). I en vanlig match en mot en vinner den som först når 8 poäng." },
+            { "q": "Har spelarna livspoäng?", "a": "Nej. Allt handlar om att ta och hålla slagfälten i mitten av bordet." },
+            { "q": "Hur tar man poäng?", "a": "Du får en poäng när du erövrar ett slagfält (Conquer) och en poäng i början av din tur för varje slagfält du håller (Hold). Den sista poängen har särskilda regler, så att man inte kan vinna för lätt." },
+            { "q": "Vad är Battlefields?", "a": "Slagfält som läggs i mitten av bordet och som spelarna slåss om. Varje slagfält har en egen effekt." },
+            { "q": "Vad är Base?", "a": "Ditt eget område närmast dig, där enheter och Gear oftast spelas innan de flyttas ut till slagfälten." },
+            { "q": "Hur fungerar strider?", "a": "När enheter från olika spelare möts på samma slagfält blir det strid. Spelarna kan spela besvärjelser innan enheterna gör skada utifrån sitt Might-värde." },
+            { "q": "Vad betyder Might?", "a": "Enhetens styrka. Den gör så mycket skada i strid, och tar den lika mycket skada som sin Might under en tur slås den ut." },
+            { "q": "Hur lång tid tar en match?", "a": "En match en mot en tar ofta ungefär en halvtimme. Matcher med fler spelare tar längre tid." }
+          ]
+        },
+        {
+          "name": "Leken och resurserna",
+          "qs": [
+            { "q": "Hur många kort är det i en Riftbound-lek?", "a": "En huvudlek på 40 kort, en Legend, en lek med 12 Runes och 3 Battlefields. Din Chosen Champion räknas in i de 40 korten." },
+            { "q": "Hur många exemplar av samma kort får man ha?", "a": "Högst 3 kort med samma namn i huvudleken." },
+            { "q": "Vad är ett Legend-kort?", "a": "Lekens ledare, som ligger synlig på bordet från början. Legenden bestämmer vilka två domäner leken får använda och har en egen förmåga." },
+            { "q": "Vad är en Chosen Champion?", "a": "En champion-enhet som hör ihop med din Legend och börjar matchen utanför leken, så att du alltid kan spela den när du har råd." },
+            { "q": "Hur fungerar Runes?", "a": "Runes är resurserna och ligger i en egen lek på 12 kort. Du får nya runes varje tur, så du drar aldrig för många eller för få resurser från huvudleken." },
+            { "q": "Vad är skillnaden mellan att Exhaust och Recycle en Rune?", "a": "Exhaust (vrida runan) ger energi till kortets vanliga kostnad. Recycle (lägga tillbaka runan i runleken) ger kraft i en domän, som starkare kort kräver." },
+            { "q": "Vilka domäner finns?", "a": "Sex stycken: Fury, Calm, Mind, Body, Chaos och Order. Varje domän har sin färg och spelstil." },
+            { "q": "Hur många domäner får man ha i leken?", "a": "De två domäner som din Legend har. Även dina runes ska höra till de domänerna." },
+            { "q": "Vilka korttyper finns?", "a": "Legends, Units (bland dem champions), Spells, Gear, Battlefields och Runes." },
+            { "q": "Vad är Gear?", "a": "Föremål, ofta inspirerade av föremål från League of Legends, som ger bestående bonusar eller effekter." },
+            { "q": "Hur många kortfickor behöver man?", "a": "56 för en hel lek: 40 till huvudleken, 12 till runorna, 3 till slagfälten och 1 till din Legend. Korten har standardstorlek, 63 × 88 mm." }
+          ]
+        },
+        {
+          "name": "Set, produkter och samlande",
+          "qs": [
+            { "q": "Vad heter det första Riftbound-setet?", "a": "Origins. Engelska Origins släpptes hösten 2025, efter den kinesiska utgåvan." },
+            { "q": "Hur börjar man spela Riftbound?", "a": "Köp en färdig Champion Deck eller boxen Proving Grounds, som har flera färdiga lekar för två till fyra spelare." },
+            { "q": "Hur många paket är det i en Riftbound Booster Box?", "a": "En engelsk booster box har 24 paket med 14 kort i varje." },
+            { "q": "Vilka sällsyntheter finns?", "a": "Common, Uncommon, Rare och Epic, plus ovanliga alternativa versioner. De ovanligaste har högre nummer än setets antal kort (overnumbered), och vissa är signerade av illustratören." },
+            { "q": "Vilka League of Legends-champions finns med?", "a": "Bland andra Jinx, Viktor, Lee Sin, Ahri, Yasuo, Darius, Lux, Garen och Teemo. Fler kommer i nya set." },
+            { "q": "Är Riftbound bra för samlare som inte spelar?", "a": "Ja. Kända karaktärer från League of Legends och Arcane och ovanliga alternativa och signerade kort gör att många samlar utan att spela." },
+            { "q": "Finns det turneringar i Riftbound?", "a": "Ja, Riot har ett officiellt program med spelkvällar i butiker och större turneringar. Fråga din lokala spelbutik vad som finns nära dig." },
+            { "q": "Hur kollar man vad ett Riftbound-kort är värt?", "a": "Sök på kortet i <a href=\"priser.html?game=rb\">Kortpriser</a>, som visar TCGplayers marknadspris omräknat till kronor." }
+          ]
+        },
+        {
+          "name": "Köpa i Sverige",
+          "qs": [
+            { "q": "Var hittar man Riftbound i lager i Sverige?", "a": "<a href=\"butiker.html\">Lootninjas butikslager</a> visar vilka svenska butiker som har Riftbound-boxar, Champion Decks och paket inne just nu. Med <a href=\"butiker.html#notiser\">notiser</a> får du veta när något kommer tillbaka i lager." },
+            { "q": "När släpps nästa Riftbound-set?", "a": "<a href=\"slapp.html\">Släppkalendern</a> visar kommande Riftbound-set med datum." }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -14,6 +14,15 @@ Språk: svenska. Priser i SEK. Lager och priser hämtas automatiskt från svensk
 - [Nyheter](https://lootninja.se/nyheter.html): nyheter om Pokémon TCG, One Piece Card Game och Riftbound från flera källor
 - [Värdering](https://lootninja.se/vardering.html): fotografera eller sök ett kort och få ett ungefärligt värde
 
+## Guider
+
+Korta frågor och svar per spel (produkter, sällsynthet, kortvärde, regler och var man köper i Sverige):
+
+- [Alla guider](https://lootninja.se/guider/)
+- [Pokémon TCG – frågor och svar](https://lootninja.se/guider/pokemon.html)
+- [One Piece Card Game – frågor och svar](https://lootninja.se/guider/one-piece.html)
+- [Riftbound – frågor och svar](https://lootninja.se/guider/riftbound.html)
+
 ## Om, kontakt och villkor
 
 - [Om Lootninja](https://lootninja.se/om.html): vad sajten är, källor och hur butiksbevakningen fungerar

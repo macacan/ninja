@@ -26,6 +26,11 @@ const PAGES = [
   ["vardering.html", ["vardering.html"]],
   ["set/", ["set/index.html"]],
   ["nyheter.html", ["nyheter.html", "data/news.json"]],
+  // Guidesidorna (scripts/build-guides.mjs).
+  ["guider/", ["guider/index.html"]],
+  ["guider/pokemon.html", ["guider/pokemon.html"]],
+  ["guider/one-piece.html", ["guider/one-piece.html"]],
+  ["guider/riftbound.html", ["guider/riftbound.html"]],
   ["om.html", ["om.html"]],
   ["villkor.html", ["villkor.html"]],
   ["integritet.html", ["integritet.html"]],
