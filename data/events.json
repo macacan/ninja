@@ -1,6 +1,36 @@
 {
- "updated": 1794343576599,
+ "updated": 1794344496620,
  "events": [
+  {
+   "at": 1794343822600,
+   "store": "bangerpack",
+   "product": "bangerpack:https://bangerpack.se/tcg-samlarkort/one-piece/japanska-utgavor-one-piece/one-piece-op-17-the-worlds-strongest-warriors-booster-jp",
+   "group": "op|the-world-s-strongest-warriors|booster-pack|ja|",
+   "title": "One Piece OP-17 The World's Strongest Warriors – Booster (JP)",
+   "url": "https://bangerpack.se/tcg-samlarkort/one-piece/japanska-utgavor-one-piece/one-piece-op-17-the-worlds-strongest-warriors-booster-jp",
+   "image": "https://cdn.quickbutik.com/images/99246J/products/6aefd277cc310.png",
+   "price": 109,
+   "type": "Booster Pack",
+   "set": "The World's Strongest Warriors",
+   "lang": "ja",
+   "game": "op",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1794343822600,
+   "store": "bangerpack",
+   "product": "bangerpack:https://bangerpack.se/tcg-samlarkort/one-piece/japanska-utgavor-one-piece/one-piece-op-15-adventure-on-kamis-island-booster-jp",
+   "group": "op|adventure-on-kami-s-island|booster-pack|ja|",
+   "title": "One Piece OP-15 Adventure on Kami's Island – Booster (JP)",
+   "url": "https://bangerpack.se/tcg-samlarkort/one-piece/japanska-utgavor-one-piece/one-piece-op-15-adventure-on-kamis-island-booster-jp",
+   "image": "https://cdn.quickbutik.com/images/99246J/products/6aefb51d0709d.png",
+   "price": 89,
+   "type": "Booster Pack",
+   "set": "Adventure on Kami's Island",
+   "lang": "ja",
+   "game": "op",
+   "kind": "tillbaka"
+  },
   {
    "at": 1794342927404,
    "store": "tt-vault",
@@ -7081,35 +7111,6 @@
    "set": null,
    "lang": "ja",
    "kind": "tillbaka"
-  },
-  {
-   "at": 1793858137243,
-   "store": "webhallen",
-   "product": "webhallen:401984",
-   "group": "30th-celebration|premium-collection|en||ditto",
-   "title": "Pokemon 30th Celebration Ditto Premium Collection",
-   "url": "https://www.webhallen.com/se/product/401984-Pokemon-30th-Celebration-Ditto-Premium-Collection",
-   "image": "https://www.webhallen.com/images-ext/images.eu.ctfassets.net/n0e6ajgmrw5w/nvYftl3AS0IfZPI2DPmiC/4e597acefa25cd10d7eeb815688c367d/Pokemon_30th_Celebration_Ditto_Premium_Collection.jpg?fit=pad",
-   "price": 899,
-   "type": "Premium Collection",
-   "set": "30th Celebration",
-   "lang": "en",
-   "kind": "forbestallning"
-  },
-  {
-   "at": 1793857819601,
-   "store": "rahtech",
-   "product": "rahtech:15734802481478",
-   "group": "x|collection-box|zh||eevee-friends-gathering-gift-grand-terastal",
-   "title": "Terastal Grand Gathering Eevee & Friends Gift Box (15 Pack) (CH)",
-   "url": "https://rahtech.se/products/pokemon-scarlet-violet-terastal-grand-gathering-eevee-friends-gift-box-15-pack-ch",
-   "image": "https://cdn.shopify.com/s/files/1/0994/8882/5670/files/4AE83E34-4C25-49FD-82B1-78024267A407.webp?v=1789693560",
-   "price": 3799,
-   "type": "Collection Box",
-   "set": null,
-   "lang": "zh",
-   "kind": "prissankt",
-   "from": 4099
   }
  ]
 }
