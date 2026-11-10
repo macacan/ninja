@@ -1,6 +1,34 @@
 {
- "updated": 1794309421238,
+ "updated": 1794310321257,
  "events": [
+  {
+   "at": 1794309820042,
+   "store": "tcgstore",
+   "product": "tcgstore:10923398725959",
+   "group": "chaos-rising|elite-trainer-box|en|",
+   "title": "Pokémon Mega Evolution: Chaos Rising Elite Trainer Box",
+   "url": "https://tcgstore.se/products/pokemon-mega-evolution-chaos-rising-elite-trainer-box",
+   "image": "https://cdn.shopify.com/s/files/1/0758/2508/6791/files/pokemon-mega-evolution-chaos-rising-elite-trainer-box.jpg?v=1784806057",
+   "price": 1099,
+   "type": "Elite Trainer Box",
+   "set": "Chaos Rising",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1794309820042,
+   "store": "tcgstore",
+   "product": "tcgstore:8902713966919",
+   "group": "celebrations|elite-trainer-box|en|",
+   "title": "Pokémon: 25th Anniversary Celebrations Elite Trainer Box",
+   "url": "https://tcgstore.se/products/pokemon-celebrations-elite-trainer-box",
+   "image": "https://cdn.shopify.com/s/files/1/0758/2508/6791/files/celebrations-elite-trainer-box-engelska-pokemonkort.png?v=1699456332",
+   "price": 5999,
+   "type": "Elite Trainer Box",
+   "set": "Celebrations",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1794309066928,
    "store": "spelexperten",
@@ -7085,34 +7113,6 @@
    "set": "30th Celebration",
    "lang": "zh",
    "kind": "forbestallning"
-  },
-  {
-   "at": 1793799074978,
-   "store": "cardlevels",
-   "product": "cardlevels:11060818706743",
-   "group": "evolving-skies|booster-box|en|",
-   "title": "Pokémon Evolving Skies Sword & Shield 7: Booster Box",
-   "url": "https://cardlevels.se/products/pokemon-evolving-skies-sword-shield-7-booster-box",
-   "image": "https://cdn.shopify.com/s/files/1/0846/0458/4247/files/evolving-skies-booster-box.webp?v=1793798969",
-   "price": 25499,
-   "type": "Booster Box",
-   "set": "Evolving Skies",
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1793799074978,
-   "store": "cardlevels",
-   "product": "cardlevels:11060802748727",
-   "group": "30th-celebration|elite-trainer-box|en|",
-   "title": "Pokémon 30th Celebration: Elite Trainer Box",
-   "url": "https://cardlevels.se/products/pokemon-30th-celebration-elite-trainer-box",
-   "image": "https://cdn.shopify.com/s/files/1/0846/0458/4247/files/Pokemon_TCG_30th_Celebration_Elite_Trainer_Box_EN-copy-scaled_970fa672-2f29-4a13-9657-932d76d3b744.webp?v=1793798879",
-   "price": 1999,
-   "type": "Elite Trainer Box",
-   "set": "30th Celebration",
-   "lang": "en",
-   "kind": "ny"
   }
  ]
 }
