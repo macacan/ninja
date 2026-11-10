@@ -1,6 +1,21 @@
 {
- "updated": 1794293245494,
+ "updated": 1794294165516,
  "events": [
+  {
+   "at": 1794294124367,
+   "store": "webhallen",
+   "product": "webhallen:403151",
+   "group": "rb|radiance|bundle|en|",
+   "title": "Riftbound LoL TCG Radiance Vault",
+   "url": "https://www.webhallen.com/se/product/403151-Riftbound-LoL-TCG-Radiance-Vault",
+   "image": "https://www.webhallen.com/images-ext/images.eu.ctfassets.net/n0e6ajgmrw5w/3Wk1PwYYpqjGhwNP2moZsA/87856c941e3d1095353bdd8d9e7c95d6/riftboundlol-radiance-vault-box.png?fit=pad",
+   "price": 499,
+   "type": "Bundle",
+   "set": "Radiance",
+   "lang": "en",
+   "game": "rb",
+   "kind": "tillbaka"
+  },
   {
    "at": 1794269350700,
    "store": "sweet-nerds",
@@ -7095,20 +7110,6 @@
    "lang": "en",
    "game": "op",
    "kind": "tillbaka"
-  },
-  {
-   "at": 1793772181166,
-   "store": "samlarhobby",
-   "product": "samlarhobby:16096718815613",
-   "group": "x|deck|ja||championships-world-yokohama",
-   "title": "Pokémon: World Championships 2023 Yokohama Deck (Japansk)",
-   "url": "https://samlarhobby.se/products/pokemon-world-championships-2023-yokohama-deck-japansk",
-   "image": "https://cdn.shopify.com/s/files/1/0905/3120/1405/files/pokemon-trading-card-game-scarlet-violet-pokemon-world-championships-2023-yokohama-deck-pikachu.jpg?v=1793772060",
-   "price": 4295,
-   "type": "Deck",
-   "set": null,
-   "lang": "ja",
-   "kind": "ny"
   }
  ]
 }
