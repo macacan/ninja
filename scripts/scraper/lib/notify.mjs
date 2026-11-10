@@ -31,12 +31,16 @@ const BADGE = { ny: "NY", tillbaka: "TILLBAKA I LAGER", prissankt: "PRISSÄNKT",
 function message(e, storeName) {
   const price = kr(e.price);
   const badge = BADGE[e.kind] || (KIND[e.kind] || e.kind).toUpperCase();
-  return { title: e.title, body: `${badge} · ${price}\n${storeName[e.store] || e.store}`, image: e.image || undefined, url: e.url, tag: `${e.product}-${e.kind}` };
+  const store = storeName[e.store] || e.store;
+  // "stat" läses av sw.js, som räknar visade och tryckta notiser per typ och butik i besöksstatistiken.
+  return { title: e.title, body: `${badge} · ${price}\n${store}`, image: e.image || undefined, url: e.url, tag: `${e.product}-${e.kind}`,
+    stat: { k: KIND[e.kind] || e.kind, s: store, p: Math.round(e.price) } };
 }
 function summary(list) {
   const counts = Object.entries(list.reduce((a, e) => ((a[e.kind] = (a[e.kind] || 0) + 1), a), {}))
     .map(([k, n]) => `${n} ${(KIND[k] || k).toLowerCase()}`).join(", ");
-  return { title: `${list.length} nya händelser i butikerna`, body: `${counts}. Tryck för hela listan.`, url: "https://lootninja.se/butiker.html#events", tag: "summary" };
+  return { title: `${list.length} nya händelser i butikerna`, body: `${counts}. Tryck för hela listan.`, url: "https://lootninja.se/butiker.html#events", tag: "summary",
+    stat: { k: "Sammanfattning" } };
 }
 
 async function api(action, key, body) {

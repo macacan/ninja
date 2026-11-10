@@ -251,7 +251,7 @@ if ($view === 'oversikt') {
   }
   $rowsOf = function (array $m, string $key) use ($lim) { arsort($m); $m = array_slice($m, 0, $lim($key), true); return array_map(fn($k, $n) => ['label' => $k, 'n' => $n], array_keys($m), $m); };
   $labels = ['valuation' => 'Värderingar', 'card_view' => 'Kortpriser öppnade', 'search' => 'Sökningar', 'store_click' => 'Butiksklick', 'outbound' => 'Andra utgående klick',
-    'watch' => 'Nya bevakningar', 'scan' => 'Kortskannern', 'pack_open' => 'Öppnade pack', 'pack_submit' => 'Till topplistan', 'push' => 'Pushnotiser', 'not_found' => 'Sidor som inte finns'];
+    'watch' => 'Nya bevakningar', 'scan' => 'Kortskannern', 'pack_open' => 'Öppnade pack', 'pack_submit' => 'Till topplistan', 'push' => 'Pushnotiser', 'push_shown' => 'Notiser visade', 'push_click' => 'Tryck på notiser', 'not_found' => 'Sidor som inte finns'];
   $features = [];
   foreach ($q("SELECT type, COUNT(*) AS n FROM events WHERE type <> 'pageview' AND $w GROUP BY type ORDER BY n DESC", $a) as $r) $features[] = ['label' => $labels[$r['type']] ?? $r['type'], 'n' => (int)$r['n']];
   $tables = [
@@ -427,13 +427,43 @@ if ($view === 'oversikt') {
   </section>
   <?php $extra = ob_get_clean();
 } else {
+  // Notiserna räknas av sw.js med målet "Typ · Butik" (sammanfattningar bara "Sammanfattning").
+  $rate = fn(int $click, int $shown) => $shown ? (int)round($click / $shown * 100) : 0;
+  $shownNow = $count('push_shown', $P); $clickNow = $count('push_click', $P);
+  $shownPrev = $count('push_shown', $prev); $clickPrev = $count('push_click', $prev);
   $cards = [
+    ['Notiser visade', $shownNow, $shownPrev],
+    ['Tryck på notiser', $clickNow, $clickPrev],
+    ['Andel som trycker (%)', $rate($clickNow, $shownNow), $rate($clickPrev, $shownPrev)],
     ['Push påslagna', $count('push', $P, 'Påslagna'), $count('push', $prev, 'Påslagna')],
     ['Push avstängda', $count('push', $P, 'Avstängda'), $count('push', $prev, 'Avstängda')],
     ['Sidor som inte finns', $count('not_found', $P), $count('not_found', $prev)],
   ];
+  $chart = ['type' => 'push_click', 'a' => 'Tryck på notiser', 'b' => 'Tryck på notiser', 'distinct' => false];
+  // Visade och tryckta per typ, och tryck per butik med snittpriset.
+  $kinds = $stores = [];
+  foreach ($q("SELECT type, target, COUNT(*) AS n, SUM(CAST(value AS REAL)) AS sum, COUNT(value) AS nv FROM events WHERE type IN ('push_shown', 'push_click') AND $w AND target IS NOT NULL GROUP BY type, target", $a) as $r) {
+    [$kind, $store] = array_pad(explode(' · ', (string)$r['target'], 2), 2, null);
+    $kinds[$kind][$r['type']] = ($kinds[$kind][$r['type']] ?? 0) + (int)$r['n'];
+    if ($r['type'] === 'push_click' && $store !== null) {
+      $s = &$stores[$store]; $s['n'] = ($s['n'] ?? 0) + (int)$r['n']; $s['sum'] = ($s['sum'] ?? 0) + (float)$r['sum']; $s['nv'] = ($s['nv'] ?? 0) + (int)$r['nv']; unset($s);
+    }
+  }
+  uasort($kinds, fn($x, $y) => ($y['push_click'] ?? 0) <=> ($x['push_click'] ?? 0));
+  $kindRows = [];
+  foreach ($kinds as $k => $v) {
+    $c = $v['push_click'] ?? 0; $sh = $v['push_shown'] ?? 0;
+    $kindRows[] = ['label' => $k . ' · ' . $rate($c, $sh) . ' % av ' . num($sh) . ' visade', 'n' => $c];
+  }
+  uasort($stores, fn($x, $y) => $y['n'] <=> $x['n']);
+  $storeRows = [];
+  foreach (array_slice($stores, 0, $lim('notisbutik'), true) as $k => $v) $storeRows[] = ['label' => $k, 'n' => $v['n'], 'avg' => $v['nv'] ? $v['sum'] / $v['nv'] : null];
   [$r1, $t1] = $top('push', 'push'); [$r2, $t2] = $top('not_found', '404');
-  $tables = ['push' => ['Pushnotiser', 'Antal', $r1, $t1, 'handelser'], '404' => ['Sidor som inte finns (404)', 'Antal', $r2, $t2, 'sidor']];
+  $tables = [
+    'notistyp' => ['Tryck per notistyp', 'Tryck', $kindRows, $clickNow, 'handelser'],
+    'notisbutik' => ['Tryck per butik', 'Tryck', $storeRows, $clickNow, 'butik', true],
+    'push' => ['Pushnotiser', 'Antal', $r1, $t1, 'handelser'], '404' => ['Sidor som inte finns (404)', 'Antal', $r2, $t2, 'sidor'],
+  ];
 }
 
 // Staplarna: per timme, dag eller månad. Serie b ritas ljus bakom serie a.

@@ -10,10 +10,20 @@ export const statsOptedOut = () => { try { return localStorage.getItem(OPT_OUT) 
 const privacyOff = () => statsOptedOut() || navigator.doNotTrack === "1" || window.doNotTrack === "1" || navigator.globalPrivacyControl === true
   || location.hostname !== "lootninja.se";
 let off = privacyOff();
+// Notiserna räknas av sw.js, som inte kan läsa localStorage eller Do Not Track. Därför lämnar sidan ett märke i
+// webbläsarens cache när statistiken är på, och sw.js skickar bara något när märket finns. Utan märke räknas inget.
+const syncWorkerFlag = () => {
+  try {
+    if (!self.caches) return;
+    caches.open("nl-flags").then((c) => off ? c.delete("/stats-on") : c.put("/stats-on", new Response("1"))).catch(() => {});
+  } catch {}
+};
+syncWorkerFlag();
 // Besökarens eget val på integritetssidan. Sparas i webbläsaren tills man ändrar det eller rensar webbplatsdata.
 export function setStatsOptOut(out) {
   try { if (out) localStorage.setItem(OPT_OUT, "1"); else localStorage.removeItem(OPT_OUT); } catch {}
   off = privacyOff();
+  syncWorkerFlag();
 }
 
 // Varifrån besökaren kom, i den här ordningen:

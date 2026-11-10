@@ -8,7 +8,7 @@ if (basename($_SERVER['SCRIPT_FILENAME'] ?? '') === 'lib.php') { http_response_c
 date_default_timezone_set('Europe/Stockholm');
 
 const STATS_KEEP_DAYS = 395; // drygt ett år, sedan raderas händelserna
-const STATS_TYPES = ['pageview', 'store_click', 'outbound', 'search', 'watch', 'card_view', 'valuation', 'scan', 'pack_open', 'pack_submit', 'push', 'not_found'];
+const STATS_TYPES = ['pageview', 'store_click', 'outbound', 'search', 'watch', 'card_view', 'valuation', 'scan', 'pack_open', 'pack_submit', 'push', 'push_shown', 'push_click', 'not_found'];
 
 // Besökarens IP-adress bakom Cloudflare, delad med huvudsidans api-filer.
 require_once __DIR__ . '/../api/client-ip.php';
