@@ -1,6 +1,36 @@
 {
- "updated": 1794302445706,
+ "updated": 1794303385729,
  "events": [
+  {
+   "at": 1794303278673,
+   "store": "aquitaz",
+   "product": "aquitaz:10883065577818",
+   "group": "op|extra-booster-one-piece-heroines-edition-vol-2|booster-box|ja|",
+   "title": "One Piece: (EB 05) Heroines Edition Vol.2 Extra Booster Box (24 Pack) (JP)",
+   "url": "https://aquitaz.se/products/one-piece-eb-05-heroines-edition-vol-2-extra-booster-box-24-pack-jp",
+   "image": "https://cdn.shopify.com/s/files/1/0885/4087/3050/files/One_Piece__EB_05_Extra_Booster_Pack_6_Cards_JP.png?v=1791031835",
+   "price": 1799,
+   "type": "Booster Box",
+   "set": "Extra Booster: One Piece Heroines Edition Vol. 2",
+   "lang": "ja",
+   "game": "op",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1794303278673,
+   "store": "aquitaz",
+   "product": "aquitaz:10883093791066",
+   "group": "op|extra-booster-one-piece-heroines-edition-vol-2|booster-pack|ja|",
+   "title": "One Piece: (EB 05) Heroines Edition Vol.2 Extra Booster Pack (6 Kort) (JP)",
+   "url": "https://aquitaz.se/products/one-piece-eb-05-heroines-edition-vol-2-extra-booster-pack-6-kort-jp",
+   "image": "https://cdn.shopify.com/s/files/1/0885/4087/3050/files/One_Piece__EB_05_Extra_Booster_Pack_6_Cards_JP_1.png?v=1791031834",
+   "price": 79,
+   "type": "Booster Pack",
+   "set": "Extra Booster: One Piece Heroines Edition Vol. 2",
+   "lang": "ja",
+   "game": "op",
+   "kind": "tillbaka"
+  },
   {
    "at": 1794301666587,
    "store": "tcgstore",
@@ -7084,34 +7114,6 @@
    "set": "Paldea Evolved",
    "lang": "en",
    "kind": "ny"
-  },
-  {
-   "at": 1793785284803,
-   "store": "poketalk",
-   "product": "poketalk:10795637997910",
-   "group": "chaos-rising|booster-pack|en|",
-   "title": "Pokémon Mega & Evolution: Chaos Rising Booster Pack",
-   "url": "https://poketalk.se/products/pokemon-mega-evolution-chaos-rising-booster-pack",
-   "image": "https://cdn.shopify.com/s/files/1/0862/7860/3094/files/PRODUKTSERIER_2000x2000px_d2ed601c-7427-49af-9fcd-aea365b00091.png?v=1779644489",
-   "price": 79,
-   "type": "Booster Pack",
-   "set": "Chaos Rising",
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793785284803,
-   "store": "poketalk",
-   "product": "poketalk:9253005787478",
-   "group": "151|booster-pack|en|",
-   "title": "Pokémon Scarlet & Violet: 151 Booster Pack",
-   "url": "https://poketalk.se/products/pokemon-scarlet-violet-151-booster-pack",
-   "image": "https://cdn.shopify.com/s/files/1/0862/7860/3094/files/PRODUKTSERIER_43.png?v=1750707777",
-   "price": 399,
-   "type": "Booster Pack",
-   "set": "151",
-   "lang": "en",
-   "kind": "tillbaka"
   }
  ]
 }
