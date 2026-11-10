@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-10T18:27:28.754Z",
+ "updated": "2026-11-10T18:42:49.002Z",
  "articles": [
   {
    "title": "Target's New 'Pokémon' 30th Anniversary Drawing Is A Must-See For TCG Fans",
@@ -17,6 +17,15 @@
    "summary": "Pokémon TCG collectors can nab a 30th Anniversary ETB and Booster Bundle cheaper than at Target, Walmart, and Best Buy",
    "image": "https://static0.polygonimages.com/wordpress/wp-content/uploads/2026/11/pikachu-025-thumbnail.jpg",
    "source": "Polygon",
+   "game": "pk"
+  },
+  {
+   "title": "Pokemon collectors fear fake PSA slabs after AliExpress sells custom labels and cases for any card",
+   "link": "https://www.dexerto.com/pokemon/pokemon-collectors-fear-fake-psa-slabs-after-aliexpress-sells-custom-labels-and-cases-for-any-card-3427092/",
+   "date": "2026-11-10T17:07:03.000Z",
+   "summary": "Pokemon TCG collectors are warning that AliExpress sellers now offer customizable PSA-style labels and empty cases for around $4.",
+   "image": "https://www.dexerto.com/cdn-image/wp-content/uploads/2026/11/10/pokemon-psa-slab-aliexpress-sales.jpg?width=480&quality=75&format=auto",
+   "source": "Dexerto",
    "game": "pk"
   },
   {
@@ -385,15 +394,6 @@
    "date": "2026-10-04T11:12:03.000Z",
    "summary": "Azurill has long been depicted as a morose looking Pokémon down on its luck, the Pokémon TCG's new Delta Reign expansion finally lets it smile.",
    "image": "https://www.wargamer.com/wp-content/sites/wargamer/2026/10/Azurill-Thumbnail-V2.jpg",
-   "source": "Wargamer",
-   "game": "pk"
-  },
-  {
-   "title": "The Pokémon TCG is releasing a new tool kit designed to encourage players to play competitively",
-   "link": "https://www.wargamer.com/pokemon-trading-card-game/deck-crafters-collection-2026",
-   "date": "2026-10-03T16:09:27.000Z",
-   "summary": "A new Pokémon TCG Deck Crafter's Collection is due to release on October 23rd, designed to provide players with staple trainer cards.",
-   "image": "https://www.wargamer.com/wp-content/sites/wargamer/2026/10/Deck-Crafters-Collection-Thumbnail.jpg",
    "source": "Wargamer",
    "game": "pk"
   },
