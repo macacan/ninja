@@ -1,5 +1,5 @@
 {
- "updated": 1794269664009,
+ "updated": 1794269704009,
  "stores": [
   {
    "id": "alara-games",
@@ -121,14 +121,14 @@
    "name": "Cardclub",
    "domain": "cardclub.se",
    "status": "ej-forbjuden",
-   "checkedAt": 1794268748338,
+   "checkedAt": 1794269665827,
    "ok": true,
-   "lastOkAt": 1794268748338,
+   "lastOkAt": 1794269665827,
    "count": 84,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 15
+   "interval": 60
   },
   {
    "id": "cardgame",
@@ -269,14 +269,14 @@
    "name": "Frog med Vänner",
    "domain": "frogmedvanner.se",
    "status": "ej-forbjuden",
-   "checkedAt": 1794268777648,
+   "checkedAt": 1794269700127,
    "ok": true,
-   "lastOkAt": 1794268777648,
+   "lastOkAt": 1794269700127,
    "count": 9,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 15
+   "interval": 60
   },
   {
    "id": "gameshop",
@@ -756,14 +756,14 @@
    "name": "Skattkistan",
    "domain": "skattkistan.net",
    "status": "ej-forbjuden",
-   "checkedAt": 1794268792365,
+   "checkedAt": 1794269684962,
    "ok": true,
-   "lastOkAt": 1794268792365,
+   "lastOkAt": 1794269684962,
    "count": 50,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 15
+   "interval": 60
   },
   {
    "id": "sneak",
