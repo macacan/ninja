@@ -1,6 +1,20 @@
 {
- "updated": 1794380481862,
+ "updated": 1794381379185,
  "events": [
+  {
+   "at": 1794380804717,
+   "store": "sweet-nerds",
+   "product": "sweet-nerds:https://sweetnerds.se/sv/products/pokemon-30th-celebration-booster-box-jp",
+   "group": "30th-celebration|booster-box|ja|",
+   "title": "Pokémon 30th Celebration Booster Box (JP)",
+   "url": "https://sweetnerds.se/sv/products/pokemon-30th-celebration-booster-box-jp",
+   "image": "https://nycdn.nyehandel.se/store_17dfab1e-b233-4e19-a6f0-ae93160c8b85/images/1000002847-92f17d25.png?width=400&height=400",
+   "price": 2499,
+   "type": "Booster Box",
+   "set": "30th Celebration",
+   "lang": "ja",
+   "kind": "forbestallning"
+  },
   {
    "at": 1794380411984,
    "store": "collected",
@@ -7095,20 +7109,6 @@
    "url": "https://bangerpack.se/pokemon/japanska-utgavor/pokemon-silver-lance-booster-jp",
    "image": "https://cdn.quickbutik.com/images/99246J/products/6ae815a112e59.png",
    "price": 69,
-   "type": "Booster Pack",
-   "set": null,
-   "lang": "ja",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793859932330,
-   "store": "bangerpack",
-   "product": "bangerpack:https://bangerpack.se/pokemon/japanska-utgavor/pokemon-dark-phantasma-booster-jp",
-   "group": "x|booster-pack|ja||dark-phantasma",
-   "title": "Pokémon Dark Phantasma – Booster (JP)",
-   "url": "https://bangerpack.se/pokemon/japanska-utgavor/pokemon-dark-phantasma-booster-jp",
-   "image": "https://cdn.quickbutik.com/images/99246J/products/6ae8027789325.png",
-   "price": 79,
    "type": "Booster Pack",
    "set": null,
    "lang": "ja",
