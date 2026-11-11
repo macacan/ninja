@@ -1,6 +1,48 @@
 {
- "updated": 1794413319799,
+ "updated": 1794414239817,
  "events": [
+  {
+   "at": 1794414187084,
+   "store": "tcg-card-house",
+   "product": "tcg-card-house:15560170963319",
+   "group": "30th-celebration|booster-box|ja|",
+   "title": "Pokémon: 30th Celebration Booster Box (JPN)",
+   "url": "https://tcgcardhouse.se/products/pokemon-30th-celebration-booster-box-jpn",
+   "image": "https://cdn.shopify.com/s/files/1/0950/2815/0647/files/pokemon-card-game-30th-celebration-booster-box-japansk_2.jpg?v=1790084572",
+   "price": 2599,
+   "type": "Booster Box",
+   "set": "30th Celebration",
+   "lang": "ja",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1794414174366,
+   "store": "spelparken",
+   "product": "spelparken:15237517705591",
+   "group": "silver-tempest|booster-pack|en|",
+   "title": "Silver Tempest Booster Pack",
+   "url": "https://spelparken.se/products/pokemon-sword-shield-silver-tempest-booster-pack-oppnas-live",
+   "image": "https://cdn.shopify.com/s/files/1/0948/1876/3127/files/pokemon-tcg-silver-tempest-pok86091-main.webp?v=1762964967",
+   "price": 199,
+   "type": "Booster Pack",
+   "set": "Silver Tempest",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1794413716038,
+   "store": "dragon-s-lair",
+   "product": "dragon-s-lair:15940303618396",
+   "group": "delta-reign|blister|en||3",
+   "title": "Pokémon TCG: Mega Evolution - Delta Reign 3-pack Booster Blister",
+   "url": "https://dragonslair.se/products/pokemon-tcg-mega-evolution-delta-reign-3-pack-booster-blister",
+   "image": "https://cdn.shopify.com/s/files/1/1015/8315/9644/files/PokemonTCGMegaEvolution-DeltaReign3-packBoosterBlister.png?v=1793236574",
+   "price": 269,
+   "type": "Blister",
+   "set": "Delta Reign",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1794412347604,
    "store": "alphaspel",
@@ -7068,48 +7110,6 @@
    "set": "Delta Reign",
    "lang": "en",
    "kind": "ny"
-  },
-  {
-   "at": 1793895109183,
-   "store": "the-swedish-fish",
-   "product": "the-swedish-fish:17130",
-   "group": "delta-reign|booster-pack|en|",
-   "title": "Pokemon Delta Reign: Booster Pack",
-   "url": "https://theswedishfish.se/product/pokemon-delta-reign-booster-pack/",
-   "image": "https://theswedishfish.se/wp-content/uploads/2026/11/delta-pack.webp",
-   "price": 89,
-   "type": "Booster Pack",
-   "set": "Delta Reign",
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1793893534676,
-   "store": "dragon-s-lair",
-   "product": "dragon-s-lair:15956720746844",
-   "group": "30th-celebration|booster-pack|zh|",
-   "title": "Pokemon 30th Celebration Booster (Kinesisk)(30th C)",
-   "url": "https://dragonslair.se/products/pokemon-30th-celebration-booster-kinesisk30th-c",
-   "image": "https://cdn.shopify.com/s/files/1/1015/8315/9644/files/s-l16003_65b68412-ede9-4bc9-b6a8-ce22d0eb9ef9.jpg?v=1793893282",
-   "price": 65,
-   "type": "Booster Pack",
-   "set": "30th Celebration",
-   "lang": "zh",
-   "kind": "ny"
-  },
-  {
-   "at": 1793890582453,
-   "store": "speltrollet",
-   "product": "speltrollet:15117417382214",
-   "group": "x|booster-pack|ja||festival-terastal",
-   "title": "Pokemon Scarlet & Violet Terastal Festival Booster (sv8a)(Japansk)",
-   "url": "https://speltrollet.se/products/pokemon-scarlet-violet-terastal-festival-booster-sv8ajapansk",
-   "image": "https://cdn.shopify.com/s/files/1/0674/0951/0716/files/high-class-terastal-festival-ex-booster-sv8a-pokemon-card-game.png?v=1738930311",
-   "price": 239,
-   "type": "Booster Pack",
-   "set": "Scarlet & Violet",
-   "lang": "ja",
-   "kind": "tillbaka"
   }
  ]
 }
