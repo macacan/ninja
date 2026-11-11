@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-11T04:04:17.426Z",
+ "updated": "2026-11-11T04:19:36.631Z",
  "articles": [
   {
    "title": "Riftbound Game Director Confirms Card Ban Update on Friday",
@@ -44,15 +44,6 @@
    "summary": "A man is facing a serious criminal charge after leaving his 6-year-old daughter alone to hold his place in a store line for Pokemon card products.",
    "image": "https://static0.gamerantimages.com/wordpress/wp-content/uploads/wm/2026/11/father-accused-of-leaving-6-year-old-daughter-alone-in-line-to-buy-pokemon-cards-gamerant.jpg",
    "source": "Game Rant",
-   "game": "pk"
-  },
-  {
-   "title": "Pokémon TCG Mega Evolution—Delta Reign highlights Giratina, Mega Rayquaza ex and more",
-   "link": "https://pokemonblog.com/2026/11/09/pokemon-tcg-mega-evolution-delta-reign-highlights-giratina-mega-rayquaza-ex-and-more/",
-   "date": "2026-11-09T22:17:12.000Z",
-   "summary": "The Pokémon TCG’s Mega Evolution—Delta Reign expansion introduces several cards that could influence the 2027 Championship Series, including Giratina, Legendary Pyroduct, Aarune,…",
-   "image": "https://pokemonblog.com/wp-content/uploads/2026/08/pokemon_tcg_mega_evolution_delta_reign_mega_rayquaza_ex.jpg",
-   "source": "PokemonBlog",
    "game": "pk"
   },
   {
@@ -398,6 +389,15 @@
    "game": "pk"
   },
   {
+   "title": "The Pokémon TCG is releasing a new tool kit designed to encourage players to play competitively",
+   "link": "https://www.wargamer.com/pokemon-trading-card-game/deck-crafters-collection-2026",
+   "date": "2026-10-03T16:09:27.000Z",
+   "summary": "A new Pokémon TCG Deck Crafter's Collection is due to release on October 23rd, designed to provide players with staple trainer cards.",
+   "image": "https://www.wargamer.com/wp-content/sites/wargamer/2026/10/Deck-Crafters-Collection-Thumbnail.jpg",
+   "source": "Wargamer",
+   "game": "pk"
+  },
+  {
    "title": "[DeckReview] KeyLlua: Red Ace deck in Postban (No Mihawk) OP17 format.",
    "link": "https://onepiecetopdecks.com/deckreview-keyllua-red-ace-deck-in-postban-no-mihawk-op17-format/",
    "date": "2026-09-27T03:49:05.000Z",
@@ -461,5 +461,30 @@
    "game": "op"
   }
  ],
- "videos": []
+ "videos": [
+  {
+   "id": "bW0cOvHxvLI",
+   "title": "Pokémon TCG: Mega Evolution—Delta Reign 🐉 | Available Now",
+   "date": "2026-11-06T17:00:33.000Z",
+   "source": "Pokémon (officiell)"
+  },
+  {
+   "id": "fAxKjg5hKYE",
+   "title": "[UK] Pokémon TCG: Mega Evolution—Delta Reign | Out now!",
+   "date": "2026-11-06T10:25:12.000Z",
+   "source": "Pokémon (officiell)"
+  },
+  {
+   "id": "pGIxhUQvezQ",
+   "title": "TCG Day 2 | 2027 Pokémon Gdańsk Regional Championships",
+   "date": "2026-11-01T19:24:07.000Z",
+   "source": "Pokémon (officiell)"
+  },
+  {
+   "id": "FlkW1YWVQF0",
+   "title": "TCG Day 1 | 2027 Pokémon Gdańsk Regional Championships",
+   "date": "2026-10-31T19:18:36.000Z",
+   "source": "Pokémon (officiell)"
+  }
+ ]
 }
