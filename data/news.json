@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-11T13:35:10.583Z",
+ "updated": "2026-11-11T13:50:30.975Z",
  "articles": [
   {
    "title": "Pokémon Happy Meals return to McDonald’s in the U.S. with 15 toys and TCG cards",
@@ -18,6 +18,15 @@
    "image": null,
    "source": "Riftbound.gg",
    "game": "rb"
+  },
+  {
+   "title": "Florida woman arrested after targeting ex’s Pokemon cards because he wasn’t giving her attention",
+   "link": "https://www.dexerto.com/pokemon/florida-woman-arrested-after-targeting-exs-pokemon-cards-because-he-wasnt-giving-her-attention-3427169/",
+   "date": "2026-11-10T19:31:41.000Z",
+   "summary": "A Florida woman has been arrested after allegedly targeting her ex-boyfriend’s Pokemon card collection during an argument.",
+   "image": "https://www.dexerto.com/cdn-image/wp-content/uploads/2026/11/10/florida-woman-pokemon-cards-ex.jpg?width=480&quality=75&format=auto",
+   "source": "Dexerto",
+   "game": "pk"
   },
   {
    "title": "Target's New 'Pokémon' 30th Anniversary Drawing Is A Must-See For TCG Fans",
@@ -385,15 +394,6 @@
    "date": "2026-10-07T15:06:07.000Z",
    "summary": "On October 7-8, Walmart has a lottery with tons of Pokémon TCG products going on sale at surprisingly cheap prices.",
    "image": "https://www.wargamer.com/wp-content/sites/wargamer/2026/10/pokemon-tcg-walmart-lottery-deal.jpg",
-   "source": "Wargamer",
-   "game": "pk"
-  },
-  {
-   "title": "New Delta Reign artwork puts a smile on the face of one of the Pokémon TCG's saddest Pokémon",
-   "link": "https://www.wargamer.com/pokemon-trading-card-game/azurill-happy",
-   "date": "2026-10-04T11:12:03.000Z",
-   "summary": "Azurill has long been depicted as a morose looking Pokémon down on its luck, the Pokémon TCG's new Delta Reign expansion finally lets it smile.",
-   "image": "https://www.wargamer.com/wp-content/sites/wargamer/2026/10/Azurill-Thumbnail-V2.jpg",
    "source": "Wargamer",
    "game": "pk"
   },

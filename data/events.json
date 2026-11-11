@@ -1,6 +1,20 @@
 {
- "updated": 1794404119573,
+ "updated": 1794405039599,
  "events": [
+  {
+   "at": 1794404500585,
+   "store": "mystery-shack",
+   "product": "mystery-shack:https://mysteryshack.se/products/mega-evolution-ex-starter-deck-exclusive-set-of-3-japansk",
+   "group": "x|deck|ja||exclusive-set-starter",
+   "title": "Mega Evolution EX Starter Deck Exclusive Set of 3 (Japansk)",
+   "url": "https://mysteryshack.se/products/mega-evolution-ex-starter-deck-exclusive-set-of-3-japansk",
+   "image": "https://cdn.quickbutik.com/images/62396l/products/6af46b83b6c28.webp",
+   "price": 679,
+   "type": "Deck",
+   "set": "Mega Evolution",
+   "lang": "ja",
+   "kind": "ny"
+  },
   {
    "at": 1794402460635,
    "store": "cards-by-malcolm",
@@ -7101,20 +7115,6 @@
    "image": "https://alphaspel.se/media/products/b57c4266-6154-4481-bb1b-fcefa9fdc423",
    "price": 479,
    "type": "Deck",
-   "set": "30th Celebration",
-   "lang": "en",
-   "kind": "forbestallning"
-  },
-  {
-   "at": 1793877488957,
-   "store": "alphaspel",
-   "product": "alphaspel:https://alphaspel.se/1762-pokemon-tcg/362642-pokemon-tcg-30th-celebration-mew-figure-collection",
-   "group": "30th-celebration|collection-box|en||figure-mew",
-   "title": "Pokémon TCG: 30th Celebration Mew Figure Collection",
-   "url": "https://alphaspel.se/1762-pokemon-tcg/362642-pokemon-tcg-30th-celebration-mew-figure-collection",
-   "image": "https://alphaspel.se/media/products/0dc78875-7c3d-48de-a6d8-4080b85094ed",
-   "price": 649,
-   "type": "Collection Box",
    "set": "30th Celebration",
    "lang": "en",
    "kind": "forbestallning"
