@@ -1,6 +1,20 @@
 {
- "updated": 1794430477293,
+ "updated": 1794431397316,
  "events": [
+  {
+   "at": 1794430600761,
+   "store": "dragon-s-lair",
+   "product": "dragon-s-lair:15832720441692",
+   "group": "x|booster-pack|zh||brilliant-illusions",
+   "title": "Pokemon TCG Scarlet & Violet - Brilliant Illusions (CSV8C) Booster (5-kort) (Kinesisk)",
+   "url": "https://dragonslair.se/products/pokemon-tcg-scarlet-violet-brilliant-illusions-csv8c-booster-5-kort-kinesisk",
+   "image": "https://cdn.shopify.com/s/files/1/1015/8315/9644/files/Pokemon_Brilliant_Illusions_Slim_Booster_Pack_Chinese.webp?v=1789722619",
+   "price": 20,
+   "type": "Booster Pack",
+   "set": "Scarlet & Violet",
+   "lang": "zh",
+   "kind": "tillbaka"
+  },
   {
    "at": 1794430293316,
    "store": "cardvalley",
@@ -7097,20 +7111,6 @@
    "price": 249,
    "type": "Booster Pack",
    "set": "Lost Origin",
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793909302124,
-   "store": "cardvalley",
-   "product": "cardvalley:10611330285906",
-   "group": "prismatic-evolutions|booster-bundle|en|",
-   "title": "Pokémon: Prismatic Evolutions Booster Bundle",
-   "url": "https://cardvalley.se/products/pokemon-prismatic-evolutions-booster-bundle",
-   "image": "https://cdn.shopify.com/s/files/1/0934/7946/9394/files/IMG-9967.png?v=1776753974",
-   "price": 1299,
-   "type": "Booster Bundle",
-   "set": "Prismatic Evolutions",
    "lang": "en",
    "kind": "tillbaka"
   }
