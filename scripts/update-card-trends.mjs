@@ -57,6 +57,31 @@ const allSets = [...details, ...olderDetails];
 
 const cards = (await pool(allSets.flatMap((s) => s.cards.map((c) => c.id)), (id) => getJSON(`${API}/cards/${id}`))).filter(Boolean);
 
+// Kurserna: euro och dollar till kronor (ECB via Frankfurter).
+const rate = (await getJSON("https://api.frankfurter.dev/v1/latest?from=EUR&to=SEK"))?.rates?.SEK;
+const usdRate = (await getJSON("https://api.frankfurter.dev/v1/latest?from=USD&to=SEK"))?.rates?.SEK;
+
+// ---------- Kort som delar Cardmarket-produkt ----------
+// I nya set kopplar TCGdex ibland alla versioner av ett kort till samma Cardmarket-produkt (Delta Reign: Mega Rayquaza ex
+// #084 Double rare, #138 Special illustration rare och #141 Mega Hyper Rare fick alla Double rare-kortets 4 €).
+// Produkten hör då till kortet med lägst nummer. De andra får TCGplayers marknadspris, omräknat till euro, tills
+// TCGdex ger dem en egen produkt. Listan sparas i data/cm-shared.json så att sajten gör samma byte för livepriserna.
+const byNo = (a, b) => String(a.localId).localeCompare(String(b.localId), "en", { numeric: true });
+const sharedIds = new Set();
+for (const s of allSets) {
+  const groups = new Map();
+  for (const c of cards.filter((x) => x.set?.id === s.id)) {
+    const pid = c.pricing?.cardmarket?.idProduct;
+    if (pid) groups.set(pid, [...(groups.get(pid) || []), c]);
+  }
+  for (const g of groups.values()) if (g.length > 1) g.sort(byNo).slice(1).forEach((c) => sharedIds.add(c.id));
+}
+const usdToEur = (v) => (v == null || !rate || !usdRate ? null : Math.round((v * usdRate / rate) * 100) / 100);
+for (const c of cards.filter((x) => sharedIds.has(x.id))) {
+  const tp = Object.values(c.pricing?.tcgplayer || {}).find((v) => v && typeof v === "object" && v.marketPrice != null);
+  c.pricing.cardmarket = tp ? { unit: "EUR", trend: usdToEur(tp.marketPrice), avg: usdToEur(tp.marketPrice), low: usdToEur(tp.lowPrice), fromTcgplayer: true } : {};
+}
+
 const slim = (c) => {
   const cm = c.pricing?.cardmarket || {};
   return {
@@ -68,9 +93,7 @@ const slim = (c) => {
 // ---------- Prishistorik i kronor, en fil per set: data/card-history/<set>.json ----------
 // TCGdex har bara dagens priser och snitt. Historiken byggs därför upp av oss, en punkt per kort och dag,
 // omräknad till kronor med ECB:s kurs samma dag: [datum, trendpris, lägsta pris].
-const rate = (await getJSON("https://api.frankfurter.dev/v1/latest?from=EUR&to=SEK"))?.rates?.SEK;
 // Kurserna till sidorna (fxRates i js/site.js). Svarar Frankfurter inte ligger gårdagens kvar.
-const usdRate = (await getJSON("https://api.frankfurter.dev/v1/latest?from=USD&to=SEK"))?.rates?.SEK;
 if (rate && usdRate) await writeFile(new URL("../data/rates.json", import.meta.url), JSON.stringify({ updated: Date.now(), EUR: rate, USD: usdRate }) + "\n");
 if (rate) {
   const today = new Date().toISOString().slice(0, 10);
@@ -82,8 +105,11 @@ if (rate) {
     const f = new URL(`${encodeURIComponent(s.id)}.json`, dir);
     let h = { cards: {} };
     try { h = JSON.parse(await readFile(f, "utf8")); } catch {}
+    const wasShared = new Set(h.cmShared || []);
     for (const c of cards.filter((x) => x.set?.id === s.id)) {
       const cm = c.pricing?.cardmarket || {};
+      // Historiken för ett kort som just upptäckts dela produkt är den andra versionens priser och börjar om.
+      if (sharedIds.has(c.id) && !wasShared.has(c.id)) delete h.cards[c.id];
       const price = sek(cm.trend ?? cm.avg ?? cm["trend-holo"]);
       if (price == null) continue;
       const pts = (h.cards[c.id] ||= []);
@@ -94,8 +120,16 @@ if (rate) {
     // Sällsyntheten per kort visas på setsidorna (scripts/build-set-pages.mjs).
     const rarity = { ...h.rarity };
     for (const c of cards) if (c.set?.id === s.id && c.rarity) rarity[c.id] = c.rarity;
-    await writeFile(f, JSON.stringify({ updated: Date.now(), set: s.name, rate, cards: h.cards, rarity }) + "\n");
+    const cmShared = cards.filter((c) => c.set?.id === s.id && sharedIds.has(c.id)).map((c) => c.id);
+    await writeFile(f, JSON.stringify({ updated: Date.now(), set: s.name, rate, cards: h.cards, rarity, ...(cmShared.length ? { cmShared } : {}) }) + "\n");
   }
+  // Alla kort med delad produkt, även i set som inte lästes i dag.
+  const all = {};
+  for (const f of (await readdir(dir)).filter((x) => x.endsWith(".json"))) {
+    const h = JSON.parse(await readFile(new URL(f, dir), "utf8").catch(() => "null"));
+    for (const id of h?.cmShared || []) all[id] = 1;
+  }
+  await writeFile(new URL("../data/cm-shared.json", import.meta.url), JSON.stringify(all) + "\n");
 }
 
 const trendSets = new Set(details.slice(0, TREND_SETS).map((s) => s.id));

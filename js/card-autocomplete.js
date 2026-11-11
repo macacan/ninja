@@ -503,6 +503,8 @@ const priceOf = new Map();
 let eurSek = null;
 const cardEur = (id) => {
   if (!priceOf.has(id)) priceOf.set(id, fetch(`${API}/cards/${encodeURIComponent(id)}`).then((r) => (r.ok ? r.json() : null))
+    // Kort som delar Cardmarket-produkt med en annan version får TCGplayers pris (fixCardPricing i site.js).
+    .then((c) => (c ? import("./site.js").then((m) => m.fixCardPricing(c)) : c))
     .then((c) => c?.pricing?.cardmarket?.trend ?? c?.pricing?.cardmarket?.avg ?? null).catch(() => null));
   return priceOf.get(id);
 };

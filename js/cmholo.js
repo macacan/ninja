@@ -35,7 +35,8 @@ export const baseLabel = (card) => (card?.variants?.holo && !card.variants.norma
 const priceRow = (sek, label, v, cur) => (v == null ? "" : `<tr><th>${label}</th><td>${sek(v, cur)}</td></tr>`);
 export function cardmarketTable(card, sek) {
   const cm = card?.pricing?.cardmarket || {};
-  if (cm.trend == null && cm.avg == null) return "";
+  // Priset kommer från TCGplayer (fixCardPricing i js/site.js), som har en egen tabell.
+  if ((cm.trend == null && cm.avg == null) || cm.fromTcgplayer) return "";
   const r = (label, v) => priceRow(sek, label, v, "EUR");
   return `<h3>Cardmarket (Europa)</h3><table class="cm-table">${r("Trend", cm.trend)}${r("Snitt", cm.avg)}${r("Lägsta", cm.low)}${r("Snitt 1 dag", cm.avg1)}${r("Snitt 7 dagar", cm.avg7)}${r("Snitt 30 dagar", cm.avg30)}${r("Reverse holo", reverseEur(card))}</table>`;
 }

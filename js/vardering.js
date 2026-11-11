@@ -18,7 +18,7 @@ const scanner = () => import("./card-scanner.js?v=20261109c");
 const warmScanner = () => (window.requestIdleCallback || setTimeout)(() => scanner().catch(() => {}), { timeout: 4000 });
 if (document.readyState === "complete") warmScanner(); else addEventListener("load", warmScanner, { once: true });
 import { showReveal } from "./card-reveal.js?v=20261104c";
-import { reverseEur, baseLabel, versionNote } from "./cmholo.js?v=20261104b";
+import { reverseEur, baseLabel, versionNote } from "./cmholo.js?v=20261111a";
 import { getAnatomyData, renderPullRatesModal } from "./anatomy.js";
 
 // Fyra kriterier, som graderingsbolagen: centrering, hörn, kanter och yta. Smuts ingår i ytan.

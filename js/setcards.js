@@ -1,7 +1,7 @@
 // Tryck på ett set: en ruta med alla kort i setet, pris i kronor och sortering.
 // Namn, bild och nummer kommer från TCGdex (eller data/card-images.json om TCGdex saknar bilder). Set som TCGdex inte har än läses från data/sets/<id>.json. Priserna från data/card-history/<set>.json.
 import { esc, kr, fmt, loading, getJSON, API, setLogo, cardImg, extraCardImgsReady, setPages } from "./site.js";
-import { openCardPrice } from "./cardprice.js?v=20261106a";
+import { openCardPrice } from "./cardprice.js?v=20261111a";
 
 const SORTS = {
   "price-desc": ["Dyrast först", (a, b) => (b.price ?? -1) - (a.price ?? -1)],

@@ -3,7 +3,7 @@
 import { API, esc, kr, getJSON, fxRates, cardImg, extraCardImgsReady, setPages, setLink } from "./site.js";
 import { mountChart } from "./pricechart.js";
 import { CONDITIONS, gradeMult } from "./valuation.js";
-import { cardmarketTable, tcgplayerTable } from "./cmholo.js?v=20261104b";
+import { cardmarketTable, tcgplayerTable } from "./cmholo.js?v=20261111a";
 
 let dlg = null, token = 0;
 
@@ -43,10 +43,27 @@ export async function openCardPrice(id) {
       ${imgUrl ? `<img class="pm-img" src="${esc(imgUrl)}" alt="" referrerpolicy="no-referrer">` : ""}
       <div><h2>${esc(card.name)}</h2><p class="muted">${setLink(card.set, pages)} · #${esc(card.localId || "")}${card.rarity && card.rarity !== "None" ? ` · ${esc(card.rarity)}` : ""}</p>
       <div class="cm-price">${base != null ? kr(base) : "Inget pris ännu"}</div>
-      <p class="muted">Cardmarkets trendpris i kronor. Vägledande, uppdateras dagligen.</p></div></div>
+      <p class="muted">${cm.fromTcgplayer ? "TCGplayers marknadspris i kronor. Cardmarket har inget eget pris för just den här versionen än." : "Cardmarkets trendpris i kronor."} Vägledande, uppdateras dagligen.</p></div></div>
     <div class="pchart"></div>
     ${cardmarketTable(card, sek)}
     ${values}
-    ${tcgplayerTable(card, sek)}`;
+    ${tcgplayerTable(card, sek)}
+    <p class="pm-links"><a class="btn small" href="vardering.html?id=${encodeURIComponent(card.id)}">Värdera ditt exemplar</a></p>`;
   mountChart(body.querySelector(".pchart"), card, rate).catch(() => {});
+}
+
+// One Piece och Riftbound (setsidorna): kortet med TCGplayers marknadspris och prishistorik ur data/<spel>/history.
+// c: { game, id, setId, name, sub, image, back, sek, href } där href öppnar kortet i Kortpriser.
+export function openGameCard(c) {
+  const d = dialog(), body = d.querySelector(".pm-body");
+  ++token;
+  body.innerHTML = `<div class="pm-head">
+      <img class="pm-img" src="${esc(c.image || c.back)}" alt="" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='${esc(c.back)}'">
+      <div><h2>${esc(c.name)}</h2><p class="muted">${esc(c.sub)}</p>
+      <div class="cm-price">${c.sek != null ? kr(c.sek) : "Inget pris ännu"}</div>
+      <p class="muted">TCGplayers marknadspris i kronor. Vägledande, uppdateras dagligen.</p></div></div>
+    <div class="pchart"></div>
+    <p class="pm-links"><a class="btn small" href="${esc(c.href)}">Öppna i Kortpriser</a></p>`;
+  if (!d.open) d.showModal();
+  mountChart(body.querySelector(".pchart"), { id: c.id, set: { id: c.setId } }, null, { dir: `data/${c.game}/history`, source: "TCGplayers marknadspris" }).catch(() => {});
 }

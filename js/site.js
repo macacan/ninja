@@ -243,14 +243,30 @@ export async function getJSON(url, ttl = TTL) {
   const key = "nl:" + url;
   try {
     const hit = JSON.parse(localStorage.getItem(key));
-    if (hit && Date.now() - hit.t < ttl) return hit.d;
+    if (hit && Date.now() - hit.t < ttl) return url.startsWith(`${API}/cards/`) ? fixCardPricing(hit.d) : hit.d;
   } catch {}
   const r = await fetch(url);
   if (!r.ok) throw new Error(r.status);
   const d = await r.json();
   // Fullt lagringsutrymme: rensa våra sparade svar och strunta i att cacha just detta
   try { localStorage.setItem(key, JSON.stringify({ t: Date.now(), d })); } catch { clearCache(); }
-  return d;
+  return url.startsWith(`${API}/cards/`) ? fixCardPricing(d) : d;
+}
+
+// I nya set kopplar TCGdex ibland flera versioner av ett kort till samma Cardmarket-produkt, så att t.ex. en Mega Hyper
+// Rare får Double rare-kortets pris. scripts/update-card-trends.mjs listar dem i data/cm-shared.json, och de får
+// TCGplayers marknadspris omräknat till euro i stället (fromTcgplayer). Cardmarket-tabellen visas då inte.
+let cmShared = null;
+export async function fixCardPricing(c) {
+  if (!c?.id || !c.pricing?.cardmarket || c.pricing.cardmarket.fromTcgplayer) return c;
+  const shared = await (cmShared ??= fetch(new URL("../data/cm-shared.json", import.meta.url), { cache: "no-cache" })
+    .then((r) => (r.ok ? r.json() : {})).catch(() => ({})));
+  if (!shared[c.id]) return c;
+  const { EUR, USD } = await fxRates();
+  const toEur = (v) => (v == null || !EUR || !USD ? null : Math.round((v * USD / EUR) * 100) / 100);
+  const tp = Object.values(c.pricing.tcgplayer || {}).find((v) => v && typeof v === "object" && v.marketPrice != null);
+  c.pricing.cardmarket = tp ? { unit: "EUR", trend: toEur(tp.marketPrice), avg: toEur(tp.marketPrice), low: toEur(tp.lowPrice), fromTcgplayer: true } : {};
+  return c;
 }
 
 // Tar bort sparade svar ({ t, d }) som är äldre än maxAge ms (0: alla). Valvet, inställningarna och annat som

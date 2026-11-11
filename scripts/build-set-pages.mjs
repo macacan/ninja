@@ -179,7 +179,7 @@ const headHtml = ({ title, desc, url, ld }) => `<!doctype html>
 <meta name="twitter:card" content="summary_large_image">
 <script type="application/ld+json">${JSON.stringify(ld).replace(/</g, "\\u003c")}</script>
 <link href="fonts/fonts.css" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=20261107a">
+<link rel="stylesheet" href="style.css?v=20261111a">
 <link rel="stylesheet" href="dark.css?v=20261105a" id="dark-css" media="(prefers-color-scheme: dark)">
 <script src="js/theme.js?v=20261106"></script>
 </head>
@@ -225,7 +225,7 @@ const foot = `
     <li><a href="/integritet.html" rel="privacy-policy">Integritet och kakor</a></li>
   </ul></nav>
 </footer>
-<script type="module" src="js/setpage.js?v=20261106a"></script>
+<script type="module" src="js/setpage.js?v=20261111a"></script>
 </body>
 </html>
 `;
@@ -309,7 +309,7 @@ function relatedHtml(p, all) {
   const list = (same.length ? same : all.filter((o) => o !== p).sort((a, b) => (b.date || "9999").localeCompare(a.date || "9999"))).slice(0, 8);
   if (!list.length) return "";
   return `
-    <div class="section"><h2>${same.length ? `Fler set i ${esc(p.serie)}` : "Fler set"}</h2><a class="more" href="set/">Alla set</a></div>
+    <div class="section"><h2>${same.length ? `Fler set i ${esc(p.serie)}` : "Fler set"}</h2><a class="more" href="set/?spel=pk">Alla set</a></div>
     <ul class="set-tiles">${list.map(tile).join("")}</ul>`;
 }
 
@@ -347,7 +347,7 @@ function gamePage(p) {
   const desc = release
     ? `${p.name} (${game}) släpps ${p.date ? longDate(p.date) : "snart"}. Se alla produkter, släppdatum och vilka svenska butiker som har förbeställning eller lager.`
     : `Alla ${p.cards.length} kort i ${p.name} (${game}${p.code ? ` ${p.code}` : ""}) med bilder och priser i kronor.${p.date ? ` Släpptes ${longDate(p.date)}.` : ""}${top[0] ? ` Dyrast just nu: ${top[0].name} (${kr(top[0].sek)}).` : ""}${stockDesc(p)}`;
-  const crumbs = [["Hem", `${SITE}/`, "./"], ["Alla set", `${SITE}/set/`, "set/"], [game, `${SITE}/set/#${gameAnchor[p.game]}`, `set/#${gameAnchor[p.game]}`], [p.name, p.url, null]];
+  const crumbs = [["Hem", `${SITE}/`, "./"], ["Alla set", `${SITE}/set/`, "set/"], [game, `${SITE}/set/?spel=${p.game}`, `set/?spel=${p.game}`], [p.name, p.url, null]];
   const facts = [esc(game), p.code && `Kod: ${esc(p.code)}`, p.date && (p.date > today ? `Släpps <time datetime="${p.date}">${longDate(p.date)}</time>` : `Släpptes <time datetime="${p.date}">${longDate(p.date)}</time>`),
     p.cards.length && `${p.cards.length} kort`].filter(Boolean);
   const others = gamePages.filter((o) => o !== p && o.game === p.game).sort((a, b) => (b.main - a.main) || (b.date || "").localeCompare(a.date || "")).slice(0, 8);
@@ -380,7 +380,7 @@ ${p.cards.length ? `
     <ul class="set-top set-all">${[...p.cards].sort(byNo).map((c) => gameCard(p, c)).join("")}
     </ul>` : ""}
 ${others.length ? `
-    <div class="section"><h2>Fler ${esc(game)}-set</h2><a class="more" href="set/#${gameAnchor[p.game]}">Alla set</a></div>
+    <div class="section"><h2>Fler ${esc(game)}-set</h2><a class="more" href="set/?spel=${p.game}">Alla set</a></div>
     <ul class="set-tiles">${others.map(gameTile).join("")}</ul>` : ""}
   </div>${foot}`;
 }
@@ -435,6 +435,13 @@ function indexPage(all) {
     if (!series.has(k)) series.set(k, []);
     series.get(k).push(p);
   }
+  // Översikten: en rad per spel med de nyaste seten (utom de som redan står bland aktuella och kommande).
+  // "Visa alla set" (?spel=op) och sökningen visar alla set, Pokémon uppdelat på serier.
+  const ROW = 6;
+  const gameLists = GAMES.map(([g, anchor, name]) => [g, anchor, name, gamePages.filter((p) => p.game === g && p.cards.length).sort((a, b) => (b.main - a.main) || (b.date || "").localeCompare(a.date || ""))])
+    .filter(([, , , list]) => list.length);
+  const overview = [["pk", "Pokémon TCG", rest], ...gameLists.map(([g, , name, list]) => [g, name, list.filter((p) => !current(p))])]
+    .filter(([, , list]) => list.length);
   const title = "Alla set – Pokémon TCG, One Piece och Riftbound";
   const desc = `Alla ${all.length} Pokémon TCG-set från Base Set till de senaste, plus seten i One Piece Card Game och Riftbound, med kortlistor, priser i kronor, släppdatum och kommande set.`;
   const crumbs = [["Hem", `${SITE}/`, "./"], ["Kalender", `${SITE}/slapp.html`, "slapp.html"], ["Alla set", url, null]];
@@ -444,7 +451,7 @@ function indexPage(all) {
     <section class="set-hero">
       <div>
         <h1>Alla set</h1>
-        <p>Varje set i Pokémon, One Piece och Riftbound har en egen sida med alla kort och bilder, priser i kronor, släppdatum och vilka svenska butiker som har setet i lager. Kommande set står först, sedan varje spel och serie, nyast först.</p>
+        <p>Varje set i Pokémon, One Piece och Riftbound har en egen sida med alla kort och bilder, priser i kronor, släppdatum och vilka svenska butiker som har setet i lager. Kommande set står först, sedan de nyaste seten i varje spel. Välj ett spel för att se alla dess set.</p>
         <form class="set-search" role="search" onsubmit="return false">
           <input type="search" id="set-q" placeholder="Sök set, t.ex. Scarlet, OP-12 eller Origins" aria-label="Sök set" autocomplete="off">
         </form>
@@ -457,27 +464,33 @@ function indexPage(all) {
 ${soon.length ? `
     <div class="section"><h2>Aktuella och kommande set</h2><a class="more" href="slapp.html">Släppkalendern</a></div>
     <ul class="set-tiles">${soon.map(anyTile).join("")}</ul>` : ""}
-${GAMES.map(([g, anchor, name]) => [g, anchor, name, gamePages.filter((p) => p.game === g && p.cards.length).sort((a, b) => (b.main - a.main) || (b.date || "").localeCompare(a.date || ""))])
-  .filter(([, , , list]) => list.length).map(([g, anchor, name, list]) => `
-    <div class="section" id="${anchor}"><h2>${esc(name)}</h2><a class="more" href="priser.html?game=${g}">Kortpriser</a></div>
-    <ul class="set-tiles">${list.map(gameTile).join("")}</ul>`).join("")}
+${overview.map(([g, name, list]) => `
+    <div class="section"><h2>${esc(name)}</h2><a class="more" href="set/?spel=${g}">Visa alla set</a></div>
+    <ul class="set-tiles" data-view="overview">${list.slice(0, ROW).map(anyTile).join("")}</ul>`).join("")}
+${gameLists.map(([g, anchor, name, list]) => `
+    <div class="section" id="${anchor}" hidden><h2>${esc(name)}</h2></div>
+    <ul class="set-tiles" data-view="full" hidden>${list.map(gameTile).join("")}</ul>`).join("")}
 ${[...series].map(([name, list]) => `
-    <div class="section"><h2>${esc(name)}</h2></div>
-    <ul class="set-tiles">${list.map(tile).join("")}</ul>`).join("")}
+    <div class="section" hidden><h2>${esc(name)}</h2></div>
+    <ul class="set-tiles" data-view="full" hidden>${list.map(tile).join("")}</ul>`).join("")}
   </div>${foot}<script>
 (() => {
   const q = document.getElementById("set-q"), none = document.getElementById("set-none");
   const fold = (s) => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
   const lists = [...document.querySelectorAll(".set-tiles")], seg = document.getElementById("set-games");
   // Spelknapparna och sökrutan gäller tillsammans. Valt spel står i adressen (?spel=op), så att det går att länka.
+  // Utan spel och sökord visas översikten (en rad per spel), annars alla set som matchar.
   let game = new URLSearchParams(location.search).get("spel") || "";
   const apply = () => {
-    const t = fold(q.value.trim());
+    const t = fold(q.value.trim()), full = !!(t || game);
     for (const b of seg.querySelectorAll("button")) b.setAttribute("aria-pressed", String(b.dataset.game === game));
     let shown = 0;
     for (const ul of lists) {
+      const view = ul.dataset.view;
       let any = false;
-      for (const li of ul.children) { const ok = (!t || li.dataset.q.includes(t)) && (!game || li.dataset.game === game); li.hidden = !ok; any = any || ok; }
+      if (view === "overview" ? !full : view === "full" ? full : true) {
+        for (const li of ul.children) { const ok = (!t || li.dataset.q.includes(t)) && (!game || li.dataset.game === game); li.hidden = !ok; any = any || ok; }
+      }
       ul.hidden = !any;
       const h = ul.previousElementSibling;
       if (h && h.classList.contains("section")) h.hidden = !any;
@@ -493,7 +506,17 @@ ${[...series].map(([name, list]) => `
     history.replaceState(null, "", location.pathname + (game ? "?spel=" + game : ""));
     apply();
   });
-  if (game) apply();
+  // Länken "Visa alla set" byter spel utan att ladda om sidan.
+  document.addEventListener("click", (e) => {
+    const a = e.target.closest('a.more[href^="set/?spel="]');
+    if (!a || e.ctrlKey || e.metaKey || e.shiftKey) return;
+    e.preventDefault();
+    game = new URL(a.href).searchParams.get("spel") || "";
+    history.replaceState(null, "", location.pathname + "?spel=" + game);
+    apply();
+    seg.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+  apply();
 })();
 </script>`;
 }

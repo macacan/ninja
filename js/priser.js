@@ -7,7 +7,7 @@ import { signatureBadge } from "./signature.js?v=20261107a";
 import { apiFor, findJapanese } from "./japanese.js";
 import { track } from "./tracker.js";
 import { gameSuggestions } from "./game-guess.js";
-import { reverseEur, baseLabel, cardmarketTable, tcgplayerTable } from "./cmholo.js?v=20261104b";
+import { reverseEur, baseLabel, cardmarketTable, tcgplayerTable } from "./cmholo.js?v=20261111a";
 import { unlockCoin } from "./scan/coin.js?v=20261106a";
 import { backupDue, backupFile, backupState, cardCount, listCopies, markSaved, mergeCards, noteAdded, parseBackup, saveCopy, saveFile, snooze } from "./vault-backup.js?v=20261106a";
 
@@ -1021,7 +1021,7 @@ async function openCard(i) {
     <div class="cm-info">
       <h2 id="cm-name">${ja && c.en ? `${esc(c.en)} <small class="cname-ja">${esc(full.name || c.name)}</small> <span class="beta-tag">Beta</span>` : esc(full.name || c.name)}</h2>
       <div class="cm-price">${c.holo ? (c.sek != null ? `${kr(c.sek)} <small class="cname-ja">${esc(foilLabel(c))}</small>` : "Inget pris ännu") : c.eur != null ? sek(c.eur) : "Inget pris ännu"} ${change(c.change)}</div>
-      <p class="muted">Cardmarkets trendpris i kronor. Vägledande, uppdateras dagligen.</p>
+      <p class="muted">${cm.fromTcgplayer ? "TCGplayers marknadspris i kronor. Cardmarket har inget eget pris för just den här versionen än." : "Cardmarkets trendpris i kronor."} Vägledande, uppdateras dagligen.</p>
       <div class="pchart"></div>
       ${cardmarketTable(full, sek)}
       ${tcgplayerTable(full, sek)}

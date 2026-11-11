@@ -3962,6 +3962,7 @@ button.zm-price:hover{background:#1f2132}
 .pm-body{padding:24px 26px 28px;overflow:auto;max-height:calc(100vh - 24px)}
 .pm-head{display:flex;gap:16px;align-items:flex-start;padding-right:36px}
 .pm-img{width:96px;border-radius:6px;flex:none}
+.pm-links{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
 .pm-head h2{margin:0;font:700 1.6rem/1.1 var(--cond);text-transform:uppercase}
 .pm-body h3{margin:16px 0 6px;font:600 .78rem var(--sans);text-transform:uppercase;letter-spacing:.6px;color:var(--muted)}
 .price-modal{overflow:hidden}

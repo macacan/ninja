@@ -2,9 +2,25 @@
 // det levande till: butikernas lager för setet (uppdateras varje minut) och knappen som visar alla kort med bilder.
 import { $, esc, liveStock, productCard, skeleton, whileVisible } from "./site.js";
 import { groupKey } from "./group.js";
-import { bindSetCards } from "./setcards.js?v=20261106a";
+import { bindSetCards } from "./setcards.js?v=20261111a";
+import { openCardPrice, openGameCard } from "./cardprice.js?v=20261111a";
 
 bindSetCards($("#main"));
+
+// Ett kort i "Dyraste korten" eller kortlistan öppnar prisrutan på sidan i stället för att lämna den.
+// Länkarna (värdering för Pokémon, Kortpriser för One Piece och Riftbound) finns kvar för sökmotorer och nya flikar.
+$("#main").addEventListener("click", (e) => {
+  const a = e.target.closest('a[href^="vardering.html?id="], a[href^="priser.html?game="]');
+  if (!a || e.ctrlKey || e.metaKey || e.shiftKey || e.button) return;
+  const q = new URL(a.href).searchParams;
+  e.preventDefault();
+  if (q.get("id")) { openCardPrice(q.get("id")); return; }
+  if (!q.get("card")) { location.href = a.href; return; }
+  const li = a.closest("li"), img = a.querySelector("img");
+  openGameCard({ game: q.get("game"), id: q.get("card"), setId: q.get("set"), name: a.querySelector("b")?.textContent || "",
+    sub: a.querySelector("small")?.textContent || "", image: img?.getAttribute("src"), back: q.get("game") === "op" ? "img/kortbaksida-op.webp" : "img/kortbaksida-rb.png",
+    sek: li?.dataset.price ? +li.dataset.price : null, href: a.href });
+});
 
 const SHOW = 12;
 const grid = $("#set-stock"), countEl = $("#set-stock-count");
