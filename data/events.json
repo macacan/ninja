@@ -1,6 +1,20 @@
 {
- "updated": 1794415159840,
+ "updated": 1794416079858,
  "events": [
+  {
+   "at": 1794415982265,
+   "store": "spelparken",
+   "product": "spelparken:15422322246007",
+   "group": "fusion-strike|tin|en||galar-power",
+   "title": "Galar Power Tin (Evolving Skies & Fusion Strike)",
+   "url": "https://spelparken.se/products/galar-power-tin",
+   "image": "https://cdn.shopify.com/s/files/1/0948/1876/3127/files/P6465_699-17038_01.jpg?v=1773956089",
+   "price": 1349,
+   "type": "Tin",
+   "set": "Fusion Strike",
+   "lang": "en",
+   "kind": "ny"
+  },
   {
    "at": 1794415095330,
    "store": "tcg-card-house",
@@ -7098,20 +7112,6 @@
    "set": "Spiritforged",
    "lang": "en",
    "game": "rb",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793906798347,
-   "store": "spelparken",
-   "product": "spelparken:15237517705591",
-   "group": "silver-tempest|booster-pack|en|",
-   "title": "Silver Tempest Booster Pack",
-   "url": "https://spelparken.se/products/pokemon-sword-shield-silver-tempest-booster-pack-oppnas-live",
-   "image": "https://cdn.shopify.com/s/files/1/0948/1876/3127/files/pokemon-tcg-silver-tempest-pok86091-main.webp?v=1762964967",
-   "price": 199,
-   "type": "Booster Pack",
-   "set": "Silver Tempest",
-   "lang": "en",
    "kind": "tillbaka"
   }
  ]
