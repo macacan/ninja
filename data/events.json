@@ -1,6 +1,21 @@
 {
- "updated": 1794438776382,
+ "updated": 1794439677417,
  "events": [
+  {
+   "at": 1794439620072,
+   "store": "cardvalley",
+   "product": "cardvalley:11313574871378",
+   "group": "30th-celebration|premium-collection|en||ditto",
+   "title": "Pokémon: 30th Celebration Ditto Premium Collection",
+   "url": "https://cardvalley.se/products/pokemon-30th-celebration-ditto-premium-collection",
+   "image": "https://cdn.shopify.com/s/files/1/0934/7946/9394/files/6daa4048-47a0-4cac-b3eb-14e4733e78b5.png?v=1794411258",
+   "price": 1099,
+   "type": "Premium Collection",
+   "set": "30th Celebration",
+   "lang": "en",
+   "kind": "prissankt",
+   "from": 1199
+  },
   {
    "at": 1794435521219,
    "store": "samlargrottan",
@@ -7096,20 +7111,6 @@
    "price": 129,
    "type": "Booster Pack",
    "set": "Astral Radiance",
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793914933991,
-   "store": "cardvalley",
-   "product": "cardvalley:11277556777298",
-   "group": "delta-reign|booster-pack|en|",
-   "title": "Delta Reign Booster pack",
-   "url": "https://cardvalley.se/products/delta-reign-booster-pack",
-   "image": "https://cdn.shopify.com/s/files/1/0934/7946/9394/files/fd52ac8a-b0d4-4075-8316-c548452eb673.png?v=1793393454",
-   "price": 99,
-   "type": "Booster Pack",
-   "set": "Delta Reign",
    "lang": "en",
    "kind": "tillbaka"
   }
