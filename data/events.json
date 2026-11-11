@@ -1,6 +1,34 @@
 {
- "updated": 1794407799657,
+ "updated": 1794408719683,
  "events": [
+  {
+   "at": 1794408330355,
+   "store": "speltrollet",
+   "product": "speltrollet:15691697553734",
+   "group": "delta-reign|booster-box|en|",
+   "title": "Pokemon ME06 Delta Reign Booster Box Display (36 pack)",
+   "url": "https://speltrollet.se/products/pokemon-me06-delta-reign-booster-box-display-36-pack",
+   "image": "https://cdn.shopify.com/s/files/1/0674/0951/0716/files/Delta-Reign-Booster-Box-scaled.webp?v=1787307833",
+   "price": 2290,
+   "type": "Booster Box",
+   "set": "Delta Reign",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1794408167026,
+   "store": "tcgstore",
+   "product": "tcgstore:11502426292551",
+   "group": "delta-reign|booster-pack|en|",
+   "title": "Pokémon Mega Evolution: Delta Reign Booster Pack",
+   "url": "https://tcgstore.se/products/pokemon-mega-evolution-delta-reign-booster-pack",
+   "image": "https://cdn.shopify.com/s/files/1/0758/2508/6791/files/Pokemon_Delta_Reign_Booster_Pack_Mega_Rayquaza_EN.jpg?v=1794296505",
+   "price": 89,
+   "type": "Booster Pack",
+   "set": "Delta Reign",
+   "lang": "en",
+   "kind": "ny"
+  },
   {
    "at": 1794405967834,
    "store": "kortbutiken",
@@ -7088,34 +7116,6 @@
    "price": 89,
    "type": "Booster Pack",
    "set": "Delta Reign",
-   "lang": "en",
-   "kind": "forbestallning"
-  },
-  {
-   "at": 1793877488957,
-   "store": "alphaspel",
-   "product": "alphaspel:https://alphaspel.se/1762-pokemon-tcg/362650-pokemon-tcg-deck-crafters-collection",
-   "group": "x|collection-box|en||crafter",
-   "title": "Pokémon TCG: Deck Crafter's Collection",
-   "url": "https://alphaspel.se/1762-pokemon-tcg/362650-pokemon-tcg-deck-crafters-collection",
-   "image": "https://alphaspel.se/media/products/6d91ef01-53e9-4a87-8562-6c6820e83026",
-   "price": 199,
-   "type": "Collection Box",
-   "set": null,
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1793877488957,
-   "store": "alphaspel",
-   "product": "alphaspel:https://alphaspel.se/1762-pokemon-tcg/362649-pokemon-tcg-30th-celebration-umbreon-ex-battle-deck",
-   "group": "30th-celebration|deck|en||umbreon",
-   "title": "Pokémon TCG: 30th Celebration Umbreon ex Battle Deck",
-   "url": "https://alphaspel.se/1762-pokemon-tcg/362649-pokemon-tcg-30th-celebration-umbreon-ex-battle-deck",
-   "image": "https://alphaspel.se/media/products/717ef47a-80fb-4186-9f27-6770a933b9e8",
-   "price": 479,
-   "type": "Deck",
-   "set": "30th Celebration",
    "lang": "en",
    "kind": "forbestallning"
   }
