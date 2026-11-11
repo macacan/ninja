@@ -1,6 +1,20 @@
 {
- "updated": 1794354618160,
+ "updated": 1794355538188,
  "events": [
+  {
+   "at": 1794354732614,
+   "store": "shinycards",
+   "product": "shinycards:https://www.shinycards.se/pokemon/mega-evolution/phantasmal-flames/pokemon-phantasmal-flames-elite-trainer-box",
+   "group": "phantasmal-flames|elite-trainer-box|en|",
+   "title": "Pokemon Mega Evolution 2: Phantasmal Flames Elite Trainer Box",
+   "url": "https://www.shinycards.se/pokemon/mega-evolution/phantasmal-flames/pokemon-phantasmal-flames-elite-trainer-box",
+   "image": "https://cdn.quickbutik.com/images/69946c/products/68dfa3067a756.png",
+   "price": 1799,
+   "type": "Elite Trainer Box",
+   "set": "Phantasmal Flames",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1794354569766,
    "store": "bangerpack",
@@ -7097,20 +7111,6 @@
    "price": 109,
    "type": "Booster Pack",
    "set": "Black Bolt",
-   "lang": "ja",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793859932330,
-   "store": "bangerpack",
-   "product": "bangerpack:https://bangerpack.se/pokemon/japanska-utgavor/pokemon-star-birth-booster-jp",
-   "group": "x|booster-pack|ja||birth-star",
-   "title": "Pokémon Star Birth – Booster (JP)",
-   "url": "https://bangerpack.se/pokemon/japanska-utgavor/pokemon-star-birth-booster-jp",
-   "image": "https://cdn.quickbutik.com/images/99246J/products/6ae8174f0e6aa.png",
-   "price": 99,
-   "type": "Booster Pack",
-   "set": null,
    "lang": "ja",
    "kind": "tillbaka"
   }
