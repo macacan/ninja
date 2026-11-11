@@ -1,6 +1,20 @@
 {
- "updated": 1794440617439,
+ "updated": 1794441537463,
  "events": [
+  {
+   "at": 1794441285819,
+   "store": "packs-on-packs",
+   "product": "packs-on-packs:https://packsonpacks.se/sealed-produkter/30th-celebration-mini-tin-display",
+   "group": "30th-celebration|tin|en|mini|mini",
+   "title": "30th Celebration: Mini Tin Display",
+   "url": "https://packsonpacks.se/sealed-produkter/30th-celebration-mini-tin-display",
+   "image": "https://cdn.quickbutik.com/images/92330P/products/6af4ff4b4fa33.png",
+   "price": 3100,
+   "type": "Tin",
+   "set": "30th Celebration",
+   "lang": "en",
+   "kind": "ny"
+  },
   {
    "at": 1794439620072,
    "store": "cardvalley",
@@ -7099,20 +7113,6 @@
    "lang": "en",
    "kind": "prissankt",
    "from": 4059
-  },
-  {
-   "at": 1793915111101,
-   "store": "spelparken",
-   "product": "spelparken:15223823040887",
-   "group": "astral-radiance|booster-pack|en|",
-   "title": "Astral Radiance Booster Pack",
-   "url": "https://spelparken.se/products/pokemon-sword-shield-astral-radiance-booster-pack",
-   "image": "https://cdn.shopify.com/s/files/1/0948/1876/3127/files/astral-radiance-booster-pack-2-engelska-pokemonkort.webp?v=1762105397",
-   "price": 129,
-   "type": "Booster Pack",
-   "set": "Astral Radiance",
-   "lang": "en",
-   "kind": "tillbaka"
   }
  ]
 }
