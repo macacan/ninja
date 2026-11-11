@@ -1,6 +1,34 @@
 {
- "updated": 1794379979346,
+ "updated": 1794380481862,
  "events": [
+  {
+   "at": 1794380411984,
+   "store": "collected",
+   "product": "collected:11158723330390",
+   "group": "x|booster-box|ja||dream",
+   "title": "Pokémon TCG: Mega Dream ex Booster Box (Japansk) – M2A",
+   "url": "https://collected.se/products/pokemon-tcg-mega-dream-ex-booster-box",
+   "image": "https://cdn.shopify.com/s/files/1/0965/6788/6166/files/pokemon-tcg-mega-dream-ex-japansk-booster-box_59a0bcd3-76bf-4a5d-b9b7-5f21561a2ee3.webp?v=1785619845",
+   "price": 1499,
+   "type": "Booster Box",
+   "set": null,
+   "lang": "ja",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1794380411984,
+   "store": "collected",
+   "product": "collected:11155604734294",
+   "group": "emerald|booster-box|ja|",
+   "title": "Pokémon TCG: Storm Emerald Booster Box (Japansk) - M6",
+   "url": "https://collected.se/products/pokemon-tcg-storm-emerald-booster-box-30-packs-japansk",
+   "image": "https://cdn.shopify.com/s/files/1/0965/6788/6166/files/pokemon-tcg-storm-emerald-japansk-booster-box.png?v=1785485896",
+   "price": 1290,
+   "type": "Booster Box",
+   "set": "Emerald",
+   "lang": "ja",
+   "kind": "tillbaka"
+  },
   {
    "at": 1794354732614,
    "store": "shinycards",
@@ -7083,34 +7111,6 @@
    "price": 79,
    "type": "Booster Pack",
    "set": null,
-   "lang": "ja",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793859932330,
-   "store": "bangerpack",
-   "product": "bangerpack:https://bangerpack.se/pokemon/japanska-utgavor/pokemon-terastal-festival-ex-booster-jp",
-   "group": "x|booster-pack|ja||festival-terastal",
-   "title": "Pokémon Terastal Festival ex – Booster (JP)",
-   "url": "https://bangerpack.se/pokemon/japanska-utgavor/pokemon-terastal-festival-ex-booster-jp",
-   "image": "https://cdn.quickbutik.com/images/99246J/products/6ae7ff143f336.png",
-   "price": 239,
-   "type": "Booster Pack",
-   "set": null,
-   "lang": "ja",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793859932330,
-   "store": "bangerpack",
-   "product": "bangerpack:https://bangerpack.se/pokemon/japanska-utgavor/pokemon-black-bolt-booster-jp",
-   "group": "black-bolt|booster-pack|ja|",
-   "title": "Pokémon Black Bolt – Booster (JP)",
-   "url": "https://bangerpack.se/pokemon/japanska-utgavor/pokemon-black-bolt-booster-jp",
-   "image": "https://cdn.quickbutik.com/images/99246J/products/6ae7ff040387f.png",
-   "price": 109,
-   "type": "Booster Pack",
-   "set": "Black Bolt",
    "lang": "ja",
    "kind": "tillbaka"
   }
