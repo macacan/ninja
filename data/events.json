@@ -1,6 +1,20 @@
 {
- "updated": 1794424037154,
+ "updated": 1794424957179,
  "events": [
+  {
+   "at": 1794424233783,
+   "store": "westcoast-vault",
+   "product": "westcoast-vault:15838405951828",
+   "group": "30th-celebration|booster-pack|en|",
+   "title": "Pokémon TCG: 30th celebration Booster Pack",
+   "url": "https://westcoastvault.se/products/pokemon-tcg-30th-celebration-booster-pack",
+   "image": "https://cdn.shopify.com/s/files/1/1042/6177/9796/files/9A3DC358-3AAD-4051-AFF5-D0C13CF69228.png?v=1791142171",
+   "price": 149,
+   "type": "Booster Pack",
+   "set": "30th Celebration",
+   "lang": "en",
+   "kind": "ny"
+  },
   {
    "at": 1794420533209,
    "store": "nordic-pulls",
@@ -7098,20 +7112,6 @@
    "set": "Prismatic Evolutions",
    "lang": "en",
    "kind": "ny"
-  },
-  {
-   "at": 1793908498208,
-   "store": "rahtech",
-   "product": "rahtech:15764749680966",
-   "group": "30th-celebration|booster-bundle|en|",
-   "title": "30th Celebration Booster Bundle",
-   "url": "https://rahtech.se/products/30th-celebration-booster-bundle",
-   "image": "https://cdn.shopify.com/s/files/1/0994/8882/5670/files/IMG-4474.jpg?v=1791375365",
-   "price": 899,
-   "type": "Booster Bundle",
-   "set": "30th Celebration",
-   "lang": "en",
-   "kind": "tillbaka"
   }
  ]
 }
