@@ -1,6 +1,21 @@
 {
- "updated": 1794393400277,
+ "updated": 1794394320306,
  "events": [
+  {
+   "at": 1794393817830,
+   "store": "spelgalaxen",
+   "product": "spelgalaxen:15443504628091",
+   "group": "rb|radiance|booster-box|en|",
+   "title": "League of Legends: Riftbound Radiance Booster Display (ENG)",
+   "url": "https://spelgalaxen.se/products/league-of-legends-riftbound-radiance-booster-display-eng",
+   "image": "https://cdn.shopify.com/s/files/1/0902/2554/1499/files/LeagueofLegendsRiftboundRadianceBoosterDisplay.webp?v=1791126595",
+   "price": 1450,
+   "type": "Booster Box",
+   "set": "Radiance",
+   "lang": "en",
+   "game": "rb",
+   "kind": "ny"
+  },
   {
    "at": 1794393313468,
    "store": "aquitaz",
@@ -7100,20 +7115,6 @@
    "set": "30th Celebration",
    "lang": "zh",
    "kind": "ny"
-  },
-  {
-   "at": 1793868625161,
-   "store": "kortbutiken",
-   "product": "kortbutiken:16584530133341",
-   "group": "30th-celebration|booster-pack|ja|",
-   "title": "Japanska Expansion 30th Celebration Booster Pack",
-   "url": "https://kortbutiken-shop.se/products/mega-expansion-30th-celebration-booster-pack",
-   "image": "https://cdn.shopify.com/s/files/1/1074/5610/2749/files/MEGAExpansion30thCelebrationBoosterPack.png?v=1790230857",
-   "price": 169,
-   "type": "Booster Pack",
-   "set": "30th Celebration",
-   "lang": "ja",
-   "kind": "tillbaka"
   }
  ]
 }
