@@ -1,6 +1,20 @@
 {
- "updated": 1794397080368,
+ "updated": 1794398000391,
  "events": [
+  {
+   "at": 1794397727415,
+   "store": "rgb-kingz",
+   "product": "rgb-kingz:16195721593162",
+   "group": "x|booster-box|ja||brave",
+   "title": "Pokémon TCG: Mega Brave – Booster Box (Japansk)",
+   "url": "https://rgbkingz.com/products/pokemon-tcg-mega-brave-booster-box-japansk",
+   "image": "https://cdn.shopify.com/s/files/1/0782/8088/4554/files/pokemon-mega-brave-booster-box-japansk.webp?v=1794397121",
+   "price": 995,
+   "type": "Booster Box",
+   "set": null,
+   "lang": "ja",
+   "kind": "ny"
+  },
   {
    "at": 1794396792040,
    "store": "rgb-kingz",
@@ -7100,20 +7114,6 @@
    "price": 399,
    "type": "Tin",
    "set": "Dragon",
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1793877488957,
-   "store": "alphaspel",
-   "product": "alphaspel:https://alphaspel.se/1762-pokemon-tcg/362603-pokemon-tcg-2026-mega-forces-mega-darkrai-ex-tin",
-   "group": "x|tin|en||darkrai-forces",
-   "title": "Pokémon TCG: 2026 Mega Forces Mega Darkrai ex Tin",
-   "url": "https://alphaspel.se/1762-pokemon-tcg/362603-pokemon-tcg-2026-mega-forces-mega-darkrai-ex-tin",
-   "image": "https://alphaspel.se/media/products/3dbd1646-d9f2-4e37-b442-99eb9fd61bb4",
-   "price": 399,
-   "type": "Tin",
-   "set": null,
    "lang": "en",
    "kind": "ny"
   }
