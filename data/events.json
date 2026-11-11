@@ -1,6 +1,34 @@
 {
- "updated": 1794392480260,
+ "updated": 1794393400277,
  "events": [
+  {
+   "at": 1794393313468,
+   "store": "aquitaz",
+   "product": "aquitaz:9719377035610",
+   "group": "paradox-rift|booster-pack|en|",
+   "title": "Pokémon Scarlet & Violet: Paradox Rift Booster Pack (10 Kort) (ENG)",
+   "url": "https://aquitaz.se/products/pokemon-scarlet-violet-paradox-rift-booster-pack",
+   "image": "https://cdn.shopify.com/s/files/1/0885/4087/3050/files/IMG_2035.png?v=1723895691",
+   "price": 99,
+   "type": "Booster Pack",
+   "set": "Paradox Rift",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1794393313468,
+   "store": "aquitaz",
+   "product": "aquitaz:9719371268442",
+   "group": "paldea-evolved|booster-pack|en|",
+   "title": "Pokémon Scarlet & Violet: Paldea Evolved Booster Pack (10 Kort) (ENG)",
+   "url": "https://aquitaz.se/products/pokemon-scarlet-violet-paldea-evolved-booster-pack",
+   "image": "https://cdn.shopify.com/s/files/1/0885/4087/3050/files/07913204-F1FC-4CFD-A2CB-314918511E05.jpg?v=1727089611",
+   "price": 189,
+   "type": "Booster Pack",
+   "set": "Paldea Evolved",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1794392072793,
    "store": "rgb-kingz",
@@ -7085,34 +7113,6 @@
    "type": "Booster Pack",
    "set": "30th Celebration",
    "lang": "ja",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793865031009,
-   "store": "mtg-butiken",
-   "product": "mtg-butiken:https://mtgbutiken.quickbutik.com/pokemon/pitch-black-elite-trainer-box",
-   "group": "pitch-black|elite-trainer-box|en|",
-   "title": "Pitch Black Elite Trainer Box",
-   "url": "https://mtgbutiken.quickbutik.com/pokemon/pitch-black-elite-trainer-box",
-   "image": "https://cdn.quickbutik.com/images/26595u/products/6a4f533ccafe1.png",
-   "price": 795,
-   "type": "Elite Trainer Box",
-   "set": "Pitch Black",
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793864056348,
-   "store": "mtg-butiken",
-   "product": "mtg-butiken:https://mtgbutiken.quickbutik.com/pokemon/kopia-pitch-black-gengar-premium-checklane-blister",
-   "group": "pitch-black|booster-bundle|en|",
-   "title": "Pitch Black Booster Bundle",
-   "url": "https://mtgbutiken.quickbutik.com/pokemon/kopia-pitch-black-gengar-premium-checklane-blister",
-   "image": "https://cdn.quickbutik.com/images/26595u/products/6a4f58882d3d8.png",
-   "price": 475,
-   "type": "Booster Bundle",
-   "set": "Pitch Black",
-   "lang": "en",
    "kind": "tillbaka"
   }
  ]
