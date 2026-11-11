@@ -1,6 +1,20 @@
 {
- "updated": 1794385119286,
+ "updated": 1794386039311,
  "events": [
+  {
+   "at": 1794385494297,
+   "store": "cardgame",
+   "product": "cardgame:https://cardgame.se/engelska-pokmon-produkter/engelskaboosterpacks/surging-sparks",
+   "group": "surging-sparks|booster-pack|en|",
+   "title": "Surging Sparks Booster Pack",
+   "url": "https://cardgame.se/engelska-pokmon-produkter/engelskaboosterpacks/surging-sparks",
+   "image": "https://cdn.quickbutik.com/images/87588Q/products/693f0a8dbe116.png",
+   "price": 120,
+   "type": "Booster Pack",
+   "set": "Surging Sparks",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1794384528769,
    "store": "cardgame",
@@ -7098,20 +7112,6 @@
    "type": "Ultra-Premium Collection",
    "set": "30th Celebration",
    "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793859932330,
-   "store": "bangerpack",
-   "product": "bangerpack:https://bangerpack.se/pokemon/japanska-utgavor/pokemon-paradigm-trigger-booster-jp",
-   "group": "x|booster-pack|ja||paradigm-trigger",
-   "title": "Pokémon Paradigm Trigger – Booster (JP)",
-   "url": "https://bangerpack.se/pokemon/japanska-utgavor/pokemon-paradigm-trigger-booster-jp",
-   "image": "https://cdn.quickbutik.com/images/99246J/products/6ae8029842654.png",
-   "price": 95,
-   "type": "Booster Pack",
-   "set": null,
-   "lang": "ja",
    "kind": "tillbaka"
   }
  ]
