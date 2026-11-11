@@ -1,6 +1,21 @@
 {
- "updated": 1794391560232,
+ "updated": 1794392480260,
  "events": [
+  {
+   "at": 1794392072793,
+   "store": "rgb-kingz",
+   "product": "rgb-kingz:16195373334858",
+   "group": "rb|radiance|booster-box|en|",
+   "title": "Riftbound: League of Legends TCG – Radiance Booster Box (Engelsk)",
+   "url": "https://rgbkingz.com/products/riftbound-league-of-legends-tcg-radiance-booster-box-engelsk",
+   "image": "https://cdn.shopify.com/s/files/1/0782/8088/4554/files/J4u1sevhkXiUO0-ymVUiSrE6n7DIXHw6WlOKCDqKx2YCATSQwjBoj2mq6gj-kNXdRHA5_-iXqlQrWAcPfX_P_L4wBpjq2llnefg6A-Ncc4ZBFnTpnD8NFLEYTBz1RzRhFv6gptRZ5-Gu4QsIHwoKuxnIPID6tTxW9dbYNsQAP1H136DqFDjm6VA.jpg?v=1794390785",
+   "price": 1790,
+   "type": "Booster Box",
+   "set": "Radiance",
+   "lang": "en",
+   "game": "rb",
+   "kind": "ny"
+  },
   {
    "at": 1794385494297,
    "store": "cardgame",
@@ -7097,20 +7112,6 @@
    "price": 475,
    "type": "Booster Bundle",
    "set": "Pitch Black",
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793863264568,
-   "store": "samlarverket",
-   "product": "samlarverket:11343697346903",
-   "group": "30th-celebration|ultra-premium-collection|en||pikachu-umbreon",
-   "title": "Pokémon 30th Celebration Ultra-Premium Collection Umbreon & Pikachu",
-   "url": "https://samlarverket.com/produkt/pokemon-30th-celebration-ultra-premium-collection-umbreon-pikachu",
-   "image": "https://cdn.shopify.com/s/files/1/1022/5323/2471/files/Pokemon_30th_Celebration_Ultra-Premium_Collection_Night_1.webp?v=1793373358",
-   "price": 5299,
-   "type": "Ultra-Premium Collection",
-   "set": "30th Celebration",
    "lang": "en",
    "kind": "tillbaka"
   }
