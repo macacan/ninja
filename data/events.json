@@ -1,6 +1,20 @@
 {
- "updated": 1794384179264,
+ "updated": 1794385119286,
  "events": [
+  {
+   "at": 1794384528769,
+   "store": "cardgame",
+   "product": "cardgame:https://cardgame.se/engelska-pokmon-produkter/engelskaboosterpacks/delta-reign-booster-pack",
+   "group": "delta-reign|booster-pack|en|",
+   "title": "Delta Reign Booster Pack",
+   "url": "https://cardgame.se/engelska-pokmon-produkter/engelskaboosterpacks/delta-reign-booster-pack",
+   "image": "https://cdn.quickbutik.com/images/87588Q/products/6af41f5b50965.webp",
+   "price": 89,
+   "type": "Booster Pack",
+   "set": "Delta Reign",
+   "lang": "en",
+   "kind": "ny"
+  },
   {
    "at": 1794380804717,
    "store": "sweet-nerds",
@@ -7095,20 +7109,6 @@
    "url": "https://bangerpack.se/pokemon/japanska-utgavor/pokemon-paradigm-trigger-booster-jp",
    "image": "https://cdn.quickbutik.com/images/99246J/products/6ae8029842654.png",
    "price": 95,
-   "type": "Booster Pack",
-   "set": null,
-   "lang": "ja",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793859932330,
-   "store": "bangerpack",
-   "product": "bangerpack:https://bangerpack.se/pokemon/japanska-utgavor/pokemon-silver-lance-booster-jp",
-   "group": "x|booster-pack|ja||lance-silver",
-   "title": "Pokémon Silver Lance – Booster (JP)",
-   "url": "https://bangerpack.se/pokemon/japanska-utgavor/pokemon-silver-lance-booster-jp",
-   "image": "https://cdn.quickbutik.com/images/99246J/products/6ae815a112e59.png",
-   "price": 69,
    "type": "Booster Pack",
    "set": null,
    "lang": "ja",
