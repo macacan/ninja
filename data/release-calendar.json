@@ -1,6 +1,6 @@
 {
  "_info": "Byggs av scripts/update-releases.mjs. Ändra inte här, ändra i data/releases.json.",
- "updated": 1794250679605,
+ "updated": 1794427720057,
  "releases": [
   {
    "id": "30th-celebration",
@@ -184,6 +184,28 @@
    ]
   },
   {
+   "id": "rb-riftbound-x-k-da-couture-collection",
+   "set": "Riftbound x K/DA: Couture Collection",
+   "game": "rb",
+   "series": "Riftbound",
+   "language": "en",
+   "match": [
+    "Riftbound x K/DA: Couture Collection"
+   ],
+   "auto": true,
+   "logo": "https://tcgplayer-cdn.tcgplayer.com/product/732649_400w.jpg",
+   "source": "https://www.tcgplayer.com/search/riftbound-league-of-legends-trading-card-game/riftbound-x-k-da-couture-collection",
+   "waves": [
+    {
+     "date": "2026-11-11",
+     "products": [
+      "(Sealed Promotional Bundle)"
+     ],
+     "auto": true
+    }
+   ]
+  },
+  {
    "id": "op-the-dominance-of-god",
    "set": "The Dominance of God",
    "game": "op",
@@ -235,17 +257,17 @@
    ]
   },
   {
-   "id": "rb-gift-of-the-rift-bundle",
-   "set": "Gift of the Rift Bundle",
+   "id": "rb-gift-of-the-rift-bundles",
+   "set": "Gift of the Rift Bundles",
    "game": "rb",
    "series": "Riftbound",
    "language": "en",
    "match": [
-    "Gift of the Rift Bundle"
+    "Gift of the Rift Bundles"
    ],
    "auto": true,
    "logo": "https://tcgplayer-cdn.tcgplayer.com/product/714486_400w.jpg",
-   "source": "https://www.tcgplayer.com/search/riftbound-league-of-legends-trading-card-game/gift-of-the-rift-bundle",
+   "source": "https://www.tcgplayer.com/search/riftbound-league-of-legends-trading-card-game/gift-of-the-rift-bundles",
    "waves": [
     {
      "date": "2026-12-04",
