@@ -1,6 +1,15 @@
 {
- "updated": "2026-11-11T04:19:36.631Z",
+ "updated": "2026-11-11T04:34:55.668Z",
  "articles": [
+  {
+   "title": "Pokémon Happy Meals return to McDonald’s in the U.S. with 15 toys and TCG cards",
+   "link": "https://pokemonblog.com/2026/11/10/pokemon-happy-meals-return-to-mcdonalds-in-the-u-s-with-15-toys-and-tcg-cards/",
+   "date": "2026-11-11T04:29:36.000Z",
+   "summary": "McDonald’s has brought Pokémon Happy Meals back to the U.S. for a limited time, with the promotion running through Dec. 14, 2026, while supplies last at participating restaurants.…",
+   "image": "https://pokemonblog.com/wp-content/uploads/2026/10/pokemon_happy_meals_mcdonalds.jpg",
+   "source": "PokemonBlog",
+   "game": "pk"
+  },
   {
    "title": "Riftbound Game Director Confirms Card Ban Update on Friday",
    "link": "https://riftbound.gg/riftbound-game-director-confirms-card-ban-update-on-friday/",
@@ -389,15 +398,6 @@
    "game": "pk"
   },
   {
-   "title": "The Pokémon TCG is releasing a new tool kit designed to encourage players to play competitively",
-   "link": "https://www.wargamer.com/pokemon-trading-card-game/deck-crafters-collection-2026",
-   "date": "2026-10-03T16:09:27.000Z",
-   "summary": "A new Pokémon TCG Deck Crafter's Collection is due to release on October 23rd, designed to provide players with staple trainer cards.",
-   "image": "https://www.wargamer.com/wp-content/sites/wargamer/2026/10/Deck-Crafters-Collection-Thumbnail.jpg",
-   "source": "Wargamer",
-   "game": "pk"
-  },
-  {
    "title": "[DeckReview] KeyLlua: Red Ace deck in Postban (No Mihawk) OP17 format.",
    "link": "https://onepiecetopdecks.com/deckreview-keyllua-red-ace-deck-in-postban-no-mihawk-op17-format/",
    "date": "2026-09-27T03:49:05.000Z",
@@ -461,30 +461,5 @@
    "game": "op"
   }
  ],
- "videos": [
-  {
-   "id": "bW0cOvHxvLI",
-   "title": "Pokémon TCG: Mega Evolution—Delta Reign 🐉 | Available Now",
-   "date": "2026-11-06T17:00:33.000Z",
-   "source": "Pokémon (officiell)"
-  },
-  {
-   "id": "fAxKjg5hKYE",
-   "title": "[UK] Pokémon TCG: Mega Evolution—Delta Reign | Out now!",
-   "date": "2026-11-06T10:25:12.000Z",
-   "source": "Pokémon (officiell)"
-  },
-  {
-   "id": "pGIxhUQvezQ",
-   "title": "TCG Day 2 | 2027 Pokémon Gdańsk Regional Championships",
-   "date": "2026-11-01T19:24:07.000Z",
-   "source": "Pokémon (officiell)"
-  },
-  {
-   "id": "FlkW1YWVQF0",
-   "title": "TCG Day 1 | 2027 Pokémon Gdańsk Regional Championships",
-   "date": "2026-10-31T19:18:36.000Z",
-   "source": "Pokémon (officiell)"
-  }
- ]
+ "videos": []
 }
