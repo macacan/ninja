@@ -1,6 +1,20 @@
 {
- "updated": 1794432317489,
+ "updated": 1794434136239,
  "events": [
+  {
+   "at": 1794433468177,
+   "store": "nordictcg",
+   "product": "nordictcg:https://nordictcg.se/20-pokemon-mega-dream-ex-booster-box-japansk.html",
+   "group": "x|booster-box|ja||dream",
+   "title": "Mega Dream ex Booster Box (m2a)(Japansk)",
+   "url": "https://nordictcg.se/20-pokemon-mega-dream-ex-booster-box-japansk.html",
+   "image": "https://nordictcg.se/381-large_default/pokemon-mega-dream-ex-booster-box-japansk.jpg",
+   "price": 1059,
+   "type": "Booster Box",
+   "set": null,
+   "lang": "ja",
+   "kind": "tillbaka"
+  },
   {
    "at": 1794430600761,
    "store": "dragon-s-lair",
@@ -7099,20 +7113,6 @@
    "lang": "en",
    "kind": "prissankt",
    "from": 5299
-  },
-  {
-   "at": 1793911361972,
-   "store": "spelparken",
-   "product": "spelparken:15469220397431",
-   "group": "lost-origin|booster-pack|en|",
-   "title": "Lost Origin Booster Pack",
-   "url": "https://spelparken.se/products/lost-origin-booster-pack-kopia",
-   "image": "https://cdn.shopify.com/s/files/1/0948/1876/3127/files/Pokemon_Lost-Origin_Booster-Pack.png?v=1784762896",
-   "price": 249,
-   "type": "Booster Pack",
-   "set": "Lost Origin",
-   "lang": "en",
-   "kind": "tillbaka"
   }
  ]
 }
