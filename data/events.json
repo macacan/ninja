@@ -1,6 +1,62 @@
 {
- "updated": 1794398920414,
+ "updated": 1794399840436,
  "events": [
+  {
+   "at": 1794399613469,
+   "store": "rgb-kingz",
+   "product": "rgb-kingz:16195818783050",
+   "group": "x|booster-pack|ja||beat-triplet",
+   "title": "Pokémon TCG: Triplet Beat Booster Pack (Japansk)",
+   "url": "https://rgbkingz.com/products/pokemon-tcg-triplet-beat-booster-pack-japansk",
+   "image": "https://cdn.shopify.com/s/files/1/0782/8088/4554/files/qnAml9tjIUc0LVzcUKdEN0aEGnjZnU8RefY4YKIiE_JdCQD72dNDhW7zXdAhb5LgAhWWufk5AmB09bDhC95lOxZK2rGwWA8_kpWY1p8mJBpqZmzKyCtd__A_aOg4TVzW1VhQWbppe7DXAViJKn-bFSHjV_S1Hw58vAAyQSKfizxQFEa1R8nVTjh.jpg?v=1794399430",
+   "price": 69,
+   "type": "Booster Pack",
+   "set": null,
+   "lang": "ja",
+   "kind": "ny"
+  },
+  {
+   "at": 1794399613469,
+   "store": "rgb-kingz",
+   "product": "rgb-kingz:16195804954954",
+   "group": "x|booster-pack|ja||arcana-incandescent",
+   "title": "Pokémon TCG: Incandescent Arcana – Booster Pack (Japansk)",
+   "url": "https://rgbkingz.com/products/pokemon-tcg-incandescent-arcana-booster-pack-japansk",
+   "image": "https://cdn.shopify.com/s/files/1/0782/8088/4554/files/incandescent_arcana_booster_pack_japanska_pokemonkort_fbfe7d7e-5a25-4360-a888-fb3b3444e29d.webp?v=1794399008",
+   "price": 79,
+   "type": "Booster Pack",
+   "set": null,
+   "lang": "ja",
+   "kind": "ny"
+  },
+  {
+   "at": 1794399613469,
+   "store": "rgb-kingz",
+   "product": "rgb-kingz:16195795616074",
+   "group": "x|booster-pack|ja||ancient-roar",
+   "title": "Pokémon TCG: Ancient Roar – Booster Pack (Japansk)",
+   "url": "https://rgbkingz.com/products/pokemon-tcg-ancient-roar-booster-pack-japansk",
+   "image": "https://cdn.shopify.com/s/files/1/0782/8088/4554/files/ancient-roar-booster-pack-japanska-pokemonkort.webp?v=1794398822",
+   "price": 49,
+   "type": "Booster Pack",
+   "set": null,
+   "lang": "ja",
+   "kind": "ny"
+  },
+  {
+   "at": 1794399613469,
+   "store": "rgb-kingz",
+   "product": "rgb-kingz:16076507873610",
+   "group": "white-flare|booster-box|ja|",
+   "title": "Pokémon TCG: White Flare Deluxe Booster Box sv11W – Japansk",
+   "url": "https://rgbkingz.com/products/pokemon-white-flare-deluxe-booster-box-sv11w-japansk",
+   "image": "https://cdn.shopify.com/s/files/1/0782/8088/4554/files/whiteflareJPdeluxeboosterbox.webp?v=1790884057",
+   "price": 2249,
+   "type": "Booster Box",
+   "set": "White Flare",
+   "lang": "ja",
+   "kind": "tillbaka"
+  },
   {
    "at": 1794398667111,
    "store": "rgb-kingz",
@@ -7060,62 +7116,6 @@
    "set": "30th Celebration",
    "lang": "en",
    "kind": "forbestallning"
-  },
-  {
-   "at": 1793877488957,
-   "store": "alphaspel",
-   "product": "alphaspel:https://alphaspel.se/1762-pokemon-tcg/362618-pokemon-tcg-mega-evolution-delta-reign-premium-checklane-blister",
-   "group": "delta-reign|blister|en||cl",
-   "title": "Pokémon TCG: Mega Evolution - Delta Reign Premium Checklane Blister",
-   "url": "https://alphaspel.se/1762-pokemon-tcg/362618-pokemon-tcg-mega-evolution-delta-reign-premium-checklane-blister",
-   "image": "https://alphaspel.se/media/products/5f2dc113-d9ef-406e-8298-3ff15322f9d5",
-   "price": 119,
-   "type": "Blister",
-   "set": "Delta Reign",
-   "lang": "en",
-   "kind": "forbestallning"
-  },
-  {
-   "at": 1793877488957,
-   "store": "alphaspel",
-   "product": "alphaspel:https://alphaspel.se/1762-pokemon-tcg/362615-pokemon-tcg-mega-evolution-delta-reign-checklane-blister",
-   "group": "delta-reign|blister|en||cl",
-   "title": "Pokémon TCG: Mega Evolution - Delta Reign Checklane Blister",
-   "url": "https://alphaspel.se/1762-pokemon-tcg/362615-pokemon-tcg-mega-evolution-delta-reign-checklane-blister",
-   "image": "https://alphaspel.se/media/products/8e40c142-e21e-4c80-8499-bf6b709947a3",
-   "price": 99,
-   "type": "Blister",
-   "set": "Delta Reign",
-   "lang": "en",
-   "kind": "forbestallning"
-  },
-  {
-   "at": 1793877488957,
-   "store": "alphaspel",
-   "product": "alphaspel:https://alphaspel.se/1762-pokemon-tcg/362610-pokemon-tcg-mega-evolution-delta-reign-3-pack-blister",
-   "group": "delta-reign|blister|en||3",
-   "title": "Pokémon TCG: Mega Evolution - Delta Reign 3-pack Blister",
-   "url": "https://alphaspel.se/1762-pokemon-tcg/362610-pokemon-tcg-mega-evolution-delta-reign-3-pack-blister",
-   "image": "https://alphaspel.se/media/products/20141f4c-c4e1-4db4-8860-c202eea82d52",
-   "price": 269,
-   "type": "Blister",
-   "set": "Delta Reign",
-   "lang": "en",
-   "kind": "forbestallning"
-  },
-  {
-   "at": 1793877488957,
-   "store": "alphaspel",
-   "product": "alphaspel:https://alphaspel.se/1762-pokemon-tcg/362608-pokemon-tcg-2026-mega-forces-mega-zeraora-ex-tin",
-   "group": "x|tin|en||forces-zeraora",
-   "title": "Pokémon TCG: 2026 Mega Forces Mega Zeraora ex Tin",
-   "url": "https://alphaspel.se/1762-pokemon-tcg/362608-pokemon-tcg-2026-mega-forces-mega-zeraora-ex-tin",
-   "image": "https://alphaspel.se/media/products/c2e95ce9-c9ea-497c-a1b3-e68851a592bd",
-   "price": 399,
-   "type": "Tin",
-   "set": null,
-   "lang": "en",
-   "kind": "ny"
   }
  ]
 }
