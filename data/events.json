@@ -1,6 +1,21 @@
 {
- "updated": 1794429557267,
+ "updated": 1794430477293,
  "events": [
+  {
+   "at": 1794430293316,
+   "store": "cardvalley",
+   "product": "cardvalley:11305270870354",
+   "group": "30th-celebration|ultra-premium-collection|en||day",
+   "title": "Pokémon: 30th Celebration UPC - DAY",
+   "url": "https://cardvalley.se/products/pokemon-30th-celebration-upc-day",
+   "image": "https://cdn.shopify.com/s/files/1/0934/7946/9394/files/cdedfb45-5bd1-49d2-bfd0-96cea7381580.png?v=1794148742",
+   "price": 4199,
+   "type": "Ultra-Premium Collection",
+   "set": "30th Celebration",
+   "lang": "en",
+   "kind": "prissankt",
+   "from": 4299
+  },
   {
    "at": 1794424233783,
    "store": "westcoast-vault",
@@ -7098,20 +7113,6 @@
    "set": "Prismatic Evolutions",
    "lang": "en",
    "kind": "tillbaka"
-  },
-  {
-   "at": 1793908498208,
-   "store": "rahtech",
-   "product": "rahtech:15830808232262",
-   "group": "prismatic-evolutions|premium-collection|en||super",
-   "title": "Scarlet & Violet 8.5: Prismatic Evolutions – Super-Premium Collection (ENG)",
-   "url": "https://rahtech.se/products/scarlet-violet-8-5-prismatic-evolutions-super-premium-collection-eng",
-   "image": "https://cdn.shopify.com/s/files/1/0994/8882/5670/files/377246.webp?v=1793881013",
-   "price": 2799,
-   "type": "Premium Collection",
-   "set": "Prismatic Evolutions",
-   "lang": "en",
-   "kind": "ny"
   }
  ]
 }
