@@ -1,6 +1,20 @@
 {
- "updated": 1794405959623,
+ "updated": 1794406879642,
  "events": [
+  {
+   "at": 1794405967834,
+   "store": "kortbutiken",
+   "product": "kortbutiken:16695907418461",
+   "group": "30th-celebration|premium-collection|en||ditto",
+   "title": "Pokemon 30th Celebration Ditto Premium Collection",
+   "url": "https://kortbutiken-shop.se/products/pokemon-30th-celebration-ditto-premium-collection-1",
+   "image": "https://cdn.shopify.com/s/files/1/1074/5610/2749/files/Skarmavbild2026-11-11kl.14.50.41.png?v=1794405116",
+   "price": 1199,
+   "type": "Premium Collection",
+   "set": "30th Celebration",
+   "lang": "en",
+   "kind": "ny"
+  },
   {
    "at": 1794404500585,
    "store": "mystery-shack",
@@ -7099,20 +7113,6 @@
    "title": "Pokémon TCG: 30th Celebration Umbreon ex Battle Deck",
    "url": "https://alphaspel.se/1762-pokemon-tcg/362649-pokemon-tcg-30th-celebration-umbreon-ex-battle-deck",
    "image": "https://alphaspel.se/media/products/717ef47a-80fb-4186-9f27-6770a933b9e8",
-   "price": 479,
-   "type": "Deck",
-   "set": "30th Celebration",
-   "lang": "en",
-   "kind": "forbestallning"
-  },
-  {
-   "at": 1793877488957,
-   "store": "alphaspel",
-   "product": "alphaspel:https://alphaspel.se/1762-pokemon-tcg/362645-pokemon-tcg-30th-celebration-espeon-ex-battle-deck",
-   "group": "30th-celebration|deck|en||espeon",
-   "title": "Pokémon TCG: 30th Celebration Espeon ex Battle Deck",
-   "url": "https://alphaspel.se/1762-pokemon-tcg/362645-pokemon-tcg-30th-celebration-espeon-ex-battle-deck",
-   "image": "https://alphaspel.se/media/products/b57c4266-6154-4481-bb1b-fcefa9fdc423",
    "price": 479,
    "type": "Deck",
    "set": "30th Celebration",
