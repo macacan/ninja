@@ -1,6 +1,20 @@
 {
- "updated": 1794398000391,
+ "updated": 1794398920414,
  "events": [
+  {
+   "at": 1794398667111,
+   "store": "rgb-kingz",
+   "product": "rgb-kingz:16195772350794",
+   "group": "x|booster-box|ja||symphonia",
+   "title": "Pokémon TCG: Mega Symphonia – Booster Box (Japansk)",
+   "url": "https://rgbkingz.com/products/pokemon-tcg-mega-symphonia-booster-box-japansk",
+   "image": "https://cdn.shopify.com/s/files/1/0782/8088/4554/files/pokemon-mega-symphonia-booster-box-japansk_0c689507-17c1-4b65-b39b-592ff95beede.webp?v=1794398126",
+   "price": 949,
+   "type": "Booster Box",
+   "set": null,
+   "lang": "ja",
+   "kind": "ny"
+  },
   {
    "at": 1794397727415,
    "store": "rgb-kingz",
@@ -7100,20 +7114,6 @@
    "price": 399,
    "type": "Tin",
    "set": null,
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1793877488957,
-   "store": "alphaspel",
-   "product": "alphaspel:https://alphaspel.se/1762-pokemon-tcg/362607-pokemon-tcg-2026-mega-forces-mega-dragonite-ex-tin",
-   "group": "dragon|tin|en||dragonite-forces",
-   "title": "Pokémon TCG: 2026 Mega Forces Mega Dragonite ex Tin",
-   "url": "https://alphaspel.se/1762-pokemon-tcg/362607-pokemon-tcg-2026-mega-forces-mega-dragonite-ex-tin",
-   "image": "https://alphaspel.se/media/products/0b74f376-40f3-4f70-ac39-9032ff5c4ef2",
-   "price": 399,
-   "type": "Tin",
-   "set": "Dragon",
    "lang": "en",
    "kind": "ny"
   }
