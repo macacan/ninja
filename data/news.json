@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-12T18:37:42.029Z",
+ "updated": "2026-11-12T18:53:01.955Z",
  "articles": [
   {
    "title": "Walmart's Black Friday Deals Offer A 'Pokémon' 30th Anniversary TCG Surprise",
@@ -44,15 +44,6 @@
    "summary": "The retailer Walmart has a lottery system that provides a promising way to get Pokémon cards.",
    "image": "https://www.wargamer.com/wp-content/sites/wargamer/2026/11/pokemon-card-games-walmart.jpg",
    "source": "Wargamer",
-   "game": "pk"
-  },
-  {
-   "title": "Pokémon Happy Meals return to McDonald’s in the U.S. with 15 toys and TCG cards",
-   "link": "https://pokemonblog.com/2026/11/10/pokemon-happy-meals-return-to-mcdonalds-in-the-u-s-with-15-toys-and-tcg-cards/",
-   "date": "2026-11-11T04:29:36.000Z",
-   "summary": "McDonald’s has brought Pokémon Happy Meals back to the U.S. for a limited time, with the promotion running through Dec. 14, 2026, while supplies last at participating restaurants.…",
-   "image": "https://pokemonblog.com/wp-content/uploads/2026/10/pokemon_happy_meals_mcdonalds.jpg",
-   "source": "PokemonBlog",
    "game": "pk"
   },
   {
@@ -405,6 +396,15 @@
    "image": "https://static0.gamerantimages.com/wordpress/wp-content/uploads/2026/10/riftbound-radiance-trinket-peddler-exclusive-reveal.jpg",
    "source": "Game Rant",
    "game": "rb"
+  },
+  {
+   "title": "These Pokémon skateboards are sold like cards, with random draws and chase rares",
+   "link": "https://www.wargamer.com/pokemon-trading-card-game/skateboards-bling-bags",
+   "date": "2026-10-08T14:49:37.000Z",
+   "summary": "This designer slapped Pokémon cards onto licensed skateboards and is selling them in randomized blind bags",
+   "image": "https://www.wargamer.com/wp-content/sites/wargamer/2026/10/pokemon-tcg-skateboards.jpg",
+   "source": "Wargamer",
+   "game": "pk"
   },
   {
    "title": "[DeckReview] KeyLlua: Red Ace deck in Postban (No Mihawk) OP17 format.",
