@@ -1,6 +1,21 @@
 {
- "updated": 1794504989152,
+ "updated": 1794505909169,
  "events": [
+  {
+   "at": 1794505840275,
+   "store": "packs-on-packs",
+   "product": "packs-on-packs:https://packsonpacks.se/one-piece/one-piece-the-worlds-strongest-warriors-op-17-booster-box",
+   "group": "op|the-world-s-strongest-warriors|booster-box|en|",
+   "title": "One Piece – The World’s Strongest Warriors OP-17 Booster Box",
+   "url": "https://packsonpacks.se/one-piece/one-piece-the-worlds-strongest-warriors-op-17-booster-box",
+   "image": "https://cdn.quickbutik.com/images/92330P/products/6aa7d99b622b3.png",
+   "price": 4100,
+   "type": "Booster Box",
+   "set": "The World's Strongest Warriors",
+   "lang": "en",
+   "game": "op",
+   "kind": "tillbaka"
+  },
   {
    "at": 1794504875231,
    "store": "packs-on-packs",
@@ -7099,20 +7114,6 @@
    "type": "Booster Box",
    "set": null,
    "lang": "ja",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793964992471,
-   "store": "samlarverket",
-   "product": "samlarverket:11343708291415",
-   "group": "30th-celebration|ultra-premium-collection|en||espeon-pikachu",
-   "title": "Pokémon 30th Celebration Ultra-Premium Collection Espeon & Pikachu",
-   "url": "https://samlarverket.com/produkt/pokemon-30th-celebration-ultra-premium-collection-espeon-pikachu",
-   "image": "https://cdn.shopify.com/s/files/1/1022/5323/2471/files/Pokemon_30th_Celebration_Ultra-Premium_Collection_Day_1.webp?v=1793373582",
-   "price": 5299,
-   "type": "Ultra-Premium Collection",
-   "set": "30th Celebration",
-   "lang": "en",
    "kind": "tillbaka"
   }
  ]
