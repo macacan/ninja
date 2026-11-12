@@ -1,6 +1,34 @@
 {
- "updated": 1794480460336,
+ "updated": 1794481380346,
  "events": [
+  {
+   "at": 1794480524475,
+   "store": "mix-max",
+   "product": "mix-max:https://mix-max.se/pokemon/7127-pokemon-me06-checklane-196214144415.html",
+   "group": "x|blister|en||cl|checklane",
+   "title": "POKEMON ME06 CHECKLANE",
+   "url": "https://mix-max.se/pokemon/7127-pokemon-me06-checklane-196214144415.html",
+   "image": "https://mix-max.se/12097-large_default/pokemon-me06-checklane.jpg",
+   "price": 149,
+   "type": "Blister",
+   "set": null,
+   "lang": "en",
+   "kind": "ny"
+  },
+  {
+   "at": 1794480524475,
+   "store": "mix-max",
+   "product": "mix-max:https://mix-max.se/pokemon/7129-pokemon-30th-display-collection-196214147423.html",
+   "group": "x|collection-box|en||30th-ditto",
+   "title": "POKEMON 30TH DITTO COLLECTION",
+   "url": "https://mix-max.se/pokemon/7129-pokemon-30th-display-collection-196214147423.html",
+   "image": "https://mix-max.se/12100-large_default/pokemon-30th-display-collection.jpg",
+   "price": 1495,
+   "type": "Collection Box",
+   "set": null,
+   "lang": "en",
+   "kind": "ny"
+  },
   {
    "at": 1794480163013,
    "store": "aquitaz",
@@ -7087,34 +7115,6 @@
    "lang": "en",
    "kind": "prissankt",
    "from": 999
-  },
-  {
-   "at": 1793950736768,
-   "store": "bangerpack",
-   "product": "bangerpack:https://bangerpack.se/pokemon/boosters-packs/pokemon-paldea-evolved-booster",
-   "group": "paldea-evolved|booster-pack|en|",
-   "title": "Pokémon Paldea Evolved – Booster",
-   "url": "https://bangerpack.se/pokemon/boosters-packs/pokemon-paldea-evolved-booster",
-   "image": "https://cdn.quickbutik.com/images/99246J/products/6ae8081b2a3f8.png",
-   "price": 189,
-   "type": "Booster Pack",
-   "set": "Paldea Evolved",
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793950736768,
-   "store": "bangerpack",
-   "product": "bangerpack:https://bangerpack.se/pokemon/boosters-packs/pokemon-obsidian-flames-booster",
-   "group": "obsidian-flames|booster-pack|en|",
-   "title": "Pokémon Obsidian Flames – Booster",
-   "url": "https://bangerpack.se/pokemon/boosters-packs/pokemon-obsidian-flames-booster",
-   "image": "https://cdn.quickbutik.com/images/99246J/products/6ae807b7910ae.png",
-   "price": 189,
-   "type": "Booster Pack",
-   "set": "Obsidian Flames",
-   "lang": "en",
-   "kind": "tillbaka"
   }
  ]
 }
