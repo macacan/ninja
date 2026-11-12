@@ -1,6 +1,20 @@
 {
- "updated": 1794483220392,
+ "updated": 1794484140417,
  "events": [
+  {
+   "at": 1794484041527,
+   "store": "alphaspel",
+   "product": "alphaspel:https://alphaspel.se/1762-pokemon-tcg/361794-pokemon-tcg-30th-celebration-ditto-premium-collection",
+   "group": "30th-celebration|premium-collection|en||ditto",
+   "title": "Pokémon TCG: 30th Celebration Ditto Premium Collection",
+   "url": "https://alphaspel.se/1762-pokemon-tcg/361794-pokemon-tcg-30th-celebration-ditto-premium-collection",
+   "image": "https://alphaspel.se/media/products/2fa8657e-dd4e-450f-a43a-057a2f485134",
+   "price": 899,
+   "type": "Premium Collection",
+   "set": "30th Celebration",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1794483201934,
    "store": "worldofboardgames",
@@ -7100,20 +7114,6 @@
    "set": "Destined Rivals",
    "lang": "en",
    "kind": "tillbaka"
-  },
-  {
-   "at": 1793952368914,
-   "store": "poketalk",
-   "product": "poketalk:10497694204246",
-   "group": "perfect-order|booster-pack|en|",
-   "title": "Pokémon Mega & Evolution: Perfect Order Booster Pack",
-   "url": "https://poketalk.se/products/pokemon-mega-evolution-perfect-order-booster-pack-1",
-   "image": "https://cdn.shopify.com/s/files/1/0862/7860/3094/files/PRODUKTSERIER_2000x2000px_-3_39c0224a-60d1-4e71-acc8-2418de0262ab.png?v=1776781497",
-   "price": 75,
-   "type": "Booster Pack",
-   "set": "Perfect Order",
-   "lang": "en",
-   "kind": "ny"
   }
  ]
 }
