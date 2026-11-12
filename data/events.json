@@ -1,6 +1,48 @@
 {
- "updated": 1794515689119,
+ "updated": 1794516629152,
  "events": [
+  {
+   "at": 1794515841848,
+   "store": "spelparken",
+   "product": "spelparken:15280887824759",
+   "group": "phantasmal-flames|blister|en||3",
+   "title": "Phantasmal Flames - 3 Pack Blister",
+   "url": "https://spelparken.se/products/phantasmal-flames-3-pack-blister",
+   "image": "https://cdn.shopify.com/s/files/1/0948/1876/3127/files/PokemonMegaEvolutionPhantasmalFlames3packblisterSneasel.webp?v=1765384846",
+   "price": 509,
+   "type": "Blister",
+   "set": "Phantasmal Flames",
+   "lang": "en",
+   "kind": "ny"
+  },
+  {
+   "at": 1794515794985,
+   "store": "rahtech",
+   "product": "rahtech:15801220497734",
+   "group": "phantasmal-flames|booster-pack|en|",
+   "title": "Mega Evolution: Phantasmal Flames – Booster Pack (ENG)",
+   "url": "https://rahtech.se/products/mega-evolution-phantasmal-flames-booster-pack-eng",
+   "image": "https://cdn.shopify.com/s/files/1/0994/8882/5670/files/2025-Pokemon-Mega-Evolution-Phantasmal-Flames-Mega-Charizard-X-Booster-Pack.avif?v=1792967304",
+   "price": 129,
+   "type": "Booster Pack",
+   "set": "Phantasmal Flames",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1794515794985,
+   "store": "rahtech",
+   "product": "rahtech:15734802186566",
+   "group": "ascended-heroes|booster-pack|en|",
+   "title": "Mega Evolution: Ascended Heroes Booster Pack (ENG)",
+   "url": "https://rahtech.se/products/pokemon-mega-evolution-ascended-heroes-booster-pack-eng",
+   "image": "https://cdn.shopify.com/s/files/1/0994/8882/5670/files/IMG-4346.webp?v=1789839239",
+   "price": 179,
+   "type": "Booster Pack",
+   "set": "Ascended Heroes",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1794512566960,
    "store": "bangerpack",
@@ -7072,48 +7114,6 @@
    "type": "Booster Pack",
    "set": null,
    "lang": "ja",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793968647423,
-   "store": "bangerpack",
-   "product": "bangerpack:https://bangerpack.se/pokemon/japanska-utgavor/pokemon-the-glory-of-team-rocket-booster-jp",
-   "group": "team-rocket|booster-pack|ja|",
-   "title": "Pokémon The Glory of Team Rocket – Booster (JP)",
-   "url": "https://bangerpack.se/pokemon/japanska-utgavor/pokemon-the-glory-of-team-rocket-booster-jp",
-   "image": "https://cdn.quickbutik.com/images/99246J/products/6ae7ef188ec26.png",
-   "price": 99,
-   "type": "Booster Pack",
-   "set": "Team Rocket",
-   "lang": "ja",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793968647423,
-   "store": "bangerpack",
-   "product": "bangerpack:https://bangerpack.se/pokemon/displayer-boxar/pokemon-prismatic-evolutions-booster-bundle-6-boosters",
-   "group": "prismatic-evolutions|booster-bundle|en|",
-   "title": "Pokémon Prismatic Evolutions – Booster Bundle (6 boosters)",
-   "url": "https://bangerpack.se/pokemon/displayer-boxar/pokemon-prismatic-evolutions-booster-bundle-6-boosters",
-   "image": "https://cdn.quickbutik.com/images/99246J/products/6ae7eda2a5e24.png",
-   "price": 1439,
-   "type": "Booster Bundle",
-   "set": "Prismatic Evolutions",
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793968647423,
-   "store": "bangerpack",
-   "product": "bangerpack:https://bangerpack.se/pokemon/displayer-boxar/pokemon-pitch-black-booster-bundle-6-boosters",
-   "group": "pitch-black|booster-bundle|en|",
-   "title": "Pokémon Pitch Black – Booster Bundle (6 boosters)",
-   "url": "https://bangerpack.se/pokemon/displayer-boxar/pokemon-pitch-black-booster-bundle-6-boosters",
-   "image": "https://cdn.quickbutik.com/images/99246J/products/6a8f3a825f632.png",
-   "price": 629,
-   "type": "Booster Bundle",
-   "set": "Pitch Black",
-   "lang": "en",
    "kind": "tillbaka"
   }
  ]
