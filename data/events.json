@@ -1,6 +1,20 @@
 {
- "updated": 1794466971415,
+ "updated": 1794467891428,
  "events": [
+  {
+   "at": 1794467333127,
+   "store": "spelexperten",
+   "product": "spelexperten:https://www.spelexperten.com/sallskapsspel/pokemon/pokemon-tcg-30th-celebration-umbreon-ex-battle-deck.html",
+   "group": "30th-celebration|deck|en||umbreon",
+   "title": "Pokémon TCG: 30th Celebration - Umbreon ex Battle Deck",
+   "url": "https://www.spelexperten.com/sallskapsspel/pokemon/pokemon-tcg-30th-celebration-umbreon-ex-battle-deck.html",
+   "image": "https://www.spelexperten.com/bilder/artiklar/POK10468-101-UMB.jpg?m=1788178426",
+   "price": 499,
+   "type": "Deck",
+   "set": "30th Celebration",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1794466862233,
    "store": "poketalk",
@@ -7097,20 +7111,6 @@
    "url": "https://bangerpack.se/pokemon/koreanska-utgavor/pokemon-blue-sky-stream-booster-kor",
    "image": "https://cdn.quickbutik.com/images/99246J/products/6ae81fc833d2a.png",
    "price": 79,
-   "type": "Booster Pack",
-   "set": null,
-   "lang": "ko",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793947819794,
-   "store": "bangerpack",
-   "product": "bangerpack:https://bangerpack.se/pokemon/koreanska-utgavor/pokemon-violet-ex-booster-kor",
-   "group": "x|booster-pack|ko||violet",
-   "title": "Pokémon Violet ex – Booster (KOR)",
-   "url": "https://bangerpack.se/pokemon/koreanska-utgavor/pokemon-violet-ex-booster-kor",
-   "image": "https://cdn.quickbutik.com/images/99246J/products/6ae81fb0f0441.png",
-   "price": 49,
    "type": "Booster Pack",
    "set": null,
    "lang": "ko",
