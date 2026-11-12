@@ -1,5 +1,5 @@
 {
- "updated": 1794442457483,
+ "updated": 1794442617489,
  "stores": [
   {
    "id": "alara-games",
@@ -31,14 +31,14 @@
    "name": "Aquitaz",
    "domain": "aquitaz.se",
    "status": "ej-forbjuden",
-   "checkedAt": 1794441469912,
+   "checkedAt": 1794442616371,
    "ok": true,
-   "lastOkAt": 1794441469912,
+   "lastOkAt": 1794442616371,
    "count": 1698,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 15
+   "interval": 60
   },
   {
    "id": "arcade-dreams",
@@ -230,14 +230,14 @@
    "name": "Dragon's Lair",
    "domain": "dragonslair.se",
    "status": "ej-forbjuden",
-   "checkedAt": 1794441510058,
+   "checkedAt": 1794442531480,
    "ok": true,
-   "lastOkAt": 1794441510058,
+   "lastOkAt": 1794442531480,
    "count": 717,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 15
+   "interval": 60
   },
   {
    "id": "fantasia-north",
@@ -714,14 +714,14 @@
    "name": "Samlarverket",
    "domain": "samlarverket.com",
    "status": "ej-forbjuden",
-   "checkedAt": 1794441582010,
+   "checkedAt": 1794442484331,
    "ok": true,
-   "lastOkAt": 1794441582010,
+   "lastOkAt": 1794442484331,
    "count": 59,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 15
+   "interval": 60
   },
   {
    "id": "sf-bokhandeln",
@@ -756,14 +756,14 @@
    "name": "Skattkistan",
    "domain": "skattkistan.net",
    "status": "ej-forbjuden",
-   "checkedAt": 1794441597954,
+   "checkedAt": 1794442501424,
    "ok": true,
-   "lastOkAt": 1794441597954,
+   "lastOkAt": 1794442501424,
    "count": 64,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 15
+   "interval": 60
   },
   {
    "id": "sneak",
@@ -1123,14 +1123,14 @@
    "name": "Spel och sånt",
    "domain": "spelochsant.se",
    "status": "ej-forbjuden",
-   "checkedAt": 1794441510957,
+   "checkedAt": 1794442489897,
    "ok": true,
-   "lastOkAt": 1794441510957,
+   "lastOkAt": 1794442489897,
    "count": 35,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 15
+   "interval": 60
   },
   {
    "id": "starkboxes",
