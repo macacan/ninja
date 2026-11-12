@@ -1,6 +1,20 @@
 {
- "updated": 1794477700280,
+ "updated": 1794478620303,
  "events": [
+  {
+   "at": 1794478284435,
+   "store": "dragon-s-lair",
+   "product": "dragon-s-lair:15554560164188",
+   "group": "ascended-heroes|collection-box|en||feraligatr",
+   "title": "Pokémon TCG - Ascended Heroes Mega Feraligatr ex Box",
+   "url": "https://dragonslair.se/products/pokemon-tcg-ascended-heroes-mega-feraligatr-ex-box-pokemon",
+   "image": "https://cdn.shopify.com/s/files/1/1015/8315/9644/files/Pok-mon-TCG---Ascended-Heroes-Mega-Feraligatr-EX-Box.webp?v=1777051055",
+   "price": 895,
+   "type": "Collection Box",
+   "set": "Ascended Heroes",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1794473286811,
    "store": "rgb-kingz",
@@ -7101,20 +7115,6 @@
    "type": "Booster Pack",
    "set": "Dragon",
    "lang": "ja",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793949765111,
-   "store": "bangerpack",
-   "product": "bangerpack:https://bangerpack.se/pokemon/boosters-packs/pokemon-astral-radiance-booster",
-   "group": "astral-radiance|booster-pack|en|",
-   "title": "Pokémon Astral Radiance – Booster",
-   "url": "https://bangerpack.se/pokemon/boosters-packs/pokemon-astral-radiance-booster",
-   "image": "https://cdn.quickbutik.com/images/99246J/products/6ae80de18b079.png",
-   "price": 169,
-   "type": "Booster Pack",
-   "set": "Astral Radiance",
-   "lang": "en",
    "kind": "tillbaka"
   }
  ]
