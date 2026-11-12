@@ -1,6 +1,15 @@
 {
- "updated": 1794402090270,
+ "updated": 1794492261339,
  "sets": [
+  {
+   "id": "24943",
+   "name": "Riftbound x K/DA: Couture Collection",
+   "code": "RXK/DA",
+   "date": "2026-11-11",
+   "main": false,
+   "image": "https://tcgplayer-cdn.tcgplayer.com/product/732649_400w.jpg",
+   "count": 5
+  },
   {
    "id": "24819",
    "name": "Radiance",
@@ -8,7 +17,7 @@
    "date": "2026-10-23",
    "main": true,
    "image": "https://tcgplayer-cdn.tcgplayer.com/product/711365_400w.jpg",
-   "count": 240
+   "count": 246
   },
   {
    "id": "24861",
@@ -26,7 +35,7 @@
    "date": "2026-07-31",
    "main": true,
    "image": "https://tcgplayer-cdn.tcgplayer.com/product/693380_400w.jpg",
-   "count": 248
+   "count": 254
   },
   {
    "id": "24560",
@@ -35,7 +44,7 @@
    "date": "2026-05-08",
    "main": true,
    "image": "https://tcgplayer-cdn.tcgplayer.com/product/678150_400w.jpg",
-   "count": 308
+   "count": 314
   },
   {
    "id": "24519",
@@ -62,7 +71,7 @@
    "date": "2025-10-31",
    "main": true,
    "image": "https://tcgplayer-cdn.tcgplayer.com/product/635368_400w.jpg",
-   "count": 352
+   "count": 358
   },
   {
    "id": "24439",
@@ -80,7 +89,7 @@
    "date": "2025-10-31",
    "main": false,
    "image": null,
-   "count": 265
+   "count": 247
   },
   {
    "id": "24343",

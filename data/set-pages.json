@@ -210,8 +210,8 @@
   "op-the-dominance-of-god": "set/one-piece-op18-the-dominance-of-god.html",
   "op-extra-booster-one-piece-heroines-edition-vol-2": "set/one-piece-eb05-extra-booster-one-piece-heroines-edition-vol-2.html",
   "op-set-sail-deck-set": "set/one-piece-set-sail-deck-set.html",
+  "rb-riftbound-x-k-da-couture-collection": "set/riftbound-x-k-da-couture-collection.html",
   "rb-radiance": "set/riftbound-radiance.html",
-  "rb-riftbound-x-k-da-couture-collection": "set/riftbound-riftbound-x-k-da-couture-collection.html",
   "rb-gift-of-the-rift-bundles": "set/riftbound-gift-of-the-rift-bundles.html",
   "rb-legacy": "set/riftbound-legacy.html"
  },
@@ -289,7 +289,8 @@
    "24698": "set/riftbound-vendetta.html",
    "24797": "set/riftbound-secret-garden.html",
    "24819": "set/riftbound-radiance.html",
-   "24861": "set/riftbound-t1-2025-worlds-champion-bundles.html"
+   "24861": "set/riftbound-t1-2025-worlds-champion-bundles.html",
+   "24943": "set/riftbound-x-k-da-couture-collection.html"
   }
  }
 }
