@@ -1,6 +1,20 @@
 {
- "updated": 1794499468393,
+ "updated": 1794500368418,
  "events": [
+  {
+   "at": 1794499574998,
+   "store": "mix-max",
+   "product": "mix-max:https://mix-max.se/pokemon/7130-pokemon-booster-me06-196214144590.html",
+   "group": "x|booster-pack|en||",
+   "title": "POKEMON BOOSTER ME06",
+   "url": "https://mix-max.se/pokemon/7130-pokemon-booster-me06-196214144590.html",
+   "image": "https://mix-max.se/12104-large_default/pokemon-booster-me06.jpg",
+   "price": 119,
+   "type": "Booster Pack",
+   "set": null,
+   "lang": "en",
+   "kind": "ny"
+  },
   {
    "at": 1794495166706,
    "store": "nordic-pulls",
@@ -7100,20 +7114,6 @@
    "set": "Pitch Black",
    "lang": "en",
    "kind": "tillbaka"
-  },
-  {
-   "at": 1793963282295,
-   "store": "tt-vault",
-   "product": "tt-vault:16764641608025",
-   "group": "delta-reign|elite-trainer-box|en|",
-   "title": "Pokemon TCG: Mega Evolution - Delta Reign - Elite Trainer Box PREORDER November 6",
-   "url": "https://ttvault.se/products/pokemon-tcg-mega-evolution-delta-reign-elite-trainer-box-preorder-november-6",
-   "image": "https://cdn.shopify.com/s/files/1/1020/3683/2601/files/IMG_0398.jpg?v=1793727769",
-   "price": 1299,
-   "type": "Elite Trainer Box",
-   "set": "Delta Reign",
-   "lang": "en",
-   "kind": "forbestallning"
   }
  ]
 }
