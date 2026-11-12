@@ -1,6 +1,8 @@
 // Bygger kortskannerns bildindex: data/hashes.json (id- och namnlista) + data/hashes.bin (ett avtryck på 240 byte per kort).
 // Körs av GitHub Actions (Bygg kortindex) en gång i månaden. Kräver: npm i --no-save sharp.
 // Bilder från TCGdex. Kort som saknar bild där tas från data/card-images.json (samma reservbilder som sidan visar).
+// node scripts/build-card-index.mjs --add: behåller indexet och lägger bara till kort som saknas (t.ex. ett nytt set
+// som TCGdex har utan bilder). Tar någon minut i stället för en timme.
 import { createHash } from "node:crypto";
 import fs from "node:fs";
 import { createRequire } from "node:module";
@@ -21,7 +23,17 @@ const url = (c) => {
 // Pokémon TCG Pocket (set A1, B1, P-A …) är bara digitala kort. De har ofta samma konstverk som ett fysiskt kort, och
 // då pekar bilden ut två nästan identiska kort, så att skannern inte vågar välja.
 const pocket = (c) => /\/tcgp\//.test(c.image || "") || /^(?:[AB]\d|P-A-)/.test(c.id);
-const cards = list.filter((c) => !pocket(c) && url(c));
+const ADD = process.argv.includes("--add");
+const HJ = new URL("../data/hashes.json", import.meta.url), HB = new URL("../data/hashes.bin", import.meta.url);
+const old = ADD ? JSON.parse(fs.readFileSync(HJ, "utf8")) : null;
+const have = new Set(old?.ids || []);
+// Lokala set (data/sets/*.json med local: true) som TCGdex inte listar än
+const known = new Set(list.map((c) => c.id));
+for (const f of fs.readdirSync(new URL("../data/sets/", import.meta.url))) {
+  let set; try { set = JSON.parse(fs.readFileSync(new URL("../data/sets/" + f, import.meta.url), "utf8")); } catch { continue; }
+  if (set.local) for (const c of set.cards || []) if (!known.has(c.id)) list.push({ id: c.id, localId: c.localId, name: c.name, image: c.image || undefined });
+}
+const cards = list.filter((c) => !pocket(c) && url(c) && !have.has(c.id));
 console.log(`${cards.length} kort med bild (${cards.filter((c) => !c.image).length} med reservbild)`);
 
 async function one(c) {
@@ -47,11 +59,13 @@ await Promise.all(Array.from({ length: CONC }, async () => {
     if (++done % 2000 === 0) console.log(`${done}/${cards.length} (misslyckade: ${failed})`);
   }
 }));
-const ids = [], names = [], vecs = [];
+const ids = [...(old?.ids || [])], names = [...(old?.names || [])], vecs = [];
+const oldBin = ADD ? fs.readFileSync(HB) : Buffer.alloc(0);
 for (let i = 0; i < cards.length; i++) if (results[i]) { ids.push(cards[i].id); names.push(cards[i].name); vecs.push(results[i]); }
-if (ids.length < cards.length * 0.9) throw new Error(`För många misslyckade: ${ids.length}/${cards.length}`);
+if (vecs.length < cards.length * 0.9) throw new Error(`För många misslyckade: ${vecs.length}/${cards.length}`);
 const bin = Buffer.alloc(ids.length * FP.LEN);
-vecs.forEach((v, i) => Buffer.from(v.buffer).copy(bin, i * FP.LEN));
-fs.writeFileSync(new URL("../data/hashes.bin", import.meta.url), bin);
-fs.writeFileSync(new URL("../data/hashes.json", import.meta.url), JSON.stringify({ len: FP.LEN, n: ids.length, v: createHash("sha1").update(bin).digest("hex").slice(0, 12), ids, names }));
+oldBin.copy(bin, 0);
+vecs.forEach((v, i) => Buffer.from(v.buffer).copy(bin, oldBin.length + i * FP.LEN));
+fs.writeFileSync(HB, bin);
+fs.writeFileSync(HJ, JSON.stringify({ len: FP.LEN, n: ids.length, v: createHash("sha1").update(bin).digest("hex").slice(0, 12), ids, names }));
 console.log(`Klart: ${ids.length} kort, ${(bin.length / 1e6).toFixed(1)} MB`);
