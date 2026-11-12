@@ -1,6 +1,34 @@
 {
- "updated": 1794465131261,
+ "updated": 1794466051393,
  "events": [
+  {
+   "at": 1794465417584,
+   "store": "speltrollet",
+   "product": "speltrollet:15372620104006",
+   "group": "x|booster-box|ja||nihil-zero",
+   "title": "Pokemon Mega: Nihil Zero Booster Box (m3)(Japansk)",
+   "url": "https://speltrollet.se/products/pokemon-mega-nihil-zero-booster-box-m3japansk",
+   "image": "https://cdn.shopify.com/s/files/1/0674/0951/0716/files/pokemon-mega-nihil-zero-booster-box-japansk.webp?v=1768561207",
+   "price": 990,
+   "type": "Booster Box",
+   "set": null,
+   "lang": "ja",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1794465417584,
+   "store": "speltrollet",
+   "product": "speltrollet:15117915423046",
+   "group": "dragon|booster-box|ja|",
+   "title": "Pokemon Paradise Dragona Booster Box (sv7a) (Japansk)",
+   "url": "https://speltrollet.se/products/pokemon-scarlet-violet-paradise-dragona-booster-box-sv7ajapansk",
+   "image": "https://cdn.shopify.com/s/files/1/0674/0951/0716/files/Paradise_Dragona_Booster_Box_Japansk.webp?v=1755790883",
+   "price": 1290,
+   "type": "Booster Box",
+   "set": "Dragon",
+   "lang": "ja",
+   "kind": "tillbaka"
+  },
   {
    "at": 1794456972887,
    "store": "skattkistan",
@@ -7083,34 +7111,6 @@
    "price": 59,
    "type": "Booster Pack",
    "set": null,
-   "lang": "ko",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793947819794,
-   "store": "bangerpack",
-   "product": "bangerpack:https://bangerpack.se/pokemon/koreanska-utgavor/pokemon-mask-of-change-booster-kor",
-   "group": "x|booster-pack|ko||change-mask",
-   "title": "Pokémon Mask of Change – Booster (KOR)",
-   "url": "https://bangerpack.se/pokemon/koreanska-utgavor/pokemon-mask-of-change-booster-kor",
-   "image": "https://cdn.quickbutik.com/images/99246J/products/6ae81a6b4c353.png",
-   "price": 49,
-   "type": "Booster Pack",
-   "set": null,
-   "lang": "ko",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793947819794,
-   "store": "bangerpack",
-   "product": "bangerpack:https://bangerpack.se/pokemon/koreanska-utgavor/pokemon-the-glory-of-team-rocket-booster-kor",
-   "group": "team-rocket|booster-pack|ko|",
-   "title": "Pokémon The Glory of Team Rocket – Booster (KOR)",
-   "url": "https://bangerpack.se/pokemon/koreanska-utgavor/pokemon-the-glory-of-team-rocket-booster-kor",
-   "image": "https://cdn.quickbutik.com/images/99246J/products/6ae81a54e0bf3.png",
-   "price": 59,
-   "type": "Booster Pack",
-   "set": "Team Rocket",
    "lang": "ko",
    "kind": "tillbaka"
   }
