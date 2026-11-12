@@ -1,5 +1,5 @@
 {
- "updated": 1794461151172,
+ "updated": 1794463291219,
  "stores": [
   {
    "id": "alara-games",
@@ -67,14 +67,14 @@
    "name": "Bangerpack",
    "domain": "bangerpack.se",
    "status": "ej-forbjuden",
-   "checkedAt": 1794460626558,
+   "checkedAt": 1794463288646,
    "ok": true,
-   "lastOkAt": 1794460626558,
+   "lastOkAt": 1794463288646,
    "count": 308,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 43
+   "interval": 15
   },
   {
    "id": "beam-card-shop",
@@ -107,14 +107,14 @@
    "name": "Card Mountain",
    "domain": "cardmountain.se",
    "status": "ej-forbjuden",
-   "checkedAt": 1794460398555,
+   "checkedAt": 1794463288622,
    "ok": true,
-   "lastOkAt": 1794460398555,
+   "lastOkAt": 1794463288622,
    "count": 60,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 47
+   "interval": 15
   },
   {
    "id": "cardclub",
@@ -135,14 +135,14 @@
    "name": "CardGame",
    "domain": "cardgame.se",
    "status": "ej-forbjuden",
-   "checkedAt": 1794460623480,
+   "checkedAt": 1794463278760,
    "ok": true,
-   "lastOkAt": 1794460623480,
+   "lastOkAt": 1794463278760,
    "count": 166,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 43
+   "interval": 15
   },
   {
    "id": "cardhaven",
@@ -191,28 +191,28 @@
    "name": "CardValley",
    "domain": "cardvalley.se",
    "status": "ej-forbjuden",
-   "checkedAt": 1794460412522,
+   "checkedAt": 1794463279507,
    "ok": true,
-   "lastOkAt": 1794460412522,
+   "lastOkAt": 1794463279507,
    "count": 121,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 47
+   "interval": 15
   },
   {
    "id": "collected",
    "name": "Collected",
    "domain": "collected.se",
    "status": "ej-forbjuden",
-   "checkedAt": 1794460398394,
+   "checkedAt": 1794463262248,
    "ok": true,
-   "lastOkAt": 1794460398394,
+   "lastOkAt": 1794463262248,
    "count": 50,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 47
+   "interval": 15
   },
   {
    "id": "coolcard",
@@ -325,14 +325,14 @@
    "name": "Hobbykort",
    "domain": "hobbykort.se",
    "status": "ej-forbjuden",
-   "checkedAt": 1794460452284,
+   "checkedAt": 1794463269308,
    "ok": true,
-   "lastOkAt": 1794460452284,
+   "lastOkAt": 1794463269308,
    "count": 176,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 46
+   "interval": 15
   },
   {
    "id": "jollyroom",
@@ -404,14 +404,14 @@
    "name": "Majki Poke",
    "domain": "majkipoke.se",
    "status": "ej-forbjuden",
-   "checkedAt": 1794460460472,
+   "checkedAt": 1794463245977,
    "ok": true,
-   "lastOkAt": 1794460460472,
+   "lastOkAt": 1794463245977,
    "count": 127,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 46
+   "interval": 15
   },
   {
    "id": "mana-torsk",
@@ -443,14 +443,14 @@
    "name": "Miniature Metropolis",
    "domain": "miniaturemetropolis.se",
    "status": "ej-forbjuden",
-   "checkedAt": 1794460574333,
+   "checkedAt": 1794463248328,
    "ok": true,
-   "lastOkAt": 1794460574333,
+   "lastOkAt": 1794463248328,
    "count": 32,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 44
+   "interval": 15
   },
   {
    "id": "mix-max",
@@ -566,14 +566,14 @@
    "name": "Packs on Packs",
    "domain": "packsonpacks.se",
    "status": "ej-forbjuden",
-   "checkedAt": 1794460803092,
+   "checkedAt": 1794463272457,
    "ok": true,
-   "lastOkAt": 1794460803092,
+   "lastOkAt": 1794463272457,
    "count": 35,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 40
+   "interval": 15
   },
   {
    "id": "playoteket",
@@ -591,28 +591,28 @@
    "name": "Pokekid",
    "domain": "pokekid.se",
    "status": "ej-forbjuden",
-   "checkedAt": 1794460808098,
+   "checkedAt": 1794463288556,
    "ok": true,
-   "lastOkAt": 1794460808098,
+   "lastOkAt": 1794463288556,
    "count": 72,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 40
+   "interval": 15
   },
   {
    "id": "pokemastersvault",
    "name": "Pokemastersvault",
    "domain": "pokemastersvault.com",
    "status": "ej-forbjuden",
-   "checkedAt": 1794460585943,
+   "checkedAt": 1794463261095,
    "ok": true,
-   "lastOkAt": 1794460585943,
+   "lastOkAt": 1794463261095,
    "count": 26,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 44
+   "interval": 15
   },
   {
    "id": "pokemurre",
@@ -633,14 +633,14 @@
    "name": "PokeTalk",
    "domain": "poketalk.se",
    "status": "ej-forbjuden",
-   "checkedAt": 1794460564317,
+   "checkedAt": 1794463220295,
    "ok": true,
-   "lastOkAt": 1794460564317,
+   "lastOkAt": 1794463220295,
    "count": 187,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 44
+   "interval": 15
   },
   {
    "id": "pokexclusive",
@@ -672,14 +672,14 @@
    "name": "RGB Kingz",
    "domain": "rgbkingz.com",
    "status": "ej-forbjuden",
-   "checkedAt": 1794460744915,
+   "checkedAt": 1794463248307,
    "ok": true,
-   "lastOkAt": 1794460744915,
+   "lastOkAt": 1794463248307,
    "count": 213,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 41
+   "interval": 15
   },
   {
    "id": "samlargrottan",
@@ -700,28 +700,28 @@
    "name": "Samlarhobby",
    "domain": "samlarhobby.se",
    "status": "ej-forbjuden",
-   "checkedAt": 1794460651347,
+   "checkedAt": 1794463288392,
    "ok": true,
-   "lastOkAt": 1794460651347,
+   "lastOkAt": 1794463288392,
    "count": 222,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 43
+   "interval": 15
   },
   {
    "id": "samlarverket",
    "name": "Samlarverket",
    "domain": "samlarverket.com",
    "status": "ej-forbjuden",
-   "checkedAt": 1794460582362,
+   "checkedAt": 1794463289838,
    "ok": true,
-   "lastOkAt": 1794460582362,
+   "lastOkAt": 1794463289838,
    "count": 59,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 44
+   "interval": 15
   },
   {
    "id": "sf-bokhandeln",
@@ -756,14 +756,14 @@
    "name": "Skattkistan",
    "domain": "skattkistan.net",
    "status": "ej-forbjuden",
-   "checkedAt": 1794460577415,
+   "checkedAt": 1794463249693,
    "ok": true,
-   "lastOkAt": 1794460577415,
+   "lastOkAt": 1794463249693,
    "count": 64,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 44
+   "interval": 15
   },
   {
    "id": "sneak",
@@ -795,14 +795,14 @@
    "name": "Spelgalaxen",
    "domain": "spelgalaxen.se",
    "status": "ej-forbjuden",
-   "checkedAt": 1794460746910,
+   "checkedAt": 1794463235293,
    "ok": true,
-   "lastOkAt": 1794460746910,
+   "lastOkAt": 1794463235293,
    "count": 30,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 41
+   "interval": 15
   },
   {
    "id": "spelkortsbutiken",
@@ -834,14 +834,14 @@
    "name": "Spelparken",
    "domain": "spelparken.se",
    "status": "ej-forbjuden",
-   "checkedAt": 1794460628351,
+   "checkedAt": 1794463244385,
    "ok": true,
-   "lastOkAt": 1794460628351,
+   "lastOkAt": 1794463244385,
    "count": 200,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 43
+   "interval": 15
   },
   {
    "id": "speltrollet",
@@ -974,14 +974,14 @@
    "name": "The Swedish Fish",
    "domain": "theswedishfish.se",
    "status": "ej-forbjuden",
-   "checkedAt": 1794460702051,
+   "checkedAt": 1794463240626,
    "ok": true,
-   "lastOkAt": 1794460702051,
+   "lastOkAt": 1794463240626,
    "count": 29,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 42
+   "interval": 15
   },
   {
    "id": "tinymisters",
@@ -999,28 +999,28 @@
    "name": "Toyspace",
    "domain": "toyspace.se",
    "status": "ej-forbjuden",
-   "checkedAt": 1794460879859,
+   "checkedAt": 1794463286339,
    "ok": true,
-   "lastOkAt": 1794460879859,
+   "lastOkAt": 1794463286339,
    "count": 54,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 39
+   "interval": 15
   },
   {
    "id": "tsp-vault",
    "name": "TSP Vault",
    "domain": "tspvault.se",
    "status": "ej-forbjuden",
-   "checkedAt": 1794460653423,
+   "checkedAt": 1794463287576,
    "ok": true,
-   "lastOkAt": 1794460653423,
+   "lastOkAt": 1794463287576,
    "count": 17,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 43
+   "interval": 15
   },
   {
    "id": "webhallen",
@@ -1095,14 +1095,14 @@
    "name": "Pokecollect",
    "domain": "pokecollect.se",
    "status": "inga-bilder",
-   "checkedAt": 1794460718987,
+   "checkedAt": 1794463290467,
    "ok": true,
-   "lastOkAt": 1794460718987,
+   "lastOkAt": 1794463290467,
    "count": 90,
    "error": null,
    "blocked": false,
    "note": null,
-   "interval": 42
+   "interval": 15
   },
   {
    "id": "skapamer",
