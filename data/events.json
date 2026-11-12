@@ -1,6 +1,34 @@
 {
- "updated": 1794493868096,
+ "updated": 1794494868122,
  "events": [
+  {
+   "at": 1794494175441,
+   "store": "pokecollect",
+   "product": "pokecollect:10530883993929",
+   "group": "brilliant-stars|booster-pack|en|sleeved",
+   "title": "Pokémon Sword & Shield: Brilliant Stars Sleeved Booster Pack",
+   "url": "https://pokecollect.se/products/pokemon-sword-shield-brilliant-stars-sleeved-booster-pack",
+   "image": null,
+   "price": 229,
+   "type": "Booster Pack",
+   "set": "Brilliant Stars",
+   "lang": "en",
+   "kind": "ny"
+  },
+  {
+   "at": 1794494175441,
+   "store": "pokecollect",
+   "product": "pokecollect:10530835071305",
+   "group": "astral-radiance|booster-pack|en|sleeved",
+   "title": "Pokémon Sword & Shield: Astral Radiance Sleeved Booster Pack",
+   "url": "https://pokecollect.se/products/pokemon-sword-shield-astral-radiance-sleeved-booster-pack",
+   "image": null,
+   "price": 139,
+   "type": "Booster Pack",
+   "set": "Astral Radiance",
+   "lang": "en",
+   "kind": "ny"
+  },
   {
    "at": 1794492279839,
    "store": "pokecollect",
@@ -7084,34 +7112,6 @@
    "price": 1179,
    "type": "Blister",
    "set": "Crown Zenith",
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793963010767,
-   "store": "alphaspel",
-   "product": "alphaspel:https://alphaspel.se/1762-pokemon-tcg/361549-pokemon-tcg-mega-evolution-delta-reign-build-battle-box",
-   "group": "delta-reign|collection-box|en||",
-   "title": "Pokémon TCG: Mega Evolution - Delta Reign Build & Battle Box",
-   "url": "https://alphaspel.se/1762-pokemon-tcg/361549-pokemon-tcg-mega-evolution-delta-reign-build-battle-box",
-   "image": "https://alphaspel.se/media/products/e5baabb0-abcc-454d-82c9-853870237266",
-   "price": 399,
-   "type": "Collection Box",
-   "set": "Delta Reign",
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1793962866287,
-   "store": "cards-by-malcolm",
-   "product": "cards-by-malcolm:https://www.cardsbymalcolm.se/product/23049467/pokemon-mega-evolution-chaos-rising-booster-pack",
-   "group": "chaos-rising|booster-pack|en|",
-   "title": "Pokémon Mega Evolution: Chaos Rising Booster Pack",
-   "url": "https://www.cardsbymalcolm.se/product/23049467/pokemon-mega-evolution-chaos-rising-booster-pack",
-   "image": "https://primary.jwwb.nl/public/j/t/b/temp-lbskgdtsizbkffcqieki/chaos-rising-pack-high.png",
-   "price": 109,
-   "type": "Booster Pack",
-   "set": "Chaos Rising",
    "lang": "en",
    "kind": "tillbaka"
   }
