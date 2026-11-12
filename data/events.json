@@ -1,6 +1,34 @@
 {
- "updated": 1794470651498,
+ "updated": 1794471571513,
  "events": [
+  {
+   "at": 1794471422828,
+   "store": "poketalk",
+   "product": "poketalk:10253275398486",
+   "group": "x|ultra-premium-collection|en||charizard-x",
+   "title": "Pokémon TCG: Mega Charizard X Ultra Premium Collection",
+   "url": "https://poketalk.se/products/pokemon-tcg-mega-charizard-x-ultra-premium-collection",
+   "image": "https://cdn.shopify.com/s/files/1/0862/7860/3094/files/54_7c3b0c22-cd7a-45ef-8f7d-2a868fa9974f.png?v=1767888351",
+   "price": 2899,
+   "type": "Ultra-Premium Collection",
+   "set": null,
+   "lang": "en",
+   "kind": "ny"
+  },
+  {
+   "at": 1794471422828,
+   "store": "poketalk",
+   "product": "poketalk:10136499093846",
+   "group": "151|booster-bundle|en|",
+   "title": "Pokémon Scarlet & Violet: 151 Booster Bundle",
+   "url": "https://poketalk.se/products/pokemon-scarlet-violet-151-booster-bundle-1",
+   "image": "https://cdn.shopify.com/s/files/1/0862/7860/3094/files/PRODUKTSERIER_47.png?v=1750968890",
+   "price": 2299,
+   "type": "Booster Bundle",
+   "set": "151",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1794467333127,
    "store": "spelexperten",
@@ -7086,34 +7114,6 @@
    "type": "Tin",
    "set": "White Flare",
    "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793947927755,
-   "store": "speltrollet",
-   "product": "speltrollet:15123227214150",
-   "group": "x|booster-box|ja||raging-surf",
-   "title": "Pokemon Scarlet & Violet: Raging Surf Booster Box (Japansk)",
-   "url": "https://speltrollet.se/products/pokemon-scarlet-violet-raging-surf-booster-box-japansk",
-   "image": "https://cdn.shopify.com/s/files/1/0674/0951/0716/files/raging_surf_booster_box_japanska_pokemonkort_3c7a3533-cb3d-4eee-b4bc-f45fe321f4df.webp?v=1756199789",
-   "price": 1190,
-   "type": "Booster Box",
-   "set": "Scarlet & Violet",
-   "lang": "ja",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793947819794,
-   "store": "bangerpack",
-   "product": "bangerpack:https://bangerpack.se/pokemon/koreanska-utgavor/pokemon-blue-sky-stream-booster-kor",
-   "group": "x|booster-pack|ko||blue-sky-stream",
-   "title": "Pokémon Blue Sky Stream – Booster (KOR)",
-   "url": "https://bangerpack.se/pokemon/koreanska-utgavor/pokemon-blue-sky-stream-booster-kor",
-   "image": "https://cdn.quickbutik.com/images/99246J/products/6ae81fc833d2a.png",
-   "price": 79,
-   "type": "Booster Pack",
-   "set": null,
-   "lang": "ko",
    "kind": "tillbaka"
   }
  ]
