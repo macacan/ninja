@@ -1,6 +1,20 @@
 {
- "updated": 1794488740558,
+ "updated": 1794489640577,
  "events": [
+  {
+   "at": 1794488863128,
+   "store": "samlarhobby",
+   "product": "samlarhobby:16088563646845",
+   "group": "x|collection-box|en||flygon",
+   "title": "Pokémon, Flygon EX Box",
+   "url": "https://samlarhobby.se/products/pokemon-flygon-ex-box",
+   "image": "https://cdn.shopify.com/s/files/1/0905/3120/1405/files/flygonex.jpg?v=1793042491",
+   "price": 7995,
+   "type": "Collection Box",
+   "set": null,
+   "lang": "en",
+   "kind": "ny"
+  },
   {
    "at": 1794486994609,
    "store": "toyspace",
@@ -7101,20 +7115,6 @@
    "lang": "en",
    "kind": "prissankt",
    "from": 1499
-  },
-  {
-   "at": 1793959049574,
-   "store": "alphaspel",
-   "product": "alphaspel:https://alphaspel.se/1762-pokemon-tcg/362651-pokemon-tcg-30th-celebration-mini-tin",
-   "group": "30th-celebration|tin|en|mini|mini",
-   "title": "Pokémon TCG: 30th Celebration Mini Tin",
-   "url": "https://alphaspel.se/1762-pokemon-tcg/362651-pokemon-tcg-30th-celebration-mini-tin",
-   "image": "https://alphaspel.se/media/products/22ea2bb8-5cc6-4b7a-96d9-a2ce7ba89b88",
-   "price": 289,
-   "type": "Tin",
-   "set": "30th Celebration",
-   "lang": "en",
-   "kind": "ny"
   }
  ]
 }
