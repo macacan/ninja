@@ -1,5 +1,5 @@
 {
- "updated": 1794442617489,
+ "updated": 1794445217575,
  "stores": [
   {
    "id": "alara-games",
@@ -834,9 +834,9 @@
    "name": "Spelparken",
    "domain": "spelparken.se",
    "status": "ej-forbjuden",
-   "checkedAt": 1794441612123,
+   "checkedAt": 1794445208077,
    "ok": true,
-   "lastOkAt": 1794441612123,
+   "lastOkAt": 1794445208077,
    "count": 200,
    "error": null,
    "blocked": false,
@@ -904,9 +904,9 @@
    "name": "TCG Card House",
    "domain": "tcgcardhouse.se",
    "status": "ej-forbjuden",
-   "checkedAt": 1794441612266,
+   "checkedAt": 1794445215297,
    "ok": true,
-   "lastOkAt": 1794441612266,
+   "lastOkAt": 1794445215297,
    "count": 56,
    "error": null,
    "blocked": false,
