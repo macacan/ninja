@@ -1,6 +1,20 @@
 {
- "updated": 1794494868122,
+ "updated": 1794495788143,
  "events": [
+  {
+   "at": 1794495166706,
+   "store": "nordic-pulls",
+   "product": "nordic-pulls:https://nordicpulls.se/produkt/delta-reign-elite-trainer-box",
+   "group": "delta-reign|elite-trainer-box|en|",
+   "title": "Delta Reign Elite Trainer Box",
+   "url": "https://nordicpulls.se/produkt/delta-reign-elite-trainer-box",
+   "image": "https://nordicpulls.se/images/products/etb-delta-reign.jpg",
+   "price": 1199,
+   "type": "Elite Trainer Box",
+   "set": "Delta Reign",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1794494175441,
    "store": "pokecollect",
@@ -7100,20 +7114,6 @@
    "set": "Delta Reign",
    "lang": "en",
    "kind": "forbestallning"
-  },
-  {
-   "at": 1793963261901,
-   "store": "tcgaddan",
-   "product": "tcgaddan:16289052098892",
-   "group": "crown-zenith|blister|en||3",
-   "title": "Crown Zenith 3-Pack Blister",
-   "url": "https://tcgaddan.se/products/crown-zenith-booster-pack-kopia",
-   "image": "https://cdn.shopify.com/s/files/1/1037/7062/0236/files/Crown-zenith-inteleon-pin-collection-3-pack-blister_49c0fea3-5c97-40bb-99da-41a2d0dc1f78.png?v=1793962058",
-   "price": 1179,
-   "type": "Blister",
-   "set": "Crown Zenith",
-   "lang": "en",
-   "kind": "tillbaka"
   }
  ]
 }
