@@ -1,6 +1,34 @@
 {
- "updated": 1794512329318,
+ "updated": 1794512888102,
  "events": [
+  {
+   "at": 1794512566960,
+   "store": "bangerpack",
+   "product": "bangerpack:https://bangerpack.se/pokemon/elite-trainer-special/pokemon-tcg-delta-reign-elite-trainer-box",
+   "group": "delta-reign|elite-trainer-box|en|",
+   "title": "Pokémon Delta Reign – Elite Trainer Box",
+   "url": "https://bangerpack.se/pokemon/elite-trainer-special/pokemon-tcg-delta-reign-elite-trainer-box",
+   "image": "https://cdn.quickbutik.com/images/99246J/products/6ab57f90a6475.png",
+   "price": 1295,
+   "type": "Elite Trainer Box",
+   "set": "Delta Reign",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1794512566960,
+   "store": "bangerpack",
+   "product": "bangerpack:https://bangerpack.se/pokemon/displayer-boxar/pokemon-tcg-delta-reign-booster-display",
+   "group": "delta-reign|booster-box|en|",
+   "title": "Pokémon Delta Reign – Booster Display",
+   "url": "https://bangerpack.se/pokemon/displayer-boxar/pokemon-tcg-delta-reign-booster-display",
+   "image": "https://cdn.quickbutik.com/images/99246J/products/6ab57fca11490.png",
+   "price": 2795,
+   "type": "Booster Box",
+   "set": "Delta Reign",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1794511866402,
    "store": "miniature-metropolis",
@@ -7087,35 +7115,6 @@
    "set": "Pitch Black",
    "lang": "en",
    "kind": "tillbaka"
-  },
-  {
-   "at": 1793967669701,
-   "store": "bangerpack",
-   "product": "bangerpack:https://bangerpack.se/pokemon/boosters-packs/pokemon-shrouded-fable-booster",
-   "group": "shrouded-fable|booster-pack|en|",
-   "title": "Pokémon Shrouded Fable – Booster",
-   "url": "https://bangerpack.se/pokemon/boosters-packs/pokemon-shrouded-fable-booster",
-   "image": "https://cdn.quickbutik.com/images/99246J/products/6ae7efcf0b32a.png",
-   "price": 149,
-   "type": "Booster Pack",
-   "set": "Shrouded Fable",
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793967315831,
-   "store": "dragon-s-lair",
-   "product": "dragon-s-lair:15952412967260",
-   "group": "x|booster-box|ja||black-flame-ruler",
-   "title": "Pokemon Ruler Of The Black Flame Booster Box (sv3)(Japansk)(30st Boosters)",
-   "url": "https://dragonslair.se/products/pokemon-ruler-of-the-black-flame-booster-box-sv3japansk30st-boosters",
-   "image": "https://cdn.shopify.com/s/files/1/1015/8315/9644/files/rulerofblackflamebb1.webp?v=1793719454",
-   "price": 1749,
-   "type": "Booster Box",
-   "set": null,
-   "lang": "ja",
-   "kind": "prissankt",
-   "from": 1895
   }
  ]
 }
