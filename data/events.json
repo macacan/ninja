@@ -1,6 +1,34 @@
 {
- "updated": 1794448877664,
+ "updated": 1794449777690,
  "events": [
+  {
+   "at": 1794449456420,
+   "store": "bangerpack",
+   "product": "bangerpack:https://bangerpack.se/pokemon/koreanska-utgavor/pokemon-terastal-festival-ex-booster-kor",
+   "group": "x|booster-pack|ko||festival-terastal",
+   "title": "Pokémon Terastal Festival ex – Booster (KOR)",
+   "url": "https://bangerpack.se/pokemon/koreanska-utgavor/pokemon-terastal-festival-ex-booster-kor",
+   "image": "https://cdn.quickbutik.com/images/99246J/products/6ae826a2ef9eb.png",
+   "price": 189,
+   "type": "Booster Pack",
+   "set": null,
+   "lang": "ko",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1794449456420,
+   "store": "bangerpack",
+   "product": "bangerpack:https://bangerpack.se/pokemon/koreanska-utgavor/pokemon-mega-symphonia-booster-kor",
+   "group": "x|booster-pack|ko||symphonia",
+   "title": "Pokémon Mega Symphonia – Booster (KOR)",
+   "url": "https://bangerpack.se/pokemon/koreanska-utgavor/pokemon-mega-symphonia-booster-kor",
+   "image": "https://cdn.quickbutik.com/images/99246J/products/6ae826883b96d.png",
+   "price": 59,
+   "type": "Booster Pack",
+   "set": null,
+   "lang": "ko",
+   "kind": "tillbaka"
+  },
   {
    "at": 1794446062914,
    "store": "toyspace",
@@ -7083,34 +7111,6 @@
    "set": null,
    "lang": "zh",
    "kind": "tillbaka"
-  },
-  {
-   "at": 1793934323879,
-   "store": "spelparken",
-   "product": "spelparken:15472262971767",
-   "group": "paldea-evolved|blister|en||1",
-   "title": "Paldea Evolved – 1-Pack Blister",
-   "url": "https://spelparken.se/products/paldea-evolved-1-pack-blister",
-   "image": "https://cdn.shopify.com/s/files/1/0948/1876/3127/files/Scarlet-and-Violet-Paldea-Evolved-1-Pack-Checklane-Blister-Growlithe.jpg?v=1777831690",
-   "price": 209,
-   "type": "Blister",
-   "set": "Paldea Evolved",
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1793934323879,
-   "store": "spelparken",
-   "product": "spelparken:15219165036919",
-   "group": "lost-origin|elite-trainer-box|en|",
-   "title": "Lost Origin ETB",
-   "url": "https://spelparken.se/products/sword-shield-last-origin-etb-oppnas-live",
-   "image": "https://cdn.shopify.com/s/files/1/0948/1876/3127/files/lost-origin-etb-1.jpg?v=1761824643",
-   "price": 2999,
-   "type": "Elite Trainer Box",
-   "set": "Lost Origin",
-   "lang": "en",
-   "kind": "ny"
   }
  ]
 }
