@@ -1,6 +1,21 @@
 {
- "updated": 1794473041331,
+ "updated": 1794473940197,
  "events": [
+  {
+   "at": 1794473286811,
+   "store": "rgb-kingz",
+   "product": "rgb-kingz:16205113590090",
+   "group": "op|extra-booster-one-piece-heroines-edition|booster-box|ja|",
+   "title": "One Piece Card Game: EB03 – Heroines Edition Booster Box (Japansk)",
+   "url": "https://rgbkingz.com/products/one-piece-card-game-eb03-heroines-edition-booster-box-japansk",
+   "image": "https://cdn.shopify.com/s/files/1/0782/8088/4554/files/n_gayNx1j5NI8kOzkvJgKI2MbHZ1ccs07cQc3sE4BF3lAGTbsKwUjj_2nONlCUmyZlhIhXdUa-AR8uPWGXbSYZOiPG3IAssl-m0xqM_RJrg3WBnZHofUOiCvUW3rgXTXXtI6RnImGR1mRfqCF4NOwtLuEiS5PslORd5mFW1lXh_PiuAIprHWwVD.jpg?v=1794472698",
+   "price": 1599,
+   "type": "Booster Box",
+   "set": "Extra Booster: One Piece Heroines Edition",
+   "lang": "ja",
+   "game": "op",
+   "kind": "ny"
+  },
   {
    "at": 1794472654536,
    "store": "rgb-kingz",
@@ -7101,21 +7116,6 @@
    "set": "Astral Radiance",
    "lang": "en",
    "kind": "tillbaka"
-  },
-  {
-   "at": 1793949621156,
-   "store": "poketalk",
-   "product": "poketalk:11259843346774",
-   "group": "chaos-rising|elite-trainer-box|en|pc",
-   "title": "Pokémon Mega & Evolution: Pokemon Center Chaos Rising Elite Trainer Box",
-   "url": "https://poketalk.se/products/pokemon-mega-evolution-pokemon-center-chaos-rising-elite-trainer-box-1",
-   "image": "https://cdn.shopify.com/s/files/1/0862/7860/3094/files/PRODUKTSERIER_2000x2000px_-4_9fba43ca-dd71-49f2-b1fe-1a4060705642.png?v=1782542251",
-   "price": 1790,
-   "type": "Elite Trainer Box",
-   "set": "Chaos Rising",
-   "lang": "en",
-   "kind": "prissankt",
-   "from": 1899
   }
  ]
 }
