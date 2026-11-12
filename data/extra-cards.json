@@ -4,5 +4,285 @@
   { "id": "30th-R", "localId": "R", "name": "Mew RGB Edition (Red)" },
   { "id": "30th-G", "localId": "G", "name": "Mew RGB Edition (Green)" },
   { "id": "30th-B", "localId": "B", "name": "Mew RGB Edition (Blue)" }
+ ],
+ "mep": [
+  { "id": "mep-111", "localId": "111", "name": "Masquerain" },
+  { "id": "mep-112", "localId": "112", "name": "Magmortar" },
+  { "id": "mep-113", "localId": "113", "name": "Enamorus" },
+  { "id": "mep-114", "localId": "114", "name": "Kommo-o" },
+  { "id": "mep-115", "localId": "115", "name": "Spritzee" },
+  { "id": "mep-116", "localId": "116", "name": "Seel" },
+  { "id": "mep-117", "localId": "117", "name": "Kyogre" },
+  { "id": "mep-118", "localId": "118", "name": "Mega Rayquaza ex" },
+  { "id": "mep-131", "localId": "131", "name": "Pokémon RUN Pikachu" },
+  { "id": "mep-028", "localId": "028", "name": "Celebratory Fanfare" },
+  { "id": "mep-101", "localId": "101", "name": "Nidorina" },
+  { "id": "mep-120", "localId": "120", "name": "Celebratory Fanfare" }
+ ],
+ "sv10": [
+  { "id": "sv10-028", "localId": "028", "name": "Arcanine" }
+ ],
+ "sve": [
+  { "id": "sve-017", "localId": "017", "name": "Basic Grass Energy" },
+  { "id": "sve-018", "localId": "018", "name": "Basic Fire Energy" },
+  { "id": "sve-019", "localId": "019", "name": "Basic Water Energy" },
+  { "id": "sve-020", "localId": "020", "name": "Basic Lightning Energy" },
+  { "id": "sve-021", "localId": "021", "name": "Basic Psychic Energy" },
+  { "id": "sve-022", "localId": "022", "name": "Basic Fighting Energy" },
+  { "id": "sve-023", "localId": "023", "name": "Basic Darkness Energy" },
+  { "id": "sve-024", "localId": "024", "name": "Basic Metal Energy" }
+ ],
+ "svp": [
+  { "id": "svp-196", "localId": "196", "name": "Charizard ex" },
+  { "id": "svp-221", "localId": "221", "name": "Professor's Research" },
+  { "id": "svp-222", "localId": "222", "name": "Professor's Research" },
+  { "id": "svp-223", "localId": "223", "name": "Professor's Research" }
+ ],
+ "swsh6": [
+  { "id": "swsh6-181", "localId": "181", "name": "Metagross V" }
+ ],
+ "sm12": [
+  { "id": "sm12-143a", "localId": "143a", "name": "Togepi & Cleffa & Igglybuff-GX" }
+ ],
+ "sm11": [
+  { "id": "sm11-079a", "localId": "079a", "name": "Jirachi-GX" },
+  { "id": "sm11-191a", "localId": "191a", "name": "Cherish Ball" },
+  { "id": "sm11-206a", "localId": "206a", "name": "Reset Stamp" }
+ ],
+ "sm9": [
+  { "id": "sm9-152a", "localId": "152a", "name": "Pokémon Communication" },
+  { "id": "sm9-152b", "localId": "152b", "name": "Pokémon Communication" }
+ ],
+ "sm10": [
+  { "id": "sm10-182a", "localId": "182a", "name": "Pokégear 3.0" },
+  { "id": "sm10-182b", "localId": "182b", "name": "Pokégear 3.0" },
+  { "id": "sm10-189a", "localId": "189a", "name": "Welder" },
+  { "id": "sm10-195a", "localId": "195a", "name": "Dedenne-GX" }
+ ],
+ "sm7.5": [
+  { "id": "sm7.5-40a", "localId": "40a", "name": "Altaria" },
+  { "id": "sm7.5-60a", "localId": "60a", "name": "Fiery Flint" }
+ ],
+ "sm8": [
+  { "id": "sm8-172a", "localId": "172a", "name": "Electropower" },
+  { "id": "sm8-187a", "localId": "187a", "name": "Net Ball" },
+  { "id": "sm8-188a", "localId": "188a", "name": "Professor Elm's Lecture" },
+  { "id": "sm8-189a", "localId": "189a", "name": "Sightseer" }
+ ],
+ "sm7": [
+  { "id": "sm7-010a", "localId": "010a", "name": "Sceptile" },
+  { "id": "sm7-123a", "localId": "123a", "name": "Acro Bike" },
+  { "id": "sm7-148a", "localId": "148a", "name": "Tate & Liza" },
+  { "id": "sm7-177a", "localId": "177a", "name": "Rayquaza-GX" }
+ ],
+ "sm6": [
+  { "id": "sm6-002a", "localId": "002a", "name": "Alolan Exeggutor" },
+  { "id": "sm6-102a", "localId": "102a", "name": "Beast Ring" },
+  { "id": "sm6-112a", "localId": "112a", "name": "Metal Frying Pan" },
+  { "id": "sm6-113a", "localId": "113a", "name": "Mysterious Treasure" }
+ ],
+ "sm3.5": [
+  { "id": "sm3.5-10a", "localId": "10a", "name": "Entei-GX" },
+  { "id": "sm3.5-68a", "localId": "68a", "name": "Ultra Ball" },
+  { "id": "sm3.5-77a", "localId": "77a", "name": "Zoroark-GX" }
+ ],
+ "sm5": [
+  { "id": "sm5-119a", "localId": "119a", "name": "Cynthia" },
+  { "id": "sm5-122a", "localId": "122a", "name": "Escape Board" },
+  { "id": "sm5-125a", "localId": "125a", "name": "Lillie" },
+  { "id": "sm5-135a", "localId": "135a", "name": "Volkner" },
+  { "id": "sm5-153a", "localId": "153a", "name": "Lusamine" }
+ ],
+ "sm4": [
+  { "id": "sm4-084a", "localId": "084a", "name": "Regigigas" }
+ ],
+ "sm2": [
+  { "id": "sm2-019a", "localId": "019a", "name": "Alolan Sandshrew" },
+  { "id": "sm2-021a", "localId": "021a", "name": "Alolan Vulpix" },
+  { "id": "sm2-051a", "localId": "051a", "name": "Garbodor" },
+  { "id": "sm2-060a", "localId": "060a", "name": "Tapu Lele-GX" },
+  { "id": "sm2-092a", "localId": "092a", "name": "Sylveon-GX" },
+  { "id": "sm2-121a", "localId": "121a", "name": "Choice Band" },
+  { "id": "sm2-124a", "localId": "124a", "name": "Enhanced Hammer" },
+  { "id": "sm2-125a", "localId": "125a", "name": "Field Blower" },
+  { "id": "sm2-128a", "localId": "128a", "name": "Max Potion" },
+  { "id": "sm2-130a", "localId": "130a", "name": "Rescue Stretcher" },
+  { "id": "sm2-157a", "localId": "157a", "name": "Metagross-GX" }
+ ],
+ "sm1": [
+  { "id": "sm1-101a", "localId": "101a", "name": "Eevee" }
+ ],
+ "smp": [
+  { "id": "smp-SM30a", "localId": "SM30a", "name": "Tapu Koko" },
+  { "id": "smp-SM103a", "localId": "SM103a", "name": "Lunala-GX" },
+  { "id": "smp-SM104a", "localId": "SM104a", "name": "Solgaleo-GX" }
+ ],
+ "sm3": [
+  { "id": "sm3-018a", "localId": "018a", "name": "Charmander" },
+  { "id": "sm3-039a", "localId": "039a", "name": "Tapu Fini-GX" },
+  { "id": "sm3-088a", "localId": "088a", "name": "Darkrai-GX" },
+  { "id": "sm3-092a", "localId": "092a", "name": "Kirlia" },
+  { "id": "sm3-105a", "localId": "105a", "name": "Porygon-Z" },
+  { "id": "sm3-112a", "localId": "112a", "name": "Acerola" },
+  { "id": "sm3-115a", "localId": "115a", "name": "Guzma" },
+  { "id": "sm3-116a", "localId": "116a", "name": "Kiawe" },
+  { "id": "sm3-165", "localId": "165", "name": "Rescue Stretcher" }
+ ],
+ "g1": [
+  { "id": "g1-19", "localId": "19", "name": "Shellder" }
+ ],
+ "hgssp": [
+  { "id": "hgssp-HGSS18", "localId": "HGSS18", "name": "Tropical Tidal Wave" }
+ ],
+ "ex10": [
+  { "id": "ex10-A", "localId": "A", "name": "Unown" },
+  { "id": "ex10-B", "localId": "B", "name": "Unown" },
+  { "id": "ex10-C", "localId": "C", "name": "Unown" },
+  { "id": "ex10-D", "localId": "D", "name": "Unown" },
+  { "id": "ex10-E", "localId": "E", "name": "Unown" },
+  { "id": "ex10-F", "localId": "F", "name": "Unown" },
+  { "id": "ex10-G", "localId": "G", "name": "Unown" },
+  { "id": "ex10-H", "localId": "H", "name": "Unown" },
+  { "id": "ex10-I", "localId": "I", "name": "Unown" },
+  { "id": "ex10-J", "localId": "J", "name": "Unown" },
+  { "id": "ex10-K", "localId": "K", "name": "Unown" },
+  { "id": "ex10-L", "localId": "L", "name": "Unown" },
+  { "id": "ex10-M", "localId": "M", "name": "Unown" },
+  { "id": "ex10-N", "localId": "N", "name": "Unown" },
+  { "id": "ex10-O", "localId": "O", "name": "Unown" },
+  { "id": "ex10-P", "localId": "P", "name": "Unown" },
+  { "id": "ex10-Q", "localId": "Q", "name": "Unown" },
+  { "id": "ex10-R", "localId": "R", "name": "Unown" },
+  { "id": "ex10-S", "localId": "S", "name": "Unown" },
+  { "id": "ex10-T", "localId": "T", "name": "Unown" },
+  { "id": "ex10-U", "localId": "U", "name": "Unown" },
+  { "id": "ex10-V", "localId": "V", "name": "Unown" },
+  { "id": "ex10-W", "localId": "W", "name": "Unown" },
+  { "id": "ex10-X", "localId": "X", "name": "Unown" },
+  { "id": "ex10-Y", "localId": "Y", "name": "Unown" },
+  { "id": "ex10-Z", "localId": "Z", "name": "Unown" },
+  { "id": "ex10-!", "localId": "!", "name": "Unown" },
+  { "id": "ex10-?", "localId": "?", "name": "Unown" }
+ ],
+ "ecard2": [
+  { "id": "ecard2-050", "localId": "050", "name": "Golduck" },
+  { "id": "ecard2-074", "localId": "074", "name": "Drowzee" },
+  { "id": "ecard2-095", "localId": "095", "name": "Mr. Mime" },
+  { "id": "ecard2-103", "localId": "103", "name": "Porygon" }
+ ],
+ "clv": [
+  { "id": "clv-1", "localId": "1", "name": "Bulbasaur" },
+  { "id": "clv-2", "localId": "2", "name": "Ivysaur" },
+  { "id": "clv-3", "localId": "3", "name": "Venusaur" },
+  { "id": "clv-4", "localId": "4", "name": "Paras" },
+  { "id": "clv-5", "localId": "5", "name": "Parasect" },
+  { "id": "clv-6", "localId": "6", "name": "Scyther" },
+  { "id": "clv-7", "localId": "7", "name": "Pinsir" },
+  { "id": "clv-8", "localId": "8", "name": "Sandshrew" },
+  { "id": "clv-9", "localId": "9", "name": "Sandslash" },
+  { "id": "clv-10", "localId": "10", "name": "Onix" },
+  { "id": "clv-11", "localId": "11", "name": "Hitmonlee" },
+  { "id": "clv-12", "localId": "12", "name": "Hitmonchan" },
+  { "id": "clv-13", "localId": "13", "name": "Doduo" },
+  { "id": "clv-14", "localId": "14", "name": "Dodrio" },
+  { "id": "clv-15", "localId": "15", "name": "Chansey" },
+  { "id": "clv-16", "localId": "16", "name": "Snorlax" },
+  { "id": "clv-17", "localId": "17", "name": "Lugia ex" },
+  { "id": "clv-18", "localId": "18", "name": "Bill" },
+  { "id": "clv-19", "localId": "19", "name": "Boss's Orders" },
+  { "id": "clv-20", "localId": "20", "name": "Computer Search" },
+  { "id": "clv-21", "localId": "21", "name": "Poké Ball" },
+  { "id": "clv-22", "localId": "22", "name": "Pokémon Fan Club" },
+  { "id": "clv-23", "localId": "23", "name": "Pokémon Nurse" },
+  { "id": "clv-24", "localId": "24", "name": "Professor Oak" },
+  { "id": "clv-25", "localId": "25", "name": "Rare Candy" },
+  { "id": "clv-26", "localId": "26", "name": "Rocket's Admin" },
+  { "id": "clv-27", "localId": "27", "name": "Sun Seed" },
+  { "id": "clv-28", "localId": "28", "name": "Super Rod" },
+  { "id": "clv-29", "localId": "29", "name": "Switch" },
+  { "id": "clv-30", "localId": "30", "name": "Ultra Ball" },
+  { "id": "clv-31", "localId": "31", "name": "VS Seeker" },
+  { "id": "clv-32", "localId": "32", "name": "Double Colorless Energy" },
+  { "id": "clv-33", "localId": "33", "name": "Basic Grass Energy" },
+  { "id": "clv-34", "localId": "34", "name": "Basic Fighting Energy" }
+ ],
+ "clc": [
+  { "id": "clc-1", "localId": "1", "name": "Charmander" },
+  { "id": "clc-2", "localId": "2", "name": "Charmeleon" },
+  { "id": "clc-3", "localId": "3", "name": "Charizard" },
+  { "id": "clc-4", "localId": "4", "name": "Ponyta" },
+  { "id": "clc-5", "localId": "5", "name": "Rapidash" },
+  { "id": "clc-6", "localId": "6", "name": "Magmar" },
+  { "id": "clc-7", "localId": "7", "name": "Ho-Oh ex" },
+  { "id": "clc-8", "localId": "8", "name": "Pikachu" },
+  { "id": "clc-9", "localId": "9", "name": "Raichu" },
+  { "id": "clc-10", "localId": "10", "name": "Voltorb" },
+  { "id": "clc-11", "localId": "11", "name": "Electrode" },
+  { "id": "clc-12", "localId": "12", "name": "Zapdos" },
+  { "id": "clc-13", "localId": "13", "name": "Clefairy" },
+  { "id": "clc-14", "localId": "14", "name": "Clefable" },
+  { "id": "clc-15", "localId": "15", "name": "Dunsparce" },
+  { "id": "clc-16", "localId": "16", "name": "Stantler" },
+  { "id": "clc-17", "localId": "17", "name": "Miltank" },
+  { "id": "clc-18", "localId": "18", "name": "Bill" },
+  { "id": "clc-19", "localId": "19", "name": "Boss's Orders" },
+  { "id": "clc-20", "localId": "20", "name": "Computer Search" },
+  { "id": "clc-21", "localId": "21", "name": "Poké Ball" },
+  { "id": "clc-22", "localId": "22", "name": "Pokémon Fan Club" },
+  { "id": "clc-23", "localId": "23", "name": "Professor Oak" },
+  { "id": "clc-24", "localId": "24", "name": "Rare Candy" },
+  { "id": "clc-25", "localId": "25", "name": "Rocket's Admin" },
+  { "id": "clc-26", "localId": "26", "name": "Scorching Charcoal" },
+  { "id": "clc-27", "localId": "27", "name": "Super Rod" },
+  { "id": "clc-28", "localId": "28", "name": "Super Scoop Up" },
+  { "id": "clc-29", "localId": "29", "name": "Switch" },
+  { "id": "clc-30", "localId": "30", "name": "Ultra Ball" },
+  { "id": "clc-31", "localId": "31", "name": "VS Seeker" },
+  { "id": "clc-32", "localId": "32", "name": "Double Colorless Energy" },
+  { "id": "clc-33", "localId": "33", "name": "Basic Fire Energy" },
+  { "id": "clc-34", "localId": "34", "name": "Basic Lightning Energy" }
+ ],
+ "clb": [
+  { "id": "clb-1", "localId": "1", "name": "Squirtle" },
+  { "id": "clb-2", "localId": "2", "name": "Wartortle" },
+  { "id": "clb-3", "localId": "3", "name": "Blastoise" },
+  { "id": "clb-4", "localId": "4", "name": "Staryu" },
+  { "id": "clb-5", "localId": "5", "name": "Starmie" },
+  { "id": "clb-6", "localId": "6", "name": "Magikarp" },
+  { "id": "clb-7", "localId": "7", "name": "Gyarados" },
+  { "id": "clb-8", "localId": "8", "name": "Lapras" },
+  { "id": "clb-9", "localId": "9", "name": "Articuno" },
+  { "id": "clb-10", "localId": "10", "name": "Suicune ex" },
+  { "id": "clb-11", "localId": "11", "name": "Drowzee" },
+  { "id": "clb-12", "localId": "12", "name": "Hypno" },
+  { "id": "clb-13", "localId": "13", "name": "Mr. Mime" },
+  { "id": "clb-14", "localId": "14", "name": "Mewtwo" },
+  { "id": "clb-15", "localId": "15", "name": "Lt. Surge's Rattata" },
+  { "id": "clb-16", "localId": "16", "name": "Lt. Surge's Raticate" },
+  { "id": "clb-17", "localId": "17", "name": "Kangaskhan" },
+  { "id": "clb-18", "localId": "18", "name": "Bill" },
+  { "id": "clb-19", "localId": "19", "name": "Boss's Orders" },
+  { "id": "clb-20", "localId": "20", "name": "Computer Search" },
+  { "id": "clb-21", "localId": "21", "name": "Drops in the Ocean" },
+  { "id": "clb-22", "localId": "22", "name": "Fisherman" },
+  { "id": "clb-23", "localId": "23", "name": "Poké Ball" },
+  { "id": "clb-24", "localId": "24", "name": "Pokémon Fan Club" },
+  { "id": "clb-25", "localId": "25", "name": "Professor Oak" },
+  { "id": "clb-26", "localId": "26", "name": "Rare Candy" },
+  { "id": "clb-27", "localId": "27", "name": "Rocket's Admin" },
+  { "id": "clb-28", "localId": "28", "name": "Super Rod" },
+  { "id": "clb-29", "localId": "29", "name": "Switch" },
+  { "id": "clb-30", "localId": "30", "name": "Ultra Ball" },
+  { "id": "clb-31", "localId": "31", "name": "VS Seeker" },
+  { "id": "clb-32", "localId": "32", "name": "Double Colorless Energy" },
+  { "id": "clb-33", "localId": "33", "name": "Basic Water Energy" },
+  { "id": "clb-34", "localId": "34", "name": "Basic Psychic Energy" }
+ ],
+ "wb1": [
+  { "id": "wb1-1", "localId": "1", "name": "Treecko" },
+  { "id": "wb1-2", "localId": "2", "name": "Wurmple" },
+  { "id": "wb1-3", "localId": "3", "name": "Torchic" },
+  { "id": "wb1-4", "localId": "4", "name": "Mudkip" },
+  { "id": "wb1-5", "localId": "5", "name": "Pikachu" }
  ]
 }

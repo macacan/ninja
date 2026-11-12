@@ -204,6 +204,37 @@ for (const t of tcgOnly) {
   });
 }
 
+// TCGplayer-grupper som optcgapi inte har alls: promokort (OP-PR, där t.ex. Mini Case Set-korten ligger), eventkort
+// (Release Event, Pre-Release, Anniversary), demo- och revisionspaket och nya starterdeck. Alla deras kort tas med från
+// TCGplayer, med TCGplayers bild och pris. Setets id blir gruppens kod ("OP-PR", "OP13-ANN", "ST-29").
+const covered = new Set([...setList.map((s) => code(s.id)), ...setList.map((s) => code(s.code || ""))]);
+const groupId = (abbr) => abbr.toUpperCase().replace(/\s+/g, "-").replace(/^([A-Z]+)(\d+)(?=$|-)/, "$1-$2").replace(/^(OP|ST)-(\d+)-(RE|PRE|ANN)$/, "$1$2-$3");
+for (const g of groups) {
+  if (!g.abbreviation || covered.has(code(g.abbreviation))) continue;
+  const products = await productsOf(g.groupId);
+  const withCards = products.filter((p) => p.imageUrl && (p.extendedData || []).some((e) => e.name === "Number"));
+  if (!withCards.length) continue;
+  const set = groupId(g.abbreviation);
+  covered.add(code(g.abbreviation));
+  const prices = await getJSON(`https://tcgcsv.com/tcgplayer/68/${g.groupId}/prices`);
+  const price = new Map((prices?.results || []).map((x) => [x.productId, x]));
+  setList.push({ id: set, name: g.name, code: g.abbreviation, date: g.publishedOn?.slice(0, 10) || null, main: false, image: sealedImage(products) });
+  for (const p of withCards) {
+    const ex = Object.fromEntries(p.extendedData.map((e) => [e.name, e.value]));
+    const id = `${set}/tcg${p.productId}`;
+    if (seen.has(id)) continue;
+    seen.add(id);
+    const { name, variant } = splitName(p.name), pr = price.get(p.productId);
+    cards.push({
+      id, name, variant, set, no: ex.Number, rarity: ex.Rarity || null,
+      color: ex.Color?.replace(/;/g, " ") || null, type: ex.CardType || null, cost: num(ex.Cost), power: num(ex.Power),
+      counter: num(ex.Counterplus), life: num(ex.Life), attr: ex.Attribute || null, sub: ex.Subtypes || null,
+      image: p.imageUrl.replace(/_\d+w\.jpg$/, "_400w.jpg"), sek: sekOf(pr?.marketPrice ?? pr?.lowPrice), low: sekOf(pr?.lowPrice),
+      tcg: String(p.productId),
+    });
+  }
+}
+
 // optcgapi kan ha korten innan setet står i deras setlista: då är setet inte längre väntande
 const withCards = new Set(cards.map((c) => c.set));
 for (const s of setList) if (s.pending && withCards.has(s.id)) delete s.pending;

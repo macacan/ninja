@@ -1,5 +1,5 @@
 {
- "updated": 1794491986650,
+ "updated": 1794513717032,
  "sets": [
   {
    "id": "OP-18",
@@ -21,6 +21,15 @@
    "count": 96
   },
   {
+   "id": "SD-01",
+   "name": "Set Sail Deck Set",
+   "code": "SD01",
+   "date": "2026-09-18",
+   "main": false,
+   "image": "https://tcgplayer-cdn.tcgplayer.com/product/694893_400w.jpg",
+   "count": 30
+  },
+  {
    "id": "OP-17",
    "name": "The World's Strongest Warriors",
    "code": "OP17",
@@ -28,6 +37,15 @@
    "main": true,
    "image": "https://tcgplayer-cdn.tcgplayer.com/product/704752_400w.jpg",
    "count": 169
+  },
+  {
+   "id": "OP17-RE",
+   "name": "The World's Strongest Warriors Release Event Cards",
+   "code": "OP17 RE",
+   "date": "2026-08-21",
+   "main": false,
+   "image": "https://tcgplayer-cdn.tcgplayer.com/product/712741_400w.jpg",
+   "count": 75
   },
   {
    "id": "ST-36",
@@ -102,6 +120,15 @@
    "count": 34
   },
   {
+   "id": "OP16-RE",
+   "name": "The Time of Battle Release Event Cards",
+   "code": "OP16 RE",
+   "date": "2026-06-05",
+   "main": false,
+   "image": null,
+   "count": 75
+  },
+  {
    "id": "OP15-EB04",
    "name": "Adventure on Kami's Island",
    "code": "OP15-EB04",
@@ -109,6 +136,15 @@
    "main": true,
    "image": "https://tcgplayer-cdn.tcgplayer.com/product/682057_400w.jpg",
    "count": 203
+  },
+  {
+   "id": "OP15-RE",
+   "name": "Adventure on Kami's Island Release Event Cards",
+   "code": "OP15 RE",
+   "date": "2026-03-27",
+   "main": false,
+   "image": null,
+   "count": 90
   },
   {
    "id": "EB-03",
@@ -129,6 +165,24 @@
    "count": 205
   },
   {
+   "id": "ST-29",
+   "name": "ST-29: Starter Deck 29 Egghead",
+   "code": "ST-29",
+   "date": "2026-01-16",
+   "main": false,
+   "image": "https://tcgplayer-cdn.tcgplayer.com/product/671479_400w.jpg",
+   "count": 62
+  },
+  {
+   "id": "OP14-RE",
+   "name": "The Azure Sea's Seven Release Event Cards",
+   "code": "OP14 RE",
+   "date": "2026-01-09",
+   "main": false,
+   "image": null,
+   "count": 89
+  },
+  {
    "id": "OP-13",
    "name": "Carrying On His Will",
    "code": "OP13",
@@ -138,6 +192,15 @@
    "count": 175
   },
   {
+   "id": "OP13-ANN",
+   "name": "Carrying On His Will: 3rd Anniversary Tournament Cards",
+   "code": "OP13 ANN",
+   "date": "2025-10-31",
+   "main": false,
+   "image": "https://tcgplayer-cdn.tcgplayer.com/product/657796_400w.jpg",
+   "count": 78
+  },
+  {
    "id": "PRB-02",
    "name": "Premium Booster - The Best - Vol. 2",
    "code": "PRB-02",
@@ -145,6 +208,15 @@
    "main": true,
    "image": "https://tcgplayer-cdn.tcgplayer.com/product/628452_400w.jpg",
    "count": 315
+  },
+  {
+   "id": "LT-01",
+   "name": "Learn Together Deck Set",
+   "code": "LT-01",
+   "date": "2025-10-03",
+   "main": false,
+   "image": "https://tcgplayer-cdn.tcgplayer.com/product/628478_400w.jpg",
+   "count": 51
   },
   {
    "id": "ST-22",
@@ -163,6 +235,15 @@
    "main": true,
    "image": "https://tcgplayer-cdn.tcgplayer.com/product/628346_400w.jpg",
    "count": 155
+  },
+  {
+   "id": "OP12-RE",
+   "name": "Legacy of the Master Release Event Cards",
+   "code": "OP12 RE",
+   "date": "2025-08-15",
+   "main": false,
+   "image": null,
+   "count": 75
   },
   {
    "id": "OP-11",
@@ -228,6 +309,15 @@
    "count": 15
   },
   {
+   "id": "OP11-RE",
+   "name": "A Fist of Divine Speed Release Event Cards",
+   "code": "OP11 RE",
+   "date": "2025-05-30",
+   "main": false,
+   "image": null,
+   "count": 75
+  },
+  {
    "id": "EB-02",
    "name": "Extra Booster: Anime 25th Collection",
    "code": "EB02",
@@ -255,6 +345,15 @@
    "count": 32
   },
   {
+   "id": "OP10-RE",
+   "name": "Royal Blood Release Event Cards",
+   "code": "OP10 RE",
+   "date": "2025-03-14",
+   "main": false,
+   "image": null,
+   "count": 75
+  },
+  {
    "id": "OP-09",
    "name": "Emperors in the New World",
    "code": "OP09",
@@ -262,6 +361,33 @@
    "main": true,
    "image": "https://tcgplayer-cdn.tcgplayer.com/product/563834_400w.jpg",
    "count": 159
+  },
+  {
+   "id": "OP09-ANN",
+   "name": "Emperors in the New World: 2nd Anniversary Tournament Cards",
+   "code": "OP09 ANN",
+   "date": "2024-12-06",
+   "main": false,
+   "image": "https://tcgplayer-cdn.tcgplayer.com/product/600705_400w.jpg",
+   "count": 75
+  },
+  {
+   "id": "OP-DD",
+   "name": "One Piece Demo Deck Cards",
+   "code": "OP-DD",
+   "date": "2024-12-05",
+   "main": false,
+   "image": null,
+   "count": 25
+  },
+  {
+   "id": "OP-RP",
+   "name": "Revision Pack Cards",
+   "code": "OP-RP",
+   "date": "2024-11-26",
+   "main": false,
+   "image": null,
+   "count": 33
   },
   {
    "id": "PRB-01",
@@ -336,6 +462,15 @@
    "count": 151
   },
   {
+   "id": "OP08-PRE",
+   "name": "Two Legends Pre-Release Cards",
+   "code": "OP08 PRE",
+   "date": "2024-09-06",
+   "main": false,
+   "image": "https://tcgplayer-cdn.tcgplayer.com/product/577144_400w.jpg",
+   "count": 75
+  },
+  {
    "id": "ST-14",
    "name": "Starter Deck 14: 3D2Y",
    "code": "ST-14",
@@ -352,6 +487,15 @@
    "main": true,
    "image": "https://tcgplayer-cdn.tcgplayer.com/product/532106_400w.jpg",
    "count": 151
+  },
+  {
+   "id": "OP07-PRE",
+   "name": "500 Years in the Future Pre-Release Cards",
+   "code": "OP07 PRE",
+   "date": "2024-06-21",
+   "main": false,
+   "image": "https://tcgplayer-cdn.tcgplayer.com/product/552054_400w.jpg",
+   "count": 75
   },
   {
    "id": "EB-01",
@@ -390,6 +534,15 @@
    "count": 17
   },
   {
+   "id": "OP06-PRE",
+   "name": "Wings of the Captain Pre-Release Cards",
+   "code": "OP06 PRE",
+   "date": "2024-03-08",
+   "main": false,
+   "image": "https://tcgplayer-cdn.tcgplayer.com/product/537437_400w.jpg",
+   "count": 75
+  },
+  {
    "id": "ST-11",
    "name": "Starter Deck 11: Uta",
    "code": "ST-11",
@@ -408,6 +561,15 @@
    "count": 154
   },
   {
+   "id": "OP05-ANN",
+   "name": "Awakening of the New Era: 1st Anniversary Tournament Cards",
+   "code": "OP05 ANN",
+   "date": "2023-12-08",
+   "main": false,
+   "image": "https://tcgplayer-cdn.tcgplayer.com/product/520771_400w.jpg",
+   "count": 75
+  },
+  {
    "id": "ST-10",
    "name": "Ultra Deck: The Three Captains",
    "code": "ST-10",
@@ -424,6 +586,15 @@
    "main": true,
    "image": "https://tcgplayer-cdn.tcgplayer.com/product/485833_400w.jpg",
    "count": 155
+  },
+  {
+   "id": "OP04-PRE",
+   "name": "Kingdoms of Intrigue Pre-Release Cards",
+   "code": "OP04 PRE",
+   "date": "2023-09-15",
+   "main": false,
+   "image": "https://tcgplayer-cdn.tcgplayer.com/product/516961_400w.jpg",
+   "count": 75
   },
   {
    "id": "ST-09",
@@ -462,6 +633,15 @@
    "count": 17
   },
   {
+   "id": "OP03-PRE",
+   "name": "Pillars of Strength Pre-Release Cards",
+   "code": "OP03 PRE",
+   "date": "2023-06-30",
+   "main": false,
+   "image": "https://tcgplayer-cdn.tcgplayer.com/product/502624_400w.jpg",
+   "count": 77
+  },
+  {
    "id": "OP-02",
    "name": "Paramount War",
    "code": "OP02",
@@ -478,6 +658,15 @@
    "main": false,
    "image": "https://tcgplayer-cdn.tcgplayer.com/product/455868_400w.jpg",
    "count": 17
+  },
+  {
+   "id": "OP02-PRE",
+   "name": "Paramount War Pre-Release Cards",
+   "code": "OP02 PRE",
+   "date": "2023-03-03",
+   "main": false,
+   "image": "https://tcgplayer-cdn.tcgplayer.com/product/482217_400w.jpg",
+   "count": 75
   },
   {
    "id": "ST-05",
@@ -531,6 +720,51 @@
    "date": "2022-12-02",
    "main": false,
    "image": "https://tcgplayer-cdn.tcgplayer.com/product/288221_400w.jpg",
+   "count": 17
+  },
+  {
+   "id": "OP-PR",
+   "name": "One Piece Promotion Cards",
+   "code": "OP-PR",
+   "date": "2022-09-30",
+   "main": false,
+   "image": "https://tcgplayer-cdn.tcgplayer.com/product/457013_400w.jpg",
+   "count": 1315
+  },
+  {
+   "id": "ST01-PRE",
+   "name": "ST-01: Starter Deck 1 Straw Hat Crew (Super Pre-Release Edition)",
+   "code": "ST-01 PRE",
+   "date": "2022-09-30",
+   "main": false,
+   "image": "https://tcgplayer-cdn.tcgplayer.com/product/409506_400w.jpg",
+   "count": 17
+  },
+  {
+   "id": "ST02-PRE",
+   "name": "ST-02: Starter Deck 2 Worst Generation (Super Pre-Release Edition)",
+   "code": "ST-02 PRE",
+   "date": "2022-09-30",
+   "main": false,
+   "image": "https://tcgplayer-cdn.tcgplayer.com/product/408197_400w.jpg",
+   "count": 17
+  },
+  {
+   "id": "ST03-PRE",
+   "name": "ST-03: Starter Deck 3 The Seven Warlords of The Sea (Super Pre-Release Edition)",
+   "code": "ST-03 PRE",
+   "date": "2022-09-30",
+   "main": false,
+   "image": "https://tcgplayer-cdn.tcgplayer.com/product/411279_400w.jpg",
+   "count": 17
+  },
+  {
+   "id": "ST04-PRE",
+   "name": "ST-04: Starter Deck 4 Animal Kingdom Pirates (Super Pre-Release Edition)",
+   "code": "ST-04 PRE",
+   "date": "2022-09-30",
+   "main": false,
+   "image": "https://tcgplayer-cdn.tcgplayer.com/product/422137_400w.jpg",
    "count": 17
   }
  ]

@@ -1710,7 +1710,6 @@ function ui() {
   dialog.setAttribute("aria-label", "Skanna kort");
   dialog.innerHTML = `
     <div class="scan-top">
-      <b>Skanna kort</b>
       <div class="scan-tools">
         <button class="scan-quick" type="button" aria-pressed="false" hidden>Snabb skanning</button>
         <button class="scan-fx" type="button" hidden></button>
@@ -3360,7 +3359,6 @@ export async function openScanner(callback, partialCallback, { game = "pokemon",
   clearTimeout(restTimer);
   const d = ui();
   const title = { pokemon: "Skanna Pokémonkort", rb: "Skanna Riftbound-kort", op: "Skanna One Piece-kort" }[game] || "Skanna kort";
-  d.querySelector(".scan-top b").textContent = title;
   d.setAttribute("aria-label", title);
   d.querySelector(".scan-sound").hidden = !hit && !lookup; // ljudet hör till valvet och Kortpriser
   d.querySelector(".scan-fx").hidden = !hit && !lookup;

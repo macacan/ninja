@@ -3244,8 +3244,7 @@ input[type=search]::-webkit-search-results-decoration {
 .scan{--ai1:#22d3ee;--ai2:#a855f7;--ai-grad:linear-gradient(135deg,var(--ai1),#6366f1 55%,var(--ai2));width:calc(100vw - 24px);max-width:440px;max-height:calc(100dvh - 24px);overflow:auto;padding:0;border:1px solid rgba(255,255,255,.08);border-radius:26px;background:#07080f;color:#e8eaf6;box-shadow:0 30px 80px rgba(0,0,0,.7),0 0 0 1px rgba(168,85,247,.12),0 0 60px rgba(99,102,241,.18)}
 .scan::backdrop{background:rgba(4,5,12,.86);backdrop-filter:blur(10px)}
 /* Raden ovanför kamerabilden: rubriken och blixten uppe till höger, utanför själva bilden */
-.scan-top{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:40px;padding:10px 12px 10px 18px}
-.scan-top b{font:700 .95rem var(--sans);color:#f1f3ff}
+.scan-top{display:flex;align-items:center;gap:10px;min-height:40px;padding:10px 12px}
 .scan-view{position:relative;aspect-ratio:3/4;background:radial-gradient(120% 90% at 50% 40%,#141633,#05060c);overflow:hidden;border-radius:18px 18px 0 0}
 .scan-view video{width:100%;height:100%;object-fit:cover;display:block}
 .scan-view.nocam video{display:none}
@@ -3275,7 +3274,11 @@ input[type=search]::-webkit-search-results-decoration {
 .scan-torch[hidden]{display:none}
 .scan-torch:hover{background:rgba(30,34,64,.75)}
 .scan-torch.active{background:var(--ai-grad);border-color:transparent;box-shadow:0 0 18px rgba(139,92,246,.8)}
-.scan-tools{display:flex;align-items:center;gap:8px}
+.scan-tools{display:flex;align-items:center;gap:8px;flex:1;min-width:0}
+.scan-tools .scan-torch{margin-left:auto;flex:none}
+.scan-tools .scan-sound,.scan-tools .scan-fx{flex:none}
+.scan-quick{flex:0 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis}
+@media (max-width:360px){.scan-top{padding:10px 8px}.scan-tools{gap:4px}.scan-quick{padding:0 10px;font-size:.72rem}.scan-torch{padding:0 9px;gap:4px}}
 .scan-sound,.scan-fx{display:grid;place-items:center;width:40px;height:40px;padding:0;border-radius:50%;color:#fff;cursor:pointer;transition:background .2s,color .2s}
 .scan-quick{height:40px;padding:0 14px;border-radius:999px;background:rgba(12,14,30,.55);border:1px solid rgba(255,255,255,.12);color:#c9cfe0;font:600 .78rem var(--sans);cursor:pointer;white-space:nowrap;transition:background .2s,color .2s,border-color .2s}
 .scan-quick[hidden]{display:none}
