@@ -1,6 +1,20 @@
 {
- "updated": 1794485980460,
+ "updated": 1794486900480,
  "events": [
+  {
+   "at": 1794486871650,
+   "store": "cardgame",
+   "product": "cardgame:https://cardgame.se/engelska-pokmon-produkter/engelska-etber/pokemon-me06-delta-reign-elite-trainer-box",
+   "group": "delta-reign|elite-trainer-box|en|",
+   "title": "Pokemon ME06 Delta Reign Elite Trainer Box",
+   "url": "https://cardgame.se/engelska-pokmon-produkter/engelska-etber/pokemon-me06-delta-reign-elite-trainer-box",
+   "image": "https://cdn.quickbutik.com/images/87588Q/products/6af5af7b11405.webp",
+   "price": 1100,
+   "type": "Elite Trainer Box",
+   "set": "Delta Reign",
+   "lang": "en",
+   "kind": "ny"
+  },
   {
    "at": 1794485037809,
    "store": "alphaspel",
@@ -7094,20 +7108,6 @@
    "title": "Pokémon Mega: 30th Celebration Sylveon EX Card Display Set (3 Pack) (CH)",
    "url": "https://aquitaz.se/products/pokemon-mega-30th-celebration-sylveon-ex-card-display-set-3-pack-ch",
    "image": "https://cdn.shopify.com/s/files/1/0885/4087/3050/files/BlackBox-2026-08-26T223634.525.png?v=1787755074",
-   "price": 449,
-   "type": "Collection Box",
-   "set": "30th Celebration",
-   "lang": "zh",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793957692344,
-   "store": "aquitaz",
-   "product": "aquitaz:10973057941850",
-   "group": "30th-celebration|collection-box|zh||greninja-set",
-   "title": "Pokémon Mega: 30th Celebration Greninja EX Card Display Set (3 Pack) (CH)",
-   "url": "https://aquitaz.se/products/pokemon-mega-30th-celebration-greninja-ex-card-display-set-3-pack-ch",
-   "image": "https://cdn.shopify.com/s/files/1/0885/4087/3050/files/BlackBox-2026-08-26T222227.871.png?v=1787754648",
    "price": 449,
    "type": "Collection Box",
    "set": "30th Celebration",
