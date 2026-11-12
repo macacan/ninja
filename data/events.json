@@ -1,6 +1,34 @@
 {
- "updated": 1794500368418,
+ "updated": 1794501308441,
  "events": [
+  {
+   "at": 1794501273403,
+   "store": "rahtech",
+   "product": "rahtech:15848331411782",
+   "group": "delta-reign|booster-bundle|en|",
+   "title": "Delta Reign Booster Bundle - Pokemon",
+   "url": "https://rahtech.se/products/delta-reign-booster-bundle-pokemon",
+   "image": "https://cdn.shopify.com/s/files/1/0994/8882/5670/files/delta-reign-booster-bundle.png?v=1794500997",
+   "price": 639,
+   "type": "Booster Bundle",
+   "set": "Delta Reign",
+   "lang": "en",
+   "kind": "ny"
+  },
+  {
+   "at": 1794501273403,
+   "store": "rahtech",
+   "product": "rahtech:15848331379014",
+   "group": "delta-reign|booster-pack|en|sleeved",
+   "title": "Delta Reign Sleeved Booster - Pokemon",
+   "url": "https://rahtech.se/products/delta-reign-sleeved-booster-pokemon",
+   "image": "https://cdn.shopify.com/s/files/1/0994/8882/5670/files/card-1794500991209-0.jpg?v=1794500996",
+   "price": 79,
+   "type": "Booster Pack",
+   "set": "Delta Reign",
+   "lang": "en",
+   "kind": "ny"
+  },
   {
    "at": 1794499574998,
    "store": "mix-max",
@@ -7086,34 +7114,6 @@
    "set": null,
    "lang": "ja",
    "kind": "ny"
-  },
-  {
-   "at": 1793964191125,
-   "store": "spelparken",
-   "product": "spelparken:15383749460343",
-   "group": "lost-origin|build-battle|en|",
-   "title": "Lost Origin Build & Battle Stadium",
-   "url": "https://spelparken.se/products/lost-origin-build-battle-stadium",
-   "image": "https://cdn.shopify.com/s/files/1/0948/1876/3127/files/1600_1c749d8c-54eb-44a8-afbd-2e51ec3d3b5e.jpg?v=1771170022",
-   "price": 3099,
-   "type": "Build & Battle",
-   "set": "Lost Origin",
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1793963833080,
-   "store": "cards-by-malcolm",
-   "product": "cards-by-malcolm:https://www.cardsbymalcolm.se/product/23569766/pokemon-tcg-mega-evolution-pitch-black-booster-pack",
-   "group": "pitch-black|booster-pack|en|",
-   "title": "Pokémon TCG: Mega Evolution Pitch Black Booster Pack",
-   "url": "https://www.cardsbymalcolm.se/product/23569766/pokemon-tcg-mega-evolution-pitch-black-booster-pack",
-   "image": "https://primary.jwwb.nl/public/j/t/b/temp-lbskgdtsizbkffcqieki/pitch-black-booster-pack-high.png",
-   "price": 99,
-   "type": "Booster Pack",
-   "set": "Pitch Black",
-   "lang": "en",
-   "kind": "tillbaka"
   }
  ]
 }
