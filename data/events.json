@@ -1,6 +1,20 @@
 {
- "updated": 1794491480619,
+ "updated": 1794492380631,
  "events": [
+  {
+   "at": 1794492279839,
+   "store": "pokecollect",
+   "product": "pokecollect:10530762326345",
+   "group": "151|booster-pack|en|",
+   "title": "Pokémon Scarlet & Violet: 151 Booster Pack",
+   "url": "https://pokecollect.se/products/pokemon-scarlet-violet-151-booster-pack",
+   "image": null,
+   "price": 359,
+   "type": "Booster Pack",
+   "set": "151",
+   "lang": "en",
+   "kind": "ny"
+  },
   {
    "at": 1794491388398,
    "store": "pokecollect",
@@ -7100,20 +7114,6 @@
    "set": "Chaos Rising",
    "lang": "en",
    "kind": "tillbaka"
-  },
-  {
-   "at": 1793962358211,
-   "store": "tcgaddan",
-   "product": "tcgaddan:15961114640716",
-   "group": "lost-origin|booster-pack|en|",
-   "title": "Lost Origin Booster Pack",
-   "url": "https://tcgaddan.se/products/lost-origin-booster-pack",
-   "image": "https://cdn.shopify.com/s/files/1/1037/7062/0236/files/Lost-Origin-Booster-Pack-2.webp?v=1788957086",
-   "price": 219,
-   "type": "Booster Pack",
-   "set": "Lost Origin",
-   "lang": "en",
-   "kind": "ny"
   }
  ]
 }
