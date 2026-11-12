@@ -1,6 +1,6 @@
 {
  "_info": "Byggs av scripts/update-releases.mjs. Ändra inte här, ändra i data/releases.json.",
- "updated": 1794512911754,
+ "updated": 1794514791448,
  "releases": [
   {
    "id": "30th-celebration",
@@ -116,7 +116,8 @@
       "Showdown Decks: Evelynn vs Seraphine",
       "Showdown Decks: Evelynn vs Seraphine Display",
       "Pre-Rift Kit",
-      "Vault Bundle"
+      "Vault Bundle",
+      "Nexus Night Promo Pack"
      ],
      "auto": true
     }
