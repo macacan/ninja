@@ -1,6 +1,20 @@
 {
- "updated": 1794479540322,
+ "updated": 1794480460336,
  "events": [
+  {
+   "at": 1794480163013,
+   "store": "aquitaz",
+   "product": "aquitaz:10967744708954",
+   "group": "delta-reign|elite-trainer-box|en|",
+   "title": "Pokémon Mega Evolution: Delta Reign Elite Trainer Box (ETB) (9 Pack) (ENG)",
+   "url": "https://aquitaz.se/products/pokemon-mega-evolution-delta-reign-elite-trainer-box-etb-9-pack-eng",
+   "image": "https://cdn.shopify.com/s/files/1/0885/4087/3050/files/BlackBox-2026-08-20T235809.264.png?v=1787244716",
+   "price": 1399,
+   "type": "Elite Trainer Box",
+   "set": "Delta Reign",
+   "lang": "en",
+   "kind": "forbestallning"
+  },
   {
    "at": 1794479128448,
    "store": "maxgaming",
@@ -7100,20 +7114,6 @@
    "type": "Booster Pack",
    "set": "Obsidian Flames",
    "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793950736768,
-   "store": "bangerpack",
-   "product": "bangerpack:https://bangerpack.se/pokemon/japanska-utgavor/pokemon-ancient-roar-booster-jp",
-   "group": "x|booster-pack|ja||ancient-roar",
-   "title": "Pokémon Ancient Roar – Booster (JP)",
-   "url": "https://bangerpack.se/pokemon/japanska-utgavor/pokemon-ancient-roar-booster-jp",
-   "image": "https://cdn.quickbutik.com/images/99246J/products/6ae7f3e96d746.png",
-   "price": 69,
-   "type": "Booster Pack",
-   "set": null,
-   "lang": "ja",
    "kind": "tillbaka"
   }
  ]
