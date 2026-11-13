@@ -1,6 +1,34 @@
 {
- "updated": 1794587536483,
+ "updated": 1794588456502,
  "events": [
+  {
+   "at": 1794588291407,
+   "store": "samlarverket",
+   "product": "samlarverket:11386019381591",
+   "group": "30th-celebration|collection-box|en||figure",
+   "title": "Pokémon 30th Celebration Figure Collection",
+   "url": "https://samlarverket.com/produkt/pokemon-30th-celebration-ditto-premium-collection-copy",
+   "image": "https://cdn.shopify.com/s/files/1/1022/5323/2471/files/Sneak-Pokemon-TCG-30th-Celebration_-Mew-Figure-Collection-1.webp?v=1794587982",
+   "price": 799,
+   "type": "Collection Box",
+   "set": "30th Celebration",
+   "lang": "en",
+   "kind": "ny"
+  },
+  {
+   "at": 1794588291407,
+   "store": "samlarverket",
+   "product": "samlarverket:11386014826839",
+   "group": "30th-celebration|premium-collection|en||ditto",
+   "title": "Pokémon 30th Celebration Ditto Premium Collection",
+   "url": "https://samlarverket.com/produkt/pokemon-30th-celebration-ditto-premium-collection",
+   "image": "https://cdn.shopify.com/s/files/1/1022/5323/2471/files/ef6d5237-8bee-4f52-ba08-ffa3b2eaceca.webp?v=1794587604",
+   "price": 1199,
+   "type": "Premium Collection",
+   "set": "30th Celebration",
+   "lang": "en",
+   "kind": "ny"
+  },
   {
    "at": 1794586704929,
    "store": "tcg-picks",
@@ -7089,34 +7117,6 @@
    "lang": "en",
    "game": "rb",
    "kind": "ny"
-  },
-  {
-   "at": 1793985604927,
-   "store": "bangerpack",
-   "product": "bangerpack:https://bangerpack.se/pokemon/boosters-packs/pokemon-vivid-voltage-booster",
-   "group": "vivid-voltage|booster-pack|en|",
-   "title": "Pokémon Vivid Voltage – Booster",
-   "url": "https://bangerpack.se/pokemon/boosters-packs/pokemon-vivid-voltage-booster",
-   "image": "https://cdn.quickbutik.com/images/99246J/products/6ae8075e4e911.png",
-   "price": 179,
-   "type": "Booster Pack",
-   "set": "Vivid Voltage",
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793985604927,
-   "store": "bangerpack",
-   "product": "bangerpack:https://bangerpack.se/pokemon/boosters-packs/pokemon-chilling-reign-booster",
-   "group": "chilling-reign|booster-pack|en|",
-   "title": "Pokémon Chilling Reign – Booster",
-   "url": "https://bangerpack.se/pokemon/boosters-packs/pokemon-chilling-reign-booster",
-   "image": "https://cdn.quickbutik.com/images/99246J/products/6ae80394c2d89.png",
-   "price": 219,
-   "type": "Booster Pack",
-   "set": "Chilling Reign",
-   "lang": "en",
-   "kind": "tillbaka"
   }
  ]
 }
