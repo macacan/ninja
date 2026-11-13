@@ -1,6 +1,20 @@
 {
- "updated": 1794564792709,
+ "updated": 1794565712728,
  "events": [
+  {
+   "at": 1794565498886,
+   "store": "alphaspel",
+   "product": "alphaspel:https://alphaspel.se/1762-pokemon-tcg/361794-pokemon-tcg-30th-celebration-ditto-premium-collection",
+   "group": "30th-celebration|premium-collection|en||ditto",
+   "title": "Pokémon TCG: 30th Celebration Ditto Premium Collection",
+   "url": "https://alphaspel.se/1762-pokemon-tcg/361794-pokemon-tcg-30th-celebration-ditto-premium-collection",
+   "image": "https://alphaspel.se/media/products/2fa8657e-dd4e-450f-a43a-057a2f485134",
+   "price": 899,
+   "type": "Premium Collection",
+   "set": "30th Celebration",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1794563488460,
    "store": "speltrollet",
@@ -7094,20 +7108,6 @@
    "type": "Tin",
    "set": "30th Celebration",
    "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793972493828,
-   "store": "speltrollet",
-   "product": "speltrollet:15430238830918",
-   "group": "x|collection-box|zh||charizard-gift-set",
-   "title": "Pokemon TCG Card Display Set Gift Box Charizard (Kinesisk)",
-   "url": "https://speltrollet.se/products/pokemon-tcg-card-display-set-gift-box-charizard-kinesisk",
-   "image": "https://cdn.shopify.com/s/files/1/0674/0951/0716/files/6975272836050.jpg?v=1771493064",
-   "price": 249,
-   "type": "Collection Box",
-   "set": null,
-   "lang": "zh",
    "kind": "tillbaka"
   }
  ]
