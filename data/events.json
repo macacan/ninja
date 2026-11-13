@@ -1,6 +1,21 @@
 {
- "updated": 1794608231066,
+ "updated": 1794609151083,
  "events": [
+  {
+   "at": 1794608353661,
+   "store": "spelparken",
+   "product": "spelparken:15607733289335",
+   "group": "op|legacy-of-the-master-release-event-cards|booster-pack|en|sleeved",
+   "title": "One Piece OP-12 Legacy of the Master Sleeved Booster Pack",
+   "url": "https://spelparken.se/products/one-piece-op-12-legacy-of-the-master-sleeved-booster-pack",
+   "image": "https://cdn.shopify.com/s/files/1/0948/1876/3127/files/images_e43895b4-a64a-4191-921f-ce268aa230a6.jpg?v=1794606982",
+   "price": 159,
+   "type": "Booster Pack",
+   "set": "Legacy of the Master Release Event Cards",
+   "lang": "en",
+   "game": "op",
+   "kind": "ny"
+  },
   {
    "at": 1794606473566,
    "store": "skattkistan",
@@ -7106,20 +7121,6 @@
    "price": 1199,
    "type": "Elite Trainer Box",
    "set": "Delta Reign",
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1794002587268,
-   "store": "bangerpack",
-   "product": "bangerpack:https://bangerpack.se/pokemon/boosters-packs/pokemon-twilight-masquerade-booster",
-   "group": "twilight-masquerade|booster-pack|en|",
-   "title": "Pokémon Twilight Masquerade – Booster",
-   "url": "https://bangerpack.se/pokemon/boosters-packs/pokemon-twilight-masquerade-booster",
-   "image": "https://cdn.quickbutik.com/images/99246J/products/6ae7ee9e79ea2.png",
-   "price": 149,
-   "type": "Booster Pack",
-   "set": "Twilight Masquerade",
    "lang": "en",
    "kind": "tillbaka"
   }
