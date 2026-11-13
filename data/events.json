@@ -1,6 +1,20 @@
 {
- "updated": 1794582895937,
+ "updated": 1794583815956,
  "events": [
+  {
+   "at": 1794582992100,
+   "store": "tcgaddan",
+   "product": "tcgaddan:15886191657292",
+   "group": "x|booster-pack|ja||inferno-x",
+   "title": "Inferno X Booster Pack Japanese",
+   "url": "https://tcgaddan.se/products/inferno-x-booster-pack",
+   "image": "https://cdn.shopify.com/s/files/1/1037/7062/0236/files/Pokemon-tcg-korean-inferno-x-booster-pack.webp?v=1783549050",
+   "price": 65,
+   "type": "Booster Pack",
+   "set": null,
+   "lang": "ja",
+   "kind": "ny"
+  },
   {
    "at": 1794582458917,
    "store": "alphaspel",
@@ -7095,20 +7109,6 @@
    "price": 329,
    "type": "Tin",
    "set": "Shrouded Fable",
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793983662572,
-   "store": "bangerpack",
-   "product": "bangerpack:https://bangerpack.se/pokemon/elite-trainer-special/pokemon-30th-celebration-mini-tin",
-   "group": "30th-celebration|tin|en|mini|mini",
-   "title": "Pokémon 30th Celebration – Mini Tin",
-   "url": "https://bangerpack.se/pokemon/elite-trainer-special/pokemon-30th-celebration-mini-tin",
-   "image": "https://cdn.quickbutik.com/images/99246J/products/6ae80be69396d.png",
-   "price": 389,
-   "type": "Tin",
-   "set": "30th Celebration",
    "lang": "en",
    "kind": "tillbaka"
   }
