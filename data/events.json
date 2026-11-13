@@ -1,6 +1,38 @@
 {
- "updated": 1794584755971,
+ "updated": 1794585675992,
  "events": [
+  {
+   "at": 1794584884831,
+   "store": "tcg-picks",
+   "product": "tcg-picks:16275817267525",
+   "group": "rb|vendetta|booster-pack|en|",
+   "title": "Riftbound Vendetta Booster Pack",
+   "url": "https://tcgpicks.com/produkt/riftbound-vendetta-booster-pack-1",
+   "image": "https://cdn.shopify.com/s/files/1/0977/3046/2021/files/1790602768853-888357_b2daa79d-6397-416d-ad05-93e82410f1e9.jpg?v=1792275092",
+   "price": 79,
+   "type": "Booster Pack",
+   "set": "Vendetta",
+   "lang": "en",
+   "game": "rb",
+   "kind": "prissankt",
+   "from": 99
+  },
+  {
+   "at": 1794584884831,
+   "store": "tcg-picks",
+   "product": "tcg-picks:16275817201989",
+   "group": "rb|origins|booster-pack|en|",
+   "title": "Riftbound Origins Booster Pack",
+   "url": "https://tcgpicks.com/produkt/riftbound-origins-booster-pack-1",
+   "image": "https://cdn.shopify.com/s/files/1/0977/3046/2021/files/1792274756587-845728.jpg?v=1792275089",
+   "price": 129,
+   "type": "Booster Pack",
+   "set": "Origins",
+   "lang": "en",
+   "game": "rb",
+   "kind": "prissankt",
+   "from": 139
+  },
   {
    "at": 1794582992100,
    "store": "tcgaddan",
@@ -7082,34 +7114,6 @@
    "type": "Booster Pack",
    "set": null,
    "lang": "ja",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793985604927,
-   "store": "bangerpack",
-   "product": "bangerpack:https://bangerpack.se/pokemon/japanska-utgavor/pokemon-battle-region-booster-jp",
-   "group": "x|booster-pack|ja||region",
-   "title": "Pokémon Battle Region – Booster (JP)",
-   "url": "https://bangerpack.se/pokemon/japanska-utgavor/pokemon-battle-region-booster-jp",
-   "image": "https://cdn.quickbutik.com/images/99246J/products/6ae8050dcde2f.png",
-   "price": 89,
-   "type": "Booster Pack",
-   "set": null,
-   "lang": "ja",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793983662572,
-   "store": "bangerpack",
-   "product": "bangerpack:https://bangerpack.se/pokemon/elite-trainer-special/pokemon-shrouded-fable-mini-tin",
-   "group": "shrouded-fable|tin|en|mini|mini",
-   "title": "Pokémon Shrouded Fable – Mini Tin",
-   "url": "https://bangerpack.se/pokemon/elite-trainer-special/pokemon-shrouded-fable-mini-tin",
-   "image": "https://cdn.quickbutik.com/images/99246J/products/6ae80c9ce35d5.png",
-   "price": 329,
-   "type": "Tin",
-   "set": "Shrouded Fable",
-   "lang": "en",
    "kind": "tillbaka"
   }
  ]
