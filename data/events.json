@@ -1,6 +1,35 @@
 {
- "updated": 1794586596455,
+ "updated": 1794587536483,
  "events": [
+  {
+   "at": 1794586704929,
+   "store": "tcg-picks",
+   "product": "tcg-picks:16101132140869",
+   "group": "emerald|booster-box|en|",
+   "title": "Storm Emeralda Booster Box (Skicka hem)",
+   "url": "https://tcgpicks.com/produkt/storm-emeralda-booster-box?variant=58896957768005",
+   "image": "https://cdn.shopify.com/s/files/1/0977/3046/2021/files/card-1786916465326-0.jpg?v=1786916469",
+   "price": 999,
+   "type": "Booster Box",
+   "set": "Emerald",
+   "lang": "en",
+   "kind": "prissankt",
+   "from": 1699
+  },
+  {
+   "at": 1794586620882,
+   "store": "westcoast-vault",
+   "product": "westcoast-vault:15976850620756",
+   "group": "delta-reign|booster-pack|en|",
+   "title": "Pokémon TCG: Delta Reign Booster Pack",
+   "url": "https://westcoastvault.se/products/pokemon-tcg-delta-reign-booster-pack",
+   "image": "https://cdn.shopify.com/s/files/1/1042/6177/9796/files/IMG_1678.jpg?v=1794585258",
+   "price": 89,
+   "type": "Booster Pack",
+   "set": "Delta Reign",
+   "lang": "en",
+   "kind": "ny"
+  },
   {
    "at": 1794585795173,
    "store": "tcg-picks",
@@ -7086,34 +7115,6 @@
    "price": 219,
    "type": "Booster Pack",
    "set": "Chilling Reign",
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793985604927,
-   "store": "bangerpack",
-   "product": "bangerpack:https://bangerpack.se/pokemon/boosters-packs/pokemon-shining-fates-booster",
-   "group": "shining-fates|booster-pack|en|",
-   "title": "Pokémon Shining Fates – Booster",
-   "url": "https://bangerpack.se/pokemon/boosters-packs/pokemon-shining-fates-booster",
-   "image": "https://cdn.quickbutik.com/images/99246J/products/6ae8033727106.png",
-   "price": 269,
-   "type": "Booster Pack",
-   "set": "Shining Fates",
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793985604927,
-   "store": "bangerpack",
-   "product": "bangerpack:https://bangerpack.se/pokemon/boosters-packs/pokemon-evolving-skies-booster",
-   "group": "evolving-skies|booster-pack|en|",
-   "title": "Pokémon Evolving Skies – Booster",
-   "url": "https://bangerpack.se/pokemon/boosters-packs/pokemon-evolving-skies-booster",
-   "image": "https://cdn.quickbutik.com/images/99246J/products/6ae82df305bdc.png",
-   "price": 899,
-   "type": "Booster Pack",
-   "set": "Evolving Skies",
    "lang": "en",
    "kind": "tillbaka"
   }
