@@ -1,6 +1,48 @@
 {
- "updated": 1794560192603,
+ "updated": 1794561112627,
  "events": [
+  {
+   "at": 1794560619371,
+   "store": "maxgaming",
+   "product": "maxgaming:https://maxgaming.se/sv/pokemon/pokemon-tin-fall-ex",
+   "group": "x|tin|en||fall",
+   "title": "Pokémon Tin Fall ex",
+   "url": "https://maxgaming.se/sv/pokemon/pokemon-tin-fall-ex",
+   "image": "https://www.maxgaming.se/bilder/artiklar/42457.jpg?m=1794555005",
+   "price": 399,
+   "type": "Tin",
+   "set": null,
+   "lang": "en",
+   "kind": "ny"
+  },
+  {
+   "at": 1794560619371,
+   "store": "maxgaming",
+   "product": "maxgaming:https://maxgaming.se/sv/pokemon/pokemon-deck-crafters-collection",
+   "group": "x|collection-box|en||crafters",
+   "title": "Pokémon Deck Crafters Collection",
+   "url": "https://maxgaming.se/sv/pokemon/pokemon-deck-crafters-collection",
+   "image": "https://www.maxgaming.se/bilder/artiklar/42458.jpg?m=1794555262",
+   "price": 199,
+   "type": "Collection Box",
+   "set": null,
+   "lang": "en",
+   "kind": "ny"
+  },
+  {
+   "at": 1794560550597,
+   "store": "tcgstore",
+   "product": "tcgstore:8835110437191",
+   "group": "fusion-strike|booster-pack|en|",
+   "title": "Pokémon Sword & Shield 8: Fusion Strike Booster Pack",
+   "url": "https://tcgstore.se/products/pokemon-sword-shield-8-fusion-strike-booster-pack",
+   "image": "https://cdn.shopify.com/s/files/1/0758/2508/6791/files/pokemon-fusion-strike-gengar-vmax-booster-pack.jpg?v=1694374347",
+   "price": 299,
+   "type": "Booster Pack",
+   "set": "Fusion Strike",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1794532520211,
    "store": "toyspace",
@@ -7065,48 +7107,6 @@
    "price": 1195,
    "type": "Collection Box",
    "set": "30th Celebration",
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793971571512,
-   "store": "bangerpack",
-   "product": "bangerpack:https://bangerpack.se/pokemon/elite-trainer-special/pokemon-30th-celebration-mew-figure-collection",
-   "group": "30th-celebration|collection-box|en||figure-mew",
-   "title": "Pokémon 30th Celebration – Mew Figure Collection",
-   "url": "https://bangerpack.se/pokemon/elite-trainer-special/pokemon-30th-celebration-mew-figure-collection",
-   "image": "https://cdn.quickbutik.com/images/99246J/products/6ae2ed955a164.png",
-   "price": 1195,
-   "type": "Collection Box",
-   "set": "30th Celebration",
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793971571512,
-   "store": "bangerpack",
-   "product": "bangerpack:https://bangerpack.se/pokemon/elite-trainer-special/pokemon-30th-celebration-ditto-premium-collection",
-   "group": "30th-celebration|premium-collection|en||ditto",
-   "title": "Pokémon 30th Celebration – Ditto Premium Collection",
-   "url": "https://bangerpack.se/pokemon/elite-trainer-special/pokemon-30th-celebration-ditto-premium-collection",
-   "image": "https://cdn.quickbutik.com/images/99246J/products/6acb977b8de58.png",
-   "price": 1599,
-   "type": "Premium Collection",
-   "set": "30th Celebration",
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793971531401,
-   "store": "speltrollet",
-   "product": "speltrollet:15691705352518",
-   "group": "delta-reign|elite-trainer-box|en|",
-   "title": "Pokemon ME06 Delta Reign Elite Trainer Box",
-   "url": "https://speltrollet.se/products/pokemon-me06-delta-reign-elite-trainer-box",
-   "image": "https://cdn.shopify.com/s/files/1/0674/0951/0716/files/Delta-Reign-ETB-copy.webp?v=1787308070",
-   "price": 849,
-   "type": "Elite Trainer Box",
-   "set": "Delta Reign",
    "lang": "en",
    "kind": "tillbaka"
   }
