@@ -1,6 +1,20 @@
 {
- "updated": 1794606411029,
+ "updated": 1794607331048,
  "events": [
+  {
+   "at": 1794606473566,
+   "store": "skattkistan",
+   "product": "skattkistan:11309100695890",
+   "group": "30th-celebration|premium-collection|en||ditto",
+   "title": "Pokémon TCG 30th Celebration Ditto Premium Collection",
+   "url": "https://skattkistan.net/products/pokemon-30th-celebration-ditto-premium-collection",
+   "image": "https://cdn.shopify.com/s/files/1/1094/6858/2226/files/chrome_zwsyzs27v0.png?v=1794286174",
+   "price": 999,
+   "type": "Premium Collection",
+   "set": "30th Celebration",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1794598372555,
    "store": "skattkistan",
@@ -7106,20 +7120,6 @@
    "price": 149,
    "type": "Booster Pack",
    "set": "Twilight Masquerade",
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1794002587268,
-   "store": "bangerpack",
-   "product": "bangerpack:https://bangerpack.se/pokemon/displayer-boxar/pokemon-destined-rivals-booster-bundle-6-boosters",
-   "group": "destined-rivals|booster-bundle|en|",
-   "title": "Pokémon Destined Rivals – Booster Bundle (6 boosters)",
-   "url": "https://bangerpack.se/pokemon/displayer-boxar/pokemon-destined-rivals-booster-bundle-6-boosters",
-   "image": "https://cdn.quickbutik.com/images/99246J/products/6ae7ede5632a5.png",
-   "price": 1019,
-   "type": "Booster Bundle",
-   "set": "Destined Rivals",
    "lang": "en",
    "kind": "tillbaka"
   }
