@@ -1,6 +1,20 @@
 {
- "updated": 1794529132284,
+ "updated": 1794532272381,
  "events": [
+  {
+   "at": 1794532078939,
+   "store": "spelparken",
+   "product": "spelparken:15603341623671",
+   "group": "30th-celebration|collection-box|en||classic",
+   "title": "30th Celebration Classic Collection Pack",
+   "url": "https://spelparken.se/products/30th-celebration-classic-collection-pack",
+   "image": "https://cdn.shopify.com/s/files/1/0948/1876/3127/files/images_3ec954e9-f7dc-43ba-bb0c-1b0c9ad7de1b.jpg?v=1794163693",
+   "price": 799,
+   "type": "Collection Box",
+   "set": "30th Celebration",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1794522122160,
    "store": "skattkistan",
@@ -7099,21 +7113,6 @@
    "lang": "ja",
    "kind": "prissankt",
    "from": 39
-  },
-  {
-   "at": 1793969354262,
-   "store": "dragon-s-lair",
-   "product": "dragon-s-lair:15554494103900",
-   "group": "x|booster-box|ja||nihil-zero",
-   "title": "Pokemon Tcg Nihil Zero Booster Japansk Display 30 Boosters Pokemon(m3)",
-   "url": "https://dragonslair.se/products/pokemon-tcg-nihil-zero-booster-japansk-display-30-boosters-pokemon",
-   "image": "https://cdn.shopify.com/s/files/1/1015/8315/9644/files/Pok-mon-TCG---Munikis-Zero-Booster-Japansk-Display-30-Boosters.webp?v=1777049986",
-   "price": 895,
-   "type": "Booster Box",
-   "set": null,
-   "lang": "ja",
-   "kind": "prissankt",
-   "from": 1090
   }
  ]
 }
