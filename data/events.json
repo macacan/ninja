@@ -1,6 +1,20 @@
 {
- "updated": 1794562932664,
+ "updated": 1794563872690,
  "events": [
+  {
+   "at": 1794563488460,
+   "store": "speltrollet",
+   "product": "speltrollet:15691705352518",
+   "group": "delta-reign|elite-trainer-box|en|",
+   "title": "Pokemon ME06 Delta Reign Elite Trainer Box",
+   "url": "https://speltrollet.se/products/pokemon-me06-delta-reign-elite-trainer-box",
+   "image": "https://cdn.shopify.com/s/files/1/0674/0951/0716/files/Delta-Reign-ETB-copy.webp?v=1787308070",
+   "price": 849,
+   "type": "Elite Trainer Box",
+   "set": "Delta Reign",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
   {
    "at": 1794560619371,
    "store": "maxgaming",
@@ -7094,20 +7108,6 @@
    "type": "Collection Box",
    "set": null,
    "lang": "zh",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793971571512,
-   "store": "bangerpack",
-   "product": "bangerpack:https://bangerpack.se/pokemon/elite-trainer-special/pokemon-30th-celebration-mewtwo-figure-collection",
-   "group": "30th-celebration|collection-box|en||figure-mewtwo",
-   "title": "Pokémon 30th Celebration – Mewtwo Figure Collection",
-   "url": "https://bangerpack.se/pokemon/elite-trainer-special/pokemon-30th-celebration-mewtwo-figure-collection",
-   "image": "https://cdn.quickbutik.com/images/99246J/products/6ae2edf5e0354.png",
-   "price": 1195,
-   "type": "Collection Box",
-   "set": "30th Celebration",
-   "lang": "en",
    "kind": "tillbaka"
   }
  ]
