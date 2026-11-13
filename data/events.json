@@ -1,6 +1,48 @@
 {
- "updated": 1794577294511,
+ "updated": 1794578294538,
  "events": [
+  {
+   "at": 1794577680387,
+   "store": "spelexperten",
+   "product": "spelexperten:https://www.spelexperten.com/sallskapsspel/pokemon/pokemon-tcg-mega-dragonite-ex-tin-fall-2026.html",
+   "group": "dragon|tin|en||dragonite-fall",
+   "title": "Pokémon TCG: Mega Dragonite ex Tin - Fall 2026",
+   "url": "https://www.spelexperten.com/sallskapsspel/pokemon/pokemon-tcg-mega-dragonite-ex-tin-fall-2026.html",
+   "image": "https://www.spelexperten.com/bilder/artiklar/POK10411-DRA.jpg?m=1793978669",
+   "price": 429,
+   "type": "Tin",
+   "set": "Dragon",
+   "lang": "en",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1794577598015,
+   "store": "rgb-kingz",
+   "product": "rgb-kingz:16113454580042",
+   "group": "team-rocket|booster-pack|ko|",
+   "title": "Pokémon The Glory of Team Rocket Booster Pack (SV10) – Koreansk",
+   "url": "https://rgbkingz.com/products/pokemon-glory-of-team-rocket-sv10-booster-pack-koreansk",
+   "image": "https://cdn.shopify.com/s/files/1/0782/8088/4554/files/Glory-of-Team-Rocket-Korean-1.webp?v=1792164385",
+   "price": 39,
+   "type": "Booster Pack",
+   "set": "Team Rocket",
+   "lang": "ko",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1794577598015,
+   "store": "rgb-kingz",
+   "product": "rgb-kingz:16105906274634",
+   "group": "x|booster-pack|ko||breaker-electric-super",
+   "title": "Pokémon Super Electric Breaker Booster Pack (SV8) – Koreansk",
+   "url": "https://rgbkingz.com/products/pokemon-super-electric-breaker-booster-pack-koreansk",
+   "image": "https://cdn.shopify.com/s/files/1/0782/8088/4554/files/Stellarcrystalslimboosterkorean.jpg?v=1791990604",
+   "price": 39,
+   "type": "Booster Pack",
+   "set": null,
+   "lang": "ko",
+   "kind": "tillbaka"
+  },
   {
    "at": 1794571392086,
    "store": "mix-max",
@@ -7065,48 +7107,6 @@
    "set": null,
    "lang": "en",
    "kind": "tillbaka"
-  },
-  {
-   "at": 1793979880745,
-   "store": "speltrollet",
-   "product": "speltrollet:15731768099142",
-   "group": "30th-celebration|booster-box|zh|",
-   "title": "Pokemon 30th Celebration Booster Box (20 boosters) (Kinesisk)",
-   "url": "https://speltrollet.se/products/pokemon-30th-celebration-booster-box-20-boosters-kinesisk",
-   "image": "https://cdn.shopify.com/s/files/1/0674/0951/0716/files/769afac3ce2e11004f71028bfba98880.webp?v=1790672923",
-   "price": 1490,
-   "type": "Booster Box",
-   "set": "30th Celebration",
-   "lang": "zh",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793978633536,
-   "store": "goblinen",
-   "product": "goblinen:16215762108760",
-   "group": "x|tin|en||forces",
-   "title": "Pokémon TCG: Mega Forces Tin (Max 1st/kund!)(Slumpas)",
-   "url": "https://goblinen.com/products/pokemon-tcg-mega-forces-tin",
-   "image": "https://cdn.shopify.com/s/files/1/0267/3236/3950/files/mega-forces-tin-169-en.png?v=1793977602",
-   "price": 379,
-   "type": "Tin",
-   "set": null,
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1793978030165,
-   "store": "samlargrottan",
-   "product": "samlargrottan:https://www.samlargrottan.se/product-page/pokémon-30th-celebration-ditto-premium-collection-box",
-   "group": "30th-celebration|premium-collection|en||ditto",
-   "title": "Pokémon: 30th Celebration Ditto Premium Collection Box",
-   "url": "https://www.samlargrottan.se/product-page/pok%C3%A9mon-30th-celebration-ditto-premium-collection-box",
-   "image": "https://static.wixstatic.com/media/d265aa_faadeab24f254710a2c168b1009d2cfb~mv2.webp/v1/fit/w_500,h_500,q_90/file.webp",
-   "price": 1299,
-   "type": "Premium Collection",
-   "set": "30th Celebration",
-   "lang": "en",
-   "kind": "ny"
   }
  ]
 }
