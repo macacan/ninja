@@ -1,6 +1,20 @@
 {
- "updated": 1794571233127,
+ "updated": 1794572153149,
  "events": [
+  {
+   "at": 1794571392086,
+   "store": "mix-max",
+   "product": "mix-max:https://mix-max.se/pokemon/7131-pokemon-30th-ultra-premium-196214144903.html",
+   "group": "x|ultra-premium-collection|en||30th",
+   "title": "POKEMON 30TH ULTRA PREMIUM",
+   "url": "https://mix-max.se/pokemon/7131-pokemon-30th-ultra-premium-196214144903.html",
+   "image": "https://mix-max.se/12106-large_default/pokemon-30th-ultra-premium.jpg",
+   "price": 3995,
+   "type": "Ultra-Premium Collection",
+   "set": null,
+   "lang": "en",
+   "kind": "ny"
+  },
   {
    "at": 1794566810091,
    "store": "goblinen",
@@ -7093,21 +7107,6 @@
    "set": "30th Celebration",
    "lang": "en",
    "kind": "ny"
-  },
-  {
-   "at": 1793976923128,
-   "store": "dragon-s-lair",
-   "product": "dragon-s-lair:15832720441692",
-   "group": "x|booster-pack|zh||brilliant-illusions",
-   "title": "Pokemon TCG Scarlet & Violet - Brilliant Illusions (CSV8C) Booster (5-kort) (Kinesisk)",
-   "url": "https://dragonslair.se/products/pokemon-tcg-scarlet-violet-brilliant-illusions-csv8c-booster-5-kort-kinesisk",
-   "image": "https://cdn.shopify.com/s/files/1/1015/8315/9644/files/Pokemon_Brilliant_Illusions_Slim_Booster_Pack_Chinese.webp?v=1789722619",
-   "price": 20,
-   "type": "Booster Pack",
-   "set": "Scarlet & Violet",
-   "lang": "zh",
-   "kind": "prissankt",
-   "from": 29
   }
  ]
 }
