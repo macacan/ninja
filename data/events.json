@@ -1,6 +1,21 @@
 {
- "updated": 1794585675992,
+ "updated": 1794586596455,
  "events": [
+  {
+   "at": 1794585795173,
+   "store": "tcg-picks",
+   "product": "tcg-picks:16251117011269",
+   "group": "x|booster-pack|en||breaker-electric-super",
+   "title": "Super Electric Breaker Booster",
+   "url": "https://tcgpicks.com/produkt/super-electric-breaker-booster",
+   "image": "https://cdn.shopify.com/s/files/1/0977/3046/2021/files/1791892236994-789975.jpg?v=1791920085",
+   "price": 49,
+   "type": "Booster Pack",
+   "set": null,
+   "lang": "en",
+   "kind": "prissankt",
+   "from": 59
+  },
   {
    "at": 1794584884831,
    "store": "tcg-picks",
@@ -7100,20 +7115,6 @@
    "type": "Booster Pack",
    "set": "Evolving Skies",
    "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1793985604927,
-   "store": "bangerpack",
-   "product": "bangerpack:https://bangerpack.se/pokemon/japanska-utgavor/pokemon-heat-wave-arena-booster-jp",
-   "group": "x|booster-pack|ja||arena-heat-wave",
-   "title": "Pokémon Heat Wave Arena – Booster (JP)",
-   "url": "https://bangerpack.se/pokemon/japanska-utgavor/pokemon-heat-wave-arena-booster-jp",
-   "image": "https://cdn.quickbutik.com/images/99246J/products/6ae816b8724d1.png",
-   "price": 79,
-   "type": "Booster Pack",
-   "set": null,
-   "lang": "ja",
    "kind": "tillbaka"
   }
  ]
