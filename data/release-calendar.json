@@ -1,6 +1,6 @@
 {
  "_info": "Byggs av scripts/update-releases.mjs. Ändra inte här, ändra i data/releases.json.",
- "updated": 1794597297495,
+ "updated": 1794600953230,
  "releases": [
   {
    "id": "scarlet-and-violet",
@@ -656,17 +656,17 @@
    ]
   },
   {
-   "id": "rb-gift-of-the-rift-bundles",
-   "set": "Gift of the Rift Bundles",
+   "id": "rb-gift-of-the-rift-bundle",
+   "set": "Gift of the Rift Bundle",
    "game": "rb",
    "series": "Riftbound",
    "language": "en",
    "match": [
-    "Gift of the Rift Bundles"
+    "Gift of the Rift Bundle"
    ],
    "auto": true,
    "logo": "https://tcgplayer-cdn.tcgplayer.com/product/714486_400w.jpg",
-   "source": "https://www.tcgplayer.com/search/riftbound-league-of-legends-trading-card-game/gift-of-the-rift-bundles",
+   "source": "https://www.tcgplayer.com/search/riftbound-league-of-legends-trading-card-game/gift-of-the-rift-bundle",
    "waves": [
     {
      "date": "2026-12-04",
