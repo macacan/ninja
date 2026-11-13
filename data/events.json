@@ -1,6 +1,21 @@
 {
- "updated": 1794594916647,
+ "updated": 1794595836670,
  "events": [
+  {
+   "at": 1794595619182,
+   "store": "spelparken",
+   "product": "spelparken:15389674865015",
+   "group": "op|x|illustration-box|en||ib6",
+   "title": "One Piece Illustration box vol.6",
+   "url": "https://spelparken.se/products/one-piece-illustration-box-vol-6-oppnas-live",
+   "image": "https://cdn.shopify.com/s/files/1/0948/1876/3127/files/onepiecevol6.avif?v=1771426565",
+   "price": 1299,
+   "type": "Illustration Box",
+   "set": null,
+   "lang": "en",
+   "game": "op",
+   "kind": "ny"
+  },
   {
    "at": 1794593798457,
    "store": "spelparken",
@@ -7104,20 +7119,6 @@
    "price": 789,
    "type": "Booster Bundle",
    "set": "Journey Together",
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1794001614800,
-   "store": "bangerpack",
-   "product": "bangerpack:https://bangerpack.se/pokemon/boosters-packs/pokemon-perfect-order-sleeved-booster",
-   "group": "perfect-order|booster-pack|en|sleeved",
-   "title": "Pokémon Perfect Order – Sleeved Booster",
-   "url": "https://bangerpack.se/pokemon/boosters-packs/pokemon-perfect-order-sleeved-booster",
-   "image": "https://cdn.quickbutik.com/images/99246J/products/6ae7eedbbf008.png",
-   "price": 109,
-   "type": "Booster Pack",
-   "set": "Perfect Order",
    "lang": "en",
    "kind": "tillbaka"
   }
