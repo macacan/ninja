@@ -1,6 +1,21 @@
 {
- "updated": 1794598210846,
+ "updated": 1794599110869,
  "events": [
+  {
+   "at": 1794598372555,
+   "store": "skattkistan",
+   "product": "skattkistan:11253828059474",
+   "group": "x|booster-box|zh||chasing-glory-together",
+   "title": "Pokémon TCG – Chasing Glory Together (CSV10C) Booster Box – Simplified Chinese",
+   "url": "https://skattkistan.net/products/pokemon-tcg-chasing-glory-together-csv10c-booster-box-simplified-chinese",
+   "image": "https://cdn.shopify.com/s/files/1/1094/6858/2226/files/chrome_QnyyuOKHZg.jpg?v=1792619144",
+   "price": 399,
+   "type": "Booster Box",
+   "set": null,
+   "lang": "zh",
+   "kind": "prissankt",
+   "from": 439
+  },
   {
    "at": 1794595619182,
    "store": "spelparken",
@@ -7105,20 +7120,6 @@
    "price": 1019,
    "type": "Booster Bundle",
    "set": "Destined Rivals",
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1794001614800,
-   "store": "bangerpack",
-   "product": "bangerpack:https://bangerpack.se/pokemon/displayer-boxar/pokemon-journey-together-booster-bundle-6-boosters",
-   "group": "journey-together|booster-bundle|en|",
-   "title": "Pokémon Journey Together – Booster Bundle (6 boosters)",
-   "url": "https://bangerpack.se/pokemon/displayer-boxar/pokemon-journey-together-booster-bundle-6-boosters",
-   "image": "https://cdn.quickbutik.com/images/99246J/products/6ae7ee2296b0d.png",
-   "price": 789,
-   "type": "Booster Bundle",
-   "set": "Journey Together",
    "lang": "en",
    "kind": "tillbaka"
   }
