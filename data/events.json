@@ -1,6 +1,36 @@
 {
- "updated": 1794638883318,
+ "updated": 1794639823341,
  "events": [
+  {
+   "at": 1794639132301,
+   "store": "bangerpack",
+   "product": "bangerpack:https://bangerpack.se/tcg-samlarkort/one-piece/one-piece-op-14/one-piece-op-14-the-azure-seas-seven-booster-jp",
+   "group": "op|the-azure-sea-s-seven-release-event-cards|booster-pack|ja|",
+   "title": "One Piece OP-14 The Azure Sea's Seven – Booster (JP)",
+   "url": "https://bangerpack.se/tcg-samlarkort/one-piece/one-piece-op-14/one-piece-op-14-the-azure-seas-seven-booster-jp",
+   "image": "https://cdn.quickbutik.com/images/99246J/products/6aefb3a9be19a.png",
+   "price": 79,
+   "type": "Booster Pack",
+   "set": "The Azure Sea's Seven Release Event Cards",
+   "lang": "ja",
+   "game": "op",
+   "kind": "tillbaka"
+  },
+  {
+   "at": 1794639132301,
+   "store": "bangerpack",
+   "product": "bangerpack:https://bangerpack.se/tcg-samlarkort/one-piece/one-piece-op-16-the-time-of-battle-booster",
+   "group": "op|the-time-of-battle-release-event-cards|booster-pack|en|",
+   "title": "One Piece OP-16 The Time of Battle – Booster",
+   "url": "https://bangerpack.se/tcg-samlarkort/one-piece/one-piece-op-16-the-time-of-battle-booster",
+   "image": "https://cdn.quickbutik.com/images/99246J/products/6aefb36ccd143.png",
+   "price": 119,
+   "type": "Booster Pack",
+   "set": "The Time of Battle Release Event Cards",
+   "lang": "en",
+   "game": "op",
+   "kind": "tillbaka"
+  },
   {
    "at": 1794638152731,
    "store": "bangerpack",
@@ -7094,34 +7124,6 @@
    "price": 469,
    "type": "Booster Bundle",
    "set": "Pitch Black",
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1794014047671,
-   "store": "bangerpack",
-   "product": "bangerpack:https://bangerpack.se/pokemon/boosters-packs/pokemon-sword-shield-brilliant-stars-booster",
-   "group": "brilliant-stars|booster-pack|en|",
-   "title": "Pokémon Brilliant Stars – Booster",
-   "url": "https://bangerpack.se/pokemon/boosters-packs/pokemon-sword-shield-brilliant-stars-booster",
-   "image": "https://cdn.quickbutik.com/images/99246J/products/6ab5820c52fe2.png",
-   "price": 239,
-   "type": "Booster Pack",
-   "set": "Brilliant Stars",
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1794003654608,
-   "store": "nordic-pulls",
-   "product": "nordic-pulls:https://nordicpulls.se/produkt/delta-reign-boosterpaket",
-   "group": "delta-reign|booster-pack|en|",
-   "title": "Delta Reign Boosterpaket",
-   "url": "https://nordicpulls.se/produkt/delta-reign-boosterpaket",
-   "image": "https://nordicpulls.se/images/products/bp-delta-reign.jpg",
-   "price": 79,
-   "type": "Booster Pack",
-   "set": "Delta Reign",
    "lang": "en",
    "kind": "tillbaka"
   }
