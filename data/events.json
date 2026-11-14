@@ -1,6 +1,21 @@
 {
- "updated": 1794637983293,
+ "updated": 1794638883318,
  "events": [
+  {
+   "at": 1794638152731,
+   "store": "bangerpack",
+   "product": "bangerpack:https://bangerpack.se/tcg-samlarkort/one-piece/japanska-utgavor-one-piece/one-piece-eb-03-heroines-edition-booster-jp",
+   "group": "op|extra-booster-one-piece-heroines-edition|booster-pack|ja|",
+   "title": "One Piece EB-03 Heroines Edition – Booster (JP)",
+   "url": "https://bangerpack.se/tcg-samlarkort/one-piece/japanska-utgavor-one-piece/one-piece-eb-03-heroines-edition-booster-jp",
+   "image": "https://cdn.quickbutik.com/images/99246J/products/6aefb4dfa6f9e.png",
+   "price": 109,
+   "type": "Booster Pack",
+   "set": "Extra Booster: One Piece Heroines Edition",
+   "lang": "ja",
+   "game": "op",
+   "kind": "tillbaka"
+  },
   {
    "at": 1794636218825,
    "store": "bangerpack",
@@ -7103,20 +7118,6 @@
    "group": "delta-reign|booster-pack|en|",
    "title": "Delta Reign Boosterpaket",
    "url": "https://nordicpulls.se/produkt/delta-reign-boosterpaket",
-   "image": "https://nordicpulls.se/images/products/bp-delta-reign.jpg",
-   "price": 79,
-   "type": "Booster Pack",
-   "set": "Delta Reign",
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1794003654608,
-   "store": "nordic-pulls",
-   "product": "nordic-pulls:https://nordicpulls.se/en/produkt/delta-reign-booster-pack",
-   "group": "delta-reign|booster-pack|en|",
-   "title": "Delta Reign Booster Pack",
-   "url": "https://nordicpulls.se/en/produkt/delta-reign-booster-pack",
    "image": "https://nordicpulls.se/images/products/bp-delta-reign.jpg",
    "price": 79,
    "type": "Booster Pack",
