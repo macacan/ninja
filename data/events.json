@@ -1,6 +1,34 @@
 {
- "updated": 1794661563068,
+ "updated": 1794662483088,
  "events": [
+  {
+   "at": 1794661867018,
+   "store": "rgb-kingz",
+   "product": "rgb-kingz:16219990098250",
+   "group": "x|booster-pack|ko||partners",
+   "title": "Pokémon TCG: Battle Partners Booster Pack (Koreansk)",
+   "url": "https://rgbkingz.com/products/pokemon-tcg-battle-partners-booster-pack-koreansk",
+   "image": "https://cdn.shopify.com/s/files/1/0782/8088/4554/files/QV0OwvzKaV2Gjb8jrYfs1rqbckYPDqu7pGVukI1owgmE-1-UYya_zUgdAEAV3bIg9DQb7zCaaW9o-Pf6r1Ru9n8hk6otWD6MKhGFFEA9-UMtCDrJY77O6pELnOl6jyn1h-GQkss99OnjpS45yfpY9oAqa0u364kAS7ynYHTtul8VDhfLAvC-xiu.jpg?v=1794661481",
+   "price": 39,
+   "type": "Booster Pack",
+   "set": null,
+   "lang": "ko",
+   "kind": "ny"
+  },
+  {
+   "at": 1794661867018,
+   "store": "rgb-kingz",
+   "product": "rgb-kingz:16219963031882",
+   "group": "30th-celebration|booster-pack|ko|",
+   "title": "Pokémon TCG: 30th Celebration – Booster Pack (Koreansk)",
+   "url": "https://rgbkingz.com/products/pokemon-tcg-30th-celebration-booster-pack-koreansk",
+   "image": "https://cdn.shopify.com/s/files/1/0782/8088/4554/files/YX_K8ind-zabl-YIXi-zyvxnDAv4KxKJ7LcRGmYZQyE7TKKLyfzmrAbMceNDq4uEzAuCQqJDhN3Ukrj7cdMJU8sv_GcGYxRquZ2pGp4tUU46jcrT2s2OA_7qv3qOp3TaPZXYh-OpmGdfJ9G_S3QAZ_e4K_A3oGPpOqB4MdSm25WhnGUqwerOeBX.jpg?v=1794660941",
+   "price": 99,
+   "type": "Booster Pack",
+   "set": "30th Celebration",
+   "lang": "ko",
+   "kind": "ny"
+  },
   {
    "at": 1794657184848,
    "store": "packs-on-packs",
@@ -7098,34 +7126,6 @@
    "type": "Booster Pack",
    "set": "Celebrations",
    "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1794032327346,
-   "store": "bangerpack",
-   "product": "bangerpack:https://bangerpack.se/pokemon/koreanska-utgavor/pokemon-fusion-arts-booster-kor",
-   "group": "x|booster-pack|ko||arts-fusion",
-   "title": "Pokémon Fusion Arts – Booster (KOR)",
-   "url": "https://bangerpack.se/pokemon/koreanska-utgavor/pokemon-fusion-arts-booster-kor",
-   "image": "https://cdn.quickbutik.com/images/99246J/products/6ae81fe2c25bb.png",
-   "price": 99,
-   "type": "Booster Pack",
-   "set": null,
-   "lang": "ko",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1794031341687,
-   "store": "bangerpack",
-   "product": "bangerpack:https://bangerpack.se/pokemon/koreanska-utgavor/pokemon-time-gazer-booster-kor",
-   "group": "x|booster-pack|ko||gazer-time",
-   "title": "Pokémon Time Gazer – Booster (KOR)",
-   "url": "https://bangerpack.se/pokemon/koreanska-utgavor/pokemon-time-gazer-booster-kor",
-   "image": "https://cdn.quickbutik.com/images/99246J/products/6ae823b94d67c.png",
-   "price": 59,
-   "type": "Booster Pack",
-   "set": null,
-   "lang": "ko",
    "kind": "tillbaka"
   }
  ]
