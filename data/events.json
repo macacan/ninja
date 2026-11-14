@@ -1,6 +1,20 @@
 {
- "updated": 1794623569309,
+ "updated": 1794624169522,
  "events": [
+  {
+   "at": 1794623678738,
+   "store": "spelparken",
+   "product": "spelparken:15237517705591",
+   "group": "silver-tempest|booster-pack|en|",
+   "title": "Silver Tempest Booster Pack",
+   "url": "https://spelparken.se/products/pokemon-sword-shield-silver-tempest-booster-pack-oppnas-live",
+   "image": "https://cdn.shopify.com/s/files/1/0948/1876/3127/files/pokemon-tcg-silver-tempest-pok86091-main.webp?v=1762964967",
+   "price": 199,
+   "type": "Booster Pack",
+   "set": "Silver Tempest",
+   "lang": "en",
+   "kind": "ny"
+  },
   {
    "at": 1794608353661,
    "store": "spelparken",
@@ -7106,20 +7120,6 @@
    "image": "https://nordicpulls.se/images/products/bp-delta-reign-sleeved.jpg",
    "price": 89,
    "type": "Booster Pack",
-   "set": "Delta Reign",
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1794002688057,
-   "store": "nordic-pulls",
-   "product": "nordic-pulls:https://nordicpulls.se/produkt/delta-reign-elite-trainer-box",
-   "group": "delta-reign|elite-trainer-box|en|",
-   "title": "Delta Reign Elite Trainer Box",
-   "url": "https://nordicpulls.se/produkt/delta-reign-elite-trainer-box",
-   "image": "https://nordicpulls.se/images/products/etb-delta-reign.jpg",
-   "price": 1199,
-   "type": "Elite Trainer Box",
    "set": "Delta Reign",
    "lang": "en",
    "kind": "tillbaka"
