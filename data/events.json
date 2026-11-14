@@ -1,6 +1,49 @@
 {
- "updated": 1794656882951,
+ "updated": 1794657862973,
  "events": [
+  {
+   "at": 1794657184848,
+   "store": "packs-on-packs",
+   "product": "packs-on-packs:https://packsonpacks.se/products/30th-celebration-ultra-premium-collection-night",
+   "group": "30th-celebration|ultra-premium-collection|en||night",
+   "title": "30th Celebration Ultra-Premium Collection – Night",
+   "url": "https://packsonpacks.se/products/30th-celebration-ultra-premium-collection-night",
+   "image": "https://cdn.quickbutik.com/images/92330P/products/6af0a3036279c.png",
+   "price": 4450,
+   "type": "Ultra-Premium Collection",
+   "set": "30th Celebration",
+   "lang": "en",
+   "kind": "prissankt",
+   "from": 4700
+  },
+  {
+   "at": 1794656963624,
+   "store": "cardvalley",
+   "product": "cardvalley:11337419096402",
+   "group": "ancient-origins|booster-box|en|",
+   "title": "Ancient Origins Booster Box (36 Packs)",
+   "url": "https://cardvalley.se/products/ancient-origins-booster-box-36-packs",
+   "image": "https://cdn.shopify.com/s/files/1/0934/7946/9394/files/a6f0af99-7e7a-42cf-84ad-87c70366e7ea.png?v=1794656286",
+   "price": 54995,
+   "type": "Booster Box",
+   "set": "Ancient Origins",
+   "lang": "en",
+   "kind": "ny"
+  },
+  {
+   "at": 1794656963624,
+   "store": "cardvalley",
+   "product": "cardvalley:11337413951826",
+   "group": "roaring-skies|booster-box|en|",
+   "title": "Roaring Skies Booster Box (36 Packs)",
+   "url": "https://cardvalley.se/products/roaring-skies-booster-box-36-packs",
+   "image": "https://cdn.shopify.com/s/files/1/0934/7946/9394/files/6ba54423-67bd-4a32-9978-c180cd54df4e.png?v=1794656252",
+   "price": 71995,
+   "type": "Booster Box",
+   "set": "Roaring Skies",
+   "lang": "en",
+   "kind": "ny"
+  },
   {
    "at": 1794649026771,
    "store": "tt-vault",
@@ -7083,48 +7126,6 @@
    "type": "Booster Pack",
    "set": null,
    "lang": "ko",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1794031341687,
-   "store": "bangerpack",
-   "product": "bangerpack:https://bangerpack.se/pokemon/koreanska-utgavor/pokemon-silver-lance-booster-kor",
-   "group": "x|booster-pack|ko||lance-silver",
-   "title": "Pokémon Silver Lance – Booster (KOR)",
-   "url": "https://bangerpack.se/pokemon/koreanska-utgavor/pokemon-silver-lance-booster-kor",
-   "image": "https://cdn.quickbutik.com/images/99246J/products/6ae823a3ac5da.png",
-   "price": 59,
-   "type": "Booster Pack",
-   "set": null,
-   "lang": "ko",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1794015748458,
-   "store": "skattkistan",
-   "product": "skattkistan:11301979717970",
-   "group": "destined-rivals|elite-trainer-box|en|",
-   "title": "Pokémon TCG – Scarlet & Violet: Destined Rivals Elite Trainer Box",
-   "url": "https://skattkistan.net/products/pokemon-tcg-scarlet-violet-destined-rivals-elite-trainer-box",
-   "image": "https://cdn.shopify.com/s/files/1/1094/6858/2226/files/chrome_cudtBOFENO.jpg?v=1794015569",
-   "price": 1349,
-   "type": "Elite Trainer Box",
-   "set": "Destined Rivals",
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1794015748458,
-   "store": "skattkistan",
-   "product": "skattkistan:10987736793426",
-   "group": "pitch-black|elite-trainer-box|en|",
-   "title": "Pokémon TCG Mega Evolution Pitch Black Elite Trainer Box",
-   "url": "https://skattkistan.net/products/me5-pitch-black-elite-trainer-box-sealed",
-   "image": "https://cdn.shopify.com/s/files/1/1094/6858/2226/files/28.07.2026_23.24.24_REC.png?v=1785274420",
-   "price": 789,
-   "type": "Elite Trainer Box",
-   "set": "Pitch Black",
-   "lang": "en",
    "kind": "tillbaka"
   }
  ]
