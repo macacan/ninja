@@ -1,6 +1,20 @@
 {
- "updated": 1794649023558,
+ "updated": 1794649943577,
  "events": [
+  {
+   "at": 1794649026771,
+   "store": "tt-vault",
+   "product": "tt-vault:16731341554009",
+   "group": "30th-celebration|ultra-premium-collection|en||duo-espeon-november-preorder-umbreon",
+   "title": "Pokémon TCG: 30th Celebration UPC Ultra Premium Collection Duo - Umbreon/Espeon PREORDER November 6",
+   "url": "https://ttvault.se/products/pokemon-tcg-30th-celebration-duo-elite-trainer-box-booster-bundle-copy",
+   "image": "https://cdn.shopify.com/s/files/1/1020/3683/2601/files/Gemini_Generated_Image_fheazzfheazzfhea.jpg?v=1792966247",
+   "price": 9999,
+   "type": "Ultra-Premium Collection",
+   "set": "30th Celebration",
+   "lang": "en",
+   "kind": "forbestallning"
+  },
   {
    "at": 1794639132301,
    "store": "bangerpack",
@@ -7109,20 +7123,6 @@
    "image": "https://cdn.shopify.com/s/files/1/1094/6858/2226/files/28.07.2026_23.24.24_REC.png?v=1785274420",
    "price": 789,
    "type": "Elite Trainer Box",
-   "set": "Pitch Black",
-   "lang": "en",
-   "kind": "tillbaka"
-  },
-  {
-   "at": 1794015748458,
-   "store": "skattkistan",
-   "product": "skattkistan:10987741020498",
-   "group": "pitch-black|booster-bundle|en|",
-   "title": "Pokémon TCG Mega Evolution Pitch Black Booster Bundle (6)",
-   "url": "https://skattkistan.net/products/me5-pitch-black-booster-bundle",
-   "image": "https://cdn.shopify.com/s/files/1/1094/6858/2226/files/28.07.2026_23.25.04_REC.png?v=1785274651",
-   "price": 469,
-   "type": "Booster Bundle",
    "set": "Pitch Black",
    "lang": "en",
    "kind": "tillbaka"
