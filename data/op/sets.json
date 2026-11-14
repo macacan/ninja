@@ -1,5 +1,5 @@
 {
- "updated": 1794576400130,
+ "updated": 1794659445736,
  "sets": [
   {
    "id": "OP-18",
@@ -10,6 +10,15 @@
    "pending": true,
    "image": "https://tcgplayer-cdn.tcgplayer.com/product/712901_400w.jpg",
    "count": 0
+  },
+  {
+   "id": "OP18-RE",
+   "name": "The Dominance of God Release Event Cards",
+   "code": "OP18 RE",
+   "date": "2026-11-13",
+   "main": false,
+   "image": "https://tcgplayer-cdn.tcgplayer.com/product/733372_400w.jpg",
+   "count": 75
   },
   {
    "id": "EB-05",
@@ -729,7 +738,7 @@
    "date": "2022-09-30",
    "main": false,
    "image": "https://tcgplayer-cdn.tcgplayer.com/product/457013_400w.jpg",
-   "count": 1315
+   "count": 1317
   },
   {
    "id": "ST01-PRE",
