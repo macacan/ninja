@@ -1,6 +1,48 @@
 {
- "updated": 1794663403099,
+ "updated": 1794664323115,
  "events": [
+  {
+   "at": 1794663757503,
+   "store": "rgb-kingz",
+   "product": "rgb-kingz:16220146729290",
+   "group": "x|booster-pack|ko||brave",
+   "title": "Pokémon TCG: Mega Brave Booster Pack (Koreansk)",
+   "url": "https://rgbkingz.com/products/pokemon-tcg-mega-brave-booster-pack-koreansk",
+   "image": "https://cdn.shopify.com/s/files/1/0782/8088/4554/files/BV7pyhir8R07SXIloGNelHEt_UytVmRGmCHPhDFZ2WqKSwyZPsRG4lr50A8oq7lbSZG7U3YW9OuP0SrwvvoL_28yL6uFJMMU0N4__JjGAeLTYvoNzxwU1kfLn9ulf6y76rMivzhFzEnk5IS702g8MszDb5o5jVb5lD5cNXeTKJ2xa5sohUyvxzp.jpg?v=1794663368",
+   "price": 39,
+   "type": "Booster Pack",
+   "set": null,
+   "lang": "ko",
+   "kind": "ny"
+  },
+  {
+   "at": 1794663757503,
+   "store": "rgb-kingz",
+   "product": "rgb-kingz:16220137783626",
+   "group": "x|booster-pack|ko||symphonia",
+   "title": "Pokémon TCG: Mega Symphonia Booster Pack (Koreansk)",
+   "url": "https://rgbkingz.com/products/pokemon-tcg-mega-symphonia-booster-pack-koreansk",
+   "image": "https://cdn.shopify.com/s/files/1/0782/8088/4554/files/35dwivJUBf9OjCz_Ds6Yox2fLu5rfdAcQeMVaFgwElU94xuM8PajISAXluG9W_LdesAIipnH40D05Bow8j4up8fyGPxqfx7VvNo9JJxDDzGpqhqmJz1smkAU4Uu7TByI24Q83v18PH5Ymn9mWzWc2K53GNiWga1q5CVJ9Ou3i4w5zjnyF_2VXL6.jpg?v=1794663162",
+   "price": 39,
+   "type": "Booster Pack",
+   "set": null,
+   "lang": "ko",
+   "kind": "ny"
+  },
+  {
+   "at": 1794663757503,
+   "store": "rgb-kingz",
+   "product": "rgb-kingz:16220095414602",
+   "group": "x|booster-box|ko||symphonia",
+   "title": "Pokémon TCG: Mega Symphonia Booster Box (Koreansk)",
+   "url": "https://rgbkingz.com/products/pokemon-tcg-mega-symphonia-booster-box-koreansk",
+   "image": "https://cdn.shopify.com/s/files/1/0782/8088/4554/files/b9VTD4FAncfxsGkH9B2x6J-w1bjrdsrRmgvszSCYllygsc1itoTIX8NozmozL6Q5qpeqZKuCNjq3edI2n1dsrUieGJpAJupC5drCM9ZO_LTXpFFjhXkP6fb8FuK1-84IloWlaDRIAA7aEmBvs0uJ-HZiSbfP1aaSRmMG7uHP14eJal_8MwhRzn0.jpg?v=1794663050",
+   "price": 689,
+   "type": "Booster Box",
+   "set": null,
+   "lang": "ko",
+   "kind": "ny"
+  },
   {
    "at": 1794662818480,
    "store": "rgb-kingz",
@@ -7084,48 +7126,6 @@
    "set": "30th Celebration",
    "lang": "en",
    "kind": "tillbaka"
-  },
-  {
-   "at": 1794064767637,
-   "store": "westcoast-vault",
-   "product": "westcoast-vault:15557959319892",
-   "group": "chaos-rising|booster-pack|en|sleeved",
-   "title": "Pokémon TCG: Chaos rising sleeved Booster Pack",
-   "url": "https://westcoastvault.se/products/chaos-rising-sleeved-boosterpack",
-   "image": "https://cdn.shopify.com/s/files/1/1042/6177/9796/files/5D4E93A0-84D6-4106-913C-894FA1E04517.png?v=1787643538",
-   "price": 99,
-   "type": "Booster Pack",
-   "set": "Chaos Rising",
-   "lang": "en",
-   "kind": "ny"
-  },
-  {
-   "at": 1794060930235,
-   "store": "collected",
-   "product": "collected:11452490711382",
-   "group": "aura-seeker|booster-box|ja|",
-   "title": "[Förhandsbokning] - Pokémon TCG: Aura Seeker Booster Box (Japansk) – M7",
-   "url": "https://collected.se/products/pokemon-tcg-aura-seeker-booster-box-japansk-m7",
-   "image": "https://cdn.shopify.com/s/files/1/0965/6788/6166/files/pokemon-tcg-aura-seeker-booster-box-japansk-m7.png?v=1794060347",
-   "price": 1249,
-   "type": "Booster Box",
-   "set": "Aura Seeker",
-   "lang": "ja",
-   "kind": "forbestallning"
-  },
-  {
-   "at": 1794057570992,
-   "store": "dragon-s-lair",
-   "product": "dragon-s-lair:15960857182556",
-   "group": "30th-celebration|collection-box|zh||greninja-set",
-   "title": "Pokemon 30th Celebration set Greninja EX Card Box (Kinesisk)",
-   "url": "https://dragonslair.se/products/pokemon-30th-celebration-set-greninja-ex-card-box-kinesisk-1",
-   "image": "https://cdn.shopify.com/s/files/1/1015/8315/9644/files/tcgs-pokemon-30th-anniversary-celebration-card-display-set-greninja.webp?v=1793360502",
-   "price": 439,
-   "type": "Collection Box",
-   "set": "30th Celebration",
-   "lang": "zh",
-   "kind": "ny"
   }
  ]
 }
